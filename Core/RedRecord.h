@@ -39,6 +39,7 @@ public:
 
     // Remove
     void        Del(const RedString& cNewAttribName)                      { pAttribList->Del(cNewAttribName); };
+    void        DelAll(void)                                              { pAttribList->DelAll(); };
 
     // Operators
     void operator =(const RedRecord& cNewVal);
