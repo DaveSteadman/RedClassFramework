@@ -1,0 +1,31 @@
+{{class}
+  {{name}TestRoutines}
+  {{routine}
+    {{name}TwoPi}
+    {{code}
+      new local number varX = 3.14159 
+      varX = varX * 2 
+      return varX
+    }
+  }
+  {{routine}
+    {{name}Double}
+    {{params}
+      {{X}number}
+    }
+    {{code}
+      X = X * 2 
+      return X
+    }
+  }
+  {{routine}
+    {{name}Halve}
+    {{params}
+      {{X}number}
+    }
+    {{code}
+      X = X / 2 
+      return X
+    }
+  }
+}

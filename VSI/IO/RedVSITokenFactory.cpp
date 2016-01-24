@@ -1,0 +1,297 @@
+
+#include "RedVSITokenFactory.h"
+
+namespace Red {
+namespace VSI {
+
+using namespace Red::Core;
+
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+int RedVSITokenFactory::CreateTokens(const RedString& cInputText, RedVSITokenElementMap& cTokenMap, RedVSITokenBuffer& cOutputTokenList)
+{
+    cOutputTokenList.Init();
+    RedBufferInput cCodeBuffer(cInputText);
+
+    int iResult = CreateTokens(cCodeBuffer, cTokenMap, cOutputTokenList);
+    
+    return iResult;
+}
+
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+int RedVSITokenFactory::CreateTokens(RedBufferInput& cInputBuffer, RedVSITokenElementMap& cTokenMap, RedVSITokenBuffer& cOutputTokenList)
+{
+    cOutputTokenList.Init();
+    cInputBuffer.SetStartPos();
+    RedVSIToken cNewTok;
+
+    do {
+        // read the token data
+        RunTokenComp(cInputBuffer, cTokenMap, cNewTok);
+        
+        // create the new token, so long as its valid
+        if ( (cNewTok.IsValid()) && (!cNewTok.IsEOF()) )
+            cOutputTokenList.AppendToken(cNewTok);
+    }
+    while( (!cNewTok.IsEOF()) && (cNewTok.IsValid()) );
+
+    //RedString cRep = Test_RedVSITokenBuffer::CreateBufferReport(cOutputTokenList, cTokenMap);
+
+    // Initialise if we've not interpreted all the tokens right.
+    if (!cNewTok.IsValid()) 
+    {
+        cOutputTokenList.Init();
+        return 0;
+    }
+    return 1;
+}
+
+// ============================================================================
+// Private Routines
+// ============================================================================
+
+RedResult RedVSITokenFactory::RunTokenComp(RedBufferInput& cInputBuffer, RedVSITokenElementMap& cTokenMap, RedVSIToken& cNewTok)
+{
+    // initialise the outputs
+    cNewTok.Init();
+    RedResult RedResult;
+    RedResult.SetNoResult();
+    
+    // skip over whitespace characters until we get to a character we want to deal with
+    cInputBuffer.SkipWhitespace();
+
+    // get the buffer position, so each competition entry can start from the 
+    // same point
+    int        iStartPos = cInputBuffer.GetPos();
+    RedBufferPos cBufPos = cInputBuffer.GetRowColPos();
+    
+    //RedChar cPreviewChar = cInputBuffer.PreviewNextChar();
+    
+    int iCompetitionEntry = 1;
+
+    while (RedResult.IsNoResult())
+    {
+        // reset the start read pos
+        cInputBuffer.SetPos(iStartPos);
+
+        switch(iCompetitionEntry)
+        {
+        case 1: RedResult = PredefinedComp(cInputBuffer, cTokenMap, cNewTok); break;
+        case 2: RedResult = NameComp(cInputBuffer, cNewTok);                  break;
+        case 3: RedResult = NumberComp(cInputBuffer, cNewTok);                break;
+        case 4: RedResult = StringLiteralComp(cInputBuffer, cNewTok);         break;
+        case 5: RedResult = NonPrintableComp(cInputBuffer, cNewTok);          break;
+        default:
+            RedResult.SetFail();
+        }
+        
+        iCompetitionEntry++;
+    }
+    
+    cNewTok.SetPos(cBufPos);
+    return RedResult;
+}
+
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+RedResult RedVSITokenFactory::NumberComp(RedBufferInput& cInputBuffer, RedVSIToken& cNewTok)
+{
+    int         iProcessingComplete = 0; 
+    int         iDecimalPointUsed = 0;   
+    RedChar   cPreviewChar;
+    RedChar   cNewChar;
+    RedString cTokenText;
+    
+    // If the first character isn't numeric, return false.
+    cPreviewChar = cInputBuffer.PreviewNextChar();
+    if ( !cPreviewChar.IsDecimalNumber() )
+        return RedResult::NoResult();
+
+    while (!iProcessingComplete)
+    {
+        // Get the characters 
+        cNewChar     = cInputBuffer.GetNextChar();
+        cPreviewChar = cInputBuffer.PreviewNextChar();
+
+        // set the fullstop used flag if we have just assigned one
+        if (cNewChar.IsDecimalPoint())
+            iDecimalPointUsed = 1;
+
+        // assign the first character we've already read
+        cTokenText += cNewChar;
+
+        // Determine end condition, on no number character or a 2nd
+        // decimal point
+        if (!cPreviewChar.IsNumeric())    
+            iProcessingComplete = 1; 
+        if (cPreviewChar.IsDecimalPoint() && iDecimalPointUsed)
+            iProcessingComplete = 1; 
+    }
+
+    // We have a number token, so convert the input string to a numeric
+    // value.
+    cNewTok.SetNumber(RedNumber(cTokenText));
+    return RedResult::Success();
+}
+
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+RedResult RedVSITokenFactory::StringLiteralComp(RedBufferInput& cInputBuffer, RedVSIToken& cNewTok)
+{
+    RedChar   cPreviewChar;
+    RedChar   cNewChar;
+    RedString cTokenText;
+
+    // create a quick list, so we can store a number of nested quote characters
+    RedChar   aQuoteList[10];
+    int         iQuotePos = 0;
+    for (int i=0; i<10; i++) aQuoteList[i]='\0';
+            
+    // If the first character isn't a quote character, return false.
+    cPreviewChar = cInputBuffer.PreviewNextChar();
+    if ( !cPreviewChar.IsQuote() )
+        return RedResult::NoResult();
+
+    // Read the quote character which starts the string
+    aQuoteList[iQuotePos] = cInputBuffer.GetNextChar();
+    iQuotePos++;
+
+    while (iQuotePos)
+    {
+        cNewChar = cInputBuffer.GetNextChar();
+
+        if (cNewChar.IsQuote())
+        {
+            // if the character matches the last quote character, then we have an end
+            // to the literal (while or nested). Otherwise, add the quote to the list
+            // to check for
+            if (cNewChar == aQuoteList[iQuotePos-1])
+            {
+                iQuotePos--;
+            }
+            else
+            {
+                aQuoteList[iQuotePos] = cNewChar.Char();
+                iQuotePos++;
+            }
+        }
+
+        // Unless we are about to end the loop (ie the last quote character) add
+        // the just examined character to the token.
+        if (iQuotePos)
+            cTokenText += cNewChar;
+    }
+
+    // finalise and return the object
+    cNewTok.SetStringLiteral(cTokenText);  
+    return RedResult::Success();
+}
+
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+RedResult RedVSITokenFactory::NonPrintableComp(RedBufferInput& cInputBuffer, RedVSIToken& cNewTok)
+{
+    RedChar   cPreviewChar;
+    RedChar   cNewChar;
+        
+    // If the first character isn't a quote character, return false.
+    cPreviewChar = cInputBuffer.PreviewNextChar();
+    if ( !cPreviewChar.IsNonPrintable() )
+        return RedResult::NoResult();
+        
+    cNewChar = cInputBuffer.GetNextChar();
+
+    // finalise and return the object
+    cNewTok.SetNonPrintable(cNewChar);
+    return RedResult::Success();
+}
+
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+RedResult RedVSITokenFactory::NameComp(RedBufferInput& cInputBuffer, RedVSIToken& cNewTok)
+{
+    //int             iProcessingComplete = 0;
+    RedChar       cPreviewChar;
+    RedChar       cNewChar;
+    RedString     cPreviewStr;
+    RedString     cValidStr;
+    
+    RedVSIIOElement  cElem;
+    RedVSIIOElement  cFinalElem;
+    //int             iExactMatchFound = 0;
+    //int             iExactMatchSuperceeded = 0;
+       
+    // If the first character isn't a letter, return false.
+    cPreviewChar = cInputBuffer.PreviewNextChar();
+    if ( !cPreviewChar.IsAlpha() )
+        return RedResult::NoResult();
+
+    while (cPreviewChar.IsAlphaNumeric())
+    {
+        cValidStr += cInputBuffer.GetNextChar();
+
+        cPreviewChar = cInputBuffer.PreviewNextChar();
+    }
+    
+    cNewTok.SetName(cValidStr);
+    return RedResult::Success();
+}
+
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+RedResult RedVSITokenFactory::PredefinedComp(RedBufferInput& cInputBuffer, RedVSITokenElementMap& cTokenMap, RedVSIToken& cNewTok)
+{
+    int           iProcessingComplete = 0; 
+    RedChar       cPreviewChar;
+    RedChar       cNewChar;
+    RedString     cPreviewStr;
+    RedString     cValidStr;
+    
+    RedVSIIOElement  cElem;
+    RedVSIIOElement  cFinalElem;
+    int              iExactMatchFound = 0;
+    
+	// skip over whitespace characters until we get to a character we want to deal with
+    cPreviewChar = cInputBuffer.PreviewNextChar();
+
+    while (!iProcessingComplete)
+    {
+        cPreviewChar = cInputBuffer.PreviewNextChar();
+  
+        // get the number of matches for the new string
+        cPreviewStr = cValidStr + cPreviewChar;
+        if ( cTokenMap.CountMatchCandidates(cPreviewStr) )
+        {
+            // we have matches, so get the character for real and look for an exact match
+            cValidStr += cInputBuffer.GetNextChar();
+            if (cTokenMap.Find(cValidStr, cElem))
+            {
+                iExactMatchFound    = 1;
+                cFinalElem          = cElem;
+            }
+        }
+        // set complete when we run out of matches - we have to look beyond any match to ensure we haven't found a substring.
+        else
+        {
+            iProcessingComplete = 1;
+        }
+    }
+        
+    // if we found a match create a valid object we are going to return     
+    if (iExactMatchFound)
+    {
+        cNewTok.SetPredefined(cElem);
+        return RedResult::Success();
+    }
+    return RedResult::NoResult();
+}
+
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+} // VSI
+} // Red
+
+
+
+
