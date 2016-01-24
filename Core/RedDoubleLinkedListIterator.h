@@ -40,7 +40,7 @@ public:
 
     void    First(void);
     void    Next(void);
-    int     IsDone(void);
+    int     IsDone(void) const;
     Element CurrentItem(void);
 
     void DeleteCurrentItem(void);
@@ -91,7 +91,7 @@ void RedDoubleLinkedListIterator<Element>::Next(void)
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 template<class Element>
-int RedDoubleLinkedListIterator<Element>::IsDone(void)
+int RedDoubleLinkedListIterator<Element>::IsDone(void) const
 {
     int iSearchDone = 0;
 

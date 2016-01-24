@@ -51,10 +51,10 @@ public:
     RedType*            Clone(void) const { RedNumber* newN = new RedNumber(*this); return (RedType*)newN; };
 
     // Class operations
-    const int           IsZero(void) const;
+    const int           IsZero(void)     const;
     const int           IsPositive(void) const;
-    const int           IsInteger(void) const  { return (eNumType == eInt); };
-    const int           IsReal(void) const     { return (eNumType == eFloat); };
+    const int           IsInteger(void)  const { return (eNumType == eInt);   };
+    const int           IsReal(void)     const { return (eNumType == eFloat); };
     const int           IsEqualTo(const RedNumber& CheckVal) const;
     const int           IsEqualToWithinTollerance(RedNumber CheckVal, RedNumber tollerance) const;
 

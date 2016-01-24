@@ -25,10 +25,7 @@ namespace Core {
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-// Dates are strictly formatted in YMD format, ie 2013/10/10
-
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
+/// Class for dates strictly formatted in YMD format, ie 2013/10/10
 class RedDate
 {
 public:

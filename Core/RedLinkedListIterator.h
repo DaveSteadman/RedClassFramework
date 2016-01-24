@@ -38,7 +38,7 @@ public:
 
     void    First(void);
     void    Next(void);
-    int     IsDone(void);
+    int     IsDone(void) const;
     Element CurrentItem(void);
 
     void    DeleteCurrentItem(void);
@@ -78,7 +78,7 @@ void RedLinkedListIterator<Element>::Next(void)
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 template<class Element>
-int RedLinkedListIterator<Element>::IsDone(void)
+int RedLinkedListIterator<Element>::IsDone(void) const
 {
     int iSearchDone = 0;
 

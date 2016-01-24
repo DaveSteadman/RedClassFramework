@@ -39,7 +39,7 @@ public:
 
     void        First(void);
     void        Next(void);
-    const int   IsDone(void);
+    const int   IsDone(void) const;
     IdClass     CurrentId(void);
     DataClass   CurrentData(void);
 
@@ -91,7 +91,7 @@ void RedMapListIterator<IdClass, DataClass>::Next(void)
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 template <class IdClass, class DataClass>
-const int RedMapListIterator<IdClass, DataClass>::IsDone(void)
+const int RedMapListIterator<IdClass, DataClass>::IsDone(void) const
 {
     int iSearchDone = 0;
 

@@ -42,10 +42,10 @@ public:
     const int FindFirst(Element& Elem) const;
     const int FindLast(Element& Elem) const;
     const int FindElementAtIndex(int iElemIndex, Element& Elem) const;
-    const int NumItems(void) const { return iNumItems; };
-    const int IsEmpty(void) const { return (iNumItems==0); };
+    const int NumItems(void)   const { return iNumItems; };
+    const int IsEmpty(void)    const { return (iNumItems==0); };
     const int FirstIndex(void) const;
-    const int LastIndex(void) const;
+    const int LastIndex(void)  const;
 
     // Delete Items
     const int DelFirst(void);
