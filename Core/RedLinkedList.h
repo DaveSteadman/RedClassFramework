@@ -19,10 +19,10 @@ public:
     int  InsertAfter(int iElemIndex, Element Elem);
 
     // Access counts and index values
-    int IsEmpty(void)     const { return (iNumItems==0); };
-    int NumItems(void) const { return iNumItems; };
-    int FirstIndex(void);
-    int LastIndex(void);
+    int IsEmpty(void)    const { return (iNumItems==0); };
+    int NumItems(void)   const { return iNumItems; };
+    int FirstIndex(void) const { if (iNumItems == 0) return 0; return 1; };
+    int LastIndex(void)  const { return iNumItems; };
 
     // Access Items
     int FindFirst(Element& Elem);
@@ -188,26 +188,6 @@ int RedLinkedList<Element>::InsertAfter(int iElemIndex, Element Elem)
     return 1;
 }
 
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-// Access counts and index values
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-template <class Element>
-int RedLinkedList<Element>::FirstIndex(void)
-{
-    if (iNumItems == 0) 
-        return 0;
-    
-    return 1;
-}
-
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-template <class Element>
-int RedLinkedList<Element>::LastIndex(void)
-{
-    return iNumItems;
-}
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 // Access

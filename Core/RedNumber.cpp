@@ -12,6 +12,7 @@ namespace Core {
 // Class Operations
 // =================================================================================================
 
+/// Query operation, determining if the int number is zero, or the float number is within kFloatCompTollerance of zero.
 const int RedNumber::IsZero(void) const
 {
     if (eNumType == eInt)

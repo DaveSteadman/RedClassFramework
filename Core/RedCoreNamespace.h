@@ -1,6 +1,12 @@
 
 #pragma once
 
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+// The Core namespace is exactly that, the core classes which are re-used throughout the rest of the
+// system. Everything is prefixed Red* to differentiate it from other class frameworks a compiler
+// may pick up.
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
 // Fundamental Elements
 #include "RedType.h"
 #include "RedDataType.h"

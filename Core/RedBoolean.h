@@ -20,6 +20,7 @@ namespace Core {
 
 class RedString;
 
+/// Boolean value class. Child of RedType class.
 class RedBoolean : public RedType
 {
 public:

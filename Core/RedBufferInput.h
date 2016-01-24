@@ -1,9 +1,6 @@
 // -------------------------------------------------------------------------------------------------
 // File: RedBufferInput.h
 // -------------------------------------------------------------------------------------------------
-// Detail: Input buffer constructed from a string, allowing character to be read sequentially while
-//         tracking position in the file.
-// -------------------------------------------------------------------------------------------------
 
 #pragma once
 
@@ -16,6 +13,8 @@
 namespace Red {
 namespace Core {
 
+/// Input buffer constructed from a string, allowing character to be read sequentially while
+/// tracking position in the file.
 class RedBufferInput
 {
 public:
