@@ -10,15 +10,6 @@
 #include "RedVSICmdReturn.h"
 #include "RedVSICmdWhile.h"
 
-// Collections
-#include "RedVSICmdStack.h"
-#include "RedVSIDataList.h"
-#include "RedVSIParseDataMap.h"
-#include "RedVSIParseList.h"
-#include "RedVSIParseStack.h"
-#include "RedVSIStringDataMap.h"
-#include "RedVSIStringStringTypeMap.h"
-
 // Context
 #include "RedVSIContextFactory.h"
 #include "RedVSIContextRoutine.h"
@@ -34,6 +25,7 @@
 #include "RedMapListIterator.h"
 
 // Definitions
+#include "RedVSICollections.h"
 #include "RedVSIErrorCodes.h"
 #include "RedVSILangElement.h"
 #include "RedVSIIOElement.h"

@@ -3,7 +3,7 @@
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-#include "RedVSIParseStack.h"
+#include "RedVSICollections.h"
 #include "RedVSIParseTreeInterface.h"
 #include "RedLog.h"
 

@@ -5,7 +5,7 @@
 //#include "RedVSIObject.h"
 #include "RedVSIErrorCodes.h"
 #include "RedVSILangElement.h"
-#include "RedVSIParseList.h"
+#include "RedVSICollections.h"
 
 namespace Red {
 namespace VSI {

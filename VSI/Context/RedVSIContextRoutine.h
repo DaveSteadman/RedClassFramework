@@ -8,13 +8,10 @@
 
 #include "RedCoreNamespace.h"
 
-#include "RedVSIParseDataMap.h"
-#include "RedVSIStringDataMap.h"
+#include "RedVSICollections.h"
 #include "RedVSICmdInterface.h"
 #include "RedVSIContextInterface.h"
-#include "RedVSICmdStack.h"
 #include "RedVSICmdInterface.h"
-#include "RedVSIParseStack.h"
 #include "RedVSIObject.h"
 #include "RedVSILangElement.h"
 

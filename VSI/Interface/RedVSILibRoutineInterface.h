@@ -5,7 +5,7 @@
 
 #include "RedCoreNamespace.h"
 
-#include "RedVSIStringStringTypeMap.h"
+#include "RedVSICollections.h"
 #include "RedVSICmdInterface.h"
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

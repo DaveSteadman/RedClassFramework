@@ -5,8 +5,7 @@
 
 #include "RedCoreNamespace.h"
 
-#include "RedVSIDataList.h"
-#include "RedVSIParseList.h"
+#include "RedVSICollections.h"
 
 namespace Red {
 namespace VSI {
