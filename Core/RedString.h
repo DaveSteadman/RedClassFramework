@@ -15,6 +15,7 @@ namespace Core {
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
+/// String class, containing numerous string search & manipulation functions and operators.
 class RedString : public RedType
 {
 public:
