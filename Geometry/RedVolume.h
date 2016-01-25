@@ -22,7 +22,7 @@
 #include "ConversionConstants.h"
 
 namespace Red {
-namespace Units {
+namespace Geometry {
 
     using namespace Red::Core;
 
@@ -41,6 +41,6 @@ namespace Units {
         RedNumber Gallons(void) const            { RedNumber retval(*this); retval += gallonsPerLitre; return retval; };
     };
 
-} // Units
+} // Geometry
 } // Red
 
