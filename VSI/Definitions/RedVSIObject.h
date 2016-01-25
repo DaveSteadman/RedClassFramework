@@ -20,7 +20,8 @@
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-#include "RedCoreNamespace.h"
+#include "RedRecord.h"
+#include "RedString.h"
 
 namespace Red {
 namespace VSI {
@@ -29,18 +30,15 @@ using namespace Red::Core;
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-static const RedString kClassname = "classname";
-
 /// A VSI-Object, an instansation of a VSI-Class, contains the classname and a RedRecord of the
 /// object attributes. The object's name is recorded in its parent context.
 class RedVSIObject : public RedRecord
 {
 public:
 
-    RedVSIObject(void);
-    //RedVSIObject(RedString& cNewClassName) { Add(kClassname, &cNewClassName); };
+    RedVSIObject(const RedString& cNewClassName) { classname = cNewClassName; };
 
-    const RedString Classname(void) { RedString r = "TBD"; return r; };
+    const RedString Classname(void) const { return classname; };
 
     // Operators
     void operator =(const RedVSIObject cNewVal);   
