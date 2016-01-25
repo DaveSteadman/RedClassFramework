@@ -16,11 +16,6 @@
 // (http://opensource.org/licenses/MIT)
 // -------------------------------------------------------------------------------------------------
 
-/*
-  {{name} qwqwq }
-  {{name} "asad }}" }
-*/
-
 #pragma once
 
 // Include Namespaces
