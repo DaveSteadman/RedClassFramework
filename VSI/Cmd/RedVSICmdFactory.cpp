@@ -20,7 +20,7 @@
 
 #include "RedVSICmdFactory.h"
 
-#include "RedVSICmdExpr.h"
+#include "RedVSICmdLet.h"
 #include "RedVSICmdIf.h"
 #include "RedVSICmdNew.h"
 #include "RedVSICmdReturn.h"
@@ -212,7 +212,7 @@ RedVSICmdInterface* RedVSICmdFactory::ExprComp(RedVSITokenBuffer& cInputBuffer, 
         if ( (pExpr->Type().IsParseFuncCall()) || (pExpr->Type().IsParseBinaryOp()) )
         {
             // Create the command object to return.
-            RedVSICmdExpr* pCmd = new RedVSICmdExpr();
+            RedVSICmdLet* pCmd = new RedVSICmdLet();
             pCmd->SetDetails(pExpr);
 
             return pCmd;

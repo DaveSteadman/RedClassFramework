@@ -20,10 +20,6 @@
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-#include <cassert>
-#include <iostream>
-#include <typeinfo>
-
 namespace Red {
 namespace Core {
 

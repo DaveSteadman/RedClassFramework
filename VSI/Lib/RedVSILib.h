@@ -33,6 +33,7 @@ using namespace Red::Core;
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
+// A VSI Code Library consists of a list of classes.
 class RedVSILib : public RedVSILibInterface
 {
 public:

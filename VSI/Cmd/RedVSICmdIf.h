@@ -40,10 +40,9 @@ public:
     RedVSICmdIf(void);
     ~RedVSICmdIf(void) {};
 
-    RedVSILangElement Type(void) { return RedVSILangElement::CommandIf(); };
+    RedVSILangElement Type(void) { return kLangElementCommandIf; };
     
-    void            QueueExpr(RedVSIContextInterface* pContext);
-
+    void QueueExpr(RedVSIContextInterface* pContext);
     void SetDetails(RedVSIParseTreeInterface*& pInCmdExpr,  RedVSICmdInterface*& pInPosBranch,  RedVSICmdInterface*& pInNegBranch);
     void GetDetails(RedVSIParseTreeInterface*& pOutCmdExpr, RedVSICmdInterface*& pOutPosBranch, RedVSICmdInterface*& pOutNegBranch) const;
 

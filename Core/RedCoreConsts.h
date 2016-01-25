@@ -16,9 +16,7 @@
 // (http://opensource.org/licenses/MIT)
 // -------------------------------------------------------------------------------------------------
 
-#ifndef RedCoreConsts_h
-#define RedCoreConsts_h
+#pragma once
 
 #define REDNULL 0
 
-#endif /* RedCoreConsts_h */

@@ -24,7 +24,7 @@
 #pragma once
 
 // Include Namespaces
-#include "RedCoreNamespace.h"
+#include "RedString.h"
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -35,6 +35,8 @@ namespace TinyML {
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
+/// A class defining the top-level class of any TinyML node. Contains the name, which all nodes
+/// have, and the default-false type functions.
 class RedTmlElement
 {
 public:

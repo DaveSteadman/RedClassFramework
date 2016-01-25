@@ -112,12 +112,12 @@ public:
     friend RedString operator +(const RedString& Str,  const RedChar ch);
 
     // Comparison Operators
-    const int operator  <(const RedString Str) const;
+    const int operator  <(const RedString Str)  const;
     const int operator <=(const RedString& Str) const;
     const int operator  >(const RedString& Str) const;
     const int operator >=(const RedString& Str) const;
     const int operator ==(const RedString& Str) const;
-    const int operator ==(const char* Str) const;
+    const int operator ==(const char* Str)      const;
     const int operator !=(const RedString& Str) const;
 
     // Test Routines

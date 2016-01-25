@@ -54,6 +54,26 @@ void RedBoolean::Invert(void)
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+#pragma mark - Comparison Operators
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+bool operator==(const RedBoolean& lhs, const RedBoolean& rhs)
+{
+    if(lhs.intState() == rhs.intState())
+        return true;
+    return false;
+}
+
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+bool operator!=(const RedBoolean& lhs, const RedBoolean& rhs)
+{
+    if(lhs.intState() != rhs.intState())
+        return true;
+    return false;
+}
+
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 } // Core
 } // Red

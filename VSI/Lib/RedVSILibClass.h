@@ -33,6 +33,8 @@ namespace VSI {
 
 using namespace Red::Core;
 
+/// A VSI-Class consists of a Classname and a list of routines. Optionally, a VSI-Class may have a parent
+/// in which a routine call can continue to look for a routine signature.
 class RedVSILibClass
 {
 public:

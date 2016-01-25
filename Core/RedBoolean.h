@@ -71,13 +71,18 @@ public:
     static RedBoolean  No(void)    { RedBoolean cRetVal; cRetVal.SetNo();    return cRetVal; };
 
     void      operator =(const RedBoolean cVal) { iState = cVal.iState; };
-    const int operator==(const RedBoolean& rhs) const { if (iState == rhs.iState) return 1; return 0; };
-    const int operator!=(const RedBoolean& rhs) const { if (iState != rhs.iState) return 1; return 0; };
+    
+    const int intState(void) const { return iState; };
 
 private:
 
     int iState;
 };
+
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+bool operator==(const RedBoolean& lhs, const RedBoolean& rhs);
+bool operator!=(const RedBoolean& lhs, const RedBoolean& rhs);
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 

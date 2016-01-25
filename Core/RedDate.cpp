@@ -17,6 +17,8 @@
 // -------------------------------------------------------------------------------------------------
 
 #include "RedDate.h"
+#include "RedNumber.h"
+#include "RedString.h"
 
 #include <time.h>
 #include <stdio.h>
@@ -74,6 +76,26 @@ const int RedDate::EightDigitInt(void) const
     retdate += date;
 
     return retdate;
+}
+
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+#pragma mark - Comparison Operators
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+bool operator==(const RedDate& lhs, const RedDate& rhs)
+{
+    if(lhs.EightDigitInt() == rhs.EightDigitInt())
+        return true;
+    return false;
+}
+
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+bool operator!=(const RedDate& lhs, const RedDate& rhs)
+{
+    if(lhs.EightDigitInt() != rhs.EightDigitInt())
+        return true;
+    return false;
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

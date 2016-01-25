@@ -38,13 +38,13 @@ class RedTmlElement;
 class RedTmlLeaf : public RedTmlElement
 {
 public:
-    RedTmlLeaf(RedString NewName, RedString NewData) : RedTmlElement(NewName) { data = NewData; };
+    RedTmlLeaf(const RedString& NewName, const RedString& NewData) : RedTmlElement(NewName) { data = NewData; };
 
     // Override: RedTmlElement
     const bool IsLeaf(void) const { return true; };
 
-    const RedString Data(void)                        { return data; };
-    void            SetData(const RedString& NewData) { data = NewData; };
+    const RedString& Data(void) const                  { return data; };
+    void             SetData(const RedString& NewData) { data = NewData; };
 
 private:
     RedString data;

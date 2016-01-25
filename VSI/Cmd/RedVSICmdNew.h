@@ -42,7 +42,7 @@ public:
 
     ~RedVSICmdNew(void) {};
 
-    RedVSILangElement Type(void) { return RedVSILangElement::CommandNew(); };
+    RedVSILangElement Type(void) { return kLangElementCommandNew; };
 
     void SetDetails(const RedVSILangElement& cInType,  const RedVSILangElement& cInLoc,  RedString cInName,  RedVSIParseTreeInterface* pInInitExpr);
     void GetDetails(RedVSILangElement& cOutType, RedVSILangElement& cOutLoc, RedString& cOutName, RedVSIParseTreeInterface*& pOutInitExpr) const;

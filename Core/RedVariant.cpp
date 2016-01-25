@@ -19,6 +19,10 @@
 #include "RedVariant.h"
 #include "RedBoolean.h"
 
+#include "RedChar.h"
+#include "RedString.h"
+#include "RedNumber.h"
+
 namespace Red {
 namespace Core {
 
@@ -138,6 +142,14 @@ void RedVariant::SetValue(const RedVariant& cDataItem)
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
+void RedVariant::SetValue(const RedBoolean& cNewBool)
+{
+    Init();
+    pData = new RedBoolean(cNewBool);
+}
+
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
 void RedVariant::SetValue(const RedNumber& cNewNum)
 {
     Init();
@@ -237,7 +249,7 @@ const RedString RedVariant::StringValue(void) const
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-// Operators
+#pragma mark - Operators
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 void RedVariant::operator =(const RedType* pNewData)
@@ -325,6 +337,8 @@ RedVariant RedVariant::operator/(const RedVariant& cVarData)
     return cRetVal;
 }
 
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+#pragma mark - Comparison Operators
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 bool operator==(const RedVariant& lhs, const RedVariant& rhs)

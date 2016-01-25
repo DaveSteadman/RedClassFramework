@@ -16,41 +16,50 @@
 // (http://opensource.org/licenses/MIT)
 // -------------------------------------------------------------------------------------------------
 
-#include "RedVSICmdExpr.h"
+#pragma once
+
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+#include "RedCoreNamespace.h"
+
+#include "RedVSIParseTreeInterface.h"
+#include "RedVSICmdInterface.h"
+#include "RedVSIContextInterface.h"
+#include "RedVSIErrorCodes.h"
 
 namespace Red {
 namespace VSI {
 
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+using namespace Red::Core;
 
-RedVSICmdExpr::RedVSICmdExpr(void)
+/// Class to contain an expression, allowing the maths to exist in a sequence.
+/// Essentially a BASIC LET statement.
+class RedVSICmdLet : public RedVSICmdInterface
 {
-    // this object's attributes
-    pExpr = 0;
+public: 
 
-    // parents attributes
-    SetNextCmd(0);
-}
+    // Fundamental Routines
+    RedVSICmdLet(void);
+    RedVSICmdLet(RedVSIParseTreeInterface*& pExpr) { SetDetails(pExpr); };
+    ~RedVSICmdLet(void) {};
 
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    RedVSILangElement Type(void) { return kLangElementCommandLet; };
 
-void RedVSICmdExpr::QueueExpr(RedVSIContextInterface* pContext)
-{
-    if (pExpr)
-        pContext->QueueExpr(pExpr);
-}
+    void SetDetails(RedVSIParseTreeInterface*& pInExpr)        { pExpr = pInExpr; };
+    void GetDetails(RedVSIParseTreeInterface*& pOutExpr) const { pOutExpr = pExpr; };
 
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    void SetExpr(RedVSIParseTreeInterface* pNewExpr)     { pExpr = pNewExpr; };
 
-void RedVSICmdExpr::Execute(RedVSIContextInterface* pContext)
-{
-    // expression will have been evaluated prior to the command, 
-    // so any actions already performed. Just queue up the next 
-    // command.
-    pContext->QueueCommand(NextCmd());
-}
+    void QueueExpr(RedVSIContextInterface* pContext);
+    void Execute(RedVSIContextInterface* pContext);
+
+private:
+
+    RedVSIParseTreeInterface* pExpr;
+};
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 } // VSI
 } // Red
+

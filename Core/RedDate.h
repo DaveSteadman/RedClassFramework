@@ -18,14 +18,14 @@
 
 #pragma once
 
-#include "RedNumber.h"
-
 namespace Red {
 namespace Core {
 
+class RedString;
+
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-/// Class for dates strictly formatted in YMD format, ie 2013/10/10
+/// Class for dates formatted in YYYYMMDD format, ie 2013/10/10. Component values are all unsigned.
 class RedDate
 {
 public:
@@ -47,6 +47,11 @@ private:
     unsigned    month;
     unsigned    date;
 };
+
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+bool operator==(const RedDate& lhs, const RedDate& rhs);
+bool operator!=(const RedDate& lhs, const RedDate& rhs);
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 

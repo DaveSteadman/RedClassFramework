@@ -22,6 +22,7 @@
 
 #include "RedCoreNamespace.h"
 
+#include "RedVSIToken.h"
 #include "RedVSITokenBuffer.h"
 #include "RedVSIParseTreeInterface.h"
 

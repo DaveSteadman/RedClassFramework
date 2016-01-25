@@ -21,7 +21,7 @@
 // Commands
 #include "RedVSICmdFactory.h"
 #include "RedVSICmdSerialiser.h"
-#include "RedVSICmdExpr.h"
+#include "RedVSICmdLet.h"
 #include "RedVSICmdIf.h"
 #include "RedVSICmdNew.h"
 #include "RedVSICmdReturn.h"

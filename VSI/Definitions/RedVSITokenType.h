@@ -28,24 +28,24 @@ namespace VSI {
 class RedVSITokenType
 {
 public:
-	RedVSITokenType(void)       { Init(); };
+	RedVSITokenType(void)                      { Init(); };
 
-	void Init(void)             { eState = eDefaultInvalid; };
+	void Init(void)                            { eState = eDefaultInvalid; };
 
-    void SetNumber(void)        { eState = eNumber; };
-    void SetName(void)          { eState = eName; };
-    void SetStringLiteral(void) { eState = eStringLiteral; };
-    void SetNonPrintable(void)  { eState = eNonPrintable; };
-    void SetWhitespace(void)    { eState = eWhitespace; };
-    void SetPredefined(void)    { eState = ePredefined; };
+    void SetNumber(void)                       { eState = eNumber; };
+    void SetName(void)                         { eState = eName; };
+    void SetStringLiteral(void)                { eState = eStringLiteral; };
+    void SetNonPrintable(void)                 { eState = eNonPrintable; };
+    void SetWhitespace(void)                   { eState = eWhitespace; };
+    void SetPredefined(void)                   { eState = ePredefined; };
 
-	int IsValid(void)           { return (eState != eDefaultInvalid); };
-	int IsNumber(void)          { return (eState == eNumber); };
-	int IsName(void)            { return (eState == eName); };
-	int IsStringLiteral(void)   { return (eState == eStringLiteral); };
-	int IsNonPrintable(void)    { return (eState == eNonPrintable); };
-	int IsWhitespace(void)      { return (eState == eWhitespace); };
-	int IsPredefined(void)      { return (eState == ePredefined); };
+	int IsValid(void) const                    { return (eState != eDefaultInvalid); };
+	int IsNumber(void) const                   { return (eState == eNumber); };
+	int IsName(void) const                     { return (eState == eName); };
+	int IsStringLiteral(void) const            { return (eState == eStringLiteral); };
+	int IsNonPrintable(void) const             { return (eState == eNonPrintable); };
+	int IsWhitespace(void) const               { return (eState == eWhitespace); };
+	int IsPredefined(void) const               { return (eState == ePredefined); };
 
     static RedVSITokenType Number(void)        { return RedVSITokenType(eNumber); };
     static RedVSITokenType Name(void)          { return RedVSITokenType(eName); };

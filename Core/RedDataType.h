@@ -20,8 +20,6 @@
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-#include "RedCoreConsts.h"
-
 namespace Red {
 namespace Core {
 

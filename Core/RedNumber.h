@@ -56,7 +56,7 @@ public:
     const int           IsInteger(void)  const { return (eNumType == eInt);   };
     const int           IsReal(void)     const { return (eNumType == eFloat); };
     const int           IsEqualTo(const RedNumber& CheckVal) const;
-    const int           IsEqualToWithinTollerance(RedNumber CheckVal, RedNumber tollerance) const;
+    const int           IsEqualToWithinTollerance(const RedNumber& CheckVal, const RedNumber& tollerance) const;
 
     const RedString     DecimalString(void) const;
     const RedString     DecimalStringWithDP(const int decimalplaces) const;
@@ -77,14 +77,6 @@ public:
     const RedNumber     FractionalPart(void) const;
     const RedNumber     DivisionQuotient(const RedNumber& d) const;
     const RedNumber     DivisionRemainder(const RedNumber& d) const;
-
-    const int operator==(const RedNumber& rhs) const { if ( IsEqualToWithinTollerance(rhs, kFloatCompTollerance)) return 1; return 0; };
-    const int operator!=(const RedNumber& rhs) const { if (!IsEqualToWithinTollerance(rhs, kFloatCompTollerance)) return 1; return 0; };
-
-    const int operator >=(const RedNumber& n) const;
-    const int operator <=(const RedNumber& n) const;
-    const int operator  >(const RedNumber& n) const;
-    const int operator  <(const RedNumber& n) const;
 
     // Arithemtic operators
     RedNumber operator  +(const RedNumber& n) const;
@@ -108,16 +100,26 @@ private:
     double          dblFloatVal;
 };
 
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+bool operator ==(const RedNumber& lhs, const RedNumber& rhs);
+bool operator !=(const RedNumber& lhs, const RedNumber& rhs);
+bool operator >=(const RedNumber& lhs, const RedNumber& rhs);
+bool operator <=(const RedNumber& lhs, const RedNumber& rhs);
+bool operator  >(const RedNumber& lhs, const RedNumber& rhs);
+bool operator  <(const RedNumber& lhs, const RedNumber& rhs);
+
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 typedef RedSmartPtr<RedNumber> RedNumberSmartPtr;
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-static const RedNumber kNumberPi       = RedNumber(Units::pi);
-static const RedNumber kNumberOne      = RedNumber(1);
-static const RedNumber kNumberZero     = RedNumber(0);
-static const RedNumber kNumberMinusOne = RedNumber(-1);
+static const RedNumber kNumberPi                  = RedNumber(Units::pi);
+static const RedNumber kNumberOne                 = RedNumber(1);
+static const RedNumber kNumberFloatCompTollerance = RedNumber(kFloatCompTollerance);
+static const RedNumber kNumberZero                = RedNumber(0);
+static const RedNumber kNumberMinusOne            = RedNumber(-1);
 
 } // Core
 } // Red

@@ -24,14 +24,8 @@
 #include "RedTmlNamespace.h"
 
 #include "RedVSILib.h"
-#include "RedVSILibClass.h"
-#include "RedVSILibRoutine.h"
-#include "RedVSITokenElementMap.h"
 #include "RedVSILibTokenMap.h"
-#include "RedVSIErrorCodes.h"
-
-#include "RedVSITokenBuffer.h"
-#include "RedVSITokenFactory.h"
+#include "RedVSILibRoutine.h"
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 

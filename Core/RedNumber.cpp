@@ -74,7 +74,7 @@ const int RedNumber::IsEqualTo(const RedNumber& CheckVal) const
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-const int RedNumber::IsEqualToWithinTollerance(RedNumber CheckVal, RedNumber tollerance) const
+const int RedNumber::IsEqualToWithinTollerance(const RedNumber& CheckVal, const RedNumber& tollerance) const
 {
     // If Integers, just compare, no tollerance
     if ( IsInteger() && CheckVal.IsInteger() )
@@ -324,56 +324,6 @@ void RedNumber::SetDecimalString(const RedString& cNewDecimalVal)
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-#pragma mark - Comparison Operators
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-const int RedNumber::operator >=(const RedNumber& n) const
-{
-    double v1, v2;
-
-    (  eNumType == eInt) ? v1 =   iIntVal : v1 =   dblFloatVal;
-    (n.eNumType == eInt) ? v2 = n.iIntVal : v2 = n.dblFloatVal;
-
-    return v1 >= v2;
-}
-
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-const int RedNumber::operator <=(const RedNumber& n) const
-{
-    double v1, v2;
-
-    (  eNumType == eInt) ? v1 =   iIntVal : v1 =   dblFloatVal;
-    (n.eNumType == eInt) ? v2 = n.iIntVal : v2 = n.dblFloatVal;
-
-    return v1 <= v2;
-}
-
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-const int RedNumber::operator >(const RedNumber& n) const
-{
-    double v1, v2;
-
-    (  eNumType == eInt) ? v1 =   iIntVal : v1 =   dblFloatVal;
-    (n.eNumType == eInt) ? v2 = n.iIntVal : v2 = n.dblFloatVal;
-
-    return v1 > v2;
-}
-
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-const int RedNumber::operator <(const RedNumber& n) const
-{
-    double v1, v2;
-
-    (  eNumType == eInt) ? v1 =   iIntVal : v1 =   dblFloatVal;
-    (n.eNumType == eInt) ? v2 = n.iIntVal : v2 = n.dblFloatVal;
-
-    return v1 < v2;
-}
-
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 #pragma mark - Arithmetic Operators
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -555,6 +505,68 @@ RedNumber RedNumber::operator ++(int) // Postfix
         dblFloatVal++;
 
     return *this;
+}
+
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+#pragma mark - Comparison Operators
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+bool operator==(const RedNumber& lhs, const RedNumber& rhs)
+{
+    if (lhs.IsEqualTo(rhs))
+        return true;
+
+    return false;
+}
+
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+bool operator!=(const RedNumber& lhs, const RedNumber& rhs)
+{
+    if (!lhs.IsEqualTo(rhs))
+        return true;
+
+    return false;
+}
+
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+bool operator >=(const RedNumber& lhs, const RedNumber& rhs)
+{
+    if (lhs.IsInteger() && rhs.IsInteger())
+        return (lhs.IntegerValue() >= rhs.IntegerValue());
+
+    return (lhs.DoubleValue() >= rhs.DoubleValue());
+}
+
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+bool operator <=(const RedNumber& lhs, const RedNumber& rhs)
+{
+    if (lhs.IsInteger() && rhs.IsInteger())
+        return (lhs.IntegerValue() <= rhs.IntegerValue());
+
+    return (lhs.DoubleValue() <= rhs.DoubleValue());
+}
+
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+bool operator  >(const RedNumber& lhs, const RedNumber& rhs)
+{
+    if (lhs.IsInteger() && rhs.IsInteger())
+        return (lhs.IntegerValue() > rhs.IntegerValue());
+
+    return (lhs.DoubleValue() > rhs.DoubleValue());
+}
+
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+bool operator  <(const RedNumber& lhs, const RedNumber& rhs)
+{
+    if (lhs.IsInteger() && rhs.IsInteger())
+        return (lhs.IntegerValue() < rhs.IntegerValue());
+
+    return (lhs.DoubleValue() < rhs.DoubleValue());
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

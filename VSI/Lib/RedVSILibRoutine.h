@@ -23,13 +23,13 @@
 #include "RedString.h"
 #include "RedVSICmdInterface.h"
 #include "RedVSILibRoutineInterface.h"
-#include "RedVSILibRoutineInterface.h"
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 namespace Red {
 namespace VSI {
 
+/// A VSI-Routine consists of a Routine-name, and a list of parameters which together make up its signature.
 class RedVSILibRoutine : public RedVSILibRoutineInterface
 {
 public:

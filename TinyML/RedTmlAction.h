@@ -30,13 +30,6 @@ using namespace Red::Core;
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-typedef enum TETmlCreateControl {
-    eActionWithoutDuplicateCheck,
-    eExistingOrCreate,
-    eExistingOrAbort,
-    eAbortIfDuplicate
-} TETmlCreateControl;
-
 typedef enum TESerialiseType { eDenseContent, eLinedIndentedContent } TESerialiseType;
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

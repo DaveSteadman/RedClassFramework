@@ -22,6 +22,28 @@
 namespace Red {
 namespace Core {
 
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+// External operators
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+bool operator==(const RedChar& lhs, const RedChar& rhs)
+{
+    if(lhs.Char() == rhs.Char())
+        return true;
+    return false;
+}
+
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+bool operator!=(const RedChar& lhs, const RedChar& rhs)
+{
+    if(lhs.Char() != rhs.Char())
+        return true;
+    return false;
+}
+
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
 }
 }
 

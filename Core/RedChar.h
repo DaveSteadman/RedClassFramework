@@ -33,9 +33,9 @@ class RedChar : public RedType
 public:
 
     // constructor
-    RedChar(void)        { Init(); };
+    RedChar(void)                 { Init();     };
     RedChar(unsigned char NewCh)  { Set(NewCh); };
-    ~RedChar(void) { };
+    ~RedChar(void)                { };
 
     // Inherited: RedType
     void              Init(void)        { Set('\0'); };
@@ -76,13 +76,15 @@ public:
     void operator =(const unsigned char newVal) { Set(newVal); };
     void operator =(const RedChar& newVal)      { Set(newVal); };
 
-    const int operator==(const RedChar& rhs) const { if (ch==rhs.ch) return 1; return 0; };
-    const int operator!=(const RedChar& rhs) const { if (ch!=rhs.ch) return 1; return 0; };
-
 private:
 
     unsigned char ch;
 };
+
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+bool operator==(const RedChar& lhs, const RedChar& rhs);
+bool operator!=(const RedChar& lhs, const RedChar& rhs);
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 

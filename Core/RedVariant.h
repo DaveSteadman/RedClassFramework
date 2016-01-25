@@ -22,9 +22,11 @@
 
 #include "RedType.h"
 #include "RedDataType.h"
+#include "RedBoolean.h"
 #include "RedChar.h"
 #include "RedString.h"
 #include "RedNumber.h"
+#include "RedCoreConsts.h"
 
 namespace Red {
 namespace Core {
@@ -38,13 +40,12 @@ public:
     RedVariant(void):pData(0) { };
     RedVariant(const RedType& cDataItem):pData(0)    { cDataItem.Clone(); };
     RedVariant(const RedVariant& cDataItem):pData(0) { SetValue(cDataItem); };
-
+    RedVariant(const RedBoolean& cNewBool):pData(0)  { SetValue(cNewBool); };
     RedVariant(const RedNumber& cNewNum):pData(0)    { SetValue(cNewNum); };
     RedVariant(const RedChar& cNewCh):pData(0)       { SetValue(RedChar(cNewCh)); };
     RedVariant(const RedString& cNewStr):pData(0)    { SetValue(RedString(cNewStr)); };
     RedVariant(const int val):pData(0)               { SetValue(RedNumber(val)); };
     RedVariant(const double val):pData(0)            { SetValue(RedNumber(val)); };
-
 
     ~RedVariant(void);
 
@@ -56,12 +57,13 @@ public:
     const int           IsValid(void) const { return (pData!=REDNULL); };
 
     void                SetValue(const RedVariant& cDataItem);
-    void                SetValue(const RedType* pNewData);
-    void                SetValue(const RedNumber& cNewNum);
-    void                SetValue(const RedChar& cNewCh);
-    void                SetValue(const RedString& cNewStr);
-    void                SetValue(const int val) { SetValue(RedNumber(val)); };
-    void                SetValue(const double val) { SetValue(RedNumber(val)); };
+    void                SetValue(const RedType*    pNewData);
+    void                SetValue(const RedBoolean& cNewBool);
+    void                SetValue(const RedNumber&  cNewNum);
+    void                SetValue(const RedChar&    cNewCh);
+    void                SetValue(const RedString&  cNewStr);
+    void                SetValue(const int         val) { SetValue(RedNumber(val)); };
+    void                SetValue(const double      val) { SetValue(RedNumber(val)); };
 
     RedType*            Value(void);
 
@@ -72,14 +74,13 @@ public:
 
     void operator =(const RedType* pData);
     void operator =(const RedVariant& n);
-    void operator =(const RedChar cNewData)    { SetValue(&cNewData); };
-    void operator =(const RedString cNewData)  { SetValue(&cNewData); };
-    void operator =(const RedNumber cNewData)  { SetValue(&cNewData); };
-
-    void operator =(const int val)             { SetValue(RedNumber(val));   };
+    void operator =(const RedChar& cNewData)   { SetValue(&cNewData);      };
+    void operator =(const RedString& cNewData) { SetValue(&cNewData);      };
+    void operator =(const RedNumber& cNewData) { SetValue(&cNewData);      };
+    void operator =(const int    val)          { SetValue(RedNumber(val)); };
     void operator =(const double val)          { SetValue(RedNumber(val)); };
-    void operator =(const char val)            { SetValue(RedChar(val)); };
-    void operator =(const char* val)           { SetValue(RedString(val)); };
+    void operator =(const char   val)          { SetValue(RedChar(val));   };
+    void operator =(const char*  val)          { SetValue(RedString(val)); };
 
     RedVariant operator+(const RedVariant& cVarData);
     RedVariant operator-(const RedVariant& cVarData);

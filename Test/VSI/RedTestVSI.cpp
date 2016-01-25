@@ -464,7 +464,7 @@ RedResult RedTestVSI::TestSaveLibrary_001(void)
 {
     {
         RedVSICmdNew pCmd1(kLangElementTypeNumber, kLangElementLocationStack, RedString("x"), REDNULL);
-        RedVSICmdExpr();
+        RedVSICmdLet();
     }
     return kResultSuccess;
 }

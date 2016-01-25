@@ -32,47 +32,47 @@ static const int kRedNumberRangeIntOnly     = 2;
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-    class RedNumberRange : public RedType
-    {
-    public:
+class RedNumberRange : public RedType
+{
+public:
 
-        // constructors
-        RedNumberRange() { Init(); };
-        RedNumberRange(const double l, const double h) { cLow=l; cHigh=h; SetBehaviour(0); };
-        RedNumberRange(const RedNumber& l, const RedNumber& h) { SetRange(l, h); SetBehaviour(0); };
-        RedNumberRange(const RedNumber& l, const RedNumber& h, const int b) { SetRange(l, h); SetBehaviour(b); };
+    // constructors
+    RedNumberRange() { Init(); };
+    RedNumberRange(const double l, const double h) { cLow=l; cHigh=h; SetBehaviour(0); };
+    RedNumberRange(const RedNumber& l, const RedNumber& h) { SetRange(l, h); SetBehaviour(0); };
+    RedNumberRange(const RedNumber& l, const RedNumber& h, const int b) { SetRange(l, h); SetBehaviour(b); };
 
-        ~RedNumberRange() { };
+    ~RedNumberRange() { };
 
-        // Inherited: RedType
-        void                Init(void)        { SetRange(0, 1); SetBehaviour(0); };
-        const RedDataType   Type(void) const  { return kDataTypeBool; };
-        RedType*            Clone(void) const { RedNumberRange* r = new RedNumberRange(cLow, cHigh); return (RedType*)r; };
+    // Inherited: RedType
+    void                Init(void)        { SetRange(0, 1); SetBehaviour(0); };
+    const RedDataType   Type(void) const  { return kDataTypeBool; };
+    RedType*            Clone(void) const { RedNumberRange* r = new RedNumberRange(cLow, cHigh); return (RedType*)r; };
 
-        void          SetBehaviour(const int b);
+    void          SetBehaviour(const int b);
 
-        // simple set/get operations
-        void          SetRange(const RedNumber& l, const RedNumber& h) { cLow=l; cHigh=h; };
-        const int     IsInRange(const RedNumber& d) const;
+    // simple set/get operations
+    void          SetRange(const RedNumber& l, const RedNumber& h) { cLow=l; cHigh=h; };
+    const int     IsInRange(const RedNumber& d) const;
 
-        // Apply this objects range limits to a number
-        void WrapNumber(RedNumber& n) const;
-        void CropNumber(RedNumber& n) const;
+    // Apply this objects range limits to a number
+    void WrapNumber(RedNumber& n) const;
+    void CropNumber(RedNumber& n) const;
 
-        const RedNumber RangeMin(void) const;
-        const RedNumber RangeMax(void) const;
+    const RedNumber RangeMin(void) const;
+    const RedNumber RangeMax(void) const;
 
-    private:
+private:
 
-        // Does the number wrap on the upper limit. ie, you can get 59.999 seconds, but 60.0 is considered 0.
-        int iIsWrapOnUpperLimit;
+    // Does the number wrap on the upper limit. ie, you can get 59.999 seconds, but 60.0 is considered 0.
+    int iIsWrapOnUpperLimit;
 
-        // Is the range made strictly of integer values
-        int iIsIntegerOnly;
+    // Is the range made strictly of integer values
+    int iIsIntegerOnly;
 
-        RedNumber cLow;
-        RedNumber cHigh;
-    };
+    RedNumber cLow;
+    RedNumber cHigh;
+};
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 

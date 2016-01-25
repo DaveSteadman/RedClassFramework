@@ -646,7 +646,7 @@ char RedString::operator [](int Pos) const
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-// Operators: Comparison 
+#pragma mark - Comparison Operators
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 const int RedString::operator <(const RedString Str) const

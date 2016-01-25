@@ -17,10 +17,11 @@
 // -------------------------------------------------------------------------------------------------
 
 #include "RedDataType.h"
-#include "RedString.h"
 
 namespace Red {
 namespace Core {
+
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 bool operator==(const RedDataType& lhs, const RedDataType& rhs)
 {
@@ -29,12 +30,16 @@ bool operator==(const RedDataType& lhs, const RedDataType& rhs)
     return false;
 }
 
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
 bool operator!=(const RedDataType& lhs, const RedDataType& rhs)
 {
     if (lhs.iState() != rhs.iState())
         return true;
     return false;
 }
+
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 } // Core
 } // Red

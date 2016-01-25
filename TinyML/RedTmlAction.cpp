@@ -167,6 +167,36 @@ const int RedTmlAction::NumberOfNamedChildLeaves(RedTmlNode& node, const RedStri
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
+const unsigned RedTmlAction::TreeElementCount(RedTmlNode& node)
+{
+    // 1 = starting node.
+    unsigned currNodeCount = 1;
+
+    TinyML::RedTmlNode::TmlNodeListItType yIt = node.NodeIterator();
+    yIt.First();
+    while (!yIt.IsDone())
+    {
+        RedTmlElement* pCurrElem = yIt.CurrentItem();
+
+        if (pCurrElem->IsLeaf())
+        {
+            currNodeCount++;
+        }
+        else if (pCurrElem->IsNode())
+        {
+            RedTmlNode* pNextNode = (RedTmlNode*)pCurrElem;
+            currNodeCount += RedTmlAction::TreeElementCount(*pNextNode);
+        }
+        yIt.Next();
+    }
+
+    return currNodeCount;
+}
+
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+#pragma mark - Top Level IO
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
 const RedResult RedTmlAction::CreateTmlFromFile(const RedString& filepath, RedTmlElement** newTmlElement)
 {
     // Initialisation
@@ -215,36 +245,6 @@ const RedResult RedTmlAction::CreateFileFromTml(const RedTmlElement* tmlElement,
     return kResultSuccess;
 }
 
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-const unsigned RedTmlAction::TreeElementCount(RedTmlNode& node)
-{
-    // 1 = starting node.
-    unsigned currNodeCount = 1;
-
-    TinyML::RedTmlNode::TmlNodeListItType yIt = node.NodeIterator();
-    yIt.First();
-    while (!yIt.IsDone())
-    {
-        RedTmlElement* pCurrElem = yIt.CurrentItem();
-
-        if (pCurrElem->IsLeaf())
-        {
-            currNodeCount++;
-        }
-        else if (pCurrElem->IsNode())
-        {
-            RedTmlNode* pNextNode = (RedTmlNode*)pCurrElem;
-            currNodeCount += RedTmlAction::TreeElementCount(*pNextNode);
-        }
-        yIt.Next();
-    }
-
-    return currNodeCount;
-}
-
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-#pragma mark - public
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 RedTmlElement* RedTmlAction::ParseTinyML(RedBufferInput& inputBuf)
@@ -313,7 +313,7 @@ void RedTmlAction::SerialiseTinyML(RedBufferOutput& outputBuf, const RedTmlEleme
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-#pragma mark - private
+#pragma mark - Private
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 int RedTmlAction::ReadName(RedBufferInput& inputBuf, RedString& outputName)

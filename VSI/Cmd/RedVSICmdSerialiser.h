@@ -24,7 +24,7 @@
 
 #include "RedVSICmdInterface.h"
 #include "RedVSITokenBuffer.h"
-#include "RedVSICmdExpr.h"
+#include "RedVSICmdLet.h"
 #include "RedVSICmdNew.h"
 #include "RedVSICmdReturn.h"
 #include "RedVSICmdIf.h"
@@ -44,7 +44,7 @@ public:
     static void TokenBufferToOutputBuffer(RedVSITokenBuffer& cInTokenBuffer, RedVSITokenElementMap& tokenMap, RedBufferOutput& outBuffer);
 
 private:
-	static void SerialiseExprCmd    (RedVSITokenBuffer& cTokenBuffer, RedVSICmdExpr* pCmd);
+	static void SerialiseExprCmd    (RedVSITokenBuffer& cTokenBuffer, RedVSICmdLet* pCmd);
 	static void SerialiseNewCmd     (RedVSITokenBuffer& cTokenBuffer, RedVSICmdNew* pCmd);
 	static void SerialiseReturnCmd  (RedVSITokenBuffer& cTokenBuffer, RedVSICmdReturn* pCmd);
 	static void SerialiseIfCmd      (RedVSITokenBuffer& cTokenBuffer, RedVSICmdIf* pCmd);

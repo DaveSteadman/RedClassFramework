@@ -40,7 +40,7 @@ class RedVSILibRoutineInterface
 {
 public:
 
-    RedVSILibRoutineInterface(void) { Init(); };
+    RedVSILibRoutineInterface(void)  { Init(); };
     ~RedVSILibRoutineInterface(void) {  };
 
     void Init(void);

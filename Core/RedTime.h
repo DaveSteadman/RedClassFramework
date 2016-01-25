@@ -70,5 +70,3 @@ private:
 
 } // Time
 } // Red
-
-
