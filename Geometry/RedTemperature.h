@@ -22,7 +22,7 @@
 #include "ConversionConstants.h"
 
 namespace Red {
-namespace Units {
+namespace Geometry {
 
     using namespace Red::Core;
 
@@ -41,5 +41,5 @@ namespace Units {
 
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-} // Units
+} // Geometry
 } // Red
