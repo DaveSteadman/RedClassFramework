@@ -19,7 +19,7 @@
 #pragma once
 
 namespace Red {
-namespace Units {
+namespace Geometry {
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 // Core
@@ -195,7 +195,7 @@ static const double tonsPerKilogram    =  0.00110231131;
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-} // Units
+} // Geometry
 } // Red
 
 

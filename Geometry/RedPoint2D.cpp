@@ -17,6 +17,7 @@
 // -------------------------------------------------------------------------------------------------
 
 #include "RedPoint2D.h"
+#include "RedVector2D.h"
 #include "math.h"
 
 namespace Red {

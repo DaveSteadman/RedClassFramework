@@ -67,6 +67,12 @@ int RedTestGeometry::RunUnitTest(void)
         ThreeDimensionsPassed = 1;
     }
 
+    if (!RedTestGeometry::TestAngle())       return 0;
+    if (!RedTestGeometry::TestArea())        return 0;
+    if (!RedTestGeometry::TestDistance())    return 0;
+    if (!RedTestGeometry::TestTemperature()) return 0;
+    if (!RedTestGeometry::TestVolume())      return 0;
+
     return (TwoDimensionsPassed && ThreeDimensionsPassed);
 }
 
@@ -211,6 +217,58 @@ int RedTestGeometry::TestVector3D(void)
         if (!y.Z().IsEqualToWithinTollerance(3.3, 0.0001)) return 0;
     }
     
+    return 1;
+}
+
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+#pragma mark - Units
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+int RedTestGeometry::TestAngle(void)
+{
+    {
+        RedAngle x;
+        x.SetDegrees(360);
+        RedNumber y = x.Radians();
+        if (!y.IsEqualToWithinTollerance(two_pi, 0.00001))
+            return 0;
+    }
+    return 1;
+}
+
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+int RedTestGeometry::TestArea(void)
+{
+    return 1;
+}
+
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+int RedTestGeometry::TestDistance(void)
+{
+    {
+        RedDistance x;
+        x.SetInches(1.0);
+        RedNumber y = x.Centimetres();
+        if (!y.IsEqualToWithinTollerance(2.54, 0.001))
+            return 0;
+    }
+
+    return 1;
+}
+
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+int RedTestGeometry::TestTemperature(void)
+{
+    return 1;
+}
+
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+int RedTestGeometry::TestVolume(void)
+{
     return 1;
 }
 

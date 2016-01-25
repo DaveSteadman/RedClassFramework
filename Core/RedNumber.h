@@ -115,7 +115,6 @@ typedef RedSmartPtr<RedNumber> RedNumberSmartPtr;
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-static const RedNumber kNumberPi                  = RedNumber(Units::pi);
 static const RedNumber kNumberOne                 = RedNumber(1);
 static const RedNumber kNumberFloatCompTollerance = RedNumber(kFloatCompTollerance);
 static const RedNumber kNumberZero                = RedNumber(0);

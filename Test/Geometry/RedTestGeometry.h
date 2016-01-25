@@ -43,6 +43,13 @@ namespace Test {
         static int TestLatLong(void);
         static int TestPoint3D(void);
         static int TestVector3D(void);
+
+        // Units
+        static int TestAngle(void);
+        static int TestArea(void);
+        static int TestDistance(void);
+        static int TestTemperature(void);
+        static int TestVolume(void);
     };
 
 }
