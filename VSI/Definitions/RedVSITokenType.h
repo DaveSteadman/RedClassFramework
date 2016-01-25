@@ -29,16 +29,16 @@ class RedVSITokenType
 {
 public:
 	RedVSITokenType(void)                      { Init(); };
-
+	
 	void Init(void)                            { eState = eDefaultInvalid; };
-
-    void SetNumber(void)                       { eState = eNumber; };
-    void SetName(void)                         { eState = eName; };
-    void SetStringLiteral(void)                { eState = eStringLiteral; };
-    void SetNonPrintable(void)                 { eState = eNonPrintable; };
-    void SetWhitespace(void)                   { eState = eWhitespace; };
-    void SetPredefined(void)                   { eState = ePredefined; };
-
+	
+	void SetNumber(void)                       { eState = eNumber; };
+	void SetName(void)                         { eState = eName; };
+	void SetStringLiteral(void)                { eState = eStringLiteral; };
+	void SetNonPrintable(void)                 { eState = eNonPrintable; };
+	void SetWhitespace(void)                   { eState = eWhitespace; };
+	void SetPredefined(void)                   { eState = ePredefined; };
+	
 	int IsValid(void) const                    { return (eState != eDefaultInvalid); };
 	int IsNumber(void) const                   { return (eState == eNumber); };
 	int IsName(void) const                     { return (eState == eName); };
@@ -46,25 +46,25 @@ public:
 	int IsNonPrintable(void) const             { return (eState == eNonPrintable); };
 	int IsWhitespace(void) const               { return (eState == eWhitespace); };
 	int IsPredefined(void) const               { return (eState == ePredefined); };
-
-    static RedVSITokenType Number(void)        { return RedVSITokenType(eNumber); };
-    static RedVSITokenType Name(void)          { return RedVSITokenType(eName); };
-    static RedVSITokenType StringLiteral(void) { return RedVSITokenType(eStringLiteral); };
-    static RedVSITokenType NonPrintable(void)  { return RedVSITokenType(eNonPrintable); };
-    static RedVSITokenType Whitespace(void)    { return RedVSITokenType(eWhitespace); };
-    static RedVSITokenType Predefined(void)    { return RedVSITokenType(ePredefined); };
+	
+	static RedVSITokenType Number(void)        { return RedVSITokenType(eNumber); };
+	static RedVSITokenType Name(void)          { return RedVSITokenType(eName); };
+	static RedVSITokenType StringLiteral(void) { return RedVSITokenType(eStringLiteral); };
+	static RedVSITokenType NonPrintable(void)  { return RedVSITokenType(eNonPrintable); };
+	static RedVSITokenType Whitespace(void)    { return RedVSITokenType(eWhitespace); };
+	static RedVSITokenType Predefined(void)    { return RedVSITokenType(ePredefined); };
 
 protected:
 
     enum TETokenType
     {
-        eDefaultInvalid, 
-        eNumber, 
-        eName,
-        eStringLiteral,
-        eNonPrintable,
-        eWhitespace,
-        ePredefined
+		eDefaultInvalid, 
+		eNumber, 
+		eName,
+		eStringLiteral,
+		eNonPrintable,
+		eWhitespace,
+		ePredefined
     };
 
     RedVSITokenType(TETokenType eNewState) { eState = eNewState; };
