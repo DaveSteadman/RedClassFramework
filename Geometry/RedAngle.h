@@ -22,7 +22,7 @@
 #include "ConversionConstants.h"
 
 namespace Red {
-namespace Units {
+namespace Geometry {
 
     using namespace Red::Core;
 
@@ -38,5 +38,5 @@ namespace Units {
         RedNumber Degrees(void) const                 { RedNumber retval(*this); retval *= degreesPerRadian; return retval; };
     };
 
-} // Units
+} // Geometry
 } // Red
