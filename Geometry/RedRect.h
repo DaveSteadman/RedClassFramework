@@ -18,8 +18,7 @@
 
 #pragma once
 
-#include "RedCoreNamespace.h"
-
+#include "RedNumber.h"
 #include "RedPoint2D.h"
 #include "RedRectSize.h"
 
