@@ -50,12 +50,12 @@ public:
     // Queries
     //EventLogListType EventsByType();
 
-    const int NumEvents(void) const { return EventList.NumItems(); };
-    const int IsError(void)   const { return containsError; };
+    const unsigned NumEvents(void) const { return EventList.NumItems(); };
+    const bool     IsError(void)   const { return containsError; };
 
 private:
     EventLogListType EventList;
-    int              containsError;
+    bool            containsError;
 };
     
 } // Logging
