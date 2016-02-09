@@ -34,7 +34,9 @@ namespace Core {
 
 class RedString;
 
-/// Boolean value class. Child of RedType class.
+/// Boolean value class. As a child of RedType class, this allows a boolean value to exist in 
+/// collections and VSI expressions alongside other RedType objects.
+/// The primary purpose of the class isn't to replace a bool type in normal operation.
 class RedBoolean : public RedType
 {
 public:
@@ -58,12 +60,11 @@ public:
 
     void               Set(const int iVal);
     void               Invert(void);
-    const RedBoolean   Not(const RedBoolean val);
 
-    const int          IsYes(void)   const { if (iState == RED_YES)   return 1; return 0; };
-    const int          IsNo(void)    const { if (iState == RED_NO)    return 1; return 0; };
-    const int          IsTrue(void)  const { if (iState == RED_TRUE)  return 1; return 0; };
-    const int          IsFalse(void) const { if (iState == RED_FALSE) return 1; return 0; };
+    const bool         IsYes(void)   const { return (iState == RED_YES);   };
+    const bool         IsNo(void)    const { return (iState == RED_NO);    };
+    const bool         IsTrue(void)  const { return (iState == RED_TRUE);  };
+    const bool         IsFalse(void) const { return (iState == RED_FALSE); };
 
     static RedBoolean  True(void)  { RedBoolean cRetVal; cRetVal.SetTrue();  return cRetVal; };
     static RedBoolean  False(void) { RedBoolean cRetVal; cRetVal.SetFalse(); return cRetVal; };
@@ -72,6 +73,7 @@ public:
 
     void      operator =(const RedBoolean cVal) { iState = cVal.iState; };
     
+    /// Obtain the integer representation of the object for serialisation
     const int intState(void) const { return iState; };
 
 private:
