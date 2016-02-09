@@ -33,18 +33,6 @@ void RedBoolean::Set(const int iVal)
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-const RedBoolean RedBoolean::Not(const RedBoolean val)
-{
-    if      (val.iState == RED_YES)   return kBoolNO;
-    else if (val.iState == RED_NO)    return kBoolYES;
-    else if (val.iState == RED_TRUE)  return kBoolFALSE;
-    else if (val.iState == RED_FALSE) return kBoolTRUE;
-
-    return kBoolFALSE;
-}
-
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
 void RedBoolean::Invert(void)
 {
     if      (iState == RED_YES)   iState = RED_NO;
