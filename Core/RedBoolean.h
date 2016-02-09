@@ -71,7 +71,8 @@ public:
     static RedBoolean  Yes(void)   { RedBoolean cRetVal; cRetVal.SetYes();   return cRetVal; };
     static RedBoolean  No(void)    { RedBoolean cRetVal; cRetVal.SetNo();    return cRetVal; };
 
-    void      operator =(const RedBoolean cVal) { iState = cVal.iState; };
+    void      operator =(const RedBoolean& cVal) { iState = cVal.iState; };
+    void      operator =(const bool        val ) { if (val) iState=RED_TRUE; else iState=RED_NO; };
     
     /// Obtain the integer representation of the object for serialisation
     const int intState(void) const { return iState; };
