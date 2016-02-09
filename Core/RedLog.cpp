@@ -29,7 +29,7 @@ namespace Core {
 void RedLog::AddEvent(const RedLogEvent& event)
 {
     if (event.EventType() == eErrorEvent)
-        containsError = 1;
+        containsError = true;
 
     RedLogEvent* storedEvent = new RedLogEvent(event);
 
@@ -52,7 +52,7 @@ void RedLog::AddErrorEvent(const RedString& NewText)
     RedLogEvent* storedEvent = new RedLogEvent(eErrorEvent, NewText);
 
     EventList.AddLast(storedEvent);
-    containsError = 1;
+    containsError = true;
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
