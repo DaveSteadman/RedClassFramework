@@ -87,10 +87,10 @@ public:
     // Complex Operations
     RedString     ToUpper(void);
     RedString     ToLower(void);
-    const int     IsCharInString(char ch) const;
-    const int     IsAlphaNumeric(void) const;
-    const int     IsEqualTo(const RedString& Str) const;
-    const int     IsEqualTo(const char* Str) const;
+    const bool    IsCharInString(char ch) const;
+    const bool    IsAlphaNumeric(void) const;
+    const bool    IsEqualTo(const RedString& Str) const;
+    const bool    IsEqualTo(const char* Str) const;
 
     enum StrCompVal  { SC_LESS, SC_EQUAL, SC_GREATER };
     enum StrCompMode { SM_CASE_SENSITIVE, SM_IGNORE_CASE };
