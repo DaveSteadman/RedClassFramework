@@ -48,28 +48,28 @@ public:
     void       Set(const RedChar& cNewVal)    { ch = cNewVal.ch; };
 
     const unsigned char Char(void)             const { return ch; };
-    const int  IsChar(unsigned char NewCh)     const { return ch == NewCh; };
+    const bool IsChar(unsigned char NewCh)     const { return ch == NewCh; };
     const int  DecimalNumber(void) const;
 
     // queries
-    const int  IsAlpha(void)          const { return ( ((ch>='a')&&(ch<='z')) || ((ch>='A')&&(ch<='Z')) ); };
-    const int  IsAlphaNumeric(void)   const { return ( IsAlpha() || IsDecimalNumber() ); };
-    const int  IsBracket(void)        const { return ( (ch=='(') || (ch==')') || (ch=='[') || (ch==']') || (ch=='{') || (ch=='}') ); };
-    const int  IsComma(void)          const { return (ch == ','); };
-    const int  IsDecimalNumber(void)  const { return ( (ch >= '0') && (ch <= '9') ); };
-    const int  IsDecimalPoint(void)   const { return (ch == '.'); };
-    const int  IsEOF(void)            const { return (ch == '\0'); };
-    const int  IsFullstop(void)       const { return (ch == '.'); };
-    const int  IsHexNumber(void)      const { return ( ((ch>='0')&&(ch<='9')) || ((ch>='a')&&(ch<='f')) || ((ch>='A')&&(ch<='F')) ); };
-    const int  IsNewline(void)        const { return (ch == '\n'); };
-    const int  IsEOL(void)            const { return (ch == '\n'); };
-    const int  IsNonPrintable(void)   const { return ( (ch<32) || (ch>128) ); };
-    const int  IsNumeric(void)        const { return ( IsDecimalNumber() || IsFullstop() ); };
-    const int  IsOperator(void)       const { return ( (ch=='=') || (ch=='+') || (ch=='-') || (ch=='*') || (ch=='/') || (ch=='<') || (ch=='>') ); };
-    const int  IsPrintable(void)      const { return ( (ch>=32) && (ch<=128) ); };
-    const int  IsQuote(void)          const { return ( (ch == '"') || (ch == '\'') ); };
-    const int  IsSymbol(void)         const { return ( IsPrintable() && (!IsAlphaNumeric()) && (!IsQuote()) ); };
-    const int  IsWhiteSpace(void)     const { return ( (ch == '\n') || (ch == ' ') || (ch == '\t') ); };
+    const bool IsAlpha(void)          const { return ( ((ch>='a')&&(ch<='z')) || ((ch>='A')&&(ch<='Z')) ); };
+    const bool IsAlphaNumeric(void)   const { return ( IsAlpha() || IsDecimalNumber() ); };
+    const bool IsBracket(void)        const { return ( (ch=='(') || (ch==')') || (ch=='[') || (ch==']') || (ch=='{') || (ch=='}') ); };
+    const bool IsComma(void)          const { return (ch == ','); };
+    const bool IsDecimalNumber(void)  const { return ( (ch >= '0') && (ch <= '9') ); };
+    const bool IsDecimalPoint(void)   const { return (ch == '.'); };
+    const bool IsEOF(void)            const { return (ch == '\0'); };
+    const bool IsFullstop(void)       const { return (ch == '.'); };
+    const bool IsHexNumber(void)      const { return ( ((ch>='0')&&(ch<='9')) || ((ch>='a')&&(ch<='f')) || ((ch>='A')&&(ch<='F')) ); };
+    const bool IsNewline(void)        const { return (ch == '\n'); };
+    const bool IsEOL(void)            const { return (ch == '\n'); };
+    const bool IsNonPrintable(void)   const { return ( (ch<32) || (ch>128) ); };
+    const bool IsNumeric(void)        const { return ( IsDecimalNumber() || IsFullstop() ); };
+    const bool IsOperator(void)       const { return ( (ch=='=') || (ch=='+') || (ch=='-') || (ch=='*') || (ch=='/') || (ch=='<') || (ch=='>') ); };
+    const bool IsPrintable(void)      const { return ( (ch>=32) && (ch<=128) ); };
+    const bool IsQuote(void)          const { return ( (ch == '"') || (ch == '\'') ); };
+    const bool IsSymbol(void)         const { return ( IsPrintable() && (!IsAlphaNumeric()) && (!IsQuote()) ); };
+    const bool IsWhiteSpace(void)     const { return ( (ch == '\n') || (ch == ' ') || (ch == '\t') ); };
 
     // Assignment Operators
     void operator =(const int      newVal)      { Set(newVal); };
@@ -92,6 +92,6 @@ typedef RedSmartPtr<RedChar> RedCharSmartPtr;
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-}
-}
+} // Core
+} // Red
 
