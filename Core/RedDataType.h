@@ -43,14 +43,14 @@ public:
     void SetStr(void)        { eState=eDataTypeStr; };
     void SetVariant(void)    { eState=eDataTypeVariant; };
 
-    const int IsValid(void)      const { return (eState!=eDataTypeInvalid); };
-    const int IsBool(void)       const { return (eState==eDataTypeBool); };
-    const int IsChar(void)       const { return (eState==eDataTypeChar); };
-    const int IsList(void)       const { return (eState==eDataTypeList); };
-    const int IsNum(void)        const { return (eState==eDataTypeNum); };
-    const int IsRecord(void)     const { return (eState==eDataTypeRecord); };
-    const int IsStr(void)        const { return (eState==eDataTypeStr); };
-    const int IsVariant(void)    const { return (eState==eDataTypeVariant); };
+    const bool IsValid(void)      const { return (eState!=eDataTypeInvalid); };
+    const bool IsBool(void)       const { return (eState==eDataTypeBool); };
+    const bool IsChar(void)       const { return (eState==eDataTypeChar); };
+    const bool IsList(void)       const { return (eState==eDataTypeList); };
+    const bool IsNum(void)        const { return (eState==eDataTypeNum); };
+    const bool IsRecord(void)     const { return (eState==eDataTypeRecord); };
+    const bool IsStr(void)        const { return (eState==eDataTypeStr); };
+    const bool IsVariant(void)    const { return (eState==eDataTypeVariant); };
 
     static const RedDataType Invalid(void)    { return RedDataType(eDataTypeInvalid); };
     static const RedDataType Bool(void)       { return RedDataType(eDataTypeBool); };
