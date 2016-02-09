@@ -43,17 +43,17 @@ public:
 
     // Set & Query Leaf elements
     static void            SetChildLeaf   (RedTmlNode& node, const RedString& leafname, const RedString& leafdata);
-    static const int       ChildLeafExists(RedTmlNode& node, const RedString& leafname);
+    static const bool      ChildLeafExists(RedTmlNode& node, const RedString& leafname);
 
     // Leaf Name<->Data lookups
-    static RedResult       ChildLeafDataForName(RedTmlNode& node, const RedString& inleafname, RedString& outleafdata);
-    static RedResult       ChildLeafNameForData(RedTmlNode& node, const RedString& inleafdata, RedString& outleafname);
+    static const bool      ChildLeafDataForName(RedTmlNode& node, const RedString& inleafname, RedString& outleafdata);
+    static const bool      ChildLeafNameForData(RedTmlNode& node, const RedString& inleafdata, RedString& outleafname);
 
     // Search Node For Child entries
     static RedTmlElement*  NodeFirstNamedElement   (RedTmlNode& node, const RedString& SearchName);
     static RedTmlNode*     NodeFirstNamedNode      (RedTmlNode& node, const RedString& SearchName);
     static RedTmlLeaf*     NodeFirstNamedLeaf      (RedTmlNode& node, const RedString& SearchName);
-    static const int       NumberOfNamedChildLeaves(RedTmlNode& node, const RedString& SearchName);
+    static const unsigned  NumberOfNamedChildLeaves(RedTmlNode& node, const RedString& SearchName);
 
     // Tree Query
     static const unsigned  TreeElementCount(RedTmlNode& node);
