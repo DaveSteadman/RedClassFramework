@@ -76,13 +76,13 @@ RedTmlLeaf* RedTmlAction::NodeFirstNamedLeaf(RedTmlNode& node, const RedString& 
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-const int RedTmlAction::ChildLeafExists(RedTmlNode& node, const RedString& leafname)
+const bool RedTmlAction::ChildLeafExists(RedTmlNode& node, const RedString& leafname)
 {
-    RedTmlLeaf* l = RedTmlAction::NodeFirstNamedLeaf(node, leafname);
+    RedTmlLeaf* leafnode = RedTmlAction::NodeFirstNamedLeaf(node, leafname);
 
-    if (l)
-        return 1;
-    return 0;
+    if (leafnode)
+        return true;
+    return false;
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -90,12 +90,12 @@ const int RedTmlAction::ChildLeafExists(RedTmlNode& node, const RedString& leafn
 void RedTmlAction::SetChildLeaf(RedTmlNode& node, const RedString& leafname, const RedString& leafdata)
 {
     // look for the named child leaf
-    RedTmlLeaf* l = RedTmlAction::NodeFirstNamedLeaf(node, leafname);
+    RedTmlLeaf* leafnode = RedTmlAction::NodeFirstNamedLeaf(node, leafname);
 
     // set the leaf if we found it
-    if (l)
+    if (leafnode)
     {
-        l->SetData(leafdata);
+        leafnode->SetData(leafdata);
     }
     // create and assign the data if we didn't
     else
@@ -108,11 +108,11 @@ void RedTmlAction::SetChildLeaf(RedTmlNode& node, const RedString& leafname, con
 
 RedResult RedTmlAction::ChildLeafDataForName(RedTmlNode& node, const RedString& inleafname, RedString& outleafdata)
 {
-    RedTmlLeaf* l = RedTmlAction::NodeFirstNamedLeaf(node, inleafname);
-    if (l == REDNULL)
+    RedTmlLeaf* leafnode = RedTmlAction::NodeFirstNamedLeaf(node, inleafname);
+    if (leafnode == REDNULL)
         return kResultFail;
 
-    outleafdata = l->Data();
+    outleafdata = leafnode->Data();
     return kResultSuccess;
 }
 
@@ -144,10 +144,10 @@ RedResult RedTmlAction::ChildLeafNameForData(RedTmlNode& node, const RedString& 
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-const int RedTmlAction::NumberOfNamedChildLeaves(RedTmlNode& node, const RedString& SearchName)
+const unsigned RedTmlAction::NumberOfNamedChildLeaves(RedTmlNode& node, const RedString& SearchName)
 {
     RedTmlNode::TmlNodeListItType it = node.NodeIterator();
-    int matchcount = 0;
+    unsigned matchcount = 0;
 
     it.First();
     while(!it.IsDone())
