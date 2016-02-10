@@ -51,7 +51,7 @@ public:
      const RedPoint2DUnit PointAtAngle(RedNumber a);
 
 private:
-      RedPoint2D             origin;
+      RedPoint2D           origin;
       RedRectPositions     rectPos;
       RedNumber            startAngle;
       RedNumber            endAngle;

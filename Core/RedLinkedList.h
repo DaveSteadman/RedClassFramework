@@ -33,23 +33,23 @@ public:
     // New Items
     void AddLast(Element Elem);
     void AddFirst(Element Elem);
-    int  InsertAfter(int iElemIndex, Element Elem);
+    int  InsertAfter(unsigned iElemIndex, Element Elem);
 
     // Access counts and index values
-    int IsEmpty(void)    const { return (iNumItems==0); };
-    int NumItems(void)   const { return iNumItems; };
-    int FirstIndex(void) const { if (iNumItems == 0) return 0; return 1; };
-    int LastIndex(void)  const { return iNumItems; };
+    int      IsEmpty(void)    const { return (iNumItems==0); };
+    unsigned NumItems(void)   const { return iNumItems; };
+    unsigned FirstIndex(void) const { if (iNumItems == 0) return 0; return 1; };
+    unsigned LastIndex(void)  const { return iNumItems; };
 
     // Access Items
     int FindFirst(Element& Elem);
     int FindLast(Element& Elem);
-    int Find(int iElemIndex, Element& Elem);
+    int Find(unsigned iElemIndex, Element& Elem);
 
     // Delete Items
     int DelFirst(void);
     int DelLast(void);
-    int Del(int iElemIndex);
+    int Del(unsigned iElemIndex);
     int DelAll(void);
 
     // complex operations
@@ -68,7 +68,7 @@ private:
 
     TListElement* pListHead;
     TListElement* pListTail;
-    int           iNumItems;
+    unsigned      iNumItems;
 };
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -165,7 +165,7 @@ void RedLinkedList<Element>::AddFirst(Element Elem)
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 template <class Element>
-int RedLinkedList<Element>::InsertAfter(int iElemIndex, Element Elem)
+int RedLinkedList<Element>::InsertAfter(unsigned iElemIndex, Element Elem)
 {
     TListElement* pInsertAfterElem = 0;
     TListElement* pNewElem         = 0;
@@ -211,7 +211,7 @@ int RedLinkedList<Element>::InsertAfter(int iElemIndex, Element Elem)
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 template <class Element>
-int RedLinkedList<Element>::Find(int iElemIndex, Element& Elem)
+int RedLinkedList<Element>::Find(unsigned iElemIndex, Element& Elem)
 {
     TListElement* pGetElem = 0;
 
@@ -330,7 +330,7 @@ int RedLinkedList<Element>::DelLast(void)
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 template <class Element>
-int RedLinkedList<Element>::Del(int iElemIndex)
+int RedLinkedList<Element>::Del(unsigned iElemIndex)
 {
     TListElement* pRemoveElem = 0;
     TListElement* pPrevElem   = 0;

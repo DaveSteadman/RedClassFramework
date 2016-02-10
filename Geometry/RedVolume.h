@@ -30,15 +30,15 @@ class RedVolume : public RedNumber
 {
 public:
 
-    // Metric
-    void SetLitres(const RedNumber& newval)  { Set(newval); };
-    RedNumber GetLitres(void) const          { RedNumber retval(*this); return retval; };
+    // Metric - Native units
+    void      SetLitres(const RedNumber& newval)  { Set(newval); };
+    RedNumber Litres(void) const                  { RedNumber retval(*this); return retval; };
 
     // Imperial
-    void SetPints(const RedNumber& newval)   { Set(newval * pintsPerLitre); };
-    void SetGallons(const RedNumber& newval) { Set(newval * gallonsPerLitre); };
-    RedNumber Pints(void) const              { RedNumber retval(*this); retval *= pintsPerLitre;   return retval; };
-    RedNumber Gallons(void) const            { RedNumber retval(*this); retval += gallonsPerLitre; return retval; };
+    void      SetPints(const RedNumber& newval)   { Set(newval * pintsPerLitre); };
+    void      SetGallons(const RedNumber& newval) { Set(newval * gallonsPerLitre); };
+    RedNumber Pints(void) const                   { RedNumber retval(*this); retval *= pintsPerLitre;   return retval; };
+    RedNumber Gallons(void) const                 { RedNumber retval(*this); retval += gallonsPerLitre; return retval; };
 };
 
 } // Geometry

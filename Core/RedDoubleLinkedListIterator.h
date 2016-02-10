@@ -38,19 +38,19 @@ public:
 
     RedDoubleLinkedListIterator(ListType* pNewList);
 
-    void    First(void);
-    void    Next(void);
-    int     IsDone(void) const;
-    Element CurrentItem(void);
+    void           First(void);
+    void           Next(void);
+    int            IsDone(void) const;
+    Element        CurrentItem(void);
 
-    void DeleteCurrentItem(void);
-    void SetSearchDirection(TESearchDir eDir) { eSearchDir = eDir; };
-    void SetSearchDirectionBackwards(void) { eSearchDir = eBackwards; First(); };
-    int  GetListIndex(void) { return iCurrPos; };
+    void           DeleteCurrentItem(void);
+    void           SetSearchDirection(TESearchDir eDir) { eSearchDir = eDir; };
+    void           SetSearchDirectionBackwards(void)    { eSearchDir = eBackwards; First(); };
+    const unsigned GetListIndex(void) const             { return iCurrPos; };
 
 private:
 
-    int         iCurrPos;
+    unsigned    iCurrPos;
     TESearchDir eSearchDir;
     ListType*   pList;
 };

@@ -49,9 +49,9 @@ public:
     DataClass NextPopItem(void);
 
     // Overall collection routines
-    int NumItems(void) const { return cList.NumItems(); };
-    int IsEmpty(void) const  { return cList.IsEmpty(); };
-    int DelAll(void)         { return cList.DelAll(); };
+    unsigned NumItems(void) const { return cList.NumItems(); };
+    int      IsEmpty(void) const  { return cList.IsEmpty(); };
+    int      DelAll(void)         { return cList.DelAll(); };
 
     // Complex
     RedStackLIFO* Clone(void); 

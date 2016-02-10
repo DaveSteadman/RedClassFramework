@@ -25,8 +25,6 @@ namespace Core {
 
 using namespace Red::Core;
 
-class RedString;
-
 /// Enumeration based class to encapsulate the possible RedType objects.
 class RedDataType 
 {

@@ -40,12 +40,12 @@ void RedVSIRoutineCallInterface::Init(void)
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-void RedVSIRoutineCallInterface::SetupCall(RedString& cNewObjName, RedString& cNewClassName, RedString& cNewFuncName)
-{
-    cObjName   = cNewObjName; 
-    cClassName = cNewClassName; 
-    cFuncName  = cNewFuncName; 
-}
+//void RedVSIRoutineCallInterface::SetupCall(const RedString& cNewObjName, const RedString& cNewClassName, const RedString& cNewFuncName)
+//{
+//    cObjName   = cNewObjName; 
+//    cClassName = cNewClassName; 
+//    cFuncName  = cNewFuncName; 
+//}
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 /*

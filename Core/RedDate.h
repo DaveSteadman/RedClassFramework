@@ -25,7 +25,7 @@ class RedString;
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-/// Class for dates formatted in YYYYMMDD format, ie 2013/10/10. Component values are all unsigned.
+/// Class for dates formatted in YYYYMMDD format, ie 2013/10/20. Component values are all unsigned.
 class RedDate
 {
 public:
@@ -39,7 +39,7 @@ public:
     void Now(void);
 
     const RedString DateString(void) const;
-    const int       EightDigitInt(void) const;
+    const unsigned  EightDigitInt(void) const;
 
 private:
 

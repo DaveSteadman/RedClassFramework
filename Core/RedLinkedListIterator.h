@@ -36,17 +36,17 @@ public:
 
     RedLinkedListIterator(ListType* pNewList);
 
-    void    First(void);
-    void    Next(void);
-    int     IsDone(void) const;
-    Element CurrentItem(void);
+    void           First(void);
+    void           Next(void);
+    int            IsDone(void) const;
+    Element        CurrentItem(void);
 
-    void    DeleteCurrentItem(void);
-    int     GetListIndex(void) { return iCurrPos; };
+    void           DeleteCurrentItem(void);
+    const unsigned GetListIndex(void) const { return iCurrPos; };
 
 private:
 
-    int         iCurrPos;
+    unsigned    iCurrPos;
     ListType*   pList;
 };
 

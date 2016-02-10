@@ -18,7 +18,6 @@
 
 #pragma once
 
-#include "RedType.h"
 #include "RedString.h"
 #include "RedLogEvent.h"
 #include "RedDoubleLinkedList.h"
@@ -51,7 +50,11 @@ public:
     //EventLogListType EventsByType();
 
     const unsigned NumEvents(void) const { return EventList.NumItems(); };
+<<<<<<< Updated upstream
     const bool     IsError(void)   const { return containsError; };
+=======
+    const int      IsError(void)   const { return containsError; };
+>>>>>>> Stashed changes
 
 private:
     EventLogListType EventList;

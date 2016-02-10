@@ -58,6 +58,8 @@ public:
     void        Del(const RedString& cNewAttribName)                      { pAttribList->Del(cNewAttribName); };
     void        DelAll(void)                                              { pAttribList->DelAll(); };
 
+    const unsigned    NumItems(void) const { return pAttribList->NumItems(); };
+
     // Operators
     void operator =(const RedRecord& cNewVal);
 

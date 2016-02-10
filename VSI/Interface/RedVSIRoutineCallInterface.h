@@ -42,22 +42,21 @@ public:
 
     void            Init(void);
 
-    void            SetupCall(RedString& cNewObjName, RedString& cNewClassName, RedString& cNewFuncName);
-    //void            SetupObjCall(RedString& cNewObjName, RedString& cNewClassName, RedString& cNewFuncName);
-    //void            SetupClassCall(RedString& cNewClassName, RedString& cNewFuncName);
-    
-    //int             IsObjCall(void) { return (!cObjName.IsEmpty()); };
-    void            SetClassName(RedString& cNewClassName)  { cClassName = cNewClassName; };
-    void            SetObjectName(RedString& cNewClassName) { cClassName = cNewClassName; };
+    void            SetupObjectCall(const RedString& cNewObjName,   const RedString& cNewFuncName);
+    void            SetupClassCall( const RedString& cNewClassName, const RedString& cNewFuncName);
+
+    void            SetClassName (const RedString& cNewClassName)  { cClassName = cNewClassName;  };
+    void            SetObjectName(const RedString& cNewObjectName) { cObjName   = cNewObjectName; };
+    void            SetFuncName  (const RedString& cNewFuncName)   { cFuncName  = cNewFuncName;   };
 
     // Query
     //const int          IsInternalCall(void) const { return ( (cObjName.IsEmpty()) && (cClassName.IsEmpty()) ); };
     const RedString    ClassName(void)   const { return cClassName; };
-    const RedString    ObjectName(void)  const { return cObjName; };
-    const RedString    FuncName(void)    const { return cFuncName; };
+    const RedString    ObjectName(void)  const { return cObjName;   };
+    const RedString    FuncName(void)    const { return cFuncName;  };
 
     void               AppendParam(RedVariant& cNewParam) { cParams.AddLast(cNewParam); };
-    RedVSIDataList*    GetParams(void)     { return &cParams; };
+    RedVSIDataList*    GetParams(void)                    { return &cParams; };
 
     void operator =(RedVSIRoutineCallInterface& cSig);
     
@@ -65,7 +64,6 @@ private:
 
     RedString         cClassName;
     RedString         cObjName;
-
     RedString         cFuncName;
     RedVSIDataList    cParams;
 };

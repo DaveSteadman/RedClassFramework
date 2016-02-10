@@ -29,10 +29,10 @@ class RedRefCount
 {
 public:
     RedRefCount(void) : count(0) {};
-    void      IncRef(void)    { count++; };
-    void      DecRef(void)    { count--; };
-    const int Count(void)     { return count; };
-    const int IsRefZero(void) { if (count==0) return 1; return 0; };
+    void           IncRef(void)          { count++; };
+    void           DecRef(void)          { count--; };
+    const unsigned Count(void) const     { return count; };
+    const int      IsRefZero(void) const { if (count==0) return 1; return 0; };
 private:
     int count;
 };

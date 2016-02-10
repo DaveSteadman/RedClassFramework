@@ -67,9 +67,9 @@ const RedString RedDate::DateString(void) const
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-const int RedDate::EightDigitInt(void) const
+const unsigned RedDate::EightDigitInt(void) const
 {
-    int retdate = 0;
+    unsigned retdate = 0;
 
     retdate += year  * 10000;
     retdate += month * 100;

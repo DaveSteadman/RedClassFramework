@@ -24,7 +24,6 @@
 
 #include "RedVSICmdInterface.h"
 
-
 #include "RedVSILangElement.h"
 #include "RedVSIContextInterface.h"
 #include "RedVSIContextRoutine.h"
@@ -46,23 +45,26 @@ class RedVSIContextThread : public RedVSIContextInterface
 {
 public:
 
+    RedVSIContextThread(const RedVSILibInterface* pInitCodeLib, const RedVSIRoutineCallInterface& cStartingSignature);
+
     RedVSIContextThread(void);
     void           SetCodeLib(RedVSILibInterface* pNewCodeLib) { pCodeLib = pNewCodeLib; };
 
     // Data accessors
-    RedType*       CreateDataItem(RedVSILangElement cLocation, RedVSILangElement cType, RedString cName);
-    int            FindDataItem(RedString cName, RedType*& pData);
-    void           SetUserObj(RedRecord* pNewUserObject) { pUserObj=pNewUserObject; };
-    RedRecord*     GetUserObj(void) { return pUserObj; };
-    int            AssignReturnValue(RedVariant& cData);
+    RedType*       CreateDataItem(const RedVSILangElement& cLocation, const RedVSILangElement& cType, const RedString& cName);
+    int            FindDataItem  (const RedString& cName, RedType*& pData);
+
+//    void           SetUserObj(RedRecord* pNewUserObject) { pUserObj=pNewUserObject; };
+//    RedRecord*     GetUserObj(void) { return pUserObj; };
+    void           AssignReturnValue(const RedVariant& cData);
     
-    // Expressions
+    // Expressions In Current Routine
     void           QueueExpr(RedVSIParseTreeInterface* pExpr);
     void           SetExprResult(RedVSIParseTreeInterface* pExpr, RedVariant& result);
-    RedVariant     GetExprResult(RedVSIParseTreeInterface* pExpr);
+    RedVariant     ExprResult(RedVSIParseTreeInterface* pExpr);
 
     // Error reporting and debugging
-    RedLog& GetAnalysis(void) { return cAnalysis; };
+    RedLog&        Analysis(void) { return cAnalysis; };
 
     // Routine creation and control
     void           SetupRoutineCall(RedVSIRoutineCallInterface& cSignature);
@@ -76,19 +78,19 @@ public:
 private:
 
     /// replace with datacentre
-    typedef RedStackLIFO<RedVSIContextRoutine*>          RedVSIRoutineContextStack;
+    typedef RedStackLIFO<RedVSIContextRoutine*> RedVSIRoutineContextStack;
 
     // Routine Context
     RedVSIRoutineContextStack cRoutineStack;
 
     // Static Code
-    RedVSILibInterface*      pCodeLib;
+    const RedVSILibInterface* pCodeLib;
 
     // Data attributes
-    RedRecord*        pUserObj;
+    RedRecord cHeap;
 
     // debugging
-    RedLog       cAnalysis;
+    RedLog cAnalysis;
 };
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

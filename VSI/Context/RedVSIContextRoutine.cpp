@@ -30,9 +30,10 @@ using namespace Red::Core;
 // Constructor / Destructor
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-RedVSIContextRoutine::RedVSIContextRoutine(void)
+RedVSIContextRoutine::RedVSIContextRoutine(RedLog& initAnalysis) : cAnalysis(initAnalysis)
 {
-    pThisObj     = 0;
+    // pThisObj     = 0;
+
     cReturnValue.Init();
     pCurrCmd     = 0;
 }
@@ -53,7 +54,7 @@ RedVSIContextRoutine::~RedVSIContextRoutine(void)
 
 void RedVSIContextRoutine::SetNameDetails(RedString& cNewObjectName, RedString& cNewClassName, RedString& cNewFuncName)
 { 
-    cObjectName = cNewObjectName; 
+    //cObjectName = cNewObjectName;
     cClassName  = cNewClassName; 
     cFuncName   = cNewFuncName; 
 }
@@ -88,34 +89,14 @@ RedType* RedVSIContextRoutine::CreateDataItem(RedVSILangElement cLocation, RedVS
 
         cRoutineData.Add(cName, pNewData);
     }
-    if (cLocation.IsLocationHeap())
+    else if (cLocation.IsLocationAttribute())
     {
+        throw;
     }
-    if (cLocation.IsLocationAttribute())
+    else
     {
+        throw;
     }
-
-//    if ( (cLocation.IsRoutine()) || (cLocation.IsThisObj()) )
-//    {
-//        // create the data item
-//        if      (cType.IsChar())  pNewData = new RedChar();
-//        else if (cType.IsNum())   pNewData = new RedNumber();
-//        else if (cType.IsStr())   pNewData = new RedString();
-//
-//        // if it was created, store it somewhere
-//        if (pNewData)
-//        {
-//            if (cLocation.IsRoutine())  
-//                cRoutineData.Add(cName, pNewData);
-//            else if ( (cLocation.IsThisObj() ) && (pThisObj) ) 
-//                pThisObj->Add(cName, pNewData);
-//            else
-//            {
-//                delete pNewData;
-//                pNewData = 0;
-//            }
-//        }
-//    }
 
     // return the pointer to the new object (or zero)
     return pNewData;
@@ -130,19 +111,18 @@ int RedVSIContextRoutine::FindDataItem(const RedString& cName, RedType*& pData)
         return 1;
 
     // if not present, look in the This object
-    if (pThisObj)
-        return pThisObj->Find(cName, pData);
+    // if (pThisObj)
+    //     return pThisObj->Find(cName, pData);
 
     return 0;
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-int RedVSIContextRoutine::SetReturnValue(RedVariant& cData)
+void RedVSIContextRoutine::SetReturnValue(const RedVariant& cData)
 {
     // copy the variant data item across and return success
     cReturnValue = cData;
-    return 1;
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -170,21 +150,19 @@ int RedVSIContextRoutine::HasCmdToExecute(void)
 
 void RedVSIContextRoutine::QueueExpr(RedVSIParseTreeInterface* pExpr)
 {
-    RedLog cStackAnalysis;
-    
-    RedVSIParseStackTraverser::PopulateStack(cExprStack, pExpr, cStackAnalysis);
+    RedVSIParseStackTraverser::PopulateStack(cExprStack, pExpr, cAnalysis);
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-void RedVSIContextRoutine::SetExprResult(RedVSIParseTreeInterface* pExpr, RedVariant& result)
+void RedVSIContextRoutine::SetExprResult(RedVSIParseTreeInterface* pExpr, const RedVariant& result)
 {
     cWorkingList.Add(pExpr, result);
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-RedVariant RedVSIContextRoutine::GetExprResult(RedVSIParseTreeInterface* pExpr)
+RedVariant RedVSIContextRoutine::ExprResult(RedVSIParseTreeInterface* pExpr)
 {
     RedVariant cResult;
     if (!cWorkingList.Find(pExpr, cResult)) throw;

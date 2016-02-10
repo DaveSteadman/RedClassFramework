@@ -32,10 +32,10 @@ class RedBufferPos
 public:
 
     RedBufferPos(void) { iRow=0; iCol=0; };
-    RedBufferPos(int iNewRow, int iNewCol) { iRow=iNewRow; iCol=iNewCol; };
+    RedBufferPos(const unsigned iNewRow, const unsigned iNewCol) { iRow=iNewRow; iCol=iNewCol; };
 
-    int GetRow(void) { return iRow.IntegerValue(); };
-    int GetCol(void) { return iCol.IntegerValue(); };
+    unsigned GetRow(void) { return iRow.IntegerValue(); };
+    unsigned GetCol(void) { return iCol.IntegerValue(); };
 
     RedString PosText(void) { RedString x="(row:" + iRow.DecimalString() + ", col:" + iCol.DecimalString() + ")"; return x; };
 

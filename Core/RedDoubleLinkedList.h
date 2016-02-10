@@ -36,21 +36,21 @@ public:
     // New Items
     const int AddLast(Element Elem);
     const int AddFirst(Element Elem);
-    const int InsertAfter(int iElemIndex, Element Elem);
+    const int InsertAfter(unsigned iElemIndex, Element Elem);
 
     // Access Items
-    const int FindFirst(Element& Elem) const;
-    const int FindLast(Element& Elem) const;
-    const int FindElementAtIndex(int iElemIndex, Element& Elem) const;
-    const int NumItems(void)   const { return iNumItems; };
-    const int IsEmpty(void)    const { return (iNumItems==0); };
-    const int FirstIndex(void) const;
-    const int LastIndex(void)  const;
+    const int      FindFirst(Element& Elem) const;
+    const int      FindLast(Element& Elem) const;
+    const int      FindElementAtIndex(unsigned iElemIndex, Element& Elem) const;
+    const unsigned NumItems(void)   const { return iNumItems; };
+    const int      IsEmpty(void)    const { return (iNumItems==0); };
+    const unsigned FirstIndex(void) const;
+    const unsigned LastIndex(void)  const;
 
     // Delete Items
     const int DelFirst(void);
     const int DelLast(void);
-    const int Del(int iElemIndex);
+    const int Del(unsigned iElemIndex);
     const int DelAll(void);
 
     // complex operations
@@ -66,11 +66,11 @@ private:
     } TListElement;
 
     const int MakeListElement(TListElement** pNewElem);
-    const int FindListElement(int iElemIndex, TListElement** pFoundElem) const;
+    const int FindListElement(unsigned iElemIndex, TListElement** pFoundElem) const;
 
     TListElement* pListHead;
     TListElement* pListTail;
-    int           iNumItems;
+    unsigned      iNumItems;
 };
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -185,7 +185,7 @@ const int RedDoubleLinkedList<Element>::AddFirst(Element Elem)
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 template <class Element>
-const int RedDoubleLinkedList<Element>::InsertAfter(int iElemIndex, Element Elem)
+const int RedDoubleLinkedList<Element>::InsertAfter(unsigned iElemIndex, Element Elem)
 {
     TListElement* pInsertAfterElem = 0;
     TListElement* pNewElem         = 0;
@@ -223,7 +223,7 @@ const int RedDoubleLinkedList<Element>::InsertAfter(int iElemIndex, Element Elem
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 template <class Element>
-const int RedDoubleLinkedList<Element>::FindElementAtIndex(int iElemIndex, Element& Elem) const
+const int RedDoubleLinkedList<Element>::FindElementAtIndex(unsigned iElemIndex, Element& Elem) const
 {
     TListElement* pGetElem = 0;
 
@@ -262,7 +262,7 @@ const int RedDoubleLinkedList<Element>::FindLast(Element& Elem) const
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 template <class Element>
-const int RedDoubleLinkedList<Element>::FirstIndex(void) const
+const unsigned RedDoubleLinkedList<Element>::FirstIndex(void) const
 {
     if (iNumItems==0) 
         return 0;
@@ -272,7 +272,7 @@ const int RedDoubleLinkedList<Element>::FirstIndex(void) const
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 template <class Element>
-const int RedDoubleLinkedList<Element>::LastIndex(void) const
+const unsigned RedDoubleLinkedList<Element>::LastIndex(void) const
 {
     return iNumItems;
 }
@@ -340,7 +340,7 @@ const int RedDoubleLinkedList<Element>::DelLast(void)
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 template <class Element>
-const int RedDoubleLinkedList<Element>::Del(int iElemIndex)
+const int RedDoubleLinkedList<Element>::Del(unsigned iElemIndex)
 {
     TListElement* pRemoveElem = 0;
     TListElement* pPrevElem   = 0;
@@ -447,7 +447,7 @@ const int RedDoubleLinkedList<Element>::MakeListElement(TListElement** pNewElem)
 
 template <class Element>
 const int RedDoubleLinkedList<Element>::FindListElement(
-    int            iElemIndex, 
+    unsigned       iElemIndex,
     TListElement** pFoundElem) const 
 {
     // Initialise the return value

@@ -42,14 +42,14 @@ public:
     void Init(void);
 
     // Access Items
-    int       Push(ElementType Data);
+    void        Push(ElementType Data);
     ElementType Pop(void);
     ElementType NextPopItem(void);
 
     // Overall collection routines
-    int NumItems(void) const { return cList.NumItems(); };
-    int IsEmpty(void) const { return cList.IsEmpty(); };
-    int DelAll(void);
+    unsigned NumItems(void) const { return cList.NumItems(); };
+    int     IsEmpty(void)   const { return cList.IsEmpty(); };
+    int     DelAll(void);
 
 private:
 
@@ -80,11 +80,9 @@ RedQueueFIFO<ElementType>::~RedQueueFIFO()
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 template <class ElementType>
-int RedQueueFIFO<ElementType>::Push(ElementType Data)
+void RedQueueFIFO<ElementType>::Push(ElementType Data)
 {
     cList.AddLast(Data);
-
-    return 1;
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

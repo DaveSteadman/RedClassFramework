@@ -32,8 +32,6 @@ namespace Core {
 #define RED_TRUE  1
 #define RED_FALSE 0
 
-class RedString;
-
 /// Boolean value class. As a child of RedType class, this allows a boolean value to exist in 
 /// collections and VSI expressions alongside other RedType objects.
 /// The primary purpose of the class isn't to replace a bool type in normal operation.
@@ -48,9 +46,9 @@ public:
     ~RedBoolean()                      { };
     
     // Inherited: RedType
-    void                Init(void)        { SetFalse(); };
-    const RedDataType   Type(void) const  { return kDataTypeBool; };
-    RedType*            Clone(void) const { RedBoolean* newB = new RedBoolean(); newB->iState = iState; return (RedType*)newB; };
+    void               Init(void)        { SetFalse(); };
+    const RedDataType  Type(void) const  { return kDataTypeBool; };
+    RedType*           Clone(void) const { RedBoolean* newB = new RedBoolean(); newB->iState = iState; return (RedType*)newB; };
 
     // simple set/get operations
     void               SetYes(void)        { iState=RED_YES; };
@@ -65,6 +63,7 @@ public:
     const bool         IsNo(void)    const { return (iState == RED_NO);    };
     const bool         IsTrue(void)  const { return (iState == RED_TRUE);  };
     const bool         IsFalse(void) const { return (iState == RED_FALSE); };
+
 
     static RedBoolean  True(void)  { RedBoolean cRetVal; cRetVal.SetTrue();  return cRetVal; };
     static RedBoolean  False(void) { RedBoolean cRetVal; cRetVal.SetFalse(); return cRetVal; };

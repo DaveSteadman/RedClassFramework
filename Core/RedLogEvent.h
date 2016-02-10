@@ -18,7 +18,6 @@
 
 #pragma once
 
-#include "RedType.h"
 #include "RedString.h"
 #include "RedNumber.h"
 
@@ -42,11 +41,11 @@ public:
     RedLogEvent(const RedLogEvent& CurrEvent)                             : LogType(CurrEvent.LogType), text(CurrEvent.text) {};
 
     // Basic Accessors
-    void                Init(void)                       { LogType = eInfoEvent; text.Init(); };
-    const TEventLogType EventType(void) const            { return LogType; };
-    const RedString     Text(void) const                 { return text; };
-    void                Append(const RedString& newText) { text.Append(newText); };
-    void                Append(const RedNumber& newNum)  { text.Append(newNum.DecimalString()); };
+    void                Init(void)                           { LogType = eInfoEvent; text.Init(); };
+    const TEventLogType EventType(void) const                { return LogType; };
+    const RedString     Text(void) const                     { return text; };
+    void                AppendText(const RedString& newText) { text.Append(newText); };
+    void                AppendText(const RedNumber& newNum)  { text.Append(newNum.DecimalString()); };
 
 private:
     TEventLogType LogType;

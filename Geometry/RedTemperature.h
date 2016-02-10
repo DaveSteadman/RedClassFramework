@@ -33,10 +33,10 @@ namespace Geometry {
     public:
 
         // Metric
-        void SetKelvin(const RedNumber& newval)   { Set(newval); };
-        void SetCelsius(const RedNumber& newval)  { Set(newval + absoluteZeroInCelsius); };
-        RedNumber Kelvin(void) const              { RedNumber retval(*this); return retval; };
-        RedNumber Celsius(void) const             { RedNumber retval(*this); retval += absoluteZeroInCelsius; return retval; };
+        void      SetKelvin(const RedNumber& newval)  { Set(newval); };
+        void      SetCelsius(const RedNumber& newval) { Set(newval + absoluteZeroInCelsius); };
+        RedNumber Kelvin(void) const                  { RedNumber retval(*this); return retval; };
+        RedNumber Celsius(void) const                 { RedNumber retval(*this); retval += absoluteZeroInCelsius; return retval; };
     };
 
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

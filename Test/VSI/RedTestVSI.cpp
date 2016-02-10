@@ -67,7 +67,7 @@ RedResult RedTestVSI::TestParseTreeVal(void)
 
         testPTVal.CalcResult(&testContext);
 
-        expRes = testContext.GetExprResult(&testPTVal);
+        expRes = testContext.ExprResult(&testPTVal);
 
         if (expRes != testValue)
             return kResultFail;
@@ -100,7 +100,7 @@ RedResult RedTestVSI::TestParseTreeVar(void)
 
             ptv.CalcResult(&testContext);
 
-            RedVariant exprRes = testContext.GetExprResult(&ptv);
+            RedVariant exprRes = testContext.ExprResult(&ptv);
 
             if (!exprRes.Type().IsNum())
                 return kResultFail;
@@ -133,7 +133,7 @@ RedResult RedTestVSI::TestParseTreeBinaryOp(void)
         testPTOp1.CalcResult(&testContext);
 
         RedNumber expectRes(1234);
-        RedVariant exprRes = testContext.GetExprResult(&testPTOp1);
+        RedVariant exprRes = testContext.ExprResult(&testPTOp1);
 
         if(!exprRes.Type().IsNum())
             return kResultFail;
@@ -154,7 +154,7 @@ RedResult RedTestVSI::TestParseTreeBinaryOp(void)
         testPTOp1.CalcResult(&testContext);
 
         RedString expectRes("Hello Red");
-        RedVariant exprRes = testContext.GetExprResult(&testPTOp1);
+        RedVariant exprRes = testContext.ExprResult(&testPTOp1);
 
         if(!exprRes.Type().IsStr())
             return kResultFail;
@@ -213,7 +213,7 @@ RedResult RedTestVSI::TestParseFactory_001(void)
         testContext.QueueExpr(pt);
         testContext.ExecuteExprQueue();
 
-        RedVariant res = testContext.GetExprResult(pt);
+        RedVariant res = testContext.ExprResult(pt);
 
         if (res.NumberValue() != RedNumber(4321))
             return kResultFail;
@@ -255,7 +255,7 @@ RedResult RedTestVSI::TestParseFactory_002(void)
         testContext.QueueExpr(pt);
         testContext.ExecuteExprQueue();
 
-        RedVariant res = testContext.GetExprResult(pt);
+        RedVariant res = testContext.ExprResult(pt);
 
         if (res.NumberValue() != RedString("hello red"))
             return kResultFail;
@@ -306,7 +306,7 @@ RedResult RedTestVSI::TestParseFactory_003(void)
         testContext.QueueExpr(pt);
         testContext.ExecuteExprQueue();
 
-        RedVariant res = testContext.GetExprResult(pt);
+        RedVariant res = testContext.ExprResult(pt);
 
         if (res.NumberValue() != RedNumber(100))
             return kResultFail;
@@ -473,7 +473,69 @@ RedResult RedTestVSI::TestSaveLibrary_001(void)
 
 RedResult RedTestVSI::TestRunProg_001(void)
 {
+    RedVSILib        vsiCodeLib;
+    RedVSILibFactory vsiCodeLibFactory(&vsiCodeLib);
+
     {
+        RedBufferInput codeBuffer(RedString(" \
+            {{class} \
+              {{name}TestRoutines} \
+              {{routine} \
+                {{name}TwoPi} \
+                {{code} \
+                  new local number varX = 3.14159 \
+                  varX = varX * 2 \
+                  return varX \
+                } \
+              } \
+              {{routine} \
+                {{name}Double} \
+                {{params} \
+                  {{X}number} \
+                } \
+                {{code} \
+                  X = X * 2 \
+                  return X \
+                } \
+              } \
+              {{routine} \
+                {{name}Halve} \
+                {{params} \
+                  {{X}number} \
+                } \
+                {{code} \
+                  X = X / 2 \
+                  return X \
+                } \
+              } \
+              {{routine} \
+                {{name}TestExecute} \
+                {{code} \
+                  new local number varX = 3.14159 \
+                  new heap  number varY \
+                  varY = varX * 2 \
+              } \
+            } "));
+
+        // Create the TML tree from the code buffer
+        RedTmlElement* tmlTreeElement = RedTmlAction::ParseTinyML(codeBuffer);
+        RedTmlNode*    tmlTreeNode    = REDNULL;
+        if (tmlTreeElement->IsNode())
+            tmlTreeNode = dynamic_cast<RedTmlNode*>(tmlTreeElement);
+        else
+            return kResultFail;
+
+        // Import the TML into the code library
+        RedLog log;
+        vsiCodeLibFactory.InputTmlClass(*tmlTreeNode, log);
+        if (vsiCodeLib.NumClasses() == 0)
+            return kResultFail;
+        if (log.IsError())
+            return kResultFail;
+
+        // Execute code
+
+
     }
     return kResultSuccess;
 }

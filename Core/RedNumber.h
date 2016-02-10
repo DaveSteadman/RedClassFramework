@@ -40,6 +40,7 @@ public:
 
     RedNumber(void)                    { Init(); };
     RedNumber(const int iNum)          { Set(iNum); };
+    RedNumber(const unsigned iNum)     { Set((int)iNum); };
     RedNumber(const double dblNum)     { Set(dblNum); };
     RedNumber(const RedNumber& objNum) { Set(objNum); };
     RedNumber(const RedString& cNewDecimalVal) { SetDecimalString(cNewDecimalVal); };
