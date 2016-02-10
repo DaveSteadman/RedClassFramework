@@ -28,8 +28,7 @@ namespace Core {
 typedef enum TEventLogType {
     eErrorEvent,
     eWarningEvent,
-    eInfoEvent,
-    eUndefinedEvent
+    eInfoEvent
 } TEventLogType;
 
 class RedLogEvent
@@ -39,7 +38,7 @@ public:
     // Constructors
     RedLogEvent(const TEventLogType NewLogType)                           : LogType(NewLogType) {};
     RedLogEvent(const TEventLogType NewLogType, const RedString& NewText) : LogType(NewLogType), text(NewText) {};
-    RedLogEvent(const RedString& NewText)                                 : LogType(eUndefinedEvent), text(NewText) {};
+    RedLogEvent(const RedString& NewText)                                 : LogType(eInfoEvent), text(NewText) {};
     RedLogEvent(const RedLogEvent& CurrEvent)                             : LogType(CurrEvent.LogType), text(CurrEvent.text) {};
 
     // Basic Accessors
