@@ -106,7 +106,7 @@ void RedTmlAction::SetChildLeaf(RedTmlNode& node, const RedString& leafname, con
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-RedResult RedTmlAction::ChildLeafDataForName(RedTmlNode& node, const RedString& inleafname, RedString& outleafdata)
+const RedResult RedTmlAction::ChildLeafDataForName(RedTmlNode& node, const RedString& inleafname, RedString& outleafdata)
 {
     RedTmlLeaf* leafnode = RedTmlAction::NodeFirstNamedLeaf(node, inleafname);
     if (leafnode == REDNULL)
@@ -118,7 +118,7 @@ RedResult RedTmlAction::ChildLeafDataForName(RedTmlNode& node, const RedString& 
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-RedResult RedTmlAction::ChildLeafNameForData(RedTmlNode& node, const RedString& inleafdata, RedString& outleafname)
+const RedResult RedTmlAction::ChildLeafNameForData(RedTmlNode& node, const RedString& inleafdata, RedString& outleafname)
 {
     RedTmlNode::TmlNodeListItType it = node.NodeIterator();
 

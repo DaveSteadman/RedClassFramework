@@ -50,11 +50,7 @@ public:
     //EventLogListType EventsByType();
 
     const unsigned NumEvents(void) const { return EventList.NumItems(); };
-<<<<<<< Updated upstream
     const bool     IsError(void)   const { return containsError; };
-=======
-    const int      IsError(void)   const { return containsError; };
->>>>>>> Stashed changes
 
 private:
     EventLogListType EventList;

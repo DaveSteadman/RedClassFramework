@@ -545,7 +545,7 @@ RedString RedString::ToLower(void)
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-const int RedString::IsCharInString(char ch) const
+const bool RedString::IsCharInString(char ch) const
 {
     for (int Pos = 0; Pos < Len; ++Pos)
     {
@@ -557,7 +557,7 @@ const int RedString::IsCharInString(char ch) const
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-const int RedString::IsAlphaNumeric(void) const
+const bool RedString::IsAlphaNumeric(void) const
 {
     RedChar RedChar;
     for (int iPos = 0; iPos < Len; ++iPos)
@@ -572,14 +572,14 @@ const int RedString::IsAlphaNumeric(void) const
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-const int RedString::IsEqualTo(const RedString& Str) const
+const bool RedString::IsEqualTo(const RedString& Str) const
 {
     return (Compare(Str, SM_CASE_SENSITIVE) == SC_EQUAL);
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-const int RedString::IsEqualTo(const char* Str) const
+const bool RedString::IsEqualTo(const char* Str) const
 {
     RedString temp(Str);
     return (Compare(temp, SM_CASE_SENSITIVE) == SC_EQUAL);

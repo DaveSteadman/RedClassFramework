@@ -46,8 +46,8 @@ public:
     static const bool      ChildLeafExists(RedTmlNode& node, const RedString& leafname);
 
     // Leaf Name<->Data lookups
-    static const bool      ChildLeafDataForName(RedTmlNode& node, const RedString& inleafname, RedString& outleafdata);
-    static const bool      ChildLeafNameForData(RedTmlNode& node, const RedString& inleafdata, RedString& outleafname);
+    static const RedResult ChildLeafDataForName(RedTmlNode& node, const RedString& inleafname, RedString& outleafdata);
+    static const RedResult ChildLeafNameForData(RedTmlNode& node, const RedString& inleafdata, RedString& outleafname);
 
     // Search Node For Child entries
     static RedTmlElement*  NodeFirstNamedElement   (RedTmlNode& node, const RedString& SearchName);
