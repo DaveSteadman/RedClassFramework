@@ -74,7 +74,7 @@ void RedVSICmdNew::Execute(RedVSIContextInterface* pContext)
     // if we have an initialisation expression for the data item
     if ( pInitExpr )
     {
-        RedVariant cInitExprResult = pContext->GetExprResult(pInitExpr);
+        RedVariant cInitExprResult = pContext->ExprResult(pInitExpr);
 
         // create the new data item
         pData = pContext->CreateDataItem(cLoc, cType, cName);

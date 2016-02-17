@@ -29,21 +29,20 @@ namespace VSI {
 
 using namespace Red::Core;
 
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-//
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+/// Class encapsulating a routine call. A container for a routine name and the parameters, as well
+/// as the initial class of object name.
 class RedVSIRoutineCallInterface
 {
 public:
 
     // construction
     RedVSIRoutineCallInterface(void) { Init(); };
-    ~RedVSIRoutineCallInterface();
+    ~RedVSIRoutineCallInterface()    { cParams.DelAll(); };
 
-    void            Init(void);
+    void            Init(void) { cClassName.Init(); cObjName.Init(); cFuncName.Init(); cParams.DelAll(); };
 
-    void            SetupObjectCall(const RedString& cNewObjName,   const RedString& cNewFuncName);
-    void            SetupClassCall( const RedString& cNewClassName, const RedString& cNewFuncName);
+    void            SetupObjectCall(const RedString& cNewObjName,   const RedString& cNewFuncName) { cObjName   = cNewObjName;   cFuncName = cNewFuncName; };
+    void            SetupClassCall( const RedString& cNewClassName, const RedString& cNewFuncName) { cClassName = cNewClassName; cFuncName = cNewFuncName; };
 
     void            SetClassName (const RedString& cNewClassName)  { cClassName = cNewClassName;  };
     void            SetObjectName(const RedString& cNewObjectName) { cObjName   = cNewObjectName; };

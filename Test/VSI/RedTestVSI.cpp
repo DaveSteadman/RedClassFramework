@@ -58,9 +58,10 @@ RedResult RedTestVSI::TestParseTreeVal(void)
 {
     // Basic Creation and calculation
     {
+        RedLog               cLog;
         RedVariant           testValue("Hello");
         RedVSIParseTreeVal   testPTVal;
-        RedVSIContextRoutine testContext;
+        RedVSIContextRoutine testContext(cLog);
         RedVariant           expRes(12);
 
         testPTVal.SetValue(testValue);
@@ -82,7 +83,8 @@ RedResult RedTestVSI::TestParseTreeVar(void)
 {
     // Basic Creation and calculation
     {
-        RedVSIContextRoutine testContext;
+        RedLog               cLog;
+        RedVSIContextRoutine testContext(cLog);
         testContext.CreateDataItem(RedVSILangElement::LocationStack(), RedVSILangElement::TypeNumber(), RedString("testVar1"));
 
         RedNumber* testVar1  = REDNULL;
@@ -122,7 +124,8 @@ RedResult RedTestVSI::TestParseTreeBinaryOp(void)
 {
     // Simple Addition Test: Number
     {
-        RedVSIContextRoutine    testContext;
+        RedLog                  cLog;
+        RedVSIContextRoutine    testContext(cLog);
 
         RedVSIParseTreeVal      testPTVal1(RedNumber(1200));
         RedVSIParseTreeVal      testPTVal2(RedNumber(34));
@@ -143,7 +146,8 @@ RedResult RedTestVSI::TestParseTreeBinaryOp(void)
 
     // Simple Addition Test: String
     {
-        RedVSIContextRoutine    testContext;
+        RedLog                  cLog;
+        RedVSIContextRoutine    testContext(cLog);
 
         RedVSIParseTreeVal      testPTVal1(RedString("Hello"));
         RedVSIParseTreeVal      testPTVal2(RedString(" Red"));
@@ -209,7 +213,8 @@ RedResult RedTestVSI::TestParseFactory_001(void)
         if (pt == REDNULL)
             return kResultFail;
 
-        RedVSIContextRoutine testContext;
+        RedLog               cLog;
+        RedVSIContextRoutine testContext(cLog);
         testContext.QueueExpr(pt);
         testContext.ExecuteExprQueue();
 
@@ -249,7 +254,8 @@ RedResult RedTestVSI::TestParseFactory_002(void)
         if (pt == REDNULL)
             return kResultFail;
 
-        RedVSIContextRoutine testContext;
+        RedLog               cLog;
+        RedVSIContextRoutine testContext(cLog);
         testContext.CreateDataItem(RedVSILangElement::LocationStack(), RedVSILangElement::TypeString(), RedString("x"));
 
         testContext.QueueExpr(pt);
@@ -300,7 +306,8 @@ RedResult RedTestVSI::TestParseFactory_003(void)
         if (pt == REDNULL)
             return kResultFail;
 
-        RedVSIContextRoutine testContext;
+        RedLog               cLog;
+        RedVSIContextRoutine testContext(cLog);
         testContext.CreateDataItem(RedVSILangElement::LocationStack(), RedVSILangElement::TypeNumber(), RedString("x"));
 
         testContext.QueueExpr(pt);
@@ -355,7 +362,8 @@ RedResult RedTestVSI::TestCmdNew(void)
 
         cmdNew.SetDetails(kLangElementTypeNumber, kLangElementLocationStack, RedString("x"), pt);
 
-        RedVSIContextRoutine testContext;
+        RedLog               cLog;
+        RedVSIContextRoutine testContext(cLog);
         cmdNew.QueueExpr(&testContext);
         testContext.ExecuteExprQueue();
         cmdNew.Execute(&testContext);

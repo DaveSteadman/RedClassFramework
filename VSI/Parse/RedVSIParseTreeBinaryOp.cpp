@@ -70,9 +70,9 @@ void RedVSIParseTreeBinaryOp::CalcResult(RedVSIContextInterface* pContext)
 {
     // Get the left/right node results
     RedVariant cLeftVal;
-    cLeftVal = pContext->GetExprResult(pLeft);
+    cLeftVal = pContext->ExprResult(pLeft);
     RedVariant cRightVal;
-    cRightVal = pContext->GetExprResult(pRight);
+    cRightVal = pContext->ExprResult(pRight);
 
     // create the output
     RedVariant cRetVal;

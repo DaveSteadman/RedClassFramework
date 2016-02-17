@@ -45,35 +45,45 @@ public:
     RedVSIContextRoutine(RedLog& initAnalysis);
     ~RedVSIContextRoutine(void);
 
-    // Setup Calls
-    void            SetupRoutineCall(const RedVSIRoutineCallInterface& cSignature) { }; // ***
-    void            SetNameDetails(RedString& cNewObjectName, RedString& cNewClassName, RedString& cNewFuncName);
-    void            AddParam(RedString cName, RedType* pData);
-    void            AddReturnValue(RedVariant& cNewReturnValue) { cReturnValue = cNewReturnValue; };
-    // void            SetThisObj(RedType* pNewThisObject) { pThisObj=pNewThisObject; };
-    void            SetParamsList(RedRecord* pParamData);
-    RedString       ClassName(void) const  { return cClassName; };
-    //RedString       ObjectName(void) const { return cObjectName; };
+    // - - - - - - - - - - -
 
     // Inhertied Data accessors (RedVSIContextInterface)
-    RedType*        CreateDataItem(RedVSILangElement cLocation, RedVSILangElement cType, RedString cName);
-    int             FindDataItem(const RedString& cName, RedType*& pData);
-    void            SetReturnValue(const RedVariant& cData);
+    RedType*       CreateDataItem(const RedVSILangElement& cLocation, const RedVSILangElement& cType, const RedString& cName);
+    int            FindDataItem  (const RedString& cName, RedType*& pData);
+    void           SetReturnValue(const RedVariant& cData);
 
     // Inhertied Expressions (RedVSIContextInterface)
     void            QueueExpr(RedVSIParseTreeInterface* pExpr);
     void            SetExprResult(RedVSIParseTreeInterface* pExpr, const RedVariant& result);
     RedVariant      ExprResult(RedVSIParseTreeInterface* pExpr);
+
+    // Error reporting and debugging
+    RedLog&         Log(void) { return cAnalysis; };
+
+    // Setup Calls
+    void            SetupRoutineCall(const RedVSIRoutineCallInterface& cSignature);
+    bool            IsBlocked(const RedVSIContextRoutine* pRoutineContext) { return false; };
+    void            QueueCommand(RedVSICmdInterface* pCmd)                 { cCmdStack.Push(pCmd); };
+    void            ClearCommandQueue(void)                                { cCmdStack.DelAll(); };
+    RedString       ClassName(void) const                                  { return cClassName; };
+    RedString       ObjectName(void) const                                 { return cObjectName; };
+
+    // - - - - - - - - - - -
+
+    void            SetParamsList(RedRecord* pParamData);
+
     void            ExecuteExprQueue(void);
+
+//    void            SetNameDetails(RedString& cNewObjectName, RedString& cNewClassName, RedString& cNewFuncName);
+//    void            AddParam(RedString cName, RedType* pData);
+//    void            AddReturnValue(RedVariant& cNewReturnValue) { cReturnValue = cNewReturnValue; };
+    // void            SetThisObj(RedType* pNewThisObject) { pThisObj=pNewThisObject; };
 
     // Inherited Routine creation and control (RedVSIContextInterface)
     RedVariant&     GetReturnValue(void) { return cReturnValue; };
     void            SetSubroutineReturnValue(RedVariant& cData);
     //RedVSIObject*   GetThisObj(void) { return pThisObj; };
 
-    int             IsBlocked(const RedVSIContextRoutine* pRoutineContext) { return 0; }; // ***
-    void            QueueCommand(RedVSICmdInterface* pCmd) { cCmdStack.Push(pCmd); };
-    void            ClearCommandQueue(void) { cCmdStack.DelAll(); };
 
     // Execution
     // void            Execute(CInterfaceContext* pTopLevelContext);
@@ -83,7 +93,7 @@ public:
 private:
 
     // Execution
-    //RedString         cObjectName;
+    RedString         cObjectName;
     RedString         cClassName;
     RedString         cFuncName;
     

@@ -52,25 +52,25 @@ RedVSIContextRoutine::~RedVSIContextRoutine(void)
 // Setup Calls
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-void RedVSIContextRoutine::SetNameDetails(RedString& cNewObjectName, RedString& cNewClassName, RedString& cNewFuncName)
-{ 
-    //cObjectName = cNewObjectName;
-    cClassName  = cNewClassName; 
-    cFuncName   = cNewFuncName; 
-}
-
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-void RedVSIContextRoutine::AddParam(RedString cName, RedType* pData)
-{
-     cRoutineData.Add(cName, pData->Clone());
-}
+//void RedVSIContextRoutine::SetNameDetails(RedString& cNewObjectName, RedString& cNewClassName, RedString& cNewFuncName)
+//{ 
+//    //cObjectName = cNewObjectName;
+//    cClassName  = cNewClassName; 
+//    cFuncName   = cNewFuncName; 
+//}
+//
+//// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+//
+//void RedVSIContextRoutine::AddParam(RedString cName, RedType* pData)
+//{
+//     cRoutineData.Add(cName, pData->Clone());
+//}
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 // Data
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-RedType* RedVSIContextRoutine::CreateDataItem(RedVSILangElement cLocation, RedVSILangElement cType, RedString cName)
+RedType* RedVSIContextRoutine::CreateDataItem(const RedVSILangElement& cLocation, const RedVSILangElement& cType, const RedString& cName)
 {
     RedType* pNewData = REDNULL;
 
@@ -121,14 +121,6 @@ int RedVSIContextRoutine::FindDataItem(const RedString& cName, RedType*& pData)
 
 void RedVSIContextRoutine::SetReturnValue(const RedVariant& cData)
 {
-    // copy the variant data item across and return success
-    cReturnValue = cData;
-}
-
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-void RedVSIContextRoutine::SetSubroutineReturnValue(RedVariant& cData)
-{
     // if we don't have an expression to write the data to, there is a serious issue.
     if (pCurrExpr != REDNULL)
         cWorkingList.Add(pCurrExpr, cData);
@@ -136,15 +128,6 @@ void RedVSIContextRoutine::SetSubroutineReturnValue(RedVariant& cData)
         throw;
 }
 
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-int RedVSIContextRoutine::HasCmdToExecute(void)
-{ 
-    if (!cCmdStack.IsEmpty()) return 1;
-    if (pCurrCmd) return 1;
-    
-    return 0; 
-}
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -172,6 +155,27 @@ RedVariant RedVSIContextRoutine::ExprResult(RedVSIParseTreeInterface* pExpr)
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
+void RedVSIContextRoutine::SetupRoutineCall(const RedVSIRoutineCallInterface& cSignature)
+{
+}
+
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+// Execution
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+int RedVSIContextRoutine::HasCmdToExecute(void)
+{ 
+    if (!cCmdStack.IsEmpty()) return 1;
+    if (pCurrCmd) return 1;
+    
+    return 0; 
+}
+
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
 void RedVSIContextRoutine::ExecuteExprQueue(void)
 {
     int iBlocked = IsBlocked(this);
@@ -184,8 +188,7 @@ void RedVSIContextRoutine::ExecuteExprQueue(void)
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-// Execution
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
 
 //void RedVSIContextRoutine::Execute(RedVSIInterfaceContext* pTopLevelContext)
 //{

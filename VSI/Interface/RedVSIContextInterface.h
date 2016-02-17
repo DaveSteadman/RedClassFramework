@@ -47,28 +47,25 @@ class RedVSIContextInterface
 public:
 
     // Data accessors
-    virtual RedType*      CreateDataItem(RedVSILangElement cLocation, RedVSILangElement cType, RedString cName) =0;
-    virtual int           FindDataItem(const RedString& cName, RedType*& pData) =0;
-    virtual int           SetReturnValue(RedVariant& cData) =0;
+    virtual RedType*      CreateDataItem(const RedVSILangElement& cLocation, const RedVSILangElement& cType, const RedString& cName) =0;
+    virtual int           FindDataItem  (const RedString& cName, RedType*& pData) =0;
+    virtual void          SetReturnValue(const RedVariant& cData) =0;
 
     // expressions
     virtual void          QueueExpr(RedVSIParseTreeInterface* pExpr) =0;
-    virtual void          SetExprResult(RedVSIParseTreeInterface* pExpr, RedVariant& result) =0;
-    virtual RedVariant    GetExprResult(RedVSIParseTreeInterface* pExpr) =0;
+    virtual void          SetExprResult(RedVSIParseTreeInterface* pExpr, const RedVariant& result) =0;
+    virtual RedVariant    ExprResult(RedVSIParseTreeInterface* pExpr) =0;
 
     // Error reporting and debugging
-    virtual RedLog&       Log(void) { return log; };
+    virtual RedLog&       Log(void) =0;
 
     // Routine creation and control
     virtual void          SetupRoutineCall(const RedVSIRoutineCallInterface& cSignature) =0;
-    virtual int           IsBlocked(const RedVSIContextRoutine* pRoutineContext) =0;
+    virtual bool          IsBlocked(const RedVSIContextRoutine* pRoutineContext) =0;
     virtual void          QueueCommand(RedVSICmdInterface* pCmd) =0;
     virtual void          ClearCommandQueue(void) =0;
     virtual RedString     ClassName(void) const =0;
     virtual RedString     ObjectName(void) const =0;
-
-private:
-    RedLog log;
 };
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

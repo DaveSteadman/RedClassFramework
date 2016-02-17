@@ -27,6 +27,8 @@
 namespace Red {
 namespace Test {
 
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
 int RedTestCentre::RunAllUnitTests(void)
 {
     int CorePassed       = RedTestCore::RunUnitTest();
@@ -44,5 +46,7 @@ int RedTestCentre::RunAllUnitTests(void)
     return OverallPass;
 }
 
-}
-}
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+} // Test
+} // Red

@@ -62,7 +62,7 @@ void RedVSICmdWhile::QueueExpr(RedVSIContextInterface* pContext)
 void RedVSICmdWhile::Execute(RedVSIContextInterface* pContext)
 {
     // Get the result of the conditional expression
-    RedVariant cExprResult = pContext->GetExprResult(pConditionExpr);
+    RedVariant cExprResult = pContext->ExprResult(pConditionExpr);
 
     // check if the value is a positive statement
     if (IsSuccessVal(cExprResult))

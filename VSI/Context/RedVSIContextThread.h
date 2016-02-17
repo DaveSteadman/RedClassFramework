@@ -46,34 +46,39 @@ class RedVSIContextThread : public RedVSIContextInterface
 public:
 
     RedVSIContextThread(const RedVSILibInterface* pInitCodeLib, const RedVSIRoutineCallInterface& cStartingSignature);
-
     RedVSIContextThread(void);
+
     void           SetCodeLib(RedVSILibInterface* pNewCodeLib) { pCodeLib = pNewCodeLib; };
+
+    // - - - - - - - - - - -
 
     // Data accessors
     RedType*       CreateDataItem(const RedVSILangElement& cLocation, const RedVSILangElement& cType, const RedString& cName);
     int            FindDataItem  (const RedString& cName, RedType*& pData);
+    void           SetReturnValue(const RedVariant& cData);
 
-//    void           SetUserObj(RedRecord* pNewUserObject) { pUserObj=pNewUserObject; };
-//    RedRecord*     GetUserObj(void) { return pUserObj; };
-    void           AssignReturnValue(const RedVariant& cData);
-    
     // Expressions In Current Routine
     void           QueueExpr(RedVSIParseTreeInterface* pExpr);
     void           SetExprResult(RedVSIParseTreeInterface* pExpr, RedVariant& result);
     RedVariant     ExprResult(RedVSIParseTreeInterface* pExpr);
 
     // Error reporting and debugging
-    RedLog&        Analysis(void) { return cAnalysis; };
+    RedLog&        Log(void) { return cAnalysis; };
 
     // Routine creation and control
     void           SetupRoutineCall(RedVSIRoutineCallInterface& cSignature);
-    void           Execute(int& iCmdCount);
+    int            IsBlocked(RedVSIContextRoutine* pRoutineContext);
     void           QueueCommand(RedVSICmdInterface* pCmd);
     void           ClearCommandQueue(void);
     RedString      ClassName(void);
     RedString      ObjectName(void);
-    int            IsBlocked(RedVSIContextRoutine* pRoutineContext);
+
+    // - - - - - - - - - - -
+
+//    void           SetUserObj(RedRecord* pNewUserObject) { pUserObj=pNewUserObject; };
+//    RedRecord*     GetUserObj(void) { return pUserObj; };
+
+    void           Execute(int& iCmdCount);
 
 private:
 

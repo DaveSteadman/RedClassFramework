@@ -27,52 +27,20 @@ namespace VSI {
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-RedVSIContextThread::RedVSIContextThread(void)
-{
-    pCodeLib = 0;
-}
-
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
 RedVSIContextThread::RedVSIContextThread(const RedVSILibInterface* pInitCodeLib, const RedVSIRoutineCallInterface& cStartingSignature)
 {
     pCodeLib = pInitCodeLib;
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-// Inherited
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-void RedVSIContextThread::Execute(int& iCmdCount)
+RedVSIContextThread::RedVSIContextThread(void)
 {
-//    while ( (iCmdCount > 0) && (!cRoutineStack.IsEmpty()) )
-//    {
-//        RedVSIContextRoutine* pTopRoutine = cRoutineStack.NextPopItem();
-//        
-//        if (pTopRoutine->HasCmdToExecute())
-//        {
-//            pTopRoutine->Execute(this);
-//            iCmdCount--;
-//        }
-//        else
-//        {
-//            //copy the data item out of the routine
-//            RedVariant cRetVal = pTopRoutine->GetReturnValue();
-//            
-//            // actually take the top item off the routine stack and delete it
-//            pTopRoutine = cRoutineStack.Pop();
-//            delete pTopRoutine;
-//
-//            // if we have a calling routine to jump back to
-//            if (!cRoutineStack.IsEmpty())
-//            {
-//                // get the new top item off the stack
-//                cRoutineStack.NextPopItem()->SetSubroutineReturnValue(cRetVal);
-//            }
-//        }
-//    }
+    pCodeLib = 0;
 }
 
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+// Inherited
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 RedType* RedVSIContextThread::CreateDataItem(const RedVSILangElement& cLocation, const RedVSILangElement& cType, const RedString& cName)
@@ -134,7 +102,7 @@ int RedVSIContextThread::FindDataItem(const RedString& cName, RedType*& pData)
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-void RedVSIContextThread::AssignReturnValue(const RedVariant& cData)
+void RedVSIContextThread::SetReturnValue(const RedVariant& cData)
 {
     RedVSIContextRoutine* pCurrRoutine = cRoutineStack.NextPopItem();
 
@@ -142,6 +110,43 @@ void RedVSIContextThread::AssignReturnValue(const RedVariant& cData)
         pCurrRoutine->SetReturnValue(cData);
     else
         cAnalysis.AddErrorEvent("AssignReturnValue with no routine context");
+}
+
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+void RedVSIContextThread::QueueExpr(RedVSIParseTreeInterface* pExpr)
+{
+    RedVSIContextRoutine* pCurrRoutine = cRoutineStack.NextPopItem();
+
+    if (pCurrRoutine)
+        pCurrRoutine->QueueExpr(pExpr);
+    else
+        cAnalysis.AddErrorEvent("QueueExpr with no routine context");
+}
+
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+void RedVSIContextThread::SetExprResult(RedVSIParseTreeInterface* pExpr, RedVariant& RedResult)
+{
+    RedVSIContextRoutine* pCurrRoutine = cRoutineStack.NextPopItem();
+
+    if (pCurrRoutine)
+        pCurrRoutine->SetExprResult(pExpr, RedResult);
+    else
+        cAnalysis.AddErrorEvent("SetExprResult with no routine context");
+}
+
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+RedVariant RedVSIContextThread::ExprResult(RedVSIParseTreeInterface* pExpr)
+{
+    RedVSIContextRoutine* pCurrRoutine = cRoutineStack.NextPopItem();
+    RedVariant            retval;
+
+    if (pCurrRoutine)
+        retval = pCurrRoutine->ExprResult(pExpr);
+
+    return retval;
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -184,6 +189,19 @@ void RedVSIContextThread::SetupRoutineCall(RedVSIRoutineCallInterface& cSignatur
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
+int RedVSIContextThread::IsBlocked(RedVSIContextRoutine* pRoutineContext)
+{
+    // if the top of the routine stack matched the context, then that context
+    // isn't blocked
+    if (cRoutineStack.NextPopItem() == pRoutineContext)
+        return 0;
+        
+    // the pointers are different, so the routine IS blocked.
+    return 1;
+}
+
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
 void RedVSIContextThread::QueueCommand(RedVSICmdInterface* pCmd)
 {
     RedVSIContextRoutine* pCurrRoutine = cRoutineStack.NextPopItem();
@@ -214,56 +232,6 @@ void RedVSIContextThread::ClearCommandQueue(void)
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-void RedVSIContextThread::QueueExpr(RedVSIParseTreeInterface* pExpr)
-{
-    RedVSIContextRoutine* pCurrRoutine = cRoutineStack.NextPopItem();
-
-    if (pCurrRoutine)
-        pCurrRoutine->QueueExpr(pExpr);
-    else
-        cAnalysis.AddErrorEvent("QueueExpr with no routine context");
-}
-
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-void RedVSIContextThread::SetExprResult(RedVSIParseTreeInterface* pExpr, RedVariant& RedResult)
-{
-    RedVSIContextRoutine* pCurrRoutine = cRoutineStack.NextPopItem();
-
-    if (pCurrRoutine)
-        pCurrRoutine->SetExprResult(pExpr, RedResult);
-    else
-        cAnalysis.AddErrorEvent("SetExprResult with no routine context");
-}
-
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-RedVariant RedVSIContextThread::ExprResult(RedVSIParseTreeInterface* pExpr)
-{
-    RedVSIContextRoutine* pCurrRoutine = cRoutineStack.NextPopItem();
-    RedVariant            retval;
-
-    if (pCurrRoutine)
-        retval = pCurrRoutine->ExprResult(pExpr);
-
-    return retval;
-}
-
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-int RedVSIContextThread::IsBlocked(RedVSIContextRoutine* pRoutineContext)
-{
-    // if the top of the routine stack matched the context, then that context
-    // isn't blocked
-    if (cRoutineStack.NextPopItem() == pRoutineContext)
-        return 0;
-        
-    // the pointers are different, so the routine IS blocked.
-    return 1;
-}
-
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
 RedString RedVSIContextThread::ClassName(void)
 {
     return cRoutineStack.NextPopItem()->ClassName();
@@ -274,6 +242,38 @@ RedString RedVSIContextThread::ClassName(void)
 RedString RedVSIContextThread::ObjectName(void)
 {
     return cRoutineStack.NextPopItem()->ObjectName();
+}
+
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+void RedVSIContextThread::Execute(int& iCmdCount)
+{
+//    while ( (iCmdCount > 0) && (!cRoutineStack.IsEmpty()) )
+//    {
+//        RedVSIContextRoutine* pTopRoutine = cRoutineStack.NextPopItem();
+//        
+//        if (pTopRoutine->HasCmdToExecute())
+//        {
+//            pTopRoutine->Execute(this);
+//            iCmdCount--;
+//        }
+//        else
+//        {
+//            //copy the data item out of the routine
+//            RedVariant cRetVal = pTopRoutine->GetReturnValue();
+//            
+//            // actually take the top item off the routine stack and delete it
+//            pTopRoutine = cRoutineStack.Pop();
+//            delete pTopRoutine;
+//
+//            // if we have a calling routine to jump back to
+//            if (!cRoutineStack.IsEmpty())
+//            {
+//                // get the new top item off the stack
+//                cRoutineStack.NextPopItem()->SetSubroutineReturnValue(cRetVal);
+//            }
+//        }
+//    }
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
