@@ -28,14 +28,15 @@ using namespace Red::Core;
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-// Time is strictly formatted in an HH:MM:SS format. 
+// Time is strictly formatted in a 24hour HH:MM:SS format. 
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-static const RedNumberRange kSecondsInDay    = RedNumberRange(0, 86400, kRedNumberRangeWrapOnUpper);
-static const RedNumberRange kSecondsInMinute = RedNumberRange(0, 60,    kRedNumberRangeWrapOnUpper);
-static const RedNumberRange kMinutesInHour   = RedNumberRange(0, 60,    kRedNumberRangeWrapOnUpper);
-static const RedNumberRange kHoursInDay      = RedNumberRange(0, 24,    kRedNumberRangeWrapOnUpper);
+static const RedNumber kSecondsInDay    = RedNumber(86400);
+static const RedNumber kSecondsInHour   = RedNumber(3600);
+static const RedNumber kSecondsInMinute = RedNumber(60);
+static const RedNumber kMinutesInDay    = RedNumber(1440);
+static const RedNumber kMinutesInHour   = RedNumber(60);
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -45,19 +46,30 @@ public:
 
     RedTime(void) { Init(); };
 
-    void Init(void)           { hour=kHoursInDay.RangeMin(); minute=kMinutesInHour.RangeMin(); seconds=kSecondsInMinute.RangeMin(); };
-    void InitStartOfDay(void) { hour=kHoursInDay.RangeMin(); minute=kMinutesInHour.RangeMin(); seconds=kSecondsInMinute.RangeMin(); };
-    void InitEndOfDay(void)   { hour=kHoursInDay.RangeMax(); minute=kMinutesInHour.RangeMax(); seconds=kSecondsInMinute.RangeMax(); };
+    void Init(void) { hour=0; minute=0; seconds=0; };
 
-    void SetTime(const int h, const int m, const double& s) { hour=h; minute=m; seconds=s; };
-    void SetTime(const RedString& timestr);
+    void SetTime(const int h, const int m, const double& s)                  { hour=h; minute=m; seconds=s; };
+	void SetTime(const RedNumber& h, const RedNumber& m, const RedNumber& s) { hour=h.IntegerValue(); minute=m.IntegerValue(); seconds=s.DoubleValue(); };
+	void SetTime(const RedString& timestr);
 
+	void SetNow(void);
+
+	// Time Presentation
     const RedString TimeString(void) const;
     const int       SixDigitInt(void) const;
 
-    void Now(void);
+	// Simple Access Routines
+    const RedNumber Hours     (void) const                  { return hour;    };
+	const RedNumber Minutes   (void) const                  { return minute;  };
+	const RedNumber Seconds   (void) const                  { return seconds; };
+	void            SetHours  (const RedNumber& NewHours)   { hour    = NewHours;   };
+	void            SetMinutes(const RedNumber& NewMinutes) { minute  = NewMinutes; };
+	void            SetSeconds(const RedNumber& NewSeconds) { seconds = NewSeconds; };
 
-    const RedNumber& Hour(void) const { return hour; };
+	// Seconds In Day Routines
+	const RedNumber SecondsElapsedInDay(void) const { return (hour*kSecondsInHour) + (minute*kSecondsInMinute) + seconds; };
+	const RedNumber SecondsLeftInDay(void)    const { return kSecondsInDay - SecondsElapsedInDay(); };
+	void            SetTimeFromElapsedSeconds(const RedNumber& DayElapsedSeconds);
 
 private:
 
@@ -65,6 +77,11 @@ private:
     RedNumber minute;
     RedNumber seconds;
 };
+
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+static const RedTime kStartOfDay = RedTime(0,   0,  0.0);
+static const RedTime kEndOfDay   = RedTime(24, 60, 60.0);
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
