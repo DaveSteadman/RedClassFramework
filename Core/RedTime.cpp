@@ -16,8 +16,8 @@
 // (http://opensource.org/licenses/MIT)
 // -------------------------------------------------------------------------------------------------
 
-#include "RedCoreNamespace.h"
-
+#include "RedString.h"
+#include "RedNumber.h"
 #include "RedTime.h"
 
 #include <time.h>
@@ -75,7 +75,7 @@ const int RedTime::SixDigitInt(void) const
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-void RedTime::Now(void)
+void RedTime::SetNow(void)
 {
     time_t     rawtime;
     struct tm* timeinfo;
@@ -90,7 +90,26 @@ void RedTime::Now(void)
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
+void RedTime::SetTimeFromElapsedSeconds(const RedNumber& DayElapsedSeconds)
+{
+	Init();
+
+	RedNumber DecrementingSeconds = DayElapsedSeconds;
+
+	while (DecrementingSeconds > kSecondsInHour)
+    {
+        hour++;
+        DecrementingSeconds -= kSecondsInHour;
+	}
+	while (DecrementingSeconds > kSecondsInMinute)
+	{
+		minute++;
+		DecrementingSeconds -= kSecondsInMinute;
+	}
+	seconds = DecrementingSeconds;
+}
+
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
 } // Time
 } // Red
-
-
