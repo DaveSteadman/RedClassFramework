@@ -145,7 +145,6 @@ RedStackLIFO<DataClass>* RedStackLIFO<DataClass>::Clone(void)
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-
 } // Core
 } // Red
 

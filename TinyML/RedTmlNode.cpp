@@ -22,11 +22,11 @@
 #include "RedTmlNode.h"
 #include "RedTmlElement.h"
 
-namespace Red {
-namespace TinyML {
-
 using namespace Red::Core;
 using namespace Red::TinyML;
+
+namespace Red {
+namespace TinyML {
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 

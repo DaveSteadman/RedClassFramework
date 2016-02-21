@@ -21,11 +21,10 @@
 #include "RedNumber.h"
 #include "ConversionConstants.h"
 
+using namespace Red::Core;
+
 namespace Red {
 namespace Geometry {
-
-using namespace Red::Core;
-using namespace Red::Geometry;
 
 static const RedNumberRange kDegreesFullCircle  = RedNumberRange(0, 360,      kRedNumberRangeWrapOnUpper); // wrap, so exact 360 isn't possible
 static const RedNumberRange kRadiansFullCircle  = RedNumberRange(0, 2.0 * pi, kRedNumberRangeWrapOnUpper); // wrap, so exact 360 isn't possible

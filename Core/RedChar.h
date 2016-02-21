@@ -27,6 +27,8 @@ namespace Core {
 
 class RedString;
 
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
 /// Class representing a character. A child of RedType. Contains many type querying operations.
 class RedChar : public RedType
 {

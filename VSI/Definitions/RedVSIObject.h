@@ -23,10 +23,10 @@
 #include "RedRecord.h"
 #include "RedString.h"
 
+using namespace Red::Core;
+
 namespace Red {
 namespace VSI {
-
-using namespace Red::Core;
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -52,5 +52,5 @@ private:
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-} // Core
+} // VSI
 } // Red

@@ -21,10 +21,10 @@
 #include "RedPoint2D.h"
 #include "RedVector2D.h"
  
+using namespace Red::Core;
+
 namespace Red {
 namespace Geometry {
-
-using namespace Red::Core;
 
 /// Arc class exists to define circular arc maths. This in turn supports the definition of a rounded rectangle.
 class RedCircularArc

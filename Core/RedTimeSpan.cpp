@@ -26,8 +26,6 @@
 namespace Red {
 namespace Core {
 
-using namespace Red::Core;
-
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 const double RedTimeSpan::SpanInDays(void) const
@@ -51,7 +49,7 @@ const double RedTimeSpan::SpanInSeconds(void) const
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-} // Time
+} // Core
 } // Red
 
 

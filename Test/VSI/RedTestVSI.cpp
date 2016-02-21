@@ -18,38 +18,36 @@
 
 #include "RedTestVSI.h"
 #include "RedVSINamespace.h"
+#include "RedVSIContextRoutine.h"
 
 #include "RedVSICmdSerialiser.h"
 #include "RedVSILibTokenMap.h"
 
-namespace Red {
-namespace Test {
-
 using namespace Red::Core;
 using namespace Red::VSI;
 
+namespace Red {
+namespace Test {
+
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-int RedTestVSI::RunUnitTest(void)
+void RedTestVSI::RunUnitTest(RedLog& log)
 {
-    if (RedTestVSI::TestParseTreeVal().IsFail())      return 0;
-    if (RedTestVSI::TestParseTreeVar().IsFail())      return 0;
-    if (RedTestVSI::TestParseTreeBinaryOp().IsFail()) return 0;
+    if (RedTestVSI::TestParseTreeVal().IsFail())      { log.AddErrorEvent("Core Unit Test: TestParseTreeVal Failed");      return; }
+    if (RedTestVSI::TestParseTreeVar().IsFail())      { log.AddErrorEvent("Core Unit Test: TestParseTreeVar Failed");      return; }
+    if (RedTestVSI::TestParseTreeBinaryOp().IsFail()) { log.AddErrorEvent("Core Unit Test: TestParseTreeBinaryOp Failed"); return; }
 
-    if (RedTestVSI::TestParseFactory_001().IsFail())  return 0;
-    if (RedTestVSI::TestParseFactory_002().IsFail())  return 0;
-    if (RedTestVSI::TestParseFactory_003().IsFail())  return 0;
+    if (RedTestVSI::TestParseFactory_001().IsFail())  { log.AddErrorEvent("Core Unit Test: TestParseFactory_001 Failed");  return; }
+    if (RedTestVSI::TestParseFactory_002().IsFail())  { log.AddErrorEvent("Core Unit Test: TestParseFactory_002 Failed");  return; }
+    if (RedTestVSI::TestParseFactory_003().IsFail())  { log.AddErrorEvent("Core Unit Test: TestParseFactory_003 Failed");  return; }
 
-    if (RedTestVSI::TestCmdNew().IsFail())            return 0;
-    if (RedTestVSI::TestTokeniseCode().IsFail())      return 0;
+    if (RedTestVSI::TestCmdNew().IsFail())            { log.AddErrorEvent("Core Unit Test: TestCmdNew Failed");            return; }
+    if (RedTestVSI::TestTokeniseCode().IsFail())      { log.AddErrorEvent("Core Unit Test: TestTokeniseCode Failed");      return; }
+
+    if (RedTestVSI::TestSnippet_New().IsFail())       { log.AddErrorEvent("Core Unit Test: TestSnippet_New Failed");       return; }
 
 
-//    if (RedTestVSI::TestLoadLibrary_001().IsFail())   return 0;
-    if (RedTestVSI::TestLoadLibrary_002().IsFail())   return 0;
-
-    if (RedTestVSI::TestSaveLibrary_001().IsFail())   return 0;
-
-    return 1;
+    log.AddText("VSI Unit Test: Passed");
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -545,6 +543,47 @@ RedResult RedTestVSI::TestRunProg_001(void)
 
 
     }
+    return kResultSuccess;
+}
+
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+RedResult RedTestVSI::TestSnippet_New(void)
+{
+    // Define a small code snippet
+    RedString strCodeSnippet = "new local number x = 3.2 x = x * 2";
+
+    // Turn the code into tokens
+    RedVSILibTokenMap cTokenMap;
+    RedVSITokenBuffer cTokenList;
+    RedLog            cRedLog;
+    if (!RedVSITokenFactory::CreateTokens(strCodeSnippet, cTokenMap.cVSILibTokenMap, cTokenList))
+        return kResultFail;
+
+    // Turn the tokens into code
+    RedVSICmdInterface* topCmd = RedVSICmdFactory::RunConstuctionCompetition(cTokenList, cRedLog);
+    if (topCmd == REDNULL)
+        return kResultFail;
+    if (cRedLog.IsError())
+        return kResultFail;
+
+    // Execute the code in a context
+    RedVSIContextRoutine testContext(cRedLog, topCmd);
+    testContext.ExecuteSnippet(10);
+    if (cRedLog.IsError())
+        return kResultFail;
+
+    // Analyse the data created by the code
+    RedType* pXVal = REDNULL;
+    testContext.FindDataItem("x", pXVal);
+    if (pXVal == REDNULL)
+        return kResultFail;
+    if (!pXVal->Type().IsNum())
+        return kResultFail;
+    RedNumber* pXNum = (RedNumber*)pXVal;
+    if (!pXNum->IsEqualToWithinTollerance(6.4, kNumberFloatCompTollerance))
+        return kResultFail;
+
     return kResultSuccess;
 }
 

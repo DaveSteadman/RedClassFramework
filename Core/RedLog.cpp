@@ -57,6 +57,32 @@ void RedLog::AddErrorEvent(const RedString& NewText)
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
+RedString RedLog::AllLoggedText(void)
+{
+    RedString          outStr;
+    EventLogListItType logIt(&EventList);
+
+    logIt.First();
+    while (!logIt.IsDone())
+    {
+        RedLogEvent* pCurrItem = logIt.CurrentItem();
+
+        if      (pCurrItem->EventType() == eErrorEvent)   outStr.Append("Error:   ");
+        else if (pCurrItem->EventType() == eWarningEvent) outStr.Append("Warning: ");
+        else if (pCurrItem->EventType() == eInfoEvent)    outStr.Append("Info:    ");
+
+        outStr.Append(pCurrItem->Text());
+
+        outStr.Append("\n");
+
+        logIt.Next();
+    }
+
+    return outStr;
+}
+
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
 } // Core
 } // Red
 

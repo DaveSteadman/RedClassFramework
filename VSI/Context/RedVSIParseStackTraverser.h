@@ -24,6 +24,8 @@
 #include "RedVSIParseTreeInterface.h"
 #include "RedLog.h"
 
+using namespace Red::Core;
+
 namespace Red {
 namespace VSI {
 

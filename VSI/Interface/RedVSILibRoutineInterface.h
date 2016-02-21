@@ -25,12 +25,12 @@
 #include "RedVSICollections.h"
 #include "RedVSICmdInterface.h"
 
+using namespace Red::Core;
+
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 namespace Red {
 namespace VSI {
-
-using namespace Red::Core;
 
 // Class has only read-only routines, so the consumers of the routines have no access to change anything.
 // The Child RedVSILibRoutine class is contained within the library construction code.

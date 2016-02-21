@@ -18,7 +18,6 @@
 
 #pragma once
 
-
 namespace Red {
 namespace VSI {
 
@@ -232,7 +231,7 @@ bool operator!=(const RedVSILangElement& lhs, const RedVSILangElement& rhs);
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-} // Core
+} // VSI
 } // Red
 
 

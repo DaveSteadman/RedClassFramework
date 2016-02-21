@@ -21,15 +21,14 @@
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 #include "RedCoreNamespace.h"
-
 #include "RedVSIIOElement.h"
+
+using namespace Red::Core;
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 namespace Red {
 namespace VSI {
-
-using namespace Red::Core;
 
 class RedVSITokenElementMap
 {

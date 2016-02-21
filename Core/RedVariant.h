@@ -31,6 +31,8 @@
 namespace Red {
 namespace Core {
 
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
 /// Class to hold any of the predefined data types. Primarily of use in
 /// expressions, to pass a common type between parse tree elements.
 class RedVariant : public RedType
@@ -46,8 +48,7 @@ public:
     RedVariant(const RedString& cNewStr):pData(0)    { SetValue(RedString(cNewStr)); };
     RedVariant(const int val):pData(0)               { SetValue(RedNumber(val)); };
     RedVariant(const double val):pData(0)            { SetValue(RedNumber(val)); };
-
-    ~RedVariant(void);
+    ~RedVariant(void)                                { Init(); };
 
     // Inherited: RedType
     void                Init(void);

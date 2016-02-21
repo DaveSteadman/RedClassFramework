@@ -32,6 +32,8 @@ namespace Core {
 #define RED_TRUE  1
 #define RED_FALSE 0
 
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
 /// Boolean value class. As a child of RedType class, this allows a boolean value to exist in 
 /// collections and VSI expressions alongside other RedType objects.
 /// The primary purpose of the class isn't to replace a bool type in normal operation.
@@ -96,6 +98,8 @@ static const RedBoolean kBoolFALSE = RedBoolean::False();
 static const RedBoolean kBoolTRUE  = RedBoolean::True();
 static const RedBoolean kBoolYES   = RedBoolean::Yes();
 static const RedBoolean kBoolNO    = RedBoolean::No();
+
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 } // Core
 } // Red

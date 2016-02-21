@@ -20,11 +20,11 @@
 
 #include "RedTestTmlSP.h"
 
-namespace Red {
-namespace Test {
-
 using namespace Red::Core;
 //using namespace Red::TinyMLSP;
+
+namespace Red {
+namespace Test {
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 

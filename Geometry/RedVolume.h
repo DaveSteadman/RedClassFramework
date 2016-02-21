@@ -21,10 +21,10 @@
 #include "RedNumber.h"
 #include "ConversionConstants.h"
 
+using namespace Red::Core;
+
 namespace Red {
 namespace Geometry {
-
-using namespace Red::Core;
 
 class RedVolume : public RedNumber
 {

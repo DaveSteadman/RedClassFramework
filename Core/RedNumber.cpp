@@ -30,7 +30,7 @@ namespace Core {
 // =================================================================================================
 
 /// Query operation, determining if the int number is zero, or the float number is within kFloatCompTollerance of zero.
-const int RedNumber::IsZero(void) const
+const bool RedNumber::IsZero(void) const
 {
     if (eNumType == eInt)
         return (iIntVal == 0);
@@ -40,7 +40,7 @@ const int RedNumber::IsZero(void) const
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-const int RedNumber::IsPositive(void) const
+const bool RedNumber::IsPositive(void) const
 {
     if (eNumType == eInt)
         return (iIntVal > 0);
@@ -50,13 +50,13 @@ const int RedNumber::IsPositive(void) const
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-const int RedNumber::IsEqualTo(const RedNumber& CheckVal) const
+const bool RedNumber::IsEqualTo(const RedNumber& CheckVal) const
 {
     // If Integers, just compare, no tollerance
     if ( IsInteger() && CheckVal.IsInteger() )
     {
         if (iIntVal == CheckVal.iIntVal)
-            return 1;
+            return true;
     }
     else
     {
@@ -67,20 +67,20 @@ const int RedNumber::IsEqualTo(const RedNumber& CheckVal) const
         const double dLowerBounds = CheckVal.DoubleValue() - kFloatCompTollerance;
 
         if ( (dLowerBounds < dVal) && (dVal < dUpperBounds) )
-            return 1;
+            return true;
     }
-    return 0;
+    return false;
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-const int RedNumber::IsEqualToWithinTollerance(const RedNumber& CheckVal, const RedNumber& tollerance) const
+const bool RedNumber::IsEqualToWithinTollerance(const RedNumber& CheckVal, const RedNumber& tollerance) const
 {
     // If Integers, just compare, no tollerance
     if ( IsInteger() && CheckVal.IsInteger() )
     {
         if (iIntVal == CheckVal.iIntVal)
-            return 1;
+            return true;
     }
     else
     {
@@ -94,10 +94,10 @@ const int RedNumber::IsEqualToWithinTollerance(const RedNumber& CheckVal, const 
         const double dLowerBounds = checkdVal - dToll;
 
         if ( (dLowerBounds < dVal) && (dVal < dUpperBounds) )
-            return 1;
+            return true;
     }
 
-    return 0;
+    return false;
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -271,13 +271,13 @@ const RedNumber RedNumber::DivisionQuotient(const RedNumber& d) const
 {
     RedNumber r;
  
-    double param, fractpart, intpart;
+    double param, intpart;
  
     double numerator   = dblFloatVal;
     double denominator = d.DoubleValue();
     param = numerator / denominator;
  
-    fractpart = modf (param , &intpart);
+    modf (param , &intpart);
     r = intpart;
  
     return r;

@@ -25,10 +25,10 @@
 #include "RedVSIParseTreeInterface.h"
 #include "RedVSIContextInterface.h"
 
+using namespace Red::Core;
+
 namespace Red {
 namespace VSI {
-
-using namespace Red::Core;
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 

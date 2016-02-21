@@ -27,13 +27,13 @@
 #include "RedVSILibTokenMap.h"
 #include "RedVSILibRoutine.h"
 
+using namespace Red::Core;
+using namespace Red::TinyML;
+
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 namespace Red {
 namespace VSI {
-
-using namespace Red::Core;
-using namespace Red::TinyML;
 
 class RedVSILibFactory
 {

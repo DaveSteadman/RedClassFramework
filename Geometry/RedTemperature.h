@@ -21,25 +21,25 @@
 #include "RedCoreNamespace.h"
 #include "ConversionConstants.h"
 
+using namespace Red::Core;
+
 namespace Red {
 namespace Geometry {
 
-    using namespace Red::Core;
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-    // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+class RedTemperature : public RedNumber
+{
+public:
 
-    class RedTemperature : public RedNumber
-    {
-    public:
+    // Metric
+    void      SetKelvin(const RedNumber& newval)  { Set(newval); };
+    void      SetCelsius(const RedNumber& newval) { Set(newval + absoluteZeroInCelsius); };
+    RedNumber Kelvin(void) const                  { RedNumber retval(*this); return retval; };
+    RedNumber Celsius(void) const                 { RedNumber retval(*this); retval += absoluteZeroInCelsius; return retval; };
+};
 
-        // Metric
-        void      SetKelvin(const RedNumber& newval)  { Set(newval); };
-        void      SetCelsius(const RedNumber& newval) { Set(newval + absoluteZeroInCelsius); };
-        RedNumber Kelvin(void) const                  { RedNumber retval(*this); return retval; };
-        RedNumber Celsius(void) const                 { RedNumber retval(*this); retval += absoluteZeroInCelsius; return retval; };
-    };
-
-    // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 } // Geometry
 } // Red

@@ -20,9 +20,7 @@
 #include <errno.h>
 #include <stdlib.h>
 
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-#include "RedCoreNamespace.h"
+#include "RedIOHandler.h"
 
 namespace Red {
 namespace Core {
@@ -89,7 +87,6 @@ RedResult RedIOHandler::OutputBufferToFile(const RedString& cFilepath, RedBuffer
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
 
 } // Core
 } // Red

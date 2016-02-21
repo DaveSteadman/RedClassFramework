@@ -22,10 +22,10 @@
 #include "RedPoint2D.h"
 #include "RedRectSize.h"
 
+using namespace Red::Core;
+
 namespace Red {
 namespace Geometry {
-
-using namespace Red::Core;
 
 class RedRect
 {

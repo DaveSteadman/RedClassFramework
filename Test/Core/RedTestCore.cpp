@@ -18,117 +18,96 @@
 
 #include "RedTestCore.h"
 
+using namespace Red::Core;
+
 namespace Red {
 namespace Test {
 
-using namespace Red::Core;
-
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-int RedTestCore::RunUnitTest(void)
+void RedTestCore::RunUnitTest(RedLog& log)
 {
-    int BoolPassed        = RedTestCore::TestBoolean();
-    int CharPassed        = RedTestCore::TestChar();
-    int NumberPassed      = RedTestCore::TestNumber();
-    int NumberRangePassed = RedTestCore::TestNumberRange();
-    int StringPassed      = RedTestCore::TestString();
-    int DataTypePassed    = RedTestCore::TestDataType();
-    int VariantPassed     = RedTestCore::TestVariant();
-    int RecordPassed      = RedTestCore::TestRecord();
-    int LinkedListPassed  = RedTestCore::TestLinkedList();
-    int ResultPassed      = RedTestCore::TestResult();
-    int EventLogPassed    = RedTestCore::TestEventLog();
-    int SmartPtrPassed    = RedTestCore::TestSmartPtr();
-    int DatePassed        = RedTestCore::TestDate();
-    int TimePassed        = RedTestCore::TestTime();
+    if (RedTestCore::TestBoolean().IsFail())      { log.AddErrorEvent("Core Unit Test: TestBoolean Failed");      return; }
+    if (RedTestCore::TestChar().IsFail())         { log.AddErrorEvent("Core Unit Test: TestChar Failed");         return; }
+    if (RedTestCore::TestNumber().IsFail())       { log.AddErrorEvent("Core Unit Test: TestNumber Failed");       return; }
+    if (RedTestCore::TestNumberRange().IsFail())  { log.AddErrorEvent("Core Unit Test: TestNumberRange Failed");  return; }
+    if (RedTestCore::TestString().IsFail())       { log.AddErrorEvent("Core Unit Test: TestString Failed");       return; }
+    if (RedTestCore::TestDataType().IsFail())     { log.AddErrorEvent("Core Unit Test: TestDataType Failed");     return; }
+    if (RedTestCore::TestVariant().IsFail())      { log.AddErrorEvent("Core Unit Test: TestVariant Failed");      return; }
+    if (RedTestCore::TestRecord().IsFail())       { log.AddErrorEvent("Core Unit Test: TestRecord Failed");       return; }
+    if (RedTestCore::TestLinkedList().IsFail())   { log.AddErrorEvent("Core Unit Test: TestLinkedList Failed");   return; }
+    if (RedTestCore::TestResult().IsFail())       { log.AddErrorEvent("Core Unit Test: TestResult Failed");       return; }
+    if (RedTestCore::TestEventLog().IsFail())     { log.AddErrorEvent("Core Unit Test: TestEventLog Failed");     return; }
+    if (RedTestCore::TestSmartPtr().IsFail())     { log.AddErrorEvent("Core Unit Test: TestSmartPtr Failed");     return; }
+    if (RedTestCore::TestDate().IsFail())         { log.AddErrorEvent("Core Unit Test: TestDate Failed");         return; }
+    if (RedTestCore::TestTime().IsFail())         { log.AddErrorEvent("Core Unit Test: TestTime Failed");         return; }
+    if (RedTestCore::TestOutputBuffer().IsFail()) { log.AddErrorEvent("Core Unit Test: TestOutputBuffer Failed"); return; }
 
-    if(!RedTestCore::TestOutputBuffer()) return 0;
-
-    int OverallPassed = 0;
-
-    if ((BoolPassed        == 1) &&
-        (CharPassed        == 1) &&
-        (NumberPassed      == 1) &&
-        (NumberRangePassed == 1) &&
-        (StringPassed      == 1) &&
-        (DataTypePassed    == 1) &&
-        (VariantPassed     == 1) &&
-        (ResultPassed      == 1) &&
-        (LinkedListPassed  == 1) &&
-        (RecordPassed      == 1) &&
-        (EventLogPassed    == 1) &&
-        (SmartPtrPassed    == 1) &&
-        (DatePassed        == 1) &&
-        (TimePassed        == 1))
-    {
-        OverallPassed = 1;
-    }
-
-    return OverallPassed;
+    log.AddText("Core Unit Test: Passed");
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-int RedTestCore::TestBoolean(void)
+RedResult RedTestCore::TestBoolean(void)
 {
     RedBoolean x;
     x.SetYes();
-    if (!x.IsYes()) return 0;
+    if (!x.IsYes()) return kResultFail;
 
     RedBoolean y;
     y.SetNo();
-    if (!y.IsNo()) return 0;
+    if (!y.IsNo()) return kResultFail;
 
     x = y;
-    if (x != y) return 0;
+    if (x != y) return kResultFail;
 
 
     RedBoolean* p = dynamic_cast<RedBoolean*>(x.Clone());
     p->SetFalse();
-    if (p->IsTrue()) return 0;
+    if (p->IsTrue()) return kResultFail;
 
-    if (p->Type() != RedDataType::Bool()) return 0;
+    if (p->Type() != RedDataType::Bool()) return kResultFail;
 
-    return 1;
+    return kResultSuccess;
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-int RedTestCore::TestChar(void)
+RedResult RedTestCore::TestChar(void)
 {
     RedChar a = RedChar(0);
     RedChar b = RedChar('A');
     RedChar c = RedChar('{');
 
-    if (a.IsPrintable()) return 0;
-    if (!b.IsAlpha())    return 0;
-    if (!c.IsBracket())  return 0;
+    if (a.IsPrintable()) return kResultFail;
+    if (!b.IsAlpha())    return kResultFail;
+    if (!c.IsBracket())  return kResultFail;
 
     a.Set(b);
-    if (!a.IsAlpha())    return 0;
+    if (!a.IsAlpha())    return kResultFail;
 
     c = a;
-    if (!a.IsAlpha())    return 0;
+    if (!a.IsAlpha())    return kResultFail;
 
     c = 'k';
-    if (!a.IsAlpha())    return 0;
+    if (!a.IsAlpha())    return kResultFail;
 
     c = 67;
-    if (!a.IsAlpha())    return 0;
+    if (!a.IsAlpha())    return kResultFail;
 
     a = 'a';
     b = 'b';
-    if (a == b) return 0;
+    if (a == b) return kResultFail;
 
     a = b;
-    if (a != b) return 0;
+    if (a != b) return kResultFail;
 
-    return 1;
+    return kResultSuccess;
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-int RedTestCore::TestNumber(void)
+RedResult RedTestCore::TestNumber(void)
 {
     RedNumber x;
     RedNumber y;
@@ -146,33 +125,33 @@ int RedTestCore::TestNumber(void)
 
     RedNumber xx = 1.2355;
     RedString yy = xx.DecimalStringWithDP(3);
-    if (yy != "1.236") return 0;
+    if (yy != "1.236") return kResultFail;
 
-    return 1;
+    return kResultSuccess;
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-int RedTestCore::TestNumberRange(void)
+RedResult RedTestCore::TestNumberRange(void)
 {
     RedNumberRange DegreesLongitude(-180.0, 180.0);    
     RedNumber x = 300;
 
-    if (DegreesLongitude.IsInRange(x)) return 0;
+    if (DegreesLongitude.IsInRange(x)) return kResultFail;
 
     DegreesLongitude.WrapNumber(x);
-    if (!DegreesLongitude.IsInRange(x)) return 0;
+    if (!DegreesLongitude.IsInRange(x)) return kResultFail;
 
     x = 300;
     DegreesLongitude.CropNumber(x);
-    if (!DegreesLongitude.IsInRange(x)) return 0;
+    if (!DegreesLongitude.IsInRange(x)) return kResultFail;
 
-    return 1;
+    return kResultSuccess;
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-int RedTestCore::TestString(void)
+RedResult RedTestCore::TestString(void)
 {
     // Case Changes
     {
@@ -180,12 +159,12 @@ int RedTestCore::TestString(void)
         x = "Hello";
 
         x = x.ToUpper();
-        if (x == "Hello") return 0;
-        if (x != "HELLO") return 0;
+        if (x == "Hello") return kResultFail;
+        if (x != "HELLO") return kResultFail;
 
         x = x.ToLower();
-        if (x == "HELLO") return 0;
-        if (x != "hello") return 0;
+        if (x == "HELLO") return kResultFail;
+        if (x != "hello") return kResultFail;
     }
 
     // String type checks
@@ -193,16 +172,16 @@ int RedTestCore::TestString(void)
         RedString x;
 
         x = "qw23";
-        if (!x.IsAlphaNumeric()) return 0;
+        if (!x.IsAlphaNumeric()) return kResultFail;
 
         x = "!@@^";
-        if (x.IsAlphaNumeric()) return 0;
+        if (x.IsAlphaNumeric()) return kResultFail;
 
         x = "Qwerty";
-        if ( x.IsCharInString('a')) return 0;
-        if (!x.IsCharInString('r')) return 0;
+        if ( x.IsCharInString('a')) return kResultFail;
+        if (!x.IsCharInString('r')) return kResultFail;
 
-        if (x.IsEmpty()) return 0;
+        if (x.IsEmpty()) return kResultFail;
     }
 
     // Inserts and appends
@@ -211,20 +190,20 @@ int RedTestCore::TestString(void)
 
         x = "123456789";
         x.Insert(3, "qwerty");
-        if (x != "123qwerty456789") return 0;
+        if (x != "123qwerty456789") return kResultFail;
 
         x = "123";
         x.Append("456");
-        if (x != "123456") return 0;
+        if (x != "123456") return kResultFail;
 
         x = "qwerty";
         int ix = 123;
         x.Append(ix);
-        if (x != "qwerty123") return 0;
+        if (x != "qwerty123") return kResultFail;
 
         x = "121212121212121212121212121212121212";
         x.Append('A');
-        if (x != "121212121212121212121212121212121212A") return 0;
+        if (x != "121212121212121212121212121212121212A") return kResultFail;
     }
 
     // Code has failed on a 32 character string - specific test here to ensure the end-of-string
@@ -238,46 +217,46 @@ int RedTestCore::TestString(void)
         const int newFLen = F.Length();
 
         if (newFLen != origFLen)
-            return 0;
+            return kResultFail;
     }
 
-    return 1;
+    return kResultSuccess;
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-int RedTestCore::TestDataType(void)
+RedResult RedTestCore::TestDataType(void)
 {
     RedDataType x;
     x = RedDataType::Char();
 
-    if (!x.IsChar()) return 0;
+    if (!x.IsChar()) return kResultFail;
 
     RedDataType y = RedDataType::Num();
 
-    if (x == y) return 0;
+    if (x == y) return kResultFail;
 
-    return 1;
+    return kResultSuccess;
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-int RedTestCore::TestVariant(void)
+RedResult RedTestCore::TestVariant(void)
 {
     {
         RedVariant x;
         RedString str = "qwerty";
 
         x = str;
-        if (x.Type() != kDataTypeStr) return 0;
+        if (x.Type() != kDataTypeStr) return kResultFail;
 
         RedString y = "1234";
 
         if (x.Type() == kDataTypeStr)
         {
             y = x.StringValue();
-            if (y.Type() != kDataTypeStr) return 0;
-            if (y != str) return 0;
+            if (y.Type() != kDataTypeStr) return kResultFail;
+            if (y != str) return kResultFail;
         }
     }
 
@@ -293,12 +272,12 @@ int RedTestCore::TestVariant(void)
         exp = "hello world";
 
         if (c == exp)
-            return 0;
+            return kResultFail;
 
         c = a + b;
 
         if (c != exp)
-            return 0;
+            return kResultFail;
     }
 
     {
@@ -310,15 +289,15 @@ int RedTestCore::TestVariant(void)
         res = x + y;
 
         if ( res != exp )
-            return 0;
+            return kResultFail;
     }
 
-    return 1;
+    return kResultSuccess;
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-int RedTestCore::TestLinkedList(void)
+RedResult RedTestCore::TestLinkedList(void)
 {
     typedef RedLinkedList<int>         TIntList;
     typedef RedLinkedListIterator<int> TIntListIt;
@@ -329,34 +308,34 @@ int RedTestCore::TestLinkedList(void)
     l.AddLast(2);
     l.AddLast(3);
 
-    if (l.NumItems() != 3) return 0;
+    if (l.NumItems() != 3) return kResultFail;
 
     int x=0;
-    if (l.FindFirst(x) == 0) return 0;
-    if (x != 1) return 0;
+    if (l.FindFirst(x) == 0) return kResultFail;
+    if (x != 1) return kResultFail;
 
-    if (l.FindLast(x) == 0) return 0;
-    if (x != 3) return 0;
+    if (l.FindLast(x) == 0) return kResultFail;
+    if (x != 3) return kResultFail;
 
-    return 1;
+    return kResultSuccess;
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-int RedTestCore::TestResult(void)
+RedResult RedTestCore::TestResult(void)
 {
     {
         RedResult x = kResultSuccess;
 
-        if (x == kResultFail)    return 0;
-        if (x != kResultSuccess) return 0;
+        if (x == kResultFail)    return kResultFail;
+        if (x != kResultSuccess) return kResultFail;
     }
-    return 1;
+    return kResultSuccess;
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-int RedTestCore::TestRecord(void)
+RedResult RedTestCore::TestRecord(void)
 {
     RedRecord x;
     RedString y("Data1");
@@ -369,77 +348,77 @@ int RedTestCore::TestRecord(void)
     RedType* p = 0;
     x.Find("Field1", p);
 
-    if (p->Type() != kDataTypeStr) return 0;
+    if (p->Type() != kDataTypeStr) return kResultFail;
     RedString* ps = (RedString*)p;
-    if (*ps != "Data1") return 0;
+    if (*ps != "Data1") return kResultFail;
 
     delete p;
     p = 0;
     ps = 0;
 
-    return 1;
+    return kResultSuccess;
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-int RedTestCore::TestEventLog(void)
+RedResult RedTestCore::TestEventLog(void)
 {
     RedLog log;
 
     log.AddText("EventLogText1");
     log.AddText("EventLogText2");
-    if (log.NumEvents() != 2) return 0;
-    if (log.IsError()) return 0;
+    if (log.NumEvents() != 2) return kResultFail;
+    if (log.IsError()) return kResultFail;
 
     RedLogEvent e(eErrorEvent, "ErrorText1");
     log.AddEvent(e);
-    if (log.NumEvents() != 3) return 0;
-    if (!log.IsError()) return 0;
+    if (log.NumEvents() != 3) return kResultFail;
+    if (!log.IsError()) return kResultFail;
 
-    return 1;
+    return kResultSuccess;
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-int RedTestCore::TestSmartPtr(void)
+RedResult RedTestCore::TestSmartPtr(void)
 {
     RedNumberSmartPtr x(new RedNumber(1.23));
-    if (x.RefCount() != 1) return 0;
+    if (x.RefCount() != 1) return kResultFail;
 
     {
         RedNumberSmartPtr y;
-        if (y.RefCount() != 1) return 0;
+        if (y.RefCount() != 1) return kResultFail;
 
         y = x;
-        if (x.RefCount() != 2) return 0;
-        if (y.RefCount() != 2) return 0;
+        if (x.RefCount() != 2) return kResultFail;
+        if (y.RefCount() != 2) return kResultFail;
 
         y->Set(1.123);
         if (!y->IsEqualTo(RedNumber(1.123)))
-            return 0;
+            return kResultFail;
     }
 
-    if (x.RefCount() != 1) return 0;
+    if (x.RefCount() != 1) return kResultFail;
 
-    return 1;
+    return kResultSuccess;
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-int RedTestCore::TestDate(void)
+RedResult RedTestCore::TestDate(void)
 {
     RedDate d;
     d.Now();
 
     int x = d.EightDigitInt();
-    if (x < 20130000) return 0;
+    if (x < 20130000) return kResultFail;
 
-    return 1;
+    return kResultSuccess;
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-int RedTestCore::TestTime(void)
+RedResult RedTestCore::TestTime(void)
 {
 //    RedTime t;
 //    t.Now();
@@ -447,24 +426,24 @@ int RedTestCore::TestTime(void)
 //    int x = t.SixDigitInt();
 //
 //    int y = t.Hour().GetInteger() * 10000;
-//    if (x < y) return 0;
+//    if (x < y) return kResultFail;
 //    
 
-    return 1;
+    return kResultSuccess;
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 // IO
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-int RedTestCore::TestInputBuffer(void)
+RedResult RedTestCore::TestInputBuffer(void)
 {
-    return 1;
+    return kResultSuccess;
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-int RedTestCore::TestOutputBuffer(void)
+RedResult RedTestCore::TestOutputBuffer(void)
 {
     {
         RedBufferOutput outbuf;
@@ -473,14 +452,14 @@ int RedTestCore::TestOutputBuffer(void)
         outbuf.Append("aaa");
         outbuf.IncreaseIndent();
         outbuf.Append("bbb");
-        if (outbuf.ExtractData() != RedString("aaabbb")) return 0;
+        if (outbuf.ExtractData() != RedString("aaabbb")) return kResultFail;
         outbuf.Empty();
 
         outbuf.Append("aaa");
         outbuf.SetIndentLevel(2);
         outbuf.WriteIndent();
         outbuf.Append("bbb");
-        if (outbuf.ExtractData() != RedString("aaa    bbb")) return 0;
+        if (outbuf.ExtractData() != RedString("aaa    bbb")) return kResultFail;
         outbuf.Empty();
 
         RedString in = "111111\n222222";
@@ -490,10 +469,10 @@ int RedTestCore::TestOutputBuffer(void)
         outbuf.AppendIndented(in);
         outbuf.DecreaseIndent();
         outbuf.AppendIndented("bbb");
-        if (outbuf.ExtractData() != RedString("aaa\n  111111\n  222222\nbbb")) return 0;
+        if (outbuf.ExtractData() != RedString("aaa\n  111111\n  222222\nbbb")) return kResultFail;
     }
 
-    return 1;
+    return kResultSuccess;
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

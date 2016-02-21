@@ -23,7 +23,7 @@
 namespace Red {
 namespace Core {
 
-using namespace Red::Core;
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 /// Enumeration based class to encapsulate the possible RedType objects.
 class RedDataType 

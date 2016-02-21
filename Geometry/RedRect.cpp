@@ -20,10 +20,10 @@
 
 #include "math.h"
 
+using namespace Red::Core;
+
 namespace Red {
 namespace Geometry {
-
-using namespace Red::Core;
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 

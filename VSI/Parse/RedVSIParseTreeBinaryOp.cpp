@@ -25,10 +25,10 @@
 
 #include "RedVSIErrorCodes.h"
 
+using namespace Red::Core;
+
 namespace Red {
 namespace VSI {
-
-using namespace Red::Core;
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 

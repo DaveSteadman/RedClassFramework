@@ -25,8 +25,6 @@
 namespace Red {
 namespace Core {
 
-using namespace Red::Core;
-
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 double RedDateSpan::SpanInDays(void) const

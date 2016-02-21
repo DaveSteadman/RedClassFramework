@@ -20,20 +20,24 @@
 
 #include "RedCoreNamespace.h"
 
+using namespace Red::Core;
+
 namespace Red {
 namespace Test {
 
-    using namespace Red::Core;
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-    class RedTestExp
-    {
-    public:
-        static int RunUnitTest(void);
+class RedTestExp
+{
+public:
+    static int RunUnitTest(void);
 
-    private:
-        static int TestOne(void);
-        static int TestTwo(void);
-    };
+private:
+    static int TestOne(void);
+    static int TestTwo(void);
+};
+
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 } // Test
 } // Red

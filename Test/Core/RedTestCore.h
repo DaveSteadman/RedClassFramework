@@ -20,40 +20,42 @@
 
 #include "RedCoreNamespace.h"
 
+using namespace Red::Core;
+
 namespace Red {
 namespace Test {
 
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-    //using namespace Red::Core;
+class RedTestCore
+{
+public:
+    static void RunUnitTest(RedLog& log);
 
-    class RedTestCore
-    {
-    public:
-        static int RunUnitTest(void);
+private:
+    static RedResult TestBoolean(void);
+    static RedResult TestChar(void);
+    static RedResult TestNumber(void);
+    static RedResult TestNumberRange(void);
+    static RedResult TestString(void);
+    static RedResult TestDataType(void);
+    static RedResult TestVariant(void);
+    static RedResult TestLinkedList(void);
+    static RedResult TestRecord(void);
+    static RedResult TestEventLog(void);
+    static RedResult TestSmartPtr(void);
+    static RedResult TestResult(void);
 
-    private:
-        static int TestBoolean(void);
-        static int TestChar(void);
-        static int TestNumber(void);
-        static int TestNumberRange(void);
-        static int TestString(void);
-        static int TestDataType(void);
-        static int TestVariant(void);
-        static int TestLinkedList(void);
-        static int TestRecord(void);
-        static int TestEventLog(void);
-        static int TestSmartPtr(void);
-        static int TestResult(void);
+    // Time
+    static RedResult TestDate(void);
+    static RedResult TestTime(void);
 
-        // Time
-        static int TestDate(void);
-        static int TestTime(void);
+    // IO
+    static RedResult TestInputBuffer(void);
+    static RedResult TestOutputBuffer(void);
+};
 
-        // IO
-        static int TestInputBuffer(void);
-        static int TestOutputBuffer(void);
-    };
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-
-}
-}
+} // Test
+} // Red

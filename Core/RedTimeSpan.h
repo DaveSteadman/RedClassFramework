@@ -24,8 +24,6 @@
 namespace Red {
 namespace Core {
 
-using namespace Red::Core;
-
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 class RedTimeSpan
@@ -38,8 +36,8 @@ public:
     const double SpanInHours(void) const;
     const double SpanInSeconds(void) const;
 
-    void   SetStartAtStartOfDay(void) { starttime.InitStartOfDay(); };
-    void   SetEndAtEndOfDay(void)     { endtime.InitEndOfDay();     };
+    void   SetStartAtStartOfDay(void) { starttime = kTimeStartOfDay; };
+    void   SetEndAtEndOfDay(void)     { endtime   = kTimeEndOfDay;   };
 
 private:
     RedTime starttime;
@@ -48,7 +46,7 @@ private:
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-} // Time
+} // Core
 } // Red
 
 

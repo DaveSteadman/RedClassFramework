@@ -27,6 +27,8 @@
 namespace Red {
 namespace Core {
 
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
 /// Input buffer constructed from a string, allowing character to be read sequentially while
 /// tracking position in the file.
 class RedBufferInput
@@ -69,6 +71,8 @@ private:
     int         iCol;
     RedString   cStrBuffer;
 };
+
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 } // Core
 } // Red

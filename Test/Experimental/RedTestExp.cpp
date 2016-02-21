@@ -21,11 +21,11 @@
 
 #include "RedTestExp.h"
 
-namespace Red {
-namespace Test {
-
 using namespace Red::Core;
 //using namespace Red::Exp;
+
+namespace Red {
+namespace Test {
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 

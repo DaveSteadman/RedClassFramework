@@ -25,10 +25,10 @@
 #include "RedVSIRoutineCallInterface.h"
 #include "RedVSILangElement.h"
 
+using namespace Red::Core;
+
 namespace Red {
 namespace VSI {
-
-using namespace Red::Core;
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -36,7 +36,6 @@ using namespace Red::Core;
 // a circular dependency.
 class RedVSICmdInterface;
 class RedVSIParseTreeInterface;
-class RedVSIContextRoutine;
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -61,7 +60,7 @@ public:
 
     // Routine creation and control
     virtual void          SetupRoutineCall(const RedVSIRoutineCallInterface& cSignature) =0;
-    virtual bool          IsBlocked(const RedVSIContextRoutine* pRoutineContext) =0;
+    virtual bool          IsBlocked(const RedVSIContextInterface* pRoutineContext) =0;
     virtual void          QueueCommand(RedVSICmdInterface* pCmd) =0;
     virtual void          ClearCommandQueue(void) =0;
     virtual RedString     ClassName(void) const =0;

@@ -26,8 +26,6 @@
 namespace Red {
 namespace Core {
 
-using namespace Red::Core;
-
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 void RedDate::SetDate(const RedString& datestr)

@@ -27,10 +27,10 @@
 #include "RedVSIParseTreeVal.h"
 #include "RedVSIParseTreeCall.h"
 
+using namespace Red::Core;
+
 namespace Red {
 namespace VSI {
-
-using namespace Red::Core;
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 // Operation taking a top-level expression node and adding it, and all its child nodes, to the expression stack.

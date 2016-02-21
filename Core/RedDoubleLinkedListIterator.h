@@ -18,15 +18,13 @@
 
 #pragma once
 
-// Include Namespaces
-
 // Include Files
 #include "RedDoubleLinkedList.h"
 
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
 namespace Red {
 namespace Core {
+
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 template<class Element>
 class RedDoubleLinkedListIterator

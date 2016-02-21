@@ -21,6 +21,8 @@
 namespace Red {
 namespace Core {
 
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
 template<class Element>
 class RedLinkedList
 {
@@ -33,10 +35,10 @@ public:
     // New Items
     void AddLast(Element Elem);
     void AddFirst(Element Elem);
-    int  InsertAfter(unsigned iElemIndex, Element Elem);
+    bool InsertAfter(const unsigned iElemIndex, Element Elem);
 
     // Access counts and index values
-    int      IsEmpty(void)    const { return (iNumItems==0); };
+    bool     IsEmpty(void)    const { return (iNumItems==0); };
     unsigned NumItems(void)   const { return iNumItems; };
     unsigned FirstIndex(void) const { if (iNumItems == 0) return 0; return 1; };
     unsigned LastIndex(void)  const { return iNumItems; };
@@ -49,7 +51,7 @@ public:
     // Delete Items
     int DelFirst(void);
     int DelLast(void);
-    int Del(unsigned iElemIndex);
+    int Del(const unsigned iElemIndex);
     int DelAll(void);
 
     // complex operations
@@ -165,7 +167,7 @@ void RedLinkedList<Element>::AddFirst(Element Elem)
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 template <class Element>
-int RedLinkedList<Element>::InsertAfter(unsigned iElemIndex, Element Elem)
+bool RedLinkedList<Element>::InsertAfter(const unsigned iElemIndex, Element Elem)
 {
     TListElement* pInsertAfterElem = 0;
     TListElement* pNewElem         = 0;
@@ -177,7 +179,7 @@ int RedLinkedList<Element>::InsertAfter(unsigned iElemIndex, Element Elem)
    
     // Return failed if the location is after the end of the list
     if ( !GetListElement(iElemIndex, &pInsertAfterElem) )
-        return 0;
+        return false;
 
     // return failed if we didn't make the new object
     MakeListElement(&pNewElem);
@@ -202,7 +204,7 @@ int RedLinkedList<Element>::InsertAfter(unsigned iElemIndex, Element Elem)
     pInsertAfterElem->pNext = pNewElem;
 
     // return success
-    return 1;
+    return true;
 }
 
 
@@ -330,7 +332,7 @@ int RedLinkedList<Element>::DelLast(void)
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 template <class Element>
-int RedLinkedList<Element>::Del(unsigned iElemIndex)
+int RedLinkedList<Element>::Del(const unsigned iElemIndex)
 {
     TListElement* pRemoveElem = 0;
     TListElement* pPrevElem   = 0;

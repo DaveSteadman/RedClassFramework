@@ -24,8 +24,6 @@
 namespace Red {
 namespace Core {
 
-using namespace Red::Core;
-
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 class RedDateSpan
@@ -50,7 +48,7 @@ private:
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-} // Time
+} // Core
 } // Red
 
 

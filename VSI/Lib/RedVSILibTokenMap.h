@@ -21,16 +21,14 @@
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 #include "RedCoreNamespace.h"
-
 #include "RedVSITokenElementMap.h"
+
+using namespace Red::Core;
 
 namespace Red {
 namespace VSI {
 
-using namespace Red::Core;
-
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
 
 class RedVSILibTokenMap
 {
@@ -101,6 +99,8 @@ static const RedString kVSIIOElementSymbolPower          = RedString("^");
 //        cVSILibTokenMap.Add(RedString("."),       RedVSIIOElement::SymbolPeriod());
 //        cVSILibTokenMap.Add(RedString("::"),      RedVSIIOElement::SymbolDoubleColon());
 //        cVSILibTokenMap.Add(RedString("'"),       RedVSIIOElement::SymbolStringContent());
+
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 } // VSI
 } // Red

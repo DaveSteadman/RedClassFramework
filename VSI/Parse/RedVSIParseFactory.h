@@ -26,10 +26,10 @@
 #include "RedVSITokenBuffer.h"
 #include "RedVSIParseTreeInterface.h"
 
+using namespace Red::Core;
+
 namespace Red {
 namespace VSI {
-
-using namespace Red::Core;
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 

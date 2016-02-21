@@ -33,6 +33,8 @@ namespace Core {
 /// Constant describing the tollerance on floating point equality statements
 static const double kFloatCompTollerance = 0.0000001;
 
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
 /// Class representing a mutable number. Internally differentiates between int and float values.
 class RedNumber : public RedType
 {
@@ -52,12 +54,12 @@ public:
     RedType*            Clone(void) const { RedNumber* newN = new RedNumber(*this); return (RedType*)newN; };
 
     // Class operations
-    const int           IsZero(void)     const;
-    const int           IsPositive(void) const;
-    const int           IsInteger(void)  const { return (eNumType == eInt);   };
-    const int           IsReal(void)     const { return (eNumType == eFloat); };
-    const int           IsEqualTo(const RedNumber& CheckVal) const;
-    const int           IsEqualToWithinTollerance(const RedNumber& CheckVal, const RedNumber& tollerance) const;
+    const bool          IsZero(void)     const;
+    const bool          IsPositive(void) const;
+    const bool          IsInteger(void)  const { return (eNumType == eInt);   };
+    const bool          IsReal(void)     const { return (eNumType == eFloat); };
+    const bool          IsEqualTo(const RedNumber& CheckVal) const;
+    const bool          IsEqualToWithinTollerance(const RedNumber& CheckVal, const RedNumber& tollerance) const;
 
     const RedString     DecimalString(void) const;
     const RedString     DecimalStringWithDP(const int decimalplaces) const;
@@ -120,6 +122,8 @@ static const RedNumber kNumberOne                 = RedNumber(1);
 static const RedNumber kNumberFloatCompTollerance = RedNumber(kFloatCompTollerance);
 static const RedNumber kNumberZero                = RedNumber(0);
 static const RedNumber kNumberMinusOne            = RedNumber(-1);
+
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 } // Core
 } // Red

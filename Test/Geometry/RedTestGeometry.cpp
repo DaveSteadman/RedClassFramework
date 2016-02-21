@@ -29,56 +29,36 @@ using namespace Red::Geometry;
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-int RedTestGeometry::RunUnitTest(void)
+void RedTestGeometry::RunUnitTest(RedLog& log)
 {
-    int CirclePassed    = RedTestGeometry::TestCircle();
-    int LinePassed      = RedTestGeometry::TestLine2D();
-    int PointPassed     = RedTestGeometry::TestPoint2D();
-    int RectPassed      = RedTestGeometry::TestRect();
-    int RectSizePassed  = RedTestGeometry::TestRectSize();
-    int VectorPassed    = RedTestGeometry::TestVector2D();
+    // 2D
+    if (RedTestGeometry::TestCircle().IsFail())      { log.AddErrorEvent("Geometry Unit Test: TestCircle Failed");      return; }
+    if (RedTestGeometry::TestLine2D().IsFail())      { log.AddErrorEvent("Geometry Unit Test: TestLine2D Failed");      return; }
+    if (RedTestGeometry::TestPoint2D().IsFail())     { log.AddErrorEvent("Geometry Unit Test: TestPoint2D Failed");     return; }
+    if (RedTestGeometry::TestRect().IsFail())        { log.AddErrorEvent("Geometry Unit Test: TestRect Failed");        return; }
+    if (RedTestGeometry::TestRectSize().IsFail())    { log.AddErrorEvent("Geometry Unit Test: TestRectSize Failed");    return; }
+    if (RedTestGeometry::TestVector2D().IsFail())    { log.AddErrorEvent("Geometry Unit Test: TestVector2D Failed");    return; }
 
-    int TwoDimensionsPassed   = 0;
+    // 3D
+    if (RedTestGeometry::TestSphere().IsFail())      { log.AddErrorEvent("Geometry Unit Test: TestSphere Failed");      return; }
+    if (RedTestGeometry::TestLine3D().IsFail())      { log.AddErrorEvent("Geometry Unit Test: TestLine3D Failed");      return; }
+    if (RedTestGeometry::TestLatLong().IsFail())     { log.AddErrorEvent("Geometry Unit Test: TestLatLong Failed");     return; }
+    if (RedTestGeometry::TestPoint3D().IsFail())     { log.AddErrorEvent("Geometry Unit Test: TestPoint3D Failed");     return; }
+    if (RedTestGeometry::TestVector3D().IsFail())    { log.AddErrorEvent("Geometry Unit Test: TestVector3D Failed");    return; }
 
-    if ((CirclePassed    == 1) &&
-        (LinePassed      == 1) &&
-        (PointPassed     == 1) &&
-        (RectPassed      == 1) &&
-        (RectSizePassed  == 1) &&
-        (VectorPassed    == 1))
-    {
-        TwoDimensionsPassed = 1;
-    }
+    // Units
+    if (RedTestGeometry::TestAngle().IsFail())       { log.AddErrorEvent("Geometry Unit Test: TestAngle Failed");       return; }
+    if (RedTestGeometry::TestArea().IsFail())        { log.AddErrorEvent("Geometry Unit Test: TestArea Failed");        return; }
+    if (RedTestGeometry::TestDistance().IsFail())    { log.AddErrorEvent("Geometry Unit Test: TestDistance Failed");    return; }
+    if (RedTestGeometry::TestTemperature().IsFail()) { log.AddErrorEvent("Geometry Unit Test: TestTemperature Failed"); return; }
+    if (RedTestGeometry::TestVolume().IsFail())      { log.AddErrorEvent("Geometry Unit Test: TestVolume Failed");      return; }
 
-    int SpherePassed      = RedTestGeometry::TestSphere();
-    int Line3DPassed      = RedTestGeometry::TestLine3D();
-    int LatLongPassed     = RedTestGeometry::TestLatLong();
-    int Point3DPassed     = RedTestGeometry::TestPoint3D();
-    int Vector3DPassed    = RedTestGeometry::TestVector3D();
-
-    int ThreeDimensionsPassed   = 0;
-
-    if ((SpherePassed      == 1) &&
-        (Line3DPassed      == 1) &&
-        (LatLongPassed     == 1) &&
-        (Point3DPassed     == 1) &&
-        (Vector3DPassed    == 1))
-    {
-        ThreeDimensionsPassed = 1;
-    }
-
-    if (!RedTestGeometry::TestAngle())       return 0;
-    if (!RedTestGeometry::TestArea())        return 0;
-    if (!RedTestGeometry::TestDistance())    return 0;
-    if (!RedTestGeometry::TestTemperature()) return 0;
-    if (!RedTestGeometry::TestVolume())      return 0;
-
-    return (TwoDimensionsPassed && ThreeDimensionsPassed);
+    log.AddText("Geometry Unit Test: Passed");
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-int RedTestGeometry::TestCircle(void)
+RedResult RedTestGeometry::TestCircle(void)
 {
     RedPoint2D p(1.1, 1.1);
     RedNumber r(1.1);
@@ -86,14 +66,14 @@ int RedTestGeometry::TestCircle(void)
     RedCircle x(p, r);
 
     RedNumber circum = x.Cirumference();
-    if (!circum.IsEqualToWithinTollerance(6.9115, 0.0001)) return 0;
+    if (!circum.IsEqualToWithinTollerance(6.9115, 0.0001)) return kResultFail;
 
-    return 1;
+    return kResultSuccess;
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-int RedTestGeometry::TestLine2D(void)
+RedResult RedTestGeometry::TestLine2D(void)
 {
     // Setup the line as the hyp of a 3,4,5 triangle.
     RedPoint2D p1(1,1);
@@ -101,53 +81,53 @@ int RedTestGeometry::TestLine2D(void)
     RedLine2D l(p1, p2);
 
     RedNumber d = l.GetLength();
-    if (!d.IsEqualToWithinTollerance(5.0, kFloatCompTollerance)) return 0;
+    if (!d.IsEqualToWithinTollerance(5.0, kFloatCompTollerance)) return kResultFail;
 
-    return 1;
+    return kResultSuccess;
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-int RedTestGeometry::TestPoint2D(void)
+RedResult RedTestGeometry::TestPoint2D(void)
 {
     RedPoint2D p1(1,1);
     RedPoint2D p2(2,2);
 
     RedNumber d = p1.DistanceTo(p2);
-    if (!d.IsEqualToWithinTollerance(1.4142, 0.001)) return 0;
+    if (!d.IsEqualToWithinTollerance(1.4142, 0.001)) return kResultFail;
 
     p2.Set(1.2, 2.2);
     RedVector2D v = p1.VectorTo(p2);
-    if (!v.X().IsEqualToWithinTollerance(0.2, kFloatCompTollerance)) return 0;
-    if (!v.Y().IsEqualToWithinTollerance(1.2, kFloatCompTollerance)) return 0;
+    if (!v.X().IsEqualToWithinTollerance(0.2, kFloatCompTollerance)) return kResultFail;
+    if (!v.Y().IsEqualToWithinTollerance(1.2, kFloatCompTollerance)) return kResultFail;
 
-    return 1;
+    return kResultSuccess;
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-int RedTestGeometry::TestRect(void)
+RedResult RedTestGeometry::TestRect(void)
 {
     RedRect x(1, 1, 10, 10);
 
     RedRectSize s = x.Size();
     s.Scale(0.5);
 
-    if (!s.Height().IsEqualToWithinTollerance(4.5, 0.0001)) return 0;
+    if (!s.Height().IsEqualToWithinTollerance(4.5, 0.0001)) return kResultFail;
 
-    return 1;
+    return kResultSuccess;
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-int RedTestGeometry::TestRectSize(void)
+RedResult RedTestGeometry::TestRectSize(void)
 {
-    return 1;
+    return kResultSuccess;
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-int RedTestGeometry::TestVector2D(void)
+RedResult RedTestGeometry::TestVector2D(void)
 {
     RedNumber a = 56.676;
     RedNumber b = 1.234;
@@ -156,40 +136,40 @@ int RedTestGeometry::TestVector2D(void)
     RedVector2D y(a, b);
 
     x.Scale(2);
-    if (!x.X().IsEqualToWithinTollerance(2,   kFloatCompTollerance)) return 0;
-    if (!x.Y().IsEqualToWithinTollerance(4.2, kFloatCompTollerance)) return 0;
+    if (!x.X().IsEqualToWithinTollerance(2,   kFloatCompTollerance)) return kResultFail;
+    if (!x.Y().IsEqualToWithinTollerance(4.2, kFloatCompTollerance)) return kResultFail;
 
     RedNumber mag = x.Magnitude();
-    if (!mag.IsEqualToWithinTollerance(4.6518, 0.0001)) return 0;
+    if (!mag.IsEqualToWithinTollerance(4.6518, 0.0001)) return kResultFail;
 
-    return 1;
+    return kResultSuccess;
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-int RedTestGeometry::TestSphere(void)
+RedResult RedTestGeometry::TestSphere(void)
 {
 
-    return 1;
+    return kResultSuccess;
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-int RedTestGeometry::TestLine3D(void)
+RedResult RedTestGeometry::TestLine3D(void)
 {
-    return 1;
+    return kResultSuccess;
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-int RedTestGeometry::TestLatLong(void)
+RedResult RedTestGeometry::TestLatLong(void)
 {
-    return 1;
+    return kResultSuccess;
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-int RedTestGeometry::TestPoint3D(void)
+RedResult RedTestGeometry::TestPoint3D(void)
 {
     {
         RedPoint3D  x(1,2,3);
@@ -197,79 +177,79 @@ int RedTestGeometry::TestPoint3D(void)
 
         x.Translate(y);
 
-        if (!x.X().IsEqualToWithinTollerance(2.1, 0.0001)) return 0;
-        if (!x.Y().IsEqualToWithinTollerance(4.2, 0.0001)) return 0;
-        if (!x.Z().IsEqualToWithinTollerance(6.3, 0.0001)) return 0;
+        if (!x.X().IsEqualToWithinTollerance(2.1, 0.0001)) return kResultFail;
+        if (!x.Y().IsEqualToWithinTollerance(4.2, 0.0001)) return kResultFail;
+        if (!x.Z().IsEqualToWithinTollerance(6.3, 0.0001)) return kResultFail;
     }
 
-    return 1;
+    return kResultSuccess;
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-int RedTestGeometry::TestVector3D(void)
+RedResult RedTestGeometry::TestVector3D(void)
 {
     {
         RedVector3D y(1,2,3);
         y.Scale(1.1);
-        if (!y.X().IsEqualToWithinTollerance(1.1, 0.0001)) return 0;
-        if (!y.Y().IsEqualToWithinTollerance(2.2, 0.0001)) return 0;
-        if (!y.Z().IsEqualToWithinTollerance(3.3, 0.0001)) return 0;
+        if (!y.X().IsEqualToWithinTollerance(1.1, 0.0001)) return kResultFail;
+        if (!y.Y().IsEqualToWithinTollerance(2.2, 0.0001)) return kResultFail;
+        if (!y.Z().IsEqualToWithinTollerance(3.3, 0.0001)) return kResultFail;
     }
     
-    return 1;
+    return kResultSuccess;
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 #pragma mark - Units
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-int RedTestGeometry::TestAngle(void)
+RedResult RedTestGeometry::TestAngle(void)
 {
     {
         RedAngle x;
         x.SetDegrees(360);
         RedNumber y = x.Radians();
         if (!y.IsEqualToWithinTollerance(two_pi, 0.00001))
-            return 0;
+            return kResultFail;
     }
-    return 1;
+    return kResultSuccess;
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-int RedTestGeometry::TestArea(void)
+RedResult RedTestGeometry::TestArea(void)
 {
-    return 1;
+    return kResultSuccess;
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-int RedTestGeometry::TestDistance(void)
+RedResult RedTestGeometry::TestDistance(void)
 {
     {
         RedDistance x;
         x.SetInches(1.0);
         RedNumber y = x.Centimetres();
         if (!y.IsEqualToWithinTollerance(2.54, 0.001))
-            return 0;
+            return kResultFail;
     }
 
-    return 1;
+    return kResultSuccess;
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-int RedTestGeometry::TestTemperature(void)
+RedResult RedTestGeometry::TestTemperature(void)
 {
-    return 1;
+    return kResultSuccess;
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-int RedTestGeometry::TestVolume(void)
+RedResult RedTestGeometry::TestVolume(void)
 {
-    return 1;
+    return kResultSuccess;
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

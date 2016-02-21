@@ -16,10 +16,54 @@
 // (http://opensource.org/licenses/MIT)
 // -------------------------------------------------------------------------------------------------
 
+#include "RedVSIContextFactory.h"
+//
+//#include "RedVSILibTokenMap.h"
+//#include "RedVSITokenFactory.h"
+//#include "RedVSICmdFactory.h"
+
 namespace Red {
 namespace VSI {
 
-#include "RedVSIContextFactory.h"
+//// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+//
+//RedResult RedVSIContextFactory::CreateRoutineContextForSnippet(const RedString& InputCode, RedVSIContextRoutine* OutputContext, RedLog& cLog)
+//{
+//    // Define a small code snippet
+//    RedString strCodeSnippet = "new local number x = 3.2 x = x * 2";
+//
+//    // Turn the code into tokens
+//    RedVSILibTokenMap cTokenMap;
+//    RedVSITokenBuffer cTokenList;
+//    RedLog            cRedLog;
+//    if (!RedVSITokenFactory::CreateTokens(strCodeSnippet, cTokenMap.cVSILibTokenMap, cTokenList))
+//        return kResultFail;
+//
+//    // Turn the tokens into code
+//    RedVSICmdInterface* topCmd = RedVSICmdFactory::RunConstuctionCompetition(cTokenList, cRedLog);
+//    if (topCmd == REDNULL)
+//        return kResultFail;
+//    if (cRedLog.IsError())
+//        return kResultFail;
+//
+//    // Execute the code in a context
+//    RedVSIContextRoutine testContext(cRedLog, topCmd);
+//    testContext.ExecuteSnippet(10);
+//    if (cRedLog.IsError())
+//        return kResultFail;
+//
+//    // Analyse the data created by the code
+//    RedType* pXVal = REDNULL;
+//    testContext.FindDataItem("x", pXVal);
+//    if (!pXVal->Type().IsNum())
+//        return kResultFail;
+//    RedNumber* pXNum = (RedNumber*)pXVal;
+//    if (!pXNum->IsEqualToWithinTollerance(6.4, kNumberFloatCompTollerance))
+//        return kResultFail;
+//
+//    return kResultSuccess;
+//}
+
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 

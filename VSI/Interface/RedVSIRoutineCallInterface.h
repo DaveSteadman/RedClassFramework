@@ -21,13 +21,12 @@
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 #include "RedCoreNamespace.h"
-
 #include "RedVSICollections.h"
+
+using namespace Red::Core;
 
 namespace Red {
 namespace VSI {
-
-using namespace Red::Core;
 
 /// Class encapsulating a routine call. A container for a routine name and the parameters, as well
 /// as the initial class of object name.

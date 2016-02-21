@@ -21,11 +21,10 @@
 #include "RedNumber.h"
 #include "RedPoint3D.h"
 
+using namespace Red::Core;
+
 namespace Red {
 namespace Geometry {
-
-using namespace Red::Core;
-using namespace Red::Geometry;
 
 class RedSphere
 {

@@ -23,10 +23,10 @@
 #include "RedVector3D.h"
 #include "RedPoint3D.h"
 
+using namespace Red::Core;
+
 namespace Red {
 namespace Geometry {
-
-using namespace Red::Core;
 
 class RedLine3D
 {

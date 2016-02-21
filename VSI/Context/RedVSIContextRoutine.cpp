@@ -21,10 +21,10 @@
 
 #include "RedVSIParseStackTraverser.h"
 
+using namespace Red::Core;
+
 namespace Red {
 namespace VSI {
-
-using namespace Red::Core;
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 // Constructor / Destructor
@@ -36,6 +36,16 @@ RedVSIContextRoutine::RedVSIContextRoutine(RedLog& initAnalysis) : cAnalysis(ini
 
     cReturnValue.Init();
     pCurrCmd     = 0;
+}
+
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+RedVSIContextRoutine::RedVSIContextRoutine(RedLog& initAnalysis, RedVSICmdInterface* pSnippetCmd) : cAnalysis(initAnalysis)
+{
+    // pThisObj     = 0;
+
+    cReturnValue.Init();
+    pCurrCmd     = pSnippetCmd;
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -164,6 +174,30 @@ void RedVSIContextRoutine::SetupRoutineCall(const RedVSIRoutineCallInterface& cS
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 // Execution
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+void RedVSIContextRoutine::ExecuteSnippet(const unsigned CmdCount)
+{
+    unsigned CommandCountdown = CmdCount;
+
+    while ( (CommandCountdown > 0) && (pCurrCmd != REDNULL) )
+    {
+        // Queue up all the expressions needed by the command
+        pCurrCmd->QueueExpr(this);
+        ExecuteExprQueue();
+
+        if (IsBlocked(this))
+        {
+            cAnalysis.AddErrorEvent("Expression blocked on running snippet.");
+            return;
+        }
+
+        // Execute the command (it will queue the next command as part of its execution)
+        pCurrCmd->Execute(this);
+        pCurrCmd = cCmdStack.Pop();
+    }
+}
+
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 int RedVSIContextRoutine::HasCmdToExecute(void)

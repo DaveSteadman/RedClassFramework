@@ -24,8 +24,6 @@
 namespace Red {
 namespace Core {
 
-using namespace Red::Core;
-
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 // Time is strictly formatted in a 24hour HH:MM:SS format. 
@@ -45,6 +43,7 @@ class RedTime
 public:
 
     RedTime(void) { Init(); };
+    RedTime(const int h, const int m, const double& s) { hour=h; minute=m; seconds=s; };
 
     void Init(void) { hour=0; minute=0; seconds=0; };
 
@@ -80,8 +79,8 @@ private:
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-static const RedTime kStartOfDay = RedTime(0,   0,  0.0);
-static const RedTime kEndOfDay   = RedTime(24, 60, 60.0);
+static const RedTime kTimeStartOfDay = RedTime(0,   0,  0.0);
+static const RedTime kTimeEndOfDay   = RedTime(24, 60, 60.0);
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 

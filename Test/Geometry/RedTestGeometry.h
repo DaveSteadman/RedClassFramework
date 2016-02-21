@@ -23,34 +23,41 @@
 namespace Red {
 namespace Test {
 
-    class RedTestGeometry
-    {
-    public:
-        static int RunUnitTest(void);
+using namespace Red::Core;
 
-    private:
-        // 2D
-        static int TestCircle(void);
-        static int TestLine2D(void);
-        static int TestPoint2D(void);
-        static int TestRect(void);
-        static int TestRectSize(void);
-        static int TestVector2D(void);
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-        // 3D
-        static int TestSphere(void);
-        static int TestLine3D(void);
-        static int TestLatLong(void);
-        static int TestPoint3D(void);
-        static int TestVector3D(void);
+class RedTestGeometry
+{
+public:
+    static void RunUnitTest(RedLog& log);
 
-        // Units
-        static int TestAngle(void);
-        static int TestArea(void);
-        static int TestDistance(void);
-        static int TestTemperature(void);
-        static int TestVolume(void);
-    };
+private:
 
-}
-}
+    // 2D
+    static RedResult TestCircle(void);
+    static RedResult TestLine2D(void);
+    static RedResult TestPoint2D(void);
+    static RedResult TestRect(void);
+    static RedResult TestRectSize(void);
+    static RedResult TestVector2D(void);
+
+    // 3D
+    static RedResult TestSphere(void);
+    static RedResult TestLine3D(void);
+    static RedResult TestLatLong(void);
+    static RedResult TestPoint3D(void);
+    static RedResult TestVector3D(void);
+
+    // Units
+    static RedResult TestAngle(void);
+    static RedResult TestArea(void);
+    static RedResult TestDistance(void);
+    static RedResult TestTemperature(void);
+    static RedResult TestVolume(void);
+};
+
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+} // Test
+} // Red

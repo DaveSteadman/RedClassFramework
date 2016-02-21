@@ -21,23 +21,22 @@
 
 #include "RedTestTml.h"
 
-namespace Red {
-namespace Test {
-
 using namespace Red::Core;
 using namespace Red::TinyML;
 
+namespace Red {
+namespace Test {
+
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-int RedTestTml::RunUnitTest(void)
+void RedTestTml::RunUnitTest(RedLog& log)
 {
+    if (RedTestTml::TestOne().IsFail())       { log.AddErrorEvent("TinyML Unit Test: TestOne Failed");       return; }
+    if (RedTestTml::TestTwo().IsFail())       { log.AddErrorEvent("TinyML Unit Test: TestTwo Failed");       return; }
+    if (RedTestTml::TestIterators().IsFail()) { log.AddErrorEvent("TinyML Unit Test: TestIterators Failed"); return; }
+    if (RedTestTml::TestTreeEdit().IsFail())  { log.AddErrorEvent("TinyML Unit Test: TestTreeEdit Failed");  return; }
 
-    if (RedTestTml::TestOne().IsFail())       return 0;
-    if (RedTestTml::TestTwo().IsFail())       return 0;
-    if (RedTestTml::TestIterators().IsFail()) return 0;
-    if (RedTestTml::TestTreeEdit().IsFail())  return 0;
-
-    return 1;
+    log.AddText("TinyML Unit Test: Passed");
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

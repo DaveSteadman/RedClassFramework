@@ -27,10 +27,10 @@
 #include "RedVSIContextInterface.h"
 #include "RedVSIErrorCodes.h"
 
+using namespace Red::Core;
+
 namespace Red {
 namespace VSI {
-
-using namespace Red::Core;
 
 /// Class to contain an expression, allowing the maths to exist in a sequence.
 /// Essentially a BASIC LET statement.

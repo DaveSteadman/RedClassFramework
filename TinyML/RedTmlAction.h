@@ -23,10 +23,10 @@
 #include "RedCoreNamespace.h"
 #include "RedTmlNamespace.h"
 
+using namespace Red::Core;
+
 namespace Red {
 namespace TinyML {
-
-using namespace Red::Core;
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 

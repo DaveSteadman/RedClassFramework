@@ -29,11 +29,10 @@
 #include "RedVSICmdIf.h"
 #include "RedVSICmdWhile.h"
 
+using namespace Red::Core;
+
 namespace Red {
 namespace VSI {
-
-using namespace Red::Core;
-using namespace Red::VSI;
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 

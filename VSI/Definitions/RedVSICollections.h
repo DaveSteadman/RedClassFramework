@@ -24,14 +24,14 @@
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
+using namespace Red::Core;
+
 namespace Red {
 namespace VSI {
 
 class RedVSICmdInterface;
 class RedVSIParseTreeInterface;
 class RedVSILangElement;
-
-using namespace Red::Core;
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 

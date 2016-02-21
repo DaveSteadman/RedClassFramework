@@ -26,6 +26,8 @@
 namespace Red {
 namespace Core {
 
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
 int  RedString::AllocIncr  = 16;
 char RedString::chInitChar = '\0';
 
@@ -771,6 +773,8 @@ void RedString::Shrink()
     }
     InitUnsetChars();
 }
+
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 } // Core
 } // Red

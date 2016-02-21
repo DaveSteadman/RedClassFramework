@@ -29,21 +29,12 @@ namespace Test {
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-int RedTestCentre::RunAllUnitTests(void)
+void RedTestCentre::RunAllUnitTests(RedLog& log)
 {
-    int CorePassed       = RedTestCore::RunUnitTest();
-    int TmlPassed        = RedTestTml::RunUnitTest();
-    int VSIPassed        = RedTestVSI::RunUnitTest();
-
-    int GeometryPassed   = RedTestGeometry::RunUnitTest();
-
-    int TmlSPPassed      = 1;// RedTestTmlSP::RunUnitTest();
-
-    int OverallPass =
-        CorePassed && TmlPassed && VSIPassed &&
-        TmlSPPassed && GeometryPassed;
-
-    return OverallPass;
+    if (!log.IsError()) RedTestCore::RunUnitTest(log);
+    if (!log.IsError()) RedTestTml::RunUnitTest(log);
+    if (!log.IsError()) RedTestGeometry::RunUnitTest(log);
+    if (!log.IsError()) RedTestVSI::RunUnitTest(log);
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

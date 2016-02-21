@@ -19,10 +19,10 @@
 #include "RedVSILibTokenMap.h"
 #include "RedCoreNamespace.h"
 
+using namespace Red::Core;
+
 namespace Red {
 namespace VSI {
-
-using namespace Red::Core;
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 

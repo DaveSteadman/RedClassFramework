@@ -23,13 +23,12 @@
 #include "RedDoubleLinkedList.h"
 #include "RedDoubleLinkedListIterator.h"
 
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-// Purpose: An unsorted, indexed list template.
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
 namespace Red {
 namespace Core {        
 
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+/// Template queue class with First-In-First-Out Push() and Pop() operations.
 template<class ElementType>
 class RedQueueFIFO
 {

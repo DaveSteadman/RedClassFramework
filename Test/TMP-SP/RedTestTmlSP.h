@@ -20,10 +20,10 @@
 
 #include "RedCoreNamespace.h"
 
+using namespace Red::Core;
+
 namespace Red {
 namespace Test {
-
-using namespace Red::Core;
 
 class RedTestTmlSP
 {

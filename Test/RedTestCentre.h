@@ -18,6 +18,10 @@
 
 #pragma once
 
+#include "RedCoreNamespace.h"
+
+using namespace Red::Core;
+
 namespace Red {
 namespace Test {
 
@@ -26,10 +30,10 @@ namespace Test {
 class RedTestCentre
 {
 public:
-    static int RunAllUnitTests(void);
+    static void RunAllUnitTests(RedLog& log);
 };
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-}
-}
+} // Test
+} // Red

@@ -24,6 +24,8 @@
 #include "RedVSICmdInterface.h"
 #include "RedVSILibRoutineInterface.h"
 
+using namespace Red::Core;
+
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 namespace Red {

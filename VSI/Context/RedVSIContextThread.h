@@ -31,72 +31,71 @@
 #include "RedVSILibRoutineInterface.h"
 #include "RedVSIRoutineCallInterface.h"
 
+using namespace Red::Core;
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 namespace Red {
 namespace VSI {
 
-using namespace Red::Core;
-
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-class RedVSIContextThread : public RedVSIContextInterface
-{
-public:
-
-    RedVSIContextThread(const RedVSILibInterface* pInitCodeLib, const RedVSIRoutineCallInterface& cStartingSignature);
-    RedVSIContextThread(void);
-
-    void           SetCodeLib(RedVSILibInterface* pNewCodeLib) { pCodeLib = pNewCodeLib; };
-
-    // - - - - - - - - - - -
-
-    // Data accessors
-    RedType*       CreateDataItem(const RedVSILangElement& cLocation, const RedVSILangElement& cType, const RedString& cName);
-    int            FindDataItem  (const RedString& cName, RedType*& pData);
-    void           SetReturnValue(const RedVariant& cData);
-
-    // Expressions In Current Routine
-    void           QueueExpr(RedVSIParseTreeInterface* pExpr);
-    void           SetExprResult(RedVSIParseTreeInterface* pExpr, RedVariant& result);
-    RedVariant     ExprResult(RedVSIParseTreeInterface* pExpr);
-
-    // Error reporting and debugging
-    RedLog&        Log(void) { return cAnalysis; };
-
-    // Routine creation and control
-    void           SetupRoutineCall(RedVSIRoutineCallInterface& cSignature);
-    int            IsBlocked(RedVSIContextRoutine* pRoutineContext);
-    void           QueueCommand(RedVSICmdInterface* pCmd);
-    void           ClearCommandQueue(void);
-    RedString      ClassName(void);
-    RedString      ObjectName(void);
-
-    // - - - - - - - - - - -
-
-//    void           SetUserObj(RedRecord* pNewUserObject) { pUserObj=pNewUserObject; };
-//    RedRecord*     GetUserObj(void) { return pUserObj; };
-
-    void           Execute(int& iCmdCount);
-
-private:
-
-    /// replace with datacentre
-    typedef RedStackLIFO<RedVSIContextRoutine*> RedVSIRoutineContextStack;
-
-    // Routine Context
-    RedVSIRoutineContextStack cRoutineStack;
-
-    // Static Code
-    const RedVSILibInterface* pCodeLib;
-
-    // Data attributes
-    RedRecord cHeap;
-
-    // debugging
-    RedLog cAnalysis;
-};
+//
+//class RedVSIContextThread : public RedVSIContextInterface
+//{
+//public:
+//
+//    RedVSIContextThread(const RedVSILibInterface* pInitCodeLib, const RedVSIRoutineCallInterface& cStartingSignature);
+//    RedVSIContextThread(void);
+//
+//    void           SetCodeLib(RedVSILibInterface* pNewCodeLib) { pCodeLib = pNewCodeLib; };
+//
+//    // - - - - - - - - - - -
+//
+//    // Data accessors
+//    RedType*       CreateDataItem(const RedVSILangElement& cLocation, const RedVSILangElement& cType, const RedString& cName);
+//    int            FindDataItem  (const RedString& cName, RedType*& pData);
+//    void           SetReturnValue(const RedVariant& cData);
+//
+//    // Expressions In Current Routine
+//    void           QueueExpr(RedVSIParseTreeInterface* pExpr);
+//    void           SetExprResult(RedVSIParseTreeInterface* pExpr, RedVariant& result);
+//    RedVariant     ExprResult(RedVSIParseTreeInterface* pExpr);
+//
+//    // Error reporting and debugging
+//    RedLog&        Log(void) { return cAnalysis; };
+//
+//    // Routine creation and control
+//    void           SetupRoutineCall(RedVSIRoutineCallInterface& cSignature);
+//    int            IsBlocked(RedVSIContextInterface* pRoutineContext);
+//    void           QueueCommand(RedVSICmdInterface* pCmd);
+//    void           ClearCommandQueue(void);
+//    RedString      ClassName(void);
+//    RedString      ObjectName(void);
+//
+//    // - - - - - - - - - - -
+//
+////    void           SetUserObj(RedRecord* pNewUserObject) { pUserObj=pNewUserObject; };
+////    RedRecord*     GetUserObj(void) { return pUserObj; };
+//
+//    void           Execute(int& iCmdCount);
+//
+//private:
+//
+//    /// replace with datacentre
+//    typedef RedStackLIFO<RedVSIContextRoutine*> RedVSIRoutineContextStack;
+//
+//    // Routine Context
+//    RedVSIRoutineContextStack cRoutineStack;
+//
+//    // Static Code
+//    const RedVSILibInterface* pCodeLib;
+//
+//    // Data attributes
+//    RedRecord cHeap;
+//
+//    // debugging
+//    RedLog cAnalysis;
+//};
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 

@@ -31,6 +31,8 @@ namespace Core {
 typedef RedDoubleLinkedList<RedLogEvent*>         EventLogListType;
 typedef RedDoubleLinkedListIterator<RedLogEvent*> EventLogListItType;
 
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
 /// Holds logged information, from text debug statements, info, warnings and
 /// error messages. Has additional methods to then query the information.
 class RedLog
@@ -46,6 +48,8 @@ public:
     void AddErrorEvent(const RedString& NewText);
     void AddErrorEvent(const char* NewText) { AddErrorEvent(RedString(NewText)); };
 
+    RedString AllLoggedText(void);
+
     // Queries
     //EventLogListType EventsByType();
 
@@ -54,12 +58,13 @@ public:
 
 private:
     EventLogListType EventList;
-    bool            containsError;
+    bool             containsError;
 };
     
-} // Logging
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+} // Core
 } // Red
 
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 

@@ -20,10 +20,10 @@
 
 #include "RedNumber.h"
 
+using namespace Red::Core;
+
 namespace Red {
 namespace Geometry {
-
-using namespace Red::Core;
 
 class RedRectSize
 {

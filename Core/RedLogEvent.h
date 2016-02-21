@@ -30,6 +30,8 @@ typedef enum TEventLogType {
     eInfoEvent
 } TEventLogType;
 
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
 class RedLogEvent
 {
 public:
@@ -51,6 +53,8 @@ private:
     TEventLogType LogType;
     RedString     text;
 };
+
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 } // Core
 } // Red

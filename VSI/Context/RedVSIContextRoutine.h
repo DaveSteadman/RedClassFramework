@@ -25,24 +25,28 @@
 #include "RedVSICollections.h"
 #include "RedVSICmdInterface.h"
 #include "RedVSIContextInterface.h"
-#include "RedVSICmdInterface.h"
 #include "RedVSIObject.h"
 #include "RedVSILangElement.h"
+
+using namespace Red::Core;
 
 namespace Red {
 namespace VSI {
 
-using namespace Red::Core;
-
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 /// Class to represent the context required to execute a routine.
-/// Uses parent class RedVSIContextInterface so
+/// Uses parent class RedVSIContextInterface, allowing code-snippets and simple command sequences to
+/// be executed in a lightweight environment.
 class RedVSIContextRoutine : public RedVSIContextInterface
 {
 public:
 
     RedVSIContextRoutine(RedLog& initAnalysis);
+
+    // Init with command for running a snippet
+    RedVSIContextRoutine(RedLog& initAnalysis, RedVSICmdInterface* pSnippetCmd);
+
     ~RedVSIContextRoutine(void);
 
     // - - - - - - - - - - -
@@ -62,7 +66,7 @@ public:
 
     // Setup Calls
     void            SetupRoutineCall(const RedVSIRoutineCallInterface& cSignature);
-    bool            IsBlocked(const RedVSIContextRoutine* pRoutineContext) { return false; };
+    bool            IsBlocked(const RedVSIContextInterface* pRoutineContext) { return false; };
     void            QueueCommand(RedVSICmdInterface* pCmd)                 { cCmdStack.Push(pCmd); };
     void            ClearCommandQueue(void)                                { cCmdStack.DelAll(); };
     RedString       ClassName(void) const                                  { return cClassName; };
@@ -88,6 +92,8 @@ public:
     // Execution
     // void            Execute(CInterfaceContext* pTopLevelContext);
 
+
+    void            ExecuteSnippet(const unsigned CmdCount);
     int             HasCmdToExecute(void);
 
 private:

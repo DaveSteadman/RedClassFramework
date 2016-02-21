@@ -30,11 +30,11 @@
 #include "RedVSICmdFactory.h"
 #include "RedVSICmdSerialiser.h"
 
-namespace Red {
-namespace VSI {
-
 using namespace Red::Core;
 using namespace Red::TinyML;
+
+namespace Red {
+namespace VSI {
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 

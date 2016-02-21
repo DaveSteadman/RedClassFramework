@@ -18,21 +18,33 @@
 
 #pragma once
 
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+//#include "RedCoreNamespace.h"
+
+#include "RedVSIContextRoutine.h"
+//#include "RedVSILibRoutineInterface.h"
+//#include "RedVSILibRoutineInterface.h"
+
 namespace Red {
 namespace VSI {
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-//#include "RedVSIContextRoutine.h"
-//#include "RedVSILibRoutineInterface.h"
-//#include "RedVSILibRoutineInterface.h"
+//using namespace Red::Core;
 
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+//class RedVSIContextRoutine;
 
 class RedVSIContextFactory
 {
 public:
+
+
 //    static RedVSIContextRoutine* CreateRoutineContext(RedVSILibRoutineInterface& cRoutineCall, RedVSILibRoutineInterface* pRoutineLib, CDataObject* pThisObj);
+
+
+    //static RedResult CreateRoutineContextForSnippet(const RedString& InputCode, RedVSIContextRoutine* OutputContext, RedLog& cLog);
+
 };
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

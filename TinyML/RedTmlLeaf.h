@@ -16,20 +16,15 @@
 // (http://opensource.org/licenses/MIT)
 // -------------------------------------------------------------------------------------------------
 
-/*
-  {{name} qwqwq }
-  {{name} "asad }}" }
-*/
-
 #pragma once
 
 // Include Namespaces
 #include "RedCoreNamespace.h"
 
+using namespace Red::Core;
+
 namespace Red {
 namespace TinyML {
-
-using namespace Red::Core;
 
 class RedTmlElement;
 
