@@ -146,7 +146,7 @@ RedVSICmdInterface* RedVSICmdFactory::IfComp(RedVSITokenBuffer& cInputBuffer, Re
     //if ( (!cTok.GetPredef().IsElseKeyword()) && (!cTok.GetPredef().IsEndifKeyword()) )
     //    { RedVSIErrorCodes::Log(RedLog, RedVSIErrorCodes::eCFact_If_KeywordError, cTok);  return 0; }
 
-    if(iNegBranchValid)
+    if (iNegBranchValid)
     {
         // Read the list of commands, which ends with a token the competition doesn't understand
         pNegBranch = RunConstuctionCompetition(cInputBuffer, RedLog);

@@ -47,7 +47,7 @@ void RedBoolean::Invert(void)
 
 bool operator==(const RedBoolean& lhs, const RedBoolean& rhs)
 {
-    if(lhs.intState() == rhs.intState())
+    if (lhs.intState() == rhs.intState())
         return true;
     return false;
 }
@@ -56,7 +56,7 @@ bool operator==(const RedBoolean& lhs, const RedBoolean& rhs)
 
 bool operator!=(const RedBoolean& lhs, const RedBoolean& rhs)
 {
-    if(lhs.intState() != rhs.intState())
+    if (lhs.intState() != rhs.intState())
         return true;
     return false;
 }

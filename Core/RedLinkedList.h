@@ -44,15 +44,15 @@ public:
     unsigned LastIndex(void)  const { return iNumItems; };
 
     // Access Items
-    int FindFirst(Element& Elem);
-    int FindLast(Element& Elem);
-    int Find(unsigned iElemIndex, Element& Elem);
+    bool Find(const unsigned iElemIndex, Element& Elem);
+    bool FindFirst(Element& Elem);
+    bool FindLast(Element& Elem);
 
     // Delete Items
-    int DelFirst(void);
-    int DelLast(void);
-    int Del(const unsigned iElemIndex);
-    int DelAll(void);
+    bool DelFirst(void);
+    bool DelLast(void);
+    bool Del(const unsigned iElemIndex);
+    bool DelAll(void);
 
     // complex operations
     RedLinkedList* Clone(void);
@@ -65,8 +65,8 @@ private:
         TListElement* pNext;
     } TListElement;
 
-    int MakeListElement(TListElement** pNewElem);
-    int FindListElement(int iElemNum, TListElement** pFoundElem);
+    bool MakeListElement(TListElement** pNewElem);
+    bool FindListElement(const unsigned ElemNum, TListElement** pFoundElem);
 
     TListElement* pListHead;
     TListElement* pListTail;
@@ -213,40 +213,40 @@ bool RedLinkedList<Element>::InsertAfter(const unsigned iElemIndex, Element Elem
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 template <class Element>
-int RedLinkedList<Element>::Find(unsigned iElemIndex, Element& Elem)
+bool RedLinkedList<Element>::Find(const unsigned iElemIndex, Element& Elem)
 {
     TListElement* pGetElem = 0;
 
     // Return failed if we can find the item
     if ( !FindListElement(iElemIndex, &pGetElem) )
-        return 0;
+        return false;
 
     Elem = pGetElem->Elem;
-    return 1;
+    return true;
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 template <class Element>
-int RedLinkedList<Element>::FindFirst(Element& Elem)
+bool RedLinkedList<Element>::FindFirst(Element& Elem)
 {
     if (pListHead == 0)
-        return 0;
+        return false;
     
     Elem = pListHead->Elem;
-    return 1;
+    return true;
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 template <class Element>
-int RedLinkedList<Element>::FindLast(Element& Elem)
+bool RedLinkedList<Element>::FindLast(Element& Elem)
 {
     if (pListTail == 0)
-        return 0;
+        return false;
     
     Elem = pListTail->Elem;
-    return 1;
+    return true;
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -254,11 +254,11 @@ int RedLinkedList<Element>::FindLast(Element& Elem)
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 template <class Element>
-int RedLinkedList<Element>::DelFirst(void)
+bool RedLinkedList<Element>::DelFirst(void)
 {
     // Fail if we have nothing to delete
     if ( (iNumItems == 0) || (!pListHead) )
-        return 0;
+        return false;
 
     // Mark the item to delete
     TListElement* pRemoveElem = pListHead;
@@ -282,20 +282,20 @@ int RedLinkedList<Element>::DelFirst(void)
     // Finally delete the item and return success
     delete pRemoveElem;
 
-    return 1;
+    return true;
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 template <class Element>
-int RedLinkedList<Element>::DelLast(void)
+bool RedLinkedList<Element>::DelLast(void)
 {
     TListElement* pRemoveElem = 0;
     TListElement* pPrevElem   = 0;
 
     // Fail if we have nothing to delete
     if ( (iNumItems == 0) || (!pListTail) )
-        return 0;
+        return false;
 
     // If we have just one element, reset the list
     if (iNumItems == 1)
@@ -326,13 +326,13 @@ int RedLinkedList<Element>::DelLast(void)
         iNumItems--;
     }
 
-    return 1;        
+    return true;
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 template <class Element>
-int RedLinkedList<Element>::Del(const unsigned iElemIndex)
+bool RedLinkedList<Element>::Del(const unsigned iElemIndex)
 {
     TListElement* pRemoveElem = 0;
     TListElement* pPrevElem   = 0;
@@ -340,7 +340,7 @@ int RedLinkedList<Element>::Del(const unsigned iElemIndex)
 
     // Fail if we have nothing to delete
     if ( iNumItems == 0 )
-        return 0;
+        return false;
 
     // Cater for special cases
     if (iNumItems  == 1)            { return DelFirst(); }
@@ -362,27 +362,27 @@ int RedLinkedList<Element>::Del(const unsigned iElemIndex)
     // Delete the item and return success
     delete pRemoveElem;
     iNumItems--;
-    return 1;
+    return true;
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 template <class Element>
-int RedLinkedList<Element>::DelAll(void)
+bool RedLinkedList<Element>::DelAll(void)
 {
     // Fail if the list has no Items
     if (IsEmpty())
-        return 0;
+        return false;
 
     // Loop, deleting the last until we have no more, returning fail if required.
     while ( !IsEmpty() )
     {
         if (!DelFirst())
-            return 0;
+            return false;
     }
     
     // Return success.
-    return 1;
+    return true;
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -411,7 +411,7 @@ RedLinkedList<Element>* RedLinkedList<Element>::Clone(void)
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 template <class Element>
-int RedLinkedList<Element>::MakeListElement(TListElement** pNewElem)
+bool RedLinkedList<Element>::MakeListElement(TListElement** pNewElem)
 {
     // Create the new element
     TListElement* pElem = new TListElement;
@@ -421,14 +421,14 @@ int RedLinkedList<Element>::MakeListElement(TListElement** pNewElem)
 
     // Assign the output value and return success
     *pNewElem = pElem;
-    return 1;
+    return true;
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 template <class Element>
-int RedLinkedList<Element>::FindListElement(
-    int            iElemIndex, 
+bool RedLinkedList<Element>::FindListElement(
+    const unsigned ElemIndex,
     TListElement** pFoundElem)
 {
     // Initialise the return value
@@ -436,23 +436,23 @@ int RedLinkedList<Element>::FindListElement(
     TListElement* pCurrElem = 0;
 
     // Fail if we have nothing (or not enough) to search.
-    if (iNumItems == 0)            return 0;
-    if (iElemIndex > LastIndex())  return 0;
-    if (iElemIndex < FirstIndex()) return 0;
+    if (iNumItems == 0)           return false;
+    if (ElemIndex > LastIndex())  return false;
+    if (ElemIndex < FirstIndex()) return false;
 
     // Don't search if we want the head or tail.
-    if (iElemIndex == FirstIndex()) { *pFoundElem = pListHead; return 1; }
-    if (iElemIndex == LastIndex())  { *pFoundElem = pListTail; return 1; }
+    if (ElemIndex == FirstIndex()) { *pFoundElem = pListHead; return 1; }
+    if (ElemIndex == LastIndex())  { *pFoundElem = pListTail; return 1; }
 
     // Set reference to element zero
     pCurrElem = pListHead;
 
     // Get the next element until we're at the requested one, or we run out of list
-    for (int i=1; i<iElemIndex; i++)
+    for (unsigned i=1; i<ElemIndex; i++)
     {
         // if we're out of list, fail
         if (pCurrElem->pNext == 0)
-            return 0;
+            return false;
 
         // else move onto next element
         pCurrElem = pCurrElem->pNext;
@@ -460,7 +460,7 @@ int RedLinkedList<Element>::FindListElement(
 
     // Moved along enough, so we return the current element and success.
     *pFoundElem = pCurrElem;
-    return 1;
+    return true;
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

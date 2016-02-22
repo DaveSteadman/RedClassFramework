@@ -47,8 +47,8 @@ public:
 
     // Overall collection routines
     unsigned NumItems(void) const { return cList.NumItems(); };
-    int     IsEmpty(void)   const { return cList.IsEmpty(); };
-    int     DelAll(void);
+    bool     IsEmpty(void)  const { return cList.IsEmpty(); };
+    bool     DelAll(void)         { cList.DelAll(); };
 
 private:
 

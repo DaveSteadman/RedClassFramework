@@ -53,10 +53,10 @@ const int RedVSILibRoutine::IsMatching(RedVSIRoutineCallInterface& cSig)
         RedVariant        cCurrCallParam = cCallParamIt.CurrentItem();
 
         RedVSILangElement cCurrCallParamType;
-        if(cCurrCallParam.Type().IsBool()) cCurrCallParamType = kLangElementTypeBool;
-        if(cCurrCallParam.Type().IsChar()) cCurrCallParamType = kLangElementTypeChar;
-        if(cCurrCallParam.Type().IsStr())  cCurrCallParamType = kLangElementTypeString;
-        if(cCurrCallParam.Type().IsNum())  cCurrCallParamType = kLangElementTypeNumber;
+        if (cCurrCallParam.Type().IsBool()) cCurrCallParamType = kLangElementTypeBool;
+        if (cCurrCallParam.Type().IsChar()) cCurrCallParamType = kLangElementTypeChar;
+        if (cCurrCallParam.Type().IsStr())  cCurrCallParamType = kLangElementTypeString;
+        if (cCurrCallParam.Type().IsNum())  cCurrCallParamType = kLangElementTypeNumber;
 
         // match the type of the current parameters
         if (cCurrCallParamType != cCurrType)

@@ -30,8 +30,6 @@ void RedBufferInput::Init(void)
     iCharPos = 0; 
     iRow     = 1;
     iCol     = 1;
-    
-    cNewLineCharPosList.DelAll(); 
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

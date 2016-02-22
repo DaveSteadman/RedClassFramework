@@ -82,7 +82,7 @@ const unsigned RedDate::EightDigitInt(void) const
 
 bool operator==(const RedDate& lhs, const RedDate& rhs)
 {
-    if(lhs.EightDigitInt() == rhs.EightDigitInt())
+    if (lhs.EightDigitInt() == rhs.EightDigitInt())
         return true;
     return false;
 }
@@ -91,7 +91,7 @@ bool operator==(const RedDate& lhs, const RedDate& rhs)
 
 bool operator!=(const RedDate& lhs, const RedDate& rhs)
 {
-    if(lhs.EightDigitInt() != rhs.EightDigitInt())
+    if (lhs.EightDigitInt() != rhs.EightDigitInt())
         return true;
     return false;
 }

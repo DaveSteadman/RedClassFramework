@@ -50,8 +50,8 @@ public:
 
     // Overall collection routines
     unsigned NumItems(void) const { return cList.NumItems(); };
-    int      IsEmpty(void) const  { return cList.IsEmpty(); };
-    int      DelAll(void)         { return cList.DelAll(); };
+    bool     IsEmpty(void) const  { return cList.IsEmpty(); };
+    bool     DelAll(void)         { return cList.DelAll(); };
 
     // Complex
     RedStackLIFO* Clone(void); 

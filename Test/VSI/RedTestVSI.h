@@ -53,7 +53,8 @@ private:
     static RedResult TestRunProg_001(void);
 
     static RedResult TestSnippet_New(void);
-
+    static RedResult TestSnippet_If(void);
+    static RedResult TestSnippet_While(void);
 };
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

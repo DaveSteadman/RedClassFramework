@@ -45,6 +45,8 @@ void RedTestVSI::RunUnitTest(RedLog& log)
     if (RedTestVSI::TestTokeniseCode().IsFail())      { log.AddErrorEvent("Core Unit Test: TestTokeniseCode Failed");      return; }
 
     if (RedTestVSI::TestSnippet_New().IsFail())       { log.AddErrorEvent("Core Unit Test: TestSnippet_New Failed");       return; }
+    if (RedTestVSI::TestSnippet_If().IsFail())        { log.AddErrorEvent("Core Unit Test: TestSnippet_If Failed");        return; }
+    if (RedTestVSI::TestSnippet_While().IsFail())     { log.AddErrorEvent("Core Unit Test: TestSnippet_While Failed");     return; }
 
 
     log.AddText("VSI Unit Test: Passed");
@@ -136,9 +138,9 @@ RedResult RedTestVSI::TestParseTreeBinaryOp(void)
         RedNumber expectRes(1234);
         RedVariant exprRes = testContext.ExprResult(&testPTOp1);
 
-        if(!exprRes.Type().IsNum())
+        if (!exprRes.Type().IsNum())
             return kResultFail;
-        if(exprRes.NumberValue() != expectRes)
+        if (exprRes.NumberValue() != expectRes)
             return kResultFail;
     }
 
@@ -158,9 +160,9 @@ RedResult RedTestVSI::TestParseTreeBinaryOp(void)
         RedString expectRes("Hello Red");
         RedVariant exprRes = testContext.ExprResult(&testPTOp1);
 
-        if(!exprRes.Type().IsStr())
+        if (!exprRes.Type().IsStr())
             return kResultFail;
-        if(exprRes.StringValue() != expectRes)
+        if (exprRes.StringValue() != expectRes)
             return kResultFail;
     }
     return kResultSuccess;
@@ -582,6 +584,88 @@ RedResult RedTestVSI::TestSnippet_New(void)
         return kResultFail;
     RedNumber* pXNum = (RedNumber*)pXVal;
     if (!pXNum->IsEqualToWithinTollerance(6.4, kNumberFloatCompTollerance))
+        return kResultFail;
+
+    return kResultSuccess;
+}
+
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+RedResult RedTestVSI::TestSnippet_If(void)
+{
+    // Define a small code snippet
+    RedString strCodeSnippet = "new local number x = 3 new local number res = 0 if x < 4 then res = res + 1 end if ";
+
+    // Turn the code into tokens
+    RedVSILibTokenMap cTokenMap;
+    RedVSITokenBuffer cTokenList;
+    RedLog            cRedLog;
+    if (!RedVSITokenFactory::CreateTokens(strCodeSnippet, cTokenMap.cVSILibTokenMap, cTokenList))
+        return kResultFail;
+
+    // Turn the tokens into code
+    RedVSICmdInterface* topCmd = RedVSICmdFactory::RunConstuctionCompetition(cTokenList, cRedLog);
+    if (topCmd == REDNULL)
+        return kResultFail;
+    if (cRedLog.IsError())
+        return kResultFail;
+
+    // Execute the code in a context
+    RedVSIContextRoutine testContext(cRedLog, topCmd);
+    testContext.ExecuteSnippet(10);
+    if (cRedLog.IsError())
+        return kResultFail;
+
+    // Analyse the data created by the code
+    RedType* pXVal = REDNULL;
+    testContext.FindDataItem("res", pXVal);
+    if (pXVal == REDNULL)
+        return kResultFail;
+    if (!pXVal->Type().IsNum())
+        return kResultFail;
+    RedNumber* pXNum = (RedNumber*)pXVal;
+    if (!pXNum->IsEqualToWithinTollerance(1.0, kNumberFloatCompTollerance))
+        return kResultFail;
+
+    return kResultSuccess;
+}
+
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+RedResult RedTestVSI::TestSnippet_While(void)
+{
+    // Define a small code snippet
+    RedString strCodeSnippet = "new local number x = 2 while x < 99 loop x = x * 2 endloop";
+
+    // Turn the code into tokens
+    RedVSILibTokenMap cTokenMap;
+    RedVSITokenBuffer cTokenList;
+    RedLog            cRedLog;
+    if (!RedVSITokenFactory::CreateTokens(strCodeSnippet, cTokenMap.cVSILibTokenMap, cTokenList))
+        return kResultFail;
+
+    // Turn the tokens into code
+    RedVSICmdInterface* topCmd = RedVSICmdFactory::RunConstuctionCompetition(cTokenList, cRedLog);
+    if (topCmd == REDNULL)
+        return kResultFail;
+    if (cRedLog.IsError())
+        return kResultFail;
+
+    // Execute the code in a context
+    RedVSIContextRoutine testContext(cRedLog, topCmd);
+    testContext.ExecuteSnippet(10);
+    if (cRedLog.IsError())
+        return kResultFail;
+
+    // Analyse the data created by the code
+    RedType* pXVal = REDNULL;
+    testContext.FindDataItem("x", pXVal);
+    if (pXVal == REDNULL)
+        return kResultFail;
+    if (!pXVal->Type().IsNum())
+        return kResultFail;
+    RedNumber* pXNum = (RedNumber*)pXVal;
+    if (!pXNum->IsEqualToWithinTollerance(128, kNumberFloatCompTollerance))
         return kResultFail;
 
     return kResultSuccess;

@@ -50,47 +50,47 @@ public:
     RedType*          Clone(void) const { RedString* newS = new RedString(*this); return (RedType*)newS; };
 
     // Assignments
-    void          Empty(void);
-    void          SetChar(const int Pos, const char chNewChar);
-    void          Set(const RedString& Str);
-    void          Set(const char* pText);
-    void          Delete(int Pos, int Count);
-    void          Insert(int Pos, char Ch);
-    void          Insert(int Pos, const RedString& Str);
-    void          Insert(int Pos, const char* Str);
-    void          Append(const RedString& Str);
-    void          Append(const char* pText);
-    void          Append(const char ch);
-    void          Append(const RedChar ch);
-    void          Append(const int num);
-    void          Append(const unsigned num);
-    void          DelFirstChar(void);
-    void          DelLastChar(void);
+    void           Empty(void);
+    void           SetChar(const int Pos, const char chNewChar);
+    void           Set(const RedString& Str);
+    void           Set(const char* pText);
+    void           Delete(const unsigned Pos, const unsigned Count);
+    void           Insert(const unsigned Pos, char Ch);
+    void           Insert(const unsigned Pos, const RedString& Str);
+    void           Insert(const unsigned Pos, const char* Str);
+    void           Append(const RedString& Str);
+    void           Append(const char* pText);
+    void           Append(const char ch);
+    void           Append(const RedChar ch);
+    void           Append(const int num);
+    void           Append(const unsigned num);
+    void           DelFirstChar(void);
+    void           DelLastChar(void);
 
     // Queries
-    const int     Length(void) const           { return Len; };
-    const int     IsEmpty(void) const          { return (Len==0); };
+    const int      Length(void) const           { return Len; };
+    const bool     IsEmpty(void) const          { return (Len==0); };
 
-    const char    CharAtPos(int iPos) const;
-    const RedChar CharObjAtPos(int iPos) const { return RedChar( CharAtPos(iPos) ); };
-    const char    FirstChar(void) const        { return CharAtPos(0); };
-    const RedChar FirstCharObj(void) const     { return RedChar( CharAtPos(0) ); };
-    const char    LastChar(void) const         { return CharAtPos(Len-1); };
-    const RedChar LastCharObj(void) const      { return RedChar( CharAtPos(Len-1) ); };
+    const char     CharAtPos(const unsigned iPos) const;
+    const RedChar  CharObjAtPos(const unsigned iPos) const { return RedChar( CharAtPos(iPos) ); };
+    const char     FirstChar(void) const        { return CharAtPos(0); };
+    const RedChar  FirstCharObj(void) const     { return RedChar( CharAtPos(0) ); };
+    const char     LastChar(void) const         { return CharAtPos(Len-1); };
+    const RedChar  LastCharObj(void) const      { return RedChar( CharAtPos(Len-1) ); };
 
-    const int     NumLines(void) const;
-    const int     LineAtNum(int iLineNum, RedString& Line) const;
-    const char*   TextPtr(void) const { return Txt; };
-    RedString     SubStr(int Start, int Count) const;
-    RedString     StringFromPos(int iPos) const;
+    const unsigned NumLines(void) const;
+    const bool     LineAtNum(const unsigned LineNum, RedString& Line) const;
+    const char*    TextPtr(void) const { return Txt; };
+    RedString      SubStr(const unsigned Start, const unsigned Count) const;
+    RedString      StringFromPos(const unsigned iPos) const;
 
     // Complex Operations
-    RedString     ToUpper(void);
-    RedString     ToLower(void);
-    const bool    IsCharInString(char ch) const;
-    const bool    IsAlphaNumeric(void) const;
-    const bool    IsEqualTo(const RedString& Str) const;
-    const bool    IsEqualTo(const char* Str) const;
+    RedString      ToUpper(void);
+    RedString      ToLower(void);
+    const bool     IsCharInString(char ch) const;
+    const bool     IsAlphaNumeric(void) const;
+    const bool     IsEqualTo(const RedString& Str) const;
+    const bool     IsEqualTo(const char* Str) const;
 
     enum StrCompVal  { SC_LESS, SC_EQUAL, SC_GREATER };
     enum StrCompMode { SM_CASE_SENSITIVE, SM_IGNORE_CASE };
@@ -136,9 +136,9 @@ private:
     static char chInitChar;
 
     // Size: allocated number of character.
-    int   Siz;
+    unsigned   Siz;
     // Length: Size of the string assigned to the allocated array. Must be <= the size.
-    int   Len;
+    unsigned   Len;
     // Text: The allocated array of charcters.
     char* Txt;
 };

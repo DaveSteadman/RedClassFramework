@@ -66,7 +66,7 @@ RedString::RedString(const RedString& Str)
 RedString::RedString(const char* Cstr)
 {
     // Read the length of the input string and tack on space for the \0 terminator.
-    Len = (int)strlen(Cstr) + 1;
+    Len = (unsigned)strlen(Cstr) + 1;
 
     // Setup the user length and allocarted size of the string
     Siz = ((Len + AllocIncr - 1) / AllocIncr) * AllocIncr;
@@ -142,7 +142,7 @@ void RedString::SetChar(const int Pos, const char chNewChar)
 void RedString::Set(const char* pText)
 {
     // Assign the new properties
-    Len = (int)strlen(pText);
+    Len = (unsigned)strlen(pText);
     Siz = (Len/AllocIncr)*AllocIncr + AllocIncr;
 
     // delete the old text
@@ -177,25 +177,26 @@ void RedString::Set(const RedString& Str)
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-void RedString::Delete(int Pos, int Count)
+void RedString::Delete(const unsigned Pos, const unsigned Count)
 {
-    int CopyPos;
+    unsigned CopyPos;
+    unsigned delpos = Pos;
 
-    if (Pos > Len)
+    if (delpos > Len)
         return;
 
-    CopyPos = Pos + Count;
+    CopyPos = delpos + Count;
 
     if (CopyPos >= Len)
     {
-        Txt[Pos] = 0;
+        Txt[delpos] = 0;
     }
     else
     {
         while (CopyPos <= Len)
         {
-            Txt[Pos] = Txt[CopyPos];
-            ++Pos;
+            Txt[delpos] = Txt[CopyPos];
+            ++delpos;
             ++CopyPos;
         }
     }
@@ -206,12 +207,12 @@ void RedString::Delete(int Pos, int Count)
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-void RedString::Insert(int Pos, char Ch)
+void RedString::Insert(const unsigned Pos, char Ch)
 {
     char* Temp;
 
     // check the position is in-bounds
-    if ( (Pos<0) || (Pos>Len) )
+    if (Pos>Len)
         return;
 
     // if we need to expand the string to accomodate the new character
@@ -226,7 +227,7 @@ void RedString::Insert(int Pos, char Ch)
         InitUnsetChars();
 
         // tidy up the memory allocation
-        delete Txt;
+        delete[] Txt;
         Txt = Temp;
     }
 
@@ -244,7 +245,7 @@ void RedString::Insert(int Pos, char Ch)
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-void RedString::Insert(int Pos, const char* Str)
+void RedString::Insert(const unsigned Pos, const char* Str)
 {
     RedString TempStr(Str);
 
@@ -253,9 +254,10 @@ void RedString::Insert(int Pos, const char* Str)
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-void RedString::Insert(int Pos, const RedString& Str)
+void RedString::Insert(const unsigned Pos, const RedString& Str)
 {
-    int  SLen = Str.Len;
+    unsigned SLen = Str.Len;
+    unsigned insertPos = Pos;
 
     if (SLen > 0)
     {
@@ -266,8 +268,8 @@ void RedString::Insert(int Pos, const RedString& Str)
 
             // Strip any \0 characters from the insert string
             if (ch != '\0')
-                Insert(Pos, ch);
-            ++Pos;
+                Insert(insertPos, ch);
+            ++insertPos;
         }
     }
 }
@@ -293,12 +295,12 @@ void RedString::Append(const char* pText)
     snprintf(pNewText, NewLen, "%s%s", Txt, pText);
 
     // delete the existing txt
-    delete Txt;
+    delete[] Txt;
 
     // Setup the new values
     Txt = pNewText;
-    Siz = (int)NewLen;
-    Len = (int)NewLen;
+    Siz = (unsigned)NewLen;
+    Len = (unsigned)NewLen;
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -315,12 +317,12 @@ void RedString::Append(const char ch)
     snprintf(pNewText, NewLen, "%s%c", Txt, ch);
 
     // delete the existing txt
-    delete Txt;
+    delete[] Txt;
 
     // Setup the new values
     Txt = pNewText;
-    Siz = (int)NewLen;
-    Len = (int)NewLen;
+    Siz = (unsigned)NewLen;
+    Len = (unsigned)NewLen;
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -368,10 +370,10 @@ void RedString::DelLastChar(void)
 // Queries
 // ============================================================================
 
-const char RedString::CharAtPos(int iPos) const
+const char RedString::CharAtPos(const unsigned iPos) const
 {
     // if the Pos is out of bounds, return a null character.
-    if ( ( iPos >= Len ) || ( iPos < 0 ) )
+    if (iPos >= Len)
         return '\0';
 
     return Txt[iPos];
@@ -379,29 +381,29 @@ const char RedString::CharAtPos(int iPos) const
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-const int RedString::NumLines(void) const
+const unsigned RedString::NumLines(void) const
 {
-    int iNumLines = 0;
+    unsigned NumLines = 0;
 
-    for (int i=0; i<Len; i++)
+    for (unsigned i=0; i<Len; i++)
     {
         // account for the first line if we have a valid char
-        if ( (iNumLines == 0) && ( Txt[i] != '\0' ) )
-            iNumLines = 1;
+        if ( (NumLines == 0) && ( Txt[i] != '\0' ) )
+            NumLines = 1;
 
         if ( Txt[i] == '\n' )
-            iNumLines++;
+            NumLines++;
     }
 
-    return iNumLines;
+    return NumLines;
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-const int RedString::LineAtNum(int iLineNum, RedString& Line) const
+const bool RedString::LineAtNum(const unsigned LineNum, RedString& Line) const
 {
-    int iLineStartIndex, iLineLength, iCurrIndex;
-    int iOnLine;
+    unsigned iLineStartIndex, iLineLength, iCurrIndex;
+    unsigned iOnLine;
 
     // initialise the return value
     Line = "";
@@ -412,14 +414,12 @@ const int RedString::LineAtNum(int iLineNum, RedString& Line) const
     iOnLine         = 1;
 
     // Lines are indexed as we would want to see a position marker, from 1.
-    if (iLineNum < 1)
-        return 0;
     // check we have enough lines to fullfill operation
-    if (iLineNum > NumLines() )
-        return 0;
+    if (LineNum > NumLines())
+        return false;
 
     // Loop to the first character of the line we need
-    while (iOnLine < iLineNum)
+    while (iOnLine < LineNum)
     {
         if ( Txt[iCurrIndex] == '\n' )
             iOnLine++;
@@ -440,20 +440,22 @@ const int RedString::LineAtNum(int iLineNum, RedString& Line) const
     // use the inbuilt routine to retrieve the section of line
     Line = SubStr(iLineStartIndex, iLineLength);
 
-    return 1;
+    return true;
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-RedString RedString::SubStr(int Start, int Count) const
+RedString RedString::SubStr(const unsigned Start, const unsigned Count) const
 {
     RedString TempStr;
-    int iCurrIndex = Start;
-    
+    unsigned iCurrIndex = Start;
+    unsigned realCount = Count;
+
     // crop the string if it would be too long
-    if (Count>Len) Count = Len;
+    if (realCount>Len)
+        realCount = Len;
     
-    for (int i=0; i<Count; i++)
+    for (unsigned i=0; i<realCount; i++)
     {
         TempStr += Txt[iCurrIndex];
         iCurrIndex++;
@@ -464,7 +466,7 @@ RedString RedString::SubStr(int Start, int Count) const
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-RedString RedString::StringFromPos(int iPos) const
+RedString RedString::StringFromPos(const unsigned iPos) const
 {
     return SubStr(iPos, Len-iPos);
 }
@@ -475,18 +477,22 @@ RedString RedString::StringFromPos(int iPos) const
 
 RedString::StrCompVal RedString::Compare(const RedString& Str, RedString::StrCompMode Case) const
 {
-    int Index, MaxIndex;
+    unsigned Index, MaxIndex;
     char Ch1, Ch2;
 
     // return quick result if one of the strings is empty
     if (Len == 0)
+    {
         if (Str.Len == 0)
             return SC_EQUAL;
         else
             return SC_LESS;
+    }
     else
+    {
         if (Str.Len == 0)
             return SC_GREATER;
+    }
 
     // determine the last point we need to compare to 
     MaxIndex = Len > Str.Len ? Len : Str.Len;
@@ -527,7 +533,7 @@ RedString RedString::ToUpper(void)
 {
     RedString TempStr = *this;
 
-    for (int Pos = 0; Pos < Len; ++Pos)
+    for (unsigned Pos = 0; Pos < Len; ++Pos)
         TempStr.Txt[Pos] = toupper(TempStr.Txt[Pos]);
 
     return TempStr;
@@ -539,7 +545,7 @@ RedString RedString::ToLower(void)
 {
     RedString TempStr = *this;
 
-    for (int Pos = 0; Pos < Len; ++Pos)
+    for (unsigned Pos = 0; Pos < Len; ++Pos)
         TempStr.Txt[Pos] = tolower(TempStr.Txt[Pos]);
 
     return TempStr;
@@ -549,7 +555,7 @@ RedString RedString::ToLower(void)
 
 const bool RedString::IsCharInString(char ch) const
 {
-    for (int Pos = 0; Pos < Len; ++Pos)
+    for (unsigned Pos = 0; Pos < Len; ++Pos)
     {
         if (Txt[Pos] == ch)
             return 1;
@@ -562,7 +568,7 @@ const bool RedString::IsCharInString(char ch) const
 const bool RedString::IsAlphaNumeric(void) const
 {
     RedChar RedChar;
-    for (int iPos = 0; iPos < Len; ++iPos)
+    for (unsigned iPos = 0; iPos < Len; ++iPos)
     {
         RedChar = CharObjAtPos(iPos);
 
@@ -594,11 +600,11 @@ const bool RedString::IsEqualTo(const char* Str) const
 void RedString::operator =(const char* chStr)
 {
     // Assign the new properties
-    Len = (int)strlen(chStr);
+    Len = (unsigned)strlen(chStr);
     Siz = (Len/AllocIncr)*AllocIncr + AllocIncr;
 
     // delete the old text
-    delete Txt;
+    delete[] Txt;
 
     // create the new sized text
     Txt = new char[Siz];
@@ -692,7 +698,7 @@ const int RedString::operator ==(const char* Str) const
         return 0;
 
     // compare each character, fail if any difference is found
-    for (int i=0; i<Len; i++)
+    for (unsigned i=0; i<Len; i++)
     {
         if (Txt[i] != Str[i])
             return 0;
@@ -751,7 +757,7 @@ void RedString::DebugDump(void)
 void RedString::InitUnsetChars(void)
 {
     // initialise the unset Chars
-    for (int i=Len; i<Siz; i++)
+    for (unsigned i=Len; i<Siz; i++)
         Txt[i] = chInitChar;
 }
 

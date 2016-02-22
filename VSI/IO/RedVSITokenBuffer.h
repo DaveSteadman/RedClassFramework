@@ -51,7 +51,7 @@ public:
     RedVSIToken GetToken(int iTokenIndex);
     void        SetTokenIndex(int iTokenIndex) { iCurrListIndex = iTokenIndex; };
     int         GetTokenIndex(void)        { return iCurrListIndex; };
-    void        SetTokenIndexBackOne(void) { if(iCurrListIndex>0) iCurrListIndex--; };
+    void        SetTokenIndexBackOne(void) { if (iCurrListIndex>0) iCurrListIndex--; };
 
     int         CurrIndexAtLastToken(void) { return (iCurrListIndex == cTokenList.NumItems()); };
 

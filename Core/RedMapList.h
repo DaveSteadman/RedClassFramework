@@ -52,7 +52,7 @@ public:
     
     // Overall collection routines
     const unsigned  NumItems(void) const { return cList.NumItems(); };
-    const int       IsEmpty(void)  const { return cList.IsEmpty();  };
+    const bool      IsEmpty(void)  const { return cList.IsEmpty();  };
 
     // Complex
     RedMapList* Clone(void); 

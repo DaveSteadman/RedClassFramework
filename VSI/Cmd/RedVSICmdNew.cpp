@@ -90,7 +90,7 @@ void RedVSICmdNew::Execute(RedVSIContextInterface* pContext)
     else
     {
         // create the new data item
-        pData = pContext->CreateDataItem(cLoc, cType, cName);
+        pContext->CreateDataItem(cLoc, cType, cName);
     }
     
     // queue the next command, we are done with this one

@@ -89,7 +89,7 @@ namespace VSI {
 //    RedVSIContextRoutine* pCurrRoutine = cRoutineStack.NextPopItem();
 //    if (pCurrRoutine)
 //    {
-//        if( pCurrRoutine->FindDataItem(cName, pData) )
+//        if ( pCurrRoutine->FindDataItem(cName, pData) )
 //            return 1;
 //    }
 //
@@ -167,7 +167,7 @@ namespace VSI {
 ////    CDataItem* pDataItem=REDNULL;
 ////    if (!cObjName.IsEmpty())
 ////    {
-////        if(!FindDataItem(cObjName, pDataItem)) { cAnalysis.AddErrorEvent("ERROR: Call on non-object.");  return; }
+////        if (!FindDataItem(cObjName, pDataItem)) { cAnalysis.AddErrorEvent("ERROR: Call on non-object.");  return; }
 ////
 ////        // error if the routine call is on a data item which isn't an object
 ////        if (!pDataItem->GetType().IsObj()) { cAnalysis.AddErrorEvent("ERROR: Call on non-object.");  return; }

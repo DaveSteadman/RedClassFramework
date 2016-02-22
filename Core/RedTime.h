@@ -30,11 +30,11 @@ namespace Core {
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-static const RedNumber kSecondsInDay    = RedNumber(86400);
-static const RedNumber kSecondsInHour   = RedNumber(3600);
-static const RedNumber kSecondsInMinute = RedNumber(60);
-static const RedNumber kMinutesInDay    = RedNumber(1440);
-static const RedNumber kMinutesInHour   = RedNumber(60);
+static const RedNumber kTimeSecondsInDay    = RedNumber(86400);
+static const RedNumber kTimeSecondsInHour   = RedNumber(3600);
+static const RedNumber kTimeSecondsInMinute = RedNumber(60);
+static const RedNumber kTimeMinutesInDay    = RedNumber(1440);
+static const RedNumber kTimeMinutesInHour   = RedNumber(60);
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -43,11 +43,11 @@ class RedTime
 public:
 
     RedTime(void) { Init(); };
-    RedTime(const int h, const int m, const double& s) { hour=h; minute=m; seconds=s; };
+    RedTime(const unsigned h, const unsigned m, const double& s) { hour=h; minute=m; seconds=s; };
 
     void Init(void) { hour=0; minute=0; seconds=0; };
 
-    void SetTime(const int h, const int m, const double& s)                  { hour=h; minute=m; seconds=s; };
+    void SetTime(const unsigned h, const unsigned m, const double& s)        { hour=h; minute=m; seconds=s; };
 	void SetTime(const RedNumber& h, const RedNumber& m, const RedNumber& s) { hour=h.IntegerValue(); minute=m.IntegerValue(); seconds=s.DoubleValue(); };
 	void SetTime(const RedString& timestr);
 
@@ -66,8 +66,8 @@ public:
 	void            SetSeconds(const RedNumber& NewSeconds) { seconds = NewSeconds; };
 
 	// Seconds In Day Routines
-	const RedNumber SecondsElapsedInDay(void) const { return (hour*kSecondsInHour) + (minute*kSecondsInMinute) + seconds; };
-	const RedNumber SecondsLeftInDay(void)    const { return kSecondsInDay - SecondsElapsedInDay(); };
+	const RedNumber SecondsElapsedInDay(void) const { return (hour*kTimeSecondsInHour) + (minute*kTimeSecondsInMinute) + seconds; };
+	const RedNumber SecondsLeftInDay(void)    const { return kTimeSecondsInDay - SecondsElapsedInDay(); };
 	void            SetTimeFromElapsedSeconds(const RedNumber& DayElapsedSeconds);
 
 private:

@@ -43,30 +43,30 @@ public:
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-static const RedString kVSIIOElementKeywordArray   = RedString("array");
-static const RedString kVSIIOElementKeywordAttrib  = RedString("attrib");
-static const RedString kVSIIOElementKeywordBool    = RedString("bool");
-static const RedString kVSIIOElementKeywordChar    = RedString("char");
-static const RedString kVSIIOElementKeywordClass   = RedString("class");
-static const RedString kVSIIOElementKeywordCode    = RedString("code");
-static const RedString kVSIIOElementKeywordElse    = RedString("else");
-static const RedString kVSIIOElementKeywordEndif   = RedString("endif");
-static const RedString kVSIIOElementKeywordEndloop = RedString("endloop");
-static const RedString kVSIIOElementKeywordHeap    = RedString("heap");
-static const RedString kVSIIOElementKeywordIf      = RedString("if");
-static const RedString kVSIIOElementKeywordLet     = RedString("let");
-static const RedString kVSIIOElementKeywordLoop    = RedString("loop");
-static const RedString kVSIIOElementKeywordName    = RedString("name");
-static const RedString kVSIIOElementKeywordNew     = RedString("new");
-static const RedString kVSIIOElementKeywordNumber  = RedString("number");
-static const RedString kVSIIOElementKeywordParams  = RedString("params");
-static const RedString kVSIIOElementKeywordParent  = RedString("parent");
-static const RedString kVSIIOElementKeywordReturn  = RedString("return");
-static const RedString kVSIIOElementKeywordRoutine = RedString("routine");
-static const RedString kVSIIOElementKeywordStack   = RedString("local");
-static const RedString kVSIIOElementKeywordString  = RedString("string");
-static const RedString kVSIIOElementKeywordThen    = RedString("then");
-static const RedString kVSIIOElementKeywordWhile   = RedString("while");
+static const RedString kVSIIOElementKeywordArray         = RedString("array");
+static const RedString kVSIIOElementKeywordAttrib        = RedString("attrib");
+static const RedString kVSIIOElementKeywordBool          = RedString("bool");
+static const RedString kVSIIOElementKeywordChar          = RedString("char");
+static const RedString kVSIIOElementKeywordClass         = RedString("class");
+static const RedString kVSIIOElementKeywordCode          = RedString("code");
+static const RedString kVSIIOElementKeywordElse          = RedString("else");
+static const RedString kVSIIOElementKeywordEndif         = RedString("endif");
+static const RedString kVSIIOElementKeywordEndloop       = RedString("endloop");
+static const RedString kVSIIOElementKeywordHeap          = RedString("heap");
+static const RedString kVSIIOElementKeywordIf            = RedString("if");
+static const RedString kVSIIOElementKeywordLet           = RedString("let");
+static const RedString kVSIIOElementKeywordLoop          = RedString("loop");
+static const RedString kVSIIOElementKeywordName          = RedString("name");
+static const RedString kVSIIOElementKeywordNew           = RedString("new");
+static const RedString kVSIIOElementKeywordNumber        = RedString("number");
+static const RedString kVSIIOElementKeywordParams        = RedString("params");
+static const RedString kVSIIOElementKeywordParent        = RedString("parent");
+static const RedString kVSIIOElementKeywordReturn        = RedString("return");
+static const RedString kVSIIOElementKeywordRoutine       = RedString("routine");
+static const RedString kVSIIOElementKeywordStack         = RedString("local");
+static const RedString kVSIIOElementKeywordString        = RedString("string");
+static const RedString kVSIIOElementKeywordThen          = RedString("then");
+static const RedString kVSIIOElementKeywordWhile         = RedString("while");
 
 static const RedString kVSIIOElementSymbolAssignPlus     = RedString("+=");
 static const RedString kVSIIOElementSymbolAssignMinus    = RedString("-=");

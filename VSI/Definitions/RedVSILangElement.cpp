@@ -147,7 +147,7 @@ const int RedVSILangElement::IsUnaryOp(void) const
 
 bool operator==(const RedVSILangElement& lhs, const RedVSILangElement& rhs)
 {
-    if(lhs.iElem() == rhs.iElem())
+    if (lhs.iElem() == rhs.iElem())
         return true;
     return false;
 }
@@ -156,7 +156,7 @@ bool operator==(const RedVSILangElement& lhs, const RedVSILangElement& rhs)
 
 bool operator!=(const RedVSILangElement& lhs, const RedVSILangElement& rhs)
 {
-    if(lhs.iElem() != rhs.iElem())
+    if (lhs.iElem() != rhs.iElem())
         return true;
     return false;
 }

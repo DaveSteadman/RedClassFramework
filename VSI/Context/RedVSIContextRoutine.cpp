@@ -194,7 +194,11 @@ void RedVSIContextRoutine::ExecuteSnippet(const unsigned CmdCount)
 
         // Execute the command (it will queue the next command as part of its execution)
         pCurrCmd->Execute(this);
+
+        // An ending command-path can pop a Null. As long as we have further entries to Pop, look for a non-null
         pCurrCmd = cCmdStack.Pop();
+        while ((pCurrCmd == REDNULL) && (!cCmdStack.IsEmpty()))
+            pCurrCmd = cCmdStack.Pop();
     }
 }
 

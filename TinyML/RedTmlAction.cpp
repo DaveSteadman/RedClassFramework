@@ -251,7 +251,7 @@ RedTmlElement* RedTmlAction::ParseTinyML(RedBufferInput& inputBuf)
 {
     RedTmlElement* retTml = REDNULL;
 
-    if( ReadTmlElement(inputBuf, &retTml) )
+    if ( ReadTmlElement(inputBuf, &retTml) )
         return retTml;
 
     return REDNULL;

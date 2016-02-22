@@ -25,7 +25,7 @@ namespace Core {
 
 bool operator==(const RedResult& lhs, const RedResult& rhs)
 {
-    if(lhs.iState() == rhs.iState())
+    if (lhs.iState() == rhs.iState())
         return true;
     return false;
 }
@@ -34,7 +34,7 @@ bool operator==(const RedResult& lhs, const RedResult& rhs)
 
 bool operator!=(const RedResult& lhs, const RedResult& rhs)
 {
-    if(lhs.iState() != rhs.iState())
+    if (lhs.iState() != rhs.iState())
         return true;
     return false;
 }

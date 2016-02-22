@@ -37,7 +37,7 @@ public:
 
     void           First(void);
     void           Next(void);
-    int            IsDone(void) const;
+    bool           IsDone(void) const;
     Element        CurrentItem(void);
 
     void           DeleteCurrentItem(void);
@@ -77,14 +77,14 @@ void RedLinkedListIterator<Element>::Next(void)
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 template<class Element>
-int RedLinkedListIterator<Element>::IsDone(void) const
+bool RedLinkedListIterator<Element>::IsDone(void) const
 {
-    int iSearchDone = 0;
+    bool SearchDone = false;
 
     if (iCurrPos > pList->NumItems())
-        iSearchDone = 1;
+        SearchDone = true;
 
-    return iSearchDone;
+    return SearchDone;
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

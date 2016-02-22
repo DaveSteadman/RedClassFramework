@@ -178,7 +178,7 @@ const int RedVSIIOElement::IsSeparatorSymbol(void) const
 
 bool operator==(const RedVSIIOElement& lhs, const RedVSIIOElement& rhs)
 {
-    if(lhs.iElem() == rhs.iElem())
+    if (lhs.iElem() == rhs.iElem())
         return true;
     return false;
 }
@@ -187,7 +187,7 @@ bool operator==(const RedVSIIOElement& lhs, const RedVSIIOElement& rhs)
 
 bool operator!=(const RedVSIIOElement& lhs, const RedVSIIOElement& rhs)
 {
-    if(lhs.iElem() != rhs.iElem())
+    if (lhs.iElem() != rhs.iElem())
         return true;
     return false;
 }

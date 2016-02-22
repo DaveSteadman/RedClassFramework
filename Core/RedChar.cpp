@@ -28,7 +28,7 @@ namespace Core {
 
 bool operator==(const RedChar& lhs, const RedChar& rhs)
 {
-    if(lhs.Char() == rhs.Char())
+    if (lhs.Char() == rhs.Char())
         return true;
     return false;
 }
@@ -37,7 +37,7 @@ bool operator==(const RedChar& lhs, const RedChar& rhs)
 
 bool operator!=(const RedChar& lhs, const RedChar& rhs)
 {
-    if(lhs.Char() != rhs.Char())
+    if (lhs.Char() != rhs.Char())
         return true;
     return false;
 }

@@ -46,7 +46,7 @@ public:
     void WriteNewLineWithIndent(void)    { WriteNewLine(); WriteIndent(); };
 
     void IncreaseIndent(void)            { indentlevel++; };
-    void DecreaseIndent(void)            { if(indentlevel>0) indentlevel--; };
+    void DecreaseIndent(void)            { if (indentlevel>0) indentlevel--; };
     const int IndentLevel(void)          { return indentlevel; };
     void SetIndentLevel(const int l)     { indentlevel=l; };
 
