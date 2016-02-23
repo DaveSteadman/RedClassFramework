@@ -26,6 +26,8 @@ using namespace Red::Core;
 namespace Red {
 namespace Geometry {
 
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
 class RedLatLongBox
 {
 public:
@@ -49,6 +51,8 @@ private:
     RedLatLong topleft;
     RedLatLong bottomright;
 };
+
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 } // Geometry
 } // Red

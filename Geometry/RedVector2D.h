@@ -26,6 +26,8 @@ using namespace Red::Core;
 namespace Red {
 namespace Geometry {
 
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
 class RedVector2D
 {
 public:
@@ -51,6 +53,8 @@ private:
     RedNumber x;
     RedNumber y; 
 };
+
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 } // Geometry
 } // Red

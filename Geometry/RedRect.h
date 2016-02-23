@@ -27,6 +27,8 @@ using namespace Red::Core;
 namespace Red {
 namespace Geometry {
 
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
 class RedRect
 {
 public:
@@ -56,6 +58,8 @@ private:
     RedPoint2D  origin;
     RedRectSize size; 
 };
+
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 } // Geometry
 } // Red

@@ -26,6 +26,8 @@ using namespace Red::Core;
 namespace Red {
 namespace Geometry {
 
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
 class RedVolume : public RedNumber
 {
 public:
@@ -40,6 +42,8 @@ public:
     RedNumber Pints(void) const                   { RedNumber retval(*this); retval *= pintsPerLitre;   return retval; };
     RedNumber Gallons(void) const                 { RedNumber retval(*this); retval += gallonsPerLitre; return retval; };
 };
+
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 } // Geometry
 } // Red

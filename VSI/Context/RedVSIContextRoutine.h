@@ -36,7 +36,7 @@ namespace VSI {
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 /// Class to represent the context required to execute a routine.
-/// Uses parent class RedVSIContextInterface, allowing code-snippets and simple command sequences to
+/// Uses parent class RedVSIContextInterface, allowing code-fragments and simple command sequences to
 /// be executed in a lightweight environment.
 class RedVSIContextRoutine : public RedVSIContextInterface
 {
@@ -44,8 +44,8 @@ public:
 
     RedVSIContextRoutine(RedLog& initAnalysis);
 
-    // Init with command for running a snippet
-    RedVSIContextRoutine(RedLog& initAnalysis, RedVSICmdInterface* pSnippetCmd);
+    // Init with command for running a fragment
+    RedVSIContextRoutine(RedLog& initAnalysis, RedVSICmdInterface* pFragmentCmd);
 
     ~RedVSIContextRoutine(void);
 

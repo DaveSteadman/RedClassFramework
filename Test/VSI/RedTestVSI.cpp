@@ -44,10 +44,9 @@ void RedTestVSI::RunUnitTest(RedLog& log)
     if (RedTestVSI::TestCmdNew().IsFail())            { log.AddErrorEvent("Core Unit Test: TestCmdNew Failed");            return; }
     if (RedTestVSI::TestTokeniseCode().IsFail())      { log.AddErrorEvent("Core Unit Test: TestTokeniseCode Failed");      return; }
 
-    if (RedTestVSI::TestSnippet_New().IsFail())       { log.AddErrorEvent("Core Unit Test: TestSnippet_New Failed");       return; }
-    if (RedTestVSI::TestSnippet_If().IsFail())        { log.AddErrorEvent("Core Unit Test: TestSnippet_If Failed");        return; }
-    if (RedTestVSI::TestSnippet_While().IsFail())     { log.AddErrorEvent("Core Unit Test: TestSnippet_While Failed");     return; }
-
+    if (RedTestVSI::TestFragment_New().IsFail())      { log.AddErrorEvent("Core Unit Test: TestFragment_New Failed");      return; }
+    if (RedTestVSI::TestFragment_If().IsFail())       { log.AddErrorEvent("Core Unit Test: TestFragment_If Failed");       return; }
+    if (RedTestVSI::TestFragment_While().IsFail())    { log.AddErrorEvent("Core Unit Test: TestFragment_While Failed");    return; }
 
     log.AddText("VSI Unit Test: Passed");
 }
@@ -550,16 +549,16 @@ RedResult RedTestVSI::TestRunProg_001(void)
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-RedResult RedTestVSI::TestSnippet_New(void)
+RedResult RedTestVSI::TestFragment_New(void)
 {
-    // Define a small code snippet
-    RedString strCodeSnippet = "new local number x = 3.2 x = x * 2";
+    // Define a small code fragment
+    RedString strCodeFragment = "new local number x = 3.2 x = x * 2";
 
     // Turn the code into tokens
     RedVSILibTokenMap cTokenMap;
     RedVSITokenBuffer cTokenList;
     RedLog            cRedLog;
-    if (!RedVSITokenFactory::CreateTokens(strCodeSnippet, cTokenMap.cVSILibTokenMap, cTokenList))
+    if (!RedVSITokenFactory::CreateTokens(strCodeFragment, cTokenMap.cVSILibTokenMap, cTokenList))
         return kResultFail;
 
     // Turn the tokens into code
@@ -591,16 +590,16 @@ RedResult RedTestVSI::TestSnippet_New(void)
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-RedResult RedTestVSI::TestSnippet_If(void)
+RedResult RedTestVSI::TestFragment_If(void)
 {
-    // Define a small code snippet
-    RedString strCodeSnippet = "new local number x = 3 new local number res = 0 if x < 4 then res = res + 1 end if ";
+    // Define a small code fragment
+    RedString strCodeFragment = "new local number x = 3 new local number res = 0 if x < 4 then res = res + 1 end if ";
 
     // Turn the code into tokens
     RedVSILibTokenMap cTokenMap;
     RedVSITokenBuffer cTokenList;
     RedLog            cRedLog;
-    if (!RedVSITokenFactory::CreateTokens(strCodeSnippet, cTokenMap.cVSILibTokenMap, cTokenList))
+    if (!RedVSITokenFactory::CreateTokens(strCodeFragment, cTokenMap.cVSILibTokenMap, cTokenList))
         return kResultFail;
 
     // Turn the tokens into code
@@ -632,34 +631,24 @@ RedResult RedTestVSI::TestSnippet_If(void)
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-RedResult RedTestVSI::TestSnippet_While(void)
+RedResult RedTestVSI::TestFragment_While(void)
 {
-    // Define a small code snippet
-    RedString strCodeSnippet = "new local number x = 2 while x < 99 loop x = x * 2 endloop";
+    // Define a small code fragment
+    RedString strCodeFragment = "new local number x = 2 while x < 99 loop x = x * 2 endloop";
 
-    // Turn the code into tokens
-    RedVSILibTokenMap cTokenMap;
-    RedVSITokenBuffer cTokenList;
-    RedLog            cRedLog;
-    if (!RedVSITokenFactory::CreateTokens(strCodeSnippet, cTokenMap.cVSILibTokenMap, cTokenList))
-        return kResultFail;
+    RedLog                cRedLog;
+    RedVSIContextRoutine* testContext = REDNULL;
 
-    // Turn the tokens into code
-    RedVSICmdInterface* topCmd = RedVSICmdFactory::RunConstuctionCompetition(cTokenList, cRedLog);
-    if (topCmd == REDNULL)
-        return kResultFail;
-    if (cRedLog.IsError())
-        return kResultFail;
+    RedVSIContextFactory::CreateRoutineContextForFragment(strCodeFragment, &testContext, cRedLog);
 
     // Execute the code in a context
-    RedVSIContextRoutine testContext(cRedLog, topCmd);
-    testContext.ExecuteSnippet(10);
+    testContext->ExecuteSnippet(10);
     if (cRedLog.IsError())
         return kResultFail;
 
     // Analyse the data created by the code
     RedType* pXVal = REDNULL;
-    testContext.FindDataItem("x", pXVal);
+    testContext->FindDataItem("x", pXVal);
     if (pXVal == REDNULL)
         return kResultFail;
     if (!pXVal->Type().IsNum())

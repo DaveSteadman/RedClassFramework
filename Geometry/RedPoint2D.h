@@ -27,6 +27,8 @@ namespace Geometry {
 
 class RedVector2D;
 
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
 class RedPoint2D
 {
 public:
@@ -53,6 +55,8 @@ private:
     RedNumber x;
     RedNumber y;
 };
+
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 } // Geometry
 } // Red

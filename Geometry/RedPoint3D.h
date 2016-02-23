@@ -27,6 +27,8 @@ namespace Geometry {
 
 class RedVector3D;
 
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
 class RedPoint3D
 {
 public:
@@ -53,6 +55,8 @@ private:
     RedNumber y;
     RedNumber z;
 };
+
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 } // Geometry
 } // Red

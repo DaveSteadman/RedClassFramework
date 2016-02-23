@@ -43,7 +43,7 @@ public:
 //    static RedVSIContextRoutine* CreateRoutineContext(RedVSILibRoutineInterface& cRoutineCall, RedVSILibRoutineInterface* pRoutineLib, CDataObject* pThisObj);
 
 
-    //static RedResult CreateRoutineContextForSnippet(const RedString& InputCode, RedVSIContextRoutine* OutputContext, RedLog& cLog);
+    static RedResult CreateRoutineContextForFragment(const RedString& InputCodeFragment, RedVSIContextRoutine** OutputContext, RedLog& cLog);
 
 };
 

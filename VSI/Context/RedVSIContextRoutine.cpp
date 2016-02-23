@@ -188,7 +188,7 @@ void RedVSIContextRoutine::ExecuteSnippet(const unsigned CmdCount)
 
         if (IsBlocked(this))
         {
-            cAnalysis.AddErrorEvent("Expression blocked on running snippet.");
+            cAnalysis.AddErrorEvent("Expression blocked on running code fragment.");
             return;
         }
 

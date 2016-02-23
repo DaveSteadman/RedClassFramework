@@ -26,6 +26,8 @@ using namespace Red::Core;
 namespace Red {
 namespace Geometry {
 
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
 class RedDistance : public RedNumber
 {
 public:
@@ -54,6 +56,8 @@ public:
     RedNumber Feet(void) const                   { RedNumber retval(*this); retval *= feetPerMetre;   return retval; };
     RedNumber Inches(void) const                 { RedNumber retval(*this); retval *= inchesPerMetre; return retval; };
 };
+
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 } // Geometry
 } // Red

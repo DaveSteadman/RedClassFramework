@@ -26,6 +26,8 @@ using namespace Red::Core;
 namespace Red {
 namespace Geometry {
 
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
 class RedArea : public RedNumber
 {
 public:
@@ -36,6 +38,8 @@ public:
     RedNumber Acres(void) const                   { RedNumber retval(*this); retval *= acresPerSquaremetre; return retval; };
 
 };
+
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 } // Geometry
 } // Red

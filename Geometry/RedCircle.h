@@ -28,6 +28,8 @@ namespace Geometry {
 
 const RedNumber kPi = 3.1415926;
 
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
 class RedCircle
 {
 public:
@@ -62,6 +64,8 @@ private:
     RedPoint2D  origin;
     RedNumber radius;
 };
+
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 } // Geometry
 } // Red

@@ -27,6 +27,8 @@ using namespace Red::Core;
 namespace Red {
 namespace Geometry {
 
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
 // Note: Class has no dependency on RedPoint3D
 
 class RedVector3D
@@ -59,6 +61,8 @@ private:
     RedNumber y;
     RedNumber z;
 };
+
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 } // Geometry
 } // Red

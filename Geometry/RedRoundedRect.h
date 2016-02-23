@@ -30,6 +30,7 @@ using namespace Red::Core;
 namespace Red {
 namespace Geometry {
 
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 /// Arc class exists to define circular arc maths. This in turn supports the definition of a rounded rectangle.
 class RedRoundedRect
@@ -67,8 +68,9 @@ private:
 
       /// Derived attributes
       //RedCircularArcUnit
-
 };
+
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 }
 }
