@@ -366,6 +366,36 @@ void RedString::DelLastChar(void)
     this->Delete(this->Length(), 1);
 }
 
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+void RedString::StripChar(const RedChar& ch)
+{
+	// New char array the same as existing, as new string is guaranteed to be same or shorter
+	char     strippedStr[Len];
+	unsigned currStrippedStrIndex = 0;
+
+	// Loop through the chars
+	for (unsigned currCharIndex = 0; currCharIndex<Len; currCharIndex++)
+	{
+		if (Txt[currCharIndex] != ch)
+		{
+			strippedStr[currStrippedStrIndex] = Txt[currCharIndex];
+			currStrippedStrIndex++;
+		}
+	}
+
+	// Append a \0
+	strippedStr[currStrippedStrIndex] = '\0';
+
+	// Delete the existing text and assign the new string
+	unsigned strippedStrLen = currStrippedStrIndex;
+	delete Txt;
+	Txt = new char[strippedStrLen];
+	memcpy(Txt, strippedStr, strippedStrLen);
+	Len = strippedStrLen;
+	Siz = strippedStrLen;
+}
+
 // ============================================================================
 // Queries
 // ============================================================================
