@@ -41,10 +41,10 @@ public:
     typedef RedDoubleLinkedListIterator<RedVSILibClass*>  IteratorType;
 
     void       AddClass(RedVSILibClass* pNewClass);
-    void       DelClass(RedString& cClassName);
+    void       DelClass(const RedString& cClassName);
 
     // inherited
-    RedVSILibClass*            FindClass(RedString cClassName);
+    RedVSILibClass*            FindClass(const RedString& cClassName);
     RedVSILibRoutineInterface* FindRoutine(RedVSIRoutineCallInterface& cSig);
 
     const int NumClasses(void) const { return cClassList.NumItems(); };

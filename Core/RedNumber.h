@@ -30,7 +30,7 @@
 namespace Red {
 namespace Core {
 
-/// Constant describing the tollerance on floating point equality statements
+/// Default tollerance on floating point equality statements
 static const double kFloatCompTollerance = 0.0000001;
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

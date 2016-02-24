@@ -46,12 +46,12 @@ public:
 
     // Init with command for running a fragment
     RedVSIContextRoutine(RedLog& initAnalysis, RedVSICmdInterface* pFragmentCmd);
-
     ~RedVSIContextRoutine(void);
 
-    // - - - - - - - - - - -
+    // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    // RedVSIContextInterface Inhertied Interface
 
-    // Inhertied Data accessors (RedVSIContextInterface)
+    // Data accessors (RedVSIContextInterface)
     RedType*       CreateDataItem(const RedVSILangElement& cLocation, const RedVSILangElement& cType, const RedString& cName);
     int            FindDataItem  (const RedString& cName, RedType*& pData);
     void           SetReturnValue(const RedVariant& cData);
@@ -72,7 +72,7 @@ public:
     RedString       ClassName(void) const                                  { return cClassName; };
     RedString       ObjectName(void) const                                 { return cObjectName; };
 
-    // - - - - - - - - - - -
+    // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
     void            SetParamsList(RedRecord* pParamData);
 

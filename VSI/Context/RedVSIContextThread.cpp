@@ -24,260 +24,260 @@
 
 namespace Red {
 namespace VSI {
+
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+RedVSIContextThread::RedVSIContextThread(const RedVSILibInterface* pInitCodeLib, const RedVSIRoutineCallInterface& cStartingSignature)
+{
+    pCodeLib = pInitCodeLib;
+}
+
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+RedVSIContextThread::RedVSIContextThread(void)
+{
+    pCodeLib = 0;
+}
+
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+// Inherited
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+RedType* RedVSIContextThread::CreateDataItem(const RedVSILangElement& cLocation, const RedVSILangElement& cType, const RedString& cName)
+{
+    // Returned value
+    RedType* pNewData = REDNULL;
+
+    // Basic Validation
+    if (!cLocation.IsLocation()) throw;
+    if (!cType.IsType()) throw;
+
+    // Determine if we just pass this action down to the routine
+    if (cLocation.IsLocationStack() || cLocation.IsLocationAttribute())
+    {
+        RedVSIContextRoutine* pCurrRoutine = cRoutineStack.NextPopItem();
+        if (pCurrRoutine != REDNULL)
+        {
+            pCurrRoutine->CreateDataItem(cLocation, cType, cName);
+        }
+    }
+    if (cLocation.IsLocationHeap())
+    {
+        // Convert from the higher-level VSILangElement type, to the core RedRecord type.
+        RedDataType t;
+        if (cType.IsTypeArray())  t.SetList();
+        if (cType.IsTypeBool())   t.SetBool();
+        if (cType.IsTypeChar())   t.SetList();
+        if (cType.IsTypeNumber()) t.SetNum();
+        if (cType.IsTypeString()) t.SetStr();
+
+        pNewData = cHeap.CreateAndAdd(cName, t);
+    }
+
+    // Return the pointer to the new object (or zero)
+    return pNewData;
+}
+
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+int RedVSIContextThread::FindDataItem(const RedString& cName, RedType*& pData)
+{
+    // Initialise output pointer
+    pData = 0;
+
+    // If we have a routine and find it.
+    RedVSIContextRoutine* pCurrRoutine = cRoutineStack.NextPopItem();
+    if (pCurrRoutine)
+    {
+        if ( pCurrRoutine->FindDataItem(cName, pData) )
+            return 1;
+    }
+
+    // Look in the thread heap
+    if (cHeap.Find(cName, pData))
+        return 1;
+
+    return 0;
+}
+
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+void RedVSIContextThread::SetReturnValue(const RedVariant& cData)
+{
+    RedVSIContextRoutine* pCurrRoutine = cRoutineStack.NextPopItem();
+
+    if (pCurrRoutine)
+        pCurrRoutine->SetReturnValue(cData);
+    else
+        cAnalysis.AddErrorEvent("AssignReturnValue with no routine context");
+}
+
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+void RedVSIContextThread::QueueExpr(RedVSIParseTreeInterface* pExpr)
+{
+    RedVSIContextRoutine* pCurrRoutine = cRoutineStack.NextPopItem();
+
+    if (pCurrRoutine)
+        pCurrRoutine->QueueExpr(pExpr);
+    else
+        cAnalysis.AddErrorEvent("QueueExpr with no routine context");
+}
+
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+void RedVSIContextThread::SetExprResult(RedVSIParseTreeInterface* pExpr, const RedVariant& RedResult)
+{
+    RedVSIContextRoutine* pCurrRoutine = cRoutineStack.NextPopItem();
+
+    if (pCurrRoutine)
+        pCurrRoutine->SetExprResult(pExpr, RedResult);
+    else
+        cAnalysis.AddErrorEvent("SetExprResult with no routine context");
+}
+
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+RedVariant RedVSIContextThread::ExprResult(RedVSIParseTreeInterface* pExpr)
+{
+    RedVSIContextRoutine* pCurrRoutine = cRoutineStack.NextPopItem();
+    RedVariant            retval;
+
+    if (pCurrRoutine)
+        retval = pCurrRoutine->ExprResult(pExpr);
+
+    return retval;
+}
+
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+void RedVSIContextThread::SetupRoutineCall(RedVSIRoutineCallInterface& cSignature)
+{
+//    RedType* pThisObj=0;
 //
-//// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-//
-//RedVSIContextThread::RedVSIContextThread(const RedVSILibInterface* pInitCodeLib, const RedVSIRoutineCallInterface& cStartingSignature)
-//{
-//    pCodeLib = pInitCodeLib;
-//}
-//
-//// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-//
-//RedVSIContextThread::RedVSIContextThread(void)
-//{
-//    pCodeLib = 0;
-//}
-//
-//// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-//// Inherited
-//// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-//
-//RedType* RedVSIContextThread::CreateDataItem(const RedVSILangElement& cLocation, const RedVSILangElement& cType, const RedString& cName)
-//{
-//    // Returned value
-//    RedType* pNewData = REDNULL;
-//
-//    // Basic Validation
-//    if (!cLocation.IsLocation()) throw;
-//    if (!cType.IsType()) throw;
-//
-//    // Determine if we just pass this action down to the routine
-//    if (cLocation.IsLocationStack() || cLocation.IsLocationAttribute())
+//    // if the call is internal, get the object/class details from the calling routine
+//    if (cSignature.IsInternalCall())
 //    {
-//        RedVSIContextRoutine* pCurrRoutine = cRoutineStack.NextPopItem();
-//        if (pCurrRoutine != REDNULL)
+//        cSignature.SetClassName( GetClassName() );
+//        cSignature.SetObjectName( GetObjectName() );
+//    }
+//    
+//    // first, try to find the object or error out
+//    RedString cObjName = cSignature.GetObjectName();
+//    CDataItem* pDataItem=REDNULL;
+//    if (!cObjName.IsEmpty())
+//    {
+//        if (!FindDataItem(cObjName, pDataItem)) { cAnalysis.AddErrorEvent("ERROR: Call on non-object.");  return; }
+//
+//        // error if the routine call is on a data item which isn't an object
+//        if (!pDataItem->GetType().IsObj()) { cAnalysis.AddErrorEvent("ERROR: Call on non-object.");  return; }
+//        pThisObj = (CDataObject*)pDataItem;
+//        
+//        // extract the classname for the signature
+//        cSignature.SetClassName(pThisObj->GetClassName());
+//    }
+//    // Find the routine
+//    RedVSILibRoutineInterface* pRoutine = pCodeLib->FindRoutine(cSignature);
+//    if (!pRoutine) { cAnalysis.AddErrorEvent("ERROR: Routine not found.");  return; }
+//
+//    // create the new routine context
+//    RedVSIContextRoutine* pNewContext = RedVSIContextFactory::CreateRoutineContext(cSignature, pRoutine, pThisObj);
+//
+//    // add the routine to the stack for the next call
+//    cRoutineStack.Push(pNewContext);
+}
+
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+int RedVSIContextThread::IsBlocked(RedVSIContextInterface* pRoutineContext)
+{
+    // if the top of the routine stack matched the context, then that context
+    // isn't blocked
+    if (cRoutineStack.NextPopItem() == pRoutineContext)
+        return 0;
+        
+    // the pointers are different, so the routine IS blocked.
+    return 1;
+}
+
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+void RedVSIContextThread::QueueCommand(RedVSICmdInterface* pCmd)
+{
+    RedVSIContextRoutine* pCurrRoutine = cRoutineStack.NextPopItem();
+
+    // only queue up non-zero commands
+    if ((pCmd) && (pCurrRoutine))
+    {
+        pCurrRoutine->QueueCommand(pCmd);
+    }
+    else
+    {
+        if (!pCmd)         cAnalysis.AddErrorEvent("QueueCommand with no command");
+        if (!pCurrRoutine) cAnalysis.AddErrorEvent("QueueCommand with no routine context");
+    }
+}
+
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+void RedVSIContextThread::ClearCommandQueue(void)
+{
+    RedVSIContextRoutine* pCurrRoutine = cRoutineStack.NextPopItem();
+
+    if (pCurrRoutine)
+        pCurrRoutine->ClearCommandQueue();
+    else
+        cAnalysis.AddErrorEvent("ClearCommandQueue with no routine context");
+}
+
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+RedString RedVSIContextThread::ClassName(void)
+{
+    return cRoutineStack.NextPopItem()->ClassName();
+}
+
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+RedString RedVSIContextThread::ObjectName(void)
+{
+    return cRoutineStack.NextPopItem()->ObjectName();
+}
+
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+void RedVSIContextThread::Execute(int& iCmdCount)
+{
+//    while ( (iCmdCount > 0) && (!cRoutineStack.IsEmpty()) )
+//    {
+//        RedVSIContextRoutine* pTopRoutine = cRoutineStack.NextPopItem();
+//        
+//        if (pTopRoutine->HasCmdToExecute())
 //        {
-//            pCurrRoutine->CreateDataItem(cLocation, cType, cName);
+//            pTopRoutine->Execute(this);
+//            iCmdCount--;
+//        }
+//        else
+//        {
+//            //copy the data item out of the routine
+//            RedVariant cRetVal = pTopRoutine->GetReturnValue();
+//            
+//            // actually take the top item off the routine stack and delete it
+//            pTopRoutine = cRoutineStack.Pop();
+//            delete pTopRoutine;
+//
+//            // if we have a calling routine to jump back to
+//            if (!cRoutineStack.IsEmpty())
+//            {
+//                // get the new top item off the stack
+//                cRoutineStack.NextPopItem()->SetSubroutineReturnValue(cRetVal);
+//            }
 //        }
 //    }
-//    if (cLocation.IsLocationHeap())
-//    {
-//        // Convert from the higher-level VSILangElement type, to the core RedRecord type.
-//        RedDataType t;
-//        if (cType.IsTypeArray())  t.SetList();
-//        if (cType.IsTypeBool())   t.SetBool();
-//        if (cType.IsTypeChar())   t.SetList();
-//        if (cType.IsTypeNumber()) t.SetNum();
-//        if (cType.IsTypeString()) t.SetStr();
-//
-//        pNewData = cHeap.CreateAndAdd(cName, t);
-//    }
-//
-//    // Return the pointer to the new object (or zero)
-//    return pNewData;
-//}
-//
-//// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-//
-//int RedVSIContextThread::FindDataItem(const RedString& cName, RedType*& pData)
-//{
-//    // Initialise output pointer
-//    pData = 0;
-//
-//    // If we have a routine and find it.
-//    RedVSIContextRoutine* pCurrRoutine = cRoutineStack.NextPopItem();
-//    if (pCurrRoutine)
-//    {
-//        if ( pCurrRoutine->FindDataItem(cName, pData) )
-//            return 1;
-//    }
-//
-//    // Look in the thread heap
-//    if (cHeap.Find(cName, pData))
-//        return 1;
-//
-//    return 0;
-//}
-//
-//// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-//
-//void RedVSIContextThread::SetReturnValue(const RedVariant& cData)
-//{
-//    RedVSIContextRoutine* pCurrRoutine = cRoutineStack.NextPopItem();
-//
-//    if (pCurrRoutine)
-//        pCurrRoutine->SetReturnValue(cData);
-//    else
-//        cAnalysis.AddErrorEvent("AssignReturnValue with no routine context");
-//}
-//
-//// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-//
-//void RedVSIContextThread::QueueExpr(RedVSIParseTreeInterface* pExpr)
-//{
-//    RedVSIContextRoutine* pCurrRoutine = cRoutineStack.NextPopItem();
-//
-//    if (pCurrRoutine)
-//        pCurrRoutine->QueueExpr(pExpr);
-//    else
-//        cAnalysis.AddErrorEvent("QueueExpr with no routine context");
-//}
-//
-//// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-//
-//void RedVSIContextThread::SetExprResult(RedVSIParseTreeInterface* pExpr, RedVariant& RedResult)
-//{
-//    RedVSIContextRoutine* pCurrRoutine = cRoutineStack.NextPopItem();
-//
-//    if (pCurrRoutine)
-//        pCurrRoutine->SetExprResult(pExpr, RedResult);
-//    else
-//        cAnalysis.AddErrorEvent("SetExprResult with no routine context");
-//}
-//
-//// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-//
-//RedVariant RedVSIContextThread::ExprResult(RedVSIParseTreeInterface* pExpr)
-//{
-//    RedVSIContextRoutine* pCurrRoutine = cRoutineStack.NextPopItem();
-//    RedVariant            retval;
-//
-//    if (pCurrRoutine)
-//        retval = pCurrRoutine->ExprResult(pExpr);
-//
-//    return retval;
-//}
-//
-//// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-//
-//void RedVSIContextThread::SetupRoutineCall(RedVSIRoutineCallInterface& cSignature)
-//{
-////    RedType* pThisObj=0;
-////
-////    // if the call is internal, get the object/class details from the calling routine
-////    if (cSignature.IsInternalCall())
-////    {
-////        cSignature.SetClassName( GetClassName() );
-////        cSignature.SetObjectName( GetObjectName() );
-////    }
-////    
-////    // first, try to find the object or error out
-////    RedString cObjName = cSignature.GetObjectName();
-////    CDataItem* pDataItem=REDNULL;
-////    if (!cObjName.IsEmpty())
-////    {
-////        if (!FindDataItem(cObjName, pDataItem)) { cAnalysis.AddErrorEvent("ERROR: Call on non-object.");  return; }
-////
-////        // error if the routine call is on a data item which isn't an object
-////        if (!pDataItem->GetType().IsObj()) { cAnalysis.AddErrorEvent("ERROR: Call on non-object.");  return; }
-////        pThisObj = (CDataObject*)pDataItem;
-////        
-////        // extract the classname for the signature
-////        cSignature.SetClassName(pThisObj->GetClassName());
-////    }
-////    // Find the routine
-////    RedVSILibRoutineInterface* pRoutine = pCodeLib->FindRoutine(cSignature);
-////    if (!pRoutine) { cAnalysis.AddErrorEvent("ERROR: Routine not found.");  return; }
-////
-////    // create the new routine context
-////    RedVSIContextRoutine* pNewContext = RedVSIContextFactory::CreateRoutineContext(cSignature, pRoutine, pThisObj);
-////
-////    // add the routine to the stack for the next call
-////    cRoutineStack.Push(pNewContext);
-//}
-//
-//// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-//
-//int RedVSIContextThread::IsBlocked(RedVSIContextInterface* pRoutineContext)
-//{
-//    // if the top of the routine stack matched the context, then that context
-//    // isn't blocked
-//    if (cRoutineStack.NextPopItem() == pRoutineContext)
-//        return 0;
-//        
-//    // the pointers are different, so the routine IS blocked.
-//    return 1;
-//}
-//
-//// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-//
-//void RedVSIContextThread::QueueCommand(RedVSICmdInterface* pCmd)
-//{
-//    RedVSIContextRoutine* pCurrRoutine = cRoutineStack.NextPopItem();
-//
-//    // only queue up non-zero commands
-//    if ((pCmd) && (pCurrRoutine))
-//    {
-//        pCurrRoutine->QueueCommand(pCmd);
-//    }
-//    else
-//    {
-//        if (!pCmd)         cAnalysis.AddErrorEvent("QueueCommand with no command");
-//        if (!pCurrRoutine) cAnalysis.AddErrorEvent("QueueCommand with no routine context");
-//    }
-//}
-//
-//// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-//
-//void RedVSIContextThread::ClearCommandQueue(void)
-//{
-//    RedVSIContextRoutine* pCurrRoutine = cRoutineStack.NextPopItem();
-//
-//    if (pCurrRoutine)
-//        pCurrRoutine->ClearCommandQueue();
-//    else
-//        cAnalysis.AddErrorEvent("ClearCommandQueue with no routine context");
-//}
-//
-//// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-//
-//RedString RedVSIContextThread::ClassName(void)
-//{
-//    return cRoutineStack.NextPopItem()->ClassName();
-//}
-//
-//// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-//
-//RedString RedVSIContextThread::ObjectName(void)
-//{
-//    return cRoutineStack.NextPopItem()->ObjectName();
-//}
-//
-//// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-//
-//void RedVSIContextThread::Execute(int& iCmdCount)
-//{
-////    while ( (iCmdCount > 0) && (!cRoutineStack.IsEmpty()) )
-////    {
-////        RedVSIContextRoutine* pTopRoutine = cRoutineStack.NextPopItem();
-////        
-////        if (pTopRoutine->HasCmdToExecute())
-////        {
-////            pTopRoutine->Execute(this);
-////            iCmdCount--;
-////        }
-////        else
-////        {
-////            //copy the data item out of the routine
-////            RedVariant cRetVal = pTopRoutine->GetReturnValue();
-////            
-////            // actually take the top item off the routine stack and delete it
-////            pTopRoutine = cRoutineStack.Pop();
-////            delete pTopRoutine;
-////
-////            // if we have a calling routine to jump back to
-////            if (!cRoutineStack.IsEmpty())
-////            {
-////                // get the new top item off the stack
-////                cRoutineStack.NextPopItem()->SetSubroutineReturnValue(cRetVal);
-////            }
-////        }
-////    }
-//}
-//
-//// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-//
+}
+
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
 } // VSI
 } // Red
 

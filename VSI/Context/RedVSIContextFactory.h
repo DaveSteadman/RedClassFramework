@@ -23,8 +23,9 @@
 //#include "RedCoreNamespace.h"
 
 #include "RedVSIContextRoutine.h"
-//#include "RedVSILibRoutineInterface.h"
-//#include "RedVSILibRoutineInterface.h"
+#include "RedVSIContextThread.h"
+#include "RedVSILibRoutineInterface.h"
+#include "RedVSILibInterface.h"
 
 namespace Red {
 namespace VSI {
@@ -39,12 +40,9 @@ class RedVSIContextFactory
 {
 public:
 
-
-//    static RedVSIContextRoutine* CreateRoutineContext(RedVSILibRoutineInterface& cRoutineCall, RedVSILibRoutineInterface* pRoutineLib, CDataObject* pThisObj);
-
-
     static RedResult CreateRoutineContextForFragment(const RedString& InputCodeFragment, RedVSIContextRoutine** OutputContext, RedLog& cLog);
 
+    static RedResult CreateThreadContextForRoutine(RedVSILibRoutineInterface& cInputRoutineCall, RedVSILibInterface* pInputLib, RedVSIContextThread** OutputContext, RedLog& cLog);
 };
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

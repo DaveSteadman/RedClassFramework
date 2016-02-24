@@ -54,7 +54,7 @@ public:
     const RedString    FuncName(void)    const { return cFuncName;  };
 
     void               AppendParam(RedVariant& cNewParam) { cParams.AddLast(cNewParam); };
-    RedVSIDataList*    GetParams(void)                    { return &cParams; };
+    const RedVSIDataList*    GetParams(void) const              { return &cParams; };
 
     void operator =(RedVSIRoutineCallInterface& cSig);
     

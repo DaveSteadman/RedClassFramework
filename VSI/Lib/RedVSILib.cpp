@@ -31,7 +31,7 @@ void RedVSILib::AddClass(RedVSILibClass* pNewClass)
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-void RedVSILib::DelClass(RedString& cClassName)
+void RedVSILib::DelClass(const RedString& cClassName)
 {
     IteratorType cIt(&cClassList);
 
@@ -49,7 +49,7 @@ void RedVSILib::DelClass(RedString& cClassName)
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-RedVSILibClass* RedVSILib::FindClass(RedString cClassName)
+RedVSILibClass* RedVSILib::FindClass(const RedString& cClassName)
 {
     IteratorType cIt(&cClassList);
 
