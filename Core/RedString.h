@@ -66,6 +66,7 @@ public:
     void           Append(const unsigned num);
     void           DelFirstChar(void);
     void           DelLastChar(void);
+    void           StripChar(const RedChar& ch);
 
     // Queries
     const int      Length(void) const           { return Len; };
