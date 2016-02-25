@@ -18,32 +18,65 @@
 
 #include "RedString2.h"
 
-
-
 namespace Red {
 namespace Core {
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 // Public Main Routines
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
 void RedString2::Empty()
 {
+    // Delete recreate the stored string
+    delete data;
+    data = AllocData(1);
 
+    // Update the string size
+    datasize    = SizeForNumBlocks(1);
+    contentsize = 0;
+
+    // assign \0 to all characters
+    for (unsigned i=0; i<datasize; i++)
+        data[i] = '\0';
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 void RedString2::Set(const char* pText)
 {
+    const unsigned StrLenNewData = strlen(pText);
+    const unsigned NumBlocksRequired = NumBlocksForSize(StrLenNewData);
     
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-void RedString2::Append(const char ch);
-void RedString2::Delete(const unsigned Pos, const unsigned Count);
-void RedString2::Insert(const unsigned Pos, char Ch);
-const char RedString2::CharAtPos(const unsigned iPos) const;
+
+void RedString2::Append(const char ch)
+{
     
+}
+
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+void RedString2::Delete(const unsigned Pos, const unsigned Count)
+{
+    
+}
+
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+void RedString2::Insert(const unsigned Pos, char Ch)
+{
+    
+}
+
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+const char RedString2::CharAtPos(const unsigned iPos) const
+{
+    
+}
+
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 // Private Main Routines
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
