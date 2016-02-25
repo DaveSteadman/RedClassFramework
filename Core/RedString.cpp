@@ -22,6 +22,7 @@
 #include <stdio.h>
 
 #include "RedString.h"
+#include "RedCoreConsts.h"
 
 namespace Red {
 namespace Core {
@@ -623,25 +624,51 @@ const bool RedString::IsEqualTo(const char* Str) const
     return (Compare(temp, SM_CASE_SENSITIVE) == SC_EQUAL);
 }
 
-// ============================================================================
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+char* RedString::StringDup(const char* inStr)
+{
+    // protect against a null input
+    if (inStr == NULL)
+        return REDNULL;
+
+    // Allocate new string with space for null
+    const unsigned long strsize = strlen (inStr) + 1;
+    char *retstr = new char[strsize];
+
+    // Copy and return data
+    strncpy(retstr, inStr, strsize);
+    return retstr;
+}
+
+// =================================================================================================
 // Operators
-// ============================================================================
+// =================================================================================================
 
 void RedString::operator =(const char* chStr)
 {
-    // Assign the new properties
-    Len = (unsigned)strlen(chStr);
-    Siz = (Len/AllocIncr)*AllocIncr + AllocIncr;
+//    const unsigned long strsize = strlen (chStr) + 1;
 
-    // delete the old text
-    delete[] Txt;
+//
+//    // Assign the new properties
+//    Len = (unsigned)strlen(chStr);
+//    Siz = Len + 1;
+//
+//    // delete the old text
+//    delete[] Txt;
+//
+//    // create the new sized text
+//    Txt = new char[Siz];
+//
+//    // copy the characters across
+//    strncpy(Txt, chStr, Len);
+//    InitUnsetChars();
 
-    // create the new sized text
-    Txt = new char[Siz];
-
-    // copy the characters across
-    memcpy(Txt, chStr, Len);
-    InitUnsetChars();
+//    delete[] Txt;
+//
+//    Txt = RedString::StringDup(chStr);
+//    Len = strsize -1;
+//    Siz = strsize;
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -684,7 +711,7 @@ char RedString::operator [](int Pos) const
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-#pragma mark - Comparison Operators
+// Comparison Operators
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 const int RedString::operator <(const RedString Str) const

@@ -18,7 +18,6 @@
 
 #pragma once
 
-
 #include "RedSmartPtr.h"
 #include "RedChar.h"
 #include "RedType.h"
@@ -97,6 +96,13 @@ public:
     enum StrCompMode { SM_CASE_SENSITIVE, SM_IGNORE_CASE };
     StrCompVal Compare(const RedString& Str, StrCompMode Case) const;
 
+
+    static char*   StringDup(const char* inStr);
+
+//    static char*   AllocateStringBlocks(const unsigned numBlocks);
+
+
+
     // Assignment/Access Operators
     void operator  =(const char* chStr);
     void operator  =(const RedChar& cChr);
@@ -136,10 +142,12 @@ private:
     static int  AllocIncr;
     static char chInitChar;
 
-    // Size: allocated number of character.
+    // Size: allocated number of characters.
     unsigned   Siz;
-    // Length: Size of the string assigned to the allocated array. Must be <= the size.
+
+    // Length: Size of the string assigned to the allocated array, not including a final \0 character.
     unsigned   Len;
+
     // Text: The allocated array of charcters.
     char* Txt;
 };

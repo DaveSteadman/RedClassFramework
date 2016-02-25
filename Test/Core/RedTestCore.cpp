@@ -206,6 +206,21 @@ RedResult RedTestCore::TestString(void)
         if (x != "121212121212121212121212121212121212A") return kResultFail;
     }
 
+    // Strip characters
+    {
+        RedString str;
+
+        str = "Utter Maddness";
+        str.StripChar('M');
+        if (str != "Utter addness")
+            return kResultFail;
+
+        str = "ABC 123 XYZ";
+        str.StripChar(' ');
+        if (str != "ABC123XYZ")
+            return kResultFail;
+    }
+
     // Code has failed on a 32 character string - specific test here to ensure the end-of-string
     // character is preserved when we have two strings allocated next to each other.
     // Addition dicriminatory factor was the string starting with a "/"? Not understood.
