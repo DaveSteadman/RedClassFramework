@@ -24,12 +24,33 @@ namespace Red {
 namespace Core {
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-// Private
+// Public Main Routines
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+void RedString2::Empty()
+{
+
+}
+
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+void RedString2::Set(const char* pText)
+{
+    
+}
+
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+void RedString2::Append(const char ch);
+void RedString2::Delete(const unsigned Pos, const unsigned Count);
+void RedString2::Insert(const unsigned Pos, char Ch);
+const char RedString2::CharAtPos(const unsigned iPos) const;
+    
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+// Private Main Routines
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 char* RedString2::AllocData(const unsigned NumBlocks)
 {
-    unsigned AllocLen = NumBlocks * kRedString2AllocBlockSize;
+    unsigned AllocLen = SizeForNumBlocks(NumBlocks);
 
     char* NewDataArray = new char[AllocLen];
 
