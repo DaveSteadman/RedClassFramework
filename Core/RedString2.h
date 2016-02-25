@@ -35,9 +35,34 @@ public:
 
     RedString2(const char* instr);
 
+    // Inherited: RedType
+    void              Init(void)        { Empty(); };
+    const RedDataType Type(void) const  { return kDataTypeStr; };
+    RedType*          Clone(void) const { RedString* newS = new RedString(*this); return (RedType*)newS; };
+
+    // Public Main Routines
+    const unsigned FirstIndex(void) const { return 0; };
+    const unsigned LastIndex(void) const  { return datasize; };
+    const char*    TextPtr(void) const    { return Txt; };
+
+    void           Empty();
+    void           Set(const char* pText);
+    void           Append(const char ch);
+    void           Delete(const unsigned Pos, const unsigned Count);
+    void           Insert(const unsigned Pos, char Ch);
+    const char     CharAtPos(const unsigned iPos) const;
+    
+    // Additional Routines (relying on Main Routines for operation)
+    
 private:
 
-    char* AllocData(const unsigned NumBlocks);
+    // Private Main Routines
+    char*          AllocData(const unsigned NumBlocks);
+    const unsigned SizeForNumBlocks(const unsigned numblocks) { return kRedString2AllocBlockSize * numblocks; };
+
+    // Given a string length, how many blocks do we need? Adds 1 to string length to allow space for at least
+    // one \0 character. Adds one to end of result and the int value will chop any fractional element.
+    const unsigned NumBlocksForSize(const unsigned strsize)   { return (strsize+1/kRedString2AllocBlockSize) + 1 };
 
     // Char pointer to an array of data
     char* data;
