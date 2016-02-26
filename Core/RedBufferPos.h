@@ -34,8 +34,8 @@ public:
     RedBufferPos(void) { iRow=0; iCol=0; };
     RedBufferPos(const unsigned iNewRow, const unsigned iNewCol) { iRow=iNewRow; iCol=iNewCol; };
 
-    unsigned GetRow(void) { return iRow.IntegerValue(); };
-    unsigned GetCol(void) { return iCol.IntegerValue(); };
+    const unsigned Row(void) const { return iRow.IntegerValue(); };
+    const unsigned Col(void) const { return iCol.IntegerValue(); };
 
     RedString PosText(void) { RedString x="(row:" + iRow.DecimalString() + ", col:" + iCol.DecimalString() + ")"; return x; };
 
