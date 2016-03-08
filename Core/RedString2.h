@@ -19,6 +19,8 @@
 #pragma once
 
 #include "RedType.h"
+#include "RedDataType.h"
+#include "RedCoreConsts.h"
 
 namespace Red {
 namespace Core {
@@ -28,52 +30,76 @@ namespace Core {
 /// Default tollerance on floating point equality statements
 static const unsigned kRedString2AllocBlockSize = 32;
 
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
 /// String class, containing numerous string search & manipulation functions and operators.
+/// All Index values start from zero.
 class RedString2 : public RedType
 {
 public:
 
+    // Construction
+    RedString2(void);
     RedString2(const char* instr);
 
     // Inherited: RedType
     void              Init(void)        { Empty(); };
-    const RedDataType Type(void) const  { return kDataTypeStr; };
-    RedType*          Clone(void) const { RedString* newS = new RedString(*this); return (RedType*)newS; };
+    const RedDataType Type(void)  const { return kDataTypeStr; };
+    RedType*          Clone(void) const { RedString2* newS = new RedString2(*this); return (RedType*)newS; };
 
     // Public Main Routines
-    const unsigned FirstIndex(void) const { return 0; };
-    const unsigned LastIndex(void) const  { return datasize; };
-    const char*    TextPtr(void) const    { return Txt; };
+    const unsigned FirstContentIndex(void) const { return 0; };
+    const unsigned LastContentIndex(void)  const { return contentsize-1; };
+    const char*    TextPtr(void)           const { return data; };
+    const unsigned AllocSize(void)         const { return allocsize; };
+    const unsigned ContentSize(void)       const { return contentsize; };
 
     void           Empty();
     void           Set(const char* pText);
-    void           Append(const char ch);
-    void           Delete(const unsigned Pos, const unsigned Count);
-    void           Insert(const unsigned Pos, char Ch);
-    const char     CharAtPos(const unsigned iPos) const;
-    
+    void           Append(const char Ch);
+    void           Delete(const unsigned Index, const unsigned Count);
+    void           Insert(const unsigned Index, const char  Ch);
+    void           Insert(const unsigned Index, const char* Str);
+
+    const char     CharAtIndex(const unsigned Index) const;
+
+    const bool     IsEmpty(void) const          { return (contentsize==0); };
+
+    // substring routines
+    // CondenseAllocation
+
     // Additional Routines (relying on Main Routines for operation)
-    
+
+    // Internal Main Routines
+    static const unsigned SizeForNumBlocks(const unsigned numblocks)      { return kRedString2AllocBlockSize * numblocks; };
+    static const unsigned NumBlocksForSize(const unsigned strsize)        { return (strsize/kRedString2AllocBlockSize) + 1; };
+    static char*          AllocData(const unsigned NumBlocks);
+
+
+    // Assignment/Access Operators
+    void operator  =(const char* chStr);
+
 private:
 
-    // Private Main Routines
-    char*          AllocData(const unsigned NumBlocks);
-    const unsigned SizeForNumBlocks(const unsigned numblocks) { return kRedString2AllocBlockSize * numblocks; };
+    void DeleteData(void) { if (data != REDNULL) { delete [] data; data = REDNULL; } };
 
-    // Given a string length, how many blocks do we need? Adds 1 to string length to allow space for at least
-    // one \0 character. Adds one to end of result and the int value will chop any fractional element.
-    const unsigned NumBlocksForSize(const unsigned strsize)   { return (strsize+1/kRedString2AllocBlockSize) + 1 };
+    void InitialiseNonContentChars(void);
 
     // Char pointer to an array of data
     char* data;
 
     // Size of the array
-    unsigned datasize;
+    unsigned allocsize;
 
     // Length of data preceding an end null character, there must always be at least one.
     unsigned contentsize;
-
 };
+
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+// Non-Member Operators
+const bool operator ==(const RedString2& lhs, const char* rhs);
+const bool operator !=(const RedString2& lhs, const char* rhs);
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 

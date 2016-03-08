@@ -34,6 +34,7 @@
 #include "RedChar.h"
 #include "RedNumber.h"
 #include "RedString.h"
+#include "RedString2.h"
 
 // Wrappers
 #include "RedRecord.h"
