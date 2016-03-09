@@ -49,10 +49,21 @@ RedString2::RedString2(const char* instr)
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+RedString2::RedString2(const RedString2& instr)
+{
+    data        = REDNULL;
+    allocsize   = 0;
+    contentsize = 0;
+
+    Set(instr.TextPtr());
+}
+
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 // Public Main Routines
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-void RedString2::Empty()
+void RedString2::Empty(void)
 {
     // Delete recreate the stored string
     DeleteData();
@@ -65,10 +76,10 @@ void RedString2::Empty()
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-void RedString2::Set(const char* pText)
+void RedString2::Set(const char Ch)
 {
-    const unsigned StrLenNewData     = (unsigned)strlen(pText);
-    const unsigned NumBlocksRequired = NumBlocksForSize(StrLenNewData);
+    const unsigned NumBlocksRequired = NumBlocksForSize(1);
+    const unsigned AllocSizeRequired = SizeForNumBlocks(NumBlocksRequired);
 
     char*          NewData           = RedString2::AllocData(NumBlocksRequired);
 
@@ -77,11 +88,38 @@ void RedString2::Set(const char* pText)
 
     // Assign new array and size
     data      = NewData;
-    allocsize = SizeForNumBlocks(NumBlocksRequired);
+    allocsize = AllocSizeRequired;
+
+    // Assign content
+    data[0] = Ch;
+
+    // Loop to clear the rest of the string
+    InitialiseNonContentChars();
+}
+
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+void RedString2::Set(const char* pText)
+{
+    const unsigned StrLenNewData     = (unsigned)strlen(pText);
+    const unsigned NumBlocksRequired = NumBlocksForSize(StrLenNewData);
+    const unsigned AllocSizeRequired = SizeForNumBlocks(NumBlocksRequired);
+
+    char*          NewData           = RedString2::AllocData(NumBlocksRequired);
+
+    // Clear Existing Data
+    DeleteData();
+
+    // Assign new array and size
+    data      = NewData;
+    allocsize = AllocSizeRequired;
 
     // Assign content
     strncpy(data, pText, StrLenNewData);
     contentsize = StrLenNewData;
+
+    // Loop to clear the rest of the string
+    InitialiseNonContentChars();
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -118,13 +156,54 @@ void RedString2::Append(const char Ch)
         // Increment the content size
         contentsize++;
 
-        // Initialise the new terminator character for robustness
-        NewData[contentsize] = '\0';
+        // Loop to clear the rest of the string
+        InitialiseNonContentChars();
 
         // Delete the existing data string and using the newly created one
         DeleteData();
         data      = NewData;
         allocsize = AllocSizeRequired;
+    }
+}
+
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+void RedString2::Append(const char* Str)
+{
+    const unsigned AppendSize           = (unsigned)strlen(Str);
+
+    const unsigned NumBlocksRequired    = NumBlocksForSize(contentsize+AppendSize);
+    const unsigned AllocSizeRequired    = SizeForNumBlocks(NumBlocksRequired);
+
+    // If we can fit the characters into the current size, tack it on.
+    if (AllocSizeRequired == allocsize)
+    {
+        // Append the new data
+        strncpy(&data[contentsize], Str, AppendSize);
+
+        // Increment the content size
+        contentsize += AppendSize;
+
+        // Initialise the new terminator character for robustness
+        data[contentsize] = '\0';
+    }
+    // Else, we need to allocate into a larger string
+    else
+    {
+        // Create the new data
+        char* NewData = RedString2::AllocData(NumBlocksRequired);
+
+        // Copy the existing data
+        strncpy(NewData, data, contentsize);
+
+        // Append the new data
+        strncpy(&NewData[contentsize], Str, AppendSize);
+
+        // Increment the content size
+        contentsize += AppendSize;
+
+        // Loop to clear the rest of the string
+        InitialiseNonContentChars();
     }
 }
 
@@ -246,6 +325,125 @@ const char RedString2::CharAtIndex(const unsigned Index) const
 
     return x;
 }
+
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+RedString2 RedString2::SubStr(const unsigned StartIndex, const unsigned Count) const
+{
+    RedString2 OutStr;
+
+    if (StartIndex > LastContentIndex())
+        return OutStr;
+
+    unsigned LastSubStrIndex = StartIndex + (Count - 1);
+    if (LastSubStrIndex > LastContentIndex())
+        LastSubStrIndex = LastContentIndex();
+
+    unsigned SubStrLength = LastSubStrIndex - StartIndex + 1;
+    unsigned SubStrBlocksRequired = NumBlocksForSize(SubStrLength);
+
+    OutStr.data = AllocData(SubStrBlocksRequired);
+    OutStr.allocsize = SizeForNumBlocks(SubStrBlocksRequired);
+    OutStr.contentsize = SubStrLength;
+    strncpy(OutStr.data, &data[StartIndex], SubStrLength);
+    OutStr.InitialiseNonContentChars();
+
+    return OutStr;
+}
+
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+const bool RedString2::IsCharInString(char ch) const
+{
+    for (unsigned Pos = 0; Pos < contentsize; ++Pos)
+    {
+        if (data[Pos] == ch)
+            return true;
+    }
+    return false;
+}
+
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+const bool RedString2::IsAlphaNumeric(void) const
+{
+    RedChar RedChar;
+    for (unsigned iPos = 0; iPos < contentsize; ++iPos)
+    {
+        RedChar = CharObjAtIndex(iPos);
+
+        if (!RedChar.IsAlphaNumeric())
+            return false;
+    }
+    return true;
+}
+
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+// Derived Routines
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+const unsigned RedString2::NumLines(void) const
+{
+    unsigned NumLines = 0;
+
+    for (unsigned i=0; i<ContentSize(); i++)
+    {
+        // account for the first line if we have a valid char
+        if ( (NumLines == 0) && ( data[i] != '\0' ) )
+            NumLines = 1;
+
+        if ( data[i] == '\n' )
+            NumLines++;
+    }
+
+    return NumLines;
+}
+
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+const bool RedString2::LineAtNum(const unsigned LineNum, RedString2& Line) const
+{
+    unsigned iLineStartIndex, iLineLength, iCurrIndex;
+    unsigned iOnLine;
+
+    // initialise the return value
+    Line = "";
+
+    // initialise the working values
+    iLineLength     = 0;
+    iCurrIndex      = 0; 
+    iOnLine         = 1;
+
+    // Lines are indexed as we would want to see a position marker, from 1.
+    // check we have enough lines to fullfill operation
+    if ((LineNum > NumLines()) || (LineNum < 1))
+        return false;
+
+    // Loop to the first character of the line we need
+    while (iOnLine < LineNum)
+    {
+        if ( data[iCurrIndex] == '\n' )
+            iOnLine++;
+
+         iCurrIndex++;
+    }
+
+    // mark the start of the line
+    iLineStartIndex = iCurrIndex;
+
+    // loop to the end of the line
+    while ( (iCurrIndex<contentsize) && (data[iCurrIndex]!='\n') )
+    {
+        iCurrIndex++;
+        iLineLength++;
+    }
+
+    // use the inbuilt routine to retrieve the section of line
+    Line = SubStr(iLineStartIndex, iLineLength);
+
+    return true;
+}
+
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 // Internal Main Routines

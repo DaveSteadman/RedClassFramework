@@ -314,6 +314,14 @@ RedResult RedTestCore::TestString2(void)
         if (x.AllocSize()        != 2*kRedString2AllocBlockSize) return kResultFail;
     }
 
+    // Append Str
+    {
+        RedString2 x1("123");
+        x1.Append("ABC");
+        if (x1 != "123ABC") return kResultFail;
+        if (x1.ContentSize() != 6) return kResultFail;
+    }
+
     // Delete Char
     {
         RedString2 x1("11233");
@@ -341,6 +349,40 @@ RedResult RedTestCore::TestString2(void)
         RedString2 x1("abc123");
         x1.Insert(3, "ABC");
         if (x1 != "abcABC123") return kResultFail;
+
+        x1 = "123";
+        x1.Insert(0, "ABC");
+        if (x1 != "ABC123") return kResultFail;
+    }
+
+    // SubStr
+    {
+        RedString2 x1("123456789");
+        RedString2 x2;
+
+        x2 = x1.SubStr(2, 3);
+        if (x2 != "345") return kResultFail;
+
+        x2 = x1.SubStr(0, 3);
+        if (x2 != "123") return kResultFail;
+
+        x2 = x1.SubStr(6, 5);
+        if (x2 != "789") return kResultFail;
+    }
+
+    // Numlines & LineAtNum
+    {
+        RedString2 x1 = "123\nabc\nQWE";
+        if (x1.NumLines() != 3) return kResultFail;
+
+        RedString2 x2;
+        if (!x1.LineAtNum(2, x2)) return kResultFail;
+        if (x2 != "abc") return kResultFail;
+
+        if (!x1.LineAtNum(1, x2)) return kResultFail;
+        if (x2 != "123") return kResultFail;
+
+        if (x1.LineAtNum(0, x2)) return kResultFail;
     }
 
     return kResultSuccess;

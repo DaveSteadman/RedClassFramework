@@ -21,6 +21,7 @@
 #include "RedType.h"
 #include "RedDataType.h"
 #include "RedCoreConsts.h"
+#include "RedChar.h"
 
 namespace Red {
 namespace Core {
@@ -41,6 +42,7 @@ public:
     // Construction
     RedString2(void);
     RedString2(const char* instr);
+    RedString2(const RedString2& instr);
 
     // Inherited: RedType
     void              Init(void)        { Empty(); };
@@ -54,16 +56,40 @@ public:
     const unsigned AllocSize(void)         const { return allocsize; };
     const unsigned ContentSize(void)       const { return contentsize; };
 
-    void           Empty();
+    void           Empty(void);
+    void           Set(const char Ch);
     void           Set(const char* pText);
     void           Append(const char Ch);
+    void           Append(const char* Str);
     void           Delete(const unsigned Index, const unsigned Count);
     void           Insert(const unsigned Index, const char  Ch);
     void           Insert(const unsigned Index, const char* Str);
-
     const char     CharAtIndex(const unsigned Index) const;
+    RedString2     SubStr(const unsigned StartIndex, const unsigned Count) const;
 
-    const bool     IsEmpty(void) const          { return (contentsize==0); };
+    const bool     IsCharInString(char ch) const;
+    const bool     IsAlphaNumeric(void) const;
+
+    // Derived Routines
+    void           Set(const RedString2& Str)                          { Set(Str.TextPtr()); };
+    void           Append(const RedString2& Str)                       { Append(Str.TextPtr()); };
+    void           Insert(const unsigned Index, const RedString2& Str) { Insert(Index, Str.TextPtr()); };
+
+    // Derived Routines
+    const int      Length(void)                         const { return contentsize; };
+    const bool     IsEmpty(void)                        const { return (contentsize==0); };
+    const RedChar  CharObjAtIndex(const unsigned Index) const { return RedChar( CharAtIndex(Index) ); };
+    const char     FirstChar(void)                      const { return CharAtIndex(FirstContentIndex()); };
+    const RedChar  FirstCharObj(void)                   const { return RedChar( CharAtIndex(FirstContentIndex()) ); };
+    const char     LastChar(void)                       const { return CharAtIndex(LastContentIndex()); };
+    const RedChar  LastCharObj(void)                    const { return RedChar( CharAtIndex(LastContentIndex()) ); };
+
+
+    const unsigned NumLines(void) const;
+    const bool     LineAtNum(const unsigned LineNum, RedString2& Line) const;
+
+
+
 
     // substring routines
     // CondenseAllocation
@@ -76,8 +102,16 @@ public:
     static char*          AllocData(const unsigned NumBlocks);
 
 
-    // Assignment/Access Operators
-    void operator  =(const char* chStr);
+    // Derived Assignment/Access Operators
+    void operator  =(const char Ch)         { Set(Ch); };
+    void operator  =(const char* chStr)     { Set(chStr); };
+    void operator  =(const RedString2& Str) { Set(Str.TextPtr()); };
+    void operator +=(const char Ch)         { Append(Ch); };
+    void operator +=(const char* chStr)     { Append(chStr); };
+    void operator +=(const RedString2& Str) { Append(Str.TextPtr()); };
+
+    const char operator [](const unsigned Index) const { return CharAtIndex(FirstContentIndex()); };
+
 
 private:
 
