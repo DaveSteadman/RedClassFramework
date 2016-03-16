@@ -70,7 +70,7 @@ protected:
     RedVSITokenType(TETokenType eNewState) { eState = eNewState; };
 
 private:
-    int eState;
+    TETokenType eState;
 };
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

@@ -57,7 +57,7 @@ int RedVSITokenElementMap::Find(RedString& cCheckStr, RedVSIIOElement& cElem)
     while (!cIt.IsDone()) 
     {
         // Get the item from the list
-        RedString  cCurrMapStr  = cIt.CurrentId();
+        RedString       cCurrMapStr  = cIt.CurrentId();
         RedVSIIOElement cCurrMapElem = cIt.CurrentData();
 
         // If the strings match, return the corresponding element
@@ -122,7 +122,7 @@ int RedVSITokenElementMap::CountMatchCandidates(RedString& cCheckStr)
         // version of the map string to check against
         if (cCurrMapStr.Length() > cCheckStr.Length())
         {
-            RedString cCroppedMapStr = cCurrMapStr.SubStr(0, iCheckLen-1);
+            RedString cCroppedMapStr = cCurrMapStr.SubStr(0, cCheckStr.ContentSize());
             
             // if the cropped match string matches the check string, we have a potential match
             if (cCroppedMapStr == cCheckStr)

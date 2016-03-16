@@ -77,7 +77,7 @@ RedResult RedIOHandler::OutputBufferToFile(const RedString& cFilepath, RedBuffer
     
     for (int i=0; i<iLen; i++)
     {
-        int iChar = (int)strBuf.CharAtPos(i);
+        int iChar = (int)strBuf.CharAtIndex(i);
         fputc(iChar, pFile);
     }
     

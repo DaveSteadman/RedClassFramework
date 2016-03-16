@@ -33,20 +33,20 @@ namespace Test {
 
 void RedTestVSI::RunUnitTest(RedLog& log)
 {
-    if (RedTestVSI::TestParseTreeVal().IsFail())      { log.AddErrorEvent("Core Unit Test: TestParseTreeVal Failed");      return; }
-    if (RedTestVSI::TestParseTreeVar().IsFail())      { log.AddErrorEvent("Core Unit Test: TestParseTreeVar Failed");      return; }
-    if (RedTestVSI::TestParseTreeBinaryOp().IsFail()) { log.AddErrorEvent("Core Unit Test: TestParseTreeBinaryOp Failed"); return; }
+    if (RedTestVSI::TestParseTreeVal().IsFail())      { log.AddErrorEvent("VSI Unit Test: TestParseTreeVal Failed");      return; }
+    if (RedTestVSI::TestParseTreeVar().IsFail())      { log.AddErrorEvent("VSI Unit Test: TestParseTreeVar Failed");      return; }
+    if (RedTestVSI::TestParseTreeBinaryOp().IsFail()) { log.AddErrorEvent("VSI Unit Test: TestParseTreeBinaryOp Failed"); return; }
 
-    if (RedTestVSI::TestParseFactory_001().IsFail())  { log.AddErrorEvent("Core Unit Test: TestParseFactory_001 Failed");  return; }
-    if (RedTestVSI::TestParseFactory_002().IsFail())  { log.AddErrorEvent("Core Unit Test: TestParseFactory_002 Failed");  return; }
-    if (RedTestVSI::TestParseFactory_003().IsFail())  { log.AddErrorEvent("Core Unit Test: TestParseFactory_003 Failed");  return; }
+    if (RedTestVSI::TestParseFactory_001().IsFail())  { log.AddErrorEvent("VSI Unit Test: TestParseFactory_001 Failed");  return; }
+    if (RedTestVSI::TestParseFactory_002().IsFail())  { log.AddErrorEvent("VSI Unit Test: TestParseFactory_002 Failed");  return; }
+    if (RedTestVSI::TestParseFactory_003().IsFail())  { log.AddErrorEvent("VSI Unit Test: TestParseFactory_003 Failed");  return; }
 
-    if (RedTestVSI::TestCmdNew().IsFail())            { log.AddErrorEvent("Core Unit Test: TestCmdNew Failed");            return; }
-    if (RedTestVSI::TestTokeniseCode().IsFail())      { log.AddErrorEvent("Core Unit Test: TestTokeniseCode Failed");      return; }
+    if (RedTestVSI::TestCmdNew().IsFail())            { log.AddErrorEvent("VSI Unit Test: TestCmdNew Failed");            return; }
+    if (RedTestVSI::TestTokeniseCode().IsFail())      { log.AddErrorEvent("VSI Unit Test: TestTokeniseCode Failed");      return; }
 
-    if (RedTestVSI::TestFragment_New().IsFail())      { log.AddErrorEvent("Core Unit Test: TestFragment_New Failed");      return; }
-    if (RedTestVSI::TestFragment_If().IsFail())       { log.AddErrorEvent("Core Unit Test: TestFragment_If Failed");       return; }
-    if (RedTestVSI::TestFragment_While().IsFail())    { log.AddErrorEvent("Core Unit Test: TestFragment_While Failed");    return; }
+    if (RedTestVSI::TestFragment_New().IsFail())      { log.AddErrorEvent("VSI Unit Test: TestFragment_New Failed");      return; }
+    if (RedTestVSI::TestFragment_If().IsFail())       { log.AddErrorEvent("VSI Unit Test: TestFragment_If Failed");       return; }
+    if (RedTestVSI::TestFragment_While().IsFail())    { log.AddErrorEvent("VSI Unit Test: TestFragment_While Failed");    return; }
 
     log.AddText("VSI Unit Test: Passed");
 }

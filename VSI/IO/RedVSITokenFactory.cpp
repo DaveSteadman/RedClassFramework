@@ -276,16 +276,19 @@ RedResult RedVSITokenFactory::PredefinedComp(RedBufferInput& cInputBuffer, RedVS
     {
         cPreviewChar = cInputBuffer.PreviewNextChar();
   
-        // get the number of matches for the new string
+        // Get the number of matches for the new string
         cPreviewStr = cValidStr + cPreviewChar;
-        if ( cTokenMap.CountMatchCandidates(cPreviewStr) )
+
+        unsigned NumMatches = cTokenMap.CountMatchCandidates(cPreviewStr);
+        if (NumMatches >= 1)
         {
-            // we have matches, so get the character for real and look for an exact match
+            // We have matches, so get the character for real and look for an exact match
             cValidStr += cInputBuffer.GetNextChar();
             if (cTokenMap.Find(cValidStr, cElem))
             {
                 iExactMatchFound    = 1;
                 cFinalElem          = cElem;
+                iProcessingComplete = 1;
             }
         }
         // set complete when we run out of matches - we have to look beyond any match to ensure we haven't found a substring.

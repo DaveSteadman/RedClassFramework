@@ -37,7 +37,7 @@ void RedBufferInput::Init(void)
 RedChar RedBufferInput::GetNextChar(void)
 {
     // get the character
-    RedChar cCharObj( cStrBuffer.CharAtPos(iCharPos) );
+    RedChar cCharObj( cStrBuffer.CharAtIndex(iCharPos) );
 
     // increment to the next read position. The string class deals with any 
     // boundary checks.
@@ -56,7 +56,7 @@ RedChar RedBufferInput::GetNextChar(void)
 RedChar RedBufferInput::PreviewNextChar(void)
 {
     // get the character
-    RedChar cCharObj( cStrBuffer.CharAtPos(iCharPos) );
+    RedChar cCharObj( cStrBuffer.CharAtIndex(iCharPos) );
 
     return cCharObj;
 }
