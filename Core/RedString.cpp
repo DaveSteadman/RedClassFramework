@@ -16,413 +16,415 @@
 // (http://opensource.org/licenses/MIT)
 // -------------------------------------------------------------------------------------------------
 
+#include "RedString.h"
+
 #include <memory.h>
 #include <string.h>
 #include <ctype.h>
 #include <stdio.h>
 
-#include "RedString.h"
-#include "RedCoreConsts.h"
-
 namespace Red {
 namespace Core {
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-int  RedString::AllocIncr  = 16;
-char RedString::chInitChar = '\0';
-
-// ============================================================================
 // Construction
-// ============================================================================
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 RedString::RedString(void)
 {
-    // define the size with no length and a default allocation
-    Len    = 0;
-    Siz    = AllocIncr;
-
-    // create the characters
-    Txt    = new char[Siz];
-    InitUnsetChars();
+    data        = REDNULL;
+    allocsize   = 0;
+    contentsize = 0;
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-RedString::RedString(const RedString& Str)
+RedString::RedString(const char* instr)
 {
-    // Setup the user length and allocarted size of the string
-    Len = Str.Len;
-    Siz = Str.Siz;
+    data        = REDNULL;
+    allocsize   = 0;
+    contentsize = 0;
 
-    // allocate the new char array
-    Txt = new char[Siz];
-
-    // copy all the old string characters in the new one
-    memcpy(Txt, Str.Txt, Siz);
+    Set(instr);
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-RedString::RedString(const char* Cstr)
+RedString::RedString(const RedString& instr)
 {
-    // Read the length of the input string and tack on space for the \0 terminator.
-    Len = (unsigned)strlen(Cstr) + 1;
+    data        = REDNULL;
+    allocsize   = 0;
+    contentsize = 0;
 
-    // Setup the user length and allocarted size of the string
-    Siz = ((Len + AllocIncr - 1) / AllocIncr) * AllocIncr;
-
-    // allocate the new char array
-    Txt = new char[Siz];
-
-    // copy the old string characters in the new one
-    memcpy(Txt, Cstr, Len);
-
-    // initialise the unused characters
-    InitUnsetChars();
+    if (instr.TextPtr() != REDNULL)
+        Set(instr.TextPtr());
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-RedString::RedString(char FillCh, int Count)
-{
-    // set up the new size, ensuring the size is a multiple of the 
-    // allocation size
-    Siz = ((Count + AllocIncr - 1) / AllocIncr) * AllocIncr;
-    Len = Count;
-
-    // create the characters and call an error on failure
-    Txt = new char[Siz];
-
-    // Copy across the characters
-    memset(Txt, FillCh, Len);
-
-    // initialise the unused characters
-    InitUnsetChars();
-}
-
+// Public Main Routines
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-RedString::~RedString()
-{
-     delete[] Txt;
-}
-
-// ============================================================================
-// Assignments
-// ============================================================================
 
 void RedString::Empty(void)
 {
-    // Delete the allocated string
-    if (Txt)
-    {
-        delete[] Txt;
-        Txt = 0;
-    }
+    // Delete recreate the stored string
+    DeleteData();
+    data = AllocData(1);
 
-    // define a new allocated string
-    Len    = 0;
-    Siz    = AllocIncr;
-
-    // create the characters
-    Txt    = new char[Siz];
-    InitUnsetChars();
+    // Update the string size
+    allocsize   = SizeForNumBlocks(1);
+    contentsize = 0;
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-void RedString::SetChar(const int Pos, const char chNewChar)
+void RedString::Set(const char Ch)
 {
-    if ( (Pos>=0) && (Pos<Len) )
-        Txt[Pos] = chNewChar;
+    if (Ch == '\0')
+    {
+        Empty();
+    }
+    else
+    {
+        const unsigned NumBlocksRequired = NumBlocksForSize(1);
+        const unsigned AllocSizeRequired = SizeForNumBlocks(NumBlocksRequired);
+
+        char*          NewData           = RedString::AllocData(NumBlocksRequired);
+
+        // Clear Existing Data
+        DeleteData();
+
+        // Assign new array and size
+        data        = NewData;
+        allocsize   = AllocSizeRequired;
+        contentsize = 1;
+
+        // Assign content
+        data[0] = Ch;
+
+        // Loop to clear the rest of the string
+        InitialiseNonContentChars();
+    }
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 void RedString::Set(const char* pText)
 {
-    // Assign the new properties
-    Len = (unsigned)strlen(pText);
-    Siz = (Len/AllocIncr)*AllocIncr + AllocIncr;
-
-    // delete the old text
-    delete Txt;
-
-    // create the new sized text
-    Txt = new char[Siz];
-
-    // copy the characters across
-    memcpy(Txt, pText, Len);
-    InitUnsetChars();
-}
-
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-void RedString::Set(const RedString& Str)
-{
-    // Assign the new properties
-    Len = Str.Len;
-    Siz = Str.Siz;
-
-    // delete the old text
-    delete Txt;
-
-    // create the new sized text
-    Txt = new char[Siz];
-
-    // copy the characters across
-    memcpy(Txt,Str.Txt,Len);
-    InitUnsetChars();   
-}
-
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-void RedString::Delete(const unsigned Pos, const unsigned Count)
-{
-    unsigned CopyPos;
-    unsigned delpos = Pos;
-
-    if (delpos > Len)
-        return;
-
-    CopyPos = delpos + Count;
-
-    if (CopyPos >= Len)
+    if (pText == REDNULL)
     {
-        Txt[delpos] = 0;
+        Empty();
     }
     else
     {
-        while (CopyPos <= Len)
-        {
-            Txt[delpos] = Txt[CopyPos];
-            ++delpos;
-            ++CopyPos;
-        }
-    }
-    Len -= Count;
+        const unsigned StrLenNewData     = (unsigned)strlen(pText);
+        const unsigned NumBlocksRequired = NumBlocksForSize(StrLenNewData);
+        const unsigned AllocSizeRequired = SizeForNumBlocks(NumBlocksRequired);
 
-    Shrink();
+        char*          NewData           = RedString::AllocData(NumBlocksRequired);
+
+        // Clear Existing Data
+        DeleteData();
+
+        // Assign new array and size
+        data      = NewData;
+        allocsize = AllocSizeRequired;
+
+        // Assign content
+        strncpy(data, pText, StrLenNewData);
+        contentsize = StrLenNewData;
+
+        // Loop to clear the rest of the string
+        InitialiseNonContentChars();
+    }
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-void RedString::Insert(const unsigned Pos, char Ch)
+void RedString::Append(const char Ch)
 {
-    char* Temp;
+    if (IsEmpty())
+    {
+        Set(Ch);
+    }
+    else
+    {
+        const unsigned NumBlocksRequired = NumBlocksForSize(contentsize+1);
+        const unsigned AllocSizeRequired = SizeForNumBlocks(NumBlocksRequired);
 
-    // check the position is in-bounds
-    if (Pos>Len)
+        // If we can fit the characters into the current size, tack it on.
+        if (AllocSizeRequired == allocsize)
+        {
+            // Add the character
+            data[contentsize] = Ch;
+
+            // Increment the content size
+            contentsize++;
+
+            // Initialise the new terminator character for robustness
+            data[contentsize] = '\0';
+        }
+        // Else, we need to allocate into a larger string
+        else
+        {
+            // Create the new data
+            char* NewData = RedString::AllocData(NumBlocksRequired);
+
+            // Copy the existing data
+            strncpy(NewData, data, contentsize);
+
+            // Add the character
+            NewData[contentsize] = Ch;
+
+            // Increment the content size
+            contentsize++;
+
+            // Delete the existing data string and using the newly created one
+            DeleteData();
+            data      = NewData;
+            allocsize = AllocSizeRequired;
+
+            // Loop to clear the rest of the string
+            InitialiseNonContentChars();
+        }
+    }
+}
+
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+void RedString::Append(const char* Str)
+{
+    if (IsEmpty())
+    {
+        Set(Str);
+    }
+    else
+    {
+        const unsigned AppendSize           = (unsigned)strlen(Str);
+        const unsigned NumBlocksRequired    = NumBlocksForSize(contentsize+AppendSize);
+        const unsigned AllocSizeRequired    = SizeForNumBlocks(NumBlocksRequired);
+
+        // If we can fit the characters into the current size, tack it on.
+        if (AllocSizeRequired == allocsize)
+        {
+            // Append the new data
+            strncpy(&data[contentsize], Str, AppendSize);
+
+            // Increment the content size
+            contentsize += AppendSize;
+
+            // Initialise the new terminator character for robustness
+            data[contentsize] = '\0';
+        }
+        // Else, we need to allocate into a larger string
+        else
+        {
+            // Create the new data
+            char* NewData = RedString::AllocData(NumBlocksRequired);
+
+            // Copy the existing data
+            strncpy(NewData, data, contentsize);
+
+            // Append the new data
+            strncpy(&NewData[contentsize], Str, AppendSize);
+
+            // Assign all the new data and increment the size
+            DeleteData();
+            data      = NewData;
+            allocsize = AllocSizeRequired;
+            contentsize += AppendSize;
+
+            // Loop to clear the rest of the string
+            InitialiseNonContentChars();
+        }
+    }
+}
+
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+void RedString::Delete(const unsigned Index, const unsigned Count)
+{
+    if (Index > LastContentIndex())
         return;
 
-    // if we need to expand the string to accomodate the new character
-    if (Len == Siz)
+    unsigned CurrDeleteIndex = Index;
+    unsigned CurrCopyIndex   = Index + Count;
+
+    // Loop to copy characters
+    while (CurrCopyIndex <= LastContentIndex())
     {
-        // create the new string
-        Siz += AllocIncr;
-        Temp = new char[Siz];
+        // Overwrite the characters
+        data[CurrDeleteIndex] = data[CurrCopyIndex];
 
-        // copy the Chars across and initialise the unused ones
-        memcpy(Temp, Txt, Len);
-        InitUnsetChars();
-
-        // tidy up the memory allocation
-        delete[] Txt;
-        Txt = Temp;
+        // Move the index values along
+        CurrDeleteIndex++;
+        CurrCopyIndex = CurrDeleteIndex + Count;
     }
 
-    // we have room and we need to shuffle characters along
-    if (Pos < Len)
+    // Setup the new content length
+    contentsize = CurrDeleteIndex;
+
+    // Loop to clear the rest of the string
+    InitialiseNonContentChars();
+}
+
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+void RedString::Insert(const unsigned Index, const char Ch)
+{
+    const unsigned NumBlocksRequired = NumBlocksForSize(contentsize+1);
+    const unsigned AllocSizeRequired = SizeForNumBlocks(NumBlocksRequired);
+
+    const unsigned FirstHalfLength  = Index - FirstContentIndex();
+    const unsigned SecondHalfLength = LastContentIndex() - Index + 1;
+
+    // Create the new data
+    char* NewData = RedString::AllocData(NumBlocksRequired);
+
+    // Copy the first half
+    strncpy(NewData, data, FirstHalfLength);
+
+    // Add the character
+    NewData[Index] = Ch;
+
+    // Copy the second half
+    strncpy(&NewData[Index+1], &data[Index], SecondHalfLength);
+
+    // Increment the content size
+    contentsize++;
+
+    // Delete the existing data string and using the newly created one
+    DeleteData();
+    data      = NewData;
+    allocsize = AllocSizeRequired;
+
+    // Loop to clear the rest of the string
+    InitialiseNonContentChars();
+}
+
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+void RedString::Insert(const unsigned Index, const char* Str)
+{
+    const unsigned InsertSize           = (unsigned)strlen(Str);
+
+    const unsigned NumBlocksRequired    = NumBlocksForSize(contentsize+InsertSize);
+    const unsigned AllocSizeRequired    = SizeForNumBlocks(NumBlocksRequired);
+
+    const unsigned FirstHalfLength      = Index - FirstContentIndex();
+    const unsigned SecondHalfLength     = LastContentIndex() - Index + 1;
+
+    const unsigned FirstHalfReadIndex   = FirstContentIndex();
+    const unsigned SecondHalfReadIndex  = FirstHalfLength;
+
+    const unsigned FirstHalfWriteIndex  = FirstContentIndex();
+    const unsigned InsertWriteIndex     = FirstHalfWriteIndex + FirstHalfLength;
+    const unsigned SecondHalfWriteindex = InsertWriteIndex + InsertSize;
+
+    // Create the new data
+    char* NewData = RedString::AllocData(NumBlocksRequired);
+
+    // Copy the first half
+    strncpy(&NewData[FirstHalfWriteIndex], &data[FirstHalfReadIndex], FirstHalfLength);
+
+    // Copy the insert
+    strncpy(&NewData[InsertWriteIndex], Str, InsertSize);
+
+    // Copy the second half
+    strncpy(&NewData[SecondHalfWriteindex], &data[SecondHalfReadIndex], SecondHalfLength);
+
+    // Increment the content size
+    contentsize += InsertSize;
+
+    // Delete the existing data string and using the newly created one
+    DeleteData();
+    data      = NewData;
+    allocsize = AllocSizeRequired;
+
+    // Loop to clear the rest of the string
+    InitialiseNonContentChars();
+}
+
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+const char RedString::CharAtIndex(const unsigned Index) const
+{
+    char x = '\0';
+
+    if (Index > LastContentIndex())
+        return x;
+
+    x = data[Index];
+
+    return x;
+}
+
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+RedString RedString::SubStr(const unsigned StartIndex, const unsigned Count) const
+{
+    RedString OutStr;
+
+    if (StartIndex > LastContentIndex())
+        return OutStr;
+
+    unsigned LastSubStrIndex = StartIndex + (Count - 1);
+    if (LastSubStrIndex > LastContentIndex())
+        LastSubStrIndex = LastContentIndex();
+
+    unsigned SubStrLength = LastSubStrIndex - StartIndex + 1;
+    unsigned SubStrBlocksRequired = NumBlocksForSize(SubStrLength);
+
+    OutStr.data = AllocData(SubStrBlocksRequired);
+    OutStr.allocsize = SizeForNumBlocks(SubStrBlocksRequired);
+    OutStr.contentsize = SubStrLength;
+    strncpy(OutStr.data, &data[StartIndex], SubStrLength);
+    OutStr.InitialiseNonContentChars();
+
+    return OutStr;
+}
+
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+const bool RedString::IsCharInString(char ch) const
+{
+    for (unsigned Pos = 0; Pos < contentsize; ++Pos)
     {
-        for (int Col = Len + 1; Col > Pos; --Col)
-            Txt[Col] = Txt[Col-1];
+        if (data[Pos] == ch)
+            return true;
     }
-
-    // finally assign the new character and increase the string length
-    Txt[Pos] = Ch;
-    ++Len;
+    return false;
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-void RedString::Insert(const unsigned Pos, const char* Str)
+const bool RedString::IsAlphaNumeric(void) const
 {
-    RedString TempStr(Str);
-
-    Insert(Pos, TempStr);
-}
-
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-void RedString::Insert(const unsigned Pos, const RedString& Str)
-{
-    unsigned SLen = Str.Len;
-    unsigned insertPos = Pos;
-
-    if (SLen > 0)
+    RedChar RedChar;
+    for (unsigned iPos = 0; iPos < contentsize; ++iPos)
     {
-        // Iterate through the new string, adding each character to this one.
-        for (int I = 0; I < SLen; ++I)
-        {
-            char ch = Str.Txt[I];
+        RedChar = CharObjAtIndex(iPos);
 
-            // Strip any \0 characters from the insert string
-            if (ch != '\0')
-                Insert(insertPos, ch);
-            ++insertPos;
-        }
+        if (!RedChar.IsAlphaNumeric())
+            return false;
     }
+    return true;
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-void RedString::Append(const RedString& Str)
-{
-    Append(Str.Txt);
-}
-
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-void RedString::Append(const char* pText)
-{
-    // Determine the new string size
-    unsigned long NewLen = strlen(Txt) + strlen(pText) + 1;
-
-    // Create teh new char array
-    char* pNewText = new char[NewLen];
-
-    // copy data into the new array
-    snprintf(pNewText, NewLen, "%s%s", Txt, pText);
-
-    // delete the existing txt
-    delete[] Txt;
-
-    // Setup the new values
-    Txt = pNewText;
-    Siz = (unsigned)NewLen;
-    Len = (unsigned)NewLen;
-}
-
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-void RedString::Append(const char ch)
-{
-    // Determine the new string size
-    unsigned long NewLen = strlen(Txt) + 1 + 1;
-
-    // Create teh new char array
-    char* pNewText = new char[NewLen];
-
-    // copy data into the new array
-    snprintf(pNewText, NewLen, "%s%c", Txt, ch);
-
-    // delete the existing txt
-    delete[] Txt;
-
-    // Setup the new values
-    Txt = pNewText;
-    Siz = (unsigned)NewLen;
-    Len = (unsigned)NewLen;
-}
-
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-void RedString::Append(RedChar ch)
-{
-    Append((const char)ch.Char());
-}
-
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-void RedString::Append(const int num)
-{
-    char numchars[16];
-    snprintf(numchars, 16, "%d", num);
-
-    Append(numchars);
-}
-
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-void RedString::Append(const unsigned num)
-{
-    char numchars[16];
-    snprintf(numchars, 16, "%u", num);
-
-    Append(numchars);
-}
-
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-void RedString::DelFirstChar(void)
-{
-    this->Delete(0, 1);
-}
-
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-void RedString::DelLastChar(void)
-{
-    this->Delete(this->Length(), 1);
-}
-
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-void RedString::StripChar(const RedChar& ch)
-{
-	// New char array the same as existing, as new string is guaranteed to be same or shorter
-	char     strippedStr[Len];
-	unsigned currStrippedStrIndex = 0;
-
-	// Loop through the chars
-	for (unsigned currCharIndex = 0; currCharIndex<Len; currCharIndex++)
-	{
-		if (Txt[currCharIndex] != ch)
-		{
-			strippedStr[currStrippedStrIndex] = Txt[currCharIndex];
-			currStrippedStrIndex++;
-		}
-	}
-
-	// Append a \0
-	strippedStr[currStrippedStrIndex] = '\0';
-
-	// Delete the existing text and assign the new string
-	unsigned strippedStrLen = currStrippedStrIndex;
-	delete Txt;
-	Txt = new char[strippedStrLen];
-	memcpy(Txt, strippedStr, strippedStrLen);
-	Len = strippedStrLen;
-	Siz = strippedStrLen;
-}
-
-// ============================================================================
-// Queries
-// ============================================================================
-
-const char RedString::CharAtPos(const unsigned iPos) const
-{
-    // if the Pos is out of bounds, return a null character.
-    if (iPos >= Len)
-        return '\0';
-
-    return Txt[iPos];
-}
-
+// Derived Routines
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 const unsigned RedString::NumLines(void) const
 {
     unsigned NumLines = 0;
 
-    for (unsigned i=0; i<Len; i++)
+    for (unsigned i=0; i<ContentSize(); i++)
     {
         // account for the first line if we have a valid char
-        if ( (NumLines == 0) && ( Txt[i] != '\0' ) )
+        if ( (NumLines == 0) && ( data[i] != '\0' ) )
             NumLines = 1;
 
-        if ( Txt[i] == '\n' )
+        if ( data[i] == '\n' )
             NumLines++;
     }
 
@@ -446,13 +448,13 @@ const bool RedString::LineAtNum(const unsigned LineNum, RedString& Line) const
 
     // Lines are indexed as we would want to see a position marker, from 1.
     // check we have enough lines to fullfill operation
-    if (LineNum > NumLines())
+    if ((LineNum > NumLines()) || (LineNum < 1))
         return false;
 
     // Loop to the first character of the line we need
     while (iOnLine < LineNum)
     {
-        if ( Txt[iCurrIndex] == '\n' )
+        if ( data[iCurrIndex] == '\n' )
             iOnLine++;
 
          iCurrIndex++;
@@ -462,7 +464,7 @@ const bool RedString::LineAtNum(const unsigned LineNum, RedString& Line) const
     iLineStartIndex = iCurrIndex;
 
     // loop to the end of the line
-    while ( (iCurrIndex<Len) && (Txt[iCurrIndex]!='\n') )
+    while ( (iCurrIndex<contentsize) && (data[iCurrIndex]!='\n') )
     {
         iCurrIndex++;
         iLineLength++;
@@ -474,367 +476,116 @@ const bool RedString::LineAtNum(const unsigned LineNum, RedString& Line) const
     return true;
 }
 
+
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+// Internal Main Routines
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-RedString RedString::SubStr(const unsigned Start, const unsigned Count) const
+char* RedString::AllocData(const unsigned NumBlocks)
 {
-    RedString TempStr;
-    unsigned iCurrIndex = Start;
-    unsigned realCount = Count;
+    const unsigned FirstIndex = 0;
+    const unsigned LastIndex  = SizeForNumBlocks(NumBlocks);
 
-    // crop the string if it would be too long
-    if (realCount>Len)
-        realCount = Len;
-    
-    for (unsigned i=0; i<realCount; i++)
+    char* NewDataArray = new char[LastIndex];
+
+    for(unsigned i=FirstIndex; i<LastIndex; i++)
+        NewDataArray[i] = '\0';
+
+    return NewDataArray;
+}
+
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+void RedString::InitialiseNonContentChars(void)
+{
+    unsigned CurrIndex = LastContentIndex() + 1;
+
+    // Loop to clear the rest of the string
+    while (CurrIndex < allocsize)
     {
-        TempStr += Txt[iCurrIndex];
-        iCurrIndex++;
+        data[CurrIndex] = '\0';
+        CurrIndex++;
+    }
+}
+
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+// Non-Member Operators
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+const bool operator ==(const RedString& lhs, const char* rhs)
+{
+    // If the strings are different lengths, fail.
+    if (strlen(rhs) != lhs.ContentSize())
+        return false;
+
+    const char* pStrTxt = lhs.TextPtr();
+
+    // Compare each character, fail if any difference is found
+    for (unsigned i=0; i<lhs.ContentSize(); i++)
+    {
+        if (rhs[i] != pStrTxt[i])
+            return false;
     }
 
-    return TempStr;
+    // Return success, nothing failed to match
+    return true;
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-RedString RedString::StringFromPos(const unsigned iPos) const
+const bool operator !=(const RedString& lhs, const char* rhs)
 {
-    return SubStr(iPos, Len-iPos);
-}
+    // If the strings are different lengths, fail.
+    if (strlen(rhs) != lhs.ContentSize())
+        return true;
 
-// ============================================================================
-// Complex Operations
-// ============================================================================
+    const char* pStrTxt = lhs.TextPtr();
 
-RedString::StrCompVal RedString::Compare(const RedString& Str, RedString::StrCompMode Case) const
-{
-    unsigned Index, MaxIndex;
-    char Ch1, Ch2;
-
-    // return quick result if one of the strings is empty
-    if (Len == 0)
+    // Compare each character, fail if any difference is found
+    for (unsigned i=0; i<lhs.ContentSize(); i++)
     {
-        if (Str.Len == 0)
-            return SC_EQUAL;
-        else
-            return SC_LESS;
-    }
-    else
-    {
-        if (Str.Len == 0)
-            return SC_GREATER;
+        if (rhs[i] != pStrTxt[i])
+            return true;
     }
 
-    // determine the last point we need to compare to 
-    MaxIndex = Len > Str.Len ? Len : Str.Len;
-
-    // compare the strings
-    for (Index = 0; Index < MaxIndex; Index++)
-    {
-        // acquire the characters
-        if (Case == SM_IGNORE_CASE)
-        {
-            Ch1 = toupper(Txt[Index]);
-            Ch2 = toupper(Str.Txt[Index]);
-        }
-        else
-        {
-            Ch1 = Txt[Index];
-            Ch2 = Str.Txt[Index];
-        }
-
-        // compare the characters, if different return the less/greater value 
-        // based on the difference in the last character.
-        if (Ch1 != Ch2)
-        {
-            if (Ch1 < Ch2)
-                return SC_LESS;
-            else
-                return SC_GREATER;
-        }
-    }
-
-    // no differences found, so return an equals value
-    return SC_EQUAL;
+    // Return false, nothing matched
+    return false;
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-RedString RedString::ToUpper(void)
+const bool operator ==(const RedString& lhs, const RedString& rhs)
 {
-    RedString TempStr = *this;
-
-    for (unsigned Pos = 0; Pos < Len; ++Pos)
-        TempStr.Txt[Pos] = toupper(TempStr.Txt[Pos]);
-
-    return TempStr;
+    return (lhs == rhs.TextPtr());
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-RedString RedString::ToLower(void)
+const bool operator !=(const RedString& lhs, const RedString& rhs)
 {
-    RedString TempStr = *this;
-
-    for (unsigned Pos = 0; Pos < Len; ++Pos)
-        TempStr.Txt[Pos] = tolower(TempStr.Txt[Pos]);
-
-    return TempStr;
+    return (lhs != rhs.TextPtr());
 }
 
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-const bool RedString::IsCharInString(char ch) const
-{
-    for (unsigned Pos = 0; Pos < Len; ++Pos)
-    {
-        if (Txt[Pos] == ch)
-            return 1;
-    }
-    return 0;
-}
-
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-const bool RedString::IsAlphaNumeric(void) const
-{
-    RedChar RedChar;
-    for (unsigned iPos = 0; iPos < Len; ++iPos)
-    {
-        RedChar = CharObjAtPos(iPos);
-
-        if (!RedChar.IsAlphaNumeric())
-            return 0;
-    }
-    return 1;
-}
-
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-const bool RedString::IsEqualTo(const RedString& Str) const
-{
-    return (Compare(Str, SM_CASE_SENSITIVE) == SC_EQUAL);
-}
-
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-const bool RedString::IsEqualTo(const char* Str) const
-{
-    RedString temp(Str);
-    return (Compare(temp, SM_CASE_SENSITIVE) == SC_EQUAL);
-}
-
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-char* RedString::StringDup(const char* inStr)
-{
-    // protect against a null input
-    if (inStr == NULL)
-        return REDNULL;
-
-    // Allocate new string with space for null
-    const unsigned long strsize = strlen (inStr) + 1;
-    char *retstr = new char[strsize];
-
-    // Copy and return data
-    strncpy(retstr, inStr, strsize);
-    return retstr;
-}
-
-// =================================================================================================
-// Operators
-// =================================================================================================
-
-void RedString::operator =(const char* chStr)
-{
-//    const unsigned long strsize = strlen (chStr) + 1;
-
-//
-//    // Assign the new properties
-//    Len = (unsigned)strlen(chStr);
-//    Siz = Len + 1;
-//
-//    // delete the old text
-//    delete[] Txt;
-//
-//    // create the new sized text
-//    Txt = new char[Siz];
-//
-//    // copy the characters across
-//    strncpy(Txt, chStr, Len);
-//    InitUnsetChars();
-
-//    delete[] Txt;
-//
-//    Txt = RedString::StringDup(chStr);
-//    Len = strsize -1;
-//    Siz = strsize;
-}
-
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-void RedString::operator =(const RedChar& cChr)
-{
-    Empty();
-    Insert(0, cChr.Char());
-}
-
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-void RedString::operator =(const RedString& Str)
-{
-    // Assign the new properties
-    Len = Str.Len;
-    Siz = Str.Siz;
-
-    // delete the old text
-    delete[] Txt;
-
-    // create the new sized text
-    Txt = new char[Siz];
-
-    // copy the characters across
-    memcpy(Txt,Str.Txt,Len);
-    
-    // Initialise unused characters
-    InitUnsetChars();
-}
-
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-char RedString::operator [](int Pos) const
-{
-    if ( (Pos<0) || (Pos>=Len) )
-        return chInitChar;
-
-    return Txt[Pos];
-}
-
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-// Comparison Operators
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-const int RedString::operator <(const RedString Str) const
-{
-    return (Compare(Str, SM_CASE_SENSITIVE) == SC_LESS);
-}
-
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-const int RedString::operator <=(const RedString& Str) const
-{
-    return (Compare(Str, SM_CASE_SENSITIVE) != SC_LESS);
-}
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-const int RedString::operator >(const RedString& Str) const
-{
-    return (Compare(Str, SM_CASE_SENSITIVE) == SC_GREATER);
-}
-
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-const int RedString::operator >=(const RedString& Str) const
-{
-    return (Compare(Str, SM_CASE_SENSITIVE) == SC_GREATER);
-}
-
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-const int RedString::operator ==(const RedString& Str) const
-{
-    return (Compare(Str, SM_CASE_SENSITIVE) == SC_EQUAL);
-}
-
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-const int RedString::operator ==(const char* Str) const
-{
-    // if the strings are different lengths, fail.
-    if (strlen(Str) != Len)
-        return 0;
-
-    // compare each character, fail if any difference is found
-    for (unsigned i=0; i<Len; i++)
-    {
-        if (Txt[i] != Str[i])
-            return 0;
-    }
-
-    // return success, nothing failed to match
-    return 1;
-}
-
-
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-const int RedString::operator !=(const RedString& Str) const
-{
-    return (Compare(Str, SM_CASE_SENSITIVE) != SC_EQUAL);
-}
-
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-// concatenation methods
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 RedString operator +(const RedString& Str1, const RedString& Str2)
 {
-    RedString retStr = Str1;
-    retStr.Append(Str2);
+    RedString RetStr(Str1);
 
-    return retStr;
-}
+    RetStr.Append(Str2);
 
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-RedString operator +(const RedString& Str, const RedChar ch)
-{
-    RedString RetStr = Str;
-    RetStr.Append(ch);
     return RetStr;
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-// ============================================================================
-// Test Routines
-// ============================================================================
-
-void RedString::DebugDump(void)
+RedString operator +(const RedString& Str1, const RedChar& Chr2)
 {
-    printf("{{Siz}%d}", Siz);
-    printf("{{Len}%d}", Len);
-    printf("{{Txt}\"%s\"}\n", Txt);
-}
+    RedString RetStr(Str1);
 
-// ============================================================================
-// Private Operations
-// ============================================================================
+    RetStr.Append(Chr2);
 
-void RedString::InitUnsetChars(void)
-{
-    // initialise the unset Chars
-    for (unsigned i=Len; i<Siz; i++)
-        Txt[i] = chInitChar;
-}
-
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-void RedString::Shrink()
-{
-    char* Temp;
-
-    if ((Siz - Len) > AllocIncr)
-    {
-        Siz  = ((Len + AllocIncr - 1) / AllocIncr) * AllocIncr;
-
-        Temp = new char[Siz];
-
-        memcpy(Temp,Txt,Len);
-        delete[] Txt;
-        Txt  = Temp;
-    }
-    InitUnsetChars();
+    return RetStr;
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
