@@ -27,8 +27,6 @@ namespace Test {
 
 void RedTestCore::RunUnitTest(RedLog& log)
 {
-    if (RedTestCore::TestString2().IsFail())      { log.AddErrorEvent("Core Unit Test: TestString2 Failed");       return; }
-
     if (RedTestCore::TestBoolean().IsFail())      { log.AddErrorEvent("Core Unit Test: TestBoolean Failed");      return; }
     if (RedTestCore::TestChar().IsFail())         { log.AddErrorEvent("Core Unit Test: TestChar Failed");         return; }
     if (RedTestCore::TestDataType().IsFail())     { log.AddErrorEvent("Core Unit Test: TestDataType Failed");     return; }
@@ -166,165 +164,84 @@ RedResult RedTestCore::TestNumberRange(void)
 
 RedResult RedTestCore::TestString(void)
 {
-//    // Case Changes
-//    {
-//        RedString x;
-//        x = "Hello";
-//
-//        x = x.ToUpper();
-//        if (x == "Hello") return kResultFail;
-//        if (x != "HELLO") return kResultFail;
-//
-//        x = x.ToLower();
-//        if (x == "HELLO") return kResultFail;
-//        if (x != "hello") return kResultFail;
-//    }
-//
-//    // String type checks
-//    {
-//        RedString x;
-//
-//        x = "qw23";
-//        if (!x.IsAlphaNumeric()) return kResultFail;
-//
-//        x = "!@@^";
-//        if (x.IsAlphaNumeric()) return kResultFail;
-//
-//        x = "Qwerty";
-//        if ( x.IsCharInString('a')) return kResultFail;
-//        if (!x.IsCharInString('r')) return kResultFail;
-//
-//        if (x.IsEmpty()) return kResultFail;
-//    }
-//
-//    // Inserts and appends
-//    {
-//        RedString x;
-//
-//        x = "123456789";
-//        x.Insert(3, "qwerty");
-//        if (x != "123qwerty456789") return kResultFail;
-//
-//        x = "123";
-//        x.Append("456");
-//        if (x != "123456") return kResultFail;
-//
-//        x = "qwerty";
-//        int ix = 123;
-//        x.Append(ix);
-//        if (x != "qwerty123") return kResultFail;
-//
-//        x = "121212121212121212121212121212121212";
-//        x.Append('A');
-//        if (x != "121212121212121212121212121212121212A") return kResultFail;
-//    }
-//
-//    // Strip characters
-//    {
-//        RedString str;
-//
-//        str = "Utter Maddness";
-//        str.StripChar('M');
-//        if (str != "Utter addness")
-//            return kResultFail;
-//
-//        str = "ABC 123 XYZ";
-//        str.StripChar(' ');
-//        if (str != "ABC123XYZ")
-//            return kResultFail;
-//    }
-//
-//    // Code has failed on a 32 character string - specific test here to ensure the end-of-string
-//    // character is preserved when we have two strings allocated next to each other.
-//    // Addition dicriminatory factor was the string starting with a "/"? Not understood.
-//    {
-//        RedString F = "/tmp/TestBasicVSILibrary_001.tml";
-//        RedString x = "123456789abcde0abcd12123131313ef";
-//        const int origFLen = F.Length();
-//
-//        const int newFLen = F.Length();
-//
-//        if (newFLen != origFLen)
-//            return kResultFail;
-//    }
-
-    return kResultSuccess;
-}
-
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-RedResult RedTestCore::TestString2(void)
-{
     // Allocation sizes
     {
         unsigned b1 = 0;
         unsigned b2 = 0;
 
-        b1 = RedString2::NumBlocksForSize(15);
-        b2 = RedString2::SizeForNumBlocks(b1);
+        b1 = RedString::NumBlocksForSize(15);
+        b2 = RedString::SizeForNumBlocks(b1);
         if (b1 != 1)                         return kResultFail;
-        if (b2 != kRedString2AllocBlockSize) return kResultFail;
+        if (b2 != kRedStringAllocBlockSize) return kResultFail;
 
-        b1 = RedString2::NumBlocksForSize(31);
-        b2 = RedString2::SizeForNumBlocks(b1);
+        b1 = RedString::NumBlocksForSize(31);
+        b2 = RedString::SizeForNumBlocks(b1);
         if (b1 != 1)                           return kResultFail;
-        if (b2 != 1*kRedString2AllocBlockSize) return kResultFail;
+        if (b2 != 1*kRedStringAllocBlockSize) return kResultFail;
 
-        b1 = RedString2::NumBlocksForSize(32);
-        b2 = RedString2::SizeForNumBlocks(b1);
+        b1 = RedString::NumBlocksForSize(32);
+        b2 = RedString::SizeForNumBlocks(b1);
         if (b1 != 2)                           return kResultFail;
-        if (b2 != 2*kRedString2AllocBlockSize) return kResultFail;
+        if (b2 != 2*kRedStringAllocBlockSize) return kResultFail;
 
-        b1 = RedString2::NumBlocksForSize(319);
-        b2 = RedString2::SizeForNumBlocks(b1);
+        b1 = RedString::NumBlocksForSize(319);
+        b2 = RedString::SizeForNumBlocks(b1);
         if (b1 != 10)                           return kResultFail;
-        if (b2 != 10*kRedString2AllocBlockSize) return kResultFail;
+        if (b2 != 10*kRedStringAllocBlockSize) return kResultFail;
     }
 
     // Set
     {
-        RedString2 x("1234567890");
+        RedString x("1234567890");
         if (x.FirstContentIndex() != 0)                          return kResultFail;
         if (x.LastContentIndex()  != 9)                          return kResultFail;
-        if (x.AllocSize()         != kRedString2AllocBlockSize)  return kResultFail;
+        if (x.AllocSize()         != kRedStringAllocBlockSize)  return kResultFail;
 
         x.Set("1234567890123456789012345678901");
         if (x.LastContentIndex() != 30)                          return kResultFail;
-        if (x.AllocSize()        != kRedString2AllocBlockSize)   return kResultFail;
+        if (x.AllocSize()        != kRedStringAllocBlockSize)   return kResultFail;
 
         x.Set("12345678901234567890123456789012");
         if (x.LastContentIndex() != 31)                          return kResultFail;
-        if (x.AllocSize()        != 2*kRedString2AllocBlockSize) return kResultFail;
+        if (x.AllocSize()        != 2*kRedStringAllocBlockSize) return kResultFail;
     }
 
     // Append Char
     {
-        RedString2 x("12345");
+        RedString x("12345");
         x.Append('Q');
         if (x.LastContentIndex() != 5) return kResultFail;
 
         x.Set("123456789012345678901234567890");
         x.Append('X');
         if (x.LastContentIndex() != 30) return kResultFail;
-        if (x.AllocSize()        != kRedString2AllocBlockSize) return kResultFail;
+        if (x.AllocSize()        != kRedStringAllocBlockSize) return kResultFail;
 
         x.Set("1234567890123456789012345678901");
         x.Append('X');
         if (x.LastContentIndex() != 31) return kResultFail;
-        if (x.AllocSize()        != 2*kRedString2AllocBlockSize) return kResultFail;
+        if (x.AllocSize()        != 2*kRedStringAllocBlockSize) return kResultFail;
     }
 
     // Append Str
     {
-        RedString2 x1("123");
+        RedString x1("123");
         x1.Append("ABC");
         if (x1 != "123ABC") return kResultFail;
         if (x1.ContentSize() != 6) return kResultFail;
+
+        x1 = "ABC";
+        x1.Append("\n");
+        if (x1 != "ABC\n") return kResultFail;
+
+        x1 = "1234567890123456789012345678901";
+        x1.Append("\n");
+        if (x1 != "1234567890123456789012345678901\n") return kResultFail;
     }
 
     // Delete Char
     {
-        RedString2 x1("11233");
+        RedString x1("11233");
         x1.Delete(2,1);
         if (x1 != "1133") return kResultFail;
 
@@ -339,14 +256,14 @@ RedResult RedTestCore::TestString2(void)
 
     // Insert Char
     {
-        RedString2 x1("abc123");
+        RedString x1("abc123");
         x1.Insert(3,'A');
         if (x1 != "abcA123") return kResultFail;
     }
 
     // Insert Str
     {
-        RedString2 x1("abc123");
+        RedString x1("abc123");
         x1.Insert(3, "ABC");
         if (x1 != "abcABC123") return kResultFail;
 
@@ -357,8 +274,8 @@ RedResult RedTestCore::TestString2(void)
 
     // SubStr
     {
-        RedString2 x1("123456789");
-        RedString2 x2;
+        RedString x1("123456789");
+        RedString x2;
 
         x2 = x1.SubStr(2, 3);
         if (x2 != "345") return kResultFail;
@@ -372,10 +289,10 @@ RedResult RedTestCore::TestString2(void)
 
     // Numlines & LineAtNum
     {
-        RedString2 x1 = "123\nabc\nQWE";
+        RedString x1 = "123\nabc\nQWE";
         if (x1.NumLines() != 3) return kResultFail;
 
-        RedString2 x2;
+        RedString x2;
         if (!x1.LineAtNum(2, x2)) return kResultFail;
         if (x2 != "abc") return kResultFail;
 
@@ -383,6 +300,28 @@ RedResult RedTestCore::TestString2(void)
         if (x2 != "123") return kResultFail;
 
         if (x1.LineAtNum(0, x2)) return kResultFail;
+    }
+
+    // Operators
+    {
+        RedString x1 = "abc";
+        RedString x2;
+        RedChar   c1 = '1';
+
+        x1 = "abc";
+        x2.Empty();
+        c1 = '1';
+
+        x2 = x1 + c1;
+        if (x2 != "abc1") return kResultFail;
+
+        x1.Empty();
+        x2.Empty();
+        c1 = '1';
+
+        x2 = x1 + c1;
+        if (x2 != "1") return kResultFail;
+
     }
 
     return kResultSuccess;

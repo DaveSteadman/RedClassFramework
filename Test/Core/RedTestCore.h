@@ -38,7 +38,6 @@ private:
     static RedResult TestNumber(void);
     static RedResult TestNumberRange(void);
     static RedResult TestString(void);
-    static RedResult TestString2(void);
     static RedResult TestDataType(void);
     static RedResult TestVariant(void);
     static RedResult TestLinkedList(void);
