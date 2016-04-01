@@ -316,7 +316,7 @@ void RedTmlAction::SerialiseTinyML(RedBufferOutput& outputBuf, const RedTmlEleme
 // Private
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-int RedTmlAction::ReadName(RedBufferInput& inputBuf, RedString& outputName)
+bool RedTmlAction::ReadName(RedBufferInput& inputBuf, RedString& outputName)
 {
     RedChar ch;
     outputName.Empty();
@@ -324,7 +324,7 @@ int RedTmlAction::ReadName(RedBufferInput& inputBuf, RedString& outputName)
     // second bracket
     ch = inputBuf.GetNextNonWhitespaceChar();
     if (ch != openbr) return false;
-    if (ch.IsEOF()) return false;
+    if (ch.IsEOF())   return false;
 
     // read name
     ch = inputBuf.GetNextNonWhitespaceChar();
@@ -341,7 +341,7 @@ int RedTmlAction::ReadName(RedBufferInput& inputBuf, RedString& outputName)
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-int RedTmlAction::ReadContent(RedBufferInput& inputBuf, RedString& outputContent)
+bool RedTmlAction::ReadContent(RedBufferInput& inputBuf, RedString& outputContent)
 {
     bool EndOfContentFound = false;
     RedString levelChars;
@@ -377,12 +377,11 @@ int RedTmlAction::ReadContent(RedBufferInput& inputBuf, RedString& outputContent
 
     // default error return value
     return false;
-
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-int RedTmlAction::ReadTmlElement(RedBufferInput& inputBuf, RedTmlElement** newTml)
+bool RedTmlAction::ReadTmlElement(RedBufferInput& inputBuf, RedTmlElement** newTml)
 {
     RedChar   ch;
     RedString leafname;
@@ -410,7 +409,7 @@ int RedTmlAction::ReadTmlElement(RedBufferInput& inputBuf, RedTmlElement** newTm
         if (ch != openbr)
         {
             delete newNode;
-            return 0;
+            return false;
         }
 
         // Iterate across the Tml entries
@@ -429,12 +428,12 @@ int RedTmlAction::ReadTmlElement(RedBufferInput& inputBuf, RedTmlElement** newTm
         if (ch == closebr)
         {
             *newTml = (RedTmlElement*)newNode;
-            return 1;
+            return true;
         }
         else
         {
             delete newNode;
-            return 0;
+            return false;
         }
     }
     else
@@ -444,7 +443,7 @@ int RedTmlAction::ReadTmlElement(RedBufferInput& inputBuf, RedTmlElement** newTm
 
         // Attempt to read the content
         if (!RedTmlAction::ReadContent(inputBuf, leafdata))
-            return 0;
+            return false;
 
         // read bracket to close statement
         ch = inputBuf.GetNextNonWhitespaceChar();
@@ -454,11 +453,11 @@ int RedTmlAction::ReadTmlElement(RedBufferInput& inputBuf, RedTmlElement** newTm
             newLeaf = new RedTmlLeaf(leafname, leafdata);
 
             *newTml = (RedTmlElement*)newLeaf;
-            return 1;
+            return true;
         }
     }
 
-    return 0;
+    return false;
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
