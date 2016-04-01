@@ -65,7 +65,7 @@ private:
         TListElement* pNext;
     } TListElement;
 
-    const int MakeListElement(TListElement** pNewElem);
+    void MakeListElement(TListElement** pNewElem);
     const int FindListElement(unsigned iElemIndex, TListElement** pFoundElem) const;
 
     TListElement* pListHead;
@@ -105,16 +105,13 @@ void RedDoubleLinkedList<Element>::Init(void)
 template <class Element>
 const bool RedDoubleLinkedList<Element>::AddLast(Element Elem)
 {
-    // first create the new element
+    // First create the new element
     TListElement* pNewElem  = 0;
     TListElement* pPrevElem = 0;
 
-    // return failed if we didn't make the new object
-    if ( !MakeListElement(&pNewElem) )
-        return false;
-    
-    // assign the contents
-    pNewElem->Elem = Elem;
+	// Make the new object and assign the contents
+	MakeListElement(&pNewElem);
+	pNewElem->Elem = Elem;
 
     // Update the pointers
     switch(iNumItems)
@@ -150,12 +147,9 @@ const bool RedDoubleLinkedList<Element>::AddFirst(Element Elem)
     TListElement* pNewElem  = 0;
     TListElement* pNextElem = 0;
 
-    // return failed if we didn't make the new object
-    if ( !MakeListElement(&pNewElem) )
-        return false;
-    
-    // assign the contents
-    pNewElem->Elem = Elem;
+	// Make the new object and assign the contents
+	MakeListElement(&pNewElem);
+	pNewElem->Elem = Elem;
 
     // Update the pointers
     switch(iNumItems)
@@ -194,11 +188,8 @@ const bool RedDoubleLinkedList<Element>::InsertAfter(const unsigned iElemIndex, 
     if ( !GetListElement(iElemIndex, &pInsertAfterElem) )
         return false;
 
-    // return failed if we didn't make the new object
-    if ( !MakeListElement(&pNewElem) )
-        return false;
-    
-    // assign the contents
+	// Make the new object and assign the contents
+	MakeListElement(&pNewElem);
     pNewElem->Elem = Elem;
 
     // reassign the pointers to insert the new object
@@ -415,7 +406,7 @@ RedDoubleLinkedList<Element>* RedDoubleLinkedList<Element>::Clone(void)
 
     // Get the next element until we're at the requested one, or we run out of list
     Element cCurrElem;
-    for (unsigned i=0; i<iNumItems; i++)
+    for (int i=0; i<iNumItems; i++)
     {
         if (Find(i, &cCurrElem))
             pNewList->AddLast(cCurrElem);
@@ -429,7 +420,7 @@ RedDoubleLinkedList<Element>* RedDoubleLinkedList<Element>::Clone(void)
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 template <class Element>
-const int RedDoubleLinkedList<Element>::MakeListElement(TListElement** pNewElem)
+void RedDoubleLinkedList<Element>::MakeListElement(TListElement** pNewElem)
 {
     //create the new element
     TListElement* pElem = new TListElement;
@@ -440,7 +431,6 @@ const int RedDoubleLinkedList<Element>::MakeListElement(TListElement** pNewElem)
 
     // assign the output value and return success
     *pNewElem = pElem;
-    return 1;
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -486,5 +476,3 @@ const int RedDoubleLinkedList<Element>::FindListElement(
 
 } // Core
 } // Red
-
-
