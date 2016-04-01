@@ -54,8 +54,8 @@ public:
     void SetNow(void);
 
     // Time Presentation
-    const RedString TimeString(void) const;
-    const int       SixDigitInt(void) const;
+    const RedString TimeString(void) const;   // hh:mm:ss
+    const unsigned  SixDigitTime(void) const; // hhmmss
 
 	// Simple Access Routines
     const RedNumber Hours     (void) const                  { return hour;    };
