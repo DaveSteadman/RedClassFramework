@@ -194,7 +194,7 @@ const unsigned RedTmlAction::TreeElementCount(RedTmlNode& node)
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-#pragma mark - Top Level IO
+// Top Level IO
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 const RedResult RedTmlAction::CreateTmlFromFile(const RedString& filepath, RedTmlElement** newTmlElement)
@@ -313,7 +313,7 @@ void RedTmlAction::SerialiseTinyML(RedBufferOutput& outputBuf, const RedTmlEleme
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-#pragma mark - Private
+// Private
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 int RedTmlAction::ReadName(RedBufferInput& inputBuf, RedString& outputName)
