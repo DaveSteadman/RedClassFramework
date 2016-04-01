@@ -94,15 +94,15 @@ void RedTime::SetTimeFromElapsedSeconds(const RedNumber& DayElapsedSeconds)
 
 	RedNumber DecrementingSeconds = DayElapsedSeconds;
 
-	while (DecrementingSeconds > kSecondsInHour)
+	while (DecrementingSeconds > kTimeSecondsInHour)
     {
         hour++;
-        DecrementingSeconds -= kSecondsInHour;
+        DecrementingSeconds -= kTimeSecondsInHour;
 	}
-	while (DecrementingSeconds > kSecondsInMinute)
+	while (DecrementingSeconds > kTimeSecondsInMinute)
 	{
 		minute++;
-		DecrementingSeconds -= kSecondsInMinute;
+		DecrementingSeconds -= kTimeSecondsInMinute;
 	}
 	seconds = DecrementingSeconds;
 }
