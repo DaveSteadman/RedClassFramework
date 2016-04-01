@@ -201,7 +201,7 @@ RedResult RedTestGeometry::TestVector3D(void)
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-#pragma mark - Units
+// Units
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 RedResult RedTestGeometry::TestAngle(void)
