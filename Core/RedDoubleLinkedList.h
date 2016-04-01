@@ -415,7 +415,7 @@ RedDoubleLinkedList<Element>* RedDoubleLinkedList<Element>::Clone(void)
 
     // Get the next element until we're at the requested one, or we run out of list
     Element cCurrElem;
-    for (int i=0; i<iNumItems; i++)
+    for (unsigned i=0; i<iNumItems; i++)
     {
         if (Find(i, &cCurrElem))
             pNewList->AddLast(cCurrElem);
@@ -467,7 +467,7 @@ const int RedDoubleLinkedList<Element>::FindListElement(
     pCurrElem = pListHead;
 
     // Get the next element until we're at the requested one, or we run out of list
-    for (int i=1; i<iElemIndex; i++)
+    for (unsigned i=1; i<iElemIndex; i++)
     {
         // if we're out of list, fail
         if (pCurrElem->pNext == 0)
