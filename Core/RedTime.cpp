@@ -43,6 +43,7 @@ void RedTime::SetTime(const RedString& timestr)
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
+/// Returns a string formatted: hh:mm:ss
 const RedString RedTime::TimeString(void) const
 {
     RedString retstr;
@@ -60,9 +61,10 @@ const RedString RedTime::TimeString(void) const
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-const int RedTime::SixDigitInt(void) const
+/// Returns an unsigned number, fomatted: hhmmss
+const unsigned RedTime::SixDigitTime(void) const 
 {
-    int rettime = 0;
+    unsigned rettime = 0;
 
     rettime += hour.IntegerValue()   * 10000;
     rettime += minute.IntegerValue() * 100;
