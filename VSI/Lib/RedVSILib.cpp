@@ -29,23 +29,23 @@ void RedVSILib::AddClass(RedVSILibClass* pNewClass)
     cClassList.AddLast(pNewClass);
 }
 
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-void RedVSILib::DelClass(const RedString& cClassName)
-{
-    IteratorType cIt(&cClassList);
-
-    cIt.First();
-    while (!cIt.IsDone())
-    {
-        RedVSILibClass* pCurrClass = cIt.CurrentItem();
-
-        if (pCurrClass->ClassName() == cClassName)
-            cIt.DeleteCurrentItem();
-
-        cIt.Next();
-    }
-}
+//// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+//
+//void RedVSILib::DelClass(const RedString& cClassName)
+//{
+//    IteratorType cIt(&cClassList);
+//
+//    cIt.First();
+//    while (!cIt.IsDone())
+//    {
+//        RedVSILibClass* pCurrClass = cIt.CurrentItem();
+//
+//        if (pCurrClass->ClassName() == cClassName)
+//            cIt.DeleteCurrentItem();
+//
+//        cIt.Next();
+//    }
+//}
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 

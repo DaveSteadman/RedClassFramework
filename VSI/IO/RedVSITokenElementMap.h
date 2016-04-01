@@ -42,10 +42,10 @@ public:
     int  Find(RedString& cCheckStr, RedVSIIOElement& cElem);
     int  FindString(RedVSIIOElement& cCheckElem, RedString& cStr);
 
-    int  CountMatchCandidates(RedString& cCheckStr);
+    unsigned  CountMatchCandidates(RedString& cCheckStr);
 
-    const int  NumItems(void) const { return cMap.NumItems(); };
-    const int  IsEmpty(void)  const { return cMap.IsEmpty();  };
+    const unsigned  NumItems(void) const { return cMap.NumItems(); };
+    const bool      IsEmpty(void)  const { return cMap.IsEmpty();  };
 
 private:
 

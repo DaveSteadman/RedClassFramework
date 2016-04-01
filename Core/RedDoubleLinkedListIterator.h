@@ -34,29 +34,29 @@ public:
     typedef RedDoubleLinkedList<Element> ListType;
     enum TESearchDir { eForwards, eBackwards };
 
-    RedDoubleLinkedListIterator(ListType* pNewList);
+    RedDoubleLinkedListIterator(const ListType* pNewList);
 
     void           First(void);
     void           Next(void);
-    int            IsDone(void) const;
-    Element        CurrentItem(void);
+    bool           IsDone(void) const;
+    Element        CurrentItem(void) const;
 
-    void           DeleteCurrentItem(void);
+    //void           DeleteCurrentItem(void);
     void           SetSearchDirection(TESearchDir eDir) { eSearchDir = eDir; };
     void           SetSearchDirectionBackwards(void)    { eSearchDir = eBackwards; First(); };
-    const unsigned GetListIndex(void) const             { return iCurrPos; };
+    const unsigned CollectionIndex(void) const          { return iCurrPos; };
 
 private:
 
-    unsigned    iCurrPos;
-    TESearchDir eSearchDir;
-    ListType*   pList;
+    unsigned          iCurrPos;
+    TESearchDir       eSearchDir;
+    const ListType*   pList;
 };
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 template<class Element>
-RedDoubleLinkedListIterator<Element>::RedDoubleLinkedListIterator(ListType* pNewList)
+RedDoubleLinkedListIterator<Element>::RedDoubleLinkedListIterator(const ListType* pNewList)
 {
     pList       = pNewList;
     eSearchDir  = eForwards;
@@ -89,21 +89,21 @@ void RedDoubleLinkedListIterator<Element>::Next(void)
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 template<class Element>
-int RedDoubleLinkedListIterator<Element>::IsDone(void) const
+bool RedDoubleLinkedListIterator<Element>::IsDone(void) const
 {
-    int iSearchDone = 0;
+    bool iSearchDone = false;
 
-    if (pList->IsEmpty()) return 1;
+    if (pList->IsEmpty()) return true;
 
     if (eSearchDir == eForwards)
     {
         if (iCurrPos > pList->LastIndex())
-            iSearchDone = 1;
+            iSearchDone = true;
     }
     else
     {
         if (iCurrPos < pList->FirstIndex())
-            iSearchDone = 1;
+            iSearchDone = true;
     }
 
     return iSearchDone;
@@ -112,7 +112,7 @@ int RedDoubleLinkedListIterator<Element>::IsDone(void) const
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 template<class Element>
-Element RedDoubleLinkedListIterator<Element>::CurrentItem(void) 
+Element RedDoubleLinkedListIterator<Element>::CurrentItem(void) const
 {
     Element Elem;
     
@@ -123,11 +123,11 @@ Element RedDoubleLinkedListIterator<Element>::CurrentItem(void)
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-template<class Element>
-void RedDoubleLinkedListIterator<Element>::DeleteCurrentItem(void)
-{
-    pList->Del(iCurrPos);
-}
+//template<class Element>
+//void RedDoubleLinkedListIterator<Element>::DeleteCurrentItem(void)
+//{
+//    pList->Del(iCurrPos);
+//}
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 

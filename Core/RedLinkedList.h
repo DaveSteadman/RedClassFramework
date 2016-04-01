@@ -44,9 +44,9 @@ public:
     unsigned LastIndex(void)  const { return iNumItems; };
 
     // Access Items
-    bool Find(const unsigned iElemIndex, Element& Elem);
-    bool FindFirst(Element& Elem);
-    bool FindLast(Element& Elem);
+    bool Find(const unsigned iElemIndex, Element& Elem) const;
+    bool FindFirst(Element& Elem) const;
+    bool FindLast(Element& Elem) const;
 
     // Delete Items
     bool DelFirst(void);
@@ -66,7 +66,7 @@ private:
     } TListElement;
 
     bool MakeListElement(TListElement** pNewElem);
-    bool FindListElement(const unsigned ElemNum, TListElement** pFoundElem);
+    bool FindListElement(const unsigned ElemNum, TListElement** pFoundElem) const;
 
     TListElement* pListHead;
     TListElement* pListTail;
@@ -213,7 +213,7 @@ bool RedLinkedList<Element>::InsertAfter(const unsigned iElemIndex, Element Elem
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 template <class Element>
-bool RedLinkedList<Element>::Find(const unsigned iElemIndex, Element& Elem)
+bool RedLinkedList<Element>::Find(const unsigned iElemIndex, Element& Elem) const
 {
     TListElement* pGetElem = 0;
 
@@ -228,7 +228,7 @@ bool RedLinkedList<Element>::Find(const unsigned iElemIndex, Element& Elem)
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 template <class Element>
-bool RedLinkedList<Element>::FindFirst(Element& Elem)
+bool RedLinkedList<Element>::FindFirst(Element& Elem) const
 {
     if (pListHead == 0)
         return false;
@@ -240,7 +240,7 @@ bool RedLinkedList<Element>::FindFirst(Element& Elem)
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 template <class Element>
-bool RedLinkedList<Element>::FindLast(Element& Elem)
+bool RedLinkedList<Element>::FindLast(Element& Elem) const
 {
     if (pListTail == 0)
         return false;
@@ -429,7 +429,7 @@ bool RedLinkedList<Element>::MakeListElement(TListElement** pNewElem)
 template <class Element>
 bool RedLinkedList<Element>::FindListElement(
     const unsigned ElemIndex,
-    TListElement** pFoundElem)
+    TListElement** pFoundElem) const
 {
     // Initialise the return value
     *pFoundElem             = 0;

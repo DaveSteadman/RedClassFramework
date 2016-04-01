@@ -51,7 +51,7 @@ public:
 
     void                SetParentClassName(const RedString& cNewParentClassName) { cParentClassName=cNewParentClassName; };
     RedString           ParentClassName(void) const                              { return cParentClassName; };
-    int                 HasParentClass(void) const                               { return (!cParentClassName.IsEmpty()); };
+    bool                HasParentClass(void) const                               { return (!cParentClassName.IsEmpty()); };
 
     void                AddRoutine(RedVSILibRoutine* pNewRoutine);
     RedVSILibRoutine*   FindRoutine(RedVSIRoutineCallInterface& cSig);

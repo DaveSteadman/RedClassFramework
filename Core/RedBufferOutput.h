@@ -39,7 +39,7 @@ public:
     void SetIndent(const RedString& str) { cIndentStr=str; };
 
     void Empty(void)                     { Init(); };
-    const int IsEmpty(void) const        { return cStrBuffer.IsEmpty(); };
+    const bool IsEmpty(void) const       { return cStrBuffer.IsEmpty(); };
 
     void WriteNewLine(void)              { cStrBuffer += "\n"; };
     void WriteIndent(void)               { for(int i=0;i<indentlevel;i++) cStrBuffer += cIndentStr; };

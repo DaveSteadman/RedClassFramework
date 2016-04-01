@@ -189,15 +189,15 @@ void RedVSIContextThread::SetupRoutineCall(RedVSIRoutineCallInterface& cSignatur
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-int RedVSIContextThread::IsBlocked(RedVSIContextInterface* pRoutineContext)
+bool RedVSIContextThread::IsBlocked(RedVSIContextInterface* pRoutineContext)
 {
     // if the top of the routine stack matched the context, then that context
     // isn't blocked
     if (cRoutineStack.NextPopItem() == pRoutineContext)
-        return 0;
+        return false;
         
     // the pointers are different, so the routine IS blocked.
-    return 1;
+    return true;
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

@@ -131,7 +131,7 @@ void RedBufferInput::SetPos(int iNewPos)
         // the iteration will need to have overstepped the actual char pos, so
         // keeping a previous version.
         int iCurrLineCharPos = cIt.CurrentItem();
-        int iCurrLineNumber  = cIt.GetListIndex();
+        int iCurrLineNumber  = cIt.CollectionIndex();
         int iPrevLineCharPos = iCurrLineCharPos;
         int iPrevLineNumber  = iCurrLineNumber;
         

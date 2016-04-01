@@ -274,11 +274,11 @@ RedResult RedVSITokenFactory::PredefinedComp(RedBufferInput& cInputBuffer, RedVS
 
     while (!iProcessingComplete)
     {
+        // Get the next potential character and create the new string to search for.
         cPreviewChar = cInputBuffer.PreviewNextChar();
-  
-        // Get the number of matches for the new string
         cPreviewStr = cValidStr + cPreviewChar;
 
+        // Get the number of matches for the new string
         unsigned NumMatches = cTokenMap.CountMatchCandidates(cPreviewStr);
         if (NumMatches >= 1)
         {

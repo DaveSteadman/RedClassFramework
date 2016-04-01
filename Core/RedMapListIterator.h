@@ -34,29 +34,29 @@ public:
     typedef RedMapList<IdClass, DataClass> MapType;
     enum TESearchDir { eForwards, eBackwards };
 
-    RedMapListIterator(MapType* pNewMap);
+    RedMapListIterator(const MapType* pNewMap);
 
     void        First(void);
     void        Next(void);
     const int   IsDone(void) const;
-    IdClass     CurrentId(void);
-    DataClass   CurrentData(void);
+    IdClass     CurrentId(void) const;
+    DataClass   CurrentData(void) const;
 
-    void        DeleteCurrentItem(void)              { pList->Del(iCurrIndex); };
-    void        SetSearchDirection(TESearchDir eDir) { eSearchDir = eDir; };
-    const int   GetListIndex(void)                   { return iCurrIndex; };
+    //void        DeleteCurrentItem(void)              { pList->Del(iCurrIndex); };
+    void        SetSearchDirection(TESearchDir eDir) const { eSearchDir = eDir; };
+    const int   CollectionIndex(void) const                { return iCurrIndex; };
 
 private:
 
-    int         iCurrIndex;
-    MapType*    pList;
-    TESearchDir eSearchDir;
+    unsigned       iCurrIndex;
+    const MapType* pList;
+    TESearchDir    eSearchDir;
 };
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 template <class IdClass, class DataClass>
-RedMapListIterator<IdClass, DataClass>::RedMapListIterator(MapType* pNewMap)
+RedMapListIterator<IdClass, DataClass>::RedMapListIterator(const MapType* pNewMap)
 {
     pList       = pNewMap;
     eSearchDir  = eForwards;
@@ -113,7 +113,7 @@ const int RedMapListIterator<IdClass, DataClass>::IsDone(void) const
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 template <class IdClass, class DataClass>
-IdClass RedMapListIterator<IdClass, DataClass>::CurrentId(void) 
+IdClass RedMapListIterator<IdClass, DataClass>::CurrentId(void) const
 {
     IdClass Id;
     
@@ -126,7 +126,7 @@ IdClass RedMapListIterator<IdClass, DataClass>::CurrentId(void)
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 template <class IdClass, class DataClass>
-DataClass RedMapListIterator<IdClass, DataClass>::CurrentData(void) 
+DataClass RedMapListIterator<IdClass, DataClass>::CurrentData(void) const
 {
     DataClass Data;
     

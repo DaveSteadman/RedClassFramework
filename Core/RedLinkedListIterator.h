@@ -30,29 +30,29 @@ class RedLinkedListIterator
 {
 public:
 
-    typedef RedLinkedList<Element> ListType;
+    typedef RedLinkedList<Element>         ListType;
     typedef RedLinkedListIterator<Element> ListItType;
 
-    RedLinkedListIterator(ListType* pNewList);
+    RedLinkedListIterator(const ListType* pNewList);
 
     void           First(void);
     void           Next(void);
     bool           IsDone(void) const;
-    Element        CurrentItem(void);
+    Element        CurrentItem(void) const;
 
-    void           DeleteCurrentItem(void);
-    const unsigned GetListIndex(void) const { return iCurrPos; };
+    //void           DeleteCurrentItem(void);
+    const unsigned CollectionIndex(void) const { return iCurrPos; };
 
 private:
 
-    unsigned    iCurrPos;
-    ListType*   pList;
+    unsigned          iCurrPos;
+    const ListType*   pList;
 };
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 template<class Element>
-RedLinkedListIterator<Element>::RedLinkedListIterator(ListType* pNewList)
+RedLinkedListIterator<Element>::RedLinkedListIterator(const ListType* pNewList)
 {
     pList = pNewList;
     First();
@@ -90,7 +90,7 @@ bool RedLinkedListIterator<Element>::IsDone(void) const
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 template<class Element>
-Element RedLinkedListIterator<Element>::CurrentItem(void) 
+Element RedLinkedListIterator<Element>::CurrentItem(void) const
 {
     Element Elem;
     
@@ -101,11 +101,11 @@ Element RedLinkedListIterator<Element>::CurrentItem(void)
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-template<class Element>
-void RedLinkedListIterator<Element>::DeleteCurrentItem(void)
-{
-    pList->Del(iCurrPos);
-}
+//template<class Element>
+//void RedLinkedListIterator<Element>::DeleteCurrentItem(void)
+//{
+//    pList->Del(iCurrPos);
+//}
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 

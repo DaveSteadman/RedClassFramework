@@ -41,7 +41,7 @@ public:
     typedef RedDoubleLinkedListIterator<RedVSILibClass*>  IteratorType;
 
     void       AddClass(RedVSILibClass* pNewClass);
-    void       DelClass(const RedString& cClassName);
+    //void       DelClass(const RedString& cClassName);
 
     // inherited
     RedVSILibClass*            FindClass(const RedString& cClassName);

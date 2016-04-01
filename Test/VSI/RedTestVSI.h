@@ -45,16 +45,18 @@ private:
     static RedResult TestCmdNew(void);
     static RedResult TestTokeniseCode(void);
 
-    static RedResult TestLoadLibrary_001(void);
-    static RedResult TestLoadLibrary_002(void);
-
-    static RedResult TestSaveLibrary_001(void);
-
-    static RedResult TestRunProg_001(void);
-
     static RedResult TestFragment_New(void);
     static RedResult TestFragment_If(void);
     static RedResult TestFragment_While(void);
+
+
+
+//    static RedResult TestLoadLibrary_001(void);
+//    static RedResult TestLoadLibrary_002(void);
+//    static RedResult TestSaveLibrary_001(void);
+
+    static RedResult TestRunProg_001(void);
+
 };
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

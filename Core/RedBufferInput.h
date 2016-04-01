@@ -62,7 +62,7 @@ private:
 
     void AddRow(void);
 
-    typedef RedLinkedList<int> ListType;
+    typedef RedLinkedList<int>         ListType;
     typedef RedLinkedListIterator<int> ListItType;
 
     ListType    cNewLineCharPosList;

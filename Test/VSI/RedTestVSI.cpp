@@ -418,63 +418,63 @@ RedResult RedTestVSI::TestCmdNew(void)
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-RedResult RedTestVSI::TestLoadLibrary_002(void)
-{
-    RedVSILib        vsiCodeLib;
-    RedVSILibFactory vsiCodeLibFactory(&vsiCodeLib);
-
-    // Test read in class
-    {
-        RedLog    log;
-        RedString iPath("/tmp/TestBasicVSILibrary_0001.tml");
-
-        RedTmlElement* newX = REDNULL;
-
-        if (RedTmlAction::CreateTmlFromFile(iPath, &newX) != kResultSuccess)
-            return kResultFail;
-
-        RedTmlNode* newNodeX = (RedTmlNode*)newX;
-
-
-        
-
-
-
-        vsiCodeLibFactory.InputTmlClass(*newNodeX, log);
-
-        if (vsiCodeLib.NumClasses() == 0)
-            return kResultFail;
-    }
-
-    // Test output class
-    {
-        RedLog    log;
-        RedString iPath("/tmp/TestBasicVSILibrary_0003.tml");
-
-        RedTmlElement* newX2 = REDNULL;
-        RedString name("TestRoutines");
-
-        newX2 =  vsiCodeLibFactory.OutputTmlClass(name);
-
-        RedBufferOutput oB2;
-        RedTmlAction::SerialiseTinyML(oB2, newX2, eLinedIndentedContent);
-        oB2.WriteNewLine();
-        RedIOHandler::OutputBufferToFile(iPath, oB2);
-    }
-
-    return kResultSuccess;
-}
+//RedResult RedTestVSI::TestLoadLibrary_002(void)
+//{
+//    RedVSILib        vsiCodeLib;
+//    RedVSILibFactory vsiCodeLibFactory(&vsiCodeLib);
+//
+//    // Test read in class
+//    {
+//        RedLog    log;
+//        RedString iPath("/tmp/TestBasicVSILibrary_0001.tml");
+//
+//        RedTmlElement* newX = REDNULL;
+//
+//        if (RedTmlAction::CreateTmlFromFile(iPath, &newX) != kResultSuccess)
+//            return kResultFail;
+//
+//        RedTmlNode* newNodeX = (RedTmlNode*)newX;
+//
+//
+//        
+//
+//
+//
+//        vsiCodeLibFactory.InputTmlClass(*newNodeX, log);
+//
+//        if (vsiCodeLib.NumClasses() == 0)
+//            return kResultFail;
+//    }
+//
+//    // Test output class
+//    {
+//        RedLog    log;
+//        RedString iPath("/tmp/TestBasicVSILibrary_0003.tml");
+//
+//        RedTmlElement* newX2 = REDNULL;
+//        RedString name("TestRoutines");
+//
+//        newX2 =  vsiCodeLibFactory.OutputTmlClass(name);
+//
+//        RedBufferOutput oB2;
+//        RedTmlAction::SerialiseTinyML(oB2, newX2, eLinedIndentedContent);
+//        oB2.WriteNewLine();
+//        RedIOHandler::OutputBufferToFile(iPath, oB2);
+//    }
+//
+//    return kResultSuccess;
+//}
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-RedResult RedTestVSI::TestSaveLibrary_001(void)
-{
-    {
-        RedVSICmdNew pCmd1(kLangElementTypeNumber, kLangElementLocationStack, RedString("x"), REDNULL);
-        RedVSICmdLet();
-    }
-    return kResultSuccess;
-}
+//RedResult RedTestVSI::TestSaveLibrary_001(void)
+//{
+//    {
+//        RedVSICmdNew pCmd1(kLangElementTypeNumber, kLangElementLocationStack, RedString("x"), REDNULL);
+//        RedVSICmdLet();
+//    }
+//    return kResultSuccess;
+//}
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 

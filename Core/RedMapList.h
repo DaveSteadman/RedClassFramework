@@ -44,8 +44,8 @@ public:
     void            Del(IdClass Id);
     const int       DelAll(void);
     
-    const int       FindIdByIndex    (unsigned iElemIndex, IdClass& Id);
-    const int       FindDataByIndex  (unsigned iElemIndex, DataClass& Data);
+    const int       FindIdByIndex    (unsigned iElemIndex, IdClass& Id) const;
+    const int       FindDataByIndex  (unsigned iElemIndex, DataClass& Data) const;
     const int       AssignDataByIndex(unsigned iElemIndex, DataClass Data);
     const unsigned  FirstIndex       (void) const;
     const unsigned  LastIndex        (void) const;
@@ -151,7 +151,7 @@ const int RedMapList<IdClass, DataClass>::DelAll(void)
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 template <class IdClass, class DataClass>
-const int RedMapList<IdClass, DataClass>::FindIdByIndex(unsigned iElemIndex, IdClass& Id)
+const int RedMapList<IdClass, DataClass>::FindIdByIndex(unsigned iElemIndex, IdClass& Id) const
 {
     if ( (iElemIndex<cList.FirstIndex()) || (iElemIndex>cList.LastIndex()) )
         return 0;
@@ -167,7 +167,7 @@ const int RedMapList<IdClass, DataClass>::FindIdByIndex(unsigned iElemIndex, IdC
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 template <class IdClass, class DataClass>
-const int RedMapList<IdClass, DataClass>::FindDataByIndex(unsigned iElemIndex, DataClass& Data)
+const int RedMapList<IdClass, DataClass>::FindDataByIndex(unsigned iElemIndex, DataClass& Data) const
 {
     if ( (iElemIndex<cList.FirstIndex()) || (iElemIndex>cList.LastIndex()) )
         return 0;
@@ -267,7 +267,7 @@ const int RedMapList<IdClass, DataClass>::FindElement(IdClass cId, TMapElement& 
         if (cElem.cId == cId)
         {
             Elem = cElem;
-            iElemIndex = cIt.GetListIndex();
+            iElemIndex = cIt.CollectionIndex();
             return 1;
         }
         cIt.Next();

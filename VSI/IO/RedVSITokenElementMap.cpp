@@ -102,13 +102,13 @@ int RedVSITokenElementMap::FindString(RedVSIIOElement& cCheckElem, RedString& cS
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-int RedVSITokenElementMap::CountMatchCandidates(RedString& cCheckStr)
+unsigned RedVSITokenElementMap::CountMatchCandidates(RedString& cCheckStr)
 {
     // create map iterator and initialise outputs
     MapListItType   cIt(&cMap);
     RedVSIIOElement cElem;
-    int             iNumMatches = 0;
-    int             iCheckLen = cCheckStr.Length();
+    unsigned             iNumMatches = 0;
+    //int             iCheckLen = cCheckStr.Length();
 
     // Loop through all the items in the list
     cIt.First();
