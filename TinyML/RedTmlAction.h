@@ -65,9 +65,9 @@ public:
     static void            SerialiseTinyML(RedBufferOutput& outputBuf, const RedTmlElement* topTmlNode, const TESerialiseType eMode);
 
 private:
-    static int ReadName      (RedBufferInput& inputBuf, RedString& outputName);
-    static int ReadContent   (RedBufferInput& inputBuf, RedString& outputContent);
-    static int ReadTmlElement(RedBufferInput& inputBuf, RedTmlElement** newTml);
+    static bool ReadName      (RedBufferInput& inputBuf, RedString& outputName);
+    static bool ReadContent   (RedBufferInput& inputBuf, RedString& outputContent);
+    static bool ReadTmlElement(RedBufferInput& inputBuf, RedTmlElement** newTml);
 
 };
 
