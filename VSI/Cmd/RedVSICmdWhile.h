@@ -35,6 +35,7 @@ class RedVSICmdWhile : public RedVSICmdInterface
 {
 public:
 
+    // Construction Routines
     RedVSICmdWhile(void);
     ~RedVSICmdWhile(void) {};
 

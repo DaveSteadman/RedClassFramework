@@ -42,9 +42,8 @@ class RedVSIContextFragment : public RedVSIContextInterface
 {
 public:
 
+    // Construction Routines
     RedVSIContextFragment(RedLog& initAnalysis);
-
-    // Init with command for running a fragment
     RedVSIContextFragment(RedLog& initAnalysis, RedVSICmdInterface* pFragmentCmd);
     ~RedVSIContextFragment(void);
 
@@ -85,11 +84,11 @@ private:
     /// Curr command initialised to zero, command popped off the stack.
     /// expressions for that command evaluated, then the command is evaluated
     /// which leads to a change on the stack. Following exection, the curr is cleared.
-    RedVSICmdInterface*      pCurrCmd;
+    RedVSICmdInterface* pCurrCmd;
 
     /// The stack of commands in the routine. Added to by commands stacking up their
     /// branched and subsequent commands. Reduced by the context executing them.
-    RedVSICmdStack       cCmdStack;
+    RedVSICmdStack cCmdStack;
 
     /// The currently considered expression. Zero when starting a routine or between commands,
     /// but maintains the address of the expression when the routine is blocked.
@@ -97,14 +96,14 @@ private:
 
     /// The list of parse tree nodes which need to be executed IN ORDER before
     /// the pCurrCmd can be executed
-    RedVSIParseStack     cExprStack;
+    RedVSIParseStack cExprStack;
 
     /// The list of working data items from the evaluation of expressions. Cleared between
     /// each command call.
-    RedVSIParseDataMap    cExprResultList;
+    RedVSIParseDataMap cExprResultList;
 
     /// Variables and values created during the execution of the routine, including the parameters
-    RedRecord   cRoutineData;
+    RedRecord cLocalVariables;
 
     /// Log object
     RedLog& cAnalysis;

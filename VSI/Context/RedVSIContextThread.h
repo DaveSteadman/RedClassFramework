@@ -71,8 +71,6 @@ public:
     bool            IsBlocked(RedVSIContextInterface* pRoutineContext);
     void            QueueCommand(RedVSICmdInterface* pCmd);
     void            ClearCommandQueue(void);
-//    RedString       ClassName(void);
-//    RedString       ObjectName(void);
 
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 

@@ -238,8 +238,8 @@ private:
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-    bool operator==(const RedVSIIOElement& lhs, const RedVSIIOElement& rhs);
-    bool operator!=(const RedVSIIOElement& lhs, const RedVSIIOElement& rhs);
+bool operator==(const RedVSIIOElement& lhs, const RedVSIIOElement& rhs);
+bool operator!=(const RedVSIIOElement& lhs, const RedVSIIOElement& rhs);
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 

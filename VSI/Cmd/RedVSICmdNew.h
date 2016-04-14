@@ -35,7 +35,7 @@ class RedVSICmdNew : public RedVSICmdInterface
 {
 public:
 
-    // Fundamental Routines
+    // Construction Routines
     RedVSICmdNew();
     RedVSICmdNew(const RedVSILangElement& cInType, const RedVSILangElement& cInLoc, const RedString& cInName, RedVSIParseTreeInterface* pInInitExpr);
     ~RedVSICmdNew(void);

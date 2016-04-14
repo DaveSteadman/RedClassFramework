@@ -38,7 +38,7 @@ class RedVSICmdLet : public RedVSICmdInterface
 {
 public: 
 
-    // Fundamental Routines
+    // Construction Routines
     RedVSICmdLet(void);
     RedVSICmdLet(RedVSIParseTreeInterface*& pExpr) { SetDetails(pExpr); };
     ~RedVSICmdLet(void) {};

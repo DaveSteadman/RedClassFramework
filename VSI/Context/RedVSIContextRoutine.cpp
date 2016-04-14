@@ -52,7 +52,7 @@ RedVSIContextRoutine::RedVSIContextRoutine(RedLog& initAnalysis, RedVSICmdInterf
 
 RedVSIContextRoutine::~RedVSIContextRoutine(void)
 {
-    cRoutineData.DelAll();
+    cLocalVariables.DelAll();
     
     //if (pReturnValue)
     //    delete pReturnValue;
@@ -97,7 +97,7 @@ RedType* RedVSIContextRoutine::CreateDataItem(const RedVSILangElement& cLocation
         else
             throw;
 
-        cRoutineData.Add(cName, pNewData);
+        cLocalVariables.Add(cName, pNewData);
     }
     else if (cLocation.IsLocationAttribute())
     {
@@ -117,7 +117,7 @@ RedType* RedVSIContextRoutine::CreateDataItem(const RedVSILangElement& cLocation
 bool RedVSIContextRoutine::FindDataItem(const RedString& cName, RedType*& pData)
 {
     // first try and get the data from the local routine
-    if (cRoutineData.Find(cName, pData))
+    if (cLocalVariables.Find(cName, pData))
         return 1;
 
     // if not present, look in the This object
@@ -200,12 +200,12 @@ void RedVSIContextRoutine::Execute(const unsigned CmdCount)
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-int RedVSIContextRoutine::HasCmdToExecute(void)
+bool RedVSIContextRoutine::HasCmdToExecute(void)
 { 
-    if (!cCmdStack.IsEmpty()) return 1;
-    if (pCurrCmd) return 1;
+    if (!cCmdStack.IsEmpty()) return true;
+    if (pCurrCmd) return true;
     
-    return 0; 
+    return false;
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

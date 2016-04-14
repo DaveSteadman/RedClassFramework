@@ -27,6 +27,7 @@
 #include "RedVSIContextInterface.h"
 #include "RedVSIObject.h"
 #include "RedVSILangElement.h"
+#include "RedVSIRoutineCallInterface.h"
 
 using namespace Red::Core;
 
@@ -42,9 +43,8 @@ class RedVSIContextRoutine : public RedVSIContextInterface
 {
 public:
 
+    // Construction Routines
     RedVSIContextRoutine(RedLog& initAnalysis);
-
-    // Init with command for running a fragment
     RedVSIContextRoutine(RedLog& initAnalysis, RedVSICmdInterface* pFragmentCmd);
     ~RedVSIContextRoutine(void);
 
@@ -71,18 +71,15 @@ public:
     void            QueueCommand(RedVSICmdInterface* pCmd)                   { cCmdStack.Push(pCmd); };
     void            ClearCommandQueue(void)                                  { cCmdStack.DelAll(); };
 
-    RedString       ClassName(void) const                                    { return cClassName; };
-    RedString       ObjectName(void) const                                   { return cObjectName; };
-
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
     void            SetParamsList(RedRecord* pParamData);
 
 
-//    void            SetNameDetails(RedString& cNewObjectName, RedString& cNewClassName, RedString& cNewFuncName);
-//    void            AddParam(RedString cName, RedType* pData);
-//    void            AddReturnValue(RedVariant& cNewReturnValue) { cReturnValue = cNewReturnValue; };
-    // void            SetThisObj(RedType* pNewThisObject) { pThisObj=pNewThisObject; };
+
+    void                       SetRoutineCallData(const RedVSIRoutineCallInterface& d) { cRoutineCall = d; };
+    RedVSIRoutineCallInterface RoutineCallData(void)                                   { return cRoutineCall; };
+
 
     // Inherited Routine creation and control (RedVSIContextInterface)
     RedVariant&     GetReturnValue(void) { return cReturnValue; };
@@ -90,51 +87,45 @@ public:
     //RedVSIObject*   GetThisObj(void) { return pThisObj; };
 
     // Execution
-    // void            Execute(CInterfaceContext* pTopLevelContext);
-
     void            Execute(const unsigned CmdCount);
-    int             HasCmdToExecute(void);
+    bool            HasCmdToExecute(void);
 
 private:
 
     // Execution
-    RedString         cObjectName;
-    RedString         cClassName;
-    RedString         cFuncName;
-
-    /// Interface object to the thread context, allowing searching for data.
-    RedVSIContextInterface* pThreadContext;
+    RedVSIRoutineCallInterface cRoutineCall;
 
     /// Curr command initialised to zero, command popped off the stack.
     /// expressions for that command evaluated, then the command is evaluated
     /// which leads to a change on the stack. Following exection, the curr is cleared.
-    RedVSICmdInterface*      pCurrCmd;
+    RedVSICmdInterface* pCurrCmd;
+
+    /// The stack of commands in the routine. Added to by commands stacking up their
+    /// branched and subsequent commands. Reduced by the context executing them.
+    RedVSICmdStack cCmdStack;
 
     /// The currently considered expression. Zero when starting a routine or between commands,
     /// but maintains the address of the expression when the routine is blocked.
     RedVSIParseTreeInterface* pCurrExpr;
 
-    /// The stack of commands in the routine. Added to by commands stacking up their
-    /// branched and subsequent commands. Reduced by the context executing them.
-    RedVSICmdStack       cCmdStack;
-    
     /// The list of parse tree nodes which need to be executed IN ORDER before
     /// the pCurrCmd can be executed
-    RedVSIParseStack     cExprStack;
+    RedVSIParseStack cExprStack;
+
+    /// The list of working data items from the evaluation of expressions. Cleared between
+    /// each command call.
+    RedVSIParseDataMap cExprResultList;
 
     /// Pointer to the object associated to the routine call
     //RedVSIObject*        pThisObj;
     
     /// Variables and values created during the execution of the routine, including the parameters
-    RedRecord   cRoutineData;
+    RedRecord cLocalVariables;
 
     // The data to be returned to the calling routine
-    RedVariant        cReturnValue;
+    RedVariant cReturnValue;
     
-    /// The list of working data items from the evaluation of expressions. Cleared between
-    /// each command call.
-    RedVSIParseDataMap    cExprResultList;
-
+    /// Logging
     RedLog& cAnalysis;
 };
 

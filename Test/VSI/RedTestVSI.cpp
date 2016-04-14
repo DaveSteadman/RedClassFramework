@@ -584,7 +584,7 @@ RedResult RedTestVSI::TestFragment_New(void)
         return kResultFail;
     if (!pXVal->Type().IsNum())
         return kResultFail;
-    RedNumber* pXNum = (RedNumber*)pXVal;
+    RedNumber* pXNum = dynamic_cast<RedNumber*>(pXVal);
     if (!pXNum->IsEqualToWithinTollerance(6.4, kNumberFloatCompTollerance))
         return kResultFail;
 
@@ -625,7 +625,7 @@ RedResult RedTestVSI::TestFragment_If(void)
         return kResultFail;
     if (!pXVal->Type().IsNum())
         return kResultFail;
-    RedNumber* pXNum = (RedNumber*)pXVal;
+    RedNumber* pXNum = dynamic_cast<RedNumber*>(pXVal);
     if (!pXNum->IsEqualToWithinTollerance(4.0, kNumberFloatCompTollerance))
         return kResultFail;
 
@@ -639,7 +639,7 @@ RedResult RedTestVSI::TestFragment_While(void)
     // Define a small code fragment
     RedString strCodeFragment = "new local number x = 2 while x < 99 loop x = x * 2 endloop";
 
-    RedLog                cRedLog;
+    RedLog                 cRedLog;
     RedVSIContextFragment* testContext = REDNULL;
 
     RedVSIContextFactory FactoryObj;
@@ -658,7 +658,7 @@ RedResult RedTestVSI::TestFragment_While(void)
         return kResultFail;
     if (!pXVal->Type().IsNum())
         return kResultFail;
-    RedNumber* pXNum = (RedNumber*)pXVal;
+    RedNumber* pXNum = dynamic_cast<RedNumber*>(pXVal);
     if (!pXNum->IsEqualToWithinTollerance(128, kNumberFloatCompTollerance))
         return kResultFail;
 

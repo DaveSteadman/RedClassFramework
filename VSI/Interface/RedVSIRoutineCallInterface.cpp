@@ -25,5 +25,15 @@ namespace VSI {
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
+void RedVSIRoutineCallInterface::operator =(const RedVSIRoutineCallInterface& cSig)
+{
+    cClassName = cSig.cClassName;
+    cObjName   = cSig.cObjName;
+    cFuncName  = cSig.cFuncName;
+    cParams    = cSig.cParams;
+}
+
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
 } // VSI
 } // Red

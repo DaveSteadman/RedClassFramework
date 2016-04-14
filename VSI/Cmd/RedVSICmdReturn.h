@@ -36,6 +36,7 @@ class RedVSICmdReturn : public RedVSICmdInterface
 {
 public:
 
+    // Construction Routines
     RedVSICmdReturn(void);
     ~RedVSICmdReturn(void) {};
 

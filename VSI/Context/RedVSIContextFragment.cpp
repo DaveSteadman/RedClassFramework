@@ -27,7 +27,7 @@ namespace Red {
 namespace VSI {
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-// Constructor / Destructor
+// Construction Routines
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 RedVSIContextFragment::RedVSIContextFragment(RedLog& initAnalysis) : cAnalysis(initAnalysis)
@@ -46,7 +46,7 @@ RedVSIContextFragment::RedVSIContextFragment(RedLog& initAnalysis, RedVSICmdInte
 
 RedVSIContextFragment::~RedVSIContextFragment(void)
 {
-    cRoutineData.DelAll();
+    cLocalVariables.DelAll();
     
     //if (pReturnValue)
     //    delete pReturnValue;
@@ -91,7 +91,7 @@ RedType* RedVSIContextFragment::CreateDataItem(const RedVSILangElement& cLocatio
         else
             throw;
 
-        cRoutineData.Add(cName, pNewData);
+        cLocalVariables.Add(cName, pNewData);
     }
     else if (cLocation.IsLocationAttribute())
     {
@@ -111,7 +111,7 @@ RedType* RedVSIContextFragment::CreateDataItem(const RedVSILangElement& cLocatio
 bool RedVSIContextFragment::FindDataItem(const RedString& cName, RedType*& pData)
 {
     // first try and get the data from the local routine
-    if (cRoutineData.Find(cName, pData))
+    if (cLocalVariables.Find(cName, pData))
         return true;
 
     // if not present, look in the This object

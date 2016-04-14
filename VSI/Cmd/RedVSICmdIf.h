@@ -37,6 +37,7 @@ class RedVSICmdIf : public RedVSICmdInterface
 {
 public:
 
+    // Construction Routines
     RedVSICmdIf(void);
     ~RedVSICmdIf(void) {};
 
