@@ -16,7 +16,7 @@
 // (http://opensource.org/licenses/MIT)
 // -------------------------------------------------------------------------------------------------
 
-#include "RedVSIContextRoutine.h"
+#include "RedVSIContextFragment.h"
 //#include "CDataArray.h"
 
 #include "RedVSIParseStackTraverser.h"
@@ -30,27 +30,21 @@ namespace VSI {
 // Constructor / Destructor
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-RedVSIContextRoutine::RedVSIContextRoutine(RedLog& initAnalysis) : cAnalysis(initAnalysis)
+RedVSIContextFragment::RedVSIContextFragment(RedLog& initAnalysis) : cAnalysis(initAnalysis)
 {
-    // pThisObj     = 0;
-
-    cReturnValue.Init();
-    pCurrCmd     = 0;
+    pCurrCmd     = REDNULL;
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-RedVSIContextRoutine::RedVSIContextRoutine(RedLog& initAnalysis, RedVSICmdInterface* pSnippetCmd) : cAnalysis(initAnalysis)
+RedVSIContextFragment::RedVSIContextFragment(RedLog& initAnalysis, RedVSICmdInterface* pSnippetCmd) : cAnalysis(initAnalysis)
 {
-    // pThisObj     = 0;
-
-    cReturnValue.Init();
     pCurrCmd     = pSnippetCmd;
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-RedVSIContextRoutine::~RedVSIContextRoutine(void)
+RedVSIContextFragment::~RedVSIContextFragment(void)
 {
     cRoutineData.DelAll();
     
@@ -80,7 +74,7 @@ RedVSIContextRoutine::~RedVSIContextRoutine(void)
 // Data
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-RedType* RedVSIContextRoutine::CreateDataItem(const RedVSILangElement& cLocation, const RedVSILangElement& cType, const RedString& cName)
+RedType* RedVSIContextFragment::CreateDataItem(const RedVSILangElement& cLocation, const RedVSILangElement& cType, const RedString& cName)
 {
     RedType* pNewData = REDNULL;
 
@@ -114,22 +108,22 @@ RedType* RedVSIContextRoutine::CreateDataItem(const RedVSILangElement& cLocation
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-bool RedVSIContextRoutine::FindDataItem(const RedString& cName, RedType*& pData)
+bool RedVSIContextFragment::FindDataItem(const RedString& cName, RedType*& pData)
 {
     // first try and get the data from the local routine
     if (cRoutineData.Find(cName, pData))
-        return 1;
+        return true;
 
     // if not present, look in the This object
     // if (pThisObj)
     //     return pThisObj->Find(cName, pData);
 
-    return 0;
+    return false;
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-void RedVSIContextRoutine::SetReturnValue(const RedVariant& cData)
+void RedVSIContextFragment::SetReturnValue(const RedVariant& cData)
 {
     // if we don't have an expression to write the data to, there is a serious issue.
     if (pCurrExpr != REDNULL)
@@ -140,21 +134,21 @@ void RedVSIContextRoutine::SetReturnValue(const RedVariant& cData)
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-void RedVSIContextRoutine::QueueExpr(RedVSIParseTreeInterface* pExpr)
+void RedVSIContextFragment::QueueExpr(RedVSIParseTreeInterface* pExpr)
 {
     RedVSIParseStackTraverser::PopulateStack(cExprStack, pExpr, cAnalysis);
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-void RedVSIContextRoutine::SetExprResult(RedVSIParseTreeInterface* pExpr, const RedVariant& result)
+void RedVSIContextFragment::SetExprResult(RedVSIParseTreeInterface* pExpr, const RedVariant& result)
 {
     cExprResultList.Add(pExpr, result);
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-RedVariant RedVSIContextRoutine::ExprResult(RedVSIParseTreeInterface* pExpr)
+RedVariant RedVSIContextFragment::ExprResult(RedVSIParseTreeInterface* pExpr)
 {
     RedVariant cResult;
     if (!cExprResultList.Find(pExpr, cResult)) throw;
@@ -164,7 +158,7 @@ RedVariant RedVSIContextRoutine::ExprResult(RedVSIParseTreeInterface* pExpr)
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-void RedVSIContextRoutine::SetupRoutineCall(const RedVSIRoutineCallInterface& cSignature)
+void RedVSIContextFragment::SetupRoutineCall(const RedVSIRoutineCallInterface& cSignature)
 {
 }
 
@@ -172,7 +166,7 @@ void RedVSIContextRoutine::SetupRoutineCall(const RedVSIRoutineCallInterface& cS
 // Execution
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-void RedVSIContextRoutine::Execute(const unsigned CmdCount)
+void RedVSIContextFragment::Execute(const unsigned CmdCount)
 {
     unsigned CommandCountdown = CmdCount;
 
@@ -200,65 +194,32 @@ void RedVSIContextRoutine::Execute(const unsigned CmdCount)
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-int RedVSIContextRoutine::HasCmdToExecute(void)
+bool RedVSIContextFragment::HasCmdToExecute(void)
 { 
-    if (!cCmdStack.IsEmpty()) return 1;
-    if (pCurrCmd) return 1;
+    if (!cCmdStack.IsEmpty()) return true;
+    if (pCurrCmd) return true;
     
-    return 0; 
+    return false;
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-void RedVSIContextRoutine::ExecuteExprQueue(void)
+void RedVSIContextFragment::ExecuteExprQueue(void)
 {
-    int iBlocked = IsBlocked(this);
-    while ( (!cExprStack.IsEmpty()) && (!iBlocked) )
+    while ( !cExprStack.IsEmpty() )
     {
         pCurrExpr = cExprStack.Pop();
+
+        // Need to abort any expression with a function call in
+        if (pCurrExpr->Type().IsParseFuncCall())
+        {
+            cAnalysis.AddErrorEvent("Routine call parse-node found inside code fragment.");
+            return;
+        }
+
         pCurrExpr->CalcResult(this);
-        iBlocked = IsBlocked(this);
     }
 }
-
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-//void RedVSIContextRoutine::Execute(RedVSIInterfaceContext* pTopLevelContext)
-//{
-//    // Any command has the potential to affect the thread by adding a new (blocking) routine
-//    // call, so each call execs only one command before returning for the thread to make the 
-//    // next decision on what to do.
-//
-//    // if we have no command, get a new one and queue up the expressions
-//    if (!pCurrCmd)
-//    {
-//        // get the top level command
-//        pCurrCmd = cCmdStack.Pop();
-//
-//        // queue up all the expressions needed by the command
-//        pCurrCmd->QueueExpr(pTopLevelContext);
-//    }
-//
-//    // execute any expressions until we run out or get blocked
-//    int iBlocked = pTopLevelContext->IsBlocked(this);
-//    while ( (!cExprStack.IsEmpty()) && (!iBlocked) )
-//    {
-//        pCurrExpr = cExprStack.Pop();
-//        pCurrExpr->CalcResult(pTopLevelContext);
-//        iBlocked = pTopLevelContext->IsBlocked(this);
-//    }
-//    
-//    // if all the expressions have completed, move on to process the command
-//    if (!iBlocked)
-//    {
-//        pCurrCmd->Execute(pTopLevelContext);
-//
-//        // now clear out all the temp data associated with executing the command
-//        cWorkingList.DelAll();
-//        pCurrExpr = 0;
-//        pCurrCmd = 0;
-//    }
-//}
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 

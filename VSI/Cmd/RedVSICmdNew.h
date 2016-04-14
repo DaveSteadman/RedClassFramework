@@ -37,23 +37,23 @@ public:
 
     // Fundamental Routines
     RedVSICmdNew();
-    RedVSICmdNew(const RedVSILangElement& cInType, const RedVSILangElement& cInLoc, RedString cInName, RedVSIParseTreeInterface* pInInitExpr) { SetDetails(cInType, cInLoc, cInName, pInInitExpr); };
+    RedVSICmdNew(const RedVSILangElement& cInType, const RedVSILangElement& cInLoc, const RedString& cInName, RedVSIParseTreeInterface* pInInitExpr);
+    ~RedVSICmdNew(void);
 
-
-    ~RedVSICmdNew(void) {};
-
+    // RedVSICmdInterface inherited routines
     RedVSILangElement Type(void) { return kLangElementCommandNew; };
+    void              QueueExpr(RedVSIContextInterface* pContext);
+    void              Execute(RedVSIContextInterface* pContext);
 
-    void SetDetails(const RedVSILangElement& cInType,  const RedVSILangElement& cInLoc,  RedString cInName,  RedVSIParseTreeInterface* pInInitExpr);
-    void GetDetails(RedVSILangElement& cOutType, RedVSILangElement& cOutLoc, RedString& cOutName, RedVSIParseTreeInterface*& pOutInitExpr) const;
-
-    void QueueExpr(RedVSIContextInterface* pContext);
-    void Execute(RedVSIContextInterface* pContext);
-
+    // Command Setup
     void SetType(RedVSILangElement cNewType)                 { if (!cLoc.IsType())     throw; cType=cNewType; };
     void SetLoc(RedVSILangElement cNewLoc)                   { if (!cLoc.IsLocation()) throw; cLoc=cNewLoc; };
     void SetName(const RedString& cNewName)                  { cName=cNewName; };
     void SetInitExpr(RedVSIParseTreeInterface* pNewInitExpr) { pInitExpr=pNewInitExpr; };
+
+    // Wholesale access/assign operations
+    void SetDetails(const RedVSILangElement& cInType,  const RedVSILangElement& cInLoc, const RedString& cInName, RedVSIParseTreeInterface* pInInitExpr);
+    void GetDetails(RedVSILangElement& cOutType, RedVSILangElement& cOutLoc, RedString& cOutName, RedVSIParseTreeInterface*& pOutInitExpr) const;
 
 private:
     

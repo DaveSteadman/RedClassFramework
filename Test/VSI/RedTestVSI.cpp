@@ -19,6 +19,7 @@
 #include "RedTestVSI.h"
 #include "RedVSINamespace.h"
 #include "RedVSIContextRoutine.h"
+#include "RedVSIContextFragment.h"
 
 #include "RedVSICmdSerialiser.h"
 #include "RedVSILibTokenMap.h"
@@ -541,6 +542,8 @@ RedResult RedTestVSI::TestRunProg_001(void)
             return kResultFail;
 
         // Execute code
+        RedVSIRoutineCallInterface cSignature;
+        cSignature.SetupClassCall("TestRoutines", "TestExecute");
 
 
     }
@@ -569,8 +572,8 @@ RedResult RedTestVSI::TestFragment_New(void)
         return kResultFail;
 
     // Execute the code in a context
-    RedVSIContextRoutine testContext(cRedLog, topCmd);
-    testContext.ExecuteSnippet(10);
+    RedVSIContextFragment testContext(cRedLog, topCmd);
+    testContext.Execute(10);
     if (cRedLog.IsError())
         return kResultFail;
 
@@ -593,7 +596,7 @@ RedResult RedTestVSI::TestFragment_New(void)
 RedResult RedTestVSI::TestFragment_If(void)
 {
     // Define a small code fragment
-    RedString strCodeFragment = "new local number x = 3 new local number res = 0 if x < 4 then res = res + 1 end if ";
+    RedString strCodeFragment = "new local number x = 3 new local number res = 0 if x < 4 then res = x + 1 end if ";
 
     // Turn the code into tokens
     RedVSILibTokenMap cTokenMap;
@@ -610,8 +613,8 @@ RedResult RedTestVSI::TestFragment_If(void)
         return kResultFail;
 
     // Execute the code in a context
-    RedVSIContextRoutine testContext(cRedLog, topCmd);
-    testContext.ExecuteSnippet(10);
+    RedVSIContextFragment testContext(cRedLog, topCmd);
+    testContext.Execute(10);
     if (cRedLog.IsError())
         return kResultFail;
 
@@ -623,7 +626,7 @@ RedResult RedTestVSI::TestFragment_If(void)
     if (!pXVal->Type().IsNum())
         return kResultFail;
     RedNumber* pXNum = (RedNumber*)pXVal;
-    if (!pXNum->IsEqualToWithinTollerance(1.0, kNumberFloatCompTollerance))
+    if (!pXNum->IsEqualToWithinTollerance(4.0, kNumberFloatCompTollerance))
         return kResultFail;
 
     return kResultSuccess;
@@ -637,12 +640,14 @@ RedResult RedTestVSI::TestFragment_While(void)
     RedString strCodeFragment = "new local number x = 2 while x < 99 loop x = x * 2 endloop";
 
     RedLog                cRedLog;
-    RedVSIContextRoutine* testContext = REDNULL;
+    RedVSIContextFragment* testContext = REDNULL;
 
-    RedVSIContextFactory::CreateRoutineContextForFragment(strCodeFragment, &testContext, cRedLog);
+    RedVSIContextFactory FactoryObj;
+
+    FactoryObj.CreateContextForFragment(strCodeFragment, &testContext, cRedLog);
 
     // Execute the code in a context
-    testContext->ExecuteSnippet(10);
+    testContext->Execute(10);
     if (cRedLog.IsError())
         return kResultFail;
 

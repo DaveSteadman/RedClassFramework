@@ -22,32 +22,31 @@
 
 #include "RedCoreNamespace.h"
 
+#include "RedVSICollections.h"
 #include "RedVSICmdInterface.h"
-
-#include "RedVSILangElement.h"
 #include "RedVSIContextInterface.h"
-#include "RedVSIContextRoutine.h"
-#include "RedVSILibInterface.h"
-#include "RedVSILibRoutineInterface.h"
-#include "RedVSIRoutineCallInterface.h"
+#include "RedVSIObject.h"
+#include "RedVSILangElement.h"
 
 using namespace Red::Core;
-
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 namespace Red {
 namespace VSI {
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-class RedVSIContextThread : public RedVSIContextInterface
+/// Class to represent the context required to execute a routine.
+/// Uses parent class RedVSIContextInterface, allowing code-fragments and simple command sequences to
+/// be executed in a lightweight environment.
+class RedVSIContextFragment : public RedVSIContextInterface
 {
 public:
 
-    RedVSIContextThread(const RedVSILibInterface* pInitCodeLib, const RedVSIRoutineCallInterface& cStartingSignature);
-    RedVSIContextThread(void);
+    RedVSIContextFragment(RedLog& initAnalysis);
 
-    void            SetCodeLib(RedVSILibInterface* pNewCodeLib) { pCodeLib = pNewCodeLib; };
+    // Init with command for running a fragment
+    RedVSIContextFragment(RedLog& initAnalysis, RedVSICmdInterface* pFragmentCmd);
+    ~RedVSIContextFragment(void);
 
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     // RedVSIContextInterface Inhertied Interface
@@ -67,36 +66,48 @@ public:
     RedLog&         Log(void) { return cAnalysis; };
 
     // Setup Calls
-    void            SetupRoutineCall(RedVSIRoutineCallInterface& cSignature);
-    bool            IsBlocked(RedVSIContextInterface* pRoutineContext);
-    void            QueueCommand(RedVSICmdInterface* pCmd);
-    void            ClearCommandQueue(void);
-//    RedString       ClassName(void);
-//    RedString       ObjectName(void);
+    void            SetupRoutineCall(const RedVSIRoutineCallInterface& cSignature);
+    bool            IsBlocked(const RedVSIContextInterface* pRoutineContext) { return false; };
+    void            QueueCommand(RedVSICmdInterface* pCmd)                   { cCmdStack.Push(pCmd); };
+    void            ClearCommandQueue(void)                                  { cCmdStack.DelAll(); };
+
 
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-//    void           SetUserObj(RedRecord* pNewUserObject) { pUserObj=pNewUserObject; };
-//    RedRecord*     GetUserObj(void) { return pUserObj; };
 
+
+    // Execution
     void            Execute(const unsigned CmdCount);
+    bool            HasCmdToExecute(void);
 
 private:
 
-    /// replace with datacentre
-    typedef RedStackLIFO<RedVSIContextRoutine*> RedVSIRoutineContextStack;
+    /// Curr command initialised to zero, command popped off the stack.
+    /// expressions for that command evaluated, then the command is evaluated
+    /// which leads to a change on the stack. Following exection, the curr is cleared.
+    RedVSICmdInterface*      pCurrCmd;
 
-    // Routine Context
-    RedVSIRoutineContextStack cRoutineStack;
+    /// The stack of commands in the routine. Added to by commands stacking up their
+    /// branched and subsequent commands. Reduced by the context executing them.
+    RedVSICmdStack       cCmdStack;
 
-    // Static Code
-    const RedVSILibInterface* pCodeLib;
+    /// The currently considered expression. Zero when starting a routine or between commands,
+    /// but maintains the address of the expression when the routine is blocked.
+    RedVSIParseTreeInterface* pCurrExpr;
 
-    // Data attributes
-    RedRecord cHeap;
+    /// The list of parse tree nodes which need to be executed IN ORDER before
+    /// the pCurrCmd can be executed
+    RedVSIParseStack     cExprStack;
 
-    // debugging
-    RedLog cAnalysis;
+    /// The list of working data items from the evaluation of expressions. Cleared between
+    /// each command call.
+    RedVSIParseDataMap    cExprResultList;
+
+    /// Variables and values created during the execution of the routine, including the parameters
+    RedRecord   cRoutineData;
+
+    /// Log object
+    RedLog& cAnalysis;
 };
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

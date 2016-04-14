@@ -32,6 +32,8 @@ using namespace Red::Core;
 namespace Red {
 namespace VSI {
 
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
 // Class has only read-only routines, so the consumers of the routines have no access to change anything.
 // The Child RedVSILibRoutine class is contained within the library construction code.
 
@@ -40,7 +42,7 @@ class RedVSILibRoutineInterface
 public:
 
     RedVSILibRoutineInterface(void)  { Init(); };
-    ~RedVSILibRoutineInterface(void) {  };
+    ~RedVSILibRoutineInterface(void) { };
 
     void Init(void);
     int  IsValid(void);

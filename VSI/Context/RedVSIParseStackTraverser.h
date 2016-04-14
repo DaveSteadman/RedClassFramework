@@ -31,6 +31,8 @@ namespace VSI {
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
+/// Class to convert a parse-tree structure into a stack we can execute in the correct order to satisfy
+/// the dependent results for each node.
 class RedVSIParseStackTraverser
 {
 public:

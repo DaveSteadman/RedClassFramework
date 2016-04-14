@@ -40,13 +40,14 @@ public:
     RedVSICmdIf(void);
     ~RedVSICmdIf(void) {};
 
+    // RedVSICmdInterface inherited routines
     RedVSILangElement Type(void) { return kLangElementCommandIf; };
-    
     void QueueExpr(RedVSIContextInterface* pContext);
+    void Execute(RedVSIContextInterface* pContext);
+
+    // Wholesale access/assign operations
     void SetDetails(RedVSIParseTreeInterface*& pInCmdExpr,  RedVSICmdInterface*& pInPosBranch,  RedVSICmdInterface*& pInNegBranch);
     void GetDetails(RedVSIParseTreeInterface*& pOutCmdExpr, RedVSICmdInterface*& pOutPosBranch, RedVSICmdInterface*& pOutNegBranch) const;
-
-    void Execute(RedVSIContextInterface* pContext);
 
 private:
 

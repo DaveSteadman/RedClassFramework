@@ -80,7 +80,7 @@ RedType* RedVSIContextThread::CreateDataItem(const RedVSILangElement& cLocation,
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-int RedVSIContextThread::FindDataItem(const RedString& cName, RedType*& pData)
+bool RedVSIContextThread::FindDataItem(const RedString& cName, RedType*& pData)
 {
     // Initialise output pointer
     pData = 0;
@@ -147,6 +147,16 @@ RedVariant RedVSIContextThread::ExprResult(RedVSIParseTreeInterface* pExpr)
         retval = pCurrRoutine->ExprResult(pExpr);
 
     return retval;
+}
+
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+void RedVSIContextThread::ExecuteExprQueue(void)
+{
+    RedVSIContextRoutine* pCurrRoutine = cRoutineStack.NextPopItem();
+
+    if (pCurrRoutine)
+        pCurrRoutine->ExecuteExprQueue();
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -232,21 +242,21 @@ void RedVSIContextThread::ClearCommandQueue(void)
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-RedString RedVSIContextThread::ClassName(void)
-{
-    return cRoutineStack.NextPopItem()->ClassName();
-}
+//RedString RedVSIContextThread::ClassName(void)
+//{
+//    return cRoutineStack.NextPopItem()->ClassName();
+//}
+//
+//// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+//
+//RedString RedVSIContextThread::ObjectName(void)
+//{
+//    return cRoutineStack.NextPopItem()->ObjectName();
+//}
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-RedString RedVSIContextThread::ObjectName(void)
-{
-    return cRoutineStack.NextPopItem()->ObjectName();
-}
-
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-void RedVSIContextThread::Execute(int& iCmdCount)
+void RedVSIContextThread::Execute(const unsigned CmdCount)
 {
 //    while ( (iCmdCount > 0) && (!cRoutineStack.IsEmpty()) )
 //    {

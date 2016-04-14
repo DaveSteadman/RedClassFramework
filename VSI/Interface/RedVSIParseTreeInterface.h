@@ -23,10 +23,10 @@
 #include "RedVSIContextInterface.h"
 #include "RedVSILangElement.h"
 
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
 namespace Red {
 namespace VSI {
+
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 class RedVSIParseTreeInterface 
 {

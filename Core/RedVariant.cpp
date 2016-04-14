@@ -196,7 +196,7 @@ int RedVariant::ExportTo(RedType* pExportToData)
                 RedChar* pExportToChar = (RedChar*)pExportToData;
                 RedChar* pDataChar     = (RedChar*)pData;
                 *pExportToChar = *pDataChar;
-            }        
+            }
             else if (pExportToData->Type().IsStr())
             {
                 RedString* pExportToStr = (RedString*)pExportToData;

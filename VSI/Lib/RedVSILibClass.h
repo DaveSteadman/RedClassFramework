@@ -55,6 +55,8 @@ public:
 
     void                AddRoutine(RedVSILibRoutine* pNewRoutine);
     RedVSILibRoutine*   FindRoutine(RedVSIRoutineCallInterface& cSig);
+    RedVSILibRoutine*   FindRoutineByName(const RedString& cNewRoutineName);
+
     RoutineIteratorType GetRoutineIterator(void) { RoutineIteratorType cIt(&cRoutineList); return cIt; };
     
 private:

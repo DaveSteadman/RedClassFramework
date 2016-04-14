@@ -28,12 +28,13 @@
 namespace Red {
 namespace VSI {
 
+/// Library interface, providing read-only access to find classes and routines.
 class RedVSILibInterface
 {
 public:
 
     // Starting point for the search for a routine to satisfy a routine call
-    virtual RedVSILibRoutineInterface* FindRoutine(RedVSIRoutineCallInterface& cSig) =0;
+    virtual RedVSILibRoutineInterface* FindRoutine(const RedVSIRoutineCallInterface& cSig) =0;
 };
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

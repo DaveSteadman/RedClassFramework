@@ -37,8 +37,8 @@ class RedVSILangElement;
 
 typedef RedStackLIFO<RedVSICmdInterface*> RedVSICmdStack;
 
-typedef RedDoubleLinkedList<RedVariant>         RedVSIDataList;
-typedef RedDoubleLinkedListIterator<RedVariant> RedVSIDataListIterator;
+typedef RedDoubleLinkedList<RedVariant>         RedVSIVariantList;
+typedef RedDoubleLinkedListIterator<RedVariant> RedVSIVariantListIterator;
 
 typedef RedMapList<int, RedType*>           RedVSIIntDataMap;
 typedef RedMapListIterator<int, RedType*>   RedVSIIntDataMapIterator;

@@ -27,7 +27,7 @@ namespace VSI {
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-RedResult RedVSIContextFactory::CreateRoutineContextForFragment(const RedString& InputCodeFragment, RedVSIContextRoutine** OutputContext, RedLog& cLog)
+RedResult RedVSIContextFactory::CreateContextForFragment(const RedString& InputCodeFragment, RedVSIContextFragment** OutputContext, RedLog& cLog)
 {
     // Turn the code into tokens
     RedVSILibTokenMap cTokenMap;
@@ -43,11 +43,24 @@ RedResult RedVSIContextFactory::CreateRoutineContextForFragment(const RedString&
     if (cRedLog.IsError())
         return kResultFail;
 
-    *OutputContext = new RedVSIContextRoutine(cRedLog, topCmd);
+    *OutputContext = new RedVSIContextFragment(cRedLog, topCmd);
 
     if (*OutputContext == REDNULL)
         return kResultFail;
 
+    return kResultSuccess;
+}
+
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+RedResult RedVSIContextFactory::CreateRoutineContextForRoutine(const RedString& ClassName, const RedString& RoutineName, RedVSIContextRoutine** OutputContext, RedLog& cLog)
+{
+//    RedVSILibRoutineInterface* LibRoutine = lib.FindRoutine(ClassName, RoutineName);
+//
+//    RedLog            cRedLog;
+//
+//    *OutputContext = new RedVSIContextRoutine(cRedLog, LibRoutine->FirstCommand());
+//
     return kResultSuccess;
 }
 
@@ -73,7 +86,7 @@ RedResult RedVSIContextFactory::CreateThreadContextForRoutine(RedVSILibRoutineIn
 //    pNewRoutine->QueueCommand(pRoutineLib->GetCode());
 //
 //    // Loop through the parameters
-//    RedVSIDataListIterator cCallParamsIt(cRoutineCall.GetParams());
+//    RedVSIVariantListIterator cCallParamsIt(cRoutineCall.GetParams());
 //    RedVSIStringStringTypeMapIterator cRoutineParamsIt(pRoutineLib->GetParams());
 //    cCallParamsIt.First();
 //    cRoutineParamsIt.First();

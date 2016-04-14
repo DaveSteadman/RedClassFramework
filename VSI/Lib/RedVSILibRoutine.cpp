@@ -38,7 +38,7 @@ const int RedVSILibRoutine::IsMatching(RedVSIRoutineCallInterface& cSig)
 //
 //    // Get the lists and iterators to perform the full param check
 //    
-//    RedVSIDataListIterator cCallParamIt(cSig.GetParams());
+//    RedVSIVariantListIterator cCallParamIt(cSig.GetParams());
 //    RedVSIStringLangElementMapIterator cParamIt(&cParamList);
 //    cParamIt.First();
 //    cCallParamIt.First();

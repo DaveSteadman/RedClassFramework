@@ -41,29 +41,28 @@ public:
     void            Init(void) { cClassName.Init(); cObjName.Init(); cFuncName.Init(); cParams.DelAll(); };
 
     void            SetupObjectCall(const RedString& cNewObjName,   const RedString& cNewFuncName) { cObjName   = cNewObjName;   cFuncName = cNewFuncName; };
-    void            SetupClassCall( const RedString& cNewClassName, const RedString& cNewFuncName) { cClassName = cNewClassName; cFuncName = cNewFuncName; };
-
-    void            SetClassName (const RedString& cNewClassName)  { cClassName = cNewClassName;  };
-    void            SetObjectName(const RedString& cNewObjectName) { cObjName   = cNewObjectName; };
-    void            SetFuncName  (const RedString& cNewFuncName)   { cFuncName  = cNewFuncName;   };
+    void            SetupClassCall (const RedString& cNewClassName, const RedString& cNewFuncName) { cClassName = cNewClassName; cFuncName = cNewFuncName; };
+    void            SetClassName   (const RedString& cNewClassName)                                { cClassName = cNewClassName;  };
+    void            SetObjectName  (const RedString& cNewObjectName)                               { cObjName   = cNewObjectName; };
+    void            SetFuncName    (const RedString& cNewFuncName)                                 { cFuncName  = cNewFuncName;   };
 
     // Query
-    //const int          IsInternalCall(void) const { return ( (cObjName.IsEmpty()) && (cClassName.IsEmpty()) ); };
     const RedString    ClassName(void)   const { return cClassName; };
     const RedString    ObjectName(void)  const { return cObjName;   };
     const RedString    FuncName(void)    const { return cFuncName;  };
 
-    void               AppendParam(RedVariant& cNewParam) { cParams.AddLast(cNewParam); };
-    const RedVSIDataList*    GetParams(void) const              { return &cParams; };
+    // Params - variant type as they will be mainly derived from expression results
+    void                        AppendParam(const RedVariant& cNewParam) { cParams.AddLast(cNewParam); };
+    const RedVSIVariantList*    GetParams(void) const                    { return &cParams; };
 
-    void operator =(RedVSIRoutineCallInterface& cSig);
-    
+    void operator =(const RedVSIRoutineCallInterface& cSig);
+
 private:
 
     RedString         cClassName;
     RedString         cObjName;
     RedString         cFuncName;
-    RedVSIDataList    cParams;
+    RedVSIVariantList cParams;
 };
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

@@ -33,20 +33,21 @@ namespace VSI {
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-// A VSI Code Library consists of a list of classes.
-class RedVSILib : public RedVSILibInterface
+/// A VSI Code Library consists of a list of classes.
+class RedVSILib
 {
 public:
     typedef RedDoubleLinkedList<RedVSILibClass*>          ListType;
     typedef RedDoubleLinkedListIterator<RedVSILibClass*>  IteratorType;
 
     void       AddClass(RedVSILibClass* pNewClass);
-    //void       DelClass(const RedString& cClassName);
+    void       DelClass(const RedString& cClassName);
 
-    // inherited
     RedVSILibClass*            FindClass(const RedString& cClassName);
     RedVSILibRoutineInterface* FindRoutine(RedVSIRoutineCallInterface& cSig);
+    RedVSILibRoutineInterface* FindRoutine(const RedString& cClassName, const RedString& cRoutineName);
 
+    /// Returns number of classes in library
     const int NumClasses(void) const { return cClassList.NumItems(); };
 
 private:

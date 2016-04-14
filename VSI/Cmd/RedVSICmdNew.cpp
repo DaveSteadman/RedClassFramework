@@ -31,7 +31,7 @@ RedVSICmdNew::RedVSICmdNew(void)
     cType.Init();
     cLoc.Init();
     cName.Init();
-    pInitExpr = 0;
+    pInitExpr = REDNULL;
 
     // parents attributes
     SetNextCmd(0);
@@ -39,24 +39,24 @@ RedVSICmdNew::RedVSICmdNew(void)
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-void RedVSICmdNew::SetDetails(const RedVSILangElement& cInType, const RedVSILangElement& cInLoc, RedString cInName, RedVSIParseTreeInterface* pInInitExpr)
+RedVSICmdNew::RedVSICmdNew(const RedVSILangElement& cInType, const RedVSILangElement& cInLoc, const RedString& cInName, RedVSIParseTreeInterface* pInInitExpr)
 {
-    cType     = cInType;
-    cLoc      = cInLoc;
-    cName     = cInName;
-    pInitExpr = pInInitExpr;
+    SetDetails(cInType, cInLoc, cInName, pInInitExpr);
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-void RedVSICmdNew::GetDetails(RedVSILangElement& cOutType, RedVSILangElement& cOutLoc, RedString& cOutName, RedVSIParseTreeInterface*& pOutInitExpr) const
+RedVSICmdNew::~RedVSICmdNew(void)
 {
-    cOutType     = cType;
-    cOutLoc      = cLoc;
-    cOutName     = cName;
-    pOutInitExpr = pInitExpr;
+    if (pInitExpr != REDNULL)
+    {
+        delete pInitExpr;
+        pInitExpr = REDNULL;
+    }
 }
 
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+// RedVSICmdInterface inherited routines
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 void RedVSICmdNew::QueueExpr(RedVSIContextInterface* pContext)
@@ -95,6 +95,28 @@ void RedVSICmdNew::Execute(RedVSIContextInterface* pContext)
     
     // queue the next command, we are done with this one
     pContext->QueueCommand( NextCmd() );
+}
+
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+// Wholesale access/assign operations
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+void RedVSICmdNew::SetDetails(const RedVSILangElement& cInType, const RedVSILangElement& cInLoc, const RedString& cInName, RedVSIParseTreeInterface* pInInitExpr)
+{
+    cType     = cInType;
+    cLoc      = cInLoc;
+    cName     = cInName;
+    pInitExpr = pInInitExpr;
+}
+
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+void RedVSICmdNew::GetDetails(RedVSILangElement& cOutType, RedVSILangElement& cOutLoc, RedString& cOutName, RedVSIParseTreeInterface*& pOutInitExpr) const
+{
+    cOutType     = cType;
+    cOutLoc      = cLoc;
+    cOutName     = cName;
+    pOutInitExpr = pInitExpr;
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

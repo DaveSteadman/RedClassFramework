@@ -29,23 +29,24 @@ void RedVSILib::AddClass(RedVSILibClass* pNewClass)
     cClassList.AddLast(pNewClass);
 }
 
-//// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-//
-//void RedVSILib::DelClass(const RedString& cClassName)
-//{
-//    IteratorType cIt(&cClassList);
-//
-//    cIt.First();
-//    while (!cIt.IsDone())
-//    {
-//        RedVSILibClass* pCurrClass = cIt.CurrentItem();
-//
-//        if (pCurrClass->ClassName() == cClassName)
-//            cIt.DeleteCurrentItem();
-//
-//        cIt.Next();
-//    }
-//}
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+void RedVSILib::DelClass(const RedString& cClassName)
+{
+    IteratorType cIt(&cClassList);
+
+    cIt.First();
+    while (!cIt.IsDone())
+    {
+        RedVSILibClass* pCurrClass = cIt.CurrentItem();
+
+        if (pCurrClass->ClassName() == cClassName)
+        {
+            cClassList.Del(cIt.CollectionIndex());
+        }
+        cIt.Next();
+    }
+}
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -64,7 +65,7 @@ RedVSILibClass* RedVSILib::FindClass(const RedString& cClassName)
         cIt.Next();
     }
 
-    return 0;
+    return REDNULL;
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -72,8 +73,8 @@ RedVSILibClass* RedVSILib::FindClass(const RedString& cClassName)
 RedVSILibRoutineInterface* RedVSILib::FindRoutine(RedVSIRoutineCallInterface& cSig)
 {
     RedVSILibClass*            pClass   = FindClass(cSig.ClassName());
-    RedVSILibRoutineInterface* pRoutine = 0;
-    
+    RedVSILibRoutineInterface* pRoutine = REDNULL;
+
     // if we found the first class
     if (pClass)
     { 
@@ -88,14 +89,27 @@ RedVSILibRoutineInterface* RedVSILib::FindRoutine(RedVSIRoutineCallInterface& cS
             {
                 // find the parent class or exit
                 if (!pClass->HasParentClass())
-                    return 0;
+                    return REDNULL;
                 pClass = FindClass(pClass->ParentClassName());
                 if (!pClass) 
-                    return 0;
+                    return REDNULL;
             }
         }
     }
-        
+
+    return pRoutine;
+}
+
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+RedVSILibRoutineInterface* RedVSILib::FindRoutine(const RedString& cClassName, const RedString& cRoutineName)
+{
+    RedVSILibClass*            pClass   = FindClass(cClassName);
+    RedVSILibRoutineInterface* pRoutine = REDNULL;
+
+    if (pClass)
+        pRoutine = pClass->FindRoutineByName(cRoutineName);
+
     return pRoutine;
 }
 
