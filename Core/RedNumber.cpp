@@ -324,7 +324,7 @@ void RedNumber::SetDecimalString(const RedString& cNewDecimalVal)
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-#pragma mark - Arithmetic Operators
+// Arithmetic Operators
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 RedNumber RedNumber::operator +(const RedNumber& n) const 
@@ -508,7 +508,7 @@ RedNumber RedNumber::operator ++(int) // Postfix
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-#pragma mark - Comparison Operators
+// Comparison Operators
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 bool operator==(const RedNumber& lhs, const RedNumber& rhs)
