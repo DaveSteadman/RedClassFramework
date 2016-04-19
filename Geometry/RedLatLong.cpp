@@ -24,7 +24,7 @@
 namespace Red {
 namespace Geometry {
 
-static const double kLatLongDecPlaces = 5; // The number of decimal places to resolve a lat/long to 1metre.
+static const unsigned kLatLongDecPlaces = 5; // The number of decimal places to resolve a lat/long to 1metre.
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
