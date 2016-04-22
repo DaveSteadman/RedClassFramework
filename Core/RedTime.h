@@ -18,9 +18,6 @@
 
 #pragma once
 
-#include "RedNumber.h"
-#include "RedNumberRange.h"
-
 namespace Red {
 namespace Core {
 
@@ -30,11 +27,12 @@ namespace Core {
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-static const RedNumber kTimeSecondsInDay    = RedNumber(86400);
-static const RedNumber kTimeSecondsInHour   = RedNumber(3600);
-static const RedNumber kTimeSecondsInMinute = RedNumber(60);
-static const RedNumber kTimeMinutesInDay    = RedNumber(1440);
-static const RedNumber kTimeMinutesInHour   = RedNumber(60);
+static const unsigned kTimeSecondsInMinute = 60;
+static const unsigned kTimeMinutesInHour   = 60;
+static const unsigned kTimeHoursInDay      = 24;
+static const unsigned kTimeSecondsInHour   = kTimeSecondsInMinute * kTimeMinutesInHour;
+static const unsigned kTimeMinutesInDay    = kTimeMinutesInHour * kTimeHoursInDay;
+static const unsigned kTimeSecondsInDay    = kTimeSecondsInHour * kTimeHoursInDay;
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -45,10 +43,9 @@ public:
     RedTime(void) { Init(); };
     RedTime(const unsigned h, const unsigned m, const double& s) { hour=h; minute=m; seconds=s; };
 
-    void Init(void) { hour=0; minute=0; seconds=0; };
+    void Init(void) { hour=0; minute=0; seconds=0.0; };
 
     void SetTime(const unsigned h, const unsigned m, const double& s)        { hour=h; minute=m; seconds=s; };
-    void SetTime(const RedNumber& h, const RedNumber& m, const RedNumber& s) { hour=h.IntegerValue(); minute=m.IntegerValue(); seconds=s.DoubleValue(); };
     void SetTime(const RedString& timestr);
 
     void SetNow(void);
@@ -58,28 +55,29 @@ public:
     const unsigned  SixDigitTime(void) const; // hhmmss
 
 	// Simple Access Routines
-    const RedNumber Hours     (void) const                  { return hour;    };
-    const RedNumber Minutes   (void) const                  { return minute;  };
-    const RedNumber Seconds   (void) const                  { return seconds; };
-    void            SetHours  (const RedNumber& NewHours)   { hour    = NewHours;   };
-    void            SetMinutes(const RedNumber& NewMinutes) { minute  = NewMinutes; };
-    void            SetSeconds(const RedNumber& NewSeconds) { seconds = NewSeconds; };
+    const unsigned Hours     (void) const                  { return hour;    };
+    const unsigned Minutes   (void) const                  { return minute;  };
+    const double   Seconds   (void) const                  { return seconds; };
+    void           SetHours  (const unsigned& NewHours)    { hour    = NewHours;   };
+    void           SetMinutes(const unsigned& NewMinutes)  { minute  = NewMinutes; };
+    void           SetSeconds(const double& NewSeconds)    { seconds = NewSeconds; };
 
     // Seconds In Day Routines
-    const RedNumber SecondsElapsedInDay(void) const { return (hour*kTimeSecondsInHour) + (minute*kTimeSecondsInMinute) + seconds; };
-    const RedNumber SecondsLeftInDay(void)    const { return kTimeSecondsInDay - SecondsElapsedInDay(); };
-    void            SetTimeFromElapsedSeconds(const RedNumber& DayElapsedSeconds);
+    const double SecondsElapsedInDay(void) const { return (hour*kTimeSecondsInHour) + (minute*kTimeSecondsInMinute) + seconds; };
+    const double SecondsLeftInDay(void)    const { return kTimeSecondsInDay - SecondsElapsedInDay(); };
+    void         SetTimeFromElapsedSeconds(const double& DayElapsedSeconds);
 
 private:
 
-    RedNumber hour;
-    RedNumber minute;
-    RedNumber seconds;
+	unsigned hour;
+	unsigned minute;
+	double   seconds;
 };
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 static const RedTime kTimeStartOfDay = RedTime(0,   0,  0.0);
+static const RedTime kTimeMidday     = RedTime(12,  0,  0.0);
 static const RedTime kTimeEndOfDay   = RedTime(24, 60, 60.0);
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
