@@ -35,7 +35,7 @@ void RedDate::SetDate(const RedString& datestr)
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-void RedDate::Now(void)
+void RedDate::Today(void)
 {
     time_t     rawtime;
     struct tm* timeinfo;
@@ -65,7 +65,7 @@ const RedString RedDate::DateString(void) const
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-const unsigned RedDate::EightDigitInt(void) const
+const unsigned RedDate::EightDigitDate(void) const
 {
     unsigned retdate = 0;
 
@@ -77,12 +77,25 @@ const unsigned RedDate::EightDigitInt(void) const
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+const unsigned RedDate::SixDigitDate(void) const
+{
+	unsigned retdate = 0;
+
+	retdate += TwoDigitYear() * 10000;
+	retdate += month * 100;
+	retdate += date;
+
+	return retdate;
+}
+
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 // Comparison Operators
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 bool operator==(const RedDate& lhs, const RedDate& rhs)
 {
-    if (lhs.EightDigitInt() == rhs.EightDigitInt())
+    if (lhs.EightDigitDate() == rhs.EightDigitDate())
         return true;
     return false;
 }
@@ -91,7 +104,7 @@ bool operator==(const RedDate& lhs, const RedDate& rhs)
 
 bool operator!=(const RedDate& lhs, const RedDate& rhs)
 {
-    if (lhs.EightDigitInt() != rhs.EightDigitInt())
+    if (lhs.EightDigitDate() != rhs.EightDigitDate())
         return true;
     return false;
 }
