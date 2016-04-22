@@ -44,13 +44,15 @@ public:
 	void           SetDate(const unsigned d)  { date  = d; };
 	const unsigned Year(void) const           { return year; };
 	const unsigned Month(void) const          { return month; };
-	const unsigned Date(void) const           { return date; };
+    const unsigned Date(void) const           { return date; };
 
-	const unsigned TwoDigitYear(void) const   { return (year % 100); }
+	// Involved Accessors
+    const unsigned TwoDigitYear(void) const   { return (year % 100); }
 	const unsigned EightDigitDate(void) const;
 	const unsigned SixDigitDate(void) const;
 
-    const RedString DateString(void) const;
+	// String output
+	const RedString DateString(void) const;
 	const RedString EightDigitDateString(void) const { RedString r; r.Append(EightDigitDate()); return r; };
 	const RedString SixDigitDateString(void)   const { RedString r; r.Append(SixDigitDate());   return r; };
 
