@@ -18,10 +18,10 @@
 
 #pragma once
 
+#include "RedString.h"
+
 namespace Red {
 namespace Core {
-
-class RedString;
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -36,10 +36,23 @@ public:
 
     void SetDate(const unsigned y, const unsigned m, const unsigned d) { year=y; month=m; date=d; };
     void SetDate(const RedString& datestr);
-    void Now(void);
+    void Today(void);
+
+	// Simple Accessors
+	void           SetYear(const unsigned y)  { year  = y; };
+	void           SetMonth(const unsigned m) { month = m; };
+	void           SetDate(const unsigned d)  { date  = d; };
+	const unsigned Year(void) const           { return year; };
+	const unsigned Month(void) const          { return month; };
+	const unsigned Date(void) const           { return date; };
+
+	const unsigned TwoDigitYear(void) const   { return (year % 100); }
+	const unsigned EightDigitDate(void) const;
+	const unsigned SixDigitDate(void) const;
 
     const RedString DateString(void) const;
-    const unsigned  EightDigitInt(void) const;
+	const RedString EightDigitDateString(void) const { RedString r; r.Append(EightDigitDate()); return r; };
+	const RedString SixDigitDateString(void)   const { RedString r; r.Append(SixDigitDate());   return r; };
 
 private:
 
