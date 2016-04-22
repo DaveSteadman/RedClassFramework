@@ -30,11 +30,11 @@ namespace Core {
 
 void RedTime::SetTime(const RedString& timestr)
 {
-    int    h;
-    int    m;
+    unsigned    h;
+	unsigned    m;
     double s;
 
-    sscanf(timestr.TextPtr(), "%d:%d:%lf", &h, &m, &s);
+    sscanf(timestr.TextPtr(), "%u:%u:%lf", &h, &m, &s);
 
     hour    = h;
     minute  = m;
@@ -90,11 +90,11 @@ void RedTime::SetNow(void)
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-void RedTime::SetTimeFromElapsedSeconds(const RedNumber& DayElapsedSeconds)
+void RedTime::SetTimeFromElapsedSeconds(const double& DayElapsedSeconds)
 {
 	Init();
 
-	RedNumber DecrementingSeconds = DayElapsedSeconds;
+	double DecrementingSeconds = DayElapsedSeconds;
 
 	while (DecrementingSeconds > kTimeSecondsInHour)
     {
