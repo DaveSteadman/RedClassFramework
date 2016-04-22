@@ -44,6 +44,6 @@ bool operator!=(const RedChar& lhs, const RedChar& rhs)
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-}
-}
+} // Core
+} // Red
 
