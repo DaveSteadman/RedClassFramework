@@ -18,8 +18,6 @@
 
 #pragma once
 
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
 #include "RedCoreNamespace.h"
 
 #include "RedVSICollections.h"
@@ -28,6 +26,7 @@
 #include "RedVSIObject.h"
 #include "RedVSILangElement.h"
 #include "RedVSIRoutineCallInterface.h"
+#include "RedVSIContextThread2.h"
 
 using namespace Red::Core;
 
@@ -35,6 +34,15 @@ namespace Red {
 namespace VSI {
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+typedef enum TECmdExecutePhases
+{
+    eCmdExecPhaseStart,
+    eCmdExecPhaseExprQueued,
+    eCmdExecPhaseExprExecuting,
+    eCmdExecPhaseCmdLogic,
+    eCmdExecPhaseCmdNextSetup
+
+} TECmdExecutePhases;
 
 /// Class to represent the context required to execute a routine.
 /// Uses parent class RedVSIContextInterface, allowing code-fragments and simple command sequences to
@@ -45,7 +53,10 @@ public:
 
     // Construction Routines
     RedVSIContextRoutine(RedLog& initAnalysis);
-    RedVSIContextRoutine(RedLog& initAnalysis, RedVSICmdInterface* pFragmentCmd);
+    RedVSIContextRoutine(RedLog& initAnalysis, RedVSICmdInterface* pFirstCmd);
+
+    RedVSIContextRoutine(const RedString& inClassName, const RedString& inRoutineName, RedVSICmdInterface* pFirstCmd, RedLog& cAnalysis);
+
     ~RedVSIContextRoutine(void);
 
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -54,7 +65,6 @@ public:
     // Data accessors (RedVSIContextInterface)
     RedType*        CreateDataItem(const RedVSILangElement& cLocation, const RedVSILangElement& cType, const RedString& cName);
     bool            FindDataItem  (const RedString& cName, RedType*& pData);
-    void            SetReturnValue(const RedVariant& cData);
 
     // Inhertied Expressions (RedVSIContextInterface)
     void            QueueExpr(RedVSIParseTreeInterface* pExpr);
@@ -67,15 +77,14 @@ public:
 
     // Setup Calls
     void            SetupRoutineCall(const RedVSIRoutineCallInterface& cSignature);
-    bool            IsBlocked(const RedVSIContextInterface* pRoutineContext) { return false; };
+    bool            IsBlocked(const RedVSIContextInterface* pRoutineContext);
     void            QueueCommand(RedVSICmdInterface* pCmd)                   { cCmdStack.Push(pCmd); };
     void            ClearCommandQueue(void)                                  { cCmdStack.DelAll(); };
+    void            SetReturnValue(const RedVariant& cData);
 
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
     void            SetParamsList(RedRecord* pParamData);
-
-
 
     void                       SetRoutineCallData(const RedVSIRoutineCallInterface& d) { cRoutineCall = d; };
     RedVSIRoutineCallInterface RoutineCallData(void)                                   { return cRoutineCall; };
@@ -90,15 +99,25 @@ public:
     void            Execute(const unsigned CmdCount);
     bool            HasCmdToExecute(void);
 
+    void  SetRoutineName(const RedString& rname) { RoutineName = rname; };
+    void  SetClassName  (const RedString& cname) { ClassName   = cname; };
+
+    void                  SetThreadContextRecord(RedVSIContextThread2* pCntxtRecord)       { pContextRecord = pCntxtRecord; };
+    RedVSIContextThread2* ThreadContextRecord(void)                                  const { return pContextRecord; };
+
 private:
 
     // Execution
     RedVSIRoutineCallInterface cRoutineCall;
+    RedString RoutineName;
+    RedString ClassName;
 
     /// Curr command initialised to zero, command popped off the stack.
     /// expressions for that command evaluated, then the command is evaluated
     /// which leads to a change on the stack. Following exection, the curr is cleared.
     RedVSICmdInterface* pCurrCmd;
+
+    TECmdExecutePhases eCmdPhase;
 
     /// The stack of commands in the routine. Added to by commands stacking up their
     /// branched and subsequent commands. Reduced by the context executing them.
@@ -124,7 +143,10 @@ private:
 
     // The data to be returned to the calling routine
     RedVariant cReturnValue;
-    
+
+    /// Record holding thread data
+    RedVSIContextThread2* pContextRecord;
+
     /// Logging
     RedLog& cAnalysis;
 };

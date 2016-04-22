@@ -18,8 +18,6 @@
 
 #pragma once
 
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
 #include "RedCoreNamespace.h"
 
 #include "RedVSICollections.h"
@@ -53,7 +51,6 @@ public:
     // Data accessors (RedVSIContextInterface)
     RedType*        CreateDataItem(const RedVSILangElement& cLocation, const RedVSILangElement& cType, const RedString& cName);
     bool            FindDataItem  (const RedString& cName, RedType*& pData);
-    void            SetReturnValue(const RedVariant& cData);
 
     // Inhertied Expressions (RedVSIContextInterface)
     void            QueueExpr(RedVSIParseTreeInterface* pExpr);
@@ -69,11 +66,9 @@ public:
     bool            IsBlocked(const RedVSIContextInterface* pRoutineContext) { return false; };
     void            QueueCommand(RedVSICmdInterface* pCmd)                   { cCmdStack.Push(pCmd); };
     void            ClearCommandQueue(void)                                  { cCmdStack.DelAll(); };
-
+    void            SetReturnValue(const RedVariant& cData)                  { };
 
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-
 
     // Execution
     void            Execute(const unsigned CmdCount);

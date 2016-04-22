@@ -16,90 +16,70 @@
 // (http://opensource.org/licenses/MIT)
 // -------------------------------------------------------------------------------------------------
 
-#include "RedVSIParseTreeCall.h"
+#include "RedCoreNamespace.h"
+#include "RedVSIContextThread2.h"
+
+using namespace Red::Core;
 
 namespace Red {
 namespace VSI {
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-// Constructors
+// Heap Data
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-RedVSIParseTreeCall::~RedVSIParseTreeCall()
+RedType* RedVSIContextThread2::CreateHeapDataItem(const RedVSILangElement& cType, const RedString& cName)
 {
-/*    if (!pParamList->IsEmpty())
-    {
-        ParamListItType cListIt(pParamList);
+    RedType* pNewData = REDNULL;
 
-        cListIt.First();
-        while (!cListIt.IsDone())
-        {
-            SParam* pParamStruct = cListIt.CurrentItem();
+    // Basic Validation
+    if (!cType.IsType()) throw;
 
-            delete pParamStruct->pParam;
-            delete pParamStruct;
+    RedDataType DataType = RedVSILangElement::DataTypeForLangElemType(cType);
 
-            cListIt.Next();
-        }
-    }*/
+    pNewData = cHeap.CreateAndAdd(cName, DataType);
+
+    // return the pointer to the new object (or zero)
+    return pNewData;
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-void RedVSIParseTreeCall::SetDetails(const RedString& cInObjName, const RedString& cInClassName, const RedString& cInFuncName, RedVSIParseList*& pInParamList)
+bool RedVSIContextThread2::FindHeapDataItem(const RedString& cName, RedType*& pData)
 {
-    cObjectName = cInObjName;
-    cClassName  = cInClassName;
-    cFuncName   = cInFuncName;
-    pParamList  = pInParamList;
+    if (cHeap.Find(cName, pData))
+        return true;
+
+    return false;
+}
+
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+// Routine Stack
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+RedVSIContextRoutine* RedVSIContextThread2::TopRoutineOnStack(void)
+{
+    if (cRoutineStack.IsEmpty())
+        return REDNULL;
+    else
+        return cRoutineStack.NextPopItem();
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-void RedVSIParseTreeCall::GetDetails(RedString& cOutObjName, RedString& cOutClassName, RedString& cOutFuncName, RedVSIParseList*& pOutParamList)
+void RedVSIContextThread2::PushRoutineOnStack(RedVSIContextRoutine* newRtn)
 {
-    cOutObjName   = cObjectName;
-    cOutClassName = cClassName;
-    cOutFuncName  = cFuncName;
-    pOutParamList = pParamList;
+    cRoutineStack.Push(newRtn);
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-// Operation
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-// The call to calculate a routine call results in the creation of a new layer on the stack.
-// The execution then has to go back to the thread, to realise it needs to be a level higher
-// start processing the new routine's commands.
-
-void RedVSIParseTreeCall::CalcResult(RedVSIContextInterface* pContext)
+RedVSIContextRoutine* RedVSIContextThread2::PopRoutineOffStack(void)
 {
-    // The params results list
-    RedVSIRoutineCallInterface cCall;
-
-    // Assign the object anbd class information, even if its blank
-    cCall.SetupCall(cObjectName, cClassName, cFuncName);
-
-    // loop through the params list to calculate any we don't have a result for
-    RedVSIParseListIterator cParseIt(pParamList);
-    cParseIt.First();
-    while(!cParseIt.IsDone())
-    {
-        // get the current parameter
-        RedVSIParseTreeInterface* pCurrParam = cParseIt.CurrentItem();
-
-        // add the result of the expr to the param list
-        cCall.AddParam(pContext->ExprResult(pCurrParam));
-        
-        // move onto the next parameter
-        cParseIt.Next();
-    }
-
-    //pContext->SetupRoutineCall(cCall);
+    return cRoutineStack.Pop();
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 } // VSI
 } // Red
-

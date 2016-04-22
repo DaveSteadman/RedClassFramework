@@ -40,34 +40,27 @@ void RedTestTml::RunUnitTest(RedLog& log)
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
+/// Simple Tml Tests
 RedResult RedTestTml::TestOne(void)
 {
-//    RedString path  = "/tmp/Test.tml";
-//    RedString path2 = "/tmp/Test2.tml";
-//
-//    // Create small Tml Structure
-//    RedTmlNode x("name");
-//    RedTmlNode* y = x.CreateChildNode("childnode");
-//    y->CreateChildLeaf("xyzname", "xyzdata");
-//
-//    RedBufferOutput oB;
-//    RedTmlAction::SerialiseTinyML(oB, &x, eDenseContent);
-//    oB.WriteNewLine();
-//    RedIOHandler::OutputBufferToFile(path, oB);
-//
-//    RedBufferInput iB;
-//    RedIOHandler::InputBufferFromFile(path, iB);
-//    RedTmlElement* newX = RedTmlAction::ParseTinyML(iB);
-//
-//    if (!newX)
-//        return kResultFail;
-//
-//    RedBufferOutput oB2;
-//    RedTmlAction::SerialiseTinyML(oB2, newX, eLinedIndentedContent);
-//    oB2.WriteNewLine();
-//    RedIOHandler::OutputBufferToFile(path2, oB2);
-//
+    {
+        RedString TestInTml = "{{name} content}";
+        RedTmlElement* testElement = RedTmlAction::ParseTinyML(TestInTml);
+        if (testElement == REDNULL)
+        {
+            delete testElement;
+            return kResultFail;
+        }
+
+        if (testElement->IsLeaf() == false)
+        {
+            delete testElement;
+            return kResultFail;
+        }
+
+        delete testElement;
+    }
+
     return kResultSuccess;
 }
 

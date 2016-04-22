@@ -20,6 +20,7 @@
 #include "RedVSINamespace.h"
 #include "RedVSIContextRoutine.h"
 #include "RedVSIContextFragment.h"
+#include "RedVSIContextThread2.h"
 
 #include "RedVSICmdSerialiser.h"
 #include "RedVSILibTokenMap.h"
@@ -48,6 +49,8 @@ void RedTestVSI::RunUnitTest(RedLog& log)
     if (RedTestVSI::TestFragment_New().IsFail())      { log.AddErrorEvent("VSI Unit Test: TestFragment_New Failed");      return; }
     if (RedTestVSI::TestFragment_If().IsFail())       { log.AddErrorEvent("VSI Unit Test: TestFragment_If Failed");       return; }
     if (RedTestVSI::TestFragment_While().IsFail())    { log.AddErrorEvent("VSI Unit Test: TestFragment_While Failed");    return; }
+
+    if (RedTestVSI::TestRunProg_001().IsFail())       { log.AddErrorEvent("VSI Unit Test: TestRunProg_001 Failed");       return; }
 
     log.AddText("VSI Unit Test: Passed");
 }
@@ -520,14 +523,19 @@ RedResult RedTestVSI::TestRunProg_001(void)
                 {{name}TestExecute} \
                 {{code} \
                   new local number varX = 3.14159 \
-                  new heap  number varY \
+                  new local number varY \
                   varY = varX * 2 \
+                } \
               } \
             } "));
 
         // Create the TML tree from the code buffer
         RedTmlElement* tmlTreeElement = RedTmlAction::ParseTinyML(codeBuffer);
         RedTmlNode*    tmlTreeNode    = REDNULL;
+
+        if (tmlTreeElement == REDNULL)
+            return kResultFail;
+
         if (tmlTreeElement->IsNode())
             tmlTreeNode = dynamic_cast<RedTmlNode*>(tmlTreeElement);
         else
@@ -542,9 +550,18 @@ RedResult RedTestVSI::TestRunProg_001(void)
             return kResultFail;
 
         // Execute code
-        RedVSIRoutineCallInterface cSignature;
-        cSignature.SetupClassCall("TestRoutines", "TestExecute");
+        RedVSILibRoutineInterface* pRtn = vsiCodeLib.FindRoutine("TestRoutines", "TestExecute");
+        RedVSIContextRoutine cntxt("TestRoutines", "TestExecute", pRtn->FirstCommand(), log);
 
+        RedVSIContextThread2 tc;
+        cntxt.SetThreadContextRecord(&tc);
+        tc.PushRoutineOnStack(&cntxt);
+
+
+        cntxt.Execute(10);
+
+        if (log.IsError()) return kResultFail;
+        
 
     }
     return kResultSuccess;

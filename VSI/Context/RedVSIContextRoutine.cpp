@@ -18,7 +18,7 @@
 
 #include "RedVSIContextRoutine.h"
 //#include "CDataArray.h"
-
+#include "RedVSILibInterface.h"
 #include "RedVSIParseStackTraverser.h"
 
 using namespace Red::Core;
@@ -35,17 +35,35 @@ RedVSIContextRoutine::RedVSIContextRoutine(RedLog& initAnalysis) : cAnalysis(ini
     // pThisObj     = 0;
 
     cReturnValue.Init();
-    pCurrCmd     = 0;
+    pCurrCmd       = REDNULL;
+    pContextRecord = REDNULL;
+
+    eCmdPhase = eCmdExecPhaseStart;
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-RedVSIContextRoutine::RedVSIContextRoutine(RedLog& initAnalysis, RedVSICmdInterface* pSnippetCmd) : cAnalysis(initAnalysis)
+RedVSIContextRoutine::RedVSIContextRoutine(RedLog& initAnalysis, RedVSICmdInterface* pFirstCmd) : cAnalysis(initAnalysis)
 {
     // pThisObj     = 0;
 
     cReturnValue.Init();
-    pCurrCmd     = pSnippetCmd;
+    pCurrCmd       = pFirstCmd;
+    pContextRecord = REDNULL;
+
+    eCmdPhase = eCmdExecPhaseStart;
+}
+
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+RedVSIContextRoutine::RedVSIContextRoutine(const RedString& inClassName, const RedString& inRoutineName, RedVSICmdInterface* pFirstCmd, RedLog& inAnalysis) : cAnalysis(inAnalysis)
+{
+    ClassName      = inClassName;
+    RoutineName    = inRoutineName;
+    pCurrCmd       = pFirstCmd;
+    pContextRecord = REDNULL;
+
+    eCmdPhase = eCmdExecPhaseStart;
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -88,24 +106,18 @@ RedType* RedVSIContextRoutine::CreateDataItem(const RedVSILangElement& cLocation
     if (!cLocation.IsLocation()) throw;
     if (!cType.IsType()) throw;
 
+    RedDataType DataType = RedVSILangElement::DataTypeForLangElemType(cType);
+
     if (cLocation.IsLocationStack())
     {
-        if      (cType.IsTypeBool())   pNewData = new RedBoolean();
-        else if (cType.IsTypeChar())   pNewData = new RedChar();
-        else if (cType.IsTypeNumber()) pNewData = new RedNumber();
-        else if (cType.IsTypeString()) pNewData = new RedString();
-        else
-            throw;
-
-        cLocalVariables.Add(cName, pNewData);
+        pNewData = cLocalVariables.CreateAndAdd(cName, DataType);
     }
-    else if (cLocation.IsLocationAttribute())
+    else if (cLocation.IsLocationHeap())
     {
-        throw;
-    }
-    else
-    {
-        throw;
+        if (pContextRecord != REDNULL)
+        {
+            pNewData = pContextRecord->CreateHeapDataItem(cType, cName);
+        }
     }
 
     // return the pointer to the new object (or zero)
@@ -118,13 +130,15 @@ bool RedVSIContextRoutine::FindDataItem(const RedString& cName, RedType*& pData)
 {
     // first try and get the data from the local routine
     if (cLocalVariables.Find(cName, pData))
-        return 1;
+        return true;
 
-    // if not present, look in the This object
-    // if (pThisObj)
-    //     return pThisObj->Find(cName, pData);
+    if (pContextRecord != REDNULL)
+    {
+        if (pContextRecord->FindHeapDataItem(cName, pData))
+            return true;
+    }
 
-    return 0;
+    return false;
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -164,13 +178,55 @@ RedVariant RedVSIContextRoutine::ExprResult(RedVSIParseTreeInterface* pExpr)
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
+void RedVSIContextRoutine::ExecuteExprQueue(void)
+{
+    int iBlocked = IsBlocked(this);
+    while ( (!cExprStack.IsEmpty()) && (!iBlocked) )
+    {
+        pCurrExpr = cExprStack.Pop();
+        pCurrExpr->CalcResult(this);
+        iBlocked = IsBlocked(this);
+    }
+}
+
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
 void RedVSIContextRoutine::SetupRoutineCall(const RedVSIRoutineCallInterface& cSignature)
 {
+    if (pContextRecord != REDNULL)
+    {
+        const RedVSILibInterface* pLib = pContextRecord->CodeLib();
+        RedVSILibRoutineInterface* pRtn = pLib->FindRoutine(cSignature);
+    }
+    // If there is no context-thread
+    else
+    {
+    }
+}
+
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+/// Routine is blocked if it is not the top routine on the thread-record routine stack.
+
+bool RedVSIContextRoutine::IsBlocked(const RedVSIContextInterface* pRoutineContext)
+{
+    if (pContextRecord != REDNULL)
+    {
+        if (pContextRecord->TopRoutineOnStack() != this)
+            return false;
+    }
+
+    return false;
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 // Execution
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+// Stages of execution:
+// - queue expression
+// - execute expression off stack
+// - command logic
+// - queue next commands
 
 void RedVSIContextRoutine::Execute(const unsigned CmdCount)
 {
@@ -178,23 +234,34 @@ void RedVSIContextRoutine::Execute(const unsigned CmdCount)
 
     while ( (CommandCountdown > 0) && (pCurrCmd != REDNULL) )
     {
-        // Queue up all the expressions needed by the command
-        pCurrCmd->QueueExpr(this);
-        ExecuteExprQueue();
-
-        if (IsBlocked(this))
+        if (eCmdPhase == eCmdExecPhaseStart)
         {
-            cAnalysis.AddErrorEvent("Expression blocked on running code fragment.");
-            return;
+            // Queue up all the expressions needed by the command
+            pCurrCmd->QueueExpr(this);
+            eCmdPhase = eCmdExecPhaseExprExecuting;
         }
 
-        // Execute the command (it will queue the next command as part of its execution)
-        pCurrCmd->Execute(this);
+        if ( (eCmdPhase == eCmdExecPhaseExprExecuting) && (!IsBlocked(this)) )
+        {
+            ExecuteExprQueue();
+            
+            if (cExprStack.IsEmpty())
+                eCmdPhase = eCmdExecPhaseCmdLogic;
+        }
 
-        // An ending command-path can pop a Null. As long as we have further entries to Pop, look for a non-null
-        pCurrCmd = cCmdStack.Pop();
-        while ((pCurrCmd == REDNULL) && (!cCmdStack.IsEmpty()))
+        if (eCmdPhase == eCmdExecPhaseCmdLogic)
+        {
+            // Execute the command (it will queue the next command as part of its execution)
+            pCurrCmd->Execute(this);
+
+            // An ending command-path can pop a Null. As long as we have further entries to Pop, look for a non-null
             pCurrCmd = cCmdStack.Pop();
+            while ((pCurrCmd == REDNULL) && (!cCmdStack.IsEmpty()))
+                pCurrCmd = cCmdStack.Pop();
+
+            eCmdPhase = eCmdExecPhaseStart;
+        }
+
     }
 }
 
@@ -206,19 +273,6 @@ bool RedVSIContextRoutine::HasCmdToExecute(void)
     if (pCurrCmd) return true;
     
     return false;
-}
-
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-void RedVSIContextRoutine::ExecuteExprQueue(void)
-{
-    int iBlocked = IsBlocked(this);
-    while ( (!cExprStack.IsEmpty()) && (!iBlocked) )
-    {
-        pCurrExpr = cExprStack.Pop();
-        pCurrExpr->CalcResult(this);
-        iBlocked = IsBlocked(this);
-    }
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

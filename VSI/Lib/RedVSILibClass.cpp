@@ -30,7 +30,7 @@ void RedVSILibClass::AddRoutine(RedVSILibRoutine* pNewRoutine)
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-RedVSILibRoutine* RedVSILibClass::FindRoutine(RedVSIRoutineCallInterface& cSig)
+RedVSILibRoutine* RedVSILibClass::FindRoutine(const RedVSIRoutineCallInterface& cSig)
 {   
     // get the routine name we're looking for
     RedString cFindRoutineName = cSig.FuncName();

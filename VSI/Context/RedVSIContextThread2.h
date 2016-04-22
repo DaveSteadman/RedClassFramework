@@ -18,26 +18,53 @@
 
 #pragma once
 
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
 #include "RedCoreNamespace.h"
-#include "RedVSILibRoutineInterface.h"
-#include "RedVSIRoutineCallInterface.h"
+#include "RedVSILangElement.h"
+#include "RedVSILibInterface.h"
 
 using namespace Red::Core;
-using namespace Red::VSI;
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 namespace Red {
 namespace VSI {
 
-/// Library interface, providing read-only access to find classes and routines.
-class RedVSILibInterface
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+class RedVSIContextRoutine;
+typedef RedStackLIFO<RedVSIContextRoutine*> RedVSIRoutineContextStack;
+
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+class RedVSIContextThread2
 {
 public:
 
-    // Starting point for the search for a routine to satisfy a routine call
-    virtual RedVSILibRoutineInterface* FindRoutine(const RedVSIRoutineCallInterface& cSig) const =0;
-    virtual RedVSILibRoutineInterface* FindRoutine(const RedString& cClassName, const RedString& cRoutineName) const =0;
+	// Code Library
+    void                       SetCodeLib(RedVSILibInterface* pNewCodeLib) { pCodeLib = pNewCodeLib; };
+    const RedVSILibInterface*  CodeLib(void)                         const { return pCodeLib; };
+
+	// Heap Data
+    RedType*  CreateHeapDataItem(const RedVSILangElement& cType, const RedString& cName);
+    bool      FindHeapDataItem(const RedString& cName, RedType*& pData);
+
+	// Routine Stack
+	RedVSIContextRoutine* TopRoutineOnStack(void);
+	void                  PushRoutineOnStack(RedVSIContextRoutine* newRtn);
+	RedVSIContextRoutine* PopRoutineOffStack(void);
+
+private:
+
+    // Routine Context
+    RedVSIRoutineContextStack cRoutineStack;
+
+    // Code library
+    const RedVSILibInterface* pCodeLib;
+
+    // Data attributes
+    RedRecord cHeap;
 };
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

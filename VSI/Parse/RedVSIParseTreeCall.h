@@ -41,13 +41,15 @@ public:
     const RedVSILangElement Type(void) const { return RedVSILangElement::ParseFuncCall(); };
 
     void SetDetails(const RedString& cInObjectName,  const RedString& cInClassName, const RedString& cInFuncName,  RedVSIParseList*& pInParamList);
-    void GetDetails(      RedString& cOutObjectName,       RedString& cOutClassName,       RedString& cOutFuncName, RedVSIParseList*& pOutParamList);
+    void GetDetails(      RedString& cOutObjectName,       RedString& cOutClassName,      RedString& cOutFuncName, RedVSIParseList*& pOutParamList);
 
     // Operation
     void CalcResult(RedVSIContextInterface* pContext);
 
 private:
 
+    // The static representation of the function-call parse-tree node is that it has a name and links to
+    // parameters that are sub parse-tree nodes. On execution, the param list will become a list of variants.
     RedString          cObjectName;
     RedString          cClassName;
     RedString          cFuncName;

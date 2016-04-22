@@ -18,6 +18,10 @@
 
 #pragma once
 
+#include "RedDataType.h"
+
+using namespace Red::Core;
+
 namespace Red {
 namespace VSI {
 
@@ -134,6 +138,9 @@ public:
     const int IsLogicOp(void) const;
     const int IsCompareOp(void) const;
 
+    // Data Type conversions, between the Core type, and the enumerations here for types
+    static RedDataType       DataTypeForLangElemType(const RedVSILangElement& LangType);
+    static RedVSILangElement LangElemTypeForDataType(const RedDataType& CoreType);
 
     // Operators
     void operator =(const RedVSILangElement cNewVal) { eType=cNewVal.eType; };

@@ -45,36 +45,37 @@ RedVSIContextThread::RedVSIContextThread(void)
 
 RedType* RedVSIContextThread::CreateDataItem(const RedVSILangElement& cLocation, const RedVSILangElement& cType, const RedString& cName)
 {
-    // Returned value
     RedType* pNewData = REDNULL;
 
     // Basic Validation
     if (!cLocation.IsLocation()) throw;
     if (!cType.IsType()) throw;
 
-    // Determine if we just pass this action down to the routine
-    if (cLocation.IsLocationStack() || cLocation.IsLocationAttribute())
+    if (cLocation.IsLocationStack())
     {
         RedVSIContextRoutine* pCurrRoutine = cRoutineStack.NextPopItem();
-        if (pCurrRoutine != REDNULL)
+
+        if (pCurrRoutine)
         {
-            pCurrRoutine->CreateDataItem(cLocation, cType, cName);
+            pNewData = pCurrRoutine->CreateDataItem(cLocation, cType, cName);
         }
     }
-    if (cLocation.IsLocationHeap())
+    else if (cLocation.IsLocationHeap())
     {
-        // Convert from the higher-level VSILangElement type, to the core RedRecord type.
-        RedDataType t;
-        if (cType.IsTypeArray())  t.SetList();
-        if (cType.IsTypeBool())   t.SetBool();
-        if (cType.IsTypeChar())   t.SetList();
-        if (cType.IsTypeNumber()) t.SetNum();
-        if (cType.IsTypeString()) t.SetStr();
+        RedDataType DataType;
+        if (cType.IsTypeBool())   DataType = kDataTypeBool;
+        if (cType.IsTypeChar())   DataType = kDataTypeChar;
+        if (cType.IsTypeNumber()) DataType = kDataTypeNum;
+        if (cType.IsTypeString()) DataType = kDataTypeStr;
 
-        pNewData = cHeap.CreateAndAdd(cName, t);
+        pNewData = cHeap.CreateAndAdd(cName, DataType);
+    }
+    else
+    {
+        throw;
     }
 
-    // Return the pointer to the new object (or zero)
+    // return the pointer to the new object (or zero)
     return pNewData;
 }
 
@@ -83,21 +84,21 @@ RedType* RedVSIContextThread::CreateDataItem(const RedVSILangElement& cLocation,
 bool RedVSIContextThread::FindDataItem(const RedString& cName, RedType*& pData)
 {
     // Initialise output pointer
-    pData = 0;
+    pData = REDNULL;
 
     // If we have a routine and find it.
     RedVSIContextRoutine* pCurrRoutine = cRoutineStack.NextPopItem();
     if (pCurrRoutine)
     {
         if ( pCurrRoutine->FindDataItem(cName, pData) )
-            return 1;
+            return true;
     }
 
     // Look in the thread heap
     if (cHeap.Find(cName, pData))
-        return 1;
+        return true;
 
-    return 0;
+    return false;
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -199,7 +200,7 @@ void RedVSIContextThread::SetupRoutineCall(RedVSIRoutineCallInterface& cSignatur
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-bool RedVSIContextThread::IsBlocked(RedVSIContextInterface* pRoutineContext)
+bool RedVSIContextThread::IsBlocked(const RedVSIContextInterface* pRoutineContext)
 {
     // if the top of the routine stack matched the context, then that context
     // isn't blocked

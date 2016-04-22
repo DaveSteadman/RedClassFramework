@@ -46,11 +46,18 @@ public:
 
     RedResult CreateContextForFragment(const RedString& InputCodeFragment, RedVSIContextFragment** OutputContext, RedLog& cLog);
 
-    RedResult CreateRoutineContextForRoutine(const RedString& ClassName, const RedString& RoutineName, RedVSIContextRoutine** OutputContext, RedLog& cLog);
+//    RedResult CreateRoutineContextForRoutine(
+//        const RedString&       InputClassName,
+//        const RedString&       InputRoutineName,
+//        RedVSILibInterface*    pInputLib,
+//        RedVSIContextRoutine** OutputContext,
+//        RedLog&                cLog);
 
-    RedResult CreateThreadContextForRoutine(RedVSILibRoutineInterface& cInputRoutineCall, RedVSILibInterface* pInputLib, RedVSIContextThread** OutputContext, RedLog& cLog);
-
-//    RedVSILib lib;
+    RedResult CreateThreadContextForRoutine(
+        RedVSIRoutineCallInterface&  cInputRoutineCall,
+        RedVSILibInterface*          pInputLib,
+        RedVSIContextThread**        OutputContext,
+        RedLog&                      cLog);
 };
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

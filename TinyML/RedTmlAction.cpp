@@ -247,6 +247,15 @@ const RedResult RedTmlAction::CreateFileFromTml(const RedTmlElement* tmlElement,
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
+RedTmlElement* RedTmlAction::ParseTinyML(const RedString& inputStr)
+{
+    RedBufferInput inputBuf(inputStr);
+
+    return RedTmlAction::ParseTinyML(inputBuf);
+}
+
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
 RedTmlElement* RedTmlAction::ParseTinyML(RedBufferInput& inputBuf)
 {
     RedTmlElement* retTml = REDNULL;

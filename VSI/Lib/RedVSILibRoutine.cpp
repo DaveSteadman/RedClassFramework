@@ -30,8 +30,34 @@ RedVSILibRoutine::RedVSILibRoutine(void)
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-const int RedVSILibRoutine::IsMatching(RedVSIRoutineCallInterface& cSig)
+const bool RedVSILibRoutine::IsMatching(const RedVSIRoutineCallInterface& cSig)
 {
+    if (cName != cSig.FuncName())
+        return false;
+
+    RedVSIStringLangElementMap* LibParamList  = Params();
+    RedVSIVariantList           CallParamList = cSig.Params();
+
+    if (LibParamList->NumItems() != CallParamList.NumItems())
+        return false;
+
+
+    unsigned CallParamIndex = CallParamList.FirstIndex();
+
+    RedString         CurrLibParamName;
+    RedVSILangElement CurrLibDataType;
+    RedVariant        CurrCallParam;
+
+    for (unsigned LibParamIndex = LibParamList->FirstIndex(); LibParamIndex <= LibParamList->LastIndex(); LibParamIndex++)
+    {
+        LibParamList->FindIdByIndex(LibParamIndex,   CurrLibParamName);
+        LibParamList->FindDataByIndex(LibParamIndex, CurrLibDataType);
+
+        CallParamList.FindElementAtIndex(CallParamIndex, CurrCallParam);
+
+
+    }
+
 //    // Check the basics, that the routine name and the number of parameters match
 //    if (cName != cSig.FuncName()) return 0;
 //    if (cParamList.NumItems() != cSig.GetParams()->NumItems()) return 0;
@@ -69,7 +95,7 @@ const int RedVSILibRoutine::IsMatching(RedVSIRoutineCallInterface& cSig)
 //    
 //    // the initial check guarantees the lists were the same length, so its
 //    // okay to return success at this point.
-    return 1;
+    return true;
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

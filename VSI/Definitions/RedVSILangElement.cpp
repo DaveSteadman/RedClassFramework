@@ -162,6 +162,39 @@ bool operator!=(const RedVSILangElement& lhs, const RedVSILangElement& rhs)
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+// Data Type conversions, between the Core type, and the enumerations here for types
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+RedDataType RedVSILangElement::DataTypeForLangElemType(const RedVSILangElement& LangType)
+{
+    // Initialises to invalid
+    RedDataType retType;
+
+    if      (!LangType.IsType())       retType.SetInvalid();
+    else if ( LangType.IsTypeBool())   retType.SetBool();
+    else if ( LangType.IsTypeNumber()) retType.SetNum();
+    else if ( LangType.IsTypeString()) retType.SetStr();
+    else if ( LangType.IsTypeChar())   retType.SetChar();
+
+    return retType;
+}
+
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+RedVSILangElement RedVSILangElement::LangElemTypeForDataType(const RedDataType& CoreType)
+{
+    // Initialises to invalid
+    RedVSILangElement retType;
+
+    if      (CoreType.IsBool()) retType = kLangElementTypeBool;
+    else if (CoreType.IsChar()) retType = kLangElementTypeChar;
+    else if (CoreType.IsNum())  retType = kLangElementTypeNumber;
+    else if (CoreType.IsStr())  retType = kLangElementTypeString;
+
+    return retType;
+}
+
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 } // VSI
 } // Red

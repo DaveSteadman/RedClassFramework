@@ -54,7 +54,7 @@ public:
     bool                HasParentClass(void) const                               { return (!cParentClassName.IsEmpty()); };
 
     void                AddRoutine(RedVSILibRoutine* pNewRoutine);
-    RedVSILibRoutine*   FindRoutine(RedVSIRoutineCallInterface& cSig);
+    RedVSILibRoutine*   FindRoutine(const RedVSIRoutineCallInterface& cSig);
     RedVSILibRoutine*   FindRoutineByName(const RedString& cNewRoutineName);
 
     RoutineIteratorType GetRoutineIterator(void) { RoutineIteratorType cIt(&cRoutineList); return cIt; };

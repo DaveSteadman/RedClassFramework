@@ -18,8 +18,6 @@
 
 #pragma once
 
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
 #include "RedCoreNamespace.h"
 #include "RedVSICollections.h"
 
@@ -27,6 +25,8 @@ using namespace Red::Core;
 
 namespace Red {
 namespace VSI {
+
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 /// Class encapsulating a routine call. A container for a routine name and the parameters, as well
 /// as the initial class of object name.
@@ -42,22 +42,23 @@ public:
 
     void            SetupObjectCall(const RedString& cNewObjName,   const RedString& cNewFuncName) { cObjName   = cNewObjName;   cFuncName = cNewFuncName; };
     void            SetupClassCall (const RedString& cNewClassName, const RedString& cNewFuncName) { cClassName = cNewClassName; cFuncName = cNewFuncName; };
-    void            SetClassName   (const RedString& cNewClassName)                                { cClassName = cNewClassName;  };
-    void            SetObjectName  (const RedString& cNewObjectName)                               { cObjName   = cNewObjectName; };
-    void            SetFuncName    (const RedString& cNewFuncName)                                 { cFuncName  = cNewFuncName;   };
 
-    // Query
-    const RedString    ClassName(void)   const { return cClassName; };
-    const RedString    ObjectName(void)  const { return cObjName;   };
-    const RedString    FuncName(void)    const { return cFuncName;  };
+    void            SetupCall(const RedString& cNewClassName, const RedString& cNewObjName, const RedString& cNewFuncName) { cClassName = cNewClassName; cObjName = cNewObjName; cFuncName = cNewFuncName; };
 
-    // Params - variant type as they will be mainly derived from expression results
-    void                        AppendParam(const RedVariant& cNewParam) { cParams.AddLast(cNewParam); };
-    const RedVSIVariantList*    GetParams(void) const                    { return &cParams; };
+
+    void              SetClassName   (const RedString& cNewClassName)        { cClassName = cNewClassName;  };
+    void              SetObjectName  (const RedString& cNewObjectName)       { cObjName   = cNewObjectName; };
+    void              SetFuncName    (const RedString& cNewFuncName)         { cFuncName  = cNewFuncName;   };
+    const RedString   ClassName      (void)                            const { return cClassName; };
+    const RedString   ObjectName     (void)                            const { return cObjName;   };
+    const RedString   FuncName       (void)                            const { return cFuncName;  };
+
+    const RedVSIVariantList Params(void)                         const { return cParams; };
+    void                    AddParam(const RedVariant& newParam)       { cParams.AddLast(newParam); };
 
     void operator =(const RedVSIRoutineCallInterface& cSig);
 
-private:
+protected:
 
     RedString         cClassName;
     RedString         cObjName;
@@ -69,6 +70,4 @@ private:
 
 } // VSI
 } // Red
-
-
 

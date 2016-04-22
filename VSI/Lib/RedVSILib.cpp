@@ -50,7 +50,7 @@ void RedVSILib::DelClass(const RedString& cClassName)
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-RedVSILibClass* RedVSILib::FindClass(const RedString& cClassName)
+RedVSILibClass* RedVSILib::FindClass(const RedString& cClassName) const
 {
     IteratorType cIt(&cClassList);
 
@@ -70,7 +70,7 @@ RedVSILibClass* RedVSILib::FindClass(const RedString& cClassName)
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-RedVSILibRoutineInterface* RedVSILib::FindRoutine(RedVSIRoutineCallInterface& cSig)
+RedVSILibRoutineInterface* RedVSILib::FindRoutine(const RedVSIRoutineCallInterface& cSig) const
 {
     RedVSILibClass*            pClass   = FindClass(cSig.ClassName());
     RedVSILibRoutineInterface* pRoutine = REDNULL;
@@ -102,7 +102,7 @@ RedVSILibRoutineInterface* RedVSILib::FindRoutine(RedVSIRoutineCallInterface& cS
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-RedVSILibRoutineInterface* RedVSILib::FindRoutine(const RedString& cClassName, const RedString& cRoutineName)
+RedVSILibRoutineInterface* RedVSILib::FindRoutine(const RedString& cClassName, const RedString& cRoutineName) const
 {
     RedVSILibClass*            pClass   = FindClass(cClassName);
     RedVSILibRoutineInterface* pRoutine = REDNULL;

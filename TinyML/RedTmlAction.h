@@ -61,6 +61,7 @@ public:
     // IO
     static const RedResult CreateTmlFromFile(const RedString& filepath, RedTmlElement** newTmlElement);
     static const RedResult CreateFileFromTml(const RedTmlElement* tmlElement, const RedString& filepath, const TESerialiseType writeStyle);
+    static RedTmlElement*  ParseTinyML(const RedString& inputStr);
     static RedTmlElement*  ParseTinyML(RedBufferInput& inputBuf);
     static void            SerialiseTinyML(RedBufferOutput& outputBuf, const RedTmlElement* topTmlNode, const TESerialiseType eMode);
 

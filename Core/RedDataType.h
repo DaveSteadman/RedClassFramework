@@ -31,8 +31,9 @@ class RedDataType
 public:
 
     RedDataType(void)        { Init(); };
-
     void Init(void)          { eState=eDataTypeInvalid; };
+
+    void SetInvalid(void)    { eState=eDataTypeInvalid; };
     void SetBool(void)       { eState=eDataTypeBool; };
     void SetChar(void)       { eState=eDataTypeChar; };
     void SetList(void)       { eState=eDataTypeList; };

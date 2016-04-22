@@ -18,8 +18,6 @@
 
 #pragma once
 
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
 #include "RedCoreNamespace.h"
 
 #include "RedVSILibClass.h"
@@ -34,7 +32,7 @@ namespace VSI {
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 /// A VSI Code Library consists of a list of classes.
-class RedVSILib
+class RedVSILib : public RedVSILibInterface
 {
 public:
     typedef RedDoubleLinkedList<RedVSILibClass*>          ListType;
@@ -43,9 +41,9 @@ public:
     void       AddClass(RedVSILibClass* pNewClass);
     void       DelClass(const RedString& cClassName);
 
-    RedVSILibClass*            FindClass(const RedString& cClassName);
-    RedVSILibRoutineInterface* FindRoutine(RedVSIRoutineCallInterface& cSig);
-    RedVSILibRoutineInterface* FindRoutine(const RedString& cClassName, const RedString& cRoutineName);
+    RedVSILibClass*            FindClass(const RedString& cClassName) const;
+    RedVSILibRoutineInterface* FindRoutine(const RedVSIRoutineCallInterface& cSig) const;
+    RedVSILibRoutineInterface* FindRoutine(const RedString& cClassName, const RedString& cRoutineName) const;
 
     /// Returns number of classes in library
     const int NumClasses(void) const { return cClassList.NumItems(); };

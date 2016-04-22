@@ -18,12 +18,9 @@
 
 #pragma once
 
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
 #include "RedCoreNamespace.h"
 
 #include "RedVSICmdInterface.h"
-
 #include "RedVSILangElement.h"
 #include "RedVSIContextInterface.h"
 #include "RedVSIContextRoutine.h"
@@ -32,8 +29,6 @@
 #include "RedVSIRoutineCallInterface.h"
 
 using namespace Red::Core;
-
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 namespace Red {
 namespace VSI {
@@ -55,7 +50,6 @@ public:
     // Data accessors (RedVSIContextInterface)
     RedType*        CreateDataItem(const RedVSILangElement& cLocation, const RedVSILangElement& cType, const RedString& cName);
     bool            FindDataItem  (const RedString& cName, RedType*& pData);
-    void            SetReturnValue(const RedVariant& cData);
 
     // Inhertied Expressions (RedVSIContextInterface)
     void            QueueExpr(RedVSIParseTreeInterface* pExpr);
@@ -68,9 +62,10 @@ public:
 
     // Setup Calls
     void            SetupRoutineCall(RedVSIRoutineCallInterface& cSignature);
-    bool            IsBlocked(RedVSIContextInterface* pRoutineContext);
+    bool            IsBlocked(const RedVSIContextInterface* pRoutineContext);
     void            QueueCommand(RedVSICmdInterface* pCmd);
     void            ClearCommandQueue(void);
+    void            SetReturnValue(const RedVariant& cData);
 
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 

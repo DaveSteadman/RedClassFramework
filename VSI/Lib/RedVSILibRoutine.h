@@ -42,7 +42,7 @@ public:
     void          AddParam(const RedString& cParamName, RedVSILangElement cType) { cParamList.Add(cParamName, cType); };
     void          SetCode (RedVSICmdInterface* pNewCode)                         { pCode = pNewCode; };
 
-    const int     IsMatching(RedVSIRoutineCallInterface& cSig);
+    const bool    IsMatching(const RedVSIRoutineCallInterface& cSig);
 };
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

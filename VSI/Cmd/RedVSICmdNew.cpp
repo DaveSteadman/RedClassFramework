@@ -71,13 +71,13 @@ void RedVSICmdNew::Execute(RedVSIContextInterface* pContext)
 {
     RedType* pData = 0;
 
+    // create the new data item
+    pData = pContext->CreateDataItem(cLoc, cType, cName);
+
     // if we have an initialisation expression for the data item
     if ( pInitExpr )
     {
         RedVariant cInitExprResult = pContext->ExprResult(pInitExpr);
-
-        // create the new data item
-        pData = pContext->CreateDataItem(cLoc, cType, cName);
 
         // if the type of the new variable and the expression don't match, raise an error
         if (!cInitExprResult.ExportTo(pData))
@@ -85,12 +85,6 @@ void RedVSICmdNew::Execute(RedVSIContextInterface* pContext)
             //RedVSIErrorCodes::Log(pContext->GetAnalysis(), RedVSIErrorCodes::eNew_ResultTypeMismatch);
             return;
         }
-    }
-    // else, we have no initialisation expression to deal with, so just create the data item and move on.
-    else
-    {
-        // create the new data item
-        pContext->CreateDataItem(cLoc, cType, cName);
     }
     
     // queue the next command, we are done with this one

@@ -53,26 +53,34 @@ RedResult RedVSIContextFactory::CreateContextForFragment(const RedString& InputC
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-RedResult RedVSIContextFactory::CreateRoutineContextForRoutine(const RedString& ClassName, const RedString& RoutineName, RedVSIContextRoutine** OutputContext, RedLog& cLog)
+//RedResult RedVSIContextFactory::CreateRoutineContextForRoutine(const RedString& ClassName, const RedString& RoutineName, RedVSIContextRoutine** OutputContext, RedLog& cLog)
+//{
+//    // Find the routine to execute
+//   // RedVSILibRoutineInterface* LibRoutine = pInputLib->FindRoutine(cInputRoutineCall);
+//
+//
+////    RedVSILibRoutineInterface* LibRoutine = lib.FindRoutine(ClassName, RoutineName);
+////
+////    RedLog            cRedLog;
+////
+////    *OutputContext = new RedVSIContextRoutine(cRedLog, LibRoutine->FirstCommand());
+////
+//    return kResultSuccess;
+//}
+
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+RedResult RedVSIContextFactory::CreateThreadContextForRoutine(RedVSIRoutineCallInterface& cInputRoutineCall, RedVSILibInterface* pInputLib, RedVSIContextThread** OutputContext, RedLog& cLog)
 {
-//    RedVSILibRoutineInterface* LibRoutine = lib.FindRoutine(ClassName, RoutineName);
-//
-//    RedLog            cRedLog;
-//
-//    *OutputContext = new RedVSIContextRoutine(cRedLog, LibRoutine->FirstCommand());
-//
+    // Find the routine to execute
+    //RedVSILibRoutineInterface* LibRoutine = pInputLib->FindRoutine(cInputRoutineCall);
+
+    *OutputContext = new RedVSIContextThread(pInputLib, cInputRoutineCall);
+
     return kResultSuccess;
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-RedResult RedVSIContextFactory::CreateThreadContextForRoutine(RedVSILibRoutineInterface& cInputRoutineCall, RedVSILibInterface* pInputLib, RedVSIContextThread** OutputContext, RedLog& cLog)
-{
-    // Find the routine to execute
-//    pInputLib->FindRoutine(pInputLib);
-
-    return kResultSuccess;
-}
 
 //RedVSIContextRoutine* RedVSIContextFactory::CreateRoutineContext(RedVSILibRoutineInterface& cRoutineCall, RedVSILibRoutineInterface* pRoutineLib, CDataObject* pThisObj)
 //{
