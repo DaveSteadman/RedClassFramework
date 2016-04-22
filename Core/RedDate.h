@@ -47,14 +47,14 @@ public:
     const unsigned Date(void) const           { return date; };
 
 	// Involved Accessors
-    const unsigned TwoDigitYear(void) const   { return (year % 100); }
+    const unsigned TwoDigitYear(void) const   { return (year % 100); };
 	const unsigned EightDigitDate(void) const;
 	const unsigned SixDigitDate(void) const;
 
 	// String output
 	const RedString DateString(void) const;
-	const RedString EightDigitDateString(void) const { RedString r; r.Append(EightDigitDate()); return r; };
-	const RedString SixDigitDateString(void)   const { RedString r; r.Append(SixDigitDate());   return r; };
+	const RedString EightDigitDateString(void) const;
+	const RedString SixDigitDateString(void) const;
 
 private:
 

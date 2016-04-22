@@ -19,6 +19,7 @@
 #pragma once
 
 #include "RedCoreNamespace.h"
+#include "RedNumberRange.h"
 
 using namespace Red::Core;
 

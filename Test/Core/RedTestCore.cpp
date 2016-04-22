@@ -145,7 +145,7 @@ RedResult RedTestCore::TestNumber(void)
 
 RedResult RedTestCore::TestNumberRange(void)
 {
-    RedNumberRange DegreesLongitude(-180.0, 180.0);    
+    RedNumberRange DegreesLongitude(-180.0, 180.0);
     RedNumber x = 300;
 
     if (DegreesLongitude.IsInRange(x)) return kResultFail;
@@ -511,11 +511,25 @@ RedResult RedTestCore::TestSmartPtr(void)
 
 RedResult RedTestCore::TestDate(void)
 {
-    RedDate d;
-    d.Now();
+    RedDate d(2021,10,10);
 
-    int x = d.EightDigitInt();
-    if (x < 20130000) return kResultFail;
+    unsigned x = d.EightDigitDate();
+    if (x != 20211010) return kResultFail;
+
+    unsigned x2 = d.SixDigitDate();
+    if (x2 != 211010) return kResultFail;
+
+    unsigned x3 = d.TwoDigitYear();
+    if (x3 != 21) return kResultFail;
+
+    RedString xstr = d.DateString();
+    if (xstr != "2021/10/10") return kResultFail;
+
+    RedString xstr2 = d.SixDigitDateString();
+    if (xstr2 != "211010") return kResultFail;
+
+    RedString xstr3 = d.EightDigitDateString();
+    if (xstr3 != "20211010") return kResultFail;
 
     return kResultSuccess;
 }

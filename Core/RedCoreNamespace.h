@@ -34,12 +34,12 @@
 #include "RedChar.h"
 #include "RedNumber.h"
 #include "RedString.h"
-#include "RedString.h"
 
 // Wrappers
 #include "RedRecord.h"
 #include "RedVariant.h"
 #include "RedSmartPtr.h"
+#include "RedNumberRange.h"
 
 // Collections
 #include "RedDoubleLinkedList.h"

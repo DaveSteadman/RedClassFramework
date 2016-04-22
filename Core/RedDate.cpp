@@ -54,11 +54,49 @@ const RedString RedDate::DateString(void) const
 {
     RedString retstr;
 
-    retstr.Append(year);
+    RedNumber y(year);
+    RedNumber m(month);
+    RedNumber d(date);
+
+    retstr.Append(y.DecimalString());
     retstr.Append("/");
-    retstr.Append(month);
+    retstr.Append(m.DecimalString());
     retstr.Append("/");
-    retstr.Append(date);
+    retstr.Append(d.DecimalString());
+
+    return retstr;
+}
+
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+const RedString RedDate::EightDigitDateString(void) const
+{
+    RedString retstr;
+
+    RedNumber y(year);
+    RedNumber m(month);
+    RedNumber d(date);
+
+    retstr.Append(y.DecimalString());
+    retstr.Append(m.DecimalString());
+    retstr.Append(d.DecimalString());
+
+    return retstr;
+}
+
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+const RedString RedDate::SixDigitDateString(void) const
+{
+    RedString retstr;
+
+    RedNumber y(TwoDigitYear());
+    RedNumber m(month);
+    RedNumber d(date);
+
+    retstr.Append(y.DecimalString());
+    retstr.Append(m.DecimalString());
+    retstr.Append(d.DecimalString());
 
     return retstr;
 }
