@@ -30,7 +30,7 @@ namespace Core {
 
 void RedDate::SetDate(const RedString& datestr)
 {
-    sscanf(datestr.TextPtr(), "%d/%d/%d", &year, &month, &date);
+    sscanf(datestr.TextPtr(), "%u/%u/%u", &year, &month, &date);
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -77,7 +77,7 @@ const unsigned RedDate::EightDigitInt(void) const
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-#pragma mark - Comparison Operators
+// Comparison Operators
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 bool operator==(const RedDate& lhs, const RedDate& rhs)
