@@ -98,7 +98,7 @@ bool operator!=(const RedDate& lhs, const RedDate& rhs)
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-} // Time
+} // Core
 } // Red
 
 
