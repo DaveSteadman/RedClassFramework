@@ -52,7 +52,7 @@ public:
     RedType*    CreateObjectOfType(const RedDataType& NewAttribType);
 
     // Locate
-    int         Find(const RedString& cAttribName, RedType*& pData)       { return pAttribList->Find(cAttribName, pData); };
+    bool        Find(const RedString& cAttribName, RedType*& pData)       { return pAttribList->Find(cAttribName, pData); };
 
     // Remove
     void        Del(const RedString& cNewAttribName)                      { pAttribList->Del(cNewAttribName); };

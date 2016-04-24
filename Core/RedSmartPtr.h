@@ -32,7 +32,7 @@ public:
     void           IncRef(void)          { count++; };
     void           DecRef(void)          { count--; };
     const unsigned Count(void) const     { return count; };
-    const int      IsRefZero(void) const { if (count==0) return 1; return 0; };
+    const bool     IsRefZero(void) const { if (count==0) return true; return false; };
 private:
     int count;
 };

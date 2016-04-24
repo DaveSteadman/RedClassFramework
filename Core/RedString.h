@@ -77,7 +77,7 @@ public:
     void           Insert(const unsigned Index, const RedString& Str) { Insert(Index, Str.TextPtr()); };
 
     // Derived Routines
-    const int      Length(void)                         const { return contentsize; };
+    const unsigned Length(void)                         const { return contentsize; };
     const bool     IsEmpty(void)                        const { return (contentsize==0); };
     const RedChar  CharObjAtIndex(const unsigned Index) const { return RedChar( CharAtIndex(Index) ); };
     const char     FirstChar(void)                      const { return CharAtIndex(FirstContentIndex()); };
