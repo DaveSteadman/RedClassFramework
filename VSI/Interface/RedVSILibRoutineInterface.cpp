@@ -31,11 +31,12 @@ void RedVSILibRoutineInterface::Init(void)
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-int RedVSILibRoutineInterface::IsValid(void)
+bool RedVSILibRoutineInterface::IsValid(void) const
 {
-    if (cName.IsEmpty()) return 0;
+    if (cName.IsEmpty())
+        return false;
     
-    return 1;
+    return true;
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

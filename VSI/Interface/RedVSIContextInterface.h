@@ -61,7 +61,7 @@ public:
     virtual void          QueueExpr(RedVSIParseTreeInterface* pExpr) =0;
     virtual void          SetExprResult(RedVSIParseTreeInterface* pExpr, const RedVariant& result) =0;
     virtual RedVariant    ExprResult(RedVSIParseTreeInterface* pExpr) =0;
-    virtual void          ExecuteExprQueue(void) =0;
+//    virtual void          ExecuteExprQueue(void) =0;
 
     // Commands
     virtual void          QueueCommand(RedVSICmdInterface* pCmd) =0;

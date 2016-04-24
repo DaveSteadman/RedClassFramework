@@ -50,17 +50,17 @@ public:
     RedVSIToken GetToken(void);
     RedVSIToken GetToken(int iTokenIndex);
     void        SetTokenIndex(int iTokenIndex) { iCurrListIndex = iTokenIndex; };
-    int         GetTokenIndex(void)        { return iCurrListIndex; };
+    unsigned    GetTokenIndex(void)        { return iCurrListIndex; };
     void        SetTokenIndexBackOne(void) { if (iCurrListIndex>0) iCurrListIndex--; };
 
-    int         CurrIndexAtLastToken(void) { return (iCurrListIndex == cTokenList.NumItems()); };
+    bool        CurrIndexAtLastToken(void) { return (iCurrListIndex == cTokenList.NumItems()); };
 
     RedString   DebugDump(void);
 
 private:
 
     ListType      cTokenList;
-    int           iCurrListIndex;
+    unsigned      iCurrListIndex;
 };
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

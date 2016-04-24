@@ -46,7 +46,7 @@ public:
     RedVSILibRoutineInterface* FindRoutine(const RedString& cClassName, const RedString& cRoutineName) const;
 
     /// Returns number of classes in library
-    const int NumClasses(void) const { return cClassList.NumItems(); };
+    const unsigned NumClasses(void) const { return cClassList.NumItems(); };
 
 private:
 

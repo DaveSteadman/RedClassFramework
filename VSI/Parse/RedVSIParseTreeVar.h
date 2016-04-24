@@ -18,8 +18,6 @@
 
 #pragma once
 
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
 #include "RedCoreNamespace.h"
 
 #include "RedVSIParseTreeInterface.h"
@@ -39,7 +37,6 @@ public:
     // construction;
     RedVSIParseTreeVar(void) { cVarName=""; };
     RedVSIParseTreeVar(RedString cNewVarName) { cVarName=cNewVarName; };
-    //RedVSIParseTreeVar(RedString cNewVarName, RedVSIParseTreeInterface* pNewVarIndexExpr) { SetDetails(cNewVarName, pNewVarIndexExpr); };
     ~RedVSIParseTreeVar();
 
     // inherited

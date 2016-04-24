@@ -66,7 +66,7 @@ private:
     } TListElement;
 
     void MakeListElement(TListElement** pNewElem);
-    const int FindListElement(unsigned iElemIndex, TListElement** pFoundElem) const;
+    const bool FindListElement(unsigned iElemIndex, TListElement** pFoundElem) const;
 
     TListElement* pListHead;
     TListElement* pListTail;
@@ -436,7 +436,7 @@ void RedDoubleLinkedList<Element>::MakeListElement(TListElement** pNewElem)
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 template <class Element>
-const int RedDoubleLinkedList<Element>::FindListElement(
+const bool RedDoubleLinkedList<Element>::FindListElement(
     unsigned       iElemIndex,
     TListElement** pFoundElem) const 
 {
@@ -445,13 +445,13 @@ const int RedDoubleLinkedList<Element>::FindListElement(
     TListElement* pCurrElem = 0;
 
     // fail if we have nothing (or not enough) to search.
-    if (iNumItems == 0) return 0;
-    if (iElemIndex > LastIndex()) return 0;
-    if (iElemIndex < FirstIndex()) return 0;
+    if (iNumItems == 0)            return false;
+    if (iElemIndex > LastIndex())  return false;
+    if (iElemIndex < FirstIndex()) return false;
 
     // Don't search if we want the head or tail.
-    if (iElemIndex == FirstIndex()) { *pFoundElem = pListHead; return 1; }
-    if (iElemIndex == LastIndex())  { *pFoundElem = pListTail; return 1; }
+    if (iElemIndex == FirstIndex()) { *pFoundElem = pListHead; return true; }
+    if (iElemIndex == LastIndex())  { *pFoundElem = pListTail; return true; }
 
     // set reference to element zero
     pCurrElem = pListHead;
@@ -461,7 +461,7 @@ const int RedDoubleLinkedList<Element>::FindListElement(
     {
         // if we're out of list, fail
         if (pCurrElem->pNext == 0)
-            return 0;
+            return false;
 
         // else move onto next element
         pCurrElem = pCurrElem->pNext;
@@ -469,7 +469,7 @@ const int RedDoubleLinkedList<Element>::FindListElement(
 
     // Moved along enough, so we return the current element and success.
     *pFoundElem = pCurrElem;
-    return 1;
+    return true;
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

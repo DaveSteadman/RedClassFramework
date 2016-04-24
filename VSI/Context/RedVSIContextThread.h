@@ -38,11 +38,11 @@ typedef RedStackLIFO<RedVSIContextRoutine*> RedVSIRoutineContextStack;
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-class RedVSIContextThread2
+class RedVSIContextThread
 {
 public:
 
-    RedVSIContextThread2(void) { pCodeLib = REDNULL; };
+    RedVSIContextThread(void) { pCodeLib = REDNULL; };
 
 	// Code Library
     void                       SetCodeLib(RedVSILibInterface* pNewCodeLib) { pCodeLib = pNewCodeLib; };

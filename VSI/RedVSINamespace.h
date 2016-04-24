@@ -30,7 +30,7 @@
 // Context
 #include "RedVSIContextFactory.h"
 #include "RedVSIContextRoutine.h"
-#include "RedVSIContextThread2.h"
+#include "RedVSIContextThread.h"
 //#include "RedVSIContextStackTraverser.h"
 
 // Collections

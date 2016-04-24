@@ -18,8 +18,6 @@
 
 #pragma once
 
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
 #include "RedVSIParseTreeInterface.h"
 #include "RedVSITokenElementMap.h"
 #include "RedVSITokenBuffer.h"

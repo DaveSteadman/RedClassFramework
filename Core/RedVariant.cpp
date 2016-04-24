@@ -172,12 +172,12 @@ RedType* RedVariant::Value(void)
     if (pData)
         return pData;
     
-    return 0;
+    return REDNULL;
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-int RedVariant::ExportTo(RedType* pExportToData)
+bool RedVariant::ExportTo(RedType* pExportToData)
 {
     // first check both ethe data items are not null pointers
     if ((pData) && (pExportToData)) 
@@ -204,10 +204,10 @@ int RedVariant::ExportTo(RedType* pExportToData)
                 *pExportToStr = *pDataStr;
             }        
 
-            return 1;
+            return true;
         }
     }
-    return 0;
+    return false;
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -336,60 +336,60 @@ RedVariant RedVariant::operator/(const RedVariant& cVarData)
 
 bool operator==(const RedVariant& lhs, const RedVariant& rhs)
 {
-    if (!lhs.IsValid() &&  rhs.IsValid()) return 0;
-    if ( lhs.IsValid() && !rhs.IsValid()) return 0;
-    if (!lhs.IsValid() && !rhs.IsValid()) return 1;
+    if (!lhs.IsValid() &&  rhs.IsValid()) return false;
+    if ( lhs.IsValid() && !rhs.IsValid()) return false;
+    if (!lhs.IsValid() && !rhs.IsValid()) return true;
 
     if (lhs.IsValid() && rhs.IsValid())
     {
         // check the types are the same
         if (lhs.Type() != rhs.Type())
-            return 0;
+            return false;
 
         // Number == Number
         if ( (lhs.Type().IsNum()) && (rhs.Type().IsNum()) )
         {
             if (lhs.NumberValue() == rhs.NumberValue())
-                return 1;
+                return true;
         }
 
         // String + String
         if ( (lhs.Type().IsStr()) && (rhs.Type().IsStr()) )
         {
             if (lhs.StringValue() == rhs.StringValue())
-                return 1;
+                return true;
         }
     }
 
-    return 0;
+    return false;
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 bool operator!=(const RedVariant& lhs, const RedVariant& rhs)
 {
-    if (!lhs.IsValid() &&  rhs.IsValid()) return 1;
-    if ( lhs.IsValid() && !rhs.IsValid()) return 1;
-    if (!lhs.IsValid() && !rhs.IsValid()) return 0;
+    if (!lhs.IsValid() &&  rhs.IsValid()) return true;
+    if ( lhs.IsValid() && !rhs.IsValid()) return true;
+    if (!lhs.IsValid() && !rhs.IsValid()) return false;
 
     if (lhs.IsValid() && rhs.IsValid())
     {
         // check the types are the same
         if (lhs.Type() != rhs.Type())
-            return 1;
+            return true;
 
         // Number == Number
         if ( (lhs.Type().IsNum()) && (rhs.Type().IsNum()) )
         {
             if (lhs.NumberValue() != rhs.NumberValue())
-                return 1;
+                return true;
         }
 
         // String + String
         if ( (lhs.Type().IsStr()) && (rhs.Type().IsStr()) )
         {
             if (lhs.StringValue() != rhs.StringValue())
-                return 1;
+                return true;
         }
     }
 

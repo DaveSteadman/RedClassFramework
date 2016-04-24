@@ -69,7 +69,7 @@ public:
 
     RedType*            Value(void);
 
-    int                 ExportTo(RedType* pExportToData);
+    bool                ExportTo(RedType* pExportToData);
     
     const RedNumber     NumberValue(void) const;
     const RedString     StringValue(void) const;

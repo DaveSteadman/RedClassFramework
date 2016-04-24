@@ -35,19 +35,19 @@ void RedVSIToken::Init(void)
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-int RedVSIToken::IsEOF(void)
+bool RedVSIToken::IsEOF(void)
 {
     if (!cType.IsNonPrintable())
-        return 0;
+        return false;
  
     RedString cEOFStr;
     
     cEOFStr.Append('\0');
-        
-    if (cText == cEOFStr)
-        return 1;
 
-    return 0;
+    if (cText == cEOFStr)
+        return true;
+
+    return false;
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

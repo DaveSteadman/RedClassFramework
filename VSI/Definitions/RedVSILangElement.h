@@ -37,12 +37,12 @@ public:
     void Init(void)         { eType = eDefaultInvalid; };
 
     // Command types
-    const int                      IsCommand(void) const;
-    const int                      IsCommandNew(void) const                        { return eType == eCommandNew; };
-    const int                      IsCommandLet(void) const                        { return eType == eCommandLet; };
-    const int                      IsCommandIf(void) const                         { return eType == eCommandIf; };
-    const int                      IsCommandWhile(void) const                      { return eType == eCommandWhile; };
-    const int                      IsCommandReturn(void) const                     { return eType == eCommandReturn; };
+    const bool                     IsCommand(void) const;
+    const bool                     IsCommandNew(void) const                        { return eType == eCommandNew; };
+    const bool                     IsCommandLet(void) const                        { return eType == eCommandLet; };
+    const bool                     IsCommandIf(void) const                         { return eType == eCommandIf; };
+    const bool                     IsCommandWhile(void) const                      { return eType == eCommandWhile; };
+    const bool                     IsCommandReturn(void) const                     { return eType == eCommandReturn; };
     static const RedVSILangElement CommandNew(void)                                { return RedVSILangElement(eCommandNew); };
     static const RedVSILangElement CommandLet(void)                                { return RedVSILangElement(eCommandLet); };
     static const RedVSILangElement CommandIf(void)                                 { return RedVSILangElement(eCommandIf); };
@@ -50,12 +50,12 @@ public:
     static const RedVSILangElement CommandReturn(void)                             { return RedVSILangElement(eCommandReturn); };
 
     // Parse node types
-    const int                      IsParse(void) const;
-    const int                      IsParseFuncCall(void) const                     { return eType == eParseFuncCall; };
-    const int                      IsParseValue(void) const                        { return eType == eParseValue; };
-    const int                      IsParseVariable(void) const                     { return eType == eParseVariable; };
-    const int                      IsParseBinaryOp(void) const                     { return eType == eParseBinaryOp; };
-    const int                      IsParseUnaryOp(void) const                      { return eType == eParseUnaryOp; };
+    const bool                     IsParse(void) const;
+    const bool                     IsParseFuncCall(void) const                     { return eType == eParseFuncCall; };
+    const bool                     IsParseValue(void) const                        { return eType == eParseValue; };
+    const bool                     IsParseVariable(void) const                     { return eType == eParseVariable; };
+    const bool                     IsParseBinaryOp(void) const                     { return eType == eParseBinaryOp; };
+    const bool                     IsParseUnaryOp(void) const                      { return eType == eParseUnaryOp; };
     static const RedVSILangElement ParseFuncCall(void)                             { return RedVSILangElement(eParseFuncCall); };
     static const RedVSILangElement ParseValue(void)                                { return RedVSILangElement(eParseValue); };
     static const RedVSILangElement ParseVariable(void)                             { return RedVSILangElement(eParseVariable); };
@@ -63,21 +63,21 @@ public:
     static const RedVSILangElement ParseUnaryOp(void)                              { return RedVSILangElement(eParseUnaryOp); };
 
     // Locations
-    const int                      IsLocation(void) const;
-    const int                      IsLocationHeap(void) const                      { return eType == eLocationHeap; };
-    const int                      IsLocationStack(void) const                     { return eType == eLocationStack; };
-    const int                      IsLocationAttribute(void) const                 { return eType == eLocationAttribute; };
+    const bool                     IsLocation(void) const;
+    const bool                     IsLocationHeap(void) const                      { return eType == eLocationHeap; };
+    const bool                     IsLocationStack(void) const                     { return eType == eLocationStack; };
+    const bool                     IsLocationAttribute(void) const                 { return eType == eLocationAttribute; };
     static const RedVSILangElement LocationHeap(void)                              { return RedVSILangElement(eLocationHeap); };
     static const RedVSILangElement LocationStack(void)                             { return RedVSILangElement(eLocationStack); };
     static const RedVSILangElement LocationAttribute(void)                         { return RedVSILangElement(eLocationAttribute); };
 
     // Types
-    const int                      IsType(void) const;
-    const int                      IsTypeArray(void) const                         { return eType == eTypeArray; };
-    const int                      IsTypeBool(void) const                          { return eType == eTypeBool; };
-    const int                      IsTypeChar(void) const                          { return eType == eTypeChar; };
-    const int                      IsTypeNumber(void) const                        { return eType == eTypeNumber; };
-    const int                      IsTypeString(void) const                        { return eType == eTypeString; };
+    const bool                     IsType(void) const;
+    const bool                     IsTypeArray(void) const                         { return eType == eTypeArray; };
+    const bool                     IsTypeBool(void) const                          { return eType == eTypeBool; };
+    const bool                     IsTypeChar(void) const                          { return eType == eTypeChar; };
+    const bool                     IsTypeNumber(void) const                        { return eType == eTypeNumber; };
+    const bool                     IsTypeString(void) const                        { return eType == eTypeString; };
     static const RedVSILangElement TypeArray(void)                                 { return RedVSILangElement(eTypeArray); };
     static const RedVSILangElement TypeBool(void)                                  { return RedVSILangElement(eTypeBool); };
     static const RedVSILangElement TypeChar(void)                                  { return RedVSILangElement(eTypeChar); };
@@ -85,25 +85,25 @@ public:
     static const RedVSILangElement TypeString(void)                                { return RedVSILangElement(eTypeString); };
 
     // Binary op types
-    const int                      IsBinaryOp(void) const;
-    const int                      IsBinaryOpAssignDivide(void) const              { return eType == eBinaryOpAssignDivide; };
-    const int                      IsBinaryOpAssignEqual(void) const               { return eType == eBinaryOpAssignEqual; };
-    const int                      IsBinaryOpAssignMinus(void) const               { return eType == eBinaryOpAssignMinus; };
-    const int                      IsBinaryOpAssignMultiply(void) const            { return eType == eBinaryOpAssignMultiply; };
-    const int                      IsBinaryOpAssignPlus(void) const                { return eType == eBinaryOpAssignPlus; };
-    const int                      IsBinaryOpCompareEqual(void) const              { return eType == eBinaryOpCompareEqual; };
-    const int                      IsBinaryOpCompareNotEqual(void) const           { return eType == eBinaryOpCompareNotEqual; };
-    const int                      IsBinaryOpCompareLessThan(void) const           { return eType == eBinaryOpCompareLessThan; };
-    const int                      IsBinaryOpCompareGreaterThan(void) const        { return eType == eBinaryOpCompareGreaterThan; };
-    const int                      IsBinaryOpCompareLessThanOrEqual(void) const    { return eType == eBinaryOpCompareLessThanOrEqual; };
-    const int                      IsBinaryOpCompareGreaterThanOrEqual(void) const { return eType == eBinaryOpCompareGreaterThanOrEqual; };
-    const int                      IsBinaryOpDivide(void) const                    { return eType == eBinaryOpDivide; };
-    const int                      IsBinaryOpLogicAnd(void) const                  { return eType == eBinaryOpLogicAnd; };
-    const int                      IsBinaryOpLogicOr(void) const                   { return eType == eBinaryOpLogicOr; };
-    const int                      IsBinaryOpMinus(void) const                     { return eType == eBinaryOpMinus; };
-    const int                      IsBinaryOpMultiply(void) const                  { return eType == eBinaryOpMultiply; };
-    const int                      IsBinaryOpPlus(void) const                      { return eType == eBinaryOpPlus; };
-    const int                      IsBinaryOpPower(void) const                     { return eType == eBinaryOpPower; };
+    const bool                     IsBinaryOp(void) const;
+    const bool                     IsBinaryOpAssignDivide(void) const              { return eType == eBinaryOpAssignDivide; };
+    const bool                     IsBinaryOpAssignEqual(void) const               { return eType == eBinaryOpAssignEqual; };
+    const bool                     IsBinaryOpAssignMinus(void) const               { return eType == eBinaryOpAssignMinus; };
+    const bool                     IsBinaryOpAssignMultiply(void) const            { return eType == eBinaryOpAssignMultiply; };
+    const bool                     IsBinaryOpAssignPlus(void) const                { return eType == eBinaryOpAssignPlus; };
+    const bool                     IsBinaryOpCompareEqual(void) const              { return eType == eBinaryOpCompareEqual; };
+    const bool                     IsBinaryOpCompareNotEqual(void) const           { return eType == eBinaryOpCompareNotEqual; };
+    const bool                     IsBinaryOpCompareLessThan(void) const           { return eType == eBinaryOpCompareLessThan; };
+    const bool                     IsBinaryOpCompareGreaterThan(void) const        { return eType == eBinaryOpCompareGreaterThan; };
+    const bool                     IsBinaryOpCompareLessThanOrEqual(void) const    { return eType == eBinaryOpCompareLessThanOrEqual; };
+    const bool                     IsBinaryOpCompareGreaterThanOrEqual(void) const { return eType == eBinaryOpCompareGreaterThanOrEqual; };
+    const bool                     IsBinaryOpDivide(void) const                    { return eType == eBinaryOpDivide; };
+    const bool                     IsBinaryOpLogicAnd(void) const                  { return eType == eBinaryOpLogicAnd; };
+    const bool                     IsBinaryOpLogicOr(void) const                   { return eType == eBinaryOpLogicOr; };
+    const bool                     IsBinaryOpMinus(void) const                     { return eType == eBinaryOpMinus; };
+    const bool                     IsBinaryOpMultiply(void) const                  { return eType == eBinaryOpMultiply; };
+    const bool                     IsBinaryOpPlus(void) const                      { return eType == eBinaryOpPlus; };
+    const bool                     IsBinaryOpPower(void) const                     { return eType == eBinaryOpPower; };
     static const RedVSILangElement BinaryOpAssignDivide(void)                      { return RedVSILangElement(eBinaryOpAssignDivide); };
     static const RedVSILangElement BinaryOpAssignEqual(void)                       { return RedVSILangElement(eBinaryOpAssignEqual); };
     static const RedVSILangElement BinaryOpAssignMinus(void)                       { return RedVSILangElement(eBinaryOpAssignMinus); };
@@ -125,18 +125,18 @@ public:
     static const RedVSILangElement BinaryOpPower(void)                             { return RedVSILangElement(eBinaryOpPower); };
 
     // Unary op types
-    const int                      IsUnaryOp(void) const;
-    const int                      IsUnaryOpMinus(void) const                      { return eType == eUnaryOpMinus; };
-    const int                      IsUnaryOpLogicNot(void) const                   { return eType == eUnaryOpLogicNot; };
+    const bool                     IsUnaryOp(void) const;
+    const bool                     IsUnaryOpMinus(void) const                      { return eType == eUnaryOpMinus; };
+    const bool                     IsUnaryOpLogicNot(void) const                   { return eType == eUnaryOpLogicNot; };
     static const RedVSILangElement UnaryOpMinus(void)                              { return RedVSILangElement(eUnaryOpMinus); };
     static const RedVSILangElement UnaryOpLogicNot(void)                           { return RedVSILangElement(eUnaryOpLogicNot); };
 
 
     // High level Query routines
-    const int IsOp(void) const;
-    const int IsAssignOp(void) const;
-    const int IsLogicOp(void) const;
-    const int IsCompareOp(void) const;
+    const bool IsOp(void) const;
+    const bool IsAssignOp(void) const;
+    const bool IsLogicOp(void) const;
+    const bool IsCompareOp(void) const;
 
     // Data Type conversions, between the Core type, and the enumerations here for types
     static RedDataType       DataTypeForLangElemType(const RedVSILangElement& LangType);
@@ -145,7 +145,7 @@ public:
     // Operators
     void operator =(const RedVSILangElement cNewVal) { eType=cNewVal.eType; };
 
-    const int iElem(void) const { return (int)eType; };
+    const bool iElem(void) const { return (int)eType; };
 
 protected:
 

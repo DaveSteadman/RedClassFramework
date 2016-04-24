@@ -36,7 +36,9 @@ public:
 
     void SetDate(const unsigned y, const unsigned m, const unsigned d) { year=y; month=m; date=d; };
     void SetDate(const RedString& datestr);
-    void Today(void);
+
+    void    SetToday(void);
+    static RedDate Today(void);
 
 	// Simple Accessors
 	void           SetYear(const unsigned y)  { year  = y; };

@@ -48,7 +48,7 @@ void RedVSITokenElementMap::Add(const RedString& cStr, const RedVSIIOElement& cE
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-int RedVSITokenElementMap::Find(RedString& cCheckStr, RedVSIIOElement& cElem)
+bool RedVSITokenElementMap::Find(RedString& cCheckStr, RedVSIIOElement& cElem)
 {
     MapListItType cIt(&cMap);
 
@@ -64,18 +64,18 @@ int RedVSITokenElementMap::Find(RedString& cCheckStr, RedVSIIOElement& cElem)
         if (cCheckStr == cCurrMapStr)
         {
             cElem = cCurrMapElem;
-            return 1;
+            return true;
         }
 
         // move onto the next item in the list
         cIt.Next();
     }
-    return 0;
+    return false;
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-int RedVSITokenElementMap::FindString(RedVSIIOElement& cCheckElem, RedString& cStr)
+bool RedVSITokenElementMap::FindString(RedVSIIOElement& cCheckElem, RedString& cStr)
 {
     MapListItType cIt(&cMap);
 
@@ -84,20 +84,20 @@ int RedVSITokenElementMap::FindString(RedVSIIOElement& cCheckElem, RedString& cS
     while (!cIt.IsDone()) 
     {
         // Get the item from the list
-        RedString  cCurrMapStr  = cIt.CurrentId();
+        RedString       cCurrMapStr  = cIt.CurrentId();
         RedVSIIOElement cCurrMapElem = cIt.CurrentData();
 
         // If the strings match, return the corresponding element
         if (cCheckElem == cCurrMapElem)
         {
             cStr =  cCurrMapStr;
-            return 1;
+            return true;
         }
 
         // move onto the next item in the list
         cIt.Next();
     }
-    return 0;
+    return false;
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

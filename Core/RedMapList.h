@@ -39,14 +39,14 @@ public:
     ~RedMapList();
 
     // Access Items
-    const int       Add(IdClass Id, DataClass Data);
-    const int       Find(IdClass Id, DataClass& Data);
+    const bool      Add(IdClass Id, DataClass Data);
+    const bool      Find(IdClass Id, DataClass& Data);
     void            Del(IdClass Id);
-    const int       DelAll(void);
+    const bool      DelAll(void);
     
-    const int       FindIdByIndex    (unsigned iElemIndex, IdClass& Id) const;
-    const int       FindDataByIndex  (unsigned iElemIndex, DataClass& Data) const;
-    const int       AssignDataByIndex(unsigned iElemIndex, DataClass Data);
+    const bool      FindIdByIndex    (unsigned iElemIndex, IdClass& Id) const;
+    const bool      FindDataByIndex  (unsigned iElemIndex, DataClass& Data) const;
+    const bool      AssignDataByIndex(unsigned iElemIndex, DataClass Data);
     const unsigned  FirstIndex       (void) const;
     const unsigned  LastIndex        (void) const;
     
@@ -68,11 +68,11 @@ private:
     typedef RedDoubleLinkedList<TMapElement>         ListType;
     typedef RedDoubleLinkedListIterator<TMapElement> ListItType;
 
-    const int MakeListElement(TMapElement** pNewElem);
+    const bool MakeListElement(TMapElement** pNewElem);
 
     /// The FindElement operation is not const because it creates an iterator, which has the
     /// capability to delete an element from the list.
-    const int FindElement(IdClass Id, TMapElement& Elem, unsigned& iElemIndex);
+    const bool FindElement(IdClass Id, TMapElement& Elem, unsigned& iElemIndex);
 
     ListType cList;
 };
@@ -93,7 +93,7 @@ RedMapList<IdClass, DataClass>::~RedMapList()
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 template <class IdClass, class DataClass>
-const int RedMapList<IdClass, DataClass>::Add(IdClass Id, DataClass Data)
+const bool RedMapList<IdClass, DataClass>::Add(IdClass Id, DataClass Data)
 {
     unsigned iElemIndex;
     TMapElement Elem;
@@ -110,22 +110,22 @@ const int RedMapList<IdClass, DataClass>::Add(IdClass Id, DataClass Data)
     // Add the item to the end of the list
     cList.AddLast(cNewElem);
 
-    return 1;
+    return true;
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 template <class IdClass, class DataClass>
-const int RedMapList<IdClass, DataClass>::Find(IdClass Id, DataClass& Data) 
+const bool RedMapList<IdClass, DataClass>::Find(IdClass Id, DataClass& Data)
 {
     unsigned iElemIndex;
     TMapElement Elem;
 
     if (!FindElement(Id, Elem, iElemIndex))
-        return 0;
+        return false;
     
     Data = Elem.cData;
-    return 1;
+    return true;
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -143,7 +143,7 @@ void RedMapList<IdClass, DataClass>::Del(IdClass Id)
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 template <class IdClass, class DataClass>
-const int RedMapList<IdClass, DataClass>::DelAll(void)
+const bool RedMapList<IdClass, DataClass>::DelAll(void)
 {
     return cList.DelAll();
 }
@@ -151,49 +151,49 @@ const int RedMapList<IdClass, DataClass>::DelAll(void)
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 template <class IdClass, class DataClass>
-const int RedMapList<IdClass, DataClass>::FindIdByIndex(unsigned iElemIndex, IdClass& Id) const
+const bool RedMapList<IdClass, DataClass>::FindIdByIndex(unsigned iElemIndex, IdClass& Id) const
 {
     if ( (iElemIndex<cList.FirstIndex()) || (iElemIndex>cList.LastIndex()) )
-        return 0;
+        return false;
 
     TMapElement cElem;
     if ( !cList.FindElementAtIndex(iElemIndex, cElem) )
-        return 0;
+        return false;
 
     Id = cElem.cId;
-    return 1;
+    return true;
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 template <class IdClass, class DataClass>
-const int RedMapList<IdClass, DataClass>::FindDataByIndex(unsigned iElemIndex, DataClass& Data) const
+const bool RedMapList<IdClass, DataClass>::FindDataByIndex(unsigned iElemIndex, DataClass& Data) const
 {
     if ( (iElemIndex<cList.FirstIndex()) || (iElemIndex>cList.LastIndex()) )
-        return 0;
+        return false;
 
     TMapElement cElem;
     if ( !cList.FindElementAtIndex(iElemIndex, cElem) )
-        return 0;
+        return false;
 
     Data = cElem.cData;
-    return 1;
+    return true;
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 template <class IdClass, class DataClass>
-const int RedMapList<IdClass, DataClass>::AssignDataByIndex(unsigned iElemIndex, DataClass Data)
+const bool RedMapList<IdClass, DataClass>::AssignDataByIndex(unsigned iElemIndex, DataClass Data)
 {
     if ( (iElemIndex<0) || (iElemIndex>cList.NumItems()) )
-        return 0;
+        return false;
 
     TMapElement cElem;
     if ( !cList.Find(iElemIndex, cElem) )
-        return 0;
+        return false;
 
     cElem.cData = Data;
-    return 1;
+    return true;
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -242,20 +242,20 @@ RedMapList<IdClass, DataClass>* RedMapList<IdClass, DataClass>::Clone(void)
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 template <class IdClass, class DataClass>
-const int RedMapList<IdClass, DataClass>::MakeListElement(TMapElement** pNewElem)
+const bool RedMapList<IdClass, DataClass>::MakeListElement(TMapElement** pNewElem)
 {
     pNewElem = new TMapElement;
     
     pNewElem->cId   = 0;
     pNewElem->cData = 0;
 
-    return 1;
+    return true;
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 template <class IdClass, class DataClass>
-const int RedMapList<IdClass, DataClass>::FindElement(IdClass cId, TMapElement& Elem, unsigned& iElemIndex)
+const bool RedMapList<IdClass, DataClass>::FindElement(IdClass cId, TMapElement& Elem, unsigned& iElemIndex)
 {
     ListItType cIt(&cList);
 
@@ -268,12 +268,12 @@ const int RedMapList<IdClass, DataClass>::FindElement(IdClass cId, TMapElement& 
         {
             Elem = cElem;
             iElemIndex = cIt.CollectionIndex();
-            return 1;
+            return true;
         }
         cIt.Next();
     }
 
-    return 0;
+    return false;
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

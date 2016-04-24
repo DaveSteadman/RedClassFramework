@@ -124,5 +124,3 @@ void RedVSICmdNew::GetDetails(RedVSILangElement& cOutType, RedVSILangElement& cO
 } // Red
 
 
-
-

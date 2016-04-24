@@ -18,8 +18,6 @@
 
 #pragma once
 
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
 #include "RedCoreNamespace.h"
 
 #include "RedVSIToken.h"
@@ -57,8 +55,8 @@ protected:
     static RedVSIParseTreeInterface* RunExternalCallCompetition (RedVSITokenBuffer& cInputBuffer, RedLog& log);
     static RedVSIParseTreeInterface* RunInternalCallCompetition (RedVSITokenBuffer& cInputBuffer, RedLog& log);
 
-    static int                  IsValueToken(RedVSIToken cTok);
-    static int                  IsVariableToken(RedVSIToken cTok);
+    static bool                      IsValueToken(const RedVSIToken& cTok);
+    static bool                      IsVariableToken(const RedVSIToken& cTok);
 };
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

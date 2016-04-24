@@ -37,8 +37,8 @@ class RedVSITokenFactory
 {
 public:
 
-    static int CreateTokens(const RedString& cInputText,  RedVSITokenElementMap& cTokenMap, RedVSITokenBuffer& cOutputTokenList);
-    static int CreateTokens(RedBufferInput& cInputBuffer, RedVSITokenElementMap& cTokenMap, RedVSITokenBuffer& cOutputTokenList);
+    static bool CreateTokens(const RedString& cInputText,  RedVSITokenElementMap& cTokenMap, RedVSITokenBuffer& cOutputTokenList);
+    static bool CreateTokens(RedBufferInput& cInputBuffer, RedVSITokenElementMap& cTokenMap, RedVSITokenBuffer& cOutputTokenList);
 
 private:
 

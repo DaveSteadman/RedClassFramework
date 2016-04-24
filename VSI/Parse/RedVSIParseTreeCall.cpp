@@ -18,7 +18,7 @@
 
 #include "RedVSIParseTreeCall.h"
 
-#include "RedVSIContextThread2.h"
+#include "RedVSIContextThread.h"
 
 namespace Red {
 namespace VSI {
@@ -29,21 +29,11 @@ namespace VSI {
 
 RedVSIParseTreeCall::~RedVSIParseTreeCall()
 {
-/*    if (!pParamList->IsEmpty())
+    if (pParamList != REDNULL)
     {
-        ParamListItType cListIt(pParamList);
-
-        cListIt.First();
-        while (!cListIt.IsDone())
-        {
-            SParam* pParamStruct = cListIt.CurrentItem();
-
-            delete pParamStruct->pParam;
-            delete pParamStruct;
-
-            cListIt.Next();
-        }
-    }*/
+        if (!pParamList->IsEmpty())
+            pParamList->DelAll();
+    }
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

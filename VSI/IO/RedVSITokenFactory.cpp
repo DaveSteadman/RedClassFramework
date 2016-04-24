@@ -25,19 +25,19 @@ namespace VSI {
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-int RedVSITokenFactory::CreateTokens(const RedString& cInputText, RedVSITokenElementMap& cTokenMap, RedVSITokenBuffer& cOutputTokenList)
+bool RedVSITokenFactory::CreateTokens(const RedString& cInputText, RedVSITokenElementMap& cTokenMap, RedVSITokenBuffer& cOutputTokenList)
 {
     cOutputTokenList.Init();
     RedBufferInput cCodeBuffer(cInputText);
 
-    int iResult = CreateTokens(cCodeBuffer, cTokenMap, cOutputTokenList);
+    bool Result = CreateTokens(cCodeBuffer, cTokenMap, cOutputTokenList);
     
-    return iResult;
+    return Result;
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-int RedVSITokenFactory::CreateTokens(RedBufferInput& cInputBuffer, RedVSITokenElementMap& cTokenMap, RedVSITokenBuffer& cOutputTokenList)
+bool RedVSITokenFactory::CreateTokens(RedBufferInput& cInputBuffer, RedVSITokenElementMap& cTokenMap, RedVSITokenBuffer& cOutputTokenList)
 {
     cOutputTokenList.Init();
     cInputBuffer.SetStartPos();
@@ -59,9 +59,9 @@ int RedVSITokenFactory::CreateTokens(RedBufferInput& cInputBuffer, RedVSITokenEl
     if (!cNewTok.IsValid()) 
     {
         cOutputTokenList.Init();
-        return 0;
+        return false;
     }
-    return 1;
+    return true;
 }
 
 // ============================================================================

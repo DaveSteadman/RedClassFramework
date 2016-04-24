@@ -38,13 +38,13 @@ public:
 
     void        First(void);
     void        Next(void);
-    const int   IsDone(void) const;
+    const bool  IsDone(void) const;
     IdClass     CurrentId(void) const;
     DataClass   CurrentData(void) const;
 
     //void        DeleteCurrentItem(void)              { pList->Del(iCurrIndex); };
     void        SetSearchDirection(TESearchDir eDir) const { eSearchDir = eDir; };
-    const int   CollectionIndex(void) const                { return iCurrIndex; };
+    const unsigned CollectionIndex(void) const                { return iCurrIndex; };
 
 private:
 
@@ -90,24 +90,24 @@ void RedMapListIterator<IdClass, DataClass>::Next(void)
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 template <class IdClass, class DataClass>
-const int RedMapListIterator<IdClass, DataClass>::IsDone(void) const
+const bool RedMapListIterator<IdClass, DataClass>::IsDone(void) const
 {
-    int iSearchDone = 0;
+    bool SearchDone = false;
 
-    if (pList->IsEmpty()) return 1;
+    if (pList->IsEmpty()) return true;
 
     if (eSearchDir == eForwards)
     {
         if (iCurrIndex > pList->LastIndex())
-            iSearchDone = 1;
+            SearchDone = true;
     }
     else
     {
         if (iCurrIndex < pList->FirstIndex())
-            iSearchDone = 1;
+            SearchDone = true;
     }
 
-    return iSearchDone;
+    return SearchDone;
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

@@ -35,7 +35,18 @@ void RedDate::SetDate(const RedString& datestr)
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-void RedDate::Today(void)
+RedDate RedDate::Today(void)
+{
+    RedDate RetDate;
+
+    RetDate.SetToday();
+
+    return RetDate;
+}
+
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+void RedDate::SetToday(void)
 {
     time_t     rawtime;
     struct tm* timeinfo;

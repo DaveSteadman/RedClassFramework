@@ -20,7 +20,7 @@
 #include "RedVSINamespace.h"
 #include "RedVSIContextRoutine.h"
 #include "RedVSIContextFragment.h"
-#include "RedVSIContextThread2.h"
+#include "RedVSIContextThread.h"
 
 #include "RedVSICmdSerialiser.h"
 #include "RedVSILibTokenMap.h"
@@ -562,7 +562,7 @@ RedResult RedTestVSI::TestRunProg_001(void)
             RedVSILibRoutineInterface* pRtn = vsiCodeLib.FindRoutine("TestRoutines", "TestCall");
             RedVSIContextRoutine cntxt("TestRoutines", "TestCall", pRtn->FirstCommand(), log);
 
-            RedVSIContextThread2 tc;
+            RedVSIContextThread tc;
             cntxt.SetThreadContextRecord(&tc);
             tc.PushRoutineOnStack(&cntxt);
             tc.SetCodeLib(&vsiCodeLib);

@@ -62,7 +62,7 @@ double RedDateSpan::DaysToEndOfYear(void) const
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-} // Time
+} // Core
 } // Red
 
 

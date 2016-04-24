@@ -25,122 +25,122 @@ namespace VSI {
 // Complex Query routines
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-const int RedVSILangElement::IsCommand(void) const
+const bool RedVSILangElement::IsCommand(void) const
 {
-    if (IsCommandNew())    return 1;
-    if (IsCommandLet())    return 1;
-    if (IsCommandIf())     return 1;
-    if (IsCommandWhile())  return 1;
-    if (IsCommandReturn()) return 1;
+    if (IsCommandNew())    return true;
+    if (IsCommandLet())    return true;
+    if (IsCommandIf())     return true;
+    if (IsCommandWhile())  return true;
+    if (IsCommandReturn()) return true;
 
-    return 0;
+    return false;
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-const int RedVSILangElement::IsParse(void) const
+const bool RedVSILangElement::IsParse(void) const
 {
-    if (IsParseFuncCall()) return 1;
-    if (IsParseValue())    return 1;
-    if (IsParseVariable()) return 1;
-    if (IsParseBinaryOp()) return 1;
-    if (IsParseUnaryOp())  return 1;
+    if (IsParseFuncCall()) return true;
+    if (IsParseValue())    return true;
+    if (IsParseVariable()) return true;
+    if (IsParseBinaryOp()) return true;
+    if (IsParseUnaryOp())  return true;
 
-    return 0;
+    return false;
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-const int RedVSILangElement::IsLocation(void) const
+const bool RedVSILangElement::IsLocation(void) const
 {
-    if (IsLocationHeap())      return 1;
-    if (IsLocationStack())     return 1;
-    if (IsLocationAttribute()) return 1;
+    if (IsLocationHeap())      return true;
+    if (IsLocationStack())     return true;
+    if (IsLocationAttribute()) return true;
 
-    return 0;
+    return false;
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-const int RedVSILangElement::IsType(void) const
+const bool RedVSILangElement::IsType(void) const
 {
-    if (IsTypeArray())  return 1;
-    if (IsTypeBool())   return 1;
-    if (IsTypeChar())   return 1;
-    if (IsTypeNumber()) return 1;
-    if (IsTypeString()) return 1;
+    if (IsTypeArray())  return true;
+    if (IsTypeBool())   return true;
+    if (IsTypeChar())   return true;
+    if (IsTypeNumber()) return true;
+    if (IsTypeString()) return true;
 
-    return 0;
+    return false;
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-const int RedVSILangElement::IsAssignOp(void) const
+const bool RedVSILangElement::IsAssignOp(void) const
 {
-    if (IsBinaryOpAssignDivide())   return 1;
-    if (IsBinaryOpAssignEqual())    return 1;
-    if (IsBinaryOpAssignMinus())    return 1;
-    if (IsBinaryOpAssignMultiply()) return 1;
-    if (IsBinaryOpAssignPlus())     return 1;
+    if (IsBinaryOpAssignDivide())   return true;
+    if (IsBinaryOpAssignEqual())    return true;
+    if (IsBinaryOpAssignMinus())    return true;
+    if (IsBinaryOpAssignMultiply()) return true;
+    if (IsBinaryOpAssignPlus())     return true;
 
-    return 0;
+    return false;
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-const int RedVSILangElement::IsLogicOp(void) const
+const bool RedVSILangElement::IsLogicOp(void) const
 {
-    if (IsBinaryOpLogicAnd()) return 1;
-    if (IsBinaryOpLogicOr())  return 1;
-    if (IsUnaryOpLogicNot())  return 1;
+    if (IsBinaryOpLogicAnd()) return true;
+    if (IsBinaryOpLogicOr())  return true;
+    if (IsUnaryOpLogicNot())  return true;
 
-    return 0;    
+    return false;    
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-const int RedVSILangElement::IsCompareOp(void) const
+const bool RedVSILangElement::IsCompareOp(void) const
 {
-    if (IsBinaryOpCompareEqual())       return 1;
-    if (IsBinaryOpCompareNotEqual())    return 1;
-    if (IsBinaryOpCompareLessThan())    return 1;
-    if (IsBinaryOpCompareGreaterThan()) return 1;
+    if (IsBinaryOpCompareEqual())       return true;
+    if (IsBinaryOpCompareNotEqual())    return true;
+    if (IsBinaryOpCompareLessThan())    return true;
+    if (IsBinaryOpCompareGreaterThan()) return true;
 
-    return 0;    
+    return false;    
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-const int RedVSILangElement::IsBinaryOp(void) const
+const bool RedVSILangElement::IsBinaryOp(void) const
 {
-    if (IsBinaryOpAssignDivide())       return 1;
-    if (IsBinaryOpAssignEqual())        return 1;
-    if (IsBinaryOpAssignMinus())        return 1;
-    if (IsBinaryOpAssignMultiply())     return 1;
-    if (IsBinaryOpAssignPlus())         return 1;
-    if (IsBinaryOpCompareEqual())       return 1;
-    if (IsBinaryOpCompareNotEqual())    return 1;
-    if (IsBinaryOpCompareLessThan())    return 1;
-    if (IsBinaryOpCompareGreaterThan()) return 1;
-    if (IsBinaryOpDivide())             return 1;
-    if (IsBinaryOpLogicAnd())           return 1;
-    if (IsBinaryOpLogicOr())            return 1;
-    if (IsBinaryOpMinus())              return 1;
-    if (IsBinaryOpMultiply())           return 1;
-    if (IsBinaryOpPlus())               return 1;
-    if (IsBinaryOpPower())              return 1;
+    if (IsBinaryOpAssignDivide())       return true;
+    if (IsBinaryOpAssignEqual())        return true;
+    if (IsBinaryOpAssignMinus())        return true;
+    if (IsBinaryOpAssignMultiply())     return true;
+    if (IsBinaryOpAssignPlus())         return true;
+    if (IsBinaryOpCompareEqual())       return true;
+    if (IsBinaryOpCompareNotEqual())    return true;
+    if (IsBinaryOpCompareLessThan())    return true;
+    if (IsBinaryOpCompareGreaterThan()) return true;
+    if (IsBinaryOpDivide())             return true;
+    if (IsBinaryOpLogicAnd())           return true;
+    if (IsBinaryOpLogicOr())            return true;
+    if (IsBinaryOpMinus())              return true;
+    if (IsBinaryOpMultiply())           return true;
+    if (IsBinaryOpPlus())               return true;
+    if (IsBinaryOpPower())              return true;
 
-    return 0;
+    return false;
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-const int RedVSILangElement::IsUnaryOp(void) const
+const bool RedVSILangElement::IsUnaryOp(void) const
 {
-    if (IsUnaryOpMinus())    return 1;
-    if (IsUnaryOpLogicNot()) return 1;
+    if (IsUnaryOpMinus())    return true;
+    if (IsUnaryOpLogicNot()) return true;
 
-    return 0;
+    return false;
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

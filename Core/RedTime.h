@@ -23,7 +23,7 @@ namespace Core {
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-// Time is strictly formatted in a 24hour HH:MM:SS format. 
+// Time is formatted in 24hour HH:MM:SS
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -45,10 +45,11 @@ public:
 
     void Init(void) { hour=0; minute=0; seconds=0.0; };
 
-    void SetTime(const unsigned h, const unsigned m, const double& s)        { hour=h; minute=m; seconds=s; };
+    void SetTime(const unsigned h, const unsigned m, const double& s) { hour=h; minute=m; seconds=s; };
     void SetTime(const RedString& timestr);
 
     void SetNow(void);
+    RedTime Now(void);
 
     // Time Presentation
     const RedString TimeString(void) const;   // hh:mm:ss
@@ -82,5 +83,5 @@ static const RedTime kTimeEndOfDay   = RedTime(24, 60, 60.0);
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-} // Time
+} // Core
 } // Red

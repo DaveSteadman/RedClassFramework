@@ -17,7 +17,7 @@
 // -------------------------------------------------------------------------------------------------
 
 #include "RedCoreNamespace.h"
-#include "RedVSIContextThread2.h"
+#include "RedVSIContextThread.h"
 #include "RedVSIContextRoutine.h"
 
 using namespace Red::Core;
@@ -29,7 +29,7 @@ namespace VSI {
 // Heap Data
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-RedType* RedVSIContextThread2::CreateHeapDataItem(const RedVSILangElement& cType, const RedString& cName)
+RedType* RedVSIContextThread::CreateHeapDataItem(const RedVSILangElement& cType, const RedString& cName)
 {
     RedType* pNewData = REDNULL;
 
@@ -46,7 +46,7 @@ RedType* RedVSIContextThread2::CreateHeapDataItem(const RedVSILangElement& cType
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-bool RedVSIContextThread2::FindHeapDataItem(const RedString& cName, RedType*& pData)
+bool RedVSIContextThread::FindHeapDataItem(const RedString& cName, RedType*& pData)
 {
     if (cHeap.Find(cName, pData))
         return true;
@@ -58,7 +58,7 @@ bool RedVSIContextThread2::FindHeapDataItem(const RedString& cName, RedType*& pD
 // Routine Stack
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-RedVSIContextRoutine* RedVSIContextThread2::TopRoutineOnStack(void)
+RedVSIContextRoutine* RedVSIContextThread::TopRoutineOnStack(void)
 {
     if (cRoutineStack.IsEmpty())
         return REDNULL;
@@ -68,14 +68,14 @@ RedVSIContextRoutine* RedVSIContextThread2::TopRoutineOnStack(void)
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-void RedVSIContextThread2::PushRoutineOnStack(RedVSIContextRoutine* newRtn)
+void RedVSIContextThread::PushRoutineOnStack(RedVSIContextRoutine* newRtn)
 {
     cRoutineStack.Push(newRtn);
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-RedVSIContextRoutine* RedVSIContextThread2::PopRoutineOffStack(void)
+RedVSIContextRoutine* RedVSIContextThread::PopRoutineOffStack(void)
 {
     return cRoutineStack.Pop();
 }
@@ -84,7 +84,7 @@ RedVSIContextRoutine* RedVSIContextThread2::PopRoutineOffStack(void)
 // Top level routines
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-void RedVSIContextThread2::Execute(const unsigned NumCmd)
+void RedVSIContextThread::Execute(const unsigned NumCmd)
 {
     unsigned decementingCmdCount = NumCmd;
 

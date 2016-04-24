@@ -45,10 +45,10 @@ public:
     ~RedVSILibRoutineInterface(void) { };
 
     void Init(void);
-    int  IsValid(void);
+    bool IsValid(void) const;
     
     RedString                   Name(void)              { return cName; };
-    int                         NumParams(void)         { return cParamList.NumItems(); };
+    unsigned                    NumParams(void)         { return cParamList.NumItems(); };
     RedVSIStringLangElementMap* Params(void)            { return &cParamList; };
     RedVSICmdInterface*         FirstCommand(void)      { return pCode; };
 

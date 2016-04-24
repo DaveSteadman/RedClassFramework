@@ -90,6 +90,17 @@ void RedTime::SetNow(void)
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
+RedTime Now(void)
+{
+    RedTime RetTime;
+
+    RetTime.SetNow();
+
+    return RetTime;
+}
+
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
 void RedTime::SetTimeFromElapsedSeconds(const double& DayElapsedSeconds)
 {
 	Init();
@@ -111,5 +122,5 @@ void RedTime::SetTimeFromElapsedSeconds(const double& DayElapsedSeconds)
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-} // Time
+} // Core
 } // Red

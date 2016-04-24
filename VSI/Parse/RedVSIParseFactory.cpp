@@ -61,7 +61,7 @@ RedVSIParseTreeInterface* RedVSIParseFactory::RunExprAssignCompetition(RedVSITok
 
     // Read the left hand expression item.
     RedVSIParseTreeInterface* pLeft = RunCompareExprCompetition(cInputBuffer, log);
-    if (pLeft==0) { return 0; }
+    if (pLeft==0) { return REDNULL; }
     pTopElem = pLeft;
 
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -124,15 +124,15 @@ RedVSIParseTreeInterface* RedVSIParseFactory::RunCompareExprCompetition(RedVSITo
 
     // Read the left hand expression item.
     RedVSIParseTreeInterface* pLeft = RunLogicExprCompetition(cInputBuffer, log);
-    if (pLeft==0) { return 0; }
+    if (pLeft==0) { return REDNULL; }
     pTopElem = pLeft;
 
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-    int                 iOpFound = 1;
-    RedVSIParseTreeInterface*      pRight   = 0;
-    RedVSIParseTreeBinaryOp* pCurrOp  = 0;
-    RedVSIParseTreeBinaryOp* pPrevOp  = 0;
+    int                        iOpFound = 1;
+    RedVSIParseTreeInterface*  pRight   = 0;
+    RedVSIParseTreeBinaryOp*   pCurrOp  = 0;
+    RedVSIParseTreeBinaryOp*   pPrevOp  = 0;
 
     while ( (iOpFound) && (!log.IsError()) )
     {
@@ -186,7 +186,7 @@ RedVSIParseTreeInterface* RedVSIParseFactory::RunLogicExprCompetition(RedVSIToke
 
     // Read the left hand expression item.
     RedVSIParseTreeInterface* pLeft = RunSumExprCompetition(cInputBuffer, log);
-    if (pLeft==0) { return 0; }
+    if (pLeft==0) { return REDNULL; }
     pTopElem = pLeft;
 
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -246,12 +246,12 @@ RedVSIParseTreeInterface* RedVSIParseFactory::RunSumExprCompetition(RedVSITokenB
 
     // Read the left hand expression item.
     RedVSIParseTreeInterface* pLeft = RunMultiExprCompetition(cInputBuffer, log);
-    if (pLeft==0) { return 0; }
+    if (pLeft==0) { return REDNULL; }
     pTopElem = pLeft;
 
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-    int                  iOpFound = 1;
+    int                       iOpFound = 1;
     RedVSIParseTreeInterface* pRight   = 0;
     RedVSIParseTreeBinaryOp*  pCurrOp  = 0;
     RedVSIParseTreeBinaryOp*  pPrevOp  = 0;
@@ -306,12 +306,12 @@ RedVSIParseTreeInterface* RedVSIParseFactory::RunMultiExprCompetition(RedVSIToke
 
     // Read the left hand expression item. Any errors already reported.
     RedVSIParseTreeInterface* pLeft = RunPowExprCompetition(cInputBuffer, log);
-    if (pLeft==0) { return 0; }
+    if (pLeft==0) { return REDNULL; }
     pTopElem = pLeft;
 
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-    int                   iOpFound = 1;
+    int                        iOpFound = 1;
     RedVSIParseTreeInterface*  pRight   = 0;
     RedVSIParseTreeBinaryOp*   pCurrOp  = 0;
     RedVSIParseTreeBinaryOp*   pPrevOp  = 0;
@@ -366,7 +366,7 @@ RedVSIParseTreeInterface* RedVSIParseFactory::RunPowExprCompetition(RedVSITokenB
 
     // Read the left hand expression item. Any errors will already have been reported.
     RedVSIParseTreeInterface* pLeft = RunItemExprCompetition(cInputBuffer, log);
-    if (pLeft==0) { return 0; }
+    if (pLeft==0) { return REDNULL; }
     pTopElem = pLeft;
 
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -485,7 +485,7 @@ RedVSIParseTreeInterface* RedVSIParseFactory::RunSubExprCompetition(RedVSITokenB
     }
     
     // return valid zero
-    return 0;
+    return REDNULL;
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -506,7 +506,7 @@ RedVSIParseTreeInterface* RedVSIParseFactory::RunValueCompetition(RedVSITokenBuf
     }
     
     // return valid zero
-    return 0;
+    return REDNULL;
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -518,7 +518,7 @@ RedVSIParseTreeInterface* RedVSIParseFactory::RunVariableCompetition(RedVSIToken
     if (IsVariableToken(cTok))
     {
         // Data to go into the constructor (name already checked)
-        RedString          cVarName   = cTok.GetText();
+        RedString                 cVarName   = cTok.GetText();
         RedVSIParseTreeInterface* pIndexExpr = 0;
     
         // check for an array index after the variable name
@@ -530,7 +530,7 @@ RedVSIParseTreeInterface* RedVSIParseFactory::RunVariableCompetition(RedVSIToken
             if (!pIndexExpr)
             {
                 log.AddText(cTok.GetPos().PosText() + RedVSIErrorCodes::GetErrorString(RedVSIErrorCodes::ePFact_Var_NoArrayExpr));
-                return 0;
+                return REDNULL;
             }
 
             // read the closing array bracket, which isn't part of the expression.
@@ -538,7 +538,7 @@ RedVSIParseTreeInterface* RedVSIParseFactory::RunVariableCompetition(RedVSIToken
             if (!cTok.GetPredef().IsSymbolCloseBracket())
             {
                 log.AddText(cTok.GetPos().PosText() + RedVSIErrorCodes::GetErrorString(RedVSIErrorCodes::ePFact_Var_NoArrayExprEnd));
-                return 0;
+                return REDNULL;
             }
         }  
         else
@@ -550,7 +550,7 @@ RedVSIParseTreeInterface* RedVSIParseFactory::RunVariableCompetition(RedVSIToken
         RedVSIParseTreeVar* pNewVar = new RedVSIParseTreeVar(cVarName);
         return pNewVar;
     }
-    return 0;
+    return REDNULL;
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -563,10 +563,9 @@ RedVSIParseTreeInterface* RedVSIParseFactory::RunExternalCallCompetition(RedVSIT
     RedVSIToken cFuncTok        = cInputBuffer.GetToken();
     RedVSIToken cOpenBracketTok = cInputBuffer.GetToken();
 
-    if (!cUnitNameTok.Type().IsName())                { return 0; }
-    //if (!cSeparatorTok.GetPredef().IsSymbolRoutineSeparator()) { return 0; }
-    if (!cFuncTok.Type().IsName())                    { return REDNULL; }
-    if (!cOpenBracketTok.GetPredef().IsSymbolOpenBracket())    { return REDNULL; }
+    if (!cUnitNameTok.Type().IsName())                      { return REDNULL; }
+    if (!cFuncTok.Type().IsName())                          { return REDNULL; }
+    if (!cOpenBracketTok.GetPredef().IsSymbolOpenBracket()) { return REDNULL; }
 
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     
@@ -589,7 +588,7 @@ RedVSIParseTreeInterface* RedVSIParseFactory::RunExternalCallCompetition(RedVSIT
     // iterate to populate the call with parameters
     RedVSIToken cParamTok;
     RedVSIToken cCommaTok;
-    int    iParamsComplete = 0;    
+    int         iParamsComplete = 0;
     
     while (!iParamsComplete)
     {
@@ -640,8 +639,8 @@ RedVSIParseTreeInterface* RedVSIParseFactory::RunInternalCallCompetition(RedVSIT
     RedVSIToken cFuncTok        = cInputBuffer.GetToken();    
     RedVSIToken cOpenBracketTok = cInputBuffer.GetToken();
 
-    if (!cFuncTok.Type().IsName())                    { return 0; }
-    if (!cOpenBracketTok.GetPredef().IsSymbolOpenBracket())    { return 0; }
+    if (!cFuncTok.Type().IsName())                          { return REDNULL; }
+    if (!cOpenBracketTok.GetPredef().IsSymbolOpenBracket()) { return REDNULL; }
 
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     
@@ -693,7 +692,7 @@ RedVSIParseTreeInterface* RedVSIParseFactory::RunInternalCallCompetition(RedVSIT
                 log.AddText(cParamTok.GetPos().PosText() + RedVSIErrorCodes::GetErrorString(RedVSIErrorCodes::ePFact_Call_NoExpr));
                 delete pNewCmd; 
                 delete pParamList; 
-                return 0;
+                return REDNULL;
             }
         }
     }
@@ -706,21 +705,21 @@ RedVSIParseTreeInterface* RedVSIParseFactory::RunInternalCallCompetition(RedVSIT
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-int RedVSIParseFactory::IsValueToken(RedVSIToken cTok)
+bool RedVSIParseFactory::IsValueToken(const RedVSIToken& cTok)
 {
-    if ( cTok.Type().IsNumber() ) return 1;
-    if ( cTok.Type().IsStringLiteral() ) return 1;
+    if ( cTok.Type().IsNumber() )        return true;
+    if ( cTok.Type().IsStringLiteral() ) return true;
     
-    return 0;
+    return false;
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-int RedVSIParseFactory::IsVariableToken(RedVSIToken cTok)
+bool RedVSIParseFactory::IsVariableToken(const RedVSIToken& cTok) 
 {
-    if ( cTok.Type().IsName() ) return 1;
+    if ( cTok.Type().IsName() ) return true;
     
-    return 0;
+    return false;
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

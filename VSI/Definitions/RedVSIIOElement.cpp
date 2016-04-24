@@ -30,148 +30,148 @@ void RedVSIIOElement::Init(void)
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-const int RedVSIIOElement::IsLocationKeyword(void) const
+const bool RedVSIIOElement::IsLocationKeyword(void) const
 {
-    if (IsKeywordAttribute()) return 1;
-    if (IsKeywordStack())     return 1;
-    if (IsKeywordHeap())      return 1;
+    if (IsKeywordAttribute()) return true;
+    if (IsKeywordStack())     return true;
+    if (IsKeywordHeap())      return true;
 
-    return 0;
+    return false;
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-const int RedVSIIOElement::IsTypeKeyword(void) const
+const bool RedVSIIOElement::IsTypeKeyword(void) const
 {
-    if (IsKeywordArray())  return 1;
-    if (IsKeywordBool())   return 1;
-    if (IsKeywordChar())   return 1;
-    if (IsKeywordNumber()) return 1;
-    if (IsKeywordString()) return 1;
+    if (IsKeywordArray())  return true;
+    if (IsKeywordBool())   return true;
+    if (IsKeywordChar())   return true;
+    if (IsKeywordNumber()) return true;
+    if (IsKeywordString()) return true;
 
-    return 0;
+    return false;
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-const int RedVSIIOElement::IsCommandKeyword(void) const
+const bool RedVSIIOElement::IsCommandKeyword(void) const
 {  
-    if (IsKeywordNew())     return 1;
-    if (IsKeywordLet())     return 1;
-    if (IsKeywordIf())      return 1;
-    if (IsKeywordElse())    return 1;
-    if (IsKeywordEndif())   return 1;
-    if (IsKeywordWhile())   return 1;
-    if (IsKeywordLoop())    return 1;
-    if (IsKeywordEndloop()) return 1;
-    if (IsKeywordReturn())  return 1;
+    if (IsKeywordNew())     return true;
+    if (IsKeywordLet())     return true;
+    if (IsKeywordIf())      return true;
+    if (IsKeywordElse())    return true;
+    if (IsKeywordEndif())   return true;
+    if (IsKeywordWhile())   return true;
+    if (IsKeywordLoop())    return true;
+    if (IsKeywordEndloop()) return true;
+    if (IsKeywordReturn())  return true;
 
-    return 0;
+    return false;
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-const int RedVSIIOElement::IsLibraryKeyword(void) const
+const bool RedVSIIOElement::IsLibraryKeyword(void) const
 {
-    if (IsKeywordName())    return 1;
-    if (IsKeywordClass())   return 1;
-    if (IsKeywordRoutine()) return 1;
-    if (IsKeywordParams())  return 1;
-    if (IsKeywordParent())  return 1;
+    if (IsKeywordName())    return true;
+    if (IsKeywordClass())   return true;
+    if (IsKeywordRoutine()) return true;
+    if (IsKeywordParams())  return true;
+    if (IsKeywordParent())  return true;
 
-    return 0;
+    return false;
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-const int RedVSIIOElement::IsOperatorSymbol(void) const
+const bool RedVSIIOElement::IsOperatorSymbol(void) const
 {
-    if (IsAssignOpSymbol())      return 1;
-    if (IsLogicOpSymbol())       return 1;
-    if (IsBinaryLogicOpSymbol()) return 1;
-    if (IsCompareOpSymbol())     return 1;
+    if (IsAssignOpSymbol())      return true;
+    if (IsLogicOpSymbol())       return true;
+    if (IsBinaryLogicOpSymbol()) return true;
+    if (IsCompareOpSymbol())     return true;
 
-    return 0;
+    return false;
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-const int RedVSIIOElement::IsAssignOpSymbol(void) const
+const bool RedVSIIOElement::IsAssignOpSymbol(void) const
 {
-    if (IsSymbolAssignDivide())   return 1;
-    if (IsSymbolAssignEqual())    return 1;
-    if (IsSymbolAssignMinus())    return 1;
-    if (IsSymbolAssignMultiply()) return 1;
-    if (IsSymbolAssignPlus())     return 1;
+    if (IsSymbolAssignDivide())   return true;
+    if (IsSymbolAssignEqual())    return true;
+    if (IsSymbolAssignMinus())    return true;
+    if (IsSymbolAssignMultiply()) return true;
+    if (IsSymbolAssignPlus())     return true;
 
-    return 0;
+    return false;
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-const int RedVSIIOElement::IsLogicOpSymbol(void) const
+const bool RedVSIIOElement::IsLogicOpSymbol(void) const
 {
-    if (IsSymbolLogicAnd()) return 1;
-    if (IsSymbolLogicOr())  return 1;
-    if (IsSymbolLogicNot()) return 1;
+    if (IsSymbolLogicAnd()) return true;
+    if (IsSymbolLogicOr())  return true;
+    if (IsSymbolLogicNot()) return true;
 
-    return 0;
+    return false;
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-const int RedVSIIOElement::IsBinaryLogicOpSymbol(void) const
+const bool RedVSIIOElement::IsBinaryLogicOpSymbol(void) const
 {
-    if (IsSymbolLogicAnd()) return 1;
-    if (IsSymbolLogicOr())  return 1;
+    if (IsSymbolLogicAnd()) return true;
+    if (IsSymbolLogicOr())  return true;
 
-    return 0;
+    return false;
 }
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-const int RedVSIIOElement::IsCompareOpSymbol(void) const
+const bool RedVSIIOElement::IsCompareOpSymbol(void) const
 {
-    if (IsSymbolCompareEqual())       return 1;
-    if (IsSymbolCompareNotEqual())    return 1;
-    if (IsSymbolCompareLessThan())    return 1;
-    if (IsSymbolCompareGreaterThan()) return 1;
+    if (IsSymbolCompareEqual())       return true;
+    if (IsSymbolCompareNotEqual())    return true;
+    if (IsSymbolCompareLessThan())    return true;
+    if (IsSymbolCompareGreaterThan()) return true;
 
-    return 0;
-}
-
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-const int RedVSIIOElement::IsBinaryOpSymbol(void) const
-{
-    if (IsSymbolAssignDivide())       return 1;
-    if (IsSymbolAssignEqual())        return 1;
-    if (IsSymbolAssignMinus())        return 1;
-    if (IsSymbolAssignMultiply())     return 1;
-    if (IsSymbolAssignPlus())         return 1;
-
-    if (IsSymbolCompareEqual())       return 1;
-    if (IsSymbolCompareNotEqual())    return 1;
-    if (IsSymbolCompareLessThan())    return 1;
-    if (IsSymbolCompareGreaterThan()) return 1;
-
-    if (IsSymbolLogicAnd())           return 1;
-    if (IsSymbolLogicOr())            return 1;
-
-    return 0;
+    return false;
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-const int RedVSIIOElement::IsSeparatorSymbol(void) const
+const bool RedVSIIOElement::IsBinaryOpSymbol(void) const
 {
-    if (IsSymbolStringContent()) return 1;
-    if (IsSymbolOpenBracket())   return 1;
-    if (IsSymbolCloseBracket())  return 1;
-    if (IsSymbolComma())         return 1;
-    if (IsSymbolPeriod())        return 1;
-    if (IsSymbolDoubleColon())   return 1;
+    if (IsSymbolAssignDivide())       return true;
+    if (IsSymbolAssignEqual())        return true;
+    if (IsSymbolAssignMinus())        return true;
+    if (IsSymbolAssignMultiply())     return true;
+    if (IsSymbolAssignPlus())         return true;
 
-    return 0;
+    if (IsSymbolCompareEqual())       return true;
+    if (IsSymbolCompareNotEqual())    return true;
+    if (IsSymbolCompareLessThan())    return true;
+    if (IsSymbolCompareGreaterThan()) return true;
+
+    if (IsSymbolLogicAnd())           return true;
+    if (IsSymbolLogicOr())            return true;
+
+    return false;
+}
+
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+const bool RedVSIIOElement::IsSeparatorSymbol(void) const
+{
+    if (IsSymbolStringContent()) return true;
+    if (IsSymbolOpenBracket())   return true;
+    if (IsSymbolCloseBracket())  return true;
+    if (IsSymbolComma())         return true;
+    if (IsSymbolPeriod())        return true;
+    if (IsSymbolDoubleColon())   return true;
+
+    return false;
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
