@@ -52,7 +52,7 @@ public:
 
 private:
 
-    int IsSuccessVal(RedVariant& cVal);
+    bool IsSuccessVal(RedVariant& cVal);
 
     RedVSIParseTreeInterface* pCmdExpr;
     RedVSICmdInterface*       pPosBranch;

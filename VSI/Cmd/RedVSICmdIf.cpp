@@ -66,7 +66,7 @@ void RedVSICmdIf::QueueExpr(RedVSIContextInterface* pContext)
 
 void RedVSICmdIf::Execute(RedVSIContextInterface* pContext)
 {
-    // regardless of the expression outcome, queue the next command
+    // Regardless of the expression outcome, queue the next command
     pContext->QueueCommand(NextCmd());
 
     // Get the result of the conditional expression
@@ -81,15 +81,15 @@ void RedVSICmdIf::Execute(RedVSIContextInterface* pContext)
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-int RedVSICmdIf::IsSuccessVal(RedVariant& cVal)
+bool RedVSICmdIf::IsSuccessVal(RedVariant& cVal)
 {
     if (cVal.Type().IsNum())
     {
         if (!cVal.NumberValue().IsZero())
-            return 1;
+            return true;
     }
     
-    return 0;
+    return false;
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

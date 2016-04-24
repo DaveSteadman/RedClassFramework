@@ -94,10 +94,8 @@ public:
 
 
     // Inherited Routine creation and control (RedVSIContextInterface)
-    RedVariant&     GetReturnValue(void) { return cReturnValue; };
-
-RedVariant&  ValueToReturn(void) { return cReturnValue; };
-void SetReturnedValue(const RedVariant& cData);
+    RedVariant&  ValueToReturn(void)  { return cReturnValue; };
+    void         SetReturnedValue(const RedVariant& cData);
 
 
     //void            SetSubroutineReturnValue(RedVariant& cData);

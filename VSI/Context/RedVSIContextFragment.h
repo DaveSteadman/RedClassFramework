@@ -67,7 +67,7 @@ public:
     bool            IsBlocked(const RedVSIContextInterface* pRoutineContext) { return false; };
     void            QueueCommand(RedVSICmdInterface* pCmd)                   { cCmdStack.Push(pCmd); };
     void            ClearCommandQueue(void)                                  { cCmdStack.DelAll(); };
-    void            SetValueToReturn(const RedVariant& cData)                  { };
+    void            SetValueToReturn(const RedVariant& cData)                { };
 
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 

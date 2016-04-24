@@ -71,11 +71,16 @@ void RedVSICmdNew::Execute(RedVSIContextInterface* pContext)
 {
     RedType* pData = 0;
 
-    // create the new data item
+    // Call the context with the details, so it can create the new data item.
+    // Pointer to new item returned
     pData = pContext->CreateDataItem(cLoc, cType, cName);
 
+    // Check we created a data item
+    if (pData == REDNULL)
+        throw;
+
     // if we have an initialisation expression for the data item
-    if ( pInitExpr )
+    if (pInitExpr != REDNULL)
     {
         RedVariant cInitExprResult = pContext->ExprResult(pInitExpr);
 

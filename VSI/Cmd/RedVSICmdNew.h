@@ -31,6 +31,8 @@ namespace VSI {
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
+/// A new command creates a data item, with a specific name and in a specific location (stack or heap)
+/// The data item has an optional initialising expression.
 class RedVSICmdNew : public RedVSICmdInterface
 {
 public:
@@ -52,8 +54,8 @@ public:
     void SetInitExpr(RedVSIParseTreeInterface* pNewInitExpr) { pInitExpr=pNewInitExpr; };
 
     // Wholesale access/assign operations
-    void SetDetails(const RedVSILangElement& cInType,  const RedVSILangElement& cInLoc, const RedString& cInName, RedVSIParseTreeInterface* pInInitExpr);
-    void GetDetails(RedVSILangElement& cOutType, RedVSILangElement& cOutLoc, RedString& cOutName, RedVSIParseTreeInterface*& pOutInitExpr) const;
+    void SetDetails(const RedVSILangElement& cInType,  const RedVSILangElement& cInLoc, const RedString& cInName,  RedVSIParseTreeInterface* pInInitExpr);
+    void GetDetails(      RedVSILangElement& cOutType,       RedVSILangElement& cOutLoc,      RedString& cOutName, RedVSIParseTreeInterface*& pOutInitExpr) const;
 
 private:
     

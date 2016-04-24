@@ -18,63 +18,36 @@
 
 #pragma once
 
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
+#include "RedWordWebTriple.h"
 #include "RedCoreNamespace.h"
-#include "RedVSILangElement.h"
-#include "RedVSILibInterface.h"
 
 using namespace Red::Core;
 
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
 namespace Red {
-namespace VSI {
+namespace Exp {
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-class RedVSIContextRoutine;
-typedef RedStackLIFO<RedVSIContextRoutine*> RedVSIRoutineContextStack;
-
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-class RedVSIContextThread2
+/// Top level class and interface to the system
+class RedWordGhost
 {
 public:
+    RedWordGhost();
 
-    RedVSIContextThread2(void) { pCodeLib = REDNULL; };
-
-	// Code Library
-    void                       SetCodeLib(RedVSILibInterface* pNewCodeLib) { pCodeLib = pNewCodeLib; };
-    const RedVSILibInterface*  CodeLib(void) const                         { return pCodeLib; };
-
-	// Heap Data
-    RedType*                   CreateHeapDataItem(const RedVSILangElement& cType, const RedString& cName);
-    bool                       FindHeapDataItem(const RedString& cName, RedType*& pData);
-    RedRecord*                 Heap(void) { return &cHeap; };
-
-	// Routine Stack
-	RedVSIContextRoutine*      TopRoutineOnStack(void);
-	void                       PushRoutineOnStack(RedVSIContextRoutine* newRtn);
-	RedVSIContextRoutine*      PopRoutineOffStack(void);
-    const unsigned             NumRoutinesOnStack(void) const { return cRoutineStack.NumItems(); };
-
-    // Routine Execution
-    void                       Execute(const unsigned NumCmd);
+    /// Main string-in-string-out routine.
+    const RedString Converse(const RedString& InSentence);
 
 private:
 
-    // A stack of all routine context. The top of the stack is the curently executing.
-    RedVSIRoutineContextStack cRoutineStack;
+    void InputSentenceCompetition(const RedString& InSentence);
 
-    // Code library
-    const RedVSILibInterface* pCodeLib;
-
-    // Data attributes
-    RedRecord cHeap;
 };
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-} // VSI
+} // Exp
 } // Red
+
+
+
+
