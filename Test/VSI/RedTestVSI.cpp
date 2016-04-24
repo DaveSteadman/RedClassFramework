@@ -520,6 +520,14 @@ RedResult RedTestVSI::TestRunProg_001(void)
                 } \
               } \
               {{routine} \
+                {{name}TestCall} \
+                {{code} \
+                  new local number x1 = 1234 \
+                  new local number x2 = 0 \
+                  x2 = TestRoutines::Halve(x1) \
+                } \
+              } \
+              {{routine} \
                 {{name}TestExecute} \
                 {{code} \
                   new local number varX = 3.14159 \
@@ -550,18 +558,34 @@ RedResult RedTestVSI::TestRunProg_001(void)
             return kResultFail;
 
         // Execute code
-        RedVSILibRoutineInterface* pRtn = vsiCodeLib.FindRoutine("TestRoutines", "TestExecute");
-        RedVSIContextRoutine cntxt("TestRoutines", "TestExecute", pRtn->FirstCommand(), log);
+        {
+//            RedVSILibRoutineInterface* pRtn = vsiCodeLib.FindRoutine("TestRoutines", "TestExecute");
+//            RedVSIContextRoutine cntxt("TestRoutines", "TestExecute", pRtn->FirstCommand(), log);
+//
+//            RedVSIContextThread2 tc;
+//            cntxt.SetThreadContextRecord(&tc);
+//            tc.PushRoutineOnStack(&cntxt);
+//
+//
+//            cntxt.Execute(10);
+//
+//            if (log.IsError()) return kResultFail;
+        }
 
-        RedVSIContextThread2 tc;
-        cntxt.SetThreadContextRecord(&tc);
-        tc.PushRoutineOnStack(&cntxt);
+        {
+            RedVSILibRoutineInterface* pRtn = vsiCodeLib.FindRoutine("TestRoutines", "TestCall");
+            RedVSIContextRoutine cntxt("TestRoutines", "TestCall", pRtn->FirstCommand(), log);
 
+            RedVSIContextThread2 tc;
+            cntxt.SetThreadContextRecord(&tc);
+            tc.PushRoutineOnStack(&cntxt);
+            tc.SetCodeLib(&vsiCodeLib);
 
-        cntxt.Execute(10);
+//            cntxt.Execute(10);
+            tc.Execute(10);
 
-        if (log.IsError()) return kResultFail;
-        
+            if (log.IsError()) return kResultFail;
+        }
 
     }
     return kResultSuccess;

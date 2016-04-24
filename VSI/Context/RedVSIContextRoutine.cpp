@@ -20,7 +20,9 @@
 //#include "CDataArray.h"
 #include "RedVSILibInterface.h"
 #include "RedVSIParseStackTraverser.h"
+#include "RedVSICollections.h"
 
+#include "RedCoreNamespace.h"
 using namespace Red::Core;
 
 namespace Red {
@@ -36,7 +38,7 @@ RedVSIContextRoutine::RedVSIContextRoutine(RedLog& initAnalysis) : cAnalysis(ini
 
     cReturnValue.Init();
     pCurrCmd       = REDNULL;
-    pContextRecord = REDNULL;
+    pThreadContextRecord = REDNULL;
 
     eCmdPhase = eCmdExecPhaseStart;
 }
@@ -49,7 +51,7 @@ RedVSIContextRoutine::RedVSIContextRoutine(RedLog& initAnalysis, RedVSICmdInterf
 
     cReturnValue.Init();
     pCurrCmd       = pFirstCmd;
-    pContextRecord = REDNULL;
+    pThreadContextRecord = REDNULL;
 
     eCmdPhase = eCmdExecPhaseStart;
 }
@@ -61,7 +63,7 @@ RedVSIContextRoutine::RedVSIContextRoutine(const RedString& inClassName, const R
     ClassName      = inClassName;
     RoutineName    = inRoutineName;
     pCurrCmd       = pFirstCmd;
-    pContextRecord = REDNULL;
+    pThreadContextRecord = REDNULL;
 
     eCmdPhase = eCmdExecPhaseStart;
 }
@@ -114,9 +116,34 @@ RedType* RedVSIContextRoutine::CreateDataItem(const RedVSILangElement& cLocation
     }
     else if (cLocation.IsLocationHeap())
     {
-        if (pContextRecord != REDNULL)
+        if (pThreadContextRecord != REDNULL)
         {
-            pNewData = pContextRecord->CreateHeapDataItem(cType, cName);
+            pNewData = pThreadContextRecord->CreateHeapDataItem(cType, cName);
+        }
+    }
+
+    // return the pointer to the new object (or zero)
+    return pNewData;
+}
+
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+RedType* RedVSIContextRoutine::DuplicateDataItem(const RedVSILangElement& cLocation, const RedType* pDataItem, const RedString& cName)
+{
+    RedType* pNewData = pDataItem->Clone();
+
+    // Basic Validation
+    if (!cLocation.IsLocation()) throw;
+
+    if (cLocation.IsLocationStack())
+    {
+        cLocalVariables.Add(cName, pNewData);
+    }
+    else if (cLocation.IsLocationHeap())
+    {
+        if (pThreadContextRecord != REDNULL)
+        {
+            pThreadContextRecord->Heap()->Add(cName, pNewData);
         }
     }
 
@@ -132,9 +159,9 @@ bool RedVSIContextRoutine::FindDataItem(const RedString& cName, RedType*& pData)
     if (cLocalVariables.Find(cName, pData))
         return true;
 
-    if (pContextRecord != REDNULL)
+    if (pThreadContextRecord != REDNULL)
     {
-        if (pContextRecord->FindHeapDataItem(cName, pData))
+        if (pThreadContextRecord->FindHeapDataItem(cName, pData))
             return true;
     }
 
@@ -143,13 +170,24 @@ bool RedVSIContextRoutine::FindDataItem(const RedString& cName, RedType*& pData)
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-void RedVSIContextRoutine::SetReturnValue(const RedVariant& cData)
+void RedVSIContextRoutine::SetValueToReturn(const RedVariant& cData)
+{
+    cReturnValue = cData;
+}
+
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+void RedVSIContextRoutine::SetReturnedValue(const RedVariant& cData)
 {
     // if we don't have an expression to write the data to, there is a serious issue.
     if (pCurrExpr != REDNULL)
+    {
         cExprResultList.Add(pCurrExpr, cData);
+    }
     else
+    {
         throw;
+    }
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -180,42 +218,104 @@ RedVariant RedVSIContextRoutine::ExprResult(RedVSIParseTreeInterface* pExpr)
 
 void RedVSIContextRoutine::ExecuteExprQueue(void)
 {
-    int iBlocked = IsBlocked(this);
+    int iBlocked = IsContextBlocked(this);
     while ( (!cExprStack.IsEmpty()) && (!iBlocked) )
     {
         pCurrExpr = cExprStack.Pop();
         pCurrExpr->CalcResult(this);
-        iBlocked = IsBlocked(this);
+
+        // pCurrExpr is a context attribute, left setup at the latest routine-call node when
+        // it becomes blocked.
+        iBlocked = IsContextBlocked(this);
     }
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-void RedVSIContextRoutine::SetupRoutineCall(const RedVSIRoutineCallInterface& cSignature)
+void RedVSIContextRoutine::SetupRoutineCall(const RedVSIRoutineCallInterface& cCallSignature)
 {
-    if (pContextRecord != REDNULL)
+    if (pThreadContextRecord != REDNULL)
     {
-        const RedVSILibInterface* pLib = pContextRecord->CodeLib();
-        RedVSILibRoutineInterface* pRtn = pLib->FindRoutine(cSignature);
-    }
-    // If there is no context-thread
-    else
-    {
+        const RedVSILibInterface* pLib = pThreadContextRecord->CodeLib();
+
+        if (pLib != REDNULL)
+        {
+            RedVSILibRoutineInterface* pRtn = pLib->FindRoutine(cCallSignature);
+
+            // If we found a routine in the library that matched the signature
+            if (pRtn != REDNULL)
+            {
+                // Create the new routine context
+                RedVSIContextRoutine* pSubroutineContext = new RedVSIContextRoutine(cCallSignature.ClassName(), cCallSignature.FuncName(), pRtn->FirstCommand(), cAnalysis);
+
+                // Add the params as local vars - the types will have been validated on selecting the routine in the library
+                // We iterate through the signature to get the names, and the call params to get the values.
+                {
+                    unsigned RtnLibParamFirstIndex  = pRtn->Params()->FirstIndex();
+                    unsigned RtnLibParamLastIndex   = pRtn->Params()->LastIndex();
+                    unsigned RtnCallParamFirstIndex = cCallSignature.Params()->FirstIndex();
+                    unsigned RtnCallParamLastIndex  = cCallSignature.Params()->LastIndex();
+
+                    if (RtnLibParamFirstIndex != RtnCallParamFirstIndex) throw;
+                    if (RtnLibParamLastIndex  != RtnCallParamLastIndex)  throw;
+
+                    RedString         CurrLibParamName;
+                    RedVariant        CurrCallParamData;
+
+                    for (unsigned CurrParamIndex = RtnLibParamFirstIndex; CurrParamIndex <= RtnLibParamLastIndex; CurrParamIndex++)
+                    {
+                        // Get name from library param list
+                        pRtn->Params()->FindIdByIndex(CurrParamIndex, CurrLibParamName);
+
+                        // Get data from call
+                        cCallSignature.Params()->FindElementAtIndex(CurrParamIndex, CurrCallParamData);
+
+                        // Add new local variable to the new routine
+                       pSubroutineContext->DuplicateDataItem(kLangElementLocationStack, CurrCallParamData.Value(), CurrLibParamName);
+                    }
+                }
+
+                // Add the thread context
+                pSubroutineContext->SetThreadContextRecord(pThreadContextRecord);
+
+                // Push the routine on the stack - At this point, the current context is no longer the top of the stack and is considered blocked.
+                pThreadContextRecord->PushRoutineOnStack(pSubroutineContext);
+            }
+        }
     }
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 /// Routine is blocked if it is not the top routine on the thread-record routine stack.
 
-bool RedVSIContextRoutine::IsBlocked(const RedVSIContextInterface* pRoutineContext)
+bool RedVSIContextRoutine::IsContextBlocked(const RedVSIContextRoutine* pRoutineContext) const
 {
-    if (pContextRecord != REDNULL)
+    if (pRoutineContext == REDNULL)
+        return false;
+
+    if (pRoutineContext->pThreadContextRecord != REDNULL)
     {
-        if (pContextRecord->TopRoutineOnStack() != this)
-            return false;
+        if (pRoutineContext->pThreadContextRecord->TopRoutineOnStack() != this)
+            return true;
     }
 
     return false;
+}
+
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+bool RedVSIContextRoutine::IsContextExecutionComplete(const RedVSIContextRoutine* pRoutineContext) const
+{
+    if (pRoutineContext == REDNULL)
+        return false;
+
+    if (IsContextBlocked(pRoutineContext))
+        return false;
+
+    if (pRoutineContext->HasCmdToExecute())
+        return false;
+
+    return true;
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -232,7 +332,7 @@ void RedVSIContextRoutine::Execute(const unsigned CmdCount)
 {
     unsigned CommandCountdown = CmdCount;
 
-    while ( (CommandCountdown > 0) && (pCurrCmd != REDNULL) )
+    while ( (CommandCountdown > 0) && (pCurrCmd != REDNULL) && (!IsContextBlocked(this)) )
     {
         if (eCmdPhase == eCmdExecPhaseStart)
         {
@@ -241,7 +341,7 @@ void RedVSIContextRoutine::Execute(const unsigned CmdCount)
             eCmdPhase = eCmdExecPhaseExprExecuting;
         }
 
-        if ( (eCmdPhase == eCmdExecPhaseExprExecuting) && (!IsBlocked(this)) )
+        if ( (eCmdPhase == eCmdExecPhaseExprExecuting) && (!IsContextBlocked(this)) )
         {
             ExecuteExprQueue();
             
@@ -254,21 +354,21 @@ void RedVSIContextRoutine::Execute(const unsigned CmdCount)
             // Execute the command (it will queue the next command as part of its execution)
             pCurrCmd->Execute(this);
 
-            // An ending command-path can pop a Null. As long as we have further entries to Pop, look for a non-null
-            pCurrCmd = cCmdStack.Pop();
-            while ((pCurrCmd == REDNULL) && (!cCmdStack.IsEmpty()))
+            // Look for the next command to execute
+            pCurrCmd = REDNULL;
+            if (!cCmdStack.IsEmpty())
                 pCurrCmd = cCmdStack.Pop();
 
             eCmdPhase = eCmdExecPhaseStart;
+            cExprResultList.DelAll();
         }
-
     }
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-bool RedVSIContextRoutine::HasCmdToExecute(void)
-{ 
+bool RedVSIContextRoutine::HasCmdToExecute(void) const
+{
     if (!cCmdStack.IsEmpty()) return true;
     if (pCurrCmd) return true;
     

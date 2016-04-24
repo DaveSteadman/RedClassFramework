@@ -53,8 +53,8 @@ public:
     const RedString   ObjectName     (void)                            const { return cObjName;   };
     const RedString   FuncName       (void)                            const { return cFuncName;  };
 
-    const RedVSIVariantList Params(void)                         const { return cParams; };
-    void                    AddParam(const RedVariant& newParam)       { cParams.AddLast(newParam); };
+    const RedVSIVariantList* Params(void)                         const { return &cParams; };
+    void                     AddParam(const RedVariant& newParam)       { cParams.AddLast(newParam); };
 
     void operator =(const RedVSIRoutineCallInterface& cSig);
 

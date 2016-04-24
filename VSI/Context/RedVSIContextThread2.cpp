@@ -18,6 +18,7 @@
 
 #include "RedCoreNamespace.h"
 #include "RedVSIContextThread2.h"
+#include "RedVSIContextRoutine.h"
 
 using namespace Red::Core;
 
@@ -80,6 +81,43 @@ RedVSIContextRoutine* RedVSIContextThread2::PopRoutineOffStack(void)
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+// Top level routines
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+void RedVSIContextThread2::Execute(const unsigned NumCmd)
+{
+    unsigned decementingCmdCount = NumCmd;
+
+    RedVSIContextRoutine* pTopRoutineContext = TopRoutineOnStack();
+
+    while (pTopRoutineContext != REDNULL)
+    {
+        pTopRoutineContext->Execute(decementingCmdCount);
+
+        // Refresh the top routine on the stack and see if its execution is complete
+        pTopRoutineContext = TopRoutineOnStack();
+        if (pTopRoutineContext != REDNULL)
+        {
+            // Its execution is complete
+            if (pTopRoutineContext->IsContextExecutionComplete(pTopRoutineContext))
+            {
+                // copy the return value to the calling routine
+                RedVariant retval = pTopRoutineContext->ValueToReturn();
+
+                // remove the record from the routine stack
+                PopRoutineOffStack();
+
+                pTopRoutineContext = TopRoutineOnStack();
+                pTopRoutineContext->SetReturnedValue(retval);
+            }
+        }
+
+        pTopRoutineContext = TopRoutineOnStack();
+    }
+}
+
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 } // VSI
 } // Red
+

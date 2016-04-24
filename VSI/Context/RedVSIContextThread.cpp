@@ -108,7 +108,7 @@ void RedVSIContextThread::SetReturnValue(const RedVariant& cData)
     RedVSIContextRoutine* pCurrRoutine = cRoutineStack.NextPopItem();
 
     if (pCurrRoutine)
-        pCurrRoutine->SetReturnValue(cData);
+        pCurrRoutine->SetReturnedValue(cData);
     else
         cAnalysis.AddErrorEvent("AssignReturnValue with no routine context");
 }

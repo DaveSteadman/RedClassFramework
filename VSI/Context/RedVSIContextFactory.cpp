@@ -70,15 +70,15 @@ RedResult RedVSIContextFactory::CreateContextForFragment(const RedString& InputC
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-RedResult RedVSIContextFactory::CreateThreadContextForRoutine(RedVSIRoutineCallInterface& cInputRoutineCall, RedVSILibInterface* pInputLib, RedVSIContextThread** OutputContext, RedLog& cLog)
-{
-    // Find the routine to execute
-    //RedVSILibRoutineInterface* LibRoutine = pInputLib->FindRoutine(cInputRoutineCall);
-
-    *OutputContext = new RedVSIContextThread(pInputLib, cInputRoutineCall);
-
-    return kResultSuccess;
-}
+//RedResult RedVSIContextFactory::CreateThreadContextForRoutine(RedVSIRoutineCallInterface& cInputRoutineCall, RedVSILibInterface* pInputLib, RedVSIContextThread** OutputContext, RedLog& cLog)
+//{
+//    // Find the routine to execute
+//    //RedVSILibRoutineInterface* LibRoutine = pInputLib->FindRoutine(cInputRoutineCall);
+//
+//    *OutputContext = new RedVSIContextThread(pInputLib, cInputRoutineCall);
+//
+//    return kResultSuccess;
+//}
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 

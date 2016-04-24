@@ -23,7 +23,7 @@
 //#include "RedCoreNamespace.h"
 
 #include "RedVSIContextRoutine.h"
-#include "RedVSIContextThread.h"
+//#include "RedVSIContextThread.h"
 #include "RedVSILibRoutineInterface.h"
 #include "RedVSIContextFragment.h"
 #include "RedVSILibInterface.h"
@@ -52,12 +52,12 @@ public:
 //        RedVSILibInterface*    pInputLib,
 //        RedVSIContextRoutine** OutputContext,
 //        RedLog&                cLog);
-
-    RedResult CreateThreadContextForRoutine(
-        RedVSIRoutineCallInterface&  cInputRoutineCall,
-        RedVSILibInterface*          pInputLib,
-        RedVSIContextThread**        OutputContext,
-        RedLog&                      cLog);
+//
+//    RedResult CreateThreadContextForRoutine(
+//        RedVSIRoutineCallInterface&  cInputRoutineCall,
+//        RedVSILibInterface*          pInputLib,
+//        RedVSIContextThread**        OutputContext,
+//        RedLog&                      cLog);
 };
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

@@ -42,6 +42,8 @@ class RedVSIContextThread2
 {
 public:
 
+    RedVSIContextThread2(void) { pCodeLib = REDNULL; };
+
 	// Code Library
     void                       SetCodeLib(RedVSILibInterface* pNewCodeLib) { pCodeLib = pNewCodeLib; };
     const RedVSILibInterface*  CodeLib(void)                         const { return pCodeLib; };
@@ -54,10 +56,15 @@ public:
 	RedVSIContextRoutine* TopRoutineOnStack(void);
 	void                  PushRoutineOnStack(RedVSIContextRoutine* newRtn);
 	RedVSIContextRoutine* PopRoutineOffStack(void);
+    const unsigned        NumRoutinesOnStack(void) const { return cRoutineStack.NumItems(); };
 
+    void   Execute(const unsigned NumCmd);
+
+    RedRecord* Heap(void) { return &cHeap; };
+    
 private:
 
-    // Routine Context
+    // A stack of all routine context. The top of the stack is the curently executing.
     RedVSIRoutineContextStack cRoutineStack;
 
     // Code library

@@ -50,6 +50,7 @@ public:
 
     // Data accessors (RedVSIContextInterface)
     RedType*        CreateDataItem(const RedVSILangElement& cLocation, const RedVSILangElement& cType, const RedString& cName);
+    RedType*        DuplicateDataItem(const RedVSILangElement& cLocation, const RedType* pDataItem, const RedString& cName);
     bool            FindDataItem  (const RedString& cName, RedType*& pData);
 
     // Inhertied Expressions (RedVSIContextInterface)
@@ -66,7 +67,7 @@ public:
     bool            IsBlocked(const RedVSIContextInterface* pRoutineContext) { return false; };
     void            QueueCommand(RedVSICmdInterface* pCmd)                   { cCmdStack.Push(pCmd); };
     void            ClearCommandQueue(void)                                  { cCmdStack.DelAll(); };
-    void            SetReturnValue(const RedVariant& cData)                  { };
+    void            SetValueToReturn(const RedVariant& cData)                  { };
 
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 

@@ -18,6 +18,8 @@
 
 #include "RedVSIParseTreeCall.h"
 
+#include "RedVSIContextThread2.h"
+
 namespace Red {
 namespace VSI {
 
@@ -78,7 +80,7 @@ void RedVSIParseTreeCall::CalcResult(RedVSIContextInterface* pContext)
     RedVSIRoutineCallInterface cCall;
 
     // Assign the object anbd class information, even if its blank
-    cCall.SetupCall(cObjectName, cClassName, cFuncName);
+    cCall.SetupCall(cClassName, cObjectName, cFuncName);
 
     // loop through the params list to calculate any we don't have a result for
     RedVSIParseListIterator cParseIt(pParamList);
@@ -88,6 +90,8 @@ void RedVSIParseTreeCall::CalcResult(RedVSIContextInterface* pContext)
         // get the current parameter
         RedVSIParseTreeInterface* pCurrParam = cParseIt.CurrentItem();
 
+        RedVariant r = pContext->ExprResult(pCurrParam);
+
         // add the result of the expr to the param list
         cCall.AddParam(pContext->ExprResult(pCurrParam));
         
@@ -95,7 +99,8 @@ void RedVSIParseTreeCall::CalcResult(RedVSIContextInterface* pContext)
         cParseIt.Next();
     }
 
-    //pContext->SetupRoutineCall(cCall);
+    // Call the context to setup the new routine call
+    pContext->SetupRoutineCall(cCall);
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

@@ -36,13 +36,13 @@ const bool RedVSILibRoutine::IsMatching(const RedVSIRoutineCallInterface& cSig)
         return false;
 
     RedVSIStringLangElementMap* LibParamList  = Params();
-    RedVSIVariantList           CallParamList = cSig.Params();
+    const RedVSIVariantList*    CallParamList = cSig.Params();
 
-    if (LibParamList->NumItems() != CallParamList.NumItems())
+    if (LibParamList->NumItems() != CallParamList->NumItems())
         return false;
 
 
-    unsigned CallParamIndex = CallParamList.FirstIndex();
+    unsigned CallParamIndex = CallParamList->FirstIndex();
 
     RedString         CurrLibParamName;
     RedVSILangElement CurrLibDataType;
@@ -53,7 +53,7 @@ const bool RedVSILibRoutine::IsMatching(const RedVSIRoutineCallInterface& cSig)
         LibParamList->FindIdByIndex(LibParamIndex,   CurrLibParamName);
         LibParamList->FindDataByIndex(LibParamIndex, CurrLibDataType);
 
-        CallParamList.FindElementAtIndex(CallParamIndex, CurrCallParam);
+        CallParamList->FindElementAtIndex(CallParamIndex, CurrCallParam);
 
 
     }

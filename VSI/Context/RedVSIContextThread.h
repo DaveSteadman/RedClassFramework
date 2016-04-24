@@ -35,7 +35,7 @@ namespace VSI {
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-class RedVSIContextThread : public RedVSIContextInterface
+class RedVSIContextThread //: public RedVSIContextInterface
 {
 public:
 

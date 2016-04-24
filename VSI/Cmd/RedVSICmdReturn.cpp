@@ -54,7 +54,7 @@ void RedVSICmdReturn::Execute(RedVSIContextInterface* pContext)
         RedVariant res = pContext->ExprResult(pReturnExpr);
         
         // assign the return value
-        pContext->SetReturnValue(res);
+        pContext->SetValueToReturn(res);
     }
 
     // remove any commands from the queue, so the routine terminates.

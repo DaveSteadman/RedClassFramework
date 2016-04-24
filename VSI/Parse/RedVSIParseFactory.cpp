@@ -565,14 +565,14 @@ RedVSIParseTreeInterface* RedVSIParseFactory::RunExternalCallCompetition(RedVSIT
 
     if (!cUnitNameTok.Type().IsName())                { return 0; }
     //if (!cSeparatorTok.GetPredef().IsSymbolRoutineSeparator()) { return 0; }
-    if (!cFuncTok.Type().IsName())                    { return 0; }
-    if (!cOpenBracketTok.GetPredef().IsSymbolOpenBracket())    { return 0; }
+    if (!cFuncTok.Type().IsName())                    { return REDNULL; }
+    if (!cOpenBracketTok.GetPredef().IsSymbolOpenBracket())    { return REDNULL; }
 
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     
     // create a call object and assign the basic name information
-    RedVSIParseTreeCall*       pNewCmd    = new RedVSIParseTreeCall;
-    RedVSIParseList* pParamList = new RedVSIParseList;
+    RedVSIParseTreeCall* pNewCmd    = new RedVSIParseTreeCall;
+    RedVSIParseList*     pParamList = new RedVSIParseList;
 
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -581,7 +581,7 @@ RedVSIParseTreeInterface* RedVSIParseFactory::RunExternalCallCompetition(RedVSIT
     RedString cObjectName;
     if (cSeparatorTok.GetPredef().IsSymbolPeriod())
         cObjectName = cUnitNameTok.GetText();
-    else
+    else if (cSeparatorTok.GetPredef().IsSymbolDoubleColon())
         cClassName = cUnitNameTok.GetText();
 
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -622,7 +622,7 @@ RedVSIParseTreeInterface* RedVSIParseFactory::RunExternalCallCompetition(RedVSIT
                 log.AddText(cParamTok.GetPos().PosText() + RedVSIErrorCodes::GetErrorString(RedVSIErrorCodes::ePFact_Call_NoExpr));
                 delete pNewCmd; 
                 delete pParamList; 
-                return 0;
+                return REDNULL;
             }
         }
     }
@@ -646,8 +646,8 @@ RedVSIParseTreeInterface* RedVSIParseFactory::RunInternalCallCompetition(RedVSIT
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     
     // create a call object and assign the basic name information
-    RedVSIParseTreeCall*       pNewCmd    = new RedVSIParseTreeCall;
-    RedVSIParseList* pParamList = new RedVSIParseList;
+    RedVSIParseTreeCall* pNewCmd    = new RedVSIParseTreeCall;
+    RedVSIParseList*     pParamList = new RedVSIParseList;
 
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 

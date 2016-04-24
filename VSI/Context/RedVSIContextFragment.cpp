@@ -81,6 +81,24 @@ RedType* RedVSIContextFragment::CreateDataItem(const RedVSILangElement& cLocatio
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
+RedType* RedVSIContextFragment::DuplicateDataItem(const RedVSILangElement& cLocation, const RedType* pDataItem, const RedString& cName)
+{
+    RedType* pNewData = pDataItem->Clone();
+
+    // Basic Validation
+    if (!cLocation.IsLocation()) throw;
+
+    if (cLocation.IsLocationStack())
+    {
+        cLocalVariables.Add(cName, pNewData);
+    }
+
+    // return the pointer to the new object (or zero)
+    return pNewData;
+}
+
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
 bool RedVSIContextFragment::FindDataItem(const RedString& cName, RedType*& pData)
 {
     // first try and get the data from the local routine

@@ -46,14 +46,15 @@ class RedVSIContextInterface
 public:
 
     // Routine creation and control
-//    virtual void          SetupRoutineCall(const RedVSIRoutineCallInterface& cSignature) =0;
+    virtual void          SetupRoutineCall(const RedVSIRoutineCallInterface& cSignature) =0;
 //    virtual RedString     ClassName(void) const =0;
 //    virtual RedString     ObjectName(void) const =0;
 
     // Data accessors
     virtual RedType*      CreateDataItem(const RedVSILangElement& cLocation, const RedVSILangElement& cType, const RedString& cName) =0;
+    virtual RedType*      DuplicateDataItem(const RedVSILangElement& cLocation, const RedType* pDataItem, const RedString& cName) =0;
     virtual bool          FindDataItem  (const RedString& cName, RedType*& pData) =0;
-    virtual void          SetReturnValue(const RedVariant& cData) =0;
+    virtual void          SetValueToReturn(const RedVariant& cData) =0;
 
     // Expressions
     virtual void          QueueExpr(RedVSIParseTreeInterface* pExpr) =0;
@@ -62,13 +63,21 @@ public:
     virtual void          ExecuteExprQueue(void) =0;
 
     // Commands
-    virtual bool          IsBlocked(const RedVSIContextInterface* pRoutineContext) =0;
+    //virtual bool          IsContextBlocked(const RedVSIContextInterface* pRoutineContext) =0;
     virtual void          QueueCommand(RedVSICmdInterface* pCmd) =0;
     virtual void          ClearCommandQueue(void) =0;
+
+//    const bool            IsBlocked(void) const { return StateBlocked; };
+//    void                  SetBlockedState(const bool b) { StateBlocked = b; };
+//    const bool            IsExecutionComplete(void) const { return StateExecutionComplete; };
+//    void                  SetExecutionComplete(const bool b) { StateExecutionComplete = b; };
 
     // Error reporting and debugging
     virtual RedLog&       Log(void) =0;
 
+private:
+//    bool StateBlocked;
+//    bool StateExecutionComplete;
 };
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
