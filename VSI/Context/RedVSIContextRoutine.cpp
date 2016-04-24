@@ -344,7 +344,7 @@ void RedVSIContextRoutine::Execute(const unsigned CmdCount)
         if ( (eCmdPhase == eCmdExecPhaseExprExecuting) && (!IsContextBlocked(this)) )
         {
             ExecuteExprQueue();
-            
+
             if (cExprStack.IsEmpty())
                 eCmdPhase = eCmdExecPhaseCmdLogic;
         }

@@ -108,7 +108,10 @@ void RedVSIContextThread2::Execute(const unsigned NumCmd)
                 PopRoutineOffStack();
 
                 pTopRoutineContext = TopRoutineOnStack();
-                pTopRoutineContext->SetReturnedValue(retval);
+
+                // If there is a further routine on the stack, write to it (won't be for the last routine.
+                if (pTopRoutineContext != REDNULL)
+                    pTopRoutineContext->SetReturnedValue(retval);
             }
         }
 
