@@ -226,7 +226,7 @@ RedMapList<IdClass, DataClass>* RedMapList<IdClass, DataClass>::Clone(void)
     IdClass   cCurrId;
     DataClass cCurrData;
     
-    for (int i=0; i<NumItems(); i++)
+    for (unsigned i=0; i<NumItems(); i++)
     {
         FindIdByIndex(i, cCurrId);
         FindDataByIndex(i, cCurrData);
