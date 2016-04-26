@@ -145,7 +145,7 @@ public:
     // Operators
     void operator =(const RedVSILangElement cNewVal) { eType=cNewVal.eType; };
 
-    const bool iElem(void) const { return (int)eType; };
+    const int iElem(void) const { return (int)eType; };
 
 protected:
 
