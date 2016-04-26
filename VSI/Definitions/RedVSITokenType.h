@@ -39,13 +39,13 @@ public:
 	void SetWhitespace(void)                   { eState = eWhitespace; };
 	void SetPredefined(void)                   { eState = ePredefined; };
 	
-	int IsValid(void) const                    { return (eState != eDefaultInvalid); };
-	int IsNumber(void) const                   { return (eState == eNumber); };
-	int IsName(void) const                     { return (eState == eName); };
-	int IsStringLiteral(void) const            { return (eState == eStringLiteral); };
-	int IsNonPrintable(void) const             { return (eState == eNonPrintable); };
-	int IsWhitespace(void) const               { return (eState == eWhitespace); };
-	int IsPredefined(void) const               { return (eState == ePredefined); };
+	bool IsValid(void) const                   { return (eState != eDefaultInvalid); };
+	bool IsNumber(void) const                  { return (eState == eNumber); };
+	bool IsName(void) const                    { return (eState == eName); };
+	bool IsStringLiteral(void) const           { return (eState == eStringLiteral); };
+	bool IsNonPrintable(void) const            { return (eState == eNonPrintable); };
+	bool IsWhitespace(void) const              { return (eState == eWhitespace); };
+	bool IsPredefined(void) const              { return (eState == ePredefined); };
 	
 	static RedVSITokenType Number(void)        { return RedVSITokenType(eNumber); };
 	static RedVSITokenType Name(void)          { return RedVSITokenType(eName); };
