@@ -242,7 +242,7 @@ const RedString RedVariant::StringValue(void) const
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-#pragma mark - Operators
+// Operators
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 void RedVariant::operator =(const RedType* pNewData)
@@ -331,7 +331,7 @@ RedVariant RedVariant::operator/(const RedVariant& cVarData)
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-#pragma mark - Comparison Operators
+// Comparison Operators
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 bool operator==(const RedVariant& lhs, const RedVariant& rhs)
