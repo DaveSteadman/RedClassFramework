@@ -163,27 +163,30 @@ void RedVSIContextFragment::SetupRoutineCall(const RedVSIRoutineCallInterface& c
 
 void RedVSIContextFragment::Execute(const unsigned CmdCount)
 {
+    // Create and initialse the countdown
     unsigned CommandCountdown = CmdCount;
 
+	// No further execution on an error
+	if (cAnalysis.IsError())
+		return;
+
+	// Iterate until no command or count done
     while ( (CommandCountdown > 0) && (pCurrCmd != REDNULL) )
     {
         // Queue up all the expressions needed by the command
         pCurrCmd->QueueExpr(this);
         ExecuteExprQueue();
 
-        if (IsBlocked(this))
-        {
-            cAnalysis.AddErrorEvent("Expression blocked on running code fragment.");
-            return;
-        }
-
         // Execute the command (it will queue the next command as part of its execution)
         pCurrCmd->Execute(this);
 
         // An ending command-path can pop a Null. As long as we have further entries to Pop, look for a non-null
         pCurrCmd = cCmdStack.Pop();
-        while ((pCurrCmd == REDNULL) && (!cCmdStack.IsEmpty()))
-            pCurrCmd = cCmdStack.Pop();
+		while ((pCurrCmd == REDNULL) && (!cCmdStack.IsEmpty()))
+		{
+			pCurrCmd = cCmdStack.Pop();
+			CommandCountdown--;
+		}
     }
 }
 
