@@ -377,45 +377,6 @@ bool RedVSIContextRoutine::HasCmdToExecute(void) const
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-//void RedVSIContextRoutine::Execute(RedVSIInterfaceContext* pTopLevelContext)
-//{
-//    // Any command has the potential to affect the thread by adding a new (blocking) routine
-//    // call, so each call execs only one command before returning for the thread to make the 
-//    // next decision on what to do.
-//
-//    // if we have no command, get a new one and queue up the expressions
-//    if (!pCurrCmd)
-//    {
-//        // get the top level command
-//        pCurrCmd = cCmdStack.Pop();
-//
-//        // queue up all the expressions needed by the command
-//        pCurrCmd->QueueExpr(pTopLevelContext);
-//    }
-//
-//    // execute any expressions until we run out or get blocked
-//    int iBlocked = pTopLevelContext->IsBlocked(this);
-//    while ( (!cExprStack.IsEmpty()) && (!iBlocked) )
-//    {
-//        pCurrExpr = cExprStack.Pop();
-//        pCurrExpr->CalcResult(pTopLevelContext);
-//        iBlocked = pTopLevelContext->IsBlocked(this);
-//    }
-//    
-//    // if all the expressions have completed, move on to process the command
-//    if (!iBlocked)
-//    {
-//        pCurrCmd->Execute(pTopLevelContext);
-//
-//        // now clear out all the temp data associated with executing the command
-//        cWorkingList.DelAll();
-//        pCurrExpr = 0;
-//        pCurrCmd = 0;
-//    }
-//}
-
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
 } // VSI
 } // Red
 

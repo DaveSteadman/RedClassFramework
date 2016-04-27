@@ -60,7 +60,7 @@ const bool RedNumber::IsEqualTo(const RedNumber& CheckVal) const
     }
     else
     {
-        const double dVal      = DoubleValue();
+        const double dVal = DoubleValue();
 
         // Add / Subtract the tollerance to create the bounds
         const double dUpperBounds = CheckVal.DoubleValue() + kFloatCompTollerance;
@@ -108,40 +108,66 @@ const RedString RedNumber::DecimalString(void) const
     RedString   cRetStr;
     char        pChrBuf[iStrLen];
 
-    // initialise the string we're going to be using
+    // Initialise the string we're going to be using
     for(int i=0;i<iStrLen;i++) 
         pChrBuf[i] = '\0';
 
-    // assign the string depending on the type of the number
+    // Assign the string depending on the type of the number
     if (eNumType == eInt)
         snprintf(pChrBuf, iStrLen, "%d", iIntVal);
     else
         snprintf(pChrBuf, iStrLen, "%f", dblFloatVal);
 
-    // copy the string into the output core string object
+    // Copy the string into the output core string object
     cRetStr = pChrBuf;
     return cRetStr;
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-const RedString RedNumber::DecimalStringWithDP(const int decimalplaces) const
+/// @brief Convert the number into a string with specific formatting
+/// @param decimalplaces The number of characters after the decimal place.
+const RedString RedNumber::DecimalStringWithDP(const unsigned decimalplaces) const
 {
     const int  iStrLen = 32;
     char       formatstr[iStrLen];
     char       numstr[iStrLen];
     RedString  cRetStr;
 
-
+    double     dblVal = 0.0;
     if (eNumType == eInt)
-    {
-        snprintf(numstr, iStrLen, "%d", iIntVal);
-    }
+        dblVal = (double)iIntVal;
     else
-    {
-        snprintf(formatstr, iStrLen, "%%.%d%s", decimalplaces, "f");
-        snprintf(numstr, iStrLen, formatstr, dblFloatVal);
-    }
+        dblVal = dblFloatVal;
+
+    snprintf(formatstr, iStrLen, "%%.%d%s", decimalplaces, "f");
+    snprintf(numstr, iStrLen, formatstr, dblVal);
+
+    // copy the string into the output core string object
+    cRetStr = numstr;
+    return cRetStr;    
+}
+
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+/// Convert the number into a string with specific formatting
+/// @param minchars      The minimum number of characters to make up the output string, including a decimal place.
+/// @param decimalplaces The number of characters after the decimal place.
+const RedString RedNumber::DecimalStringWithMinDigitsAndDP(const unsigned minchars, const unsigned decimalplaces) const
+{
+    const int  iStrLen = 32;
+    char       formatstr[iStrLen];
+    char       numstr[iStrLen];
+    RedString  cRetStr;
+
+    double     dblVal = 0.0;
+    if (eNumType == eInt)
+        dblVal = (double)iIntVal;
+    else
+        dblVal = dblFloatVal;
+
+    snprintf(formatstr, iStrLen, "%%0%d.%df", minchars, decimalplaces);
+    snprintf(numstr, iStrLen, formatstr, dblVal);
 
     // copy the string into the output core string object
     cRetStr = numstr;

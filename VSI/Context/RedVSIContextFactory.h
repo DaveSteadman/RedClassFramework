@@ -35,10 +35,6 @@ namespace VSI {
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-//using namespace Red::Core;
-
-//class RedVSIContextRoutine;
-
 /// Factory and top-level library class controlling the creation of any context object.
 class RedVSIContextFactory
 {
@@ -46,18 +42,8 @@ public:
 
     RedResult CreateContextForFragment(const RedString& InputCodeFragment, RedVSIContextFragment** OutputContext, RedLog& cLog);
 
-//    RedResult CreateRoutineContextForRoutine(
-//        const RedString&       InputClassName,
-//        const RedString&       InputRoutineName,
-//        RedVSILibInterface*    pInputLib,
-//        RedVSIContextRoutine** OutputContext,
-//        RedLog&                cLog);
-//
-//    RedResult CreateThreadContextForRoutine(
-//        RedVSIRoutineCallInterface&  cInputRoutineCall,
-//        RedVSILibInterface*          pInputLib,
-//        RedVSIContextThread**        OutputContext,
-//        RedLog&                      cLog);
+    static RedResult CreateThreadContextForRoutine(const RedString& classname, const RedString& routinename, RedVSILibInterface* pInputLib, RedVSIContextThread** OutputThreadContext, RedLog& cLog);
+
 };
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

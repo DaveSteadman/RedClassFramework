@@ -62,7 +62,8 @@ public:
     const bool          IsEqualToWithinTollerance(const RedNumber& CheckVal, const RedNumber& tollerance) const;
 
     const RedString     DecimalString(void) const;
-    const RedString     DecimalStringWithDP(const int decimalplaces) const;
+    const RedString     DecimalStringWithDP(const unsigned decimalplaces) const;
+    const RedString     DecimalStringWithMinDigitsAndDP(const unsigned mindigits, const unsigned decimalplaces) const;
     const RedChar       CharValue(void) const;
     const int           IntegerValue(void) const;
     const double        DoubleValue(void) const;

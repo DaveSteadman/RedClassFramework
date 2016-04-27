@@ -559,31 +559,26 @@ RedResult RedTestVSI::TestRunProg_001(void)
 
         // Execute code
         {
-            RedVSILibRoutineInterface* pRtn = vsiCodeLib.FindRoutine("TestRoutines", "TestCall");
-            RedVSIContextRoutine cntxt("TestRoutines", "TestCall", pRtn->FirstCommand(), log);
+            RedVSIContextThread* tc;
 
-            RedVSIContextThread tc;
-            cntxt.SetThreadContextRecord(&tc);
-            tc.PushRoutineOnStack(&cntxt);
-            tc.SetCodeLib(&vsiCodeLib);
+            if (RedVSIContextFactory::CreateThreadContextForRoutine("TestRoutines", "TestCall", &vsiCodeLib, &tc, log) == kResultSuccess)
+            {
+                tc->Execute(10);
 
-//            cntxt.Execute(10);
-            tc.Execute(10);
+                if (log.IsError()) return kResultFail;
 
-            if (log.IsError()) return kResultFail;
-
-            // Analyse the data created by the code
-            RedType* pXVal = REDNULL;
-            tc.FindHeapDataItem("x2", pXVal);
-            if (pXVal == REDNULL)
-                return kResultFail;
-            if (!pXVal->Type().IsNum())
-                return kResultFail;
-            RedNumber* pXNum = dynamic_cast<RedNumber*>(pXVal);
-            if (!pXNum->IsEqualToWithinTollerance(617, kNumberFloatCompTollerance))
-                return kResultFail;
+                // Analyse the data created by the code
+                RedType* pXVal = REDNULL;
+                tc->FindHeapDataItem("x2", pXVal);
+                if (pXVal == REDNULL)
+                    return kResultFail;
+                if (!pXVal->Type().IsNum())
+                    return kResultFail;
+                RedNumber* pXNum = dynamic_cast<RedNumber*>(pXVal);
+                if (!pXNum->IsEqualToWithinTollerance(617, kNumberFloatCompTollerance))
+                    return kResultFail;
+            }
         }
-
     }
     return kResultSuccess;
 }

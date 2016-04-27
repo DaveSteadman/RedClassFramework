@@ -22,6 +22,7 @@
 
 #include <time.h>
 #include <stdio.h>
+#include <math.h>
 
 namespace Red {
 namespace Core {
@@ -30,9 +31,9 @@ namespace Core {
 
 void RedTime::SetTime(const RedString& timestr)
 {
-    unsigned    h;
-	unsigned    m;
-    double s;
+    unsigned h;
+	unsigned m;
+    double   s;
 
     sscanf(timestr.TextPtr(), "%u:%u:%lf", &h, &m, &s);
 
@@ -48,13 +49,15 @@ const RedString RedTime::TimeString(void) const
 {
     RedString retstr;
 
-    retstr.Append(hour.IntegerValue());
-    retstr.Append(":");
-    retstr.Append(minute.IntegerValue());
-    retstr.Append(":");
+    RedNumber h(hour);
+    RedNumber m(minute);
+    RedNumber s(seconds);
 
-    RedNumber ds = seconds;
-    retstr.Append(ds.DecimalStringWithDP(3));
+    retstr.Append(h.DecimalStringWithMinDigitsAndDP(2, 0));
+    retstr.Append(":");
+    retstr.Append(m.DecimalStringWithMinDigitsAndDP(2, 0));
+    retstr.Append(":");
+    retstr.Append(s.DecimalStringWithMinDigitsAndDP(5, 2));
 
     return retstr;
 }
@@ -66,9 +69,9 @@ const unsigned RedTime::SixDigitTime(void) const
 {
     unsigned rettime = 0;
 
-    rettime += hour.IntegerValue()   * 10000;
-    rettime += minute.IntegerValue() * 100;
-    rettime += seconds.IntegerValue();
+    rettime += hour   * 10000;
+    rettime += minute * 100;
+    rettime += floor(seconds);
 
     return rettime;
 }

@@ -53,67 +53,24 @@ RedResult RedVSIContextFactory::CreateContextForFragment(const RedString& InputC
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-//RedResult RedVSIContextFactory::CreateRoutineContextForRoutine(const RedString& ClassName, const RedString& RoutineName, RedVSIContextRoutine** OutputContext, RedLog& cLog)
-//{
-//    // Find the routine to execute
-//   // RedVSILibRoutineInterface* LibRoutine = pInputLib->FindRoutine(cInputRoutineCall);
-//
-//
-////    RedVSILibRoutineInterface* LibRoutine = lib.FindRoutine(ClassName, RoutineName);
-////
-////    RedLog            cRedLog;
-////
-////    *OutputContext = new RedVSIContextRoutine(cRedLog, LibRoutine->FirstCommand());
-////
-//    return kResultSuccess;
-//}
+RedResult RedVSIContextFactory::CreateThreadContextForRoutine(const RedString& classname, const RedString& routinename, RedVSILibInterface* pInputLib, RedVSIContextThread** OutputThreadContext, RedLog& cLog)
+{
+    // Find the routine to execute
+    RedVSILibRoutineInterface* LibRoutine = pInputLib->FindRoutine(classname, routinename);
 
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    if (LibRoutine == REDNULL)
+        return kResultFail;
 
-//RedResult RedVSIContextFactory::CreateThreadContextForRoutine(RedVSIRoutineCallInterface& cInputRoutineCall, RedVSILibInterface* pInputLib, RedVSIContextThread** OutputContext, RedLog& cLog)
-//{
-//    // Find the routine to execute
-//    //RedVSILibRoutineInterface* LibRoutine = pInputLib->FindRoutine(cInputRoutineCall);
-//
-//    *OutputContext = new RedVSIContextThread(pInputLib, cInputRoutineCall);
-//
-//    return kResultSuccess;
-//}
+    *OutputThreadContext = new RedVSIContextThread();
 
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    RedVSIContextRoutine* pFirstRoutineContext = new RedVSIContextRoutine(classname, routinename, LibRoutine->FirstCommand(), cLog);
 
-//RedVSIContextRoutine* RedVSIContextFactory::CreateRoutineContext(RedVSILibRoutineInterface& cRoutineCall, RedVSILibRoutineInterface* pRoutineLib, CDataObject* pThisObj)
-//{
-//    RedVSIContextRoutine* pNewRoutine = new RedVSIContextRoutine();
-//
-//    // Assign the routine name details to the context
-//    pNewRoutine->SetNameDetails(cRoutineCall.GetObjectName(), cRoutineCall.GetClassName(), cRoutineCall.GetFuncName());
-//
-//    // Setup the core elements of the routine
-//    pNewRoutine->SetThisObj(pThisObj);
-//    pNewRoutine->QueueCommand(pRoutineLib->GetCode());
-//
-//    // Loop through the parameters
-//    RedVSIVariantListIterator cCallParamsIt(cRoutineCall.GetParams());
-//    RedVSIStringStringTypeMapIterator cRoutineParamsIt(pRoutineLib->GetParams());
-//    cCallParamsIt.First();
-//    cRoutineParamsIt.First();
-//
-//    while ( (!cCallParamsIt.IsDone()) && (!cRoutineParamsIt.IsDone()) )
-//    {
-//        // get the data out of the lists to create the new data items
-//        RedString  cName = cRoutineParamsIt.CurrentId();
-//        RedVariant cData = cCallParamsIt.CurrentItem();
-//        
-//        pNewRoutine->AddParam(cName, cData.GetValue());
-//
-//        // move the list items on.
-//        cCallParamsIt.Next();
-//        cRoutineParamsIt.Next();
-//    }
-//
-//    return pNewRoutine;  
-//}
+    pFirstRoutineContext->SetThreadContextRecord(*OutputThreadContext);
+    (*OutputThreadContext)->PushRoutineOnStack(pFirstRoutineContext);
+    (*OutputThreadContext)->SetCodeLib(pInputLib);
+
+    return kResultSuccess;
+}
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 

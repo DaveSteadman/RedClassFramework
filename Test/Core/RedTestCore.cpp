@@ -18,6 +18,9 @@
 
 #include "RedTestCore.h"
 
+#include <stdio.h>
+#include <stdlib.h>
+
 using namespace Red::Core;
 
 namespace Red {
@@ -123,6 +126,33 @@ RedResult RedTestCore::TestNumber(void)
         if (!t1.IsEqualToWithinTollerance(1, 0.001)) return kResultFail;
     }
 
+    // String representations
+    {
+        RedNumber abc1(12);
+        RedString abcstr1 = abc1.DecimalStringWithDP(2);
+        if (abcstr1 != "12.00") return kResultFail;
+
+        RedNumber abc2(12.3456);
+        RedString abcstr2 = abc2.DecimalStringWithDP(2);
+        if (abcstr2 != "12.35") return kResultFail;
+
+        RedNumber abc3(12.34);
+        RedString abcstr3 = abc3.DecimalStringWithDP(4);
+        if (abcstr3 != "12.3400") return kResultFail;
+    }
+    {
+        RedNumber abc1(12);
+        RedString abcstr1 = abc1.DecimalStringWithMinDigitsAndDP(3, 2);
+        if (abcstr1 != "12.00") return kResultFail;
+
+        RedNumber abc2(12.3);
+        RedString abcstr2 = abc2.DecimalStringWithMinDigitsAndDP(5, 0);
+        if (abcstr2 != "00012") return kResultFail;
+
+        RedNumber abc3(12.3);
+        RedString abcstr3 = abc3.DecimalStringWithMinDigitsAndDP(7, 3);
+        if (abcstr3 != "012.300") return kResultFail;
+    }
 
 
     // Reading and writing strings
@@ -171,22 +201,22 @@ RedResult RedTestCore::TestString(void)
 
         b1 = RedString::NumBlocksForSize(15);
         b2 = RedString::SizeForNumBlocks(b1);
-        if (b1 != 1)                         return kResultFail;
+        if (b1 != 1)                        return kResultFail;
         if (b2 != kRedStringAllocBlockSize) return kResultFail;
 
         b1 = RedString::NumBlocksForSize(31);
         b2 = RedString::SizeForNumBlocks(b1);
-        if (b1 != 1)                           return kResultFail;
+        if (b1 != 1)                          return kResultFail;
         if (b2 != 1*kRedStringAllocBlockSize) return kResultFail;
 
         b1 = RedString::NumBlocksForSize(32);
         b2 = RedString::SizeForNumBlocks(b1);
-        if (b1 != 2)                           return kResultFail;
+        if (b1 != 2)                          return kResultFail;
         if (b2 != 2*kRedStringAllocBlockSize) return kResultFail;
 
         b1 = RedString::NumBlocksForSize(319);
         b2 = RedString::SizeForNumBlocks(b1);
-        if (b1 != 10)                           return kResultFail;
+        if (b1 != 10)                          return kResultFail;
         if (b2 != 10*kRedStringAllocBlockSize) return kResultFail;
     }
 
@@ -195,15 +225,15 @@ RedResult RedTestCore::TestString(void)
         RedString x("1234567890");
         if (x.FirstContentIndex() != 0)                          return kResultFail;
         if (x.LastContentIndex()  != 9)                          return kResultFail;
-        if (x.AllocSize()         != kRedStringAllocBlockSize)  return kResultFail;
+        if (x.AllocSize()         != kRedStringAllocBlockSize)   return kResultFail;
 
         x.Set("1234567890123456789012345678901");
         if (x.LastContentIndex() != 30)                          return kResultFail;
-        if (x.AllocSize()        != kRedStringAllocBlockSize)   return kResultFail;
+        if (x.AllocSize()        != kRedStringAllocBlockSize)    return kResultFail;
 
         x.Set("12345678901234567890123456789012");
         if (x.LastContentIndex() != 31)                          return kResultFail;
-        if (x.AllocSize()        != 2*kRedStringAllocBlockSize) return kResultFail;
+        if (x.AllocSize()        != 2*kRedStringAllocBlockSize)  return kResultFail;
     }
 
     // Append Char
@@ -538,14 +568,10 @@ RedResult RedTestCore::TestDate(void)
 
 RedResult RedTestCore::TestTime(void)
 {
-//    RedTime t;
-//    t.Now();
-//
-//    int x = t.SixDigitInt();
-//
-//    int y = t.Hour().GetInteger() * 10000;
-//    if (x < y) return kResultFail;
-//    
+    RedTime t(12, 0, 0.0);
+
+    RedString xstr = t.TimeString();
+    if (xstr != "12:00:00.00") return kResultFail;
 
     return kResultSuccess;
 }
