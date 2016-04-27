@@ -42,6 +42,8 @@ class RedVSIParseTreeInterface;
 /// Class interface to pass to commands and parse-tree elements. Interface does not need to be
 /// complicated with the additional operations the routine/thread contexts will need to manage
 /// the execution at a higher level.
+/// Interface allows for routines/fragments to exist without commands/expressions needing to know
+/// about this level of detail.
 class RedVSIContextInterface
 {
 public:
@@ -61,7 +63,7 @@ public:
     virtual void          QueueExpr(RedVSIParseTreeInterface* pExpr) =0;
     virtual void          SetExprResult(RedVSIParseTreeInterface* pExpr, const RedVariant& result) =0;
     virtual RedVariant    ExprResult(RedVSIParseTreeInterface* pExpr) =0;
-//    virtual void          ExecuteExprQueue(void) =0;
+    virtual void          ExecuteExprQueue(void) =0;
 
     // Commands
     virtual void          QueueCommand(RedVSICmdInterface* pCmd) =0;

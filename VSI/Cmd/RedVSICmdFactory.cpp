@@ -36,9 +36,9 @@ namespace VSI {
 
 RedVSICmdInterface* RedVSICmdFactory::RunConstuctionCompetition(RedVSITokenBuffer& cInputBuffer, RedLog& RedLog)
 {
-    RedVSICmdInterface* pFirstObject = 0;
-    RedVSICmdInterface* pTailObject  = 0;
-    int                 iEndOrError  = 0;
+    RedVSICmdInterface* pFirstObject = REDNULL;
+    RedVSICmdInterface* pTailObject  = REDNULL;
+    bool                iEndOrError  = false;
 
     // Loop until the end of the input buffer or an error has broken the process
     while (!iEndOrError)
@@ -64,12 +64,12 @@ RedVSICmdInterface* RedVSICmdFactory::RunConstuctionCompetition(RedVSITokenBuffe
             case 5: pNewObject  = WhileComp (cInputBuffer, RedLog); break;
             case 6: pNewObject  = ExprComp  (cInputBuffer, RedLog); break;
             default:
-                iEndOrError = 1;
+                iEndOrError = true;
             }
 
             // Check for any error in the competition
             if (RedLog.IsError()) 
-                iEndOrError = 1;
+                iEndOrError = true;
 
             // Move onto the next entry
             iCompEntry++;
@@ -99,7 +99,7 @@ RedVSICmdInterface* RedVSICmdFactory::RunConstuctionCompetition(RedVSITokenBuffe
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-int RedVSICmdFactory::EOFComp(RedVSITokenBuffer& cInputBuffer, RedLog& RedLog)
+bool RedVSICmdFactory::EOFComp(RedVSITokenBuffer& cInputBuffer, RedLog& RedLog)
 {
     RedVSIToken cTok = cInputBuffer.GetToken();
 
@@ -107,11 +107,11 @@ int RedVSICmdFactory::EOFComp(RedVSITokenBuffer& cInputBuffer, RedLog& RedLog)
     // previously read the open bracket.
     cInputBuffer.SetTokenIndexBackOne();
 
-    if (cInputBuffer.CurrIndexAtLastToken()) return 1;
-    if (cTok.GetPredef().IsSymbolCloseBracket()) return 1;
-    if (cTok.IsEOF()) return 1;
+    if (cInputBuffer.CurrIndexAtLastToken())     return true;
+    if (cTok.GetPredef().IsSymbolCloseBracket()) return true;
+    if (cTok.IsEOF())                            return true;
 
-    return 0;
+    return false;
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -120,11 +120,11 @@ RedVSICmdInterface* RedVSICmdFactory::IfComp(RedVSITokenBuffer& cInputBuffer, Re
 {
     // Read the if keyword
     RedVSIToken cTok  = cInputBuffer.GetToken();
-    if (!cTok.GetPredef().IsKeywordIf()) return 0;
+    if (!cTok.GetPredef().IsKeywordIf()) return REDNULL;
 
-    RedVSIParseTreeInterface* pExpr;
-    RedVSICmdInterface*       pPosBranch;
-    RedVSICmdInterface*       pNegBranch;
+    RedVSIParseTreeInterface* pExpr      = REDNULL;
+    RedVSICmdInterface*       pPosBranch = REDNULL;
+    RedVSICmdInterface*       pNegBranch = REDNULL;
 
     // Read the expression to assign. If okay, assign it, else delete the command
     pExpr = RedVSIParseFactory::ConstructAssignExpr(cInputBuffer, RedLog);
@@ -132,28 +132,26 @@ RedVSICmdInterface* RedVSICmdFactory::IfComp(RedVSITokenBuffer& cInputBuffer, Re
 
     // Check for the THEN keyword
     cTok = cInputBuffer.GetToken();
-    //if (!cTok.GetPredef().IsThenKeyword()) { RedVSIErrorCodes::Log(RedLog, RedVSIErrorCodes::eCFact_If_KeywordError, cTok); return 0; }
+    if (!cTok.GetPredef().IsKeywordThen()) { RedLog.AddErrorEvent("IF command: no Then keyword found"); delete pExpr; return REDNULL; }
 
     // Create the positive branch, Read the list of commands, which ends with a token the 
     // competition doesn't understand
     pPosBranch = RunConstuctionCompetition(cInputBuffer, RedLog);
 
     // Read the ELSE related token and progress, or we have an error
-    int iNegBranchValid = 0;
     cTok = cInputBuffer.GetToken();
-    if ( cTok.GetPredef().IsKeywordElse() ) iNegBranchValid = 1;
-
-    //if ( (!cTok.GetPredef().IsElseKeyword()) && (!cTok.GetPredef().IsEndifKeyword()) )
-    //    { RedVSIErrorCodes::Log(RedLog, RedVSIErrorCodes::eCFact_If_KeywordError, cTok);  return 0; }
-
-    if (iNegBranchValid)
+    if ( cTok.GetPredef().IsKeywordElse() )
     {
         // Read the list of commands, which ends with a token the competition doesn't understand
         pNegBranch = RunConstuctionCompetition(cInputBuffer, RedLog);
 
         // control the loops based on a keyword (and return token if not a keyword)
         cTok = cInputBuffer.GetToken();
-        //if (!cTok.GetPredef().IsEndifKeyword()) { RedVSIErrorCodes::Log(RedLog, RedVSIErrorCodes::eCFact_If_KeywordError, cTok); return 0; }
+        if (!cTok.GetPredef().IsKeywordEndif()) { RedLog.AddErrorEvent("IF command: no ENDIF keyword found"); delete pExpr; return REDNULL; }
+    }
+    else
+    {
+        if (!cTok.GetPredef().IsKeywordEndif()) { RedLog.AddErrorEvent("IF command: no ENDIF keyword found"); delete pExpr; return REDNULL; }
     }
 
     RedVSICmdIf* pIfCmd = new RedVSICmdIf();

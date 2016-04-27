@@ -218,15 +218,15 @@ RedVariant RedVSIContextRoutine::ExprResult(RedVSIParseTreeInterface* pExpr)
 
 void RedVSIContextRoutine::ExecuteExprQueue(void)
 {
-    int iBlocked = IsContextBlocked(this);
-    while ( (!cExprStack.IsEmpty()) && (!iBlocked) )
+    bool Blocked = IsContextBlocked(this);
+    while ( (!cExprStack.IsEmpty()) && (!Blocked) )
     {
         pCurrExpr = cExprStack.Pop();
         pCurrExpr->CalcResult(this);
 
         // pCurrExpr is a context attribute, left setup at the latest routine-call node when
         // it becomes blocked.
-        iBlocked = IsContextBlocked(this);
+        Blocked = IsContextBlocked(this);
     }
 }
 

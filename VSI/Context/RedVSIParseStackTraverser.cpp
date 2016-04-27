@@ -43,8 +43,8 @@ void RedVSIParseStackTraverser::PopulateStack(RedVSIParseStack& cStack, RedVSIPa
     
     if      (cNodeType.IsParseBinaryOp()) { RedVSIParseStackTraverser::AddBinaryOp(cStack, pExpr, log); }
     else if (cNodeType.IsParseVariable()) { RedVSIParseStackTraverser::AddVariable(cStack, pExpr, log); }
-    else if (cNodeType.IsParseValue())    { RedVSIParseStackTraverser::AddValue(cStack, pExpr, log); }
-    else if (cNodeType.IsParseFuncCall()) { RedVSIParseStackTraverser::AddCall(cStack, pExpr, log); }
+    else if (cNodeType.IsParseValue())    { RedVSIParseStackTraverser::AddValue   (cStack, pExpr, log); }
+    else if (cNodeType.IsParseFuncCall()) { RedVSIParseStackTraverser::AddCall    (cStack, pExpr, log); }
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

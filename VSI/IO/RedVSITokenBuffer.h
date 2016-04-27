@@ -48,8 +48,8 @@ public:
 
     // all depricated on creation of iterator
     RedVSIToken GetToken(void);
-    RedVSIToken GetToken(int iTokenIndex);
-    void        SetTokenIndex(int iTokenIndex) { iCurrListIndex = iTokenIndex; };
+    RedVSIToken GetToken(const unsigned iTokenIndex);
+    void        SetTokenIndex(const unsigned iTokenIndex) { iCurrListIndex = iTokenIndex; };
     unsigned    GetTokenIndex(void)        { return iCurrListIndex; };
     void        SetTokenIndexBackOne(void) { if (iCurrListIndex>0) iCurrListIndex--; };
 

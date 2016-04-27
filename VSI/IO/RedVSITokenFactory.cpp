@@ -85,7 +85,7 @@ RedResult RedVSITokenFactory::RunTokenComp(RedBufferInput& cInputBuffer, RedVSIT
     
     //RedChar cPreviewChar = cInputBuffer.PreviewNextChar();
     
-    int iCompetitionEntry = 1;
+    unsigned iCompetitionEntry = 1;
 
     while (RedResult.IsNoResult())
     {
@@ -114,8 +114,8 @@ RedResult RedVSITokenFactory::RunTokenComp(RedBufferInput& cInputBuffer, RedVSIT
 
 RedResult RedVSITokenFactory::NumberComp(RedBufferInput& cInputBuffer, RedVSIToken& cNewTok)
 {
-    int         iProcessingComplete = 0; 
-    int         iDecimalPointUsed = 0;   
+    bool      iProcessingComplete = false;
+    bool      iDecimalPointUsed   = false;
     RedChar   cPreviewChar;
     RedChar   cNewChar;
     RedString cTokenText;
@@ -131,19 +131,19 @@ RedResult RedVSITokenFactory::NumberComp(RedBufferInput& cInputBuffer, RedVSITok
         cNewChar     = cInputBuffer.GetNextChar();
         cPreviewChar = cInputBuffer.PreviewNextChar();
 
-        // set the fullstop used flag if we have just assigned one
+        // Set the fullstop used flag if we have just assigned one
         if (cNewChar.IsDecimalPoint())
-            iDecimalPointUsed = 1;
+            iDecimalPointUsed = true;
 
-        // assign the first character we've already read
+        // Assign the first character we've already read
         cTokenText += cNewChar;
 
         // Determine end condition, on no number character or a 2nd
         // decimal point
         if (!cPreviewChar.IsNumeric())    
-            iProcessingComplete = 1; 
+            iProcessingComplete = true;
         if (cPreviewChar.IsDecimalPoint() && iDecimalPointUsed)
-            iProcessingComplete = 1; 
+            iProcessingComplete = true;
     }
 
     // We have a number token, so convert the input string to a numeric
@@ -228,7 +228,6 @@ RedResult RedVSITokenFactory::NonPrintableComp(RedBufferInput& cInputBuffer, Red
 
 RedResult RedVSITokenFactory::NameComp(RedBufferInput& cInputBuffer, RedVSIToken& cNewTok)
 {
-    //int             iProcessingComplete = 0;
     RedChar       cPreviewChar;
     RedChar       cNewChar;
     RedString     cPreviewStr;
@@ -236,9 +235,7 @@ RedResult RedVSITokenFactory::NameComp(RedBufferInput& cInputBuffer, RedVSIToken
     
     RedVSIIOElement  cElem;
     RedVSIIOElement  cFinalElem;
-    //int             iExactMatchFound = 0;
-    //int             iExactMatchSuperceeded = 0;
-       
+
     // If the first character isn't a letter, return false.
     cPreviewChar = cInputBuffer.PreviewNextChar();
     if ( !cPreviewChar.IsAlpha() )
@@ -259,7 +256,7 @@ RedResult RedVSITokenFactory::NameComp(RedBufferInput& cInputBuffer, RedVSIToken
 
 RedResult RedVSITokenFactory::PredefinedComp(RedBufferInput& cInputBuffer, RedVSITokenElementMap& cTokenMap, RedVSIToken& cNewTok)
 {
-    int           iProcessingComplete = 0; 
+    bool          iProcessingComplete = false;
     RedChar       cPreviewChar;
     RedChar       cNewChar;
     RedString     cPreviewStr;
@@ -267,7 +264,7 @@ RedResult RedVSITokenFactory::PredefinedComp(RedBufferInput& cInputBuffer, RedVS
     
     RedVSIIOElement  cElem;
     RedVSIIOElement  cFinalElem;
-    int              iExactMatchFound = 0;
+    bool             iExactMatchFound = false;
     
 	// skip over whitespace characters until we get to a character we want to deal with
     cPreviewChar = cInputBuffer.PreviewNextChar();
@@ -286,15 +283,15 @@ RedResult RedVSITokenFactory::PredefinedComp(RedBufferInput& cInputBuffer, RedVS
             cValidStr += cInputBuffer.GetNextChar();
             if (cTokenMap.Find(cValidStr, cElem))
             {
-                iExactMatchFound    = 1;
+                iExactMatchFound    = true;
                 cFinalElem          = cElem;
-                iProcessingComplete = 1;
+                iProcessingComplete = true;
             }
         }
         // set complete when we run out of matches - we have to look beyond any match to ensure we haven't found a substring.
         else
         {
-            iProcessingComplete = 1;
+            iProcessingComplete = true;
         }
     }
         

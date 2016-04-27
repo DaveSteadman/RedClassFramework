@@ -56,7 +56,7 @@ RedVSIToken RedVSITokenBuffer::GetToken(void)
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-RedVSIToken RedVSITokenBuffer::GetToken(int iTokenIndex)
+RedVSIToken RedVSITokenBuffer::GetToken(const unsigned iTokenIndex)
 {
     RedVSIToken cRetTok;
 
