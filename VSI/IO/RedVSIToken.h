@@ -60,8 +60,8 @@ public:
     RedBufferPos GetPos(void)                 { return cCodePos; };
 
     // Basic comparisons
-    bool IsValid(void) { return (cType.IsValid()); };
-    bool IsEOF(void);
+    bool IsValid(void) const { return (cType.IsValid()); };
+    bool IsEOF(void) const;
 
     // Data Access
     RedVSITokenType Type(void) const        { return cType; };
