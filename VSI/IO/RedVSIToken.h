@@ -45,12 +45,12 @@ public:
     void Init(void);
 
     // operations to construct specific tokens from a known input
-    void SetNumber(RedNumber cNewNum)              { Init(); cType.SetNumber();        cNumber=cNewNum; };
-    void SetName(RedString cNewStr)                { Init(); cType.SetName();          cText=cNewStr; };
-    void SetStringLiteral(RedString cNewStr)       { Init(); cType.SetStringLiteral(); cText=cNewStr; };
-    void SetNonPrintable(RedChar cNewChar)         { Init(); cType.SetNonPrintable();  cText=cNewChar; };
-    void SetWhitespace(RedString cNewStr)          { Init(); cType.SetWhitespace();    cText=cNewStr; };
-    void SetPredefined(RedVSIIOElement cNewPredef) { Init(); cType.SetPredefined();    cPredef=cNewPredef; };
+    void SetNumber(const RedNumber& cNewNum)              { Init(); cType.SetNumber();        cNumber=cNewNum; };
+    void SetName(const RedString& cNewStr)                { Init(); cType.SetName();          cText=cNewStr; };
+    void SetStringLiteral(const RedString& cNewStr)       { Init(); cType.SetStringLiteral(); cText=cNewStr; };
+    void SetNonPrintable(const RedChar& cNewChar)         { Init(); cType.SetNonPrintable();  cText=cNewChar; };
+    void SetWhitespace(const RedString& cNewStr)          { Init(); cType.SetWhitespace();    cText=cNewStr; };
+    void SetPredefined(const RedVSIIOElement& cNewPredef) { Init(); cType.SetPredefined();    cPredef=cNewPredef; };
 
     // Setup
     static RedVSIToken WhitespaceSpaceToken(void)  { RedVSIToken t; t.SetWhitespace(RedString(" "));               return t; };
