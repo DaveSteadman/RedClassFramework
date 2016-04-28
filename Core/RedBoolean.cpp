@@ -22,13 +22,14 @@ namespace Red {
 namespace Core {
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
+/// Set assigns internals state as a 1 or 0 value, or a default negative
 void RedBoolean::Set(const int iVal)
 {
     if      (iVal == RED_YES)   iState = RED_YES;
     else if (iVal == RED_NO)    iState = RED_NO;
     else if (iVal == RED_TRUE)  iState = RED_TRUE;
     else if (iVal == RED_FALSE) iState = RED_FALSE;
+    else                        iState = RED_FALSE;
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -39,6 +40,7 @@ void RedBoolean::Invert(void)
     else if (iState == RED_NO)    iState = RED_YES;
     else if (iState == RED_TRUE)  iState = RED_FALSE;
     else if (iState == RED_FALSE) iState = RED_TRUE;
+    else                          iState = RED_FALSE;
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
