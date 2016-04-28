@@ -50,7 +50,7 @@ public:
     // Delete Items
     const bool DelFirst(void);
     const bool DelLast(void);
-    const bool Del(unsigned iElemIndex);
+    const bool Del(const unsigned iElemIndex);
     const bool DelAll(void);
 
     // complex operations
