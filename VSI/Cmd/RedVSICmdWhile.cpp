@@ -83,15 +83,15 @@ void RedVSICmdWhile::Execute(RedVSIContextInterface* pContext)
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-int RedVSICmdWhile::IsSuccessVal(RedVariant& cVal)
+bool RedVSICmdWhile::IsSuccessVal(const RedVariant& cVal)
 {
     if (cVal.Type().IsNum())
     {
         if (!cVal.NumberValue().IsZero())
-            return 1;
+            return true;
     }
     
-    return 0;
+    return false;
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
