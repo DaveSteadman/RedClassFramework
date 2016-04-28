@@ -19,6 +19,7 @@
 #pragma once
 
 #include "RedNumber.h"
+#include "RedDistance.h"
 #include "ConversionConstants.h"
 
 using namespace Red::Core;
@@ -31,8 +32,9 @@ namespace Geometry {
 class RedArea : public RedNumber
 {
 public:
-    void SetSquareMetres(const RedNumber& newval) { Set(newval); };
-    void SetAcres(const RedNumber& newval)        { Set(newval * squaremetresPerAcre); };
+    void SetSquareMetres(const RedNumber& newval)                    { Set(newval); };
+    void SetAcres(const RedNumber& newval)                           { Set(newval * squaremetresPerAcre); };
+    void SetArea(const RedDistance& width, const RedDistance& depth) { Set(width.Metres() * depth.Metres()); };
 
     RedNumber SquareMetres(void) const            { RedNumber retval(*this); return retval; };
     RedNumber Acres(void) const                   { RedNumber retval(*this); retval *= acresPerSquaremetre; return retval; };
