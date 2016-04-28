@@ -35,7 +35,7 @@ void RedVSIToken::Init(void)
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-bool RedVSIToken::IsEOF(void)
+bool RedVSIToken::IsEOF(void) const
 {
     if (!cType.IsNonPrintable())
         return false;
