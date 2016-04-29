@@ -46,6 +46,7 @@ private:
     static RedResult TestTokeniseCode(void);
 
     static RedResult TestFragment_New(void);
+    static RedResult TestFragment_Expr(void);
     static RedResult TestFragment_If(void);
     static RedResult TestFragment_While(void);
 

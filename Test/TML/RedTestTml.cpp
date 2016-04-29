@@ -31,10 +31,11 @@ namespace Test {
 
 void RedTestTml::RunUnitTest(RedLog& log)
 {
-    if (RedTestTml::TestOne().IsFail())       { log.AddErrorEvent("TinyML Unit Test: TestOne Failed");       return; }
-    if (RedTestTml::TestTwo().IsFail())       { log.AddErrorEvent("TinyML Unit Test: TestTwo Failed");       return; }
-    if (RedTestTml::TestIterators().IsFail()) { log.AddErrorEvent("TinyML Unit Test: TestIterators Failed"); return; }
-    if (RedTestTml::TestTreeEdit().IsFail())  { log.AddErrorEvent("TinyML Unit Test: TestTreeEdit Failed");  return; }
+    if (RedTestTml::TestOne().IsFail())             { log.AddErrorEvent("TinyML Unit Test: TestOne Failed");              return; }
+    if (RedTestTml::TestTwo().IsFail())             { log.AddErrorEvent("TinyML Unit Test: TestTwo Failed");              return; }
+    if (RedTestTml::TestIterators().IsFail())       { log.AddErrorEvent("TinyML Unit Test: TestIterators Failed");        return; }
+    if (RedTestTml::TestTreeEdit().IsFail())        { log.AddErrorEvent("TinyML Unit Test: TestTreeEdit Failed");         return; }
+    if (RedTestTml::TestQuoteCharacters().IsFail()) { log.AddErrorEvent("TinyML Unit Test: TestQuoteCharacters Failed");  return; }
 
     log.AddText("TinyML Unit Test: Passed");
 }
@@ -207,5 +208,23 @@ RedResult RedTestTml::TestTreeEdit(void)
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
+RedResult RedTestTml::TestQuoteCharacters(void)
+{
+    {
+        RedString TestInTml = "{{name} \"content\"}";
+        RedTmlElement* testElement = RedTmlAction::ParseTinyML(TestInTml);
+        if (testElement == REDNULL) return kResultFail;
+        if (!testElement->IsLeaf()) { delete testElement; return kResultFail; }
+
+        RedTmlLeaf* pLeaf = dynamic_cast<RedTmlLeaf*>(testElement);
+        if (pLeaf->Data() != "\"content\"") { delete testElement; return kResultFail; }
+
+    }
+    return kResultSuccess;
+}
+
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
 } // Test
 } // Red
+

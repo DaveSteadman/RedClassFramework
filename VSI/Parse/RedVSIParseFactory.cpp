@@ -421,14 +421,16 @@ RedVSIParseTreeInterface* RedVSIParseFactory::RunPowExprCompetition(RedVSITokenB
 
 RedVSIParseTreeInterface* RedVSIParseFactory::RunItemExprCompetition(RedVSITokenBuffer& cInputBuffer, RedLog& log)
 {
-    RedVSIParseTreeInterface* pEntry = 0;
+    RedVSIParseTreeInterface* pEntry = REDNULL;
 
     // Record the start position in the competition, so we can reset it when we don't get a match
     int iCompStartPos = cInputBuffer.GetTokenIndex();
     int iCurrEntry = 1;
 
+    bool runloop = true;
+
     // Loop until we have an entity or an error
-    while ( (pEntry == 0) && (!log.IsError()) )
+    while ( (pEntry == REDNULL) && (!log.IsError()) && (runloop == true) )
     {
         // Reset the comp start position
         cInputBuffer.SetTokenIndex(iCompStartPos);
@@ -436,16 +438,20 @@ RedVSIParseTreeInterface* RedVSIParseFactory::RunItemExprCompetition(RedVSIToken
         // Attempt to input an entity
         switch(iCurrEntry)
         {
-        case 1: pEntry = RunSubExprCompetition(cInputBuffer, log); break;
+        case 1: pEntry = RunSubExprCompetition     (cInputBuffer, log); break;
         case 2: pEntry = RunExternalCallCompetition(cInputBuffer, log); break;
         case 3: pEntry = RunInternalCallCompetition(cInputBuffer, log); break;
-        case 4: pEntry = RunValueCompetition(cInputBuffer, log); break;
-        case 5: pEntry = RunVariableCompetition(cInputBuffer, log); break;
+        case 4: pEntry = RunValueCompetition       (cInputBuffer, log); break;
+        case 5: pEntry = RunVariableCompetition    (cInputBuffer, log); break;
 
         // When the counter has incremented past all the entrants, we will never find
-        // a match, so flag an error.
+        // a match, so setup an exit.
         default:
-            log.AddErrorEvent("RedVSIParseFactory::RunItemExprCompetition : No Entry");
+            {
+                runloop = false;
+                cInputBuffer.SetTokenIndex(iCompStartPos);
+            }
+            break;
         }
 
         // Move counter on for next iteration
@@ -453,7 +459,7 @@ RedVSIParseTreeInterface* RedVSIParseFactory::RunItemExprCompetition(RedVSIToken
     }
 
     // Mop-up. If we have an entry and an error, delete the entity.
-    if ( (pEntry != 0) && (log.IsError()) ) { delete pEntry; pEntry = 0; }
+    if ( (pEntry != REDNULL) && (log.IsError()) ) { delete pEntry; pEntry = REDNULL; }
     
     return pEntry;
 }
@@ -466,7 +472,7 @@ RedVSIParseTreeInterface* RedVSIParseFactory::RunSubExprCompetition(RedVSITokenB
 
     if (cTok.GetPredef().IsSymbolOpenBracket())
     {
-        // read the sub expression
+        // Read the sub expression
         RedVSIParseTreeInterface* pSubExpr = RunCompareExprCompetition(cInputBuffer, log);
         if (!pSubExpr)
         {
@@ -474,7 +480,7 @@ RedVSIParseTreeInterface* RedVSIParseFactory::RunSubExprCompetition(RedVSITokenB
             return 0;
          }
         
-        // ensure the expression ends with a close bracket
+        // Ensure the expression ends with a close bracket
         cTok = cInputBuffer.GetToken();
         if (!cTok.GetPredef().IsSymbolCloseBracket())
         {
@@ -483,8 +489,8 @@ RedVSIParseTreeInterface* RedVSIParseFactory::RunSubExprCompetition(RedVSITokenB
         }
         return pSubExpr;
     }
-    
-    // return valid zero
+
+    // Return valid zero
     return REDNULL;
 }
 

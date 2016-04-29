@@ -55,6 +55,7 @@ public:
     virtual RedType*      CreateDataItem(const RedVSILangElement& cLocation, const RedVSILangElement& cType, const RedString& cName) =0;
     virtual RedType*      DuplicateDataItem(const RedVSILangElement& cLocation, const RedType* pDataItem, const RedString& cName) =0;
     virtual bool          FindDataItem(const RedString& cName, RedType*& pData) =0;
+    virtual RedVariant    DataItemAsVariant(const RedString& cName) =0;
 
     // Return value
     virtual void          SetValueToReturn(const RedVariant& cData) =0;

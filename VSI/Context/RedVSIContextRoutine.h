@@ -66,6 +66,7 @@ public:
     RedType*        CreateDataItem(const RedVSILangElement& cLocation, const RedVSILangElement& cType, const RedString& cName);
     RedType*        DuplicateDataItem(const RedVSILangElement& cLocation, const RedType* pDataItem, const RedString& cName);
     bool            FindDataItem  (const RedString& cName, RedType*& pData);
+    RedVariant      DataItemAsVariant(const RedString& cName);
 
     // Inhertied Expressions (RedVSIContextInterface)
     void            QueueExpr(RedVSIParseTreeInterface* pExpr);

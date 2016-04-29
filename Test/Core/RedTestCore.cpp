@@ -64,7 +64,6 @@ RedResult RedTestCore::TestBoolean(void)
     x = y;
     if (x != y) return kResultFail;
 
-
     RedBoolean* p = dynamic_cast<RedBoolean*>(x.Clone());
     p->SetFalse();
     if (p->IsTrue()) return kResultFail;
@@ -112,14 +111,6 @@ RedResult RedTestCore::TestChar(void)
 
 RedResult RedTestCore::TestNumber(void)
 {
-    RedNumber x;
-    RedNumber y;
-
-    x.Set(12);
-    x.Set(12.12);
-    y.SetZero();
-    y.Set(x);
-
     // Comparisons
     {
         RedNumber t1 = 1.0000000001;
@@ -127,6 +118,15 @@ RedResult RedTestCore::TestNumber(void)
     }
 
     // String representations
+    {
+        RedNumber z1(12.345);
+        RedString zstr1 = z1.DecimalString();
+        if (zstr1 != "12.345000") return kResultFail;
+
+        RedNumber z2(12345);
+        RedString zstr2 = z2.DecimalString();
+        if (zstr2 != "12345") return kResultFail;
+    }
     {
         RedNumber abc1(12);
         RedString abcstr1 = abc1.DecimalStringWithDP(2);
@@ -154,18 +154,19 @@ RedResult RedTestCore::TestNumber(void)
         if (abcstr3 != "012.300") return kResultFail;
     }
 
-
-    // Reading and writing strings
+    // Reading strings
     {
-//        RedString strNum;
-//
-//        strNum.Set("1.234");
-//        y.SetDecimalString(strNum);
-//        RedString strNum2 = y.DecimalString();
-//
-//        RedNumber xx = 1.2355;
-//        RedString yy = xx.DecimalStringWithDP(3);
-//        if (yy != "1.236") return kResultFail;
+        RedNumber x;
+        RedNumber y;
+        RedString strNum;
+
+        strNum.Set("1.234");
+        y.SetDecimalString(strNum);
+        if (y != 1.234) return kResultFail;
+
+        strNum.Set("-1.234");
+        y.SetDecimalString(strNum);
+        if (y != -1.234) return kResultFail;
     }
 
     return kResultSuccess;
@@ -218,6 +219,14 @@ RedResult RedTestCore::TestString(void)
         b2 = RedString::SizeForNumBlocks(b1);
         if (b1 != 10)                          return kResultFail;
         if (b2 != 10*kRedStringAllocBlockSize) return kResultFail;
+    }
+
+    // Construction and calls
+    {
+        RedString x;
+        char ch = x.LastChar();
+
+        if (ch != '\0') return kResultFail;
     }
 
     // Set

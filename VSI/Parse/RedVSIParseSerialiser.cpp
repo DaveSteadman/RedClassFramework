@@ -30,7 +30,7 @@ void RedVSIParseSerialiser::SerialiseExpression(RedVSITokenBuffer& cTokenBuffer,
     RedVSILangElement cType = pExpr->Type();
     
     if      (cType.IsParseBinaryOp()) SerialiseBinaryOp(cTokenBuffer, (RedVSIParseTreeBinaryOp*)pExpr);
-    else if (cType.IsParseValue())    SerialiseValue(cTokenBuffer, (RedVSIParseTreeVal*)pExpr);
+    else if (cType.IsParseValue())    SerialiseValue   (cTokenBuffer, (RedVSIParseTreeVal*)pExpr);
     else if (cType.IsParseVariable()) SerialiseVariable(cTokenBuffer, (RedVSIParseTreeVar*)pExpr);
 }
 
@@ -85,8 +85,8 @@ void RedVSIParseSerialiser::SerialiseUnaryOp(RedVSITokenBuffer& cTokenBuffer, Re
     pExpr->GetDetails(cOutOp, pOutExpr);
 
     // write the operator   
-    if      (cOutOp.IsUnaryOpLogicNot())          cOpTok.SetPredefined(RedVSIIOElement::SymbolLogicNot());
-    else if (cOutOp.IsUnaryOpMinus())             cOpTok.SetPredefined(RedVSIIOElement::SymbolMinus());
+    if      (cOutOp.IsUnaryOpLogicNot())  cOpTok.SetPredefined(RedVSIIOElement::SymbolLogicNot());
+    else if (cOutOp.IsUnaryOpMinus())     cOpTok.SetPredefined(RedVSIIOElement::SymbolMinus());
 
     cTokenBuffer.AppendToken(cOpTok);
 

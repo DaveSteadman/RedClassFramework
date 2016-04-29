@@ -82,7 +82,7 @@ public:
     const RedChar  CharObjAtIndex(const unsigned Index) const { return RedChar( CharAtIndex(Index) ); };
     const char     FirstChar(void)                      const { return CharAtIndex(FirstContentIndex()); };
     const RedChar  FirstCharObj(void)                   const { return RedChar( CharAtIndex(FirstContentIndex()) ); };
-    const char     LastChar(void)                       const { return CharAtIndex(LastContentIndex()); };
+    const char     LastChar(void)                       const { if (ContentSize() == 0) return '\0'; else return CharAtIndex(LastContentIndex()); };
     const RedChar  LastCharObj(void)                    const { return RedChar( CharAtIndex(LastContentIndex()) ); };
 
 

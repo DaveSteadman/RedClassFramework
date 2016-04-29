@@ -110,6 +110,24 @@ bool RedVSIContextFragment::FindDataItem(const RedString& cName, RedType*& pData
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
+RedVariant RedVSIContextFragment::DataItemAsVariant(const RedString& cName)
+{
+    RedVariant RetVar;
+
+    RedType* pData = REDNULL;
+
+    bool found = FindDataItem(cName, pData);
+
+    if (found)
+    {
+        RetVar = pData;
+    }
+
+    return RetVar;
+}
+
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
 void RedVSIContextFragment::QueueExpr(RedVSIParseTreeInterface* pExpr)
 {
     RedVSIParseStackTraverser::PopulateStack(cExprStack, pExpr, cAnalysis);

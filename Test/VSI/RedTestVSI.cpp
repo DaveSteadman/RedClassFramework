@@ -47,6 +47,7 @@ void RedTestVSI::RunUnitTest(RedLog& log)
     if (RedTestVSI::TestTokeniseCode().IsFail())      { log.AddErrorEvent("VSI Unit Test: TestTokeniseCode Failed");      return; }
 
     if (RedTestVSI::TestFragment_New().IsFail())      { log.AddErrorEvent("VSI Unit Test: TestFragment_New Failed");      return; }
+    if (RedTestVSI::TestFragment_Expr().IsFail())     { log.AddErrorEvent("VSI Unit Test: TestFragment_Expr Failed");     return; }
     if (RedTestVSI::TestFragment_If().IsFail())       { log.AddErrorEvent("VSI Unit Test: TestFragment_If Failed");       return; }
     if (RedTestVSI::TestFragment_While().IsFail())    { log.AddErrorEvent("VSI Unit Test: TestFragment_While Failed");    return; }
 
@@ -338,7 +339,6 @@ RedResult RedTestVSI::TestCmdNew(void)
 {
     RedVSICmdNew cmdNew;
     {
-
         RedVSIParseTreeInterface* pt = REDNULL;
         {
             RedString testExpr("4300 + 12");
@@ -610,26 +610,22 @@ RedResult RedTestVSI::TestFragment_New(void)
     if (cRedLog.IsError())
         return kResultFail;
 
-    // Analyse the data created by the code
-    RedType* pXVal = REDNULL;
-    testContext.FindDataItem("x", pXVal);
-    if (pXVal == REDNULL)
-        return kResultFail;
-    if (!pXVal->Type().IsNum())
-        return kResultFail;
-    RedNumber* pXNum = dynamic_cast<RedNumber*>(pXVal);
-    if (!pXNum->IsEqualToWithinTollerance(6.4, kNumberFloatCompTollerance))
-        return kResultFail;
+    // Check the execution result
+    RedVariant x = testContext.DataItemAsVariant("x");
+    if (x != 6.4) return kResultFail;
 
     return kResultSuccess;
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-RedResult RedTestVSI::TestFragment_If(void)
+RedResult RedTestVSI::TestFragment_Expr(void)
 {
     // Define a small code fragment
-    RedString strCodeFragment = "new local number x = 3 new local number res = 0 if x < 4 then res = x + 1 end if ";
+    RedString strCodeFragment = "\
+        new local number x   = 3 \
+        x = x + 1 \
+        x = x * 2";
 
     // Turn the code into tokens
     RedVSILibTokenMap cTokenMap;
@@ -651,16 +647,49 @@ RedResult RedTestVSI::TestFragment_If(void)
     if (cRedLog.IsError())
         return kResultFail;
 
-    // Analyse the data created by the code
-    RedType* pXVal = REDNULL;
-    testContext.FindDataItem("res", pXVal);
-    if (pXVal == REDNULL)
+    // Check the execution result
+    RedVariant x = testContext.DataItemAsVariant("x");
+    if (x != 8) return kResultFail;
+
+    return kResultSuccess;
+}
+
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+RedResult RedTestVSI::TestFragment_If(void)
+{
+    // Define a small code fragment
+    RedString strCodeFragment = "\
+        new local number x   = 3 \
+        new local number res = 0 \
+        if x < 4 then \
+            res = x + 1 \
+        endif \
+        res = res * 3";
+
+    // Turn the code into tokens
+    RedVSILibTokenMap cTokenMap;
+    RedVSITokenBuffer cTokenList;
+    RedLog            cRedLog;
+    if (!RedVSITokenFactory::CreateTokens(strCodeFragment, cTokenMap.cVSILibTokenMap, cTokenList))
         return kResultFail;
-    if (!pXVal->Type().IsNum())
+
+    // Turn the tokens into code
+    RedVSICmdInterface* topCmd = RedVSICmdFactory::RunConstuctionCompetition(cTokenList, cRedLog);
+    if (topCmd == REDNULL)
         return kResultFail;
-    RedNumber* pXNum = dynamic_cast<RedNumber*>(pXVal);
-    if (!pXNum->IsEqualToWithinTollerance(4.0, kNumberFloatCompTollerance))
+    if (cRedLog.IsError())
         return kResultFail;
+
+    // Execute the code in a context
+    RedVSIContextFragment testContext(cRedLog, topCmd);
+    testContext.Execute(10);
+    if (cRedLog.IsError())
+        return kResultFail;
+
+    // Check the execution result
+    RedVariant x = testContext.DataItemAsVariant("res");
+    if (x != 12) return kResultFail;
 
     return kResultSuccess;
 }
@@ -670,7 +699,7 @@ RedResult RedTestVSI::TestFragment_If(void)
 RedResult RedTestVSI::TestFragment_While(void)
 {
     // Define a small code fragment
-    RedString strCodeFragment = "new local number x = 2 while x < 99 loop x = x * 2 endloop";
+    RedString strCodeFragment = "new local number x = 2 while x < 99 loop x = x * 2 endloop x = x + 1";
 
     RedLog                 cRedLog;
     RedVSIContextFragment* testContext = REDNULL;
@@ -684,16 +713,9 @@ RedResult RedTestVSI::TestFragment_While(void)
     if (cRedLog.IsError())
         return kResultFail;
 
-    // Analyse the data created by the code
-    RedType* pXVal = REDNULL;
-    testContext->FindDataItem("x", pXVal);
-    if (pXVal == REDNULL)
-        return kResultFail;
-    if (!pXVal->Type().IsNum())
-        return kResultFail;
-    RedNumber* pXNum = dynamic_cast<RedNumber*>(pXVal);
-    if (!pXNum->IsEqualToWithinTollerance(128, kNumberFloatCompTollerance))
-        return kResultFail;
+    // Check the execution result
+    RedVariant x = testContext->DataItemAsVariant("x");
+    if (x != 129) return kResultFail;
 
     return kResultSuccess;
 }
