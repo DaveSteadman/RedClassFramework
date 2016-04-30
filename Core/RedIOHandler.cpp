@@ -27,14 +27,14 @@ namespace Core {
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-RedResult RedIOHandler::FileExists(const RedString& filepath)
+bool RedIOHandler::FileExists(const RedString& filepath)
 {
     if (FILE * file = fopen(filepath.TextPtr(), "r"))
     {
         fclose(file);
-        return kResultSuccess;
+        return true;
     }
-    return kResultFail;
+    return false;
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

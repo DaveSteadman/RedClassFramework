@@ -60,61 +60,6 @@ RedType* RedVariant::Clone(void) const
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-//void RedVariant::SetType(const RedDataType& t)
-//{
-//    // If we want to change to a boolean type
-//    if (t.IsBool())
-//    {
-//        // If we have data, and its boolean, we don't want to change anything.
-//        // Any other course of action is change.
-//        if ((pData) && (pData->Type() == kDataTypeBool)) return;
-//
-//        // Delete any existing data
-//        if (pData) delete pData;
-//
-//        // New data
-//        pData = new RedBoolean();
-//    }
-//    else if (t.IsChar())
-//    {
-//        // If we have data, and its boolean, we don't want to change anything.
-//        // Any other course of action is change.
-//        if ((pData) && (pData->Type() == kDataTypeChar)) return;
-//
-//        // Delete any existing data
-//        if (pData) delete pData;
-//
-//        // New data
-//        pData = new RedChar();
-//    }
-//    else if (t.IsNum())
-//    {
-//        // If we have data, and its boolean, we don't want to change anything.
-//        // Any other course of action is change.
-//        if ((pData) && (pData->Type() == kDataTypeNum)) return;
-//
-//        // Delete any existing data
-//        if (pData) delete pData;
-//
-//        // New data
-//        pData = new RedNumber();
-//    }
-//    else if (t.IsStr())
-//    {
-//        // If we have data, and its boolean, we don't want to change anything.
-//        // Any other course of action is change.
-//        if ((pData) && (pData->Type() == kDataTypeStr)) return;
-//
-//        // Delete any existing data
-//        if (pData) delete pData;
-//
-//        // New data
-//        pData = new RedString();
-//    }
-//}
-
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 // Set a new value to the object. It maintains its own data, so any existing
 // data is deleted and the input is cloned.
 void RedVariant::SetValue(const RedType* pNewData)

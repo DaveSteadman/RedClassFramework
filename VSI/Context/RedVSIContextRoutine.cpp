@@ -337,6 +337,19 @@ bool RedVSIContextRoutine::IsContextExecutionComplete(const RedVSIContextRoutine
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+bool RedVSIContextRoutine::IsExecutionComplete(void) const
+{
+    if (IsContextBlocked(this))
+        return false;
+
+    if (HasCmdToExecute())
+        return false;
+
+    return true;
+}
+
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 // Execution
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 

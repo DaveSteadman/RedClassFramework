@@ -29,7 +29,7 @@ RedVSICmdWhile::RedVSICmdWhile(void)
 {
     // this object's attributes
     pConditionExpr = 0;
-    pLoopBranch = 0;
+    pLoopBranch    = 0;
 
     // parents attributes
     SetNextCmd(0);

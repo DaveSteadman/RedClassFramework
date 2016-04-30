@@ -46,15 +46,9 @@ public:
     void             SetVarName(const RedString& cInVarName) { cVarName = cInVarName; };
     const RedString& VarName(void) const                     { return cVarName; };
 
-    //void        SetDetails(RedString& cInVarName,  RedVSIParseTreeInterface*& pInVarIndexExpr);
-    //void        GetDetails(RedString& cOutVarName, RedVSIParseTreeInterface*& pOutVarIndexExpr);
-
-
     void        AssignValue(RedVSIContextInterface* pContext, RedVariant& result);
 
 private:
-
-    int         FindDataItem(RedVSIContextInterface* pContext, RedType*& pDataItem);
 
     RedString                  cVarName;
     //RedVSIParseTreeInterface*  pVarIndexExpr;

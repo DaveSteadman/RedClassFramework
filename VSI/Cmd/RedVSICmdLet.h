@@ -18,7 +18,6 @@
 
 #pragma once
 
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 #include "RedCoreNamespace.h"
 
@@ -31,6 +30,8 @@ using namespace Red::Core;
 
 namespace Red {
 namespace VSI {
+
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 /// Class to contain an expression, allowing the maths to exist in a sequence.
 /// Essentially a BASIC LET statement.

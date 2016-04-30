@@ -82,6 +82,7 @@ public:
     void            QueueCommand(RedVSICmdInterface* pCmd)                   { if (pCmd != REDNULL) cCmdStack.Push(pCmd); };
     void            ClearCommandQueue(void)                                  { cCmdStack.DelAll(); };
     void            SetValueToReturn(const RedVariant& cData);
+    bool            IsExecutionComplete(void) const;
 
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 

@@ -18,8 +18,6 @@
 
 #pragma once
 
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
 #include "RedVSICmdInterface.h"
 #include "RedVSITokenBuffer.h"
 #include "RedLog.h"
@@ -28,6 +26,8 @@
 
 namespace Red {
 namespace VSI {
+
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 /// Class to create all the command classes.
 /// The construction code was taken out of the command classes to allow them to

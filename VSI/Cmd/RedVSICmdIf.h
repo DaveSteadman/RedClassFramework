@@ -18,8 +18,6 @@
 
 #pragma once
 
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
 #include "RedVSICmdInterface.h"
 #include "RedVSIErrorCodes.h"
 #include "RedLog.h"

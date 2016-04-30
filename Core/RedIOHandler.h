@@ -31,7 +31,7 @@ namespace Core {
 class RedIOHandler
 {
 public:
-    static RedResult FileExists(const RedString& filepath);
+    static bool FileExists(const RedString& filepath);
 
     static RedResult InputBufferFromFile(const RedString& cFilepath, RedBufferInput&  cBuf);
     static RedResult OutputBufferToFile (const RedString& cFilepath, RedBufferOutput& cBuf);

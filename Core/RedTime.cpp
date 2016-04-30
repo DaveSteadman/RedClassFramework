@@ -93,7 +93,7 @@ void RedTime::SetNow(void)
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-RedTime Now(void)
+RedTime RedTime::Now(void)
 {
     RedTime RetTime;
 

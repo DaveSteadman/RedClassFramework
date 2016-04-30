@@ -18,8 +18,6 @@
 
 #pragma once
 
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
 #include "RedVSICollections.h"
 #include "RedVSIParseTreeInterface.h"
 #include "RedLog.h"

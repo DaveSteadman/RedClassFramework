@@ -20,10 +20,7 @@
 
 // Include Namespaces
 #include "RedCoreNamespace.h"
-
 #include "RedTmlElement.h"
-
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 using namespace Red::Core;
 

@@ -139,6 +139,68 @@ const unsigned RedDate::SixDigitDate(void) const
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+unsigned RedDate::DaysInMonth(const unsigned ForMonth, const unsigned ForYear)
+{
+    if (ForMonth == 1) // January
+        return 31;
+    if (ForMonth == 2) // February
+    {
+        if (RedDate::IsLeapYear(ForYear))
+            return 29;
+        else
+            return 28;
+    }
+    if (ForMonth == 3) // March
+        return 31;
+    if (ForMonth == 4) // April
+        return 30;
+    if (ForMonth == 5) // May
+        return 31;
+    if (ForMonth == 6) // June
+        return 30;
+    if (ForMonth == 7) // July
+        return 31;
+    if (ForMonth == 8) // August
+        return 31;
+    if (ForMonth == 9) // September
+        return 30;
+    if (ForMonth == 10) // October
+        return 31;
+    if (ForMonth == 11) // November
+        return 30;
+    if (ForMonth == 12) // December
+        return 31;
+
+    return 0;
+}
+
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+bool RedDate::IsLeapYear(const unsigned ForYear)
+{
+    if ((ForYear % 400) == 0)
+        return true;
+    else if ((ForYear % 100) == 0)
+        return true;
+    else if ((ForYear % 4) == 0 )
+        return true;
+
+    return false;
+}
+
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+// Operators
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+void RedDate::operator =(const RedDate& cNewVal)
+{
+    year  = cNewVal.year;
+    month = cNewVal.month;
+    date  = cNewVal.date;
+}
+
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 // Comparison Operators
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -154,6 +216,42 @@ bool operator==(const RedDate& lhs, const RedDate& rhs)
 bool operator!=(const RedDate& lhs, const RedDate& rhs)
 {
     if (lhs.EightDigitDate() != rhs.EightDigitDate())
+        return true;
+    return false;
+}
+
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+bool operator >=(const RedDate& lhs, const RedDate& rhs)
+{
+    if (lhs.EightDigitDate() >= rhs.EightDigitDate())
+        return true;
+    return false;
+}
+
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+bool operator <=(const RedDate& lhs, const RedDate& rhs)
+{
+    if (lhs.EightDigitDate() <= rhs.EightDigitDate())
+        return true;
+    return false;
+}
+
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+bool operator >(const RedDate& lhs, const RedDate& rhs)
+{
+    if (lhs.EightDigitDate() > rhs.EightDigitDate())
+        return true;
+    return false;
+}
+
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+bool operator <(const RedDate& lhs, const RedDate& rhs)
+{
+    if (lhs.EightDigitDate() < rhs.EightDigitDate())
         return true;
     return false;
 }

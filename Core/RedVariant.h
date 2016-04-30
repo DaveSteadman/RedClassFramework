@@ -68,9 +68,7 @@ public:
     void                SetValue(const double      val) { SetValue(RedNumber(val)); };
 
     RedType*            Value(void);
-
     bool                ExportTo(RedType* pExportToData);
-    
     const RedNumber     NumberValue(void) const;
     const RedString     StringValue(void) const;
 

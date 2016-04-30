@@ -53,10 +53,16 @@ public:
 	const unsigned EightDigitDate(void) const;
 	const unsigned SixDigitDate(void) const;
 
+    static unsigned DaysInMonth(const unsigned ForMonth, const unsigned ForYear);
+    static bool     IsLeapYear(const unsigned ForYear);
+
 	// String output
 	const RedString DateString(void) const;
 	const RedString EightDigitDateString(void) const;
 	const RedString SixDigitDateString(void) const;
+
+    // Operators
+    void operator =(const RedDate& cNewVal);
 
 private:
 
@@ -67,8 +73,12 @@ private:
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-bool operator==(const RedDate& lhs, const RedDate& rhs);
-bool operator!=(const RedDate& lhs, const RedDate& rhs);
+bool operator ==(const RedDate& lhs, const RedDate& rhs);
+bool operator !=(const RedDate& lhs, const RedDate& rhs);
+bool operator >=(const RedDate& lhs, const RedDate& rhs);
+bool operator <=(const RedDate& lhs, const RedDate& rhs);
+bool operator  >(const RedDate& lhs, const RedDate& rhs);
+bool operator  <(const RedDate& lhs, const RedDate& rhs);
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 

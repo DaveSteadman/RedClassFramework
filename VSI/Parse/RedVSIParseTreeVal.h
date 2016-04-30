@@ -46,7 +46,7 @@ public:
     void             SetValue(RedVariant& cInVal) { cVal = cInVal; };
 
     // Inherited RedVSIParseTreeInterface
-    void CalcResult(RedVSIContextInterface* pContext);
+    void CalcResult(RedVSIContextInterface* pContext) { pContext->SetExprResult(this, cVal); };
 
 private:
     RedVariant cVal;

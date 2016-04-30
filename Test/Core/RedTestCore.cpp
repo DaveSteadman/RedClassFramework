@@ -570,6 +570,10 @@ RedResult RedTestCore::TestDate(void)
     RedString xstr3 = d.EightDigitDateString();
     if (xstr3 != "20211010") return kResultFail;
 
+    RedDate dateToday1 = RedDate::Today();
+    RedDate dateToday2 = RedDate::Today();
+    if (dateToday1 != dateToday2) return kResultFail;
+
     return kResultSuccess;
 }
 

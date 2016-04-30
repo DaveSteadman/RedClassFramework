@@ -218,6 +218,15 @@ bool RedVSIContextFragment::HasCmdToExecute(void)
     return false;
 }
 
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+bool RedVSIContextFragment::IsExecutionComplete(void) const
+{ 
+    if ( (cCmdStack.IsEmpty()) && (pCurrCmd == REDNULL) )
+        return true;
+
+    return false;
+}
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 

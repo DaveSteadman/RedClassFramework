@@ -18,8 +18,6 @@
 
 #pragma once
 
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
 //#include "RedCoreNamespace.h"
 
 #include "RedVSIContextRoutine.h"
@@ -40,8 +38,7 @@ class RedVSIContextFactory
 {
 public:
 
-    RedResult CreateContextForFragment(const RedString& InputCodeFragment, RedVSIContextFragment** OutputContext, RedLog& cLog);
-
+    static RedResult CreateContextForFragment(const RedString& InputCodeFragment, RedVSIContextFragment** OutputContext, RedLog& cLog);
     static RedResult CreateThreadContextForRoutine(const RedString& classname, const RedString& routinename, RedVSILibInterface* pInputLib, RedVSIContextThread** OutputThreadContext, RedLog& cLog);
 
 };

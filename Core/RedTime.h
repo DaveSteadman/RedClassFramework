@@ -47,9 +47,9 @@ public:
 
     void SetTime(const unsigned h, const unsigned m, const double& s) { hour=h; minute=m; seconds=s; };
     void SetTime(const RedString& timestr);
-
     void SetNow(void);
-    RedTime Now(void);
+
+    static RedTime Now(void);
 
     // Time Presentation
     const RedString TimeString(void) const;   // hh:mm:ss

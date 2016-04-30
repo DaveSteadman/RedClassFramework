@@ -18,8 +18,6 @@
 
 #pragma once
 
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
 #include "RedVSICmdInterface.h"
 #include "RedLog.h"
 #include "RedVSIContextInterface.h"

@@ -699,17 +699,19 @@ RedResult RedTestVSI::TestFragment_If(void)
 RedResult RedTestVSI::TestFragment_While(void)
 {
     // Define a small code fragment
+    // The quick +1 on the end help check that we've correctly detected the endof the command
     RedString strCodeFragment = "new local number x = 2 while x < 99 loop x = x * 2 endloop x = x + 1";
 
     RedLog                 cRedLog;
     RedVSIContextFragment* testContext = REDNULL;
 
-    RedVSIContextFactory FactoryObj;
+    RedVSIContextFactory::CreateContextForFragment(strCodeFragment, &testContext, cRedLog);
+    if ( (testContext == REDNULL) || (cRedLog.IsError()) ) return kResultFail;
 
-    FactoryObj.CreateContextForFragment(strCodeFragment, &testContext, cRedLog);
-
-    // Execute the code in a context
-    testContext->Execute(10);
+    // Execute the code in a context, while we have no completion and no error
+    while ( (!testContext->IsExecutionComplete()) && (!cRedLog.IsError()) )
+        testContext->Execute(1);
+    
     if (cRedLog.IsError())
         return kResultFail;
 
