@@ -81,8 +81,19 @@ public:
     static RedVSIIOElement KeywordEndloop(void)                           { return RedVSIIOElement(eKeywordEndloop); };
     static RedVSIIOElement KeywordReturn(void)                            { return RedVSIIOElement(eKeywordReturn); };
 
+    // Bool values
+    const bool             IsBoolKeyword(void) const;
+    const bool             IsKeywordTrue(void) const                      { return eType == eKeywordBoolValueTrue; };
+    const bool             IsKeywordFalse(void) const                     { return eType == eKeywordBoolValueFalse; };
+    const bool             IsKeywordYes(void) const                       { return eType == eKeywordBoolValueYes; };
+    const bool             IsKeywordNo(void) const                        { return eType == eKeywordBoolValueNo; };
+    static RedVSIIOElement KeywordTrue(void)                              { return RedVSIIOElement(eKeywordBoolValueTrue); };
+    static RedVSIIOElement KeywordFalse(void)                             { return RedVSIIOElement(eKeywordBoolValueFalse); };
+    static RedVSIIOElement KeywordYes(void)                               { return RedVSIIOElement(eKeywordBoolValueYes); };
+    static RedVSIIOElement KeywordNo(void)                                { return RedVSIIOElement(eKeywordBoolValueNo); };
+
     // Library
-    const bool              IsLibraryKeyword(void) const;
+    const bool             IsLibraryKeyword(void) const;
     static RedVSIIOElement KeywordName(void)                              { return RedVSIIOElement(eKeywordName); };
     static RedVSIIOElement KeywordClass(void)                             { return RedVSIIOElement(eKeywordClass); };
     static RedVSIIOElement KeywordRoutine(void)                           { return RedVSIIOElement(eKeywordRoutine); };
@@ -200,6 +211,12 @@ private:
         eKeywordLoop,
         eKeywordEndloop,
         eKeywordReturn,
+
+        // Bool Values
+        eKeywordBoolValueTrue,
+        eKeywordBoolValueFalse,
+        eKeywordBoolValueYes,
+        eKeywordBoolValueNo,
 
         // Operators and separators
         eSymbolAssignDivide,

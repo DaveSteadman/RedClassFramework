@@ -87,7 +87,7 @@ void RedVSICmdNew::Execute(RedVSIContextInterface* pContext)
         // if the type of the new variable and the expression don't match, raise an error
         if (!cInitExprResult.ExportTo(pData))
         {
-            //RedVSIErrorCodes::Log(pContext->GetAnalysis(), RedVSIErrorCodes::eNew_ResultTypeMismatch);
+            pContext->Log().AddErrorEvent("New Command Execution: Unable to export expression result into variable");
             return;
         }
     }

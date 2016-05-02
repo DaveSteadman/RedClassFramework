@@ -53,6 +53,33 @@ RedResult RedVSIContextFactory::CreateContextForFragment(const RedString& InputC
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
+RedResult RedVSIContextFactory::LoadFragmentIntoContext (const RedString& InputCodeFragment, RedVSIContextFragment* UpdateContext, RedLog& cLog)
+{
+    if (UpdateContext == REDNULL)
+        return kResultFail;
+
+    // Turn the code into tokens
+    RedVSILibTokenMap cTokenMap;
+    RedVSITokenBuffer cTokenList;
+    RedLog            cRedLog;
+    if (!RedVSITokenFactory::CreateTokens(InputCodeFragment, cTokenMap.cVSILibTokenMap, cTokenList))
+        return kResultFail;
+
+    // Turn the tokens into code
+    RedVSICmdInterface* topCmd = RedVSICmdFactory::RunConstuctionCompetition(cTokenList, cRedLog);
+    if (topCmd == REDNULL)
+        return kResultFail;
+    if (cRedLog.IsError())
+        return kResultFail;
+
+    UpdateContext->ClearCommandQueue();
+    UpdateContext->QueueCommand(topCmd);
+
+    return kResultSuccess;
+}
+
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
 RedResult RedVSIContextFactory::CreateThreadContextForRoutine(const RedString& classname, const RedString& routinename, RedVSILibInterface* pInputLib, RedVSIContextThread** OutputThreadContext, RedLog& cLog)
 {
     // Find the routine to execute

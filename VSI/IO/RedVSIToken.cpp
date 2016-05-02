@@ -52,7 +52,7 @@ bool RedVSIToken::IsEOF(void) const
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-RedString RedVSIToken::GetDebugText(RedVSITokenElementMap& RedVSITokenMap)
+RedString RedVSIToken::DebugText(RedVSITokenElementMap& RedVSITokenMap)
 {
     RedString cRetStr;
 

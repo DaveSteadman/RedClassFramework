@@ -72,27 +72,27 @@ void RedVSICmdSerialiser::TokenBufferToOutputBuffer(RedVSITokenBuffer& cInTokenB
 
         if (CurrToken.Type().IsName())
         {
-            outBuffer.Append( CurrToken.GetText() );
-            outBuffer.Append( kTokenWhitespaceSpace.GetText() );
+            outBuffer.Append( CurrToken.Text() );
+            outBuffer.Append( kTokenWhitespaceSpace.Text() );
         }
         else if (CurrToken.Type().IsNumber())
         {
-            outBuffer.Append( CurrToken.GetNumber() );
-            outBuffer.Append( kTokenWhitespaceSpace.GetText() );
+            outBuffer.Append( CurrToken.Number() );
+            outBuffer.Append( kTokenWhitespaceSpace.Text() );
         }
         else if (CurrToken.Type().IsPredefined())
         {
-            RedVSIIOElement ioElem = CurrToken.GetPredef();
+            RedVSIIOElement ioElem = CurrToken.Predef();
             RedString       ioStr;
 
             if (tokenMap.FindString(ioElem, ioStr))
                 outBuffer.Append(ioStr);
 
-            outBuffer.Append( kTokenWhitespaceSpace.GetText() );
+            outBuffer.Append( kTokenWhitespaceSpace.Text() );
         }
         else if (CurrToken.Type().IsWhitespace())
         {
-            outBuffer.Append(CurrToken.GetText());
+            outBuffer.Append(CurrToken.Text());
         }
 
         cTokenIt.Next();

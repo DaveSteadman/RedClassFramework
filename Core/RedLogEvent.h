@@ -49,6 +49,10 @@ public:
     void                AppendText(const RedString& newText) { text.Append(newText); };
     void                AppendText(const RedNumber& newNum)  { text.Append(newNum.DecimalString()); };
 
+    void                Set(const TEventLogType newtype, const RedString& newtext) { LogType=newtype; text=newtext; };
+
+    void operator =(const RedLogEvent& newVal)      { Set(newVal.EventType(), newVal.Text()); };
+
 private:
     TEventLogType LogType;
     RedString     text;

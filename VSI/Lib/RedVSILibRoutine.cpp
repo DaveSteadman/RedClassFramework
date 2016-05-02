@@ -18,8 +18,6 @@
 
 #include "RedVSILibRoutine.h"
 
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
 namespace Red {
 namespace VSI {
 

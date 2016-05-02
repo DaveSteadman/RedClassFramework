@@ -120,7 +120,6 @@ void RedVSIParseStackTraverser::AddCall(RedVSIParseStack& cStack, RedVSIParseTre
     // Get the iterator for the parameters list. Stack the params up backwards so
     // the first parameter is executed first.
     RedVSIParseListIterator cIt(pOutParamList);
-    //cIt.SetSearchDirectionBackwards();
     
     // loop through and queue up parameters.
     while (!cIt.IsDone())

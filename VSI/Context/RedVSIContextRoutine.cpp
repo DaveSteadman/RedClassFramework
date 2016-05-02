@@ -117,9 +117,7 @@ RedType* RedVSIContextRoutine::CreateDataItem(const RedVSILangElement& cLocation
     else if (cLocation.IsLocationHeap())
     {
         if (pThreadContextRecord != REDNULL)
-        {
             pNewData = pThreadContextRecord->CreateHeapDataItem(cType, cName);
-        }
     }
 
     // return the pointer to the new object (or zero)
@@ -137,13 +135,13 @@ RedType* RedVSIContextRoutine::DuplicateDataItem(const RedVSILangElement& cLocat
 
     if (cLocation.IsLocationStack())
     {
-        cLocalVariables.Add(cName, pNewData);
+        cLocalVariables.CloneAndAdd(cName, pDataItem);
     }
     else if (cLocation.IsLocationHeap())
     {
         if (pThreadContextRecord != REDNULL)
         {
-            pThreadContextRecord->Heap()->Add(cName, pNewData);
+            pThreadContextRecord->Heap()->CloneAndAdd(cName, pDataItem);
         }
     }
 
@@ -363,10 +361,15 @@ void RedVSIContextRoutine::Execute(const unsigned CmdCount)
 {
     unsigned CommandCountdown = CmdCount;
 
-    while ( (CommandCountdown > 0) && (pCurrCmd != REDNULL) && (!IsContextBlocked(this)) )
+    while ( (CommandCountdown > 0) && (HasCmdToExecute()) && (!IsContextBlocked(this)) )
     {
         if (eCmdPhase == eCmdExecPhaseStart)
         {
+            // On entering the loop, check we have a command to execute. Prior HasCmd call ensures
+            // thsi will pass.
+            if (pCurrCmd == REDNULL)
+                pCurrCmd = cCmdStack.Pop();
+
             // Queue up all the expressions needed by the command
             pCurrCmd->QueueExpr(this);
             eCmdPhase = eCmdExecPhaseExprExecuting;
@@ -384,14 +387,18 @@ void RedVSIContextRoutine::Execute(const unsigned CmdCount)
         {
             // Execute the command (it will queue the next command as part of its execution)
             pCurrCmd->Execute(this);
+            
+            // Clean up after execution
+            cExprResultList.DelAll();
+            CommandCountdown--;
+            pCurrCmd = REDNULL;
 
             // Look for the next command to execute
-            pCurrCmd = REDNULL;
             if (!cCmdStack.IsEmpty())
                 pCurrCmd = cCmdStack.Pop();
 
+            // Set the phase for the next command to start
             eCmdPhase = eCmdExecPhaseStart;
-            cExprResultList.DelAll();
         }
     }
 }

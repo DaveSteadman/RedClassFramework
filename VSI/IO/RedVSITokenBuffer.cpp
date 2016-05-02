@@ -80,7 +80,7 @@ RedString RedVSITokenBuffer::DebugDump(void)
     while (!cIt.IsDone())
     {
         RedVSIToken currToken = cIt.CurrentItem();
-        RetStr += currToken.GetDebugText(map.cVSILibTokenMap);
+        RetStr += currToken.DebugText(map.cVSILibTokenMap);
         cIt.Next();
     }
 

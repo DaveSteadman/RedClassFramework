@@ -34,8 +34,8 @@ namespace VSI {
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 /// Class to represent the context required to execute a routine.
-/// Uses parent class RedVSIContextInterface, allowing code-fragments and simple command sequences to
-/// be executed in a lightweight environment.
+/// Uses parent class RedVSIContextInterface, allowing code-fragments and simple command sequences
+/// to be executed in a lightweight environment.
 class RedVSIContextFragment : public RedVSIContextInterface
 {
 public:
@@ -64,10 +64,10 @@ public:
     RedLog&         Log(void) { return cAnalysis; };
 
     // Setup Calls
-    void            SetupRoutineCall(const RedVSIRoutineCallInterface& cSignature);
+    void            SetupRoutineCall(const RedVSIRoutineCallInterface& cSignature) { };
     bool            IsBlocked(const RedVSIContextInterface* pRoutineContext) { return false; };
-    void            QueueCommand(RedVSICmdInterface* pCmd)                   { cCmdStack.Push(pCmd); };
-    void            ClearCommandQueue(void)                                  { cCmdStack.DelAll(); };
+    void            QueueCommand(RedVSICmdInterface* pCmd)                   { if (pCmd != REDNULL) cCmdStack.Push(pCmd); else pCurrCmd = pCmd; };
+    void            ClearCommandQueue(void)                                  { cCmdStack.DelAll(); pCurrCmd=REDNULL; };
     void            SetValueToReturn(const RedVariant& cData)                { };
     bool            IsExecutionComplete(void) const;
 
@@ -78,6 +78,12 @@ public:
     bool            HasCmdToExecute(void);
 
 private:
+
+    void            SetTopCmd(RedVSICmdInterface* pFragmentCmd);
+
+    /// A fragment owns the code it executes. We maintain a pointer to the top command so we can
+    /// delete it when finished.
+    RedVSICmdInterface* pTopCmd;
 
     /// Curr command initialised to zero, command popped off the stack.
     /// expressions for that command evaluated, then the command is evaluated

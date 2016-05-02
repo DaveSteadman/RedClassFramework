@@ -39,12 +39,14 @@ void RedVSILibTokenMap::SetupTokenMap(void)
         cVSILibTokenMap.Add(kVSIIOElementKeywordElse,    RedVSIIOElement::KeywordElse());
         cVSILibTokenMap.Add(kVSIIOElementKeywordEndif,   RedVSIIOElement::KeywordEndif());
         cVSILibTokenMap.Add(kVSIIOElementKeywordEndloop, RedVSIIOElement::KeywordEndloop());
+        cVSILibTokenMap.Add(kVSIIOElementKeywordFalse,   RedVSIIOElement::KeywordFalse());
         cVSILibTokenMap.Add(kVSIIOElementKeywordHeap,    RedVSIIOElement::KeywordHeap());
         cVSILibTokenMap.Add(kVSIIOElementKeywordIf,      RedVSIIOElement::KeywordIf());
         cVSILibTokenMap.Add(kVSIIOElementKeywordLet,     RedVSIIOElement::KeywordLet());
         cVSILibTokenMap.Add(kVSIIOElementKeywordLoop,    RedVSIIOElement::KeywordLoop());
         cVSILibTokenMap.Add(kVSIIOElementKeywordName,    RedVSIIOElement::KeywordName());
         cVSILibTokenMap.Add(kVSIIOElementKeywordNew,     RedVSIIOElement::KeywordNew());
+        cVSILibTokenMap.Add(kVSIIOElementKeywordNo,      RedVSIIOElement::KeywordNo());
         cVSILibTokenMap.Add(kVSIIOElementKeywordNumber,  RedVSIIOElement::KeywordNumber());
         cVSILibTokenMap.Add(kVSIIOElementKeywordParams,  RedVSIIOElement::KeywordParams());
         cVSILibTokenMap.Add(kVSIIOElementKeywordParent,  RedVSIIOElement::KeywordParent());
@@ -53,7 +55,9 @@ void RedVSILibTokenMap::SetupTokenMap(void)
         cVSILibTokenMap.Add(kVSIIOElementKeywordStack,   RedVSIIOElement::KeywordStack());
         cVSILibTokenMap.Add(kVSIIOElementKeywordString,  RedVSIIOElement::KeywordString());
         cVSILibTokenMap.Add(kVSIIOElementKeywordThen,    RedVSIIOElement::KeywordThen());
+        cVSILibTokenMap.Add(kVSIIOElementKeywordTrue,    RedVSIIOElement::KeywordTrue());
         cVSILibTokenMap.Add(kVSIIOElementKeywordWhile,   RedVSIIOElement::KeywordWhile());
+        cVSILibTokenMap.Add(kVSIIOElementKeywordYes,     RedVSIIOElement::KeywordYes());
 
         cVSILibTokenMap.Add(kVSIIOElementSymbolAssignPlus,     RedVSIIOElement::SymbolAssignPlus());
         cVSILibTokenMap.Add(kVSIIOElementSymbolAssignMinus,    RedVSIIOElement::SymbolAssignMinus());

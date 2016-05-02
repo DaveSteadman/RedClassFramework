@@ -45,6 +45,7 @@ public:
     RedBoolean()                       { SetFalse(); };
     RedBoolean(const RedBoolean& cVal) { iState = cVal.iState; };
     RedBoolean(const int& iVal)        { Set(iVal); };
+    RedBoolean(const bool Val)         { Set(Val); };
     ~RedBoolean()                      { };
     
     // Inherited: RedType
@@ -59,6 +60,7 @@ public:
     void               SetFalse(void)      { iState=RED_FALSE; };
 
     void               Set(const int iVal);
+    void               Set(const bool val) { if (val) SetYes(); else SetNo(); };
     void               Invert(void);
 
     const bool         IsYes(void)   const { return (iState == RED_YES);   };

@@ -71,6 +71,18 @@ const bool RedVSIIOElement::IsCommandKeyword(void) const
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
+const bool RedVSIIOElement::IsBoolKeyword(void) const
+{
+    if (IsKeywordTrue())  return true;
+    if (IsKeywordFalse()) return true;
+    if (IsKeywordYes())   return true;
+    if (IsKeywordNo())    return true;
+
+    return false;
+}
+
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
 const bool RedVSIIOElement::IsLibraryKeyword(void) const
 {
     if (IsKeywordName())    return true;

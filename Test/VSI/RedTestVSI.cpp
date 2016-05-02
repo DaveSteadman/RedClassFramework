@@ -47,6 +47,7 @@ void RedTestVSI::RunUnitTest(RedLog& log)
     if (RedTestVSI::TestTokeniseCode().IsFail())      { log.AddErrorEvent("VSI Unit Test: TestTokeniseCode Failed");      return; }
 
     if (RedTestVSI::TestFragment_New().IsFail())      { log.AddErrorEvent("VSI Unit Test: TestFragment_New Failed");      return; }
+    if (RedTestVSI::TestFragment_NewTypes().IsFail()) { log.AddErrorEvent("VSI Unit Test: TestFragment_NewTypes Failed"); return; }
     if (RedTestVSI::TestFragment_Expr().IsFail())     { log.AddErrorEvent("VSI Unit Test: TestFragment_Expr Failed");     return; }
     if (RedTestVSI::TestFragment_If().IsFail())       { log.AddErrorEvent("VSI Unit Test: TestFragment_If Failed");       return; }
     if (RedTestVSI::TestFragment_While().IsFail())    { log.AddErrorEvent("VSI Unit Test: TestFragment_While Failed");    return; }
@@ -613,6 +614,47 @@ RedResult RedTestVSI::TestFragment_New(void)
     // Check the execution result
     RedVariant x = testContext.DataItemAsVariant("x");
     if (x != 6.4) return kResultFail;
+
+    return kResultSuccess;
+}
+
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+RedResult RedTestVSI::TestFragment_NewTypes(void)
+{
+    // Define a small code fragment
+//    RedString strCodeFragment = " \
+//        new local boolean testB = true \
+//        new local char    testC = \"C\" \
+//        new local number  testN = 3.2 x = x * 2 \
+//        new local string  testS = \"testS\" \
+//        testN = testN + 1";
+
+    RedString strCodeFragment = "new local bool testB = true";
+
+    // Turn the code into tokens
+    RedVSILibTokenMap cTokenMap;
+    RedVSITokenBuffer cTokenList;
+    RedLog            cRedLog;
+    if (!RedVSITokenFactory::CreateTokens(strCodeFragment, cTokenMap.cVSILibTokenMap, cTokenList))
+        return kResultFail;
+
+    // Turn the tokens into code
+    RedVSICmdInterface* topCmd = RedVSICmdFactory::RunConstuctionCompetition(cTokenList, cRedLog);
+    if (topCmd == REDNULL)
+        return kResultFail;
+    if (cRedLog.IsError())
+        return kResultFail;
+
+    // Execute the code in a context
+    RedVSIContextFragment testContext(cRedLog, topCmd);
+    testContext.Execute(10);
+    if (cRedLog.IsError())
+        return kResultFail;
+
+    // Check the execution result
+    RedVariant x = testContext.DataItemAsVariant("testB");
+    if (x != true) return kResultFail;
 
     return kResultSuccess;
 }

@@ -75,15 +75,15 @@ RedVSIParseTreeInterface* RedVSIParseFactory::RunExprAssignCompetition(RedVSITok
     {
         // Read the operator
         RedVSIToken cOp = cInputBuffer.GetToken();
-        if ( (cOp.GetPredef().IsAssignOpSymbol()) )
+        if ( (cOp.Predef().IsAssignOpSymbol()) )
         {
             // Create the operator object
             pCurrOp = new RedVSIParseTreeBinaryOp();
-            if      (cOp.GetPredef().IsSymbolAssignEqual())    pCurrOp->SetOp(RedVSILangElement::BinaryOpAssignEqual());
-            else if (cOp.GetPredef().IsSymbolAssignPlus())     pCurrOp->SetOp(RedVSILangElement::BinaryOpAssignPlus());
-            else if (cOp.GetPredef().IsSymbolAssignMinus())    pCurrOp->SetOp(RedVSILangElement::BinaryOpAssignMinus());
-            else if (cOp.GetPredef().IsSymbolAssignDivide())   pCurrOp->SetOp(RedVSILangElement::BinaryOpAssignDivide());
-            else if (cOp.GetPredef().IsSymbolAssignMultiply()) pCurrOp->SetOp(RedVSILangElement::BinaryOpAssignMultiply());
+            if      (cOp.Predef().IsSymbolAssignEqual())    pCurrOp->SetOp(RedVSILangElement::BinaryOpAssignEqual());
+            else if (cOp.Predef().IsSymbolAssignPlus())     pCurrOp->SetOp(RedVSILangElement::BinaryOpAssignPlus());
+            else if (cOp.Predef().IsSymbolAssignMinus())    pCurrOp->SetOp(RedVSILangElement::BinaryOpAssignMinus());
+            else if (cOp.Predef().IsSymbolAssignDivide())   pCurrOp->SetOp(RedVSILangElement::BinaryOpAssignDivide());
+            else if (cOp.Predef().IsSymbolAssignMultiply()) pCurrOp->SetOp(RedVSILangElement::BinaryOpAssignMultiply());
 
             // shuffle nodes to accomodate the new operator
             pTopElem = pCurrOp;
@@ -138,14 +138,14 @@ RedVSIParseTreeInterface* RedVSIParseFactory::RunCompareExprCompetition(RedVSITo
     {
         // Read the operator
         RedVSIToken cOp = cInputBuffer.GetToken();
-        if ( (cOp.GetPredef().IsCompareOpSymbol()) )
+        if ( (cOp.Predef().IsCompareOpSymbol()) )
         {
             // Create the operator object
             pCurrOp = new RedVSIParseTreeBinaryOp();
-            if      (cOp.GetPredef().IsSymbolCompareEqual())        pCurrOp->SetOp(RedVSILangElement::BinaryOpCompareEqual());
-            else if (cOp.GetPredef().IsSymbolCompareNotEqual())     pCurrOp->SetOp(RedVSILangElement::BinaryOpCompareNotEqual());
-            else if (cOp.GetPredef().IsSymbolCompareGreaterThan())  pCurrOp->SetOp(RedVSILangElement::BinaryOpCompareGreaterThan());
-            else if (cOp.GetPredef().IsSymbolCompareLessThan())     pCurrOp->SetOp(RedVSILangElement::BinaryOpCompareLessThan());
+            if      (cOp.Predef().IsSymbolCompareEqual())        pCurrOp->SetOp(RedVSILangElement::BinaryOpCompareEqual());
+            else if (cOp.Predef().IsSymbolCompareNotEqual())     pCurrOp->SetOp(RedVSILangElement::BinaryOpCompareNotEqual());
+            else if (cOp.Predef().IsSymbolCompareGreaterThan())  pCurrOp->SetOp(RedVSILangElement::BinaryOpCompareGreaterThan());
+            else if (cOp.Predef().IsSymbolCompareLessThan())     pCurrOp->SetOp(RedVSILangElement::BinaryOpCompareLessThan());
 
             // shuffle nodes to accomodate the new operator
             pTopElem = pCurrOp;
@@ -200,12 +200,12 @@ RedVSIParseTreeInterface* RedVSIParseFactory::RunLogicExprCompetition(RedVSIToke
     {
         // Read the operator
         RedVSIToken cOp = cInputBuffer.GetToken();
-        if ( (cOp.GetPredef().IsLogicOpSymbol()) )
+        if ( (cOp.Predef().IsLogicOpSymbol()) )
         {
             // Create the operator object
             pCurrOp = new RedVSIParseTreeBinaryOp();
-            if      (cOp.GetPredef().IsSymbolLogicAnd()) pCurrOp->SetOp(RedVSILangElement::BinaryOpLogicAnd());
-            else if (cOp.GetPredef().IsSymbolLogicOr())  pCurrOp->SetOp(RedVSILangElement::BinaryOpLogicOr());
+            if      (cOp.Predef().IsSymbolLogicAnd()) pCurrOp->SetOp(RedVSILangElement::BinaryOpLogicAnd());
+            else if (cOp.Predef().IsSymbolLogicOr())  pCurrOp->SetOp(RedVSILangElement::BinaryOpLogicOr());
 
             // shuffle nodes to accomodate the new operator
             pTopElem = pCurrOp;
@@ -260,12 +260,12 @@ RedVSIParseTreeInterface* RedVSIParseFactory::RunSumExprCompetition(RedVSITokenB
     {
         // Read the operator
         RedVSIToken cOp = cInputBuffer.GetToken();
-        if ( (cOp.GetPredef().IsSymbolPlus()) || (cOp.GetPredef().IsSymbolMinus()) )
+        if ( (cOp.Predef().IsSymbolPlus()) || (cOp.Predef().IsSymbolMinus()) )
         {
             // Create the operator object
             pCurrOp = new RedVSIParseTreeBinaryOp();
-            if      (cOp.GetPredef().IsSymbolPlus())  pCurrOp->SetOp(RedVSILangElement::BinaryOpPlus());
-            else if (cOp.GetPredef().IsSymbolMinus()) pCurrOp->SetOp(RedVSILangElement::BinaryOpMinus());
+            if      (cOp.Predef().IsSymbolPlus())  pCurrOp->SetOp(RedVSILangElement::BinaryOpPlus());
+            else if (cOp.Predef().IsSymbolMinus()) pCurrOp->SetOp(RedVSILangElement::BinaryOpMinus());
 
             // shuffle nodes to accomodate the new operator
             pTopElem = pCurrOp;
@@ -320,12 +320,12 @@ RedVSIParseTreeInterface* RedVSIParseFactory::RunMultiExprCompetition(RedVSIToke
     {
         // Read the operator
         RedVSIToken cOp = cInputBuffer.GetToken();
-        if ( (cOp.GetPredef().IsSymbolMultiply()) || (cOp.GetPredef().IsSymbolDivide()) )
+        if ( (cOp.Predef().IsSymbolMultiply()) || (cOp.Predef().IsSymbolDivide()) )
         {
             // Create the operator object
             pCurrOp = new RedVSIParseTreeBinaryOp();
-            if      (cOp.GetPredef().IsSymbolMultiply()) pCurrOp->SetOp(RedVSILangElement::BinaryOpMultiply());
-            else if (cOp.GetPredef().IsSymbolDivide())   pCurrOp->SetOp(RedVSILangElement::BinaryOpDivide());
+            if      (cOp.Predef().IsSymbolMultiply()) pCurrOp->SetOp(RedVSILangElement::BinaryOpMultiply());
+            else if (cOp.Predef().IsSymbolDivide())   pCurrOp->SetOp(RedVSILangElement::BinaryOpDivide());
 
             // shuffle nodes to accomodate the new operator
             pTopElem = pCurrOp;
@@ -380,11 +380,11 @@ RedVSIParseTreeInterface* RedVSIParseFactory::RunPowExprCompetition(RedVSITokenB
     {
         // Read the operator
         RedVSIToken cOp = cInputBuffer.GetToken();
-        if ( cOp.GetPredef().IsSymbolPower() )
+        if ( cOp.Predef().IsSymbolPower() )
         {
             // Create the operator object
             pCurrOp = new RedVSIParseTreeBinaryOp();
-            if (cOp.GetPredef().IsSymbolPower())
+            if (cOp.Predef().IsSymbolPower())
                 pCurrOp->SetOp(RedVSILangElement::BinaryOpPower());
 
             // shuffle nodes to accomodate the new operator
@@ -470,7 +470,7 @@ RedVSIParseTreeInterface* RedVSIParseFactory::RunSubExprCompetition(RedVSITokenB
 {
     RedVSIToken cTok = cInputBuffer.GetToken();
 
-    if (cTok.GetPredef().IsSymbolOpenBracket())
+    if (cTok.Predef().IsSymbolOpenBracket())
     {
         // Read the sub expression
         RedVSIParseTreeInterface* pSubExpr = RunCompareExprCompetition(cInputBuffer, log);
@@ -482,7 +482,7 @@ RedVSIParseTreeInterface* RedVSIParseFactory::RunSubExprCompetition(RedVSITokenB
         
         // Ensure the expression ends with a close bracket
         cTok = cInputBuffer.GetToken();
-        if (!cTok.GetPredef().IsSymbolCloseBracket())
+        if (!cTok.Predef().IsSymbolCloseBracket())
         {
             log.AddText(cTok.GetPos().PosText() + RedVSIErrorCodes::GetErrorString(RedVSIErrorCodes::ePFact_SubExpr_NoExprEnd));
             return 0;
@@ -503,9 +503,16 @@ RedVSIParseTreeInterface* RedVSIParseFactory::RunValueCompetition(RedVSITokenBuf
     if (IsValueToken(cTok))
     {
         RedVariant cNodeVal;
-        if (cTok.Type().IsNumber())        cNodeVal = cTok.GetNumber();
-        if (cTok.Type().IsStringLiteral()) cNodeVal = cTok.GetText();
-        
+        if      (cTok.Type().IsNumber())        cNodeVal = cTok.Number();
+        else if (cTok.Type().IsStringLiteral()) cNodeVal = cTok.Text();
+        else if (cTok.Type().IsPredefined() && cTok.Predef().IsBoolKeyword())
+        {
+            if      (cTok.Predef().IsKeywordTrue())  cNodeVal = kBoolTRUE;
+            else if (cTok.Predef().IsKeywordFalse()) cNodeVal = kBoolFALSE;
+            else if (cTok.Predef().IsKeywordYes())   cNodeVal = kBoolYES;
+            else if (cTok.Predef().IsKeywordNo())    cNodeVal = kBoolNO;
+        }
+
         RedVSIParseTreeVal* pParseValNode = new RedVSIParseTreeVal(cNodeVal);
         
         return pParseValNode;
@@ -524,12 +531,12 @@ RedVSIParseTreeInterface* RedVSIParseFactory::RunVariableCompetition(RedVSIToken
     if (IsVariableToken(cTok))
     {
         // Data to go into the constructor (name already checked)
-        RedString                 cVarName   = cTok.GetText();
+        RedString                 cVarName   = cTok.Text();
         RedVSIParseTreeInterface* pIndexExpr = 0;
     
         // check for an array index after the variable name
         cTok = cInputBuffer.GetToken();
-        if (cTok.GetPredef().IsSymbolOpenBracket())
+        if (cTok.Predef().IsSymbolOpenBracket())
         {
             // Read the array index expression
             pIndexExpr = RunCompareExprCompetition(cInputBuffer, log);
@@ -541,7 +548,7 @@ RedVSIParseTreeInterface* RedVSIParseFactory::RunVariableCompetition(RedVSIToken
 
             // read the closing array bracket, which isn't part of the expression.
             cTok = cInputBuffer.GetToken();
-            if (!cTok.GetPredef().IsSymbolCloseBracket())
+            if (!cTok.Predef().IsSymbolCloseBracket())
             {
                 log.AddText(cTok.GetPos().PosText() + RedVSIErrorCodes::GetErrorString(RedVSIErrorCodes::ePFact_Var_NoArrayExprEnd));
                 return REDNULL;
@@ -571,7 +578,7 @@ RedVSIParseTreeInterface* RedVSIParseFactory::RunExternalCallCompetition(RedVSIT
 
     if (!cUnitNameTok.Type().IsName())                      { return REDNULL; }
     if (!cFuncTok.Type().IsName())                          { return REDNULL; }
-    if (!cOpenBracketTok.GetPredef().IsSymbolOpenBracket()) { return REDNULL; }
+    if (!cOpenBracketTok.Predef().IsSymbolOpenBracket()) { return REDNULL; }
 
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     
@@ -584,10 +591,10 @@ RedVSIParseTreeInterface* RedVSIParseFactory::RunExternalCallCompetition(RedVSIT
     // determine the class/object names from the inputs
     RedString cClassName;
     RedString cObjectName;
-    if (cSeparatorTok.GetPredef().IsSymbolPeriod())
-        cObjectName = cUnitNameTok.GetText();
-    else if (cSeparatorTok.GetPredef().IsSymbolDoubleColon())
-        cClassName = cUnitNameTok.GetText();
+    if (cSeparatorTok.Predef().IsSymbolPeriod())
+        cObjectName = cUnitNameTok.Text();
+    else if (cSeparatorTok.Predef().IsSymbolDoubleColon())
+        cClassName = cUnitNameTok.Text();
 
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -600,7 +607,7 @@ RedVSIParseTreeInterface* RedVSIParseFactory::RunExternalCallCompetition(RedVSIT
     {
         // check for the end of the params first
         cParamTok = cInputBuffer.GetToken();
-        if (cParamTok.GetPredef().IsSymbolCloseBracket())
+        if (cParamTok.Predef().IsSymbolCloseBracket())
         {
             iParamsComplete = 1;
         }
@@ -619,7 +626,7 @@ RedVSIParseTreeInterface* RedVSIParseFactory::RunExternalCallCompetition(RedVSIT
 
                 // look for a delimiter
                 cCommaTok = cInputBuffer.GetToken();
-                if (!cCommaTok.GetPredef().IsSymbolComma())
+                if (!cCommaTok.Predef().IsSymbolComma())
                     cInputBuffer.SetTokenIndexBackOne();
             }
             else
@@ -633,7 +640,7 @@ RedVSIParseTreeInterface* RedVSIParseFactory::RunExternalCallCompetition(RedVSIT
     }
     
     // Assign the final details and return the command
-    pNewCmd->SetDetails(cObjectName, cClassName, cFuncTok.GetText(), pParamList);
+    pNewCmd->SetDetails(cObjectName, cClassName, cFuncTok.Text(), pParamList);
     return pNewCmd;
 }
 
@@ -646,7 +653,7 @@ RedVSIParseTreeInterface* RedVSIParseFactory::RunInternalCallCompetition(RedVSIT
     RedVSIToken cOpenBracketTok = cInputBuffer.GetToken();
 
     if (!cFuncTok.Type().IsName())                          { return REDNULL; }
-    if (!cOpenBracketTok.GetPredef().IsSymbolOpenBracket()) { return REDNULL; }
+    if (!cOpenBracketTok.Predef().IsSymbolOpenBracket()) { return REDNULL; }
 
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     
@@ -671,7 +678,7 @@ RedVSIParseTreeInterface* RedVSIParseFactory::RunInternalCallCompetition(RedVSIT
     {
         // check for the end of the params first
         cParamTok = cInputBuffer.GetToken();
-        if (cParamTok.GetPredef().IsSymbolCloseBracket())
+        if (cParamTok.Predef().IsSymbolCloseBracket())
         {
             iParamsComplete = 1;
         }
@@ -690,7 +697,7 @@ RedVSIParseTreeInterface* RedVSIParseFactory::RunInternalCallCompetition(RedVSIT
 
                 // look for a delimiter
                 cCommaTok = cInputBuffer.GetToken();
-                if (!cCommaTok.GetPredef().IsSymbolComma())
+                if (!cCommaTok.Predef().IsSymbolComma())
                     cInputBuffer.SetTokenIndexBackOne();
             }
             else
@@ -705,7 +712,7 @@ RedVSIParseTreeInterface* RedVSIParseFactory::RunInternalCallCompetition(RedVSIT
     
     // Assign the final details and return the command
     RedString cNullClassName;
-    pNewCmd->SetDetails(cClassName, cObjectName, cFuncTok.GetText(), pParamList);
+    pNewCmd->SetDetails(cClassName, cObjectName, cFuncTok.Text(), pParamList);
     return pNewCmd;
 }
 
@@ -713,8 +720,9 @@ RedVSIParseTreeInterface* RedVSIParseFactory::RunInternalCallCompetition(RedVSIT
 
 bool RedVSIParseFactory::IsValueToken(const RedVSIToken& cTok)
 {
-    if ( cTok.Type().IsNumber() )        return true;
-    if ( cTok.Type().IsStringLiteral() ) return true;
+    if ( cTok.Type().IsNumber() )                                         return true;
+    if ( cTok.Type().IsStringLiteral() )                                  return true;
+    if ( cTok.Type().IsPredefined() && cTok.Predef().IsBoolKeyword() ) return true;
     
     return false;
 }

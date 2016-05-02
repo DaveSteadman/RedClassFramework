@@ -41,7 +41,6 @@ public:
     bool           IsDone(void) const;
     Element        CurrentItem(void) const;
 
-    //void           DeleteCurrentItem(void);
     void           SetSearchDirection(TESearchDir eDir) { eSearchDir = eDir; };
     void           SetSearchDirectionBackwards(void)    { eSearchDir = eBackwards; First(); };
     const unsigned CollectionIndex(void) const          { return iCurrPos; };
@@ -120,14 +119,6 @@ Element RedDoubleLinkedListIterator<Element>::CurrentItem(void) const
 
     return Elem;
 };
-
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-//template<class Element>
-//void RedDoubleLinkedListIterator<Element>::DeleteCurrentItem(void)
-//{
-//    pList->Del(iCurrPos);
-//}
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 

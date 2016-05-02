@@ -72,7 +72,6 @@ RedString RedLog::AllLoggedText(void)
         else if (pCurrItem->EventType() == eInfoEvent)    outStr.Append("Info:    ");
 
         outStr.Append(pCurrItem->Text());
-
         outStr.Append("\n");
 
         logIt.Next();

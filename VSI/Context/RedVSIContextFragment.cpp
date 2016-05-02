@@ -50,6 +50,9 @@ RedVSIContextFragment::~RedVSIContextFragment(void)
     
     //if (pReturnValue)
     //    delete pReturnValue;
+
+    // Clear down any owned code
+    SetTopCmd(REDNULL);
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -170,12 +173,6 @@ void RedVSIContextFragment::ExecuteExprQueue(void)
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-void RedVSIContextFragment::SetupRoutineCall(const RedVSIRoutineCallInterface& cSignature)
-{
-}
-
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 // Execution
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -189,8 +186,13 @@ void RedVSIContextFragment::Execute(const unsigned CmdCount)
 		return;
 
 	// Iterate until no command or count done
-    while ( (CommandCountdown > 0) && (pCurrCmd != REDNULL) )
+    while ( (CommandCountdown > 0) && (HasCmdToExecute()) )
     {
+        // On entering the loop, check we have a command to execute. Prior HasCmd call ensures this
+        // will pass.
+        if (pCurrCmd == REDNULL)
+			pCurrCmd = cCmdStack.Pop();
+
         // Queue up all the expressions needed by the command
         pCurrCmd->QueueExpr(this);
         ExecuteExprQueue();
@@ -198,13 +200,14 @@ void RedVSIContextFragment::Execute(const unsigned CmdCount)
         // Execute the command (it will queue the next command as part of its execution)
         pCurrCmd->Execute(this);
 
-        // An ending command-path can pop a Null. As long as we have further entries to Pop, look for a non-null
-        pCurrCmd = cCmdStack.Pop();
-		while ((pCurrCmd == REDNULL) && (!cCmdStack.IsEmpty()))
-		{
-			pCurrCmd = cCmdStack.Pop();
-			CommandCountdown--;
-		}
+        // Clean up after execution
+        cExprResultList.DelAll();
+        CommandCountdown--;
+        pCurrCmd = REDNULL;
+
+        // Look for the next command to execute
+        if (!cCmdStack.IsEmpty())
+            pCurrCmd = cCmdStack.Pop();
     }
 }
 
@@ -212,9 +215,9 @@ void RedVSIContextFragment::Execute(const unsigned CmdCount)
 
 bool RedVSIContextFragment::HasCmdToExecute(void)
 { 
+    if (pCurrCmd)             return true;
     if (!cCmdStack.IsEmpty()) return true;
-    if (pCurrCmd) return true;
-    
+
     return false;
 }
 
@@ -226,6 +229,30 @@ bool RedVSIContextFragment::IsExecutionComplete(void) const
         return true;
 
     return false;
+}
+
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+// Private
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+/// Routine takes ownership of the fragment, and will delete it when replaced, or when context is
+/// deleted.
+/// Routine designed to allow assigning a null pointer to clear down owned code.
+void RedVSIContextFragment::SetTopCmd(RedVSICmdInterface* pFragmentCmd)
+{
+    // Clear down any current execution
+    pCurrCmd = REDNULL;
+    cCmdStack.DelAll();
+    cExprResultList.DelAll();
+
+    // Delete any previous top command
+    if (pTopCmd == REDNULL)
+    {
+        delete pTopCmd;
+        pTopCmd = REDNULL;
+    }
+
+    pTopCmd = pFragmentCmd;
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

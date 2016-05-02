@@ -68,8 +68,13 @@ RedResult RedTestCore::TestBoolean(void)
     p->SetFalse();
     if (p->IsTrue()) return kResultFail;
 
-    if (p->Type() != RedDataType::Bool()) return kResultFail;
+    if (p->Type() != RedDataType::Bool())
+    {
+        delete p;
+        return kResultFail;
+    }
 
+    delete p;
     return kResultSuccess;
 }
 

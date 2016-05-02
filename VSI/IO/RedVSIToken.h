@@ -18,8 +18,6 @@
 
 #pragma once
 
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
 #include "RedCoreNamespace.h"
 
 #include "RedVSITokenType.h"
@@ -27,8 +25,6 @@
 #include "RedBufferPos.h"
 
 using namespace Red::Core;
-
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 namespace Red {
 namespace VSI {
@@ -64,11 +60,11 @@ public:
     bool IsEOF(void) const;
 
     // Data Access
-    RedVSITokenType Type(void) const        { return cType; };
-    RedNumber       GetNumber(void) const   { return cNumber; };
-    RedString       GetText(void) const     { return cText; }
-    RedVSIIOElement GetPredef(void) const   { return cPredef; };
-    RedString       GetDebugText(RedVSITokenElementMap& RedVSITokenMap);
+    RedVSITokenType Type(void) const     { return cType; };
+    RedNumber       Number(void) const   { return cNumber; };
+    RedString       Text(void) const     { return cText; }
+    RedVSIIOElement Predef(void) const   { return cPredef; };
+    RedString       DebugText(RedVSITokenElementMap& RedVSITokenMap);
 
     // Operators
     void operator =(const RedVSIToken& cTok);

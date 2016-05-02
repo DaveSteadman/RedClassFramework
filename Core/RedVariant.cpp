@@ -124,35 +124,60 @@ RedType* RedVariant::Value(void)
 
 bool RedVariant::ExportTo(RedType* pExportToData)
 {
+    bool is_success = false;
+
     // first check both ethe data items are not null pointers
     if ((pData) && (pExportToData)) 
     {
         // check if the two types are the same
         if (pData->Type() == pExportToData->Type())
         {
-            if (pExportToData->Type().IsNum())
+            if (pExportToData->Type().IsBool())
             {
-                RedNumber* pExportToNum = (RedNumber*)pExportToData;
-                RedNumber* pDataNum     = (RedNumber*)pData;
-                *pExportToNum = *pDataNum;
+                RedBoolean* pExportToBool = dynamic_cast<RedBoolean*>(pExportToData);
+                RedBoolean* pDataBool     = dynamic_cast<RedBoolean*>(pData);
+                *pExportToBool            = *pDataBool;
+                is_success                = true;
             }
             else if (pExportToData->Type().IsChar())
             {
-                RedChar* pExportToChar = (RedChar*)pExportToData;
-                RedChar* pDataChar     = (RedChar*)pData;
-                *pExportToChar = *pDataChar;
+                RedChar* pExportToChar = dynamic_cast<RedChar*>(pExportToData);
+                RedChar* pDataChar     = dynamic_cast<RedChar*>(pData);
+                *pExportToChar         = *pDataChar;
+                is_success             = true;
+            }
+            else if (pExportToData->Type().IsNum())
+            {
+                RedNumber* pExportToNum = dynamic_cast<RedNumber*>(pExportToData);
+                RedNumber* pDataNum     = dynamic_cast<RedNumber*>(pData);
+                *pExportToNum           = *pDataNum;
+                is_success              = true;
             }
             else if (pExportToData->Type().IsStr())
             {
-                RedString* pExportToStr = (RedString*)pExportToData;
-                RedString* pDataStr     = (RedString*)pData;
-                *pExportToStr = *pDataStr;
-            }        
-
-            return true;
+                RedString* pExportToStr = dynamic_cast<RedString*>(pExportToData);
+                RedString* pDataStr     = dynamic_cast<RedString*>(pData);
+                *pExportToStr           = *pDataStr;
+                is_success              = true;
+            }
         }
     }
-    return false;
+    return is_success;
+}
+
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+const RedBoolean RedVariant::BoolValue(void) const
+{
+    RedBoolean cBool;
+    
+    // Assign the data to the return type only if its numeric.
+    if (pData->Type().IsBool())
+    {
+        RedBoolean* pBoolData = dynamic_cast<RedBoolean*>(pData);
+        cBool = *pBoolData;
+    }
+    return cBool;
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -323,20 +348,38 @@ bool operator!=(const RedVariant& lhs, const RedVariant& rhs)
         if (lhs.Type() != rhs.Type())
             return true;
 
+        // Bool + Bool
+        if ( (lhs.Type().IsBool()) && (rhs.Type().IsBool()) )
+        {
+            if (lhs.BoolValue() != rhs.BoolValue())
+                return true;
+            else
+                return false;
+        }
+
         // Number == Number
-        if ( (lhs.Type().IsNum()) && (rhs.Type().IsNum()) )
+        else if ( (lhs.Type().IsNum()) && (rhs.Type().IsNum()) )
         {
             if (lhs.NumberValue() != rhs.NumberValue())
                 return true;
+            else
+                return false;
         }
 
         // String + String
-        if ( (lhs.Type().IsStr()) && (rhs.Type().IsStr()) )
+        else if ( (lhs.Type().IsStr()) && (rhs.Type().IsStr()) )
         {
             if (lhs.StringValue() != rhs.StringValue())
                 return true;
+            else
+                return false;
         }
+
     }
+
+    // We've left every IF statement without performing a decent comparison. Returning false at this
+    // point doesn't convey that lack of validity, so throwing is a better alternative.
+    throw;
 
     return false;
 }
