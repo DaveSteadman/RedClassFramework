@@ -42,12 +42,14 @@ public:
     const bool                     IsCommandLet(void) const                        { return eType == eCommandLet; };
     const bool                     IsCommandIf(void) const                         { return eType == eCommandIf; };
     const bool                     IsCommandWhile(void) const                      { return eType == eCommandWhile; };
-    const bool                     IsCommandReturn(void) const                     { return eType == eCommandReturn; };
+	const bool                     IsCommandPrint(void) const                      { return eType == eCommandPrint; };
+	const bool                     IsCommandReturn(void) const                     { return eType == eCommandReturn; };
     static const RedVSILangElement CommandNew(void)                                { return RedVSILangElement(eCommandNew); };
     static const RedVSILangElement CommandLet(void)                                { return RedVSILangElement(eCommandLet); };
     static const RedVSILangElement CommandIf(void)                                 { return RedVSILangElement(eCommandIf); };
     static const RedVSILangElement CommandWhile(void)                              { return RedVSILangElement(eCommandWhile); };
-    static const RedVSILangElement CommandReturn(void)                             { return RedVSILangElement(eCommandReturn); };
+    static const RedVSILangElement CommandPrint(void)                              { return RedVSILangElement(eCommandPrint); };
+	static const RedVSILangElement CommandReturn(void)                             { return RedVSILangElement(eCommandReturn); };
 
     // Parse node types
     const bool                     IsParse(void) const;
@@ -156,7 +158,8 @@ protected:
         eCommandNew,
         eCommandLet,
         eCommandIf,
-        eCommandReturn,
+		eCommandPrint,
+		eCommandReturn,
         eCommandWhile,
 
         eParseFuncCall,
