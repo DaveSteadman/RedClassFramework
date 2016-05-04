@@ -31,6 +31,7 @@ const bool RedVSILangElement::IsCommand(void) const
     if (IsCommandLet())    return true;
     if (IsCommandIf())     return true;
     if (IsCommandWhile())  return true;
+    if (IsCommandPrint())  return true;
     if (IsCommandReturn()) return true;
 
     return false;
