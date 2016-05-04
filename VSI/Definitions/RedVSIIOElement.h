@@ -69,7 +69,8 @@ public:
     const bool             IsKeywordWhile(void) const                     { return eType == eKeywordWhile; };
     const bool             IsKeywordLoop(void) const                      { return eType == eKeywordLoop; };
     const bool             IsKeywordEndloop(void) const                   { return eType == eKeywordEndloop; };
-    const bool             IsKeywordReturn(void) const                    { return eType == eKeywordReturn; };
+	const bool             IsKeywordPrint(void) const                     { return eType == eKeywordPrint; };
+	const bool             IsKeywordReturn(void) const                    { return eType == eKeywordReturn; };
     static RedVSIIOElement KeywordNew(void)                               { return RedVSIIOElement(eKeywordNew); };
     static RedVSIIOElement KeywordLet(void)                               { return RedVSIIOElement(eKeywordLet); };
     static RedVSIIOElement KeywordIf(void)                                { return RedVSIIOElement(eKeywordIf); };
@@ -79,7 +80,8 @@ public:
     static RedVSIIOElement KeywordWhile(void)                             { return RedVSIIOElement(eKeywordWhile); };
     static RedVSIIOElement KeywordLoop(void)                              { return RedVSIIOElement(eKeywordLoop); };
     static RedVSIIOElement KeywordEndloop(void)                           { return RedVSIIOElement(eKeywordEndloop); };
-    static RedVSIIOElement KeywordReturn(void)                            { return RedVSIIOElement(eKeywordReturn); };
+	static RedVSIIOElement KeywordPrint(void)                             { return RedVSIIOElement(eKeywordPrint); };
+	static RedVSIIOElement KeywordReturn(void)                            { return RedVSIIOElement(eKeywordReturn); };
 
     // Bool values
     const bool             IsBoolKeyword(void) const;
@@ -210,6 +212,7 @@ private:
         eKeywordWhile,
         eKeywordLoop,
         eKeywordEndloop,
+		eKeywordPrint,
         eKeywordReturn,
 
         // Bool Values
