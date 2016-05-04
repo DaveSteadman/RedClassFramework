@@ -71,7 +71,7 @@ const unsigned RedTime::SixDigitTime(void) const
 
     rettime += hour   * 10000;
     rettime += minute * 100;
-    rettime += floor(seconds);
+    rettime += (unsigned)floor(seconds);
 
     return rettime;
 }
