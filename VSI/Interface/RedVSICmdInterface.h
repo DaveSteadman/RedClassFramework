@@ -18,16 +18,14 @@
 
 #pragma once
 
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
 #include "RedLog.h"
 #include "RedVSIContextInterface.h"
 #include "RedVSILangElement.h"
 
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
 namespace Red {
 namespace VSI {
+
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 class RedVSICmdInterface
 {
@@ -37,7 +35,7 @@ public:
 
     /// Get the command type, allowing a caller to determine the type of a RedVSICmdInterface
     /// pointer.
-    virtual RedVSILangElement Type(void) =0;
+    virtual RedVSILangElement Type(void) const =0;
 
     /// Operation to queue up the top level expressions in a command. A separate class
     /// determines the actual traversing of the parse-tree.
@@ -49,7 +47,7 @@ public:
     
     /// Get the next command in the sequence (not including the branches of
     /// conditional/iterative commands)
-    RedVSICmdInterface* NextCmd(void) { return pNextCmd; };
+    RedVSICmdInterface* NextCmd(void) const { return pNextCmd; };
     
     /// Assign the next command in the sequence (not including command branches)
     void SetNextCmd(RedVSICmdInterface* pNewNextCmd) { pNextCmd = pNewNextCmd; };
