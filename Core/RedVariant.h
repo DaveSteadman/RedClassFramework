@@ -71,7 +71,7 @@ public:
     void                SetValue(const bool        val) { SetValue(RedBoolean(val)); };
 
     RedType*            Value(void);
-    bool                ExportTo(RedType* pExportToData);
+    bool                ExportTo(RedType* pExportToData) const;
     const RedBoolean    BoolValue(void) const;
     const RedNumber     NumberValue(void) const;
     const RedString     StringValue(void) const;
@@ -82,12 +82,12 @@ public:
     void operator =(const RedChar&    cNewData) { SetValue(&cNewData); };
     void operator =(const RedString&  cNewData) { SetValue(&cNewData); };
     void operator =(const RedNumber&  cNewData) { SetValue(&cNewData); };
-    void operator =(const bool     val)         { SetValue(RedBoolean(val)); };
-    void operator =(const char     val)         { SetValue(RedChar(val)); };
-    void operator =(const char*    val)         { SetValue(RedString(val)); };
-    void operator =(const int      val)         { SetValue(RedNumber(val)); };
-    void operator =(const unsigned val)         { SetValue(RedNumber((int)val)); };
-    void operator =(const double   val)         { SetValue(RedNumber(val)); };
+    void operator =(const bool        val)      { SetValue(RedBoolean(val)); };
+    void operator =(const char        val)      { SetValue(RedChar(val)); };
+    void operator =(const char*       val)      { SetValue(RedString(val)); };
+    void operator =(const int         val)      { SetValue(RedNumber(val)); };
+    void operator =(const unsigned    val)      { SetValue(RedNumber((int)val)); };
+    void operator =(const double      val)      { SetValue(RedNumber(val)); };
 
     RedVariant operator+(const RedVariant& cVarData);
     RedVariant operator-(const RedVariant& cVarData);

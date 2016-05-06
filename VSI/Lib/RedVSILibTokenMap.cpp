@@ -43,6 +43,7 @@ void RedVSILibTokenMap::SetupTokenMap(void)
         cVSILibTokenMap.Add(kVSIIOElementKeywordHeap,    RedVSIIOElement::KeywordHeap());
         cVSILibTokenMap.Add(kVSIIOElementKeywordIf,      RedVSIIOElement::KeywordIf());
         cVSILibTokenMap.Add(kVSIIOElementKeywordLet,     RedVSIIOElement::KeywordLet());
+        cVSILibTokenMap.Add(kVSIIOElementKeywordLog,     RedVSIIOElement::KeywordLog());
         cVSILibTokenMap.Add(kVSIIOElementKeywordLoop,    RedVSIIOElement::KeywordLoop());
         cVSILibTokenMap.Add(kVSIIOElementKeywordName,    RedVSIIOElement::KeywordName());
         cVSILibTokenMap.Add(kVSIIOElementKeywordNew,     RedVSIIOElement::KeywordNew());
@@ -88,7 +89,7 @@ void RedVSILibTokenMap::SetupTokenMap(void)
         cVSILibTokenMap.Add(RedString(","),       RedVSIIOElement::SymbolComma());
         cVSILibTokenMap.Add(RedString("."),       RedVSIIOElement::SymbolPeriod());
         cVSILibTokenMap.Add(RedString("::"),      RedVSIIOElement::SymbolDoubleColon());
-        cVSILibTokenMap.Add(RedString("'"),       RedVSIIOElement::SymbolStringContent());
+        //cVSILibTokenMap.Add(RedString("'"),       RedVSIIOElement::SymbolStringContent());
     }
 }
 

@@ -22,7 +22,6 @@
 #include "RedVSIErrorCodes.h"
 #include "RedLog.h"
 #include "RedVSIContextInterface.h"
-
 #include "RedVSIParseTreeInterface.h"
 #include "RedVSILangElement.h"
 
@@ -40,7 +39,7 @@ public:
     ~RedVSICmdIf(void) {};
 
     // RedVSICmdInterface inherited routines
-    RedVSILangElement Type(void) { return kLangElementCommandIf; };
+    const RedVSILangElement Type(void) const { return kLangElementCommandIf; };
     void QueueExpr(RedVSIContextInterface* pContext);
     void Execute(RedVSIContextInterface* pContext);
 

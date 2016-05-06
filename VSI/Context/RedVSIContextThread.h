@@ -46,7 +46,7 @@ public:
 
 	// Code Library
     void                       SetCodeLib(RedVSILibInterface* pNewCodeLib) { pCodeLib = pNewCodeLib; };
-    const RedVSILibInterface*  CodeLib(void) const                         { return pCodeLib; };
+    RedVSILibInterface*        CodeLib(void) const                         { return pCodeLib; };
 
 	// Heap Data
     RedType*                   CreateHeapDataItem(const RedVSILangElement& cType, const RedString& cName);
@@ -68,7 +68,7 @@ private:
     RedVSIRoutineContextStack cRoutineStack;
 
     // Code library
-    const RedVSILibInterface* pCodeLib;
+    RedVSILibInterface* pCodeLib;
 
     // Data attributes
     RedRecord cHeap;

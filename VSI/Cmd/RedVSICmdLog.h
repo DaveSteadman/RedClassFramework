@@ -18,42 +18,51 @@
 
 #pragma once
 
+#include "RedCoreNamespace.h"
+
+#include "RedVSIParseTreeInterface.h"
 #include "RedVSICmdInterface.h"
-#include "RedVSITokenBuffer.h"
-#include "RedLog.h"
 #include "RedVSIContextInterface.h"
 #include "RedVSIErrorCodes.h"
+
+using namespace Red::Core;
 
 namespace Red {
 namespace VSI {
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-/// Class to create all the command classes.
-/// The construction code was taken out of the command classes to allow them to
-/// focus on their core functionality of performing commands. Additional processing
-/// will use SetDetails/GetDetails on each of the commands and deal with their
-/// own domain (such as GUI or serialisation).
-class RedVSICmdFactory
+/// Class to contain an expression, allowing the maths to exist in a sequence.
+/// Essentially a BASIC LET statement.
+class RedVSICmdLog : public RedVSICmdInterface
 {
-public:
+public: 
 
-    static RedVSICmdInterface* RunConstuctionCompetition(RedVSITokenBuffer& cInputBuffer, RedLog& RedLog);
+    // Construction Routines
+    RedVSICmdLog(void);
+    RedVSICmdLog(RedVSIParseTreeInterface*& pExpr) { SetDetails(pLogExpr); };
+    ~RedVSICmdLog(void) {};
+
+    // RedVSICmdInterface inherited routines
+    const RedVSILangElement Type(void) const { return kLangElementCommandLet; };
+    void QueueExpr(RedVSIContextInterface* pContext);
+    void Execute(RedVSIContextInterface* pContext);
+
+    // Command Setup
+    void SetExpr(RedVSIParseTreeInterface* pNewExpr)           { pLogExpr = pNewExpr; };
+
+    // Wholesale access/assign operations
+    void SetDetails(RedVSIParseTreeInterface*& pInExpr)        { pLogExpr = pInExpr; };
+    void GetDetails(RedVSIParseTreeInterface*& pOutExpr) const { pOutExpr = pLogExpr; };
 
 private:
 
-    static bool                EOFComp   (RedVSITokenBuffer& cInputBuffer, RedLog& RedLog);
-
-    static RedVSICmdInterface* CallComp  (RedVSITokenBuffer& cInputBuffer, RedLog& RedLog);
-    static RedVSICmdInterface* ExprComp  (RedVSITokenBuffer& cInputBuffer, RedLog& RedLog);
-	static RedVSICmdInterface* IfComp    (RedVSITokenBuffer& cInputBuffer, RedLog& RedLog);
-    static RedVSICmdInterface* LogComp   (RedVSITokenBuffer& cInputBuffer, RedLog& RedLog);
-	static RedVSICmdInterface* NewComp   (RedVSITokenBuffer& cInputBuffer, RedLog& RedLog);
-    static RedVSICmdInterface* ReturnComp(RedVSITokenBuffer& cInputBuffer, RedLog& RedLog);
-    static RedVSICmdInterface* WhileComp (RedVSITokenBuffer& cInputBuffer, RedLog& RedLog);
+    RedVSIParseTreeInterface* pLogExpr;
 };
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 } // VSI
 } // Red
+
+

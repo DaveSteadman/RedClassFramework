@@ -207,7 +207,7 @@ const RedResult RedTmlAction::CreateTmlFromFile(const RedString& filepath, RedTm
     }
 
     // Check the file exists to open
-    if (RedIOHandler::FileExists(filepath))
+    if (!RedIOHandler::FileExists(filepath))
         return kResultFail;
 
     // Open the file and copy into input buffer

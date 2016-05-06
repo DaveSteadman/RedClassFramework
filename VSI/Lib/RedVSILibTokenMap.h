@@ -56,6 +56,7 @@ static const RedString kVSIIOElementKeywordFalse         = RedString("false");
 static const RedString kVSIIOElementKeywordHeap          = RedString("heap");
 static const RedString kVSIIOElementKeywordIf            = RedString("if");
 static const RedString kVSIIOElementKeywordLet           = RedString("let");
+static const RedString kVSIIOElementKeywordLog           = RedString("log");
 static const RedString kVSIIOElementKeywordLoop          = RedString("loop");
 static const RedString kVSIIOElementKeywordName          = RedString("name");
 static const RedString kVSIIOElementKeywordNew           = RedString("new");

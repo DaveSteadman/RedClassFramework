@@ -110,7 +110,7 @@ public:
     void  SetRoutineName(const RedString& rname) { RoutineName = rname; };
     void  SetClassName  (const RedString& cname) { ClassName   = cname; };
 
-    void                  SetThreadContextRecord(RedVSIContextThread* pCntxtRecord)       { pThreadContextRecord = pCntxtRecord; };
+    void                 SetThreadContextRecord(RedVSIContextThread* pCntxtRecord)        { pThreadContextRecord = pCntxtRecord; };
     RedVSIContextThread* ThreadContextRecord(void)                                  const { return pThreadContextRecord; };
 
 private:

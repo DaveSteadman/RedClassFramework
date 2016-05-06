@@ -85,7 +85,6 @@ public:
     const char     LastChar(void)                       const { if (ContentSize() == 0) return '\0'; else return CharAtIndex(LastContentIndex()); };
     const RedChar  LastCharObj(void)                    const { return RedChar( CharAtIndex(LastContentIndex()) ); };
 
-
     const unsigned NumLines(void) const;
     const bool     LineAtNum(const unsigned LineNum, RedString& Line) const;
 
@@ -114,7 +113,6 @@ public:
     void operator +=(const RedString& Str)  { Append(Str.TextPtr()); };
 
     const char operator [](const unsigned Index) const { return CharAtIndex(FirstContentIndex()); };
-
 
 private:
 

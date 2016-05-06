@@ -23,6 +23,7 @@
 #include "RedVSICmdLet.h"
 #include "RedVSICmdIf.h"
 #include "RedVSICmdNew.h"
+#include "RedVSICmdLog.h"
 #include "RedVSICmdReturn.h"
 #include "RedVSICmdWhile.h"
 
@@ -62,7 +63,8 @@ RedVSICmdInterface* RedVSICmdFactory::RunConstuctionCompetition(RedVSITokenBuffe
             case 3: pNewObject  = NewComp   (cInputBuffer, RedLog); break;
             case 4: pNewObject  = ReturnComp(cInputBuffer, RedLog); break;
             case 5: pNewObject  = WhileComp (cInputBuffer, RedLog); break;
-            case 6: pNewObject  = ExprComp  (cInputBuffer, RedLog); break;
+            case 6: pNewObject  = LogComp   (cInputBuffer, RedLog); break;
+            case 7: pNewObject  = ExprComp  (cInputBuffer, RedLog); break;
             default:
                 {
                     iEndOrError = true;
@@ -119,9 +121,9 @@ bool RedVSICmdFactory::EOFComp(RedVSITokenBuffer& cInputBuffer, RedLog& RedLog)
     // previously read the open bracket.
     cInputBuffer.SetTokenIndexBackOne();
 
-    if (cInputBuffer.CurrIndexAtLastToken())     return true;
+    if (cInputBuffer.CurrIndexAtLastToken())  return true;
     if (cTok.Predef().IsSymbolCloseBracket()) return true;
-    if (cTok.IsEOF())                            return true;
+    if (cTok.IsEOF())                         return true;
 
     return false;
 }
@@ -191,13 +193,13 @@ RedVSICmdInterface* RedVSICmdFactory::CallComp(RedVSITokenBuffer& cInputBuffer, 
 {
     // Call is started with a <name>.<name>.
     RedVSIToken cObjectNameTok = cInputBuffer.GetToken();
-    if (!cObjectNameTok.Type().IsName()) return 0;
+    if (!cObjectNameTok.Type().IsName()) return REDNULL;
     RedVSIToken cSeparatorTok = cInputBuffer.GetToken();
-    if (!cSeparatorTok.Predef().IsSymbolPeriod()) return 0;
+    if (!cSeparatorTok.Predef().IsSymbolPeriod()) return REDNULL;
     RedVSIToken cRoutineNameTok = cInputBuffer.GetToken();
-    if (!cRoutineNameTok.Type().IsName()) return 0;
+    if (!cRoutineNameTok.Type().IsName()) return REDNULL;
 
-    // read an expression
+    // Read an expression
     RedVSIParseTreeInterface* pExpr = RedVSIParseFactory::ConstructAssignExpr(cInputBuffer, RedLog);
     
     // if we have an expression and no error, then we can progress
@@ -216,7 +218,7 @@ RedVSICmdInterface* RedVSICmdFactory::CallComp(RedVSITokenBuffer& cInputBuffer, 
     }
 
     // something didn't match, so return zero.
-    return 0;
+    return REDNULL;
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -247,11 +249,36 @@ RedVSICmdInterface* RedVSICmdFactory::ExprComp(RedVSITokenBuffer& cInputBuffer, 
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
+RedVSICmdInterface* RedVSICmdFactory::LogComp(RedVSITokenBuffer& cInputBuffer, RedLog& RedLog)
+{
+    // New is started with a keyword, we can instantly return if not right.
+    RedVSIToken cKeywordTok = cInputBuffer.GetToken();
+    if (!cKeywordTok.Predef().IsKeywordLog()) return REDNULL;
+
+    // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+    // Read an expression
+    RedVSIParseTreeInterface* pExpr = RedVSIParseFactory::ConstructAssignExpr(cInputBuffer, RedLog);
+    if (!pExpr)
+    {
+        RedLog.AddErrorEvent("Log Command: Unable to read expression.");
+        return REDNULL;
+    }
+
+    // Create the command object to return, and assign the data.
+    RedVSICmdLog* pLogCmd = new RedVSICmdLog();
+    pLogCmd->SetExpr(pExpr);
+
+    return pLogCmd;
+}
+
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
 RedVSICmdInterface* RedVSICmdFactory::NewComp(RedVSITokenBuffer& cInputBuffer, RedLog& RedLog)
 {
     // New is started with a keyword, we can instantly return if not right.
     RedVSIToken cKeywordTok = cInputBuffer.GetToken();
-    if (!cKeywordTok.Predef().IsKeywordNew()) return 0;
+    if (!cKeywordTok.Predef().IsKeywordNew()) return REDNULL;
 
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -260,7 +287,7 @@ RedVSICmdInterface* RedVSICmdFactory::NewComp(RedVSITokenBuffer& cInputBuffer, R
     if (!cLocTok.Predef().IsLocationKeyword())
     {
         RedLog.AddErrorEvent("New Command: Bad Location Keyword.");
-        return 0;
+        return REDNULL;
     }
     RedVSILangElement cLoc;
     if      (cLocTok.Predef().IsKeywordAttribute()) cLoc = RedVSILangElement::LocationAttribute();
@@ -272,7 +299,7 @@ RedVSICmdInterface* RedVSICmdFactory::NewComp(RedVSITokenBuffer& cInputBuffer, R
     if (!cTypeTok.Predef().IsTypeKeyword())
     {
         RedLog.AddErrorEvent("New Command: Bad Type Keyword.");
-        return 0;
+        return REDNULL;
     }
     RedVSILangElement cType;
     if      (cTypeTok.Predef().IsKeywordArray())    cType = RedVSILangElement::TypeArray();
@@ -281,29 +308,28 @@ RedVSICmdInterface* RedVSICmdFactory::NewComp(RedVSITokenBuffer& cInputBuffer, R
     else if (cTypeTok.Predef().IsKeywordNumber())   cType = RedVSILangElement::TypeNumber();
     else if (cTypeTok.Predef().IsKeywordString())   cType = RedVSILangElement::TypeString();
 
-
     RedVSIToken cNameTok = cInputBuffer.GetToken();
     if (!cNameTok.Type().IsName())
     {
         RedLog.AddErrorEvent("New Command: Bad Name Token.");
-        return 0;
+        return REDNULL;
     }
 
     // Look for the optional initialisation clause
-    RedVSIParseTreeInterface* pInitExpr = 0;
+    RedVSIParseTreeInterface* pInitExpr = REDNULL;
     RedVSIToken cEqTok = cInputBuffer.GetToken();
     if (cEqTok.Predef().IsSymbolAssignEqual())
     {
-        // create the expression and handle creation errors
+        // Create the expression and handle creation errors
         pInitExpr = RedVSIParseFactory::ConstructAssignExpr(cInputBuffer, RedLog);
         if (!pInitExpr)
         {
             RedLog.AddErrorEvent("New Command: Unable to read initialisation expression.");
-            return 0;
+            return REDNULL;
         }
     }
     else
-        // undo the read of the token which wasn't the expected equals.
+        // Undo the read of the token which wasn't the expected equals.
         cInputBuffer.SetTokenIndexBackOne();
 
     // Create the command object to return, and assign the data.
@@ -319,17 +345,17 @@ RedVSICmdInterface* RedVSICmdFactory::ReturnComp(RedVSITokenBuffer& cInputBuffer
 {
     // New is started with a keyword, we can instantly return if not right.
     RedVSIToken cKeywordTok = cInputBuffer.GetToken();
-    if (!cKeywordTok.Predef().IsKeywordReturn()) return 0;
+    if (!cKeywordTok.Predef().IsKeywordReturn()) return REDNULL;
 
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-    // read an expression
+    // Read an expression
     RedVSIParseTreeInterface* pExpr = RedVSIParseFactory::ConstructAssignExpr(cInputBuffer, RedLog);
     
     // if we have an expression and no error, then we can progress
     if ((pExpr) && (!RedLog.IsError()))
     {
-        // if the top level element of the parse tree is an assignment or a 
+        // If the top level element of the parse tree is an assignment or a
         // routine call, then its a valid expression
         if (pExpr)
         {
@@ -342,7 +368,7 @@ RedVSICmdInterface* RedVSICmdFactory::ReturnComp(RedVSITokenBuffer& cInputBuffer
     }
 
     // something didn't match, so return zero.
-    return 0;
+    return REDNULL;
 }
     
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -351,7 +377,7 @@ RedVSICmdInterface* RedVSICmdFactory::WhileComp(RedVSITokenBuffer& cInputBuffer,
 {
     // Read the WHILE keyword
     RedVSIToken cTok  = cInputBuffer.GetToken();
-    if (!cTok.Predef().IsKeywordWhile()) return 0;
+    if (!cTok.Predef().IsKeywordWhile()) return REDNULL;
 
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -363,7 +389,7 @@ RedVSICmdInterface* RedVSICmdFactory::WhileComp(RedVSITokenBuffer& cInputBuffer,
     if (!pExpr)
     {
         RedLog.AddErrorEvent("Cmd Factory: While Cmd: unable to construct loop expression");
-        return 0;
+        return REDNULL;
     }
 
     // Check for the LOOP keyword
@@ -372,7 +398,7 @@ RedVSICmdInterface* RedVSICmdFactory::WhileComp(RedVSITokenBuffer& cInputBuffer,
     {
         RedLog.AddErrorEvent("Cmd Factory: While Cmd: No loop keyword");
         delete pExpr;
-        return 0;
+        return REDNULL;
     }
 
     // Create the positive branch, Read the list of commands, which ends with a token the 
@@ -386,7 +412,7 @@ RedVSICmdInterface* RedVSICmdFactory::WhileComp(RedVSITokenBuffer& cInputBuffer,
         RedLog.AddErrorEvent("Cmd Factory: While Cmd: No end-loop keyword");
         delete pExpr;
         delete pLoopBranch;
-        return 0;
+        return REDNULL;
     }
 
     RedVSICmdWhile* pWhileCmd = new RedVSICmdWhile();

@@ -252,7 +252,7 @@ void RedVSIContextRoutine::SetupRoutineCall(const RedVSIRoutineCallInterface& cC
 {
     if (pThreadContextRecord != REDNULL)
     {
-        const RedVSILibInterface* pLib = pThreadContextRecord->CodeLib();
+        RedVSILibInterface* pLib = pThreadContextRecord->CodeLib();
 
         if (pLib != REDNULL)
         {
@@ -275,8 +275,8 @@ void RedVSIContextRoutine::SetupRoutineCall(const RedVSIRoutineCallInterface& cC
                     if (RtnLibParamFirstIndex != RtnCallParamFirstIndex) throw;
                     if (RtnLibParamLastIndex  != RtnCallParamLastIndex)  throw;
 
-                    RedString         CurrLibParamName;
-                    RedVariant        CurrCallParamData;
+                    RedString  CurrLibParamName;
+                    RedVariant CurrCallParamData;
 
                     for (unsigned CurrParamIndex = RtnLibParamFirstIndex; CurrParamIndex <= RtnLibParamLastIndex; CurrParamIndex++)
                     {
@@ -296,6 +296,10 @@ void RedVSIContextRoutine::SetupRoutineCall(const RedVSIRoutineCallInterface& cC
 
                 // Push the routine on the stack - At this point, the current context is no longer the top of the stack and is considered blocked.
                 pThreadContextRecord->PushRoutineOnStack(pSubroutineContext);
+            }
+            else
+            {
+                cAnalysis.AddErrorEvent("Setup Routine Call: Unable to find routine");
             }
         }
     }
@@ -366,7 +370,7 @@ void RedVSIContextRoutine::Execute(const unsigned CmdCount)
         if (eCmdPhase == eCmdExecPhaseStart)
         {
             // On entering the loop, check we have a command to execute. Prior HasCmd call ensures
-            // thsi will pass.
+            // this will pass.
             if (pCurrCmd == REDNULL)
                 pCurrCmd = cCmdStack.Pop();
 

@@ -493,16 +493,16 @@ RedResult RedTestCore::TestRecord(void)
     y = "Data2";
     x.CloneAndAdd("Field2", &y);
 
-    RedType* p = 0;
+    RedType* p = REDNULL;
     x.Find("Field1", p);
 
-    if (p->Type() != kDataTypeStr) return kResultFail;
+    if ((p == REDNULL) || (p->Type() != kDataTypeStr)) return kResultFail;
     RedString* ps = (RedString*)p;
     if (*ps != "Data1") return kResultFail;
 
     delete p;
-    p = 0;
-    ps = 0;
+    p = REDNULL;
+    ps = REDNULL;
 
     return kResultSuccess;
 }

@@ -41,18 +41,24 @@ public:
     void       AddClass(RedVSILibClass* pNewClass);
     void       DelClass(const RedString& cClassName);
 
-    RedVSILibClass*            FindClass(const RedString& cClassName) const;
-    RedVSILibRoutineInterface* FindRoutine(const RedVSIRoutineCallInterface& cSig) const;
-    RedVSILibRoutineInterface* FindRoutine(const RedString& cClassName, const RedString& cRoutineName) const;
+    // Find routines not const, as they may lead to the library loading a class from file.
+    RedVSILibClass*            FindClass(const RedString& cClassName);
+    RedVSILibRoutineInterface* FindRoutine(const RedVSIRoutineCallInterface& cSig);
+    RedVSILibRoutineInterface* FindRoutine(const RedString& cClassName, const RedString& cRoutineName);
 
     /// Returns number of classes in library
     const unsigned NumClasses(void) const { return cClassList.NumItems(); };
+
+    void SetLibFilePath(const RedString& newlibpath) { LibFilePath = newlibpath; };
 
 private:
 
     IteratorType GetClassIterator(void) { IteratorType cIt(&cClassList); return cIt; };
 
-    ListType cClassList;
+    bool DoesClassFileExist(const RedString& classname);
+
+    ListType  cClassList;
+    RedString LibFilePath;
 };
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

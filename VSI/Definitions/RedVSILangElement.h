@@ -38,18 +38,20 @@ public:
 
     // Command types
     const bool                     IsCommand(void) const;
-    const bool                     IsCommandNew(void) const                        { return eType == eCommandNew; };
-    const bool                     IsCommandLet(void) const                        { return eType == eCommandLet; };
     const bool                     IsCommandIf(void) const                         { return eType == eCommandIf; };
-    const bool                     IsCommandWhile(void) const                      { return eType == eCommandWhile; };
+    const bool                     IsCommandLet(void) const                        { return eType == eCommandLet; };
+    const bool                     IsCommandLog(void) const                        { return eType == eCommandLog; };
+    const bool                     IsCommandNew(void) const                        { return eType == eCommandNew; };
 	const bool                     IsCommandPrint(void) const                      { return eType == eCommandPrint; };
 	const bool                     IsCommandReturn(void) const                     { return eType == eCommandReturn; };
-    static const RedVSILangElement CommandNew(void)                                { return RedVSILangElement(eCommandNew); };
-    static const RedVSILangElement CommandLet(void)                                { return RedVSILangElement(eCommandLet); };
+    const bool                     IsCommandWhile(void) const                      { return eType == eCommandWhile; };
     static const RedVSILangElement CommandIf(void)                                 { return RedVSILangElement(eCommandIf); };
-    static const RedVSILangElement CommandWhile(void)                              { return RedVSILangElement(eCommandWhile); };
+    static const RedVSILangElement CommandLet(void)                                { return RedVSILangElement(eCommandLet); };
+    static const RedVSILangElement CommandLog(void)                                { return RedVSILangElement(eCommandLog); };
+    static const RedVSILangElement CommandNew(void)                                { return RedVSILangElement(eCommandNew); };
     static const RedVSILangElement CommandPrint(void)                              { return RedVSILangElement(eCommandPrint); };
 	static const RedVSILangElement CommandReturn(void)                             { return RedVSILangElement(eCommandReturn); };
+    static const RedVSILangElement CommandWhile(void)                              { return RedVSILangElement(eCommandWhile); };
 
     // Parse node types
     const bool                     IsParse(void) const;
@@ -155,9 +157,10 @@ protected:
     {
         eDefaultInvalid = 0,
 
-        eCommandNew,
-        eCommandLet,
         eCommandIf,
+        eCommandLet,
+        eCommandLog,
+        eCommandNew,
 		eCommandPrint,
 		eCommandReturn,
         eCommandWhile,

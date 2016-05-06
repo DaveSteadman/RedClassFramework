@@ -51,6 +51,7 @@ void RedTestVSI::RunUnitTest(RedLog& log)
     if (RedTestVSI::TestFragment_Expr().IsFail())     { log.AddErrorEvent("VSI Unit Test: TestFragment_Expr Failed");     return; }
     if (RedTestVSI::TestFragment_If().IsFail())       { log.AddErrorEvent("VSI Unit Test: TestFragment_If Failed");       return; }
     if (RedTestVSI::TestFragment_While().IsFail())    { log.AddErrorEvent("VSI Unit Test: TestFragment_While Failed");    return; }
+    if (RedTestVSI::TestFragment_Log().IsFail())      { log.AddErrorEvent("VSI Unit Test: TestFragment_Log Failed");      return; }
 
     if (RedTestVSI::TestRunProg_001().IsFail())       { log.AddErrorEvent("VSI Unit Test: TestRunProg_001 Failed");       return; }
 
@@ -623,14 +624,10 @@ RedResult RedTestVSI::TestFragment_New(void)
 RedResult RedTestVSI::TestFragment_NewTypes(void)
 {
     // Define a small code fragment
-//    RedString strCodeFragment = " \
-//        new local boolean testB = true \
-//        new local char    testC = \"C\" \
-//        new local number  testN = 3.2 x = x * 2 \
-//        new local string  testS = \"testS\" \
-//        testN = testN + 1";
-
-    RedString strCodeFragment = "new local bool testB = true";
+    RedString strCodeFragment = " \
+        new local bool   testB = true \
+        new local number testN = 123 \
+        new local string testS = 'Str' ";
 
     // Turn the code into tokens
     RedVSILibTokenMap cTokenMap;
@@ -648,13 +645,18 @@ RedResult RedTestVSI::TestFragment_NewTypes(void)
 
     // Execute the code in a context
     RedVSIContextFragment testContext(cRedLog, topCmd);
-    testContext.Execute(10);
+    while (!testContext.IsExecutionComplete())
+        testContext.Execute(1);
     if (cRedLog.IsError())
         return kResultFail;
 
     // Check the execution result
-    RedVariant x = testContext.DataItemAsVariant("testB");
-    if (x != true) return kResultFail;
+    RedVariant testB = testContext.DataItemAsVariant("testB");
+    if (testB != true) return kResultFail;
+    RedVariant testN = testContext.DataItemAsVariant("testN");
+    if (testN != 123) return kResultFail;
+    RedVariant testS = testContext.DataItemAsVariant("testS");
+    if (testS != "Str") return kResultFail;
 
     return kResultSuccess;
 }
@@ -742,7 +744,12 @@ RedResult RedTestVSI::TestFragment_While(void)
 {
     // Define a small code fragment
     // The quick +1 on the end help check that we've correctly detected the endof the command
-    RedString strCodeFragment = "new local number x = 2 while x < 99 loop x = x * 2 endloop x = x + 1";
+    RedString strCodeFragment = " \
+        new local number x = 2 \
+        while x < 99 loop \
+            x = x * 2 \
+        endloop \
+        x = x + 1 ";
 
     RedLog                 cRedLog;
     RedVSIContextFragment* testContext = REDNULL;
@@ -760,6 +767,37 @@ RedResult RedTestVSI::TestFragment_While(void)
     // Check the execution result
     RedVariant x = testContext->DataItemAsVariant("x");
     if (x != 129) return kResultFail;
+
+    return kResultSuccess;
+}
+
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+RedResult RedTestVSI::TestFragment_Log(void)
+{
+    // Define a small code fragment
+    // The quick +1 on the end help check that we've correctly detected the endof the command
+    RedString strCodeFragment = " \
+        new local number x = 2.2 \
+        new local string zxz = 'zz' \
+        log x ";
+
+    RedLog                 cRedLog;
+    RedVSIContextFragment* testContext = REDNULL;
+
+    RedVSIContextFactory::CreateContextForFragment(strCodeFragment, &testContext, cRedLog);
+    if ( (testContext == REDNULL) || (cRedLog.IsError()) ) return kResultFail;
+
+    // Execute the code in a context, while we have no completion and no error
+    while ( (!testContext->IsExecutionComplete()) && (!cRedLog.IsError()) )
+        testContext->Execute(1);
+    
+    if (cRedLog.IsError())
+        return kResultFail;
+
+    // Check the execution result
+    RedVariant x = testContext->DataItemAsVariant("x");
+    if (x != 2.2) return kResultFail;
 
     return kResultSuccess;
 }

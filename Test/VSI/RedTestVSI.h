@@ -50,6 +50,7 @@ private:
     static RedResult TestFragment_Expr(void);
     static RedResult TestFragment_If(void);
     static RedResult TestFragment_While(void);
+    static RedResult TestFragment_Log(void);
 
 
 

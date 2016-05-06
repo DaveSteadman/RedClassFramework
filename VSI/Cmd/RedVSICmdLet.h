@@ -18,7 +18,6 @@
 
 #pragma once
 
-
 #include "RedCoreNamespace.h"
 
 #include "RedVSIParseTreeInterface.h"
@@ -45,7 +44,7 @@ public:
     ~RedVSICmdLet(void) {};
 
     // RedVSICmdInterface inherited routines
-    RedVSILangElement Type(void) { return kLangElementCommandLet; };
+    const RedVSILangElement Type(void) const { return kLangElementCommandLet; };
     void QueueExpr(RedVSIContextInterface* pContext);
     void Execute(RedVSIContextInterface* pContext);
 
@@ -65,4 +64,5 @@ private:
 
 } // VSI
 } // Red
+
 

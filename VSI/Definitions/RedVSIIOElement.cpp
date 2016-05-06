@@ -64,7 +64,7 @@ const bool RedVSIIOElement::IsCommandKeyword(void) const
     if (IsKeywordWhile())   return true;
     if (IsKeywordLoop())    return true;
     if (IsKeywordEndloop()) return true;
-    if (IsKeywordPrint())   return true;
+    if (IsKeywordLog())     return true;
     if (IsKeywordReturn())  return true;
 
     return false;

@@ -22,6 +22,7 @@
 #include "RedVSICmdFactory.h"
 #include "RedVSICmdSerialiser.h"
 #include "RedVSICmdLet.h"
+#include "RedVSICmdLog.h"
 #include "RedVSICmdIf.h"
 #include "RedVSICmdNew.h"
 #include "RedVSICmdReturn.h"
@@ -31,7 +32,7 @@
 #include "RedVSIContextFactory.h"
 #include "RedVSIContextRoutine.h"
 #include "RedVSIContextThread.h"
-//#include "RedVSIContextStackTraverser.h"
+#include "RedVSIParseStackTraverser.h"
 
 // Collections
 #include "RedDoubleLinkedList.h"

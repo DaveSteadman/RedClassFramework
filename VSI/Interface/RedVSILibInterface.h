@@ -36,8 +36,8 @@ class RedVSILibInterface
 public:
 
     // Starting point for the search for a routine to satisfy a routine call
-    virtual RedVSILibRoutineInterface* FindRoutine(const RedVSIRoutineCallInterface& cSig) const =0;
-    virtual RedVSILibRoutineInterface* FindRoutine(const RedString& cClassName, const RedString& cRoutineName) const =0;
+    virtual RedVSILibRoutineInterface* FindRoutine(const RedVSIRoutineCallInterface& cSig) =0;
+    virtual RedVSILibRoutineInterface* FindRoutine(const RedString& cClassName, const RedString& cRoutineName) =0;
 };
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

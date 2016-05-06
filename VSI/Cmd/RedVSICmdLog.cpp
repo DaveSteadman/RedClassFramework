@@ -16,42 +16,47 @@
 // (http://opensource.org/licenses/MIT)
 // -------------------------------------------------------------------------------------------------
 
-#pragma once
-
-#include "RedVSICmdInterface.h"
-#include "RedVSITokenBuffer.h"
-#include "RedLog.h"
-#include "RedVSIContextInterface.h"
-#include "RedVSIErrorCodes.h"
+#include "RedVSICmdLog.h"
 
 namespace Red {
 namespace VSI {
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+// Construction Routines
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-/// Class to create all the command classes.
-/// The construction code was taken out of the command classes to allow them to
-/// focus on their core functionality of performing commands. Additional processing
-/// will use SetDetails/GetDetails on each of the commands and deal with their
-/// own domain (such as GUI or serialisation).
-class RedVSICmdFactory
+RedVSICmdLog::RedVSICmdLog(void)
 {
-public:
+    // this object's attributes
+    pLogExpr = REDNULL;
 
-    static RedVSICmdInterface* RunConstuctionCompetition(RedVSITokenBuffer& cInputBuffer, RedLog& RedLog);
+    // parents attributes
+    SetNextCmd(REDNULL);
+}
 
-private:
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-    static bool                EOFComp   (RedVSITokenBuffer& cInputBuffer, RedLog& RedLog);
+void RedVSICmdLog::QueueExpr(RedVSIContextInterface* pContext)
+{
+    if (pLogExpr)
+        pContext->QueueExpr(pLogExpr);
+}
 
-    static RedVSICmdInterface* CallComp  (RedVSITokenBuffer& cInputBuffer, RedLog& RedLog);
-    static RedVSICmdInterface* ExprComp  (RedVSITokenBuffer& cInputBuffer, RedLog& RedLog);
-	static RedVSICmdInterface* IfComp    (RedVSITokenBuffer& cInputBuffer, RedLog& RedLog);
-    static RedVSICmdInterface* LogComp   (RedVSITokenBuffer& cInputBuffer, RedLog& RedLog);
-	static RedVSICmdInterface* NewComp   (RedVSITokenBuffer& cInputBuffer, RedLog& RedLog);
-    static RedVSICmdInterface* ReturnComp(RedVSITokenBuffer& cInputBuffer, RedLog& RedLog);
-    static RedVSICmdInterface* WhileComp (RedVSITokenBuffer& cInputBuffer, RedLog& RedLog);
-};
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+void RedVSICmdLog::Execute(RedVSIContextInterface* pContext)
+{
+    // Get the result of the commands expression
+    RedVariant cExprResult = pContext->ExprResult(pLogExpr);
+
+    // Get a string representation of the value
+    pContext->Log().AddText(cExprResult.StringValue());
+
+    // expression will have been evaluated prior to the command, 
+    // so any actions already performed. Just queue up the next 
+    // command.
+    pContext->QueueCommand(NextCmd());
+}
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 

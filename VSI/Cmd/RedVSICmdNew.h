@@ -41,7 +41,7 @@ public:
     ~RedVSICmdNew(void);
 
     // RedVSICmdInterface inherited routines
-    RedVSILangElement Type(void) { return kLangElementCommandNew; };
+    const RedVSILangElement Type(void) const { return kLangElementCommandNew; };
     void              QueueExpr(RedVSIContextInterface* pContext);
     void              Execute(RedVSIContextInterface* pContext);
 

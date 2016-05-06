@@ -32,18 +32,17 @@ RedResult RedVSIContextFactory::CreateContextForFragment(const RedString& InputC
     // Turn the code into tokens
     RedVSILibTokenMap cTokenMap;
     RedVSITokenBuffer cTokenList;
-    RedLog            cRedLog;
     if (!RedVSITokenFactory::CreateTokens(InputCodeFragment, cTokenMap.cVSILibTokenMap, cTokenList))
         return kResultFail;
 
     // Turn the tokens into code
-    RedVSICmdInterface* topCmd = RedVSICmdFactory::RunConstuctionCompetition(cTokenList, cRedLog);
+    RedVSICmdInterface* topCmd = RedVSICmdFactory::RunConstuctionCompetition(cTokenList, cLog);
     if (topCmd == REDNULL)
         return kResultFail;
-    if (cRedLog.IsError())
+    if (cLog.IsError())
         return kResultFail;
 
-    *OutputContext = new RedVSIContextFragment(cRedLog, topCmd);
+    *OutputContext = new RedVSIContextFragment(cLog, topCmd);
 
     if (*OutputContext == REDNULL)
         return kResultFail;
