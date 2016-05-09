@@ -36,14 +36,14 @@ public:
 
     RedDoubleLinkedListIterator(const ListType* pNewList);
 
-    void           First(void);
-    void           Next(void);
-    bool           IsDone(void) const;
-    Element        CurrentItem(void) const;
+    void       First(void);
+    void       Next(void);
+    bool       IsDone(void) const;
+    Element    CurrentItem(void) const;
 
-    void           SetSearchDirection(TESearchDir eDir) { eSearchDir = eDir; };
-    void           SetSearchDirectionBackwards(void)    { eSearchDir = eBackwards; First(); };
-    const unsigned CollectionIndex(void) const          { return iCurrPos; };
+    void       SetSearchDirection(TESearchDir eDir) { eSearchDir = eDir; };
+    void       SetSearchDirectionBackwards(void)    { eSearchDir = eBackwards; First(); };
+    unsigned   CollectionIndex(void) const          { return iCurrPos; };
 
 private:
 

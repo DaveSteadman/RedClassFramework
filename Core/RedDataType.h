@@ -42,25 +42,25 @@ public:
     void SetStr(void)        { eState=eDataTypeStr; };
     void SetVariant(void)    { eState=eDataTypeVariant; };
 
-    const bool IsValid(void)      const { return (eState!=eDataTypeInvalid); };
-    const bool IsBool(void)       const { return (eState==eDataTypeBool); };
-    const bool IsChar(void)       const { return (eState==eDataTypeChar); };
-    const bool IsList(void)       const { return (eState==eDataTypeList); };
-    const bool IsNum(void)        const { return (eState==eDataTypeNum); };
-    const bool IsRecord(void)     const { return (eState==eDataTypeRecord); };
-    const bool IsStr(void)        const { return (eState==eDataTypeStr); };
-    const bool IsVariant(void)    const { return (eState==eDataTypeVariant); };
+    bool IsValid(void)      const { return (eState!=eDataTypeInvalid); };
+    bool IsBool(void)       const { return (eState==eDataTypeBool); };
+    bool IsChar(void)       const { return (eState==eDataTypeChar); };
+    bool IsList(void)       const { return (eState==eDataTypeList); };
+    bool IsNum(void)        const { return (eState==eDataTypeNum); };
+    bool IsRecord(void)     const { return (eState==eDataTypeRecord); };
+    bool IsStr(void)        const { return (eState==eDataTypeStr); };
+    bool IsVariant(void)    const { return (eState==eDataTypeVariant); };
 
-    static const RedDataType Invalid(void)    { return RedDataType(eDataTypeInvalid); };
-    static const RedDataType Bool(void)       { return RedDataType(eDataTypeBool); };
-    static const RedDataType Char(void)       { return RedDataType(eDataTypeChar); };
-    static const RedDataType List(void)       { return RedDataType(eDataTypeList); };
-    static const RedDataType Num(void)        { return RedDataType(eDataTypeNum); };
-    static const RedDataType Record(void)     { return RedDataType(eDataTypeRecord); };
-    static const RedDataType Str(void)        { return RedDataType(eDataTypeStr); };
-    static const RedDataType Variant(void)    { return RedDataType(eDataTypeVariant); };
+    static RedDataType Invalid(void)    { return RedDataType(eDataTypeInvalid); };
+    static RedDataType Bool(void)       { return RedDataType(eDataTypeBool); };
+    static RedDataType Char(void)       { return RedDataType(eDataTypeChar); };
+    static RedDataType List(void)       { return RedDataType(eDataTypeList); };
+    static RedDataType Num(void)        { return RedDataType(eDataTypeNum); };
+    static RedDataType Record(void)     { return RedDataType(eDataTypeRecord); };
+    static RedDataType Str(void)        { return RedDataType(eDataTypeStr); };
+    static RedDataType Variant(void)    { return RedDataType(eDataTypeVariant); };
 
-    const int iState(void) const { return (int)eState; };
+    int iState(void) const { return (int)eState; };
 
 protected:
 

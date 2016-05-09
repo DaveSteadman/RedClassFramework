@@ -35,15 +35,15 @@ public:
     RedVSITokenElementMap(void);
     ~RedVSITokenElementMap(void);
 
-    void Add(const RedString& cStr, const RedVSIIOElement& cElem);
+    void      Add(const RedString& cStr, const RedVSIIOElement& cElem);
 
-    bool  Find(RedString& cCheckStr, RedVSIIOElement& cElem);
-    bool  FindString(RedVSIIOElement& cCheckElem, RedString& cStr);
+    bool      Find(RedString& cCheckStr, RedVSIIOElement& cElem);
+    bool      FindString(RedVSIIOElement& cCheckElem, RedString& cStr);
 
     unsigned  CountMatchCandidates(RedString& cCheckStr);
 
-    const unsigned  NumItems(void) const { return cMap.NumItems(); };
-    const bool      IsEmpty(void)  const { return cMap.IsEmpty();  };
+    unsigned  NumItems(void) const { return cMap.NumItems(); };
+    bool      IsEmpty(void)  const { return cMap.IsEmpty();  };
 
 private:
 

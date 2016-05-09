@@ -42,19 +42,18 @@ public:
     RedLog(void) : containsError(0) { };
     void Init(void) { EventList.DelAll(); containsError=0; };
 
-    void AddEvent(const RedLogEvent& event);
-    void AddText (const RedString& NewText);
-
-    void AddErrorEvent(const RedString& NewText);
-    void AddErrorEvent(const char* NewText) { AddErrorEvent(RedString(NewText)); };
+    void      AddEvent(const RedLogEvent& event);
+    void      AddText (const RedString& NewText);
+    void      AddErrorEvent(const RedString& NewText);
+    void      AddErrorEvent(const char* NewText) { AddErrorEvent(RedString(NewText)); };
 
     RedString AllLoggedText(void);
 
     // Queries
     //EventLogListType EventsByType();
 
-    const unsigned NumEvents(void) const { return EventList.NumItems(); };
-    const bool     IsError(void)   const { return containsError; };
+    unsigned NumEvents(void) const { return EventList.NumItems(); };
+    bool     IsError(void)   const { return containsError; };
 
 private:
     EventLogListType EventList;

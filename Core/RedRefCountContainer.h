@@ -35,10 +35,10 @@ class RedRefCount
 {
 public:
     RedRefCount(void) : count(0) {};
-    void       IncRef(void)    { count++; };
-    void       DecRef(void)    { count--; };
-    const int  Count(void)     { return count; };
-    const bool IsRefZero(void) { return (count==0); };
+    void IncRef(void)    { count++; };
+    void DecRef(void)    { count--; };
+    int  Count(void)     { return count; };
+    bool IsRefZero(void) { return (count==0); };
 private:
     int count;
 };
@@ -88,7 +88,7 @@ public:
     RedType* Data(void)    const { return pData; };
     RedType* operator-> () const { return pData; };
  
-    const int RefCount(void) const { return reference->Count(); }
+    int RefCount(void) const { return reference->Count(); }
  
     RedRefCountContainer& operator = (const RedRefCountContainer& SmartPtr)
     {

@@ -44,29 +44,9 @@ RedVSIParseTreeUnaryOp::~RedVSIParseTreeUnaryOp(void)
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-void RedVSIParseTreeUnaryOp::CalcResult(RedVSIContextInterface& cContext, RedVariant& cResult, int& iComplete)
+void RedVSIParseTreeUnaryOp::CalcResult(RedVSIContextInterface* pContext)
 {
-/*
-    // First check for previous execution and a return value
-    RedVariant cRetVal = cContext.GetCmdDataItem(this, cCalcResultRetValName);
-    if (cRetVal.IsValid())
-    {
-        cResult   = cRetVal;
-        iComplete = 1;
-    }
-    else
-    {
-        pExpr->CalcResult(cContext, cExprVal, iExprComplete);
-    
-        if      (cOp.IsMinusOp())      CalcNegateResult(cContext, cResult, iComplete);
-        else if (cOp.IsAddrOfItemOp()) CalcAddrOfItemResult(cContext, cResult, iComplete);
-        else if (cOp.IsItemAtAddrOp()) CalcItemAtAddrResult(cContext, cResult, iComplete);
-
-        // If we have a valid result, put it in the temporary store in case its needed again
-        if (iComplete)
-            cContext.SetCmdDataItem(this, cCalcResultRetValName, cResult);
-    }
-*/
+    if (cOp.IsUnaryOpMinus()) CalcNegateResult(pContext);
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -79,109 +59,35 @@ void RedVSIParseTreeUnaryOp::GetDetails(RedVSILangElement& cOutOp, RedVSIParseTr
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-void RedVSIParseTreeUnaryOp::CalcNegateResult(RedVSIContextInterface& cContext, RedVariant& cResult, int& iComplete)
+void RedVSIParseTreeUnaryOp::CalcNegateResult(RedVSIContextInterface* pContext)
 {
-    // first, initialise the outputs
-    cResult.Init();
-    iComplete = 0;
+    // First check for previous execution and a return value
+    RedVariant cInputExprVal;
+    cInputExprVal = pContext->ExprResult(pExpr);
 
-    RedVariant cExprVal; 
-    int        iExprComplete =0;
-
-    if (pExpr)
+    if (cInputExprVal.IsValid())
     {
-        //pExpr->CalcResult(cContext, cExprVal, iExprComplete);
-
-        if (iExprComplete)
+        if (cInputExprVal.Type().IsNum())
         {
-            // Check the expression gave us a valid value we can negate
-            if (cExprVal.Type().IsNum())
-            {
-                cResult = cExprVal.NumberValue() * kNumberMinusOne;
-                iComplete = 1;
-            }
-            else
-                cContext.Log().AddErrorEvent("RedVSIParseTreeUnaryOp::CalcNegateResult");
+            RedVariant cRetVal;
+            RedNumber cRetNum;
+            cRetNum = cInputExprVal.NumberValue() * -1;
+            cRetVal = cRetNum;
+
+            pContext->SetExprResult(this, cRetVal);
+        }
+
+        else if (cInputExprVal.Type().IsBool())
+        {
+            RedVariant cRetVal;
+            RedBoolean cB = cInputExprVal.BoolValue();
+            cB.Invert();
+
+            cRetVal = cB;
+            pContext->SetExprResult(this, cRetVal);
         }
     }
 }
-
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-void RedVSIParseTreeUnaryOp::CalcAddrOfItemResult(RedVSIContextInterface& cContext, RedVariant& cResult, int& iComplete)
-{
-/*
-    // first, initialise the outputs
-    cResult.Init();
-    iComplete = 0;
-
-    // If we have an expression which is a variable (can't get an address from a 
-    // value calculated in  an expression, so here we aren't executing anything)
-    if ( (pExpr) && (pExpr->Type().IsVariable()) )
-    {
-        // Get the variable, then its name.
-        RedVSIParseTreeVar* pExprVar = (RedVSIParseTreeVar*)pExpr;
-        if (!pExprVar) { LogError(cContext, RedVSILangErrorCodes::eGen_NoCode); return; }
-        //RedString cVarName = ->GetVarName();
-
-        // Get the address object if we correctly obtained the variable
-        CCoreData* pVar = cContext.GetDataItem(cVarName);
-        if (!pVar) { LogError(cContext, RedVSILangErrorCodes::eGen_NoCode); return ; }
-
-        // setup the positive result
-        CCoreAddress* pVarAddr = (CCoreAddress*)pVar->GetAddressObj();
-        cResult = *pVarAddr;
-        delete pVarAddr;
-        iComplete = 1;
-    }
-    else
-        LogError(cContext, RedVSILangErrorCodes::eGen_NoCode);
-*/
-}
-
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-void RedVSIParseTreeUnaryOp::CalcItemAtAddrResult(RedVSIContextInterface& cContext, RedVariant& cResult, int& iComplete)
-{
-/*
-    // first, initialise the outputs
-    cResult.Init();
-    iComplete = 0;
-
-    RedVariant cExprVal; 
-    int       iExprComplete =0;
-
-    // If we have a valid expression
-    if (pExpr)
-    {
-        pExpr->CalcResult(cContext, cExprVal, iExprComplete);
-
-        // if the expression is complete and resulting in an address, assign the 
-        // referenced object to the output.
-        if ( (iExprComplete) && (cExprVal.IsAddress()) )
-        {
-            CCoreAddress cAddr = cExprVal.GetAddress();
-            cResult.Import( cAddr.GetAddressVal() );
-            iComplete = 1;
-        }
-        else
-            LogError(cContext, RedVSILangErrorCodes::eGen_NoCode);
-    }
-    else
-        LogError(cContext, RedVSILangErrorCodes::eGen_NoCode);
-*/
-}
-
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-//void RedVSIParseTreeVar::LogError(RedVSIContextInterface& cContext, RedVSILangErrorCodes::TErrorCodes eErr)
-//{
-/*
-    RedString cErrText = RedVSILangErrorCodes::GetErrorString(eErr);
-
-    cContext.GetAnalysis()->AddErrorEvent§(cErrText);
-*/
-//}
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 

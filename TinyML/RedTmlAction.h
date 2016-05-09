@@ -41,32 +41,32 @@ public:
 
     // Set & Query Leaf elements
     static void            SetChildLeaf   (RedTmlNode& node, const RedString& leafname, const RedString& leafdata);
-    static const bool      ChildLeafExists(RedTmlNode& node, const RedString& leafname);
+    static bool            ChildLeafExists(RedTmlNode& node, const RedString& leafname);
 
     // Leaf Name<->Data lookups
-    static const RedResult ChildLeafDataForName(RedTmlNode& node, const RedString& inleafname, RedString& outleafdata);
-    static const RedResult ChildLeafNameForData(RedTmlNode& node, const RedString& inleafdata, RedString& outleafname);
+    static RedResult       ChildLeafDataForName(RedTmlNode& node, const RedString& inleafname, RedString& outleafdata);
+    static RedResult       ChildLeafNameForData(RedTmlNode& node, const RedString& inleafdata, RedString& outleafname);
 
     // Search Node For Child entries
     static RedTmlElement*  NodeFirstNamedElement   (RedTmlNode& node, const RedString& SearchName);
     static RedTmlNode*     NodeFirstNamedNode      (RedTmlNode& node, const RedString& SearchName);
     static RedTmlLeaf*     NodeFirstNamedLeaf      (RedTmlNode& node, const RedString& SearchName);
-    static const unsigned  NumberOfNamedChildLeaves(RedTmlNode& node, const RedString& SearchName);
+    static unsigned        NumberOfNamedChildLeaves(RedTmlNode& node, const RedString& SearchName);
 
     // Tree Query
-    static const unsigned  TreeElementCount(RedTmlNode& node);
+    static unsigned        TreeElementCount(RedTmlNode& node);
 
     // IO
-    static const RedResult CreateTmlFromFile(const RedString& filepath, RedTmlElement** newTmlElement);
-    static const RedResult CreateFileFromTml(const RedTmlElement* tmlElement, const RedString& filepath, const TESerialiseType writeStyle);
+    static RedResult       CreateTmlFromFile(const RedString& filepath, RedTmlElement** newTmlElement);
+    static RedResult       CreateFileFromTml(const RedTmlElement* tmlElement, const RedString& filepath, const TESerialiseType writeStyle);
     static RedTmlElement*  ParseTinyML(const RedString& inputStr);
     static RedTmlElement*  ParseTinyML(RedBufferInput& inputBuf);
     static void            SerialiseTinyML(RedBufferOutput& outputBuf, const RedTmlElement* topTmlNode, const TESerialiseType eMode);
 
 private:
-    static bool ReadName      (RedBufferInput& inputBuf, RedString& outputName);
-    static bool ReadContent   (RedBufferInput& inputBuf, RedString& outputContent);
-    static bool ReadTmlElement(RedBufferInput& inputBuf, RedTmlElement** newTml);
+    static bool            ReadName      (RedBufferInput& inputBuf, RedString& outputName);
+    static bool            ReadContent   (RedBufferInput& inputBuf, RedString& outputContent);
+    static bool            ReadTmlElement(RedBufferInput& inputBuf, RedTmlElement** newTml);
 
 };
 

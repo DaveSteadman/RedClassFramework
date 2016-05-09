@@ -36,10 +36,10 @@ public:
     RedTmlLeaf(const RedString& NewName, const RedString& NewData) : RedTmlElement(NewName) { data = NewData; };
 
     // Override: RedTmlElement
-    const bool IsLeaf(void) const { return true; };
+    bool      IsLeaf(void) const { return true; };
 
-    const RedString& Data(void) const                  { return data; };
-    void             SetData(const RedString& NewData) { data = NewData; };
+    RedString Data(void) const                  { return data; };
+    void      SetData(const RedString& NewData) { data = NewData; };
 
 private:
     RedString data;

@@ -267,27 +267,30 @@ void RedVSIContextRoutine::SetupRoutineCall(const RedVSIRoutineCallInterface& cC
                 // Add the params as local vars - the types will have been validated on selecting the routine in the library
                 // We iterate through the signature to get the names, and the call params to get the values.
                 {
-                    unsigned RtnLibParamFirstIndex  = pRtn->Params()->FirstIndex();
-                    unsigned RtnLibParamLastIndex   = pRtn->Params()->LastIndex();
-                    unsigned RtnCallParamFirstIndex = cCallSignature.Params()->FirstIndex();
-                    unsigned RtnCallParamLastIndex  = cCallSignature.Params()->LastIndex();
-
-                    if (RtnLibParamFirstIndex != RtnCallParamFirstIndex) throw;
-                    if (RtnLibParamLastIndex  != RtnCallParamLastIndex)  throw;
-
-                    RedString  CurrLibParamName;
-                    RedVariant CurrCallParamData;
-
-                    for (unsigned CurrParamIndex = RtnLibParamFirstIndex; CurrParamIndex <= RtnLibParamLastIndex; CurrParamIndex++)
+                    if ( (pRtn->Params()->NumItems() > 0) && (pRtn->Params()->NumItems()) )
                     {
-                        // Get name from library param list
-                        pRtn->Params()->FindIdByIndex(CurrParamIndex, CurrLibParamName);
+                        unsigned RtnLibParamFirstIndex  = pRtn->Params()->FirstIndex();
+                        unsigned RtnLibParamLastIndex   = pRtn->Params()->LastIndex();
+                        unsigned RtnCallParamFirstIndex = cCallSignature.Params()->FirstIndex();
+                        unsigned RtnCallParamLastIndex  = cCallSignature.Params()->LastIndex();
 
-                        // Get data from call
-                        cCallSignature.Params()->FindElementAtIndex(CurrParamIndex, CurrCallParamData);
+                        if (RtnLibParamFirstIndex != RtnCallParamFirstIndex) throw;
+                        if (RtnLibParamLastIndex  != RtnCallParamLastIndex)  throw;
 
-                        // Add new local variable to the new routine
-                       pSubroutineContext->DuplicateDataItem(kLangElementLocationStack, CurrCallParamData.Value(), CurrLibParamName);
+                        RedString  CurrLibParamName;
+                        RedVariant CurrCallParamData;
+
+                        for (unsigned CurrParamIndex = RtnLibParamFirstIndex; CurrParamIndex <= RtnLibParamLastIndex; CurrParamIndex++)
+                        {
+                            // Get name from library param list
+                            pRtn->Params()->FindIdByIndex(CurrParamIndex, CurrLibParamName);
+
+                            // Get data from call
+                            cCallSignature.Params()->FindElementAtIndex(CurrParamIndex, CurrCallParamData);
+
+                            // Add new local variable to the new routine
+                           pSubroutineContext->DuplicateDataItem(kLangElementLocationStack, CurrCallParamData.Value(), CurrLibParamName);
+                        }
                     }
                 }
 

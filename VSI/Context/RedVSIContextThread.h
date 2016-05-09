@@ -57,7 +57,7 @@ public:
 	RedVSIContextRoutine*      TopRoutineOnStack(void);
 	void                       PushRoutineOnStack(RedVSIContextRoutine* newRtn);
 	RedVSIContextRoutine*      PopRoutineOffStack(void);
-    const unsigned             NumRoutinesOnStack(void) const { return cRoutineStack.NumItems(); };
+    unsigned                   NumRoutinesOnStack(void) const { return cRoutineStack.NumItems(); };
 
     // Routine Execution
     void                       Execute(const unsigned NumCmd);

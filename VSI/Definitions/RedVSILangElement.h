@@ -37,110 +37,110 @@ public:
     void Init(void)         { eType = eDefaultInvalid; };
 
     // Command types
-    const bool                     IsCommand(void) const;
-    const bool                     IsCommandIf(void) const                         { return eType == eCommandIf; };
-    const bool                     IsCommandLet(void) const                        { return eType == eCommandLet; };
-    const bool                     IsCommandLog(void) const                        { return eType == eCommandLog; };
-    const bool                     IsCommandNew(void) const                        { return eType == eCommandNew; };
-	const bool                     IsCommandPrint(void) const                      { return eType == eCommandPrint; };
-	const bool                     IsCommandReturn(void) const                     { return eType == eCommandReturn; };
-    const bool                     IsCommandWhile(void) const                      { return eType == eCommandWhile; };
-    static const RedVSILangElement CommandIf(void)                                 { return RedVSILangElement(eCommandIf); };
-    static const RedVSILangElement CommandLet(void)                                { return RedVSILangElement(eCommandLet); };
-    static const RedVSILangElement CommandLog(void)                                { return RedVSILangElement(eCommandLog); };
-    static const RedVSILangElement CommandNew(void)                                { return RedVSILangElement(eCommandNew); };
-    static const RedVSILangElement CommandPrint(void)                              { return RedVSILangElement(eCommandPrint); };
-	static const RedVSILangElement CommandReturn(void)                             { return RedVSILangElement(eCommandReturn); };
-    static const RedVSILangElement CommandWhile(void)                              { return RedVSILangElement(eCommandWhile); };
+    bool                     IsCommand(void) const;
+    bool                     IsCommandIf(void) const                         { return eType == eCommandIf; };
+    bool                     IsCommandLet(void) const                        { return eType == eCommandLet; };
+    bool                     IsCommandLog(void) const                        { return eType == eCommandLog; };
+    bool                     IsCommandNew(void) const                        { return eType == eCommandNew; };
+	bool                     IsCommandPrint(void) const                      { return eType == eCommandPrint; };
+	bool                     IsCommandReturn(void) const                     { return eType == eCommandReturn; };
+    bool                     IsCommandWhile(void) const                      { return eType == eCommandWhile; };
+    static RedVSILangElement CommandIf(void)                                 { return RedVSILangElement(eCommandIf); };
+    static RedVSILangElement CommandLet(void)                                { return RedVSILangElement(eCommandLet); };
+    static RedVSILangElement CommandLog(void)                                { return RedVSILangElement(eCommandLog); };
+    static RedVSILangElement CommandNew(void)                                { return RedVSILangElement(eCommandNew); };
+    static RedVSILangElement CommandPrint(void)                              { return RedVSILangElement(eCommandPrint); };
+	static RedVSILangElement CommandReturn(void)                             { return RedVSILangElement(eCommandReturn); };
+    static RedVSILangElement CommandWhile(void)                              { return RedVSILangElement(eCommandWhile); };
 
     // Parse node types
-    const bool                     IsParse(void) const;
-    const bool                     IsParseFuncCall(void) const                     { return eType == eParseFuncCall; };
-    const bool                     IsParseValue(void) const                        { return eType == eParseValue; };
-    const bool                     IsParseVariable(void) const                     { return eType == eParseVariable; };
-    const bool                     IsParseBinaryOp(void) const                     { return eType == eParseBinaryOp; };
-    const bool                     IsParseUnaryOp(void) const                      { return eType == eParseUnaryOp; };
-    static const RedVSILangElement ParseFuncCall(void)                             { return RedVSILangElement(eParseFuncCall); };
-    static const RedVSILangElement ParseValue(void)                                { return RedVSILangElement(eParseValue); };
-    static const RedVSILangElement ParseVariable(void)                             { return RedVSILangElement(eParseVariable); };
-    static const RedVSILangElement ParseBinaryOp(void)                             { return RedVSILangElement(eParseBinaryOp); };
-    static const RedVSILangElement ParseUnaryOp(void)                              { return RedVSILangElement(eParseUnaryOp); };
+    bool                     IsParse(void) const;
+    bool                     IsParseFuncCall(void) const                     { return eType == eParseFuncCall; };
+    bool                     IsParseValue(void) const                        { return eType == eParseValue; };
+    bool                     IsParseVariable(void) const                     { return eType == eParseVariable; };
+    bool                     IsParseBinaryOp(void) const                     { return eType == eParseBinaryOp; };
+    bool                     IsParseUnaryOp(void) const                      { return eType == eParseUnaryOp; };
+    static RedVSILangElement ParseFuncCall(void)                             { return RedVSILangElement(eParseFuncCall); };
+    static RedVSILangElement ParseValue(void)                                { return RedVSILangElement(eParseValue); };
+    static RedVSILangElement ParseVariable(void)                             { return RedVSILangElement(eParseVariable); };
+    static RedVSILangElement ParseBinaryOp(void)                             { return RedVSILangElement(eParseBinaryOp); };
+    static RedVSILangElement ParseUnaryOp(void)                              { return RedVSILangElement(eParseUnaryOp); };
 
     // Locations
-    const bool                     IsLocation(void) const;
-    const bool                     IsLocationHeap(void) const                      { return eType == eLocationHeap; };
-    const bool                     IsLocationStack(void) const                     { return eType == eLocationStack; };
-    const bool                     IsLocationAttribute(void) const                 { return eType == eLocationAttribute; };
-    static const RedVSILangElement LocationHeap(void)                              { return RedVSILangElement(eLocationHeap); };
-    static const RedVSILangElement LocationStack(void)                             { return RedVSILangElement(eLocationStack); };
-    static const RedVSILangElement LocationAttribute(void)                         { return RedVSILangElement(eLocationAttribute); };
+    bool                     IsLocation(void) const;
+    bool                     IsLocationHeap(void) const                      { return eType == eLocationHeap; };
+    bool                     IsLocationStack(void) const                     { return eType == eLocationStack; };
+    bool                     IsLocationAttribute(void) const                 { return eType == eLocationAttribute; };
+    static RedVSILangElement LocationHeap(void)                              { return RedVSILangElement(eLocationHeap); };
+    static RedVSILangElement LocationStack(void)                             { return RedVSILangElement(eLocationStack); };
+    static RedVSILangElement LocationAttribute(void)                         { return RedVSILangElement(eLocationAttribute); };
 
     // Types
-    const bool                     IsType(void) const;
-    const bool                     IsTypeArray(void) const                         { return eType == eTypeArray; };
-    const bool                     IsTypeBool(void) const                          { return eType == eTypeBool; };
-    const bool                     IsTypeChar(void) const                          { return eType == eTypeChar; };
-    const bool                     IsTypeNumber(void) const                        { return eType == eTypeNumber; };
-    const bool                     IsTypeString(void) const                        { return eType == eTypeString; };
-    static const RedVSILangElement TypeArray(void)                                 { return RedVSILangElement(eTypeArray); };
-    static const RedVSILangElement TypeBool(void)                                  { return RedVSILangElement(eTypeBool); };
-    static const RedVSILangElement TypeChar(void)                                  { return RedVSILangElement(eTypeChar); };
-    static const RedVSILangElement TypeNumber(void)                                { return RedVSILangElement(eTypeNumber); };
-    static const RedVSILangElement TypeString(void)                                { return RedVSILangElement(eTypeString); };
+    bool                     IsType(void) const;
+    bool                     IsTypeArray(void) const                         { return eType == eTypeArray; };
+    bool                     IsTypeBool(void) const                          { return eType == eTypeBool; };
+    bool                     IsTypeChar(void) const                          { return eType == eTypeChar; };
+    bool                     IsTypeNumber(void) const                        { return eType == eTypeNumber; };
+    bool                     IsTypeString(void) const                        { return eType == eTypeString; };
+    static RedVSILangElement TypeArray(void)                                 { return RedVSILangElement(eTypeArray); };
+    static RedVSILangElement TypeBool(void)                                  { return RedVSILangElement(eTypeBool); };
+    static RedVSILangElement TypeChar(void)                                  { return RedVSILangElement(eTypeChar); };
+    static RedVSILangElement TypeNumber(void)                                { return RedVSILangElement(eTypeNumber); };
+    static RedVSILangElement TypeString(void)                                { return RedVSILangElement(eTypeString); };
 
     // Binary op types
-    const bool                     IsBinaryOp(void) const;
-    const bool                     IsBinaryOpAssignDivide(void) const              { return eType == eBinaryOpAssignDivide; };
-    const bool                     IsBinaryOpAssignEqual(void) const               { return eType == eBinaryOpAssignEqual; };
-    const bool                     IsBinaryOpAssignMinus(void) const               { return eType == eBinaryOpAssignMinus; };
-    const bool                     IsBinaryOpAssignMultiply(void) const            { return eType == eBinaryOpAssignMultiply; };
-    const bool                     IsBinaryOpAssignPlus(void) const                { return eType == eBinaryOpAssignPlus; };
-    const bool                     IsBinaryOpCompareEqual(void) const              { return eType == eBinaryOpCompareEqual; };
-    const bool                     IsBinaryOpCompareNotEqual(void) const           { return eType == eBinaryOpCompareNotEqual; };
-    const bool                     IsBinaryOpCompareLessThan(void) const           { return eType == eBinaryOpCompareLessThan; };
-    const bool                     IsBinaryOpCompareGreaterThan(void) const        { return eType == eBinaryOpCompareGreaterThan; };
-    const bool                     IsBinaryOpCompareLessThanOrEqual(void) const    { return eType == eBinaryOpCompareLessThanOrEqual; };
-    const bool                     IsBinaryOpCompareGreaterThanOrEqual(void) const { return eType == eBinaryOpCompareGreaterThanOrEqual; };
-    const bool                     IsBinaryOpDivide(void) const                    { return eType == eBinaryOpDivide; };
-    const bool                     IsBinaryOpLogicAnd(void) const                  { return eType == eBinaryOpLogicAnd; };
-    const bool                     IsBinaryOpLogicOr(void) const                   { return eType == eBinaryOpLogicOr; };
-    const bool                     IsBinaryOpMinus(void) const                     { return eType == eBinaryOpMinus; };
-    const bool                     IsBinaryOpMultiply(void) const                  { return eType == eBinaryOpMultiply; };
-    const bool                     IsBinaryOpPlus(void) const                      { return eType == eBinaryOpPlus; };
-    const bool                     IsBinaryOpPower(void) const                     { return eType == eBinaryOpPower; };
-    static const RedVSILangElement BinaryOpAssignDivide(void)                      { return RedVSILangElement(eBinaryOpAssignDivide); };
-    static const RedVSILangElement BinaryOpAssignEqual(void)                       { return RedVSILangElement(eBinaryOpAssignEqual); };
-    static const RedVSILangElement BinaryOpAssignMinus(void)                       { return RedVSILangElement(eBinaryOpAssignMinus); };
-    static const RedVSILangElement BinaryOpAssignMultiply(void)                    { return RedVSILangElement(eBinaryOpAssignMultiply); };
-    static const RedVSILangElement BinaryOpAssignPlus(void)                        { return RedVSILangElement(eBinaryOpAssignPlus); };
-    static const RedVSILangElement BinaryOpCompareEqual(void)                      { return RedVSILangElement(eBinaryOpCompareEqual); };
-    static const RedVSILangElement BinaryOpCompareNotEqual(void)                   { return RedVSILangElement(eBinaryOpCompareNotEqual); };
-    static const RedVSILangElement BinaryOpCompareLessThan(void)                   { return RedVSILangElement(eBinaryOpCompareLessThan); };
-    static const RedVSILangElement BinaryOpCompareGreaterThan(void)                { return RedVSILangElement(eBinaryOpCompareGreaterThan); };
-    static const RedVSILangElement BinaryOpCompareLessThanOrEqual(void)            { return RedVSILangElement(eBinaryOpCompareLessThanOrEqual); };
-    static const RedVSILangElement BinaryOpCompareGreaterThanOrEqual(void)         { return RedVSILangElement(eBinaryOpCompareGreaterThanOrEqual); };
-    static const RedVSILangElement BinaryOpDivide(void)                            { return RedVSILangElement(eBinaryOpDivide); };
-    static const RedVSILangElement BinaryOpItemAtAddr(void)                        { return RedVSILangElement(eBinaryOpItemAtAddr); };
-    static const RedVSILangElement BinaryOpLogicAnd(void)                          { return RedVSILangElement(eBinaryOpLogicAnd); };
-    static const RedVSILangElement BinaryOpLogicOr(void)                           { return RedVSILangElement(eBinaryOpLogicOr); };
-    static const RedVSILangElement BinaryOpMinus(void)                             { return RedVSILangElement(eBinaryOpMinus); };
-    static const RedVSILangElement BinaryOpMultiply(void)                          { return RedVSILangElement(eBinaryOpMultiply); };
-    static const RedVSILangElement BinaryOpPlus(void)                              { return RedVSILangElement(eBinaryOpPlus); };
-    static const RedVSILangElement BinaryOpPower(void)                             { return RedVSILangElement(eBinaryOpPower); };
+    bool                     IsBinaryOp(void) const;
+    bool                     IsBinaryOpAssignDivide(void) const              { return eType == eBinaryOpAssignDivide; };
+    bool                     IsBinaryOpAssignEqual(void) const               { return eType == eBinaryOpAssignEqual; };
+    bool                     IsBinaryOpAssignMinus(void) const               { return eType == eBinaryOpAssignMinus; };
+    bool                     IsBinaryOpAssignMultiply(void) const            { return eType == eBinaryOpAssignMultiply; };
+    bool                     IsBinaryOpAssignPlus(void) const                { return eType == eBinaryOpAssignPlus; };
+    bool                     IsBinaryOpCompareEqual(void) const              { return eType == eBinaryOpCompareEqual; };
+    bool                     IsBinaryOpCompareNotEqual(void) const           { return eType == eBinaryOpCompareNotEqual; };
+    bool                     IsBinaryOpCompareLessThan(void) const           { return eType == eBinaryOpCompareLessThan; };
+    bool                     IsBinaryOpCompareGreaterThan(void) const        { return eType == eBinaryOpCompareGreaterThan; };
+    bool                     IsBinaryOpCompareLessThanOrEqual(void) const    { return eType == eBinaryOpCompareLessThanOrEqual; };
+    bool                     IsBinaryOpCompareGreaterThanOrEqual(void) const { return eType == eBinaryOpCompareGreaterThanOrEqual; };
+    bool                     IsBinaryOpDivide(void) const                    { return eType == eBinaryOpDivide; };
+    bool                     IsBinaryOpLogicAnd(void) const                  { return eType == eBinaryOpLogicAnd; };
+    bool                     IsBinaryOpLogicOr(void) const                   { return eType == eBinaryOpLogicOr; };
+    bool                     IsBinaryOpMinus(void) const                     { return eType == eBinaryOpMinus; };
+    bool                     IsBinaryOpMultiply(void) const                  { return eType == eBinaryOpMultiply; };
+    bool                     IsBinaryOpPlus(void) const                      { return eType == eBinaryOpPlus; };
+    bool                     IsBinaryOpPower(void) const                     { return eType == eBinaryOpPower; };
+    static RedVSILangElement BinaryOpAssignDivide(void)                      { return RedVSILangElement(eBinaryOpAssignDivide); };
+    static RedVSILangElement BinaryOpAssignEqual(void)                       { return RedVSILangElement(eBinaryOpAssignEqual); };
+    static RedVSILangElement BinaryOpAssignMinus(void)                       { return RedVSILangElement(eBinaryOpAssignMinus); };
+    static RedVSILangElement BinaryOpAssignMultiply(void)                    { return RedVSILangElement(eBinaryOpAssignMultiply); };
+    static RedVSILangElement BinaryOpAssignPlus(void)                        { return RedVSILangElement(eBinaryOpAssignPlus); };
+    static RedVSILangElement BinaryOpCompareEqual(void)                      { return RedVSILangElement(eBinaryOpCompareEqual); };
+    static RedVSILangElement BinaryOpCompareNotEqual(void)                   { return RedVSILangElement(eBinaryOpCompareNotEqual); };
+    static RedVSILangElement BinaryOpCompareLessThan(void)                   { return RedVSILangElement(eBinaryOpCompareLessThan); };
+    static RedVSILangElement BinaryOpCompareGreaterThan(void)                { return RedVSILangElement(eBinaryOpCompareGreaterThan); };
+    static RedVSILangElement BinaryOpCompareLessThanOrEqual(void)            { return RedVSILangElement(eBinaryOpCompareLessThanOrEqual); };
+    static RedVSILangElement BinaryOpCompareGreaterThanOrEqual(void)         { return RedVSILangElement(eBinaryOpCompareGreaterThanOrEqual); };
+    static RedVSILangElement BinaryOpDivide(void)                            { return RedVSILangElement(eBinaryOpDivide); };
+    static RedVSILangElement BinaryOpItemAtAddr(void)                        { return RedVSILangElement(eBinaryOpItemAtAddr); };
+    static RedVSILangElement BinaryOpLogicAnd(void)                          { return RedVSILangElement(eBinaryOpLogicAnd); };
+    static RedVSILangElement BinaryOpLogicOr(void)                           { return RedVSILangElement(eBinaryOpLogicOr); };
+    static RedVSILangElement BinaryOpMinus(void)                             { return RedVSILangElement(eBinaryOpMinus); };
+    static RedVSILangElement BinaryOpMultiply(void)                          { return RedVSILangElement(eBinaryOpMultiply); };
+    static RedVSILangElement BinaryOpPlus(void)                              { return RedVSILangElement(eBinaryOpPlus); };
+    static RedVSILangElement BinaryOpPower(void)                             { return RedVSILangElement(eBinaryOpPower); };
 
     // Unary op types
-    const bool                     IsUnaryOp(void) const;
-    const bool                     IsUnaryOpMinus(void) const                      { return eType == eUnaryOpMinus; };
-    const bool                     IsUnaryOpLogicNot(void) const                   { return eType == eUnaryOpLogicNot; };
-    static const RedVSILangElement UnaryOpMinus(void)                              { return RedVSILangElement(eUnaryOpMinus); };
-    static const RedVSILangElement UnaryOpLogicNot(void)                           { return RedVSILangElement(eUnaryOpLogicNot); };
+    bool                     IsUnaryOp(void) const;
+    bool                     IsUnaryOpMinus(void) const                      { return eType == eUnaryOpMinus; };
+    bool                     IsUnaryOpLogicNot(void) const                   { return eType == eUnaryOpLogicNot; };
+    static RedVSILangElement UnaryOpMinus(void)                              { return RedVSILangElement(eUnaryOpMinus); };
+    static RedVSILangElement UnaryOpLogicNot(void)                           { return RedVSILangElement(eUnaryOpLogicNot); };
 
 
     // High level Query routines
-    const bool IsOp(void) const;
-    const bool IsAssignOp(void) const;
-    const bool IsLogicOp(void) const;
-    const bool IsCompareOp(void) const;
+    bool IsOp(void) const;
+    bool IsAssignOp(void) const;
+    bool IsLogicOp(void) const;
+    bool IsCompareOp(void) const;
 
     // Data Type conversions, between the Core type, and the enumerations here for types
     static RedDataType       DataTypeForLangElemType(const RedVSILangElement& LangType);
@@ -149,7 +149,7 @@ public:
     // Operators
     void operator =(const RedVSILangElement cNewVal) { eType=cNewVal.eType; };
 
-    const int iElem(void) const { return (int)eType; };
+    int iElem(void) const { return (int)eType; };
 
 protected:
 
@@ -215,27 +215,27 @@ private:
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-static const RedVSILangElement kLangElementTypeArray               = RedVSILangElement::TypeArray();
-static const RedVSILangElement kLangElementTypeBool                = RedVSILangElement::TypeBool();
-static const RedVSILangElement kLangElementTypeChar                = RedVSILangElement::TypeChar();
-static const RedVSILangElement kLangElementTypeNumber              = RedVSILangElement::TypeNumber();
-static const RedVSILangElement kLangElementTypeString              = RedVSILangElement::TypeString();
+static RedVSILangElement kLangElementTypeArray               = RedVSILangElement::TypeArray();
+static RedVSILangElement kLangElementTypeBool                = RedVSILangElement::TypeBool();
+static RedVSILangElement kLangElementTypeChar                = RedVSILangElement::TypeChar();
+static RedVSILangElement kLangElementTypeNumber              = RedVSILangElement::TypeNumber();
+static RedVSILangElement kLangElementTypeString              = RedVSILangElement::TypeString();
 
-static const RedVSILangElement kLangElementLocationHeap            = RedVSILangElement::LocationHeap();
-static const RedVSILangElement kLangElementLocationStack           = RedVSILangElement::LocationStack();
-static const RedVSILangElement kLangElementLocationAttribute       = RedVSILangElement::LocationAttribute();
+static RedVSILangElement kLangElementLocationHeap            = RedVSILangElement::LocationHeap();
+static RedVSILangElement kLangElementLocationStack           = RedVSILangElement::LocationStack();
+static RedVSILangElement kLangElementLocationAttribute       = RedVSILangElement::LocationAttribute();
 
-static const RedVSILangElement kLangElementCommandNew              = RedVSILangElement::CommandNew();
-static const RedVSILangElement kLangElementCommandLet              = RedVSILangElement::CommandLet();
-static const RedVSILangElement kLangElementCommandIf               = RedVSILangElement::CommandIf();
-static const RedVSILangElement kLangElementCommandReturn           = RedVSILangElement::CommandReturn();
-static const RedVSILangElement kLangElementCommandWhile            = RedVSILangElement::CommandWhile();
+static RedVSILangElement kLangElementCommandNew              = RedVSILangElement::CommandNew();
+static RedVSILangElement kLangElementCommandLet              = RedVSILangElement::CommandLet();
+static RedVSILangElement kLangElementCommandIf               = RedVSILangElement::CommandIf();
+static RedVSILangElement kLangElementCommandReturn           = RedVSILangElement::CommandReturn();
+static RedVSILangElement kLangElementCommandWhile            = RedVSILangElement::CommandWhile();
 
-static const RedVSILangElement kLangElementBinaryOpAssignDivide    = RedVSILangElement::BinaryOpAssignDivide();
-static const RedVSILangElement kLangElementBinaryOpAssignEqual     = RedVSILangElement::BinaryOpAssignEqual();
-static const RedVSILangElement kLangElementBinaryOpAssignMinus     = RedVSILangElement::BinaryOpAssignMinus();
-static const RedVSILangElement kLangElementBinaryOpAssignMultiply  = RedVSILangElement::BinaryOpAssignMultiply();
-static const RedVSILangElement kLangElementBinaryOpAssignPlus      = RedVSILangElement::BinaryOpAssignPlus();
+static RedVSILangElement kLangElementBinaryOpAssignDivide    = RedVSILangElement::BinaryOpAssignDivide();
+static RedVSILangElement kLangElementBinaryOpAssignEqual     = RedVSILangElement::BinaryOpAssignEqual();
+static RedVSILangElement kLangElementBinaryOpAssignMinus     = RedVSILangElement::BinaryOpAssignMinus();
+static RedVSILangElement kLangElementBinaryOpAssignMultiply  = RedVSILangElement::BinaryOpAssignMultiply();
+static RedVSILangElement kLangElementBinaryOpAssignPlus      = RedVSILangElement::BinaryOpAssignPlus();
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 

@@ -36,7 +36,7 @@ public:
 
     RedVSIObject(const RedString& cNewClassName) { classname = cNewClassName; };
 
-    const RedString Classname(void) const { return classname; };
+    RedString Classname(void) const { return classname; };
 
     // Operators
     void operator =(const RedVSIObject cNewVal);   

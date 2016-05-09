@@ -41,25 +41,25 @@ public:
     static RedDate Today(void);
 
 	// Simple Accessors
-	void           SetYear(const unsigned y)  { year  = y; };
-	void           SetMonth(const unsigned m) { month = m; };
-	void           SetDate(const unsigned d)  { date  = d; };
-	const unsigned Year(void) const           { return year; };
-	const unsigned Month(void) const          { return month; };
-    const unsigned Date(void) const           { return date; };
+	void     SetYear(const unsigned y)  { year  = y; };
+	void     SetMonth(const unsigned m) { month = m; };
+	void     SetDate(const unsigned d)  { date  = d; };
+    unsigned Year(void) const           { return year; };
+	unsigned Month(void) const          { return month; };
+    unsigned Date(void) const           { return date; };
 
 	// Involved Accessors
-    const unsigned TwoDigitYear(void) const   { return (year % 100); };
-	const unsigned EightDigitDate(void) const;
-	const unsigned SixDigitDate(void) const;
+    unsigned TwoDigitYear(void) const   { return (year % 100); };
+	unsigned EightDigitDate(void) const;
+	unsigned SixDigitDate(void) const;
 
     static unsigned DaysInMonth(const unsigned ForMonth, const unsigned ForYear);
     static bool     IsLeapYear(const unsigned ForYear);
 
 	// String output
-	const RedString DateString(void) const;
-	const RedString EightDigitDateString(void) const;
-	const RedString SixDigitDateString(void) const;
+	RedString DateString(void) const;
+    RedString EightDigitDateString(void) const;
+	RedString SixDigitDateString(void) const;
 
     // Operators
     void operator =(const RedDate& cNewVal);

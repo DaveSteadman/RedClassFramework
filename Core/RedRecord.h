@@ -38,7 +38,7 @@ public:
     ~RedRecord(void) { delete pAttribList; };
 
     // Inherited: RedType
-    const RedDataType Type(void) const { return RedDataType::Record(); };
+    RedDataType Type(void) const { return RedDataType::Record(); };
     RedType*          Clone(void) const;
     void              Init(void) { pAttribList->DelAll(); };
 
@@ -58,7 +58,7 @@ public:
     void        Del(const RedString& cNewAttribName)                      { pAttribList->Del(cNewAttribName); };
     void        DelAll(void)                                              { pAttribList->DelAll(); };
 
-    const unsigned    NumItems(void) const { return pAttribList->NumItems(); };
+    unsigned    NumItems(void) const { return pAttribList->NumItems(); };
 
     // Operators
     void operator =(const RedRecord& cNewVal);

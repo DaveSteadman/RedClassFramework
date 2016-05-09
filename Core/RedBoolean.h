@@ -42,16 +42,16 @@ class RedBoolean : public RedType
 public:
 
     // constructors
-    RedBoolean()                       { SetFalse(); };
-    RedBoolean(const RedBoolean& cVal) { iState = cVal.iState; };
-    RedBoolean(const int& iVal)        { Set(iVal); };
-    RedBoolean(const bool Val)         { Set(Val); };
-    ~RedBoolean()                      { };
+    RedBoolean()                           { SetFalse(); };
+    RedBoolean(const RedBoolean& cVal)     { iState = cVal.iState; };
+    RedBoolean(const int& iVal)            { Set(iVal); };
+    RedBoolean(const bool Val)             { Set(Val); };
+    ~RedBoolean()                          { };
     
     // Inherited: RedType
-    void               Init(void)        { SetFalse(); };
-    const RedDataType  Type(void) const  { return kDataTypeBool; };
-    RedType*           Clone(void) const { RedBoolean* newB = new RedBoolean(); newB->iState = iState; return (RedType*)newB; };
+    void               Init(void)          { SetFalse(); };
+    RedDataType        Type(void) const    { return kDataTypeBool; };
+    RedType*           Clone(void) const   { RedBoolean* newB = new RedBoolean(); newB->iState = iState; return dynamic_cast<RedType*>(newB); };
 
     // simple set/get operations
     void               SetYes(void)        { iState=RED_YES; };
@@ -63,11 +63,10 @@ public:
     void               Set(const bool val) { if (val) SetYes(); else SetNo(); };
     void               Invert(void);
 
-    const bool         IsYes(void)   const { return (iState == RED_YES);   };
-    const bool         IsNo(void)    const { return (iState == RED_NO);    };
-    const bool         IsTrue(void)  const { return (iState == RED_TRUE);  };
-    const bool         IsFalse(void) const { return (iState == RED_FALSE); };
-
+    bool               IsYes(void)   const { return (iState == RED_YES);   };
+    bool               IsNo(void)    const { return (iState == RED_NO);    };
+    bool               IsTrue(void)  const { return (iState == RED_TRUE);  };
+    bool               IsFalse(void) const { return (iState == RED_FALSE); };
 
     static RedBoolean  True(void)  { RedBoolean cRetVal; cRetVal.SetTrue();  return cRetVal; };
     static RedBoolean  False(void) { RedBoolean cRetVal; cRetVal.SetFalse(); return cRetVal; };

@@ -45,9 +45,9 @@ public:
     ~RedNumberRange() { };
 
     // Inherited: RedType
-    void                Init(void)        { SetRange(0, 1); SetBehaviour(0); };
-    const RedDataType   Type(void) const  { return kDataTypeBool; };
-    RedType*            Clone(void) const { RedNumberRange* r = new RedNumberRange(cLow, cHigh); return (RedType*)r; };
+    void          Init(void)        { SetRange(0, 1); SetBehaviour(0); };
+    RedDataType   Type(void) const  { return kDataTypeBool; };
+    RedType*      Clone(void) const { RedNumberRange* r = new RedNumberRange(cLow, cHigh); return (RedType*)r; };
 
     void          SetBehaviour(const int b);
 

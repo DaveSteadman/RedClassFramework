@@ -89,14 +89,16 @@ RedResult RedVSITokenFactory::RunTokenComp(RedBufferInput& cInputBuffer, RedVSIT
 
     while (RedResult.IsNoResult())
     {
-        // reset the start read pos
+        // Reset the start read pos
         cInputBuffer.SetPos(iStartPos);
 
+        // Put the number competition ahead of the predefined, so a leading minus sign on a number
+        // isn't recognised as a negative operator.
         switch(iCompetitionEntry)
         {
-        case 1: RedResult = PredefinedComp(cInputBuffer, cTokenMap, cNewTok); break;
-        case 2: RedResult = NameComp(cInputBuffer, cNewTok);                  break;
-        case 3: RedResult = NumberComp(cInputBuffer, cNewTok);                break;
+        case 1: RedResult = NumberComp(cInputBuffer, cNewTok);                break;
+        case 2: RedResult = PredefinedComp(cInputBuffer, cTokenMap, cNewTok); break;
+        case 3: RedResult = NameComp(cInputBuffer, cNewTok);                  break;
         case 4: RedResult = StringLiteralComp(cInputBuffer, cNewTok);         break;
         case 5: RedResult = NonPrintableComp(cInputBuffer, cNewTok);          break;
         default:
@@ -116,40 +118,48 @@ RedResult RedVSITokenFactory::NumberComp(RedBufferInput& cInputBuffer, RedVSITok
 {
     bool      iProcessingComplete = false;
     bool      iDecimalPointUsed   = false;
-    RedChar   cPreviewChar;
+    RedChar   cPreviewChar1;
+    RedChar   cPreviewChar2;
     RedChar   cNewChar;
     RedString cTokenText;
     
     // If the first character isn't numeric, return false.
-    cPreviewChar = cInputBuffer.PreviewNextChar();
-    if ( !cPreviewChar.IsDecimalNumber() )
-        return RedResult::NoResult();
+    cPreviewChar1 = cInputBuffer.PreviewAhead(1);
+    cPreviewChar2 = cInputBuffer.PreviewAhead(2);
 
-    while (!iProcessingComplete)
+    if ( (cPreviewChar1.IsNumeric()) ||
+         (cPreviewChar1.IsMinus() && cPreviewChar2.IsNumeric() ) )
     {
-        // Get the characters 
-        cNewChar     = cInputBuffer.GetNextChar();
-        cPreviewChar = cInputBuffer.PreviewNextChar();
+        while (!iProcessingComplete)
+        {
+            // Get the characters 
+            cNewChar     = cInputBuffer.GetNextChar();
+            cPreviewChar1 = cInputBuffer.PreviewAhead(1);
 
-        // Set the fullstop used flag if we have just assigned one
-        if (cNewChar.IsDecimalPoint())
-            iDecimalPointUsed = true;
+            // Set the fullstop used flag if we have just assigned one
+            if (cNewChar.IsDecimalPoint())
+                iDecimalPointUsed = true;
 
-        // Assign the first character we've already read
-        cTokenText += cNewChar;
+            // Assign the first character we've already read
+            cTokenText += cNewChar;
 
-        // Determine end condition, on no number character or a 2nd
-        // decimal point
-        if (!cPreviewChar.IsNumeric())    
-            iProcessingComplete = true;
-        if (cPreviewChar.IsDecimalPoint() && iDecimalPointUsed)
-            iProcessingComplete = true;
+            // Determine end condition, on no number character or a 2nd
+            // decimal point
+            if (!cPreviewChar1.IsNumeric())
+                iProcessingComplete = true;
+            if (cPreviewChar1.IsDecimalPoint() && iDecimalPointUsed)
+                iProcessingComplete = true;
+        }
+
+        // We have a number token, so convert the input string to a numeric
+        // value.
+        cNewTok.SetNumber(RedNumber(cTokenText));
+        return RedResult::Success();
     }
-
-    // We have a number token, so convert the input string to a numeric
-    // value.
-    cNewTok.SetNumber(RedNumber(cTokenText));
-    return RedResult::Success();
+    else
+    {
+        return RedResult::NoResult();
+    }
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

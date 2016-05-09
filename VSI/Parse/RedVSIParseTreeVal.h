@@ -36,10 +36,10 @@ public:
 
     RedVSIParseTreeVal(void)                      { Init(); };
     RedVSIParseTreeVal(RedVariant cNewVal)        { SetValue(cNewVal); };
-
+    ~RedVSIParseTreeVal(void)                     { };
     // Inherited RedType
-    void                    Init(void)            { cVal.Init(); };
-    const RedVSILangElement Type(void) const      { return RedVSILangElement::ParseValue(); };
+    void              Init(void)            { cVal.Init(); };
+    RedVSILangElement Type(void) const      { return RedVSILangElement::ParseValue(); };
 	
     // Query
     const RedVariant Value(void) const            { return cVal;  };

@@ -18,7 +18,6 @@
 
 #include "RedCoreNamespace.h"
 #include "RedTmlNamespace.h"
-
 #include "RedTmlNode.h"
 #include "RedTmlElement.h"
 
@@ -33,9 +32,9 @@ namespace TinyML {
 RedTmlNode* RedTmlNode::CreateChildNode(const RedString& NewName)
 {
     RedTmlNode* pNewNode = new RedTmlNode(NewName);
-    this->nodelist.AddLast((RedTmlElement*)pNewNode);
+    this->nodelist.AddLast(dynamic_cast<RedTmlElement*>(pNewNode));
 
-    return (RedTmlNode*)pNewNode;
+    return pNewNode;
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -44,13 +43,8 @@ RedTmlLeaf* RedTmlNode::CreateChildLeaf(const RedString& NewName, const RedStrin
 {
     RedTmlLeaf *NewLeaf = new RedTmlLeaf(NewName, NewData);
 
-    if (NewLeaf)
-    {
-        this->nodelist.AddLast((RedTmlElement*)NewLeaf);
-        return NewLeaf;
-    }
-
-    return 0;
+    this->nodelist.AddLast(dynamic_cast<RedTmlElement*>(NewLeaf));
+    return NewLeaf;
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

@@ -38,13 +38,13 @@ public:
 
     void        First(void);
     void        Next(void);
-    const bool  IsDone(void) const;
+    bool        IsDone(void) const;
     IdClass     CurrentId(void) const;
     DataClass   CurrentData(void) const;
 
     //void        DeleteCurrentItem(void)              { pList->Del(iCurrIndex); };
     void        SetSearchDirection(TESearchDir eDir) const { eSearchDir = eDir; };
-    const unsigned CollectionIndex(void) const                { return iCurrIndex; };
+    unsigned    CollectionIndex(void) const                { return iCurrIndex; };
 
 private:
 
@@ -90,7 +90,7 @@ void RedMapListIterator<IdClass, DataClass>::Next(void)
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 template <class IdClass, class DataClass>
-const bool RedMapListIterator<IdClass, DataClass>::IsDone(void) const
+bool RedMapListIterator<IdClass, DataClass>::IsDone(void) const
 {
     bool SearchDone = false;
 

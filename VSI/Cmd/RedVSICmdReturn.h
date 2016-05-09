@@ -37,7 +37,7 @@ public:
     RedVSICmdReturn(void);
     ~RedVSICmdReturn(void) {};
 
-    const RedVSILangElement Type(void) const { return kLangElementCommandReturn; };
+    RedVSILangElement Type(void) const { return kLangElementCommandReturn; };
     
     void SetDetails(RedVSIParseTreeInterface*& pInReturnExpr)        { pReturnExpr    = pInReturnExpr; };
     void GetDetails(RedVSIParseTreeInterface*& pOutReturnExpr) const { pOutReturnExpr = pReturnExpr; };

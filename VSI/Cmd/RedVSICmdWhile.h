@@ -37,7 +37,7 @@ public:
     RedVSICmdWhile(void);
     ~RedVSICmdWhile(void) {};
 
-    const RedVSILangElement Type(void) const { return kLangElementCommandWhile; };
+    RedVSILangElement Type(void) const { return kLangElementCommandWhile; };
     
     void QueueExpr(RedVSIContextInterface* pContext);
 

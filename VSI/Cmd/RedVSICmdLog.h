@@ -44,16 +44,16 @@ public:
     ~RedVSICmdLog(void) {};
 
     // RedVSICmdInterface inherited routines
-    const RedVSILangElement Type(void) const { return kLangElementCommandLet; };
-    void QueueExpr(RedVSIContextInterface* pContext);
-    void Execute(RedVSIContextInterface* pContext);
+    RedVSILangElement Type(void) const { return kLangElementCommandLet; };
+    void              QueueExpr(RedVSIContextInterface* pContext);
+    void              Execute(RedVSIContextInterface* pContext);
 
     // Command Setup
-    void SetExpr(RedVSIParseTreeInterface* pNewExpr)           { pLogExpr = pNewExpr; };
+    void              SetExpr(RedVSIParseTreeInterface* pNewExpr)           { pLogExpr = pNewExpr; };
 
     // Wholesale access/assign operations
-    void SetDetails(RedVSIParseTreeInterface*& pInExpr)        { pLogExpr = pInExpr; };
-    void GetDetails(RedVSIParseTreeInterface*& pOutExpr) const { pOutExpr = pLogExpr; };
+    void              SetDetails(RedVSIParseTreeInterface*& pInExpr)        { pLogExpr = pInExpr; };
+    void              GetDetails(RedVSIParseTreeInterface*& pOutExpr) const { pOutExpr = pLogExpr; };
 
 private:
 

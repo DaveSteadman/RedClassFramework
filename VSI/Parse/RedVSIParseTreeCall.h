@@ -38,7 +38,7 @@ public:
     RedVSIParseTreeCall(void) { pParamList = REDNULL; };
     ~RedVSIParseTreeCall(void);
 
-    const RedVSILangElement Type(void) const { return RedVSILangElement::ParseFuncCall(); };
+    RedVSILangElement Type(void) const { return RedVSILangElement::ParseFuncCall(); };
 
     void SetDetails(const RedString& cInObjectName,  const RedString& cInClassName, const RedString& cInFuncName,  RedVSIParseList*& pInParamList);
     void GetDetails(      RedString& cOutObjectName,       RedString& cOutClassName,      RedString& cOutFuncName, RedVSIParseList*& pOutParamList);

@@ -29,9 +29,9 @@ void RedVSIParseSerialiser::SerialiseExpression(RedVSITokenBuffer& cTokenBuffer,
     
     RedVSILangElement cType = pExpr->Type();
     
-    if      (cType.IsParseBinaryOp()) SerialiseBinaryOp(cTokenBuffer, (RedVSIParseTreeBinaryOp*)pExpr);
-    else if (cType.IsParseValue())    SerialiseValue   (cTokenBuffer, (RedVSIParseTreeVal*)pExpr);
-    else if (cType.IsParseVariable()) SerialiseVariable(cTokenBuffer, (RedVSIParseTreeVar*)pExpr);
+    if      (cType.IsParseBinaryOp()) SerialiseBinaryOp(cTokenBuffer, dynamic_cast<RedVSIParseTreeBinaryOp*>(pExpr));
+    else if (cType.IsParseValue())    SerialiseValue   (cTokenBuffer, dynamic_cast<RedVSIParseTreeVal*>(pExpr));
+    else if (cType.IsParseVariable()) SerialiseVariable(cTokenBuffer, dynamic_cast<RedVSIParseTreeVar*>(pExpr));
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

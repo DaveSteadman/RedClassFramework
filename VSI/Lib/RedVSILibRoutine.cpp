@@ -28,7 +28,7 @@ RedVSILibRoutine::RedVSILibRoutine(void)
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-const bool RedVSILibRoutine::IsMatching(const RedVSIRoutineCallInterface& cSig)
+bool RedVSILibRoutine::IsMatching(const RedVSIRoutineCallInterface& cSig)
 {
     if (cName != cSig.FuncName())
         return false;
@@ -38,7 +38,6 @@ const bool RedVSILibRoutine::IsMatching(const RedVSIRoutineCallInterface& cSig)
 
     if (LibParamList->NumItems() != CallParamList->NumItems())
         return false;
-
 
     unsigned CallParamIndex = CallParamList->FirstIndex();
 

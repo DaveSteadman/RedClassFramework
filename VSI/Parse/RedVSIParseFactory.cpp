@@ -242,19 +242,19 @@ RedVSIParseTreeInterface* RedVSIParseFactory::RunLogicExprCompetition(RedVSIToke
 RedVSIParseTreeInterface* RedVSIParseFactory::RunSumExprCompetition(RedVSITokenBuffer& cInputBuffer, RedLog& log)
 {
     // Top Element, returned to the caller
-    RedVSIParseTreeInterface* pTopElem = 0;
+    RedVSIParseTreeInterface* pTopElem = REDNULL;
 
     // Read the left hand expression item.
     RedVSIParseTreeInterface* pLeft = RunMultiExprCompetition(cInputBuffer, log);
-    if (pLeft==0) { return REDNULL; }
+    if (pLeft==REDNULL) { return REDNULL; }
     pTopElem = pLeft;
 
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
     int                       iOpFound = 1;
-    RedVSIParseTreeInterface* pRight   = 0;
-    RedVSIParseTreeBinaryOp*  pCurrOp  = 0;
-    RedVSIParseTreeBinaryOp*  pPrevOp  = 0;
+    RedVSIParseTreeInterface* pRight   = REDNULL;
+    RedVSIParseTreeBinaryOp*  pCurrOp  = REDNULL;
+    RedVSIParseTreeBinaryOp*  pPrevOp  = REDNULL;
 
     while ( (iOpFound) && (!log.IsError()) )
     {
@@ -269,7 +269,7 @@ RedVSIParseTreeInterface* RedVSIParseFactory::RunSumExprCompetition(RedVSITokenB
 
             // shuffle nodes to accomodate the new operator
             pTopElem = pCurrOp;
-            if (pPrevOp == 0) 
+            if (pPrevOp == REDNULL)
                 pCurrOp->SetLeftChild(pLeft);
             else
                 pCurrOp->SetLeftChild(pPrevOp);
@@ -292,7 +292,7 @@ RedVSIParseTreeInterface* RedVSIParseFactory::RunSumExprCompetition(RedVSITokenB
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
     // properly delete any new object on an error
-    if ( (log.IsError()) && (pTopElem!=0) ) { delete pTopElem; pTopElem = 0; }
+    if ( (log.IsError()) && (pTopElem!=0) ) { delete pTopElem; pTopElem = REDNULL; }
 
     return pTopElem;
 }
@@ -372,9 +372,9 @@ RedVSIParseTreeInterface* RedVSIParseFactory::RunPowExprCompetition(RedVSITokenB
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
     int                       iOpFound = 1;
-    RedVSIParseTreeInterface* pRight   = 0;
-    RedVSIParseTreeBinaryOp*  pCurrOp  = 0;
-    RedVSIParseTreeBinaryOp*  pPrevOp  = 0;
+    RedVSIParseTreeInterface* pRight   = REDNULL;
+    RedVSIParseTreeBinaryOp*  pCurrOp  = REDNULL;
+    RedVSIParseTreeBinaryOp*  pPrevOp  = REDNULL;
 
     while ( (iOpFound) && (!log.IsError()) )
     {
@@ -576,8 +576,8 @@ RedVSIParseTreeInterface* RedVSIParseFactory::RunExternalCallCompetition(RedVSIT
     RedVSIToken cFuncTok        = cInputBuffer.GetToken();
     RedVSIToken cOpenBracketTok = cInputBuffer.GetToken();
 
-    if (!cUnitNameTok.Type().IsName())                      { return REDNULL; }
-    if (!cFuncTok.Type().IsName())                          { return REDNULL; }
+    if (!cUnitNameTok.Type().IsName())                   { return REDNULL; }
+    if (!cFuncTok.Type().IsName())                       { return REDNULL; }
     if (!cOpenBracketTok.Predef().IsSymbolOpenBracket()) { return REDNULL; }
 
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -652,7 +652,7 @@ RedVSIParseTreeInterface* RedVSIParseFactory::RunInternalCallCompetition(RedVSIT
     RedVSIToken cFuncTok        = cInputBuffer.GetToken();    
     RedVSIToken cOpenBracketTok = cInputBuffer.GetToken();
 
-    if (!cFuncTok.Type().IsName())                          { return REDNULL; }
+    if (!cFuncTok.Type().IsName())                       { return REDNULL; }
     if (!cOpenBracketTok.Predef().IsSymbolOpenBracket()) { return REDNULL; }
 
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -720,8 +720,8 @@ RedVSIParseTreeInterface* RedVSIParseFactory::RunInternalCallCompetition(RedVSIT
 
 bool RedVSIParseFactory::IsValueToken(const RedVSIToken& cTok)
 {
-    if ( cTok.Type().IsNumber() )                                         return true;
-    if ( cTok.Type().IsStringLiteral() )                                  return true;
+    if ( cTok.Type().IsNumber() )                                      return true;
+    if ( cTok.Type().IsStringLiteral() )                               return true;
     if ( cTok.Type().IsPredefined() && cTok.Predef().IsBoolKeyword() ) return true;
     
     return false;

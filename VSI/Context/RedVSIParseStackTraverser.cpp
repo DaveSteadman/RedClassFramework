@@ -53,7 +53,7 @@ void RedVSIParseStackTraverser::PopulateStack(RedVSIParseStack& cStack, RedVSIPa
 
 void RedVSIParseStackTraverser::AddBinaryOp(RedVSIParseStack& cStack, RedVSIParseTreeInterface* pExpr, RedLog& log)
 {
-    RedVSIParseTreeBinaryOp*  pBinOp = (RedVSIParseTreeBinaryOp*)pExpr;
+    RedVSIParseTreeBinaryOp*  pBinOp = dynamic_cast<RedVSIParseTreeBinaryOp*>(pExpr);
     
     RedVSIParseTreeInterface* pLeft;
     RedVSILangElement         cOp;
@@ -61,13 +61,13 @@ void RedVSIParseStackTraverser::AddBinaryOp(RedVSIParseStack& cStack, RedVSIPars
     
     pBinOp->GetDetails(pLeft, cOp, pRight);
     
-    // quick validity check
-    if ((!pLeft) || (!pRight)) { log.AddText("Badly Formed BinaryOp"); return; }
+    // Quick validity check
+    if ((!pLeft) || (!pRight)) { log.AddErrorEvent("Badly Formed BinaryOp"); return; }
         
-    // push top level onto stack
+    // Push top level onto stack
     cStack.Push(pExpr);
 
-    // start process over for children
+    // Start process over for children
     RedVSIParseStackTraverser::PopulateStack(cStack, pLeft, log);
     RedVSIParseStackTraverser::PopulateStack(cStack, pRight, log);
 }
@@ -76,7 +76,6 @@ void RedVSIParseStackTraverser::AddBinaryOp(RedVSIParseStack& cStack, RedVSIPars
 
 void RedVSIParseStackTraverser::AddVariable(RedVSIParseStack& cStack, RedVSIParseTreeInterface* pExpr, RedLog& log)
 {
-    
 //    RedVSIParseTreeVar* pVar = (RedVSIParseTreeVar*)pExpr;
 //    
 //    RedString cInVarName;
@@ -97,7 +96,7 @@ void RedVSIParseStackTraverser::AddVariable(RedVSIParseStack& cStack, RedVSIPars
 
 void RedVSIParseStackTraverser::AddValue(RedVSIParseStack& cStack, RedVSIParseTreeInterface* pExpr, RedLog& log)
 {
-    // push expr onto stack
+    // Push expr onto stack
     cStack.Push(pExpr);
 }
 
@@ -105,15 +104,15 @@ void RedVSIParseStackTraverser::AddValue(RedVSIParseStack& cStack, RedVSIParseTr
 
 void RedVSIParseStackTraverser::AddCall(RedVSIParseStack& cStack, RedVSIParseTreeInterface* pExpr, RedLog& log)
 {
-    // push call onto stack
+    // Push call onto stack
     cStack.Push(pExpr);
 
-    RedVSIParseTreeCall* pCall = (RedVSIParseTreeCall*)pExpr;
+    RedVSIParseTreeCall* pCall = dynamic_cast<RedVSIParseTreeCall*>(pExpr);
 
     // Get the call details
-    RedString cOutObjectName;
-    RedString cOutClassName;
-    RedString cOutFuncName;
+    RedString        cOutObjectName;
+    RedString        cOutClassName;
+    RedString        cOutFuncName;
     RedVSIParseList* pOutParamList;
     pCall->GetDetails(cOutObjectName, cOutClassName, cOutFuncName, pOutParamList);
     
@@ -121,7 +120,7 @@ void RedVSIParseStackTraverser::AddCall(RedVSIParseStack& cStack, RedVSIParseTre
     // the first parameter is executed first.
     RedVSIParseListIterator cIt(pOutParamList);
     
-    // loop through and queue up parameters.
+    // Loop through and queue up parameters.
     while (!cIt.IsDone())
     {
         RedVSIParseTreeInterface* pCurrParam  = cIt.CurrentItem();

@@ -42,11 +42,11 @@ public:
     static void TokenBufferToOutputBuffer(RedVSITokenBuffer& cInTokenBuffer, RedVSITokenElementMap& tokenMap, RedBufferOutput& outBuffer);
 
 private:
-	static void SerialiseExprCmd    (RedVSITokenBuffer& cTokenBuffer, RedVSICmdLet* pCmd);
-	static void SerialiseNewCmd     (RedVSITokenBuffer& cTokenBuffer, RedVSICmdNew* pCmd);
+	static void SerialiseExprCmd    (RedVSITokenBuffer& cTokenBuffer, RedVSICmdLet*    pCmd);
+	static void SerialiseNewCmd     (RedVSITokenBuffer& cTokenBuffer, RedVSICmdNew*    pCmd);
 	static void SerialiseReturnCmd  (RedVSITokenBuffer& cTokenBuffer, RedVSICmdReturn* pCmd);
-	static void SerialiseIfCmd      (RedVSITokenBuffer& cTokenBuffer, RedVSICmdIf* pCmd);
-	static void SerialiseWhileCmd   (RedVSITokenBuffer& cTokenBuffer, RedVSICmdWhile* pCmd);
+	static void SerialiseIfCmd      (RedVSITokenBuffer& cTokenBuffer, RedVSICmdIf*     pCmd);
+	static void SerialiseWhileCmd   (RedVSITokenBuffer& cTokenBuffer, RedVSICmdWhile*  pCmd);
 };
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

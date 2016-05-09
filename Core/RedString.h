@@ -45,16 +45,16 @@ public:
     RedString(const RedString& instr);
 
     // Inherited: RedType
-    void              Init(void)        { Empty(); };
-    const RedDataType Type(void)  const { return kDataTypeStr; };
-    RedType*          Clone(void) const { RedString* newS = new RedString(*this); return (RedType*)newS; };
+    void          Init(void)        { Empty(); };
+    RedDataType   Type(void)  const { return kDataTypeStr; };
+    RedType*      Clone(void) const { RedString* newS = new RedString(*this); return dynamic_cast<RedType*>(newS); };
 
     // Public Main Routines
-    const unsigned FirstContentIndex(void) const { return 0; };
-    const unsigned LastContentIndex(void)  const { return contentsize-1; };
-    const char*    TextPtr(void)           const { return data; };
-    const unsigned AllocSize(void)         const { return allocsize; };
-    const unsigned ContentSize(void)       const { return contentsize; };
+    unsigned       FirstContentIndex(void) const { return 0; };
+    unsigned       LastContentIndex(void)  const { return contentsize-1; };
+    char*          TextPtr(void)           const { return data; };
+    unsigned       AllocSize(void)         const { return allocsize; };
+    unsigned       ContentSize(void)       const { return contentsize; };
 
     void           Empty(void);
     void           Set(const char Ch);
@@ -64,11 +64,11 @@ public:
     void           Delete(const unsigned Index, const unsigned Count);
     void           Insert(const unsigned Index, const char  Ch);
     void           Insert(const unsigned Index, const char* Str);
-    const char     CharAtIndex(const unsigned Index) const;
+    char           CharAtIndex(const unsigned Index) const;
     RedString      SubStr(const unsigned StartIndex, const unsigned Count) const;
 
-    const bool     IsCharInString(char ch) const;
-    const bool     IsAlphaNumeric(void) const;
+    bool           IsCharInString(char ch) const;
+    bool           IsAlphaNumeric(void) const;
 
     // Derived Routines
     void           Set(const RedString& Str)                          { Set(Str.TextPtr()); };
@@ -77,16 +77,16 @@ public:
     void           Insert(const unsigned Index, const RedString& Str) { Insert(Index, Str.TextPtr()); };
 
     // Derived Routines
-    const unsigned Length(void)                         const { return contentsize; };
-    const bool     IsEmpty(void)                        const { return (contentsize==0); };
-    const RedChar  CharObjAtIndex(const unsigned Index) const { return RedChar( CharAtIndex(Index) ); };
-    const char     FirstChar(void)                      const { return CharAtIndex(FirstContentIndex()); };
-    const RedChar  FirstCharObj(void)                   const { return RedChar( CharAtIndex(FirstContentIndex()) ); };
-    const char     LastChar(void)                       const { if (ContentSize() == 0) return '\0'; else return CharAtIndex(LastContentIndex()); };
-    const RedChar  LastCharObj(void)                    const { return RedChar( CharAtIndex(LastContentIndex()) ); };
+    unsigned       Length(void)                         const { return contentsize; };
+    bool           IsEmpty(void)                        const { return (contentsize==0); };
+    RedChar        CharObjAtIndex(const unsigned Index) const { return RedChar( CharAtIndex(Index) ); };
+    char           FirstChar(void)                      const { return CharAtIndex(FirstContentIndex()); };
+    RedChar        FirstCharObj(void)                   const { return RedChar( CharAtIndex(FirstContentIndex()) ); };
+    char           LastChar(void)                       const { if (ContentSize() == 0) return '\0'; else return CharAtIndex(LastContentIndex()); };
+    RedChar        LastCharObj(void)                    const { return RedChar( CharAtIndex(LastContentIndex()) ); };
 
-    const unsigned NumLines(void) const;
-    const bool     LineAtNum(const unsigned LineNum, RedString& Line) const;
+    unsigned       NumLines(void) const;
+    bool           LineAtNum(const unsigned LineNum, RedString& Line) const;
 
     void           DelFirstChar(void) { Delete(FirstContentIndex(), 1); };
     void           DelLastChar(void)  { Delete(LastContentIndex(),  1); };
@@ -97,9 +97,9 @@ public:
     // Additional Routines (relying on Main Routines for operation)
 
     // Internal Main Routines
-    static const unsigned SizeForNumBlocks(const unsigned numblocks)      { return kRedStringAllocBlockSize* numblocks; };
-    static const unsigned NumBlocksForSize(const unsigned strsize)        { return (strsize/kRedStringAllocBlockSize) + 1; };
-    static char*          AllocData(const unsigned NumBlocks);
+    static unsigned SizeForNumBlocks(const unsigned numblocks)      { return kRedStringAllocBlockSize* numblocks; };
+    static unsigned NumBlocksForSize(const unsigned strsize)        { return (strsize/kRedStringAllocBlockSize) + 1; };
+    static char*    AllocData(const unsigned NumBlocks);
 
 
     // Derived Assignment/Access Operators
@@ -112,7 +112,7 @@ public:
     void operator +=(const char* chStr)     { Append(chStr); };
     void operator +=(const RedString& Str)  { Append(Str.TextPtr()); };
 
-    const char operator [](const unsigned Index) const { return CharAtIndex(FirstContentIndex()); };
+    char operator [](const unsigned Index) const { return CharAtIndex(FirstContentIndex()); };
 
 private:
 
@@ -133,11 +133,11 @@ private:
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 // Non-Member Operators
-const bool operator ==(const RedString& lhs, const char* rhs);
-const bool operator !=(const RedString& lhs, const char* rhs);
+bool      operator ==(const RedString& lhs, const char* rhs);
+bool      operator !=(const RedString& lhs, const char* rhs);
 
-const bool operator ==(const RedString& lhs, const RedString& rhs);
-const bool operator !=(const RedString& lhs, const RedString& rhs);
+bool      operator ==(const RedString& lhs, const RedString& rhs);
+bool      operator !=(const RedString& lhs, const RedString& rhs);
 
 RedString operator +(const RedString& Str1, const RedString& Str2);
 RedString operator +(const RedString& Str1, const RedChar& Chr2);

@@ -30,7 +30,7 @@ void RedVSIIOElement::Init(void)
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-const bool RedVSIIOElement::IsLocationKeyword(void) const
+bool RedVSIIOElement::IsLocationKeyword(void) const
 {
     if (IsKeywordAttribute()) return true;
     if (IsKeywordStack())     return true;
@@ -41,7 +41,7 @@ const bool RedVSIIOElement::IsLocationKeyword(void) const
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-const bool RedVSIIOElement::IsTypeKeyword(void) const
+bool RedVSIIOElement::IsTypeKeyword(void) const
 {
     if (IsKeywordArray())  return true;
     if (IsKeywordBool())   return true;
@@ -54,7 +54,7 @@ const bool RedVSIIOElement::IsTypeKeyword(void) const
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-const bool RedVSIIOElement::IsCommandKeyword(void) const
+bool RedVSIIOElement::IsCommandKeyword(void) const
 {  
     if (IsKeywordNew())     return true;
     if (IsKeywordLet())     return true;
@@ -72,7 +72,7 @@ const bool RedVSIIOElement::IsCommandKeyword(void) const
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-const bool RedVSIIOElement::IsBoolKeyword(void) const
+bool RedVSIIOElement::IsBoolKeyword(void) const
 {
     if (IsKeywordTrue())  return true;
     if (IsKeywordFalse()) return true;
@@ -84,7 +84,7 @@ const bool RedVSIIOElement::IsBoolKeyword(void) const
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-const bool RedVSIIOElement::IsLibraryKeyword(void) const
+bool RedVSIIOElement::IsLibraryKeyword(void) const
 {
     if (IsKeywordName())    return true;
     if (IsKeywordClass())   return true;
@@ -97,7 +97,7 @@ const bool RedVSIIOElement::IsLibraryKeyword(void) const
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-const bool RedVSIIOElement::IsOperatorSymbol(void) const
+bool RedVSIIOElement::IsOperatorSymbol(void) const
 {
     if (IsAssignOpSymbol())      return true;
     if (IsLogicOpSymbol())       return true;
@@ -109,7 +109,7 @@ const bool RedVSIIOElement::IsOperatorSymbol(void) const
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-const bool RedVSIIOElement::IsAssignOpSymbol(void) const
+bool RedVSIIOElement::IsAssignOpSymbol(void) const
 {
     if (IsSymbolAssignDivide())   return true;
     if (IsSymbolAssignEqual())    return true;
@@ -122,7 +122,7 @@ const bool RedVSIIOElement::IsAssignOpSymbol(void) const
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-const bool RedVSIIOElement::IsLogicOpSymbol(void) const
+bool RedVSIIOElement::IsLogicOpSymbol(void) const
 {
     if (IsSymbolLogicAnd()) return true;
     if (IsSymbolLogicOr())  return true;
@@ -133,7 +133,7 @@ const bool RedVSIIOElement::IsLogicOpSymbol(void) const
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-const bool RedVSIIOElement::IsBinaryLogicOpSymbol(void) const
+bool RedVSIIOElement::IsBinaryLogicOpSymbol(void) const
 {
     if (IsSymbolLogicAnd()) return true;
     if (IsSymbolLogicOr())  return true;
@@ -142,7 +142,7 @@ const bool RedVSIIOElement::IsBinaryLogicOpSymbol(void) const
 }
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-const bool RedVSIIOElement::IsCompareOpSymbol(void) const
+bool RedVSIIOElement::IsCompareOpSymbol(void) const
 {
     if (IsSymbolCompareEqual())       return true;
     if (IsSymbolCompareNotEqual())    return true;
@@ -154,7 +154,7 @@ const bool RedVSIIOElement::IsCompareOpSymbol(void) const
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-const bool RedVSIIOElement::IsBinaryOpSymbol(void) const
+bool RedVSIIOElement::IsBinaryOpSymbol(void) const
 {
     if (IsSymbolAssignDivide())       return true;
     if (IsSymbolAssignEqual())        return true;
@@ -175,7 +175,7 @@ const bool RedVSIIOElement::IsBinaryOpSymbol(void) const
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-const bool RedVSIIOElement::IsSeparatorSymbol(void) const
+bool RedVSIIOElement::IsSeparatorSymbol(void) const
 {
     if (IsSymbolStringContent()) return true;
     if (IsSymbolOpenBracket())   return true;

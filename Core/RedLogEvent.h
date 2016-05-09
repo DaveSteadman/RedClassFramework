@@ -44,8 +44,8 @@ public:
 
     // Basic Accessors
     void                Init(void)                           { LogType = eInfoEvent; text.Init(); };
-    const TEventLogType EventType(void) const                { return LogType; };
-    const RedString     Text(void) const                     { return text; };
+    TEventLogType       EventType(void) const                { return LogType; };
+    RedString           Text(void) const                     { return text; };
     void                AppendText(const RedString& newText) { text.Append(newText); };
     void                AppendText(const RedNumber& newNum)  { text.Append(newNum.DecimalString()); };
 

@@ -18,7 +18,6 @@
 
 #pragma once
 
-// Include Namespaces
 #include "RedCoreNamespace.h"
 #include "RedTmlElement.h"
 
@@ -40,8 +39,8 @@ public:
     RedTmlNode(const RedString& NewName) : RedTmlElement(NewName) { nodelist.Init(); };
 
     // Basic Queries
-    const bool     IsNode(void)           const { return true; };
-    const unsigned NodeElementCount(void) const { return nodelist.NumItems(); };
+    bool     IsNode(void)           const { return true; };
+    unsigned NodeElementCount(void) const { return nodelist.NumItems(); };
 
     // List an list-iterator accessors
     TmlNodeListType*  NodeList(void)     { return &nodelist; };
@@ -52,8 +51,8 @@ public:
     RedTmlLeaf*    CreateChildLeaf (const RedString& NewName, const RedString& NewData);
 
     // Add new child nodes without cloning
-    void AddChildNode (RedTmlNode* pNewNode) { nodelist.AddLast((RedTmlElement*)pNewNode); };
-    void AddChildLeaf (RedTmlLeaf* pNewLeaf) { nodelist.AddLast((RedTmlElement*)pNewLeaf); };
+    void AddChildNode (RedTmlNode* pNewNode) { nodelist.AddLast(dynamic_cast<RedTmlElement*>(pNewNode)); };
+    void AddChildLeaf (RedTmlLeaf* pNewLeaf) { nodelist.AddLast(dynamic_cast<RedTmlElement*>(pNewLeaf)); };
 
 private:
     TmlNodeListType nodelist;

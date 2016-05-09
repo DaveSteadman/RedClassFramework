@@ -34,24 +34,24 @@ public:
     void Init(void);
 
     // New Items
-    const bool AddLast(Element Elem);
-    const bool AddFirst(Element Elem);
-    const bool InsertAfter(const unsigned iElemIndex, Element Elem);
+    bool     AddLast(Element Elem);
+    bool     AddFirst(Element Elem);
+    bool     InsertAfter(const unsigned iElemIndex, Element Elem);
 
     // Access Items
-    const bool     FindFirst(Element& Elem) const;
-    const bool     FindLast(Element& Elem) const;
-    const bool     FindElementAtIndex(const unsigned iElemIndex, Element& Elem) const;
-    const unsigned NumItems(void)   const { return iNumItems; };
-    const bool     IsEmpty(void)    const { return (iNumItems==0); };
-    const unsigned FirstIndex(void) const;
-    const unsigned LastIndex(void)  const;
+    bool     FindFirst(Element& Elem) const;
+    bool     FindLast(Element& Elem) const;
+    bool     FindElementAtIndex(const unsigned iElemIndex, Element& Elem) const;
+    unsigned NumItems(void)   const { return iNumItems; };
+    bool     IsEmpty(void)    const { return (iNumItems==0); };
+    unsigned FirstIndex(void) const;
+    unsigned LastIndex(void)  const;
 
     // Delete Items
-    const bool DelFirst(void);
-    const bool DelLast(void);
-    const bool Del(const unsigned iElemIndex);
-    const bool DelAll(void);
+    bool     DelFirst(void);
+    bool     DelLast(void);
+    bool     Del(const unsigned iElemIndex);
+    bool     DelAll(void);
 
     // complex operations
     RedDoubleLinkedList* Clone(void);
@@ -66,7 +66,7 @@ private:
     } TListElement;
 
     void MakeListElement(TListElement** pNewElem);
-    const bool FindListElement(unsigned iElemIndex, TListElement** pFoundElem) const;
+    bool FindListElement(unsigned iElemIndex, TListElement** pFoundElem) const;
 
     TListElement* pListHead;
     TListElement* pListTail;
@@ -103,7 +103,7 @@ void RedDoubleLinkedList<Element>::Init(void)
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 template <class Element>
-const bool RedDoubleLinkedList<Element>::AddLast(Element Elem)
+bool RedDoubleLinkedList<Element>::AddLast(Element Elem)
 {
     // First create the new element
     TListElement* pNewElem  = 0;
@@ -141,7 +141,7 @@ const bool RedDoubleLinkedList<Element>::AddLast(Element Elem)
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 template <class Element>
-const bool RedDoubleLinkedList<Element>::AddFirst(Element Elem)
+bool RedDoubleLinkedList<Element>::AddFirst(Element Elem)
 {
     // first create the new element
     TListElement* pNewElem  = 0;
@@ -179,7 +179,7 @@ const bool RedDoubleLinkedList<Element>::AddFirst(Element Elem)
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 template <class Element>
-const bool RedDoubleLinkedList<Element>::InsertAfter(const unsigned iElemIndex, Element Elem)
+bool RedDoubleLinkedList<Element>::InsertAfter(const unsigned iElemIndex, Element Elem)
 {
     TListElement* pInsertAfterElem = 0;
     TListElement* pNewElem         = 0;
@@ -214,7 +214,7 @@ const bool RedDoubleLinkedList<Element>::InsertAfter(const unsigned iElemIndex, 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 template <class Element>
-const bool RedDoubleLinkedList<Element>::FindElementAtIndex(const unsigned iElemIndex, Element& Elem) const
+bool RedDoubleLinkedList<Element>::FindElementAtIndex(const unsigned iElemIndex, Element& Elem) const
 {
     TListElement* pGetElem = 0;
 
@@ -229,7 +229,7 @@ const bool RedDoubleLinkedList<Element>::FindElementAtIndex(const unsigned iElem
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 template <class Element>
-const bool RedDoubleLinkedList<Element>::FindFirst(Element& Elem) const
+bool RedDoubleLinkedList<Element>::FindFirst(Element& Elem) const
 {
     if (pListHead == 0)
         return false;
@@ -241,7 +241,7 @@ const bool RedDoubleLinkedList<Element>::FindFirst(Element& Elem) const
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 template <class Element>
-const bool RedDoubleLinkedList<Element>::FindLast(Element& Elem) const
+bool RedDoubleLinkedList<Element>::FindLast(Element& Elem) const
 {
     if (pListTail == 0)
         return false;
@@ -253,7 +253,7 @@ const bool RedDoubleLinkedList<Element>::FindLast(Element& Elem) const
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 template <class Element>
-const unsigned RedDoubleLinkedList<Element>::FirstIndex(void) const
+unsigned RedDoubleLinkedList<Element>::FirstIndex(void) const
 {
     if (iNumItems==0) 
         return 0;
@@ -263,7 +263,7 @@ const unsigned RedDoubleLinkedList<Element>::FirstIndex(void) const
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 template <class Element>
-const unsigned RedDoubleLinkedList<Element>::LastIndex(void) const
+unsigned RedDoubleLinkedList<Element>::LastIndex(void) const
 {
     return iNumItems;
 }
@@ -273,7 +273,7 @@ const unsigned RedDoubleLinkedList<Element>::LastIndex(void) const
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 template <class Element>
-const bool RedDoubleLinkedList<Element>::DelFirst(void)
+bool RedDoubleLinkedList<Element>::DelFirst(void)
 {
     TListElement* pRemoveElem  = 0;
 
@@ -303,7 +303,7 @@ const bool RedDoubleLinkedList<Element>::DelFirst(void)
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 template <class Element>
-const bool RedDoubleLinkedList<Element>::DelLast(void)
+bool RedDoubleLinkedList<Element>::DelLast(void)
 {
     TListElement* pRemoveElem = 0;
     //TListElement* pPrevElem   = 0;
@@ -331,7 +331,7 @@ const bool RedDoubleLinkedList<Element>::DelLast(void)
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 template <class Element>
-const bool RedDoubleLinkedList<Element>::Del(unsigned iElemIndex)
+bool RedDoubleLinkedList<Element>::Del(unsigned iElemIndex)
 {
     TListElement* pRemoveElem = 0;
     TListElement* pPrevElem   = 0;
@@ -381,7 +381,7 @@ const bool RedDoubleLinkedList<Element>::Del(unsigned iElemIndex)
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 template <class Element>
-const bool RedDoubleLinkedList<Element>::DelAll(void)
+bool RedDoubleLinkedList<Element>::DelAll(void)
 {
     // fail if the list has no Items
     if (IsEmpty()) return false;
@@ -436,7 +436,7 @@ void RedDoubleLinkedList<Element>::MakeListElement(TListElement** pNewElem)
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 template <class Element>
-const bool RedDoubleLinkedList<Element>::FindListElement(
+bool RedDoubleLinkedList<Element>::FindListElement(
     unsigned       iElemIndex,
     TListElement** pFoundElem) const 
 {

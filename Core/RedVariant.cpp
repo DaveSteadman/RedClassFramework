@@ -39,7 +39,7 @@ void RedVariant::Init(void)
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-const RedDataType RedVariant::Type(void) const
+RedDataType RedVariant::Type(void) const
 {
     if (pData)
         return pData->Type();
@@ -56,7 +56,7 @@ RedType* RedVariant::Clone(void) const
     if (pData)
         pNewData->SetValue(pData->Clone());
 
-    return (RedType*)pNewData;
+    return dynamic_cast<RedType*>(pNewData);
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -182,7 +182,7 @@ bool RedVariant::ExportTo(RedType* pExportToData) const
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-const RedBoolean RedVariant::BoolValue(void) const
+RedBoolean RedVariant::BoolValue(void) const
 {
     RedBoolean cBool;
     
@@ -197,7 +197,7 @@ const RedBoolean RedVariant::BoolValue(void) const
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-const RedNumber RedVariant::NumberValue(void) const
+RedNumber RedVariant::NumberValue(void) const
 {
     RedNumber cNum;
     
@@ -212,14 +212,14 @@ const RedNumber RedVariant::NumberValue(void) const
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-const RedString RedVariant::StringValue(void) const
+RedString RedVariant::StringValue(void) const
 {
     RedString cStr;
     
     // Assign the data to the return type only if its numeric.
     if (pData->Type().IsStr())
     {
-        RedString* pStrData = (RedString*)pData;
+        RedString* pStrData = dynamic_cast<RedString*>(pData);
         cStr = *pStrData;
     }
     if (pData->Type().IsBool())
@@ -403,7 +403,6 @@ bool operator!=(const RedVariant& lhs, const RedVariant& rhs)
             else
                 return false;
         }
-
     }
 
     // We've left every IF statement without performing a decent comparison. Returning false at this

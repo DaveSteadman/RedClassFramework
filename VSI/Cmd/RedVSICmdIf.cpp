@@ -27,12 +27,12 @@ namespace VSI {
 
 RedVSICmdIf::RedVSICmdIf(void)
 {
-    // this object's attributes
+    // This object's attributes
     pCmdExpr   = REDNULL;
     pPosBranch = REDNULL;
     pNegBranch = REDNULL;
 
-    // parents attributes
+    // Parents attributes
     SetNextCmd(REDNULL);
 }
 

@@ -61,7 +61,7 @@ void RedDate::SetToday(void)
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-const RedString RedDate::DateString(void) const
+RedString RedDate::DateString(void) const
 {
     RedString retstr;
 
@@ -80,7 +80,7 @@ const RedString RedDate::DateString(void) const
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-const RedString RedDate::EightDigitDateString(void) const
+RedString RedDate::EightDigitDateString(void) const
 {
     RedString retstr;
 
@@ -97,7 +97,7 @@ const RedString RedDate::EightDigitDateString(void) const
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-const RedString RedDate::SixDigitDateString(void) const
+RedString RedDate::SixDigitDateString(void) const
 {
     RedString retstr;
 
@@ -114,7 +114,7 @@ const RedString RedDate::SixDigitDateString(void) const
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-const unsigned RedDate::EightDigitDate(void) const
+unsigned RedDate::EightDigitDate(void) const
 {
     unsigned retdate = 0;
 
@@ -127,7 +127,7 @@ const unsigned RedDate::EightDigitDate(void) const
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-const unsigned RedDate::SixDigitDate(void) const
+unsigned RedDate::SixDigitDate(void) const
 {
 	unsigned retdate = 0;
 

@@ -39,21 +39,27 @@ public:
     RedVSIParseTreeUnaryOp(RedVSILangElement cNewOp, RedVSIParseTreeInterface* pNewExpr);
     ~RedVSIParseTreeUnaryOp(void);
 
-    const RedVSILangElement Type(void) const { return RedVSILangElement::ParseUnaryOp(); };
+    // RedVSIParseTreeInterface  - - - - - - - -
+
+    RedVSILangElement Type(void) const { return RedVSILangElement::ParseUnaryOp(); };
+    void CalcResult(RedVSIContextInterface* pContext);
+
+    // - - - - - - - - - - - - - - - - - - - - -
 
     void                    SetOp(RedVSILangElement cNewOp)   { cOp = cNewOp; };
     RedVSILangElement       Op(void) const                    { return cOp; };
 
-    void CalcResult(RedVSIContextInterface& cContext, RedVariant& cResult, int& iComplete);
 
     void GetDetails(RedVSILangElement& cOutOp, RedVSIParseTreeInterface*& pNodeExpr);
 
 protected:
-    
-    void CalcNegateResult    (RedVSIContextInterface& cContext, RedVariant& cResult, int& iComplete);
-    void CalcAddrOfItemResult(RedVSIContextInterface& cContext, RedVariant& cResult, int& iComplete);
-    void CalcItemAtAddrResult(RedVSIContextInterface& cContext, RedVariant& cResult, int& iComplete);
-    
+
+    void CalcNegateResult(RedVSIContextInterface* pContext);
+
+//    void CalcNegateResult    (RedVSIContextInterface& cContext, RedVariant& cResult, int& iComplete);
+//    void CalcAddrOfItemResult(RedVSIContextInterface& cContext, RedVariant& cResult, int& iComplete);
+//    void CalcItemAtAddrResult(RedVSIContextInterface& cContext, RedVariant& cResult, int& iComplete);
+
 private:
 
     void LogError(RedVSIContextInterface& cContext, RedVSIErrorCodes::TErrorCodes eErr);

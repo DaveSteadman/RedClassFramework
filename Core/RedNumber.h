@@ -49,38 +49,38 @@ public:
     ~RedNumber(void) { };
 
     // Inherited: RedType
-    void                Init(void)        { eNumType=eInt; iIntVal=0; dblFloatVal=0.0; };
-    const RedDataType   Type(void) const  { return kDataTypeNum; };
-    RedType*            Clone(void) const { RedNumber* newN = new RedNumber(*this); return (RedType*)newN; };
+    void          Init(void)        { eNumType=eInt; iIntVal=0; dblFloatVal=0.0; };
+    RedDataType   Type(void) const  { return kDataTypeNum; };
+    RedType*      Clone(void) const { RedNumber* newN = new RedNumber(*this); return (RedType*)newN; };
 
     // Class operations
-    const bool          IsZero(void)     const;
-    const bool          IsPositive(void) const;
-    const bool          IsInteger(void)  const { return (eNumType == eInt);   };
-    const bool          IsReal(void)     const { return (eNumType == eFloat); };
-    const bool          IsEqualTo(const RedNumber& CheckVal) const;
-    const bool          IsEqualToWithinTollerance(const RedNumber& CheckVal, const RedNumber& tollerance) const;
+    bool          IsZero(void)     const;
+    bool          IsPositive(void) const;
+    bool          IsInteger(void)  const { return (eNumType == eInt);   };
+    bool          IsReal(void)     const { return (eNumType == eFloat); };
+    bool          IsEqualTo(const RedNumber& CheckVal) const;
+    bool          IsEqualToWithinTollerance(const RedNumber& CheckVal, const RedNumber& tollerance) const;
 
-    const RedString     DecimalString(void) const;
-    const RedString     DecimalStringWithDP(const unsigned decimalplaces) const;
-    const RedString     DecimalStringWithMinDigitsAndDP(const unsigned mindigits, const unsigned decimalplaces) const;
-    const RedChar       CharValue(void) const;
-    const int           IntegerValue(void) const;
-    const double        DoubleValue(void) const;
+    RedString     DecimalString(void) const;
+    RedString     DecimalStringWithDP(const unsigned decimalplaces) const;
+    RedString     DecimalStringWithMinDigitsAndDP(const unsigned mindigits, const unsigned decimalplaces) const;
+    RedChar       CharValue(void) const;
+    int           IntegerValue(void) const;
+    double        DoubleValue(void) const;
 
-    void                Set(const RedNumber& cNewVal) { eNumType=cNewVal.eNumType; iIntVal=cNewVal.iIntVal; dblFloatVal=cNewVal.dblFloatVal; };
-    void                Set(const double dblNewVal)   { eNumType=eFloat;           iIntVal=0;               dblFloatVal=dblNewVal; };
-    void                Set(const int iNewVal)        { eNumType=eInt;             iIntVal=iNewVal;         dblFloatVal=0.0; };
-    void                SetZero(void)                 { Init(); };
-    void                SetDecimalString(const RedString& cNewDecimalVal);
+    void          Set(const RedNumber& cNewVal) { eNumType=cNewVal.eNumType; iIntVal=cNewVal.iIntVal; dblFloatVal=cNewVal.dblFloatVal; };
+    void          Set(const double dblNewVal)   { eNumType=eFloat;           iIntVal=0;               dblFloatVal=dblNewVal; };
+    void          Set(const int iNewVal)        { eNumType=eInt;             iIntVal=iNewVal;         dblFloatVal=0.0; };
+    void          SetZero(void)                 { Init(); };
+    void          SetDecimalString(const RedString& cNewDecimalVal);
 
-    void                MakePositive(void);
-    void                MakeNegative(void);
+    void          MakePositive(void);
+    void          MakeNegative(void);
 
-    const RedNumber     IntegerPart(void) const;
-    const RedNumber     FractionalPart(void) const;
-    const RedNumber     DivisionQuotient(const RedNumber& d) const;
-    const RedNumber     DivisionRemainder(const RedNumber& d) const;
+    RedNumber     IntegerPart(void) const;
+    RedNumber     FractionalPart(void) const;
+    RedNumber     DivisionQuotient(const RedNumber& d) const;
+    RedNumber     DivisionRemainder(const RedNumber& d) const;
 
     // Arithemtic operators
     RedNumber operator  +(const RedNumber& n) const;

@@ -27,10 +27,10 @@ namespace VSI {
 
 RedVSICmdLog::RedVSICmdLog(void)
 {
-    // this object's attributes
+    // This object's attributes
     pLogExpr = REDNULL;
 
-    // parents attributes
+    // Parents attributes
     SetNextCmd(REDNULL);
 }
 
@@ -52,7 +52,7 @@ void RedVSICmdLog::Execute(RedVSIContextInterface* pContext)
     // Get a string representation of the value
     pContext->Log().AddText(cExprResult.StringValue());
 
-    // expression will have been evaluated prior to the command, 
+    // Expression will have been evaluated prior to the command,
     // so any actions already performed. Just queue up the next 
     // command.
     pContext->QueueCommand(NextCmd());

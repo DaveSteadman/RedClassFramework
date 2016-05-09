@@ -35,48 +35,49 @@ class RedChar : public RedType
 public:
 
     // constructor
-    RedChar(void)                 { Init();     };
+    RedChar(void)        { Init();     };
     RedChar(char NewCh)  { Set(NewCh); };
-    ~RedChar(void)                { };
+    ~RedChar(void)       { };
 
     // Inherited: RedType
-    void              Init(void)        { Set('\0'); };
-    const RedDataType Type(void) const  { return kDataTypeChar; };
-    RedType*          Clone(void) const { RedChar* newC = new RedChar(); newC->ch = ch; return (RedChar*)newC; };
+    void        Init(void)        { Set('\0'); };
+    RedDataType Type(void) const  { return kDataTypeChar; };
+    RedType*    Clone(void) const { RedChar* newC = new RedChar(); newC->ch = ch; return dynamic_cast<RedChar*>(newC); };
 
     // simple set & get operations
-    void       Set(const char NewCh) { ch = NewCh; };
-    void       Set(int NewCh)                 { if ((NewCh > 0) && (NewCh<256)) ch = NewCh; };
-    void       Set(const RedChar& cNewVal)    { ch = cNewVal.ch; };
+    void       Set(const char NewCh)        { ch = NewCh; };
+    void       Set(int NewCh)               { if ((NewCh > 0) && (NewCh<256)) ch = NewCh; };
+    void       Set(const RedChar& cNewVal)  { ch = cNewVal.ch; };
 
-    const unsigned char Char(void)             const { return ch; };
-    const bool IsChar(char NewCh)     const { return ch == NewCh; };
-    const int  DecimalNumber(void) const;
+    char       Char(void)             const { return ch; };
+    bool       IsChar(char NewCh)     const { return ch == NewCh; };
+    int        DecimalNumber(void)    const;
 
     // queries
-    const bool IsAlpha(void)          const { return ( ((ch>='a')&&(ch<='z')) || ((ch>='A')&&(ch<='Z')) ); };
-    const bool IsAlphaNumeric(void)   const { return ( IsAlpha() || IsDecimalNumber() ); };
-    const bool IsBracket(void)        const { return ( (ch=='(') || (ch==')') || (ch=='[') || (ch==']') || (ch=='{') || (ch=='}') ); };
-    const bool IsComma(void)          const { return (ch == ','); };
-    const bool IsDecimalNumber(void)  const { return ( (ch >= '0') && (ch <= '9') ); };
-    const bool IsDecimalPoint(void)   const { return (ch == '.'); };
-    const bool IsEOF(void)            const { return (ch == '\0'); };
-    const bool IsFullstop(void)       const { return (ch == '.'); };
-    const bool IsHexNumber(void)      const { return ( ((ch>='0')&&(ch<='9')) || ((ch>='a')&&(ch<='f')) || ((ch>='A')&&(ch<='F')) ); };
-    const bool IsNewline(void)        const { return (ch == '\n'); };
-    const bool IsEOL(void)            const { return (ch == '\n'); };
-    const bool IsNonPrintable(void)   const { return (ch<32); };
-    const bool IsNumeric(void)        const { return ( IsDecimalNumber() || IsFullstop() ); };
-    const bool IsOperator(void)       const { return ( (ch=='=') || (ch=='+') || (ch=='-') || (ch=='*') || (ch=='/') || (ch=='<') || (ch=='>') ); };
-    const bool IsPrintable(void)      const { return (ch>=32); };
-    const bool IsQuote(void)          const { return ( (ch == '"') || (ch == '\'') ); };
-    const bool IsSymbol(void)         const { return ( IsPrintable() && (!IsAlphaNumeric()) && (!IsQuote()) ); };
-    const bool IsWhiteSpace(void)     const { return ( (ch == '\n') || (ch == ' ') || (ch == '\t') ); };
+    bool       IsAlpha(void)          const { return ( ((ch>='a')&&(ch<='z')) || ((ch>='A')&&(ch<='Z')) ); };
+    bool       IsAlphaNumeric(void)   const { return ( IsAlpha() || IsDecimalNumber() ); };
+    bool       IsBracket(void)        const { return ( (ch=='(') || (ch==')') || (ch=='[') || (ch==']') || (ch=='{') || (ch=='}') ); };
+    bool       IsComma(void)          const { return (ch == ','); };
+    bool       IsDecimalNumber(void)  const { return ( (ch >= '0') && (ch <= '9') ); };
+    bool       IsDecimalPoint(void)   const { return (ch == '.'); };
+    bool       IsEOF(void)            const { return (ch == '\0'); };
+    bool       IsFullstop(void)       const { return (ch == '.'); };
+    bool       IsHexNumber(void)      const { return ( ((ch>='0')&&(ch<='9')) || ((ch>='a')&&(ch<='f')) || ((ch>='A')&&(ch<='F')) ); };
+    bool       IsNewline(void)        const { return (ch == '\n'); };
+    bool       IsEOL(void)            const { return (ch == '\n'); };
+    bool       IsMinus(void)          const { return (ch == '-'); };
+    bool       IsNonPrintable(void)   const { return (ch<32); };
+    bool       IsNumeric(void)        const { return ( IsDecimalNumber() || IsFullstop() ); };
+    bool       IsOperator(void)       const { return ( (ch=='=') || (ch=='+') || (ch=='-') || (ch=='*') || (ch=='/') || (ch=='<') || (ch=='>') ); };
+    bool       IsPrintable(void)      const { return (ch>=32); };
+    bool       IsQuote(void)          const { return ( (ch == '"') || (ch == '\'') ); };
+    bool       IsSymbol(void)         const { return ( IsPrintable() && (!IsAlphaNumeric()) && (!IsQuote()) ); };
+    bool       IsWhiteSpace(void)     const { return ( (ch == '\n') || (ch == ' ') || (ch == '\t') ); };
 
     // Assignment Operators
-    void operator =(const int      newVal)      { Set(newVal); };
-    void operator =(const  char newVal) { Set(newVal); };
-    void operator =(const RedChar& newVal)      { Set(newVal); };
+    void operator =(const int      newVal)  { Set(newVal); };
+    void operator =(const char     newVal)  { Set(newVal); };
+    void operator =(const RedChar& newVal)  { Set(newVal); };
 
 private:
 

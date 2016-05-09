@@ -37,11 +37,11 @@ class RedTmlElement
 public:
     RedTmlElement(const RedString& initname) { SetName(initname); };
 
-    const RedString Name(void) const { return name;  };
-    void            SetName(const RedString& initname) { name = initname; };
+    RedString    Name(void) const { return name;  };
+    void         SetName(const RedString& initname) { name = initname; };
 
-    virtual const bool IsLeaf(void) const { return false; };
-    virtual const bool IsNode(void) const { return false; };
+    virtual bool IsLeaf(void) const { return false; };
+    virtual bool IsNode(void) const { return false; };
 
 private:
     RedString name;

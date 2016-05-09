@@ -37,21 +37,21 @@ public:
     void Init(void);
 
     // Locations
-    const bool             IsLocationKeyword(void) const;
-    const bool             IsKeywordAttribute(void) const                 { return eType == eKeywordAttribute; };
-    const bool             IsKeywordStack(void) const                     { return eType == eKeywordStack; };
-    const bool             IsKeywordHeap(void) const                      { return eType == eKeywordHeap; };
+    bool                   IsLocationKeyword(void) const;
+    bool                   IsKeywordAttribute(void) const                 { return eType == eKeywordAttribute; };
+    bool                   IsKeywordStack(void) const                     { return eType == eKeywordStack; };
+    bool                   IsKeywordHeap(void) const                      { return eType == eKeywordHeap; };
     static RedVSIIOElement KeywordAttribute(void)                         { return RedVSIIOElement(eKeywordAttribute); };
     static RedVSIIOElement KeywordStack(void)                             { return RedVSIIOElement(eKeywordStack); };
     static RedVSIIOElement KeywordHeap(void)                              { return RedVSIIOElement(eKeywordHeap); };
 
     // Types
-    const bool             IsTypeKeyword(void) const;
-    const bool             IsKeywordArray(void) const                     { return eType == eKeywordArray; };
-    const bool             IsKeywordBool(void) const                      { return eType == eKeywordBool; };
-    const bool             IsKeywordChar(void) const                      { return eType == eKeywordChar; };
-    const bool             IsKeywordNumber(void) const                    { return eType == eKeywordNumber; };
-    const bool             IsKeywordString(void) const                    { return eType == eKeywordString; };
+    bool                   IsTypeKeyword(void) const;
+    bool                   IsKeywordArray(void) const                     { return eType == eKeywordArray; };
+    bool                   IsKeywordBool(void) const                      { return eType == eKeywordBool; };
+    bool                   IsKeywordChar(void) const                      { return eType == eKeywordChar; };
+    bool                   IsKeywordNumber(void) const                    { return eType == eKeywordNumber; };
+    bool                   IsKeywordString(void) const                    { return eType == eKeywordString; };
     static RedVSIIOElement KeywordArray(void)                             { return RedVSIIOElement(eKeywordArray); };
     static RedVSIIOElement KeywordBool(void)                              { return RedVSIIOElement(eKeywordBool); };
     static RedVSIIOElement KeywordChar(void)                              { return RedVSIIOElement(eKeywordChar); };
@@ -59,18 +59,18 @@ public:
     static RedVSIIOElement KeywordString(void)                            { return RedVSIIOElement(eKeywordString); };
 
     // Commands
-    const bool             IsCommandKeyword(void) const;
-    const bool             IsKeywordNew(void) const                       { return eType == eKeywordNew; };
-    const bool             IsKeywordLet(void) const                       { return eType == eKeywordLet; };
-    const bool             IsKeywordIf(void) const                        { return eType == eKeywordIf; };
-    const bool             IsKeywordThen(void) const                      { return eType == eKeywordThen; };
-    const bool             IsKeywordElse(void) const                      { return eType == eKeywordElse; };
-    const bool             IsKeywordEndif(void) const                     { return eType == eKeywordEndif; };
-    const bool             IsKeywordWhile(void) const                     { return eType == eKeywordWhile; };
-    const bool             IsKeywordLoop(void) const                      { return eType == eKeywordLoop; };
-    const bool             IsKeywordEndloop(void) const                   { return eType == eKeywordEndloop; };
-	const bool             IsKeywordLog(void) const                       { return eType == eKeywordLog; };
-	const bool             IsKeywordReturn(void) const                    { return eType == eKeywordReturn; };
+    bool                   IsCommandKeyword(void) const;
+    bool                   IsKeywordNew(void) const                       { return eType == eKeywordNew; };
+    bool                   IsKeywordLet(void) const                       { return eType == eKeywordLet; };
+    bool                   IsKeywordIf(void) const                        { return eType == eKeywordIf; };
+    bool                   IsKeywordThen(void) const                      { return eType == eKeywordThen; };
+    bool                   IsKeywordElse(void) const                      { return eType == eKeywordElse; };
+    bool                   IsKeywordEndif(void) const                     { return eType == eKeywordEndif; };
+    bool                   IsKeywordWhile(void) const                     { return eType == eKeywordWhile; };
+    bool                   IsKeywordLoop(void) const                      { return eType == eKeywordLoop; };
+    bool                   IsKeywordEndloop(void) const                   { return eType == eKeywordEndloop; };
+	bool                   IsKeywordLog(void) const                       { return eType == eKeywordLog; };
+	bool                   IsKeywordReturn(void) const                    { return eType == eKeywordReturn; };
     static RedVSIIOElement KeywordNew(void)                               { return RedVSIIOElement(eKeywordNew); };
     static RedVSIIOElement KeywordLet(void)                               { return RedVSIIOElement(eKeywordLet); };
     static RedVSIIOElement KeywordIf(void)                                { return RedVSIIOElement(eKeywordIf); };
@@ -84,66 +84,66 @@ public:
 	static RedVSIIOElement KeywordReturn(void)                            { return RedVSIIOElement(eKeywordReturn); };
 
     // Bool values
-    const bool             IsBoolKeyword(void) const;
-    const bool             IsKeywordTrue(void) const                      { return eType == eKeywordBoolValueTrue; };
-    const bool             IsKeywordFalse(void) const                     { return eType == eKeywordBoolValueFalse; };
-    const bool             IsKeywordYes(void) const                       { return eType == eKeywordBoolValueYes; };
-    const bool             IsKeywordNo(void) const                        { return eType == eKeywordBoolValueNo; };
+    bool                   IsBoolKeyword(void) const;
+    bool                   IsKeywordTrue(void) const                      { return eType == eKeywordBoolValueTrue; };
+    bool                   IsKeywordFalse(void) const                     { return eType == eKeywordBoolValueFalse; };
+    bool                   IsKeywordYes(void) const                       { return eType == eKeywordBoolValueYes; };
+    bool                   IsKeywordNo(void) const                        { return eType == eKeywordBoolValueNo; };
     static RedVSIIOElement KeywordTrue(void)                              { return RedVSIIOElement(eKeywordBoolValueTrue); };
     static RedVSIIOElement KeywordFalse(void)                             { return RedVSIIOElement(eKeywordBoolValueFalse); };
     static RedVSIIOElement KeywordYes(void)                               { return RedVSIIOElement(eKeywordBoolValueYes); };
     static RedVSIIOElement KeywordNo(void)                                { return RedVSIIOElement(eKeywordBoolValueNo); };
 
     // Library
-    const bool             IsLibraryKeyword(void) const;
+    bool                   IsLibraryKeyword(void) const;
     static RedVSIIOElement KeywordName(void)                              { return RedVSIIOElement(eKeywordName); };
     static RedVSIIOElement KeywordClass(void)                             { return RedVSIIOElement(eKeywordClass); };
     static RedVSIIOElement KeywordRoutine(void)                           { return RedVSIIOElement(eKeywordRoutine); };
     static RedVSIIOElement KeywordCode(void)                              { return RedVSIIOElement(eKeywordCode); };
     static RedVSIIOElement KeywordParams(void)                            { return RedVSIIOElement(eKeywordParams); };
     static RedVSIIOElement KeywordParent(void)                            { return RedVSIIOElement(eKeywordParent); };
-    const bool             IsKeywordName(void) const                      { return eType == eKeywordName; };
-    const bool             IsKeywordClass(void) const                     { return eType == eKeywordClass; };
-    const bool             IsKeywordRoutine(void) const                   { return eType == eKeywordRoutine; };
-    const bool             IsKeywordCode(void) const                      { return eType == eKeywordCode; };
-    const bool             IsKeywordParams(void) const                    { return eType == eKeywordParams; };
-    const bool             IsKeywordParent(void) const                    { return eType == eKeywordParent; };
+    bool                   IsKeywordName(void) const                      { return eType == eKeywordName; };
+    bool                   IsKeywordClass(void) const                     { return eType == eKeywordClass; };
+    bool                   IsKeywordRoutine(void) const                   { return eType == eKeywordRoutine; };
+    bool                   IsKeywordCode(void) const                      { return eType == eKeywordCode; };
+    bool                   IsKeywordParams(void) const                    { return eType == eKeywordParams; };
+    bool                   IsKeywordParent(void) const                    { return eType == eKeywordParent; };
 
     // Operators and separators
-    const bool             IsOperatorSymbol(void) const;
-    const bool             IsAssignOpSymbol(void) const;
-    const bool             IsLogicOpSymbol(void) const;
-    const bool             IsBinaryLogicOpSymbol(void) const;
-    const bool             IsCompareOpSymbol(void) const;
-    const bool             IsBinaryOpSymbol(void) const;
-    const bool             IsSeparatorSymbol(void) const;
+    bool                   IsOperatorSymbol(void) const;
+    bool                   IsAssignOpSymbol(void) const;
+    bool                   IsLogicOpSymbol(void) const;
+    bool                   IsBinaryLogicOpSymbol(void) const;
+    bool                   IsCompareOpSymbol(void) const;
+    bool                   IsBinaryOpSymbol(void) const;
+    bool                   IsSeparatorSymbol(void) const;
 
-    const bool             IsSymbolAssignDivide(void) const               { return eType == eSymbolAssignDivide; };
-    const bool             IsSymbolAssignEqual(void) const                { return eType == eSymbolAssignEqual; };
-    const bool             IsSymbolAssignMinus(void) const                { return eType == eSymbolAssignMinus; };
-    const bool             IsSymbolAssignMultiply(void) const             { return eType == eSymbolAssignMultiply; };
-    const bool             IsSymbolAssignPlus(void) const                 { return eType == eSymbolAssignPlus; };
-    const bool             IsSymbolCompareEqual(void) const               { return eType == eSymbolCompareEqual; };
-    const bool             IsSymbolCompareNotEqual(void) const            { return eType == eSymbolCompareNotEqual; };
-    const bool             IsSymbolCompareLessThan(void) const            { return eType == eSymbolCompareLessThan; };
-    const bool             IsSymbolCompareGreaterThan(void) const         { return eType == eSymbolCompareGreaterThan; };
-    const bool             IsSymbolCompareLessThanOrEqual(void) const     { return eType == eSymbolCompareLessThan; };
-    const bool             IsSymbolCompareGreaterThanOrEqual (void) const { return eType == eSymbolCompareGreaterThan; };
-    const bool             IsSymbolLogicAnd(void) const                   { return eType == eSymbolLogicAnd; };
-    const bool             IsSymbolLogicOr(void) const                    { return eType == eSymbolLogicOr; };
-    const bool             IsSymbolLogicNot(void) const                   { return eType == eSymbolLogicNot; };
-    const bool             IsSymbolDivide(void) const                     { return eType == eSymbolDivide; };
-    const bool             IsSymbolMinus(void) const                      { return eType == eSymbolMinus; };
-    const bool             IsSymbolMultiply(void) const                   { return eType == eSymbolMultiply; };
-    const bool             IsSymbolPlus(void) const                       { return eType == eSymbolPlus; };
-    const bool             IsSymbolPower(void) const                      { return eType == eSymbolPower; };
-    const bool             IsSymbolStringContent(void) const              { return eType == eSymbolStringContent; };
-    const bool             IsSymbolOpenBracket(void) const                { return eType == eSymbolOpenBracket; };
-    const bool             IsSymbolCloseBracket(void) const               { return eType == eSymbolCloseBracket; };
-    const bool             IsSymbolComma(void) const                      { return eType == eSymbolComma; };
-    const bool             IsSymbolPeriod(void) const                     { return eType == eSymbolPeriod; };
-    const bool             IsSymbolDoubleColon(void) const                { return eType == eSymbolDoubleColon; };
-    const bool             IsSymbolEOF(void) const                        { return eType == eSymbolEOF; };
+    bool                   IsSymbolAssignDivide(void) const               { return eType == eSymbolAssignDivide; };
+    bool                   IsSymbolAssignEqual(void) const                { return eType == eSymbolAssignEqual; };
+    bool                   IsSymbolAssignMinus(void) const                { return eType == eSymbolAssignMinus; };
+    bool                   IsSymbolAssignMultiply(void) const             { return eType == eSymbolAssignMultiply; };
+    bool                   IsSymbolAssignPlus(void) const                 { return eType == eSymbolAssignPlus; };
+    bool                   IsSymbolCompareEqual(void) const               { return eType == eSymbolCompareEqual; };
+    bool                   IsSymbolCompareNotEqual(void) const            { return eType == eSymbolCompareNotEqual; };
+    bool                   IsSymbolCompareLessThan(void) const            { return eType == eSymbolCompareLessThan; };
+    bool                   IsSymbolCompareGreaterThan(void) const         { return eType == eSymbolCompareGreaterThan; };
+    bool                   IsSymbolCompareLessThanOrEqual(void) const     { return eType == eSymbolCompareLessThan; };
+    bool                   IsSymbolCompareGreaterThanOrEqual (void) const { return eType == eSymbolCompareGreaterThan; };
+    bool                   IsSymbolLogicAnd(void) const                   { return eType == eSymbolLogicAnd; };
+    bool                   IsSymbolLogicOr(void) const                    { return eType == eSymbolLogicOr; };
+    bool                   IsSymbolLogicNot(void) const                   { return eType == eSymbolLogicNot; };
+    bool                   IsSymbolDivide(void) const                     { return eType == eSymbolDivide; };
+    bool                   IsSymbolMinus(void) const                      { return eType == eSymbolMinus; };
+    bool                   IsSymbolMultiply(void) const                   { return eType == eSymbolMultiply; };
+    bool                   IsSymbolPlus(void) const                       { return eType == eSymbolPlus; };
+    bool                   IsSymbolPower(void) const                      { return eType == eSymbolPower; };
+    bool                   IsSymbolStringContent(void) const              { return eType == eSymbolStringContent; };
+    bool                   IsSymbolOpenBracket(void) const                { return eType == eSymbolOpenBracket; };
+    bool                   IsSymbolCloseBracket(void) const               { return eType == eSymbolCloseBracket; };
+    bool                   IsSymbolComma(void) const                      { return eType == eSymbolComma; };
+    bool                   IsSymbolPeriod(void) const                     { return eType == eSymbolPeriod; };
+    bool                   IsSymbolDoubleColon(void) const                { return eType == eSymbolDoubleColon; };
+    bool                   IsSymbolEOF(void) const                        { return eType == eSymbolEOF; };
     static RedVSIIOElement SymbolAssignDivide(void)                       { return RedVSIIOElement(eSymbolAssignDivide); };
     static RedVSIIOElement SymbolAssignEqual(void)                        { return RedVSIIOElement(eSymbolAssignEqual); };
     static RedVSIIOElement SymbolAssignMinus(void)                        { return RedVSIIOElement(eSymbolAssignMinus); };
@@ -174,7 +174,7 @@ public:
     // Operators
     void operator =(const RedVSIIOElement cNewVal)                        { eType=cNewVal.eType; };
 
-    const int iElem(void) const { return (int)eType; };
+    int iElem(void) const { return (int)eType; };
 
 private:
 

@@ -40,11 +40,11 @@ public:
     ~RedVSIParseTreeVar();
 
     // inherited
-    void                    CalcResult(RedVSIContextInterface* pContext);
-    const RedVSILangElement Type(void) const { return RedVSILangElement::ParseVariable(); };
+    void              CalcResult(RedVSIContextInterface* pContext);
+    RedVSILangElement Type(void) const { return RedVSILangElement::ParseVariable(); };
 
     void             SetVarName(const RedString& cInVarName) { cVarName = cInVarName; };
-    const RedString& VarName(void) const                     { return cVarName; };
+    RedString   VarName(void) const                     { return cVarName; };
 
     void        AssignValue(RedVSIContextInterface* pContext, RedVariant& result);
 

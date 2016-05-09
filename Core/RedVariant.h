@@ -54,10 +54,10 @@ public:
 
     // Inherited: RedType
     void                Init(void);
-    const RedDataType   Type(void) const;
+    RedDataType         Type(void) const;
     RedType*            Clone(void) const;
 
-    const int           IsValid(void) const { return (pData!=REDNULL); };
+    bool                IsValid(void) const { return (pData!=REDNULL); };
 
     void                SetValue(const RedVariant& cDataItem);
     void                SetValue(const RedType*    pNewData);
@@ -72,9 +72,9 @@ public:
 
     RedType*            Value(void);
     bool                ExportTo(RedType* pExportToData) const;
-    const RedBoolean    BoolValue(void) const;
-    const RedNumber     NumberValue(void) const;
-    const RedString     StringValue(void) const;
+    RedBoolean          BoolValue(void) const;
+    RedNumber           NumberValue(void) const;
+    RedString           StringValue(void) const;
 
     void operator =(const RedType* pData);
     void operator =(const RedVariant& n);

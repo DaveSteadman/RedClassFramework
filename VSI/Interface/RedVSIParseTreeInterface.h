@@ -32,9 +32,9 @@ class RedVSIParseTreeInterface
 {
 public:
 
-    virtual void                    CalcResult(RedVSIContextInterface* pContext) =0;
-    virtual const RedVSILangElement Type(void) const =0;
-    virtual                         ~RedVSIParseTreeInterface(void) { };
+    virtual void              CalcResult(RedVSIContextInterface* pContext) =0;
+    virtual RedVSILangElement Type(void) const =0;
+    virtual                  ~RedVSIParseTreeInterface(void) { };
 };
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

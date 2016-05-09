@@ -39,17 +39,17 @@ public:
     ~RedVSICmdIf(void) {};
 
     // RedVSICmdInterface inherited routines
-    const RedVSILangElement Type(void) const { return kLangElementCommandIf; };
-    void QueueExpr(RedVSIContextInterface* pContext);
-    void Execute(RedVSIContextInterface* pContext);
+    RedVSILangElement Type(void) const { return kLangElementCommandIf; };
+    void              QueueExpr(RedVSIContextInterface* pContext);
+    void              Execute(RedVSIContextInterface* pContext);
 
     // Wholesale access/assign operations
-    void SetDetails(RedVSIParseTreeInterface*& pInCmdExpr,  RedVSICmdInterface*& pInPosBranch,  RedVSICmdInterface*& pInNegBranch);
-    void GetDetails(RedVSIParseTreeInterface*& pOutCmdExpr, RedVSICmdInterface*& pOutPosBranch, RedVSICmdInterface*& pOutNegBranch) const;
+    void              SetDetails(RedVSIParseTreeInterface*& pInCmdExpr,  RedVSICmdInterface*& pInPosBranch,  RedVSICmdInterface*& pInNegBranch);
+    void              GetDetails(RedVSIParseTreeInterface*& pOutCmdExpr, RedVSICmdInterface*& pOutPosBranch, RedVSICmdInterface*& pOutNegBranch) const;
 
 private:
 
-    bool IsSuccessVal(RedVariant& cVal);
+    bool              IsSuccessVal(RedVariant& cVal);
 
     RedVSIParseTreeInterface* pCmdExpr;
     RedVSICmdInterface*       pPosBranch;

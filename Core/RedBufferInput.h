@@ -45,6 +45,8 @@ public:
     RedChar   PreviewNextChar(void);
     void      GetCharAndPreview(RedChar& ch, RedChar& previewch);
 
+    RedChar   PreviewAhead(const unsigned IndexAhead);
+
     void      UngetChar(void) { SetPos(iCharPos-1); };
     void      SkipWhitespace(void);
 

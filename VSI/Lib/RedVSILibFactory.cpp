@@ -70,7 +70,7 @@ void RedVSILibFactory::InputTmlClass(RedTmlNode cClassNode, RedLog& cAnalysis)
 
         if (pCurrElem->IsNode())
         {
-            RedTmlNode* pCurrNode = (RedTmlNode*)pCurrElem;
+            RedTmlNode* pCurrNode = dynamic_cast<RedTmlNode*>(pCurrElem);
             if (pCurrNode->Name() == kVSIIOElementKeywordRoutine)
             {
                 RedVSILibRoutine* newRoutine = InputTmlRoutine(*pCurrNode, cAnalysis);

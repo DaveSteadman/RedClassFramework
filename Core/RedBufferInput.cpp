@@ -63,6 +63,17 @@ RedChar RedBufferInput::PreviewNextChar(void)
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
+RedChar RedBufferInput::PreviewAhead(const unsigned IndexAhead)
+{
+    const unsigned required_index = (iCharPos - 1) + IndexAhead;
+
+    RedChar retch( cStrBuffer.CharAtIndex(required_index));
+
+    return retch;
+}
+
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
 void RedBufferInput::GetCharAndPreview(RedChar& ch, RedChar& previewch)
 {
     ch = this->GetNextChar();

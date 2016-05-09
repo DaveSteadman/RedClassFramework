@@ -35,13 +35,13 @@ public:
 
     RedLinkedListIterator(const ListType* pNewList);
 
-    void           First(void);
-    void           Next(void);
-    bool           IsDone(void) const;
-    Element        CurrentItem(void) const;
+    void     First(void);
+    void     Next(void);
+    bool     IsDone(void) const;
+    Element  CurrentItem(void) const;
 
     //void           DeleteCurrentItem(void);
-    const unsigned CollectionIndex(void) const { return iCurrPos; };
+    unsigned CollectionIndex(void) const { return iCurrPos; };
 
 private:
 

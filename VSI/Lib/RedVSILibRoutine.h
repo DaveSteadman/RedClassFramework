@@ -36,11 +36,11 @@ public:
 
     RedVSILibRoutine(void);
 
-    void          SetName (const RedString& cNewName)                            { cName = cNewName; };
-    void          AddParam(const RedString& cParamName, RedVSILangElement cType) { cParamList.Add(cParamName, cType); };
-    void          SetCode (RedVSICmdInterface* pNewCode)                         { pCode = pNewCode; };
+    void    SetName (const RedString& cNewName)                            { cName = cNewName; };
+    void    AddParam(const RedString& cParamName, RedVSILangElement cType) { cParamList.Add(cParamName, cType); };
+    void    SetCode (RedVSICmdInterface* pNewCode)                         { pCode = pNewCode; };
 
-    const bool    IsMatching(const RedVSIRoutineCallInterface& cSig);
+    bool    IsMatching(const RedVSIRoutineCallInterface& cSig);
 };
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

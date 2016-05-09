@@ -44,7 +44,6 @@ private:
 
     static bool                EOFComp   (RedVSITokenBuffer& cInputBuffer, RedLog& RedLog);
 
-    static RedVSICmdInterface* CallComp  (RedVSITokenBuffer& cInputBuffer, RedLog& RedLog);
     static RedVSICmdInterface* ExprComp  (RedVSITokenBuffer& cInputBuffer, RedLog& RedLog);
 	static RedVSICmdInterface* IfComp    (RedVSITokenBuffer& cInputBuffer, RedLog& RedLog);
     static RedVSICmdInterface* LogComp   (RedVSITokenBuffer& cInputBuffer, RedLog& RedLog);

@@ -28,11 +28,11 @@ namespace VSI {
 
 RedVSICmdReturn::RedVSICmdReturn(void)
 {
-    // this object's attributes
-    pReturnExpr = 0;
+    // This object's attributes
+    pReturnExpr = REDNULL;
 
-    // parents attributes
-    SetNextCmd(0);
+    // Parents attributes
+    SetNextCmd(REDNULL);
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

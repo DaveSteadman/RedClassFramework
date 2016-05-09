@@ -346,7 +346,7 @@ void RedString::Insert(const unsigned Index, const char* Str)
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-const char RedString::CharAtIndex(const unsigned Index) const
+char RedString::CharAtIndex(const unsigned Index) const
 {
     char x = '\0';
 
@@ -385,7 +385,7 @@ RedString RedString::SubStr(const unsigned StartIndex, const unsigned Count) con
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-const bool RedString::IsCharInString(char ch) const
+bool RedString::IsCharInString(char ch) const
 {
     for (unsigned Pos = 0; Pos < contentsize; ++Pos)
     {
@@ -397,7 +397,7 @@ const bool RedString::IsCharInString(char ch) const
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-const bool RedString::IsAlphaNumeric(void) const
+bool RedString::IsAlphaNumeric(void) const
 {
     RedChar RedChar;
     for (unsigned iPos = 0; iPos < contentsize; ++iPos)
@@ -414,7 +414,7 @@ const bool RedString::IsAlphaNumeric(void) const
 // Derived Routines
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-const unsigned RedString::NumLines(void) const
+unsigned RedString::NumLines(void) const
 {
     unsigned NumLines = 0;
 
@@ -433,7 +433,7 @@ const unsigned RedString::NumLines(void) const
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-const bool RedString::LineAtNum(const unsigned LineNum, RedString& Line) const
+bool RedString::LineAtNum(const unsigned LineNum, RedString& Line) const
 {
     unsigned iLineStartIndex, iLineLength, iCurrIndex;
     unsigned iOnLine;
@@ -512,7 +512,7 @@ void RedString::InitialiseNonContentChars(void)
 // Non-Member Operators
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-const bool operator ==(const RedString& lhs, const char* rhs)
+bool operator ==(const RedString& lhs, const char* rhs)
 {
     // If the strings are different lengths, fail.
     if (strlen(rhs) != lhs.ContentSize())
@@ -533,7 +533,7 @@ const bool operator ==(const RedString& lhs, const char* rhs)
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-const bool operator !=(const RedString& lhs, const char* rhs)
+bool operator !=(const RedString& lhs, const char* rhs)
 {
     // If the strings are different lengths, fail.
     if (strlen(rhs) != lhs.ContentSize())
@@ -554,14 +554,14 @@ const bool operator !=(const RedString& lhs, const char* rhs)
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-const bool operator ==(const RedString& lhs, const RedString& rhs)
+bool operator ==(const RedString& lhs, const RedString& rhs)
 {
     return (lhs == rhs.TextPtr());
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-const bool operator !=(const RedString& lhs, const RedString& rhs)
+bool operator !=(const RedString& lhs, const RedString& rhs)
 {
     return (lhs != rhs.TextPtr());
 }

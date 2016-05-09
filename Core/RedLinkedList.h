@@ -33,9 +33,9 @@ public:
     ~RedLinkedList();
 
     // New Items
-    void AddLast(Element Elem);
-    void AddFirst(Element Elem);
-    bool InsertAfter(const unsigned iElemIndex, Element Elem);
+    void     AddLast(Element Elem);
+    void     AddFirst(Element Elem);
+    bool     InsertAfter(const unsigned iElemIndex, Element Elem);
 
     // Access counts and index values
     bool     IsEmpty(void)    const { return (iNumItems==0); };
@@ -44,15 +44,15 @@ public:
     unsigned LastIndex(void)  const { return iNumItems; };
 
     // Access Items
-    bool Find(const unsigned iElemIndex, Element& Elem) const;
-    bool FindFirst(Element& Elem) const;
-    bool FindLast(Element& Elem) const;
+    bool     Find(const unsigned iElemIndex, Element& Elem) const;
+    bool     FindFirst(Element& Elem) const;
+    bool     FindLast(Element& Elem) const;
 
     // Delete Items
-    bool DelFirst(void);
-    bool DelLast(void);
-    bool Del(const unsigned iElemIndex);
-    bool DelAll(void);
+    bool     DelFirst(void);
+    bool     DelLast(void);
+    bool     Del(const unsigned iElemIndex);
+    bool     DelAll(void);
 
     // complex operations
     RedLinkedList* Clone(void);

@@ -46,15 +46,15 @@ public:
     void            SetupCall(const RedString& cNewClassName, const RedString& cNewObjName, const RedString& cNewFuncName) { cClassName = cNewClassName; cObjName = cNewObjName; cFuncName = cNewFuncName; };
 
 
-    void              SetClassName   (const RedString& cNewClassName)        { cClassName = cNewClassName;  };
-    void              SetObjectName  (const RedString& cNewObjectName)       { cObjName   = cNewObjectName; };
-    void              SetFuncName    (const RedString& cNewFuncName)         { cFuncName  = cNewFuncName;   };
-    const RedString   ClassName      (void)                            const { return cClassName; };
-    const RedString   ObjectName     (void)                            const { return cObjName;   };
-    const RedString   FuncName       (void)                            const { return cFuncName;  };
+    void            SetClassName   (const RedString& cNewClassName)        { cClassName = cNewClassName;  };
+    void            SetObjectName  (const RedString& cNewObjectName)       { cObjName   = cNewObjectName; };
+    void            SetFuncName    (const RedString& cNewFuncName)         { cFuncName  = cNewFuncName;   };
+    RedString       ClassName      (void)                            const { return cClassName; };
+    RedString       ObjectName     (void)                            const { return cObjName;   };
+    RedString       FuncName       (void)                            const { return cFuncName;  };
 
-    const RedVSIVariantList* Params(void)                         const { return &cParams; };
-    void                     AddParam(const RedVariant& newParam)       { cParams.AddLast(newParam); };
+    const RedVSIVariantList* Params(void)                                  const { return &cParams; };
+    void               AddParam(const RedVariant& newParam)       { cParams.AddLast(newParam); };
 
     void operator =(const RedVSIRoutineCallInterface& cSig);
 

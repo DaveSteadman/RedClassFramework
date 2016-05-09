@@ -25,7 +25,7 @@ namespace VSI {
 // Complex Query routines
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-const bool RedVSILangElement::IsCommand(void) const
+bool RedVSILangElement::IsCommand(void) const
 {
     if (IsCommandNew())    return true;
     if (IsCommandLet())    return true;
@@ -39,7 +39,7 @@ const bool RedVSILangElement::IsCommand(void) const
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-const bool RedVSILangElement::IsParse(void) const
+bool RedVSILangElement::IsParse(void) const
 {
     if (IsParseFuncCall()) return true;
     if (IsParseValue())    return true;
@@ -52,7 +52,7 @@ const bool RedVSILangElement::IsParse(void) const
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-const bool RedVSILangElement::IsLocation(void) const
+bool RedVSILangElement::IsLocation(void) const
 {
     if (IsLocationHeap())      return true;
     if (IsLocationStack())     return true;
@@ -63,7 +63,7 @@ const bool RedVSILangElement::IsLocation(void) const
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-const bool RedVSILangElement::IsType(void) const
+bool RedVSILangElement::IsType(void) const
 {
     if (IsTypeArray())  return true;
     if (IsTypeBool())   return true;
@@ -76,7 +76,7 @@ const bool RedVSILangElement::IsType(void) const
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-const bool RedVSILangElement::IsAssignOp(void) const
+bool RedVSILangElement::IsAssignOp(void) const
 {
     if (IsBinaryOpAssignDivide())   return true;
     if (IsBinaryOpAssignEqual())    return true;
@@ -89,7 +89,7 @@ const bool RedVSILangElement::IsAssignOp(void) const
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-const bool RedVSILangElement::IsLogicOp(void) const
+bool RedVSILangElement::IsLogicOp(void) const
 {
     if (IsBinaryOpLogicAnd()) return true;
     if (IsBinaryOpLogicOr())  return true;
@@ -100,7 +100,7 @@ const bool RedVSILangElement::IsLogicOp(void) const
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-const bool RedVSILangElement::IsCompareOp(void) const
+bool RedVSILangElement::IsCompareOp(void) const
 {
     if (IsBinaryOpCompareEqual())       return true;
     if (IsBinaryOpCompareNotEqual())    return true;
@@ -112,7 +112,7 @@ const bool RedVSILangElement::IsCompareOp(void) const
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-const bool RedVSILangElement::IsBinaryOp(void) const
+bool RedVSILangElement::IsBinaryOp(void) const
 {
     if (IsBinaryOpAssignDivide())       return true;
     if (IsBinaryOpAssignEqual())        return true;
@@ -136,7 +136,7 @@ const bool RedVSILangElement::IsBinaryOp(void) const
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-const bool RedVSILangElement::IsUnaryOp(void) const
+bool RedVSILangElement::IsUnaryOp(void) const
 {
     if (IsUnaryOpMinus())    return true;
     if (IsUnaryOpLogicNot()) return true;

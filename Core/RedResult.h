@@ -35,9 +35,9 @@ public:
     void             SetNoResult(void)       { eState = eNoResult; };
     void             SetFail(void)           { eState = eFail;     };
 
-    const bool       IsSuccess(void) const   { return (eState == eSuccess);  };
-    const bool       IsNoResult(void) const  { return (eState == eNoResult); };
-    const bool       IsFail(void) const      { return (eState == eFail);     };
+    bool             IsSuccess(void) const   { return (eState == eSuccess);  };
+    bool             IsNoResult(void) const  { return (eState == eNoResult); };
+    bool             IsFail(void) const      { return (eState == eFail);     };
 
     static RedResult Success(void)           { return RedResult(eSuccess);   };
     static RedResult NoResult(void)          { return RedResult(eNoResult);  };

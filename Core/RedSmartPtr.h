@@ -29,10 +29,10 @@ class RedRefCount
 {
 public:
     RedRefCount(void) : count(0) {};
-    void           IncRef(void)          { count++; };
-    void           DecRef(void)          { count--; };
-    const unsigned Count(void) const     { return count; };
-    const bool     IsRefZero(void) const { if (count==0) return true; return false; };
+    void     IncRef(void)          { count++; };
+    void     DecRef(void)          { count--; };
+    unsigned Count(void) const     { return count; };
+    bool     IsRefZero(void) const { if (count==0) return true; return false; };
 private:
     int count;
 };
@@ -88,7 +88,7 @@ public:
     //T& operator* ()  { return *pData; };
     T* operator-> () { return pData;  };
 
-    const int RefCount(void) { return reference->Count(); }
+    int RefCount(void) { return reference->Count(); }
 
     RedSmartPtr<T>& operator = (const RedSmartPtr<T>& SmartPtr)
     {
@@ -106,7 +106,7 @@ public:
             
             // Copy the data and reference pointer
             // and increment the reference count
-            pData = SmartPtr.pData;
+            pData     = SmartPtr.pData;
             reference = SmartPtr.reference;
             reference->IncRef();
         }

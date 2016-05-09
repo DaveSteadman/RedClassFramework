@@ -30,7 +30,7 @@ namespace Core {
 // =================================================================================================
 
 /// Query operation, determining if the int number is zero, or the float number is within kFloatCompTollerance of zero.
-const bool RedNumber::IsZero(void) const
+bool RedNumber::IsZero(void) const
 {
     if (eNumType == eInt)
         return (iIntVal == 0);
@@ -40,7 +40,7 @@ const bool RedNumber::IsZero(void) const
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-const bool RedNumber::IsPositive(void) const
+bool RedNumber::IsPositive(void) const
 {
     if (eNumType == eInt)
         return (iIntVal > 0);
@@ -50,7 +50,7 @@ const bool RedNumber::IsPositive(void) const
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-const bool RedNumber::IsEqualTo(const RedNumber& CheckVal) const
+bool RedNumber::IsEqualTo(const RedNumber& CheckVal) const
 {
     // If Integers, just compare, no tollerance
     if ( IsInteger() && CheckVal.IsInteger() )
@@ -74,7 +74,7 @@ const bool RedNumber::IsEqualTo(const RedNumber& CheckVal) const
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-const bool RedNumber::IsEqualToWithinTollerance(const RedNumber& CheckVal, const RedNumber& tollerance) const
+bool RedNumber::IsEqualToWithinTollerance(const RedNumber& CheckVal, const RedNumber& tollerance) const
 {
     // If Integers, just compare, no tollerance
     if ( IsInteger() && CheckVal.IsInteger() )
@@ -102,7 +102,7 @@ const bool RedNumber::IsEqualToWithinTollerance(const RedNumber& CheckVal, const
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-const RedString RedNumber::DecimalString(void) const
+RedString RedNumber::DecimalString(void) const
 {
     const int   iStrLen = 32;
     RedString   cRetStr;
@@ -127,7 +127,7 @@ const RedString RedNumber::DecimalString(void) const
 
 /// @brief Convert the number into a string with specific formatting
 /// @param decimalplaces The number of characters after the decimal place.
-const RedString RedNumber::DecimalStringWithDP(const unsigned decimalplaces) const
+RedString RedNumber::DecimalStringWithDP(const unsigned decimalplaces) const
 {
     const int  iStrLen = 32;
     char       formatstr[iStrLen];
@@ -153,7 +153,7 @@ const RedString RedNumber::DecimalStringWithDP(const unsigned decimalplaces) con
 /// Convert the number into a string with specific formatting
 /// @param minchars      The minimum number of characters to make up the output string, including a decimal place.
 /// @param decimalplaces The number of characters after the decimal place.
-const RedString RedNumber::DecimalStringWithMinDigitsAndDP(const unsigned minchars, const unsigned decimalplaces) const
+RedString RedNumber::DecimalStringWithMinDigitsAndDP(const unsigned minchars, const unsigned decimalplaces) const
 {
     const int  iStrLen = 32;
     char       formatstr[iStrLen];
@@ -176,7 +176,7 @@ const RedString RedNumber::DecimalStringWithMinDigitsAndDP(const unsigned mincha
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-const RedChar RedNumber::CharValue(void) const
+RedChar RedNumber::CharValue(void) const
 {
     // define return value, self-initialised to \0
     RedChar cRetChar;
@@ -192,7 +192,7 @@ const RedChar RedNumber::CharValue(void) const
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-const int RedNumber::IntegerValue(void) const
+int RedNumber::IntegerValue(void) const
 {
     int iRetVal = 0;
 
@@ -206,7 +206,7 @@ const int RedNumber::IntegerValue(void) const
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-const double RedNumber::DoubleValue(void) const
+double RedNumber::DoubleValue(void) const
 {
     double dblRetVal = 0.0;
 
@@ -246,7 +246,7 @@ void RedNumber::MakeNegative(void)
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-const RedNumber RedNumber::IntegerPart(void) const
+RedNumber RedNumber::IntegerPart(void) const
 {
     RedNumber r;
  
@@ -268,7 +268,7 @@ const RedNumber RedNumber::IntegerPart(void) const
  
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-const RedNumber RedNumber::FractionalPart(void) const
+RedNumber RedNumber::FractionalPart(void) const
 {
     RedNumber r;
 
@@ -293,7 +293,7 @@ const RedNumber RedNumber::FractionalPart(void) const
 /// Return the integer part from the division of this number with another.
 /// Example: This = 3.14 & d = 2. Division Remainder returns 1.
 
-const RedNumber RedNumber::DivisionQuotient(const RedNumber& d) const
+RedNumber RedNumber::DivisionQuotient(const RedNumber& d) const
 {
     RedNumber r;
  
@@ -314,7 +314,7 @@ const RedNumber RedNumber::DivisionQuotient(const RedNumber& d) const
 /// Return the remainder from the division of this number with another.
 /// Example: This = 3.14 & d = 2. Division Remainder returns 1.14.
 
-const RedNumber RedNumber::DivisionRemainder(const RedNumber& d) const
+RedNumber RedNumber::DivisionRemainder(const RedNumber& d) const
 {
     RedNumber r;
  

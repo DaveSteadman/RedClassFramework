@@ -35,7 +35,7 @@ public:
 
     /// Get the command type, allowing a caller to determine the type of a RedVSICmdInterface
     /// pointer.
-    virtual const RedVSILangElement Type(void) const =0;
+    virtual RedVSILangElement Type(void) const =0;
 
     /// Operation to queue up the top level expressions in a command. A separate class
     /// determines the actual traversing of the parse-tree.

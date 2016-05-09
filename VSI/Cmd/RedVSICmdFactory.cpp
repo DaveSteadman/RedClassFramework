@@ -189,40 +189,6 @@ RedVSICmdInterface* RedVSICmdFactory::IfComp(RedVSITokenBuffer& cInputBuffer, Re
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-RedVSICmdInterface* RedVSICmdFactory::CallComp(RedVSITokenBuffer& cInputBuffer, RedLog& RedLog)
-{
-    // Call is started with a <name>.<name>.
-    RedVSIToken cObjectNameTok = cInputBuffer.GetToken();
-    if (!cObjectNameTok.Type().IsName()) return REDNULL;
-    RedVSIToken cSeparatorTok = cInputBuffer.GetToken();
-    if (!cSeparatorTok.Predef().IsSymbolPeriod()) return REDNULL;
-    RedVSIToken cRoutineNameTok = cInputBuffer.GetToken();
-    if (!cRoutineNameTok.Type().IsName()) return REDNULL;
-
-    // Read an expression
-    RedVSIParseTreeInterface* pExpr = RedVSIParseFactory::ConstructAssignExpr(cInputBuffer, RedLog);
-    
-    // if we have an expression and no error, then we can progress
-    if ((pExpr) && (!RedLog.IsError()))
-    {
-        // if the top level element of the parse tree is an assignment or a 
-        // routine call, then its a valid expression
-        if (pExpr)
-        {
-            // Create the command object to return.
-            RedVSICmdReturn* pCmd = new RedVSICmdReturn();
-            pCmd->SetDetails(pExpr);
-
-            return pCmd;
-        }
-    }
-
-    // something didn't match, so return zero.
-    return REDNULL;
-}
-
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
 RedVSICmdInterface* RedVSICmdFactory::ExprComp(RedVSITokenBuffer& cInputBuffer, RedLog& RedLog)
 {
     // read an expression

@@ -38,7 +38,7 @@ public:
     RedQueueFIFO();
     ~RedQueueFIFO();
 
-    void Init(void);
+    void        Init(void);
 
     // Access Items
     void        Push(ElementType Data);
@@ -46,9 +46,9 @@ public:
     ElementType NextPopItem(void);
 
     // Overall collection routines
-    unsigned NumItems(void) const { return cList.NumItems(); };
-    bool     IsEmpty(void)  const { return cList.IsEmpty(); };
-    bool     DelAll(void)         { cList.DelAll(); };
+    unsigned    NumItems(void) const { return cList.NumItems(); };
+    bool        IsEmpty(void)  const { return cList.IsEmpty(); };
+    bool        DelAll(void)         { cList.DelAll(); };
 
 private:
 

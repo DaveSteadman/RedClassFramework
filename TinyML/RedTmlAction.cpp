@@ -55,7 +55,7 @@ RedTmlNode* RedTmlAction::NodeFirstNamedNode(RedTmlNode& node, const RedString& 
 
     // work out the type and if we have a match without extra logic
     if ((pElem) && (pElem->IsNode()))
-        return (RedTmlNode*)pElem;
+        return dynamic_cast<RedTmlNode*>(pElem);
 
     return REDNULL;
 }
@@ -69,14 +69,14 @@ RedTmlLeaf* RedTmlAction::NodeFirstNamedLeaf(RedTmlNode& node, const RedString& 
 
     // Work out the type and if we have a match without extra logic
     if ((pElem) && (pElem->IsLeaf()))
-        return (RedTmlLeaf*)pElem;
+        return dynamic_cast<RedTmlLeaf*>(pElem);
 
     return REDNULL;
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-const bool RedTmlAction::ChildLeafExists(RedTmlNode& node, const RedString& leafname)
+bool RedTmlAction::ChildLeafExists(RedTmlNode& node, const RedString& leafname)
 {
     RedTmlLeaf* leafnode = RedTmlAction::NodeFirstNamedLeaf(node, leafname);
 
@@ -106,7 +106,7 @@ void RedTmlAction::SetChildLeaf(RedTmlNode& node, const RedString& leafname, con
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-const RedResult RedTmlAction::ChildLeafDataForName(RedTmlNode& node, const RedString& inleafname, RedString& outleafdata)
+RedResult RedTmlAction::ChildLeafDataForName(RedTmlNode& node, const RedString& inleafname, RedString& outleafdata)
 {
     RedTmlLeaf* leafnode = RedTmlAction::NodeFirstNamedLeaf(node, inleafname);
     if (leafnode == REDNULL)
@@ -118,7 +118,7 @@ const RedResult RedTmlAction::ChildLeafDataForName(RedTmlNode& node, const RedSt
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-const RedResult RedTmlAction::ChildLeafNameForData(RedTmlNode& node, const RedString& inleafdata, RedString& outleafname)
+RedResult RedTmlAction::ChildLeafNameForData(RedTmlNode& node, const RedString& inleafdata, RedString& outleafname)
 {
     RedTmlNode::TmlNodeListItType it = node.NodeIterator();
 
@@ -129,7 +129,7 @@ const RedResult RedTmlAction::ChildLeafNameForData(RedTmlNode& node, const RedSt
 
         if (e->IsLeaf())
         {
-            RedTmlLeaf* l = (RedTmlLeaf*)e;
+            RedTmlLeaf* l = dynamic_cast<RedTmlLeaf*>(e);
 
             if (l->Data() == inleafdata)
             {
@@ -144,7 +144,7 @@ const RedResult RedTmlAction::ChildLeafNameForData(RedTmlNode& node, const RedSt
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-const unsigned RedTmlAction::NumberOfNamedChildLeaves(RedTmlNode& node, const RedString& SearchName)
+unsigned RedTmlAction::NumberOfNamedChildLeaves(RedTmlNode& node, const RedString& SearchName)
 {
     RedTmlNode::TmlNodeListItType it = node.NodeIterator();
     unsigned matchcount = 0;
@@ -167,7 +167,7 @@ const unsigned RedTmlAction::NumberOfNamedChildLeaves(RedTmlNode& node, const Re
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-const unsigned RedTmlAction::TreeElementCount(RedTmlNode& node)
+unsigned RedTmlAction::TreeElementCount(RedTmlNode& node)
 {
     // 1 = starting node.
     unsigned currNodeCount = 1;
@@ -184,7 +184,7 @@ const unsigned RedTmlAction::TreeElementCount(RedTmlNode& node)
         }
         else if (pCurrElem->IsNode())
         {
-            RedTmlNode* pNextNode = (RedTmlNode*)pCurrElem;
+            RedTmlNode* pNextNode = dynamic_cast<RedTmlNode*>(pCurrElem);
             currNodeCount += RedTmlAction::TreeElementCount(*pNextNode);
         }
         yIt.Next();
@@ -197,7 +197,7 @@ const unsigned RedTmlAction::TreeElementCount(RedTmlNode& node)
 // Top Level IO
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-const RedResult RedTmlAction::CreateTmlFromFile(const RedString& filepath, RedTmlElement** newTmlElement)
+RedResult RedTmlAction::CreateTmlFromFile(const RedString& filepath, RedTmlElement** newTmlElement)
 {
     // Initialisation
     if (*newTmlElement != REDNULL)
@@ -225,7 +225,7 @@ const RedResult RedTmlAction::CreateTmlFromFile(const RedString& filepath, RedTm
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-const RedResult RedTmlAction::CreateFileFromTml(const RedTmlElement* tmlElement, const RedString& filepath, const TESerialiseType writeStyle)
+RedResult RedTmlAction::CreateFileFromTml(const RedTmlElement* tmlElement, const RedString& filepath, const TESerialiseType writeStyle)
 {
     // Check node is not null
     if (tmlElement == REDNULL)
@@ -436,7 +436,7 @@ bool RedTmlAction::ReadTmlElement(RedBufferInput& inputBuf, RedTmlElement** newT
         ch = inputBuf.GetNextNonWhitespaceChar();
         if (ch == closebr)
         {
-            *newTml = (RedTmlElement*)newNode;
+            *newTml = dynamic_cast<RedTmlElement*>(newNode);
             return true;
         }
         else
@@ -461,7 +461,7 @@ bool RedTmlAction::ReadTmlElement(RedBufferInput& inputBuf, RedTmlElement** newT
             // All read, construct returned object
             newLeaf = new RedTmlLeaf(leafname, leafdata);
 
-            *newTml = (RedTmlElement*)newLeaf;
+            *newTml = dynamic_cast<RedTmlElement*>(newLeaf);
             return true;
         }
     }

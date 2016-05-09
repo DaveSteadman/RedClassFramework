@@ -27,14 +27,14 @@ namespace VSI {
 
 RedVSICmdNew::RedVSICmdNew(void)
 {
-    // this object's attributes
+    // This object's attributes
     cType.Init();
     cLoc.Init();
     cName.Init();
     pInitExpr = REDNULL;
 
-    // parents attributes
-    SetNextCmd(0);
+    // Parents attributes
+    SetNextCmd(REDNULL);
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -79,12 +79,12 @@ void RedVSICmdNew::Execute(RedVSIContextInterface* pContext)
     if (pData == REDNULL)
         throw;
 
-    // if we have an initialisation expression for the data item
+    // If we have an initialisation expression for the data item
     if (pInitExpr != REDNULL)
     {
         RedVariant cInitExprResult = pContext->ExprResult(pInitExpr);
 
-        // if the type of the new variable and the expression don't match, raise an error
+        // If the type of the new variable and the expression don't match, raise an error
         if (!cInitExprResult.ExportTo(pData))
         {
             pContext->Log().AddErrorEvent("New Command Execution: Unable to export expression result into variable");
@@ -92,7 +92,7 @@ void RedVSICmdNew::Execute(RedVSIContextInterface* pContext)
         }
     }
     
-    // queue the next command, we are done with this one
+    // Queue the next command, we are done with this one
     pContext->QueueCommand( NextCmd() );
 }
 
