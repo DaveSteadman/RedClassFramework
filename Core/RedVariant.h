@@ -39,18 +39,18 @@ class RedVariant : public RedType
 {
 public:
 
-    RedVariant(void):pData(0) { };
-    RedVariant(const RedType& cDataItem):pData(0)    { cDataItem.Clone(); };
-    RedVariant(const RedVariant& cDataItem):pData(0) { SetValue(cDataItem); };
-    RedVariant(const RedBoolean& cNewBool):pData(0)  { SetValue(cNewBool); };
-    RedVariant(const RedChar& cNewCh):pData(0)       { SetValue(RedChar(cNewCh)); };
-    RedVariant(const RedNumber& cNewNum):pData(0)    { SetValue(cNewNum); };
-    RedVariant(const RedString& cNewStr):pData(0)    { SetValue(RedString(cNewStr)); };
-    RedVariant(const int val):pData(0)               { SetValue(RedNumber(val)); };
-    RedVariant(const double val):pData(0)            { SetValue(RedNumber(val)); };
-    RedVariant(const char* val):pData(0)             { SetValue(RedString(val)); };
-    RedVariant(const bool val):pData(0)              { SetValue(RedBoolean(val)); };
-    ~RedVariant(void)                                { Init(); };
+    RedVariant(void):pData(REDNULL) { };
+    RedVariant(const RedType& cDataItem):pData(REDNULL)    { cDataItem.Clone(); };
+    RedVariant(const RedVariant& cDataItem):pData(REDNULL) { SetValue(cDataItem); };
+    RedVariant(const RedBoolean& cNewBool):pData(REDNULL)  { SetValue(cNewBool); };
+    RedVariant(const RedChar& cNewCh):pData(REDNULL)       { SetValue(RedChar(cNewCh)); };
+    RedVariant(const RedNumber& cNewNum):pData(REDNULL)    { SetValue(cNewNum); };
+    RedVariant(const RedString& cNewStr):pData(REDNULL)    { SetValue(RedString(cNewStr)); };
+    RedVariant(const int val):pData(REDNULL)               { SetValue(RedNumber(val)); };
+    RedVariant(const double val):pData(REDNULL)            { SetValue(RedNumber(val)); };
+    RedVariant(const char* val):pData(REDNULL)             { SetValue(RedString(val)); };
+    RedVariant(const bool val):pData(REDNULL)              { SetValue(RedBoolean(val)); };
+    ~RedVariant(void)                                      { Init(); };
 
     // Inherited: RedType
     void                Init(void);
@@ -75,6 +75,8 @@ public:
     RedBoolean          BoolValue(void) const;
     RedNumber           NumberValue(void) const;
     RedString           StringValue(void) const;
+
+    bool                IsSuccessVal(void) const;
 
     void operator =(const RedType* pData);
     void operator =(const RedVariant& n);

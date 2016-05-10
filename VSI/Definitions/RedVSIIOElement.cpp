@@ -43,10 +43,11 @@ bool RedVSIIOElement::IsLocationKeyword(void) const
 
 bool RedVSIIOElement::IsTypeKeyword(void) const
 {
-    if (IsKeywordArray())  return true;
     if (IsKeywordBool())   return true;
     if (IsKeywordChar())   return true;
+    if (IsKeywordList())   return true;
     if (IsKeywordNumber()) return true;
+    if (IsKeywordRecord()) return true;
     if (IsKeywordString()) return true;
 
     return false;

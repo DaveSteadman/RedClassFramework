@@ -49,8 +49,6 @@ public:
 
 private:
 
-    bool              IsSuccessVal(RedVariant& cVal);
-
     RedVSIParseTreeInterface* pCmdExpr;
     RedVSICmdInterface*       pPosBranch;
     RedVSICmdInterface*       pNegBranch;

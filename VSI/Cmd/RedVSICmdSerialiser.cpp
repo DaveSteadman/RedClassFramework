@@ -127,17 +127,18 @@ void RedVSICmdSerialiser::SerialiseNewCmd(RedVSITokenBuffer& cTokenBuffer, RedVS
     cTokenBuffer.AppendToken(cCmdTok);
 
     RedVSIToken cLocTok;
-    if (cOutLoc.IsLocationAttribute()) cLocTok.SetPredefined(RedVSIIOElement::KeywordAttribute());
-    if (cOutLoc.IsLocationHeap())      cLocTok.SetPredefined(RedVSIIOElement::KeywordHeap());
-    if (cOutLoc.IsLocationStack())     cLocTok.SetPredefined(RedVSIIOElement::KeywordStack());
+    if      (cOutLoc.IsLocationAttribute()) cLocTok.SetPredefined(RedVSIIOElement::KeywordAttribute());
+    else if (cOutLoc.IsLocationHeap())      cLocTok.SetPredefined(RedVSIIOElement::KeywordHeap());
+    else if (cOutLoc.IsLocationStack())     cLocTok.SetPredefined(RedVSIIOElement::KeywordStack());
     cTokenBuffer.AppendToken(cLocTok);
 
     RedVSIToken cTypeTok;
-    if (cOutType.IsTypeArray())        cTypeTok.SetPredefined(RedVSIIOElement::KeywordArray());
-    if (cOutType.IsTypeBool())         cTypeTok.SetPredefined(RedVSIIOElement::KeywordBool());
-    if (cOutType.IsTypeChar())         cTypeTok.SetPredefined(RedVSIIOElement::KeywordChar());
-    if (cOutType.IsTypeNumber())       cTypeTok.SetPredefined(RedVSIIOElement::KeywordNumber());
-    if (cOutType.IsTypeString())       cTypeTok.SetPredefined(RedVSIIOElement::KeywordString());
+    if      (cOutType.IsTypeBool())         cTypeTok.SetPredefined(RedVSIIOElement::KeywordBool());
+    else if (cOutType.IsTypeChar())         cTypeTok.SetPredefined(RedVSIIOElement::KeywordChar());
+    else if (cOutType.IsTypeList())         cTypeTok.SetPredefined(RedVSIIOElement::KeywordList());
+    else if (cOutType.IsTypeNumber())       cTypeTok.SetPredefined(RedVSIIOElement::KeywordNumber());
+    else if (cOutType.IsTypeRecord())       cTypeTok.SetPredefined(RedVSIIOElement::KeywordRecord());
+    else if (cOutType.IsTypeString())       cTypeTok.SetPredefined(RedVSIIOElement::KeywordString());
     cTokenBuffer.AppendToken(cTypeTok);
 
     RedVSIToken cNameTok;

@@ -65,10 +65,11 @@ bool RedVSILangElement::IsLocation(void) const
 
 bool RedVSILangElement::IsType(void) const
 {
-    if (IsTypeArray())  return true;
     if (IsTypeBool())   return true;
     if (IsTypeChar())   return true;
+    if (IsTypeList())   return true;
     if (IsTypeNumber()) return true;
+    if (IsTypeRecord()) return true;
     if (IsTypeString()) return true;
 
     return false;
@@ -173,9 +174,11 @@ RedDataType RedVSILangElement::DataTypeForLangElemType(const RedVSILangElement& 
 
     if      (!LangType.IsType())       retType.SetInvalid();
     else if ( LangType.IsTypeBool())   retType.SetBool();
-    else if ( LangType.IsTypeNumber()) retType.SetNum();
-    else if ( LangType.IsTypeString()) retType.SetStr();
     else if ( LangType.IsTypeChar())   retType.SetChar();
+    else if ( LangType.IsTypeList())   retType.SetList();
+    else if ( LangType.IsTypeNumber()) retType.SetNum();
+    else if ( LangType.IsTypeRecord()) retType.SetRecord();
+    else if ( LangType.IsTypeString()) retType.SetStr();
 
     return retType;
 }
@@ -187,10 +190,12 @@ RedVSILangElement RedVSILangElement::LangElemTypeForDataType(const RedDataType& 
     // Initialises to invalid
     RedVSILangElement retType;
 
-    if      (CoreType.IsBool()) retType = kLangElementTypeBool;
-    else if (CoreType.IsChar()) retType = kLangElementTypeChar;
-    else if (CoreType.IsNum())  retType = kLangElementTypeNumber;
-    else if (CoreType.IsStr())  retType = kLangElementTypeString;
+    if      (CoreType.IsBool())    retType = kLangElementTypeBool;
+    else if (CoreType.IsChar())    retType = kLangElementTypeChar;
+    else if (CoreType.IsList())    retType = kLangElementTypeList;
+    else if (CoreType.IsNum())     retType = kLangElementTypeNumber;
+    else if (CoreType.IsRecord())  retType = kLangElementTypeRecord;
+    else if (CoreType.IsStr())     retType = kLangElementTypeString;
 
     return retType;
 }

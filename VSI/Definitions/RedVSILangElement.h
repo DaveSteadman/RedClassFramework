@@ -77,15 +77,17 @@ public:
 
     // Types
     bool                     IsType(void) const;
-    bool                     IsTypeArray(void) const                         { return eType == eTypeArray; };
     bool                     IsTypeBool(void) const                          { return eType == eTypeBool; };
     bool                     IsTypeChar(void) const                          { return eType == eTypeChar; };
+    bool                     IsTypeList(void) const                          { return eType == eTypeList; };
     bool                     IsTypeNumber(void) const                        { return eType == eTypeNumber; };
+    bool                     IsTypeRecord(void) const                        { return eType == eTypeRecord; };
     bool                     IsTypeString(void) const                        { return eType == eTypeString; };
-    static RedVSILangElement TypeArray(void)                                 { return RedVSILangElement(eTypeArray); };
     static RedVSILangElement TypeBool(void)                                  { return RedVSILangElement(eTypeBool); };
     static RedVSILangElement TypeChar(void)                                  { return RedVSILangElement(eTypeChar); };
+    static RedVSILangElement TypeList(void)                                  { return RedVSILangElement(eTypeList); };
     static RedVSILangElement TypeNumber(void)                                { return RedVSILangElement(eTypeNumber); };
+    static RedVSILangElement TypeRecord(void)                                { return RedVSILangElement(eTypeRecord); };
     static RedVSILangElement TypeString(void)                                { return RedVSILangElement(eTypeString); };
 
     // Binary op types
@@ -171,14 +173,17 @@ protected:
         eParseBinaryOp,
         eParseUnaryOp,
 
+        // Data locations
         eLocationHeap,
         eLocationStack,
         eLocationAttribute,
 
-        eTypeArray,
+        // Types
         eTypeBool,
         eTypeChar,
+        eTypeList,
         eTypeNumber,
+        eTypeRecord,
         eTypeString,
 
         eBinaryOpAssignDivide,
@@ -215,10 +220,11 @@ private:
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-static RedVSILangElement kLangElementTypeArray               = RedVSILangElement::TypeArray();
 static RedVSILangElement kLangElementTypeBool                = RedVSILangElement::TypeBool();
 static RedVSILangElement kLangElementTypeChar                = RedVSILangElement::TypeChar();
+static RedVSILangElement kLangElementTypeList                = RedVSILangElement::TypeList();
 static RedVSILangElement kLangElementTypeNumber              = RedVSILangElement::TypeNumber();
+static RedVSILangElement kLangElementTypeRecord              = RedVSILangElement::TypeRecord();
 static RedVSILangElement kLangElementTypeString              = RedVSILangElement::TypeString();
 
 static RedVSILangElement kLangElementLocationHeap            = RedVSILangElement::LocationHeap();

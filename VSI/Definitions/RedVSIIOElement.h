@@ -47,15 +47,17 @@ public:
 
     // Types
     bool                   IsTypeKeyword(void) const;
-    bool                   IsKeywordArray(void) const                     { return eType == eKeywordArray; };
     bool                   IsKeywordBool(void) const                      { return eType == eKeywordBool; };
     bool                   IsKeywordChar(void) const                      { return eType == eKeywordChar; };
+    bool                   IsKeywordList(void) const                      { return eType == eKeywordList; };
     bool                   IsKeywordNumber(void) const                    { return eType == eKeywordNumber; };
+    bool                   IsKeywordRecord(void) const                    { return eType == eKeywordRecord; };
     bool                   IsKeywordString(void) const                    { return eType == eKeywordString; };
-    static RedVSIIOElement KeywordArray(void)                             { return RedVSIIOElement(eKeywordArray); };
     static RedVSIIOElement KeywordBool(void)                              { return RedVSIIOElement(eKeywordBool); };
     static RedVSIIOElement KeywordChar(void)                              { return RedVSIIOElement(eKeywordChar); };
+    static RedVSIIOElement KeywordList(void)                              { return RedVSIIOElement(eKeywordList); };
     static RedVSIIOElement KeywordNumber(void)                            { return RedVSIIOElement(eKeywordNumber); };
+    static RedVSIIOElement KeywordRecord(void)                            { return RedVSIIOElement(eKeywordRecord); };
     static RedVSIIOElement KeywordString(void)                            { return RedVSIIOElement(eKeywordString); };
 
     // Commands
@@ -140,6 +142,8 @@ public:
     bool                   IsSymbolStringContent(void) const              { return eType == eSymbolStringContent; };
     bool                   IsSymbolOpenBracket(void) const                { return eType == eSymbolOpenBracket; };
     bool                   IsSymbolCloseBracket(void) const               { return eType == eSymbolCloseBracket; };
+    bool                   IsSymbolOpenSquareBracket(void) const          { return eType == eSymbolOpenSquareBracket; };
+    bool                   IsSymbolCloseSquareBracket(void) const         { return eType == eSymbolCloseSquareBracket; };
     bool                   IsSymbolComma(void) const                      { return eType == eSymbolComma; };
     bool                   IsSymbolPeriod(void) const                     { return eType == eSymbolPeriod; };
     bool                   IsSymbolDoubleColon(void) const                { return eType == eSymbolDoubleColon; };
@@ -166,6 +170,8 @@ public:
     static RedVSIIOElement SymbolStringContent(void)                      { return RedVSIIOElement(eSymbolStringContent); };
     static RedVSIIOElement SymbolOpenBracket(void)                        { return RedVSIIOElement(eSymbolOpenBracket); };
     static RedVSIIOElement SymbolCloseBracket(void)                       { return RedVSIIOElement(eSymbolCloseBracket); };
+    static RedVSIIOElement SymbolOpenSquareBracket(void)                  { return RedVSIIOElement(eSymbolOpenSquareBracket); };
+    static RedVSIIOElement SymbolCloseSquareBracket(void)                 { return RedVSIIOElement(eSymbolCloseSquareBracket); };
     static RedVSIIOElement SymbolComma(void)                              { return RedVSIIOElement(eSymbolComma); };
     static RedVSIIOElement SymbolPeriod(void)                             { return RedVSIIOElement(eSymbolPeriod); };
     static RedVSIIOElement SymbolDoubleColon(void)                        { return RedVSIIOElement(eSymbolDoubleColon); };
@@ -188,10 +194,11 @@ private:
         eKeywordHeap,
 
         // Types
-        eKeywordArray,
         eKeywordBool,
         eKeywordChar,
+        eKeywordList,
         eKeywordNumber,
+        eKeywordRecord,
         eKeywordString,
 
         // Library
@@ -244,6 +251,8 @@ private:
         eSymbolStringContent,
         eSymbolOpenBracket,
         eSymbolCloseBracket,
+        eSymbolOpenSquareBracket,
+        eSymbolCloseSquareBracket,
         eSymbolComma,
         eSymbolPeriod,
         eSymbolDoubleColon,

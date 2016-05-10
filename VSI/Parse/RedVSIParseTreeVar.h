@@ -35,23 +35,24 @@ class RedVSIParseTreeVar : public RedVSIParseTreeInterface
 public:
 
     // construction;
-    RedVSIParseTreeVar(void) { cVarName=""; };
-    RedVSIParseTreeVar(RedString cNewVarName) { cVarName=cNewVarName; };
+    RedVSIParseTreeVar(void)                                                               { cVarName=""; };
+    RedVSIParseTreeVar(const RedString& cNewVarName)                                       { cVarName=cNewVarName; pVarIndexExpr=REDNULL; };
+    RedVSIParseTreeVar(const RedString& cNewVarName, RedVSIParseTreeInterface* index_expr) { cVarName=cNewVarName; pVarIndexExpr=index_expr;  };
     ~RedVSIParseTreeVar();
 
     // inherited
     void              CalcResult(RedVSIContextInterface* pContext);
     RedVSILangElement Type(void) const { return RedVSILangElement::ParseVariable(); };
 
-    void             SetVarName(const RedString& cInVarName) { cVarName = cInVarName; };
-    RedString   VarName(void) const                     { return cVarName; };
+    void              SetVarName(const RedString& cInVarName) { cVarName = cInVarName; };
+    RedString         VarName(void) const                     { return cVarName; };
 
-    void        AssignValue(RedVSIContextInterface* pContext, RedVariant& result);
+    void              AssignValue(RedVSIContextInterface* pContext, RedVariant& result);
 
 private:
 
     RedString                  cVarName;
-    //RedVSIParseTreeInterface*  pVarIndexExpr;
+    RedVSIParseTreeInterface*  pVarIndexExpr;
 };
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

@@ -48,8 +48,6 @@ public:
 
 private:
 
-    bool IsSuccessVal(const RedVariant& cVal);
-
     RedVSIParseTreeInterface* pConditionExpr;
     RedVSICmdInterface*       pLoopBranch;
 };

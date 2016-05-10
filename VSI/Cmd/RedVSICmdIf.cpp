@@ -73,23 +73,10 @@ void RedVSICmdIf::Execute(RedVSIContextInterface* pContext)
     RedVariant cExprResult = pContext->ExprResult(pCmdExpr);
 
     // Queue a branch depending on the expression
-    if (IsSuccessVal(cExprResult))
+    if (cExprResult.IsSuccessVal())
         pContext->QueueCommand(pPosBranch);
     else
         pContext->QueueCommand(pNegBranch);
-}
-
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-bool RedVSICmdIf::IsSuccessVal(RedVariant& cVal)
-{
-    if (cVal.Type().IsNum())
-    {
-        if (!cVal.NumberValue().IsZero())
-            return true;
-    }
-    
-    return false;
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

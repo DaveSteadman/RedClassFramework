@@ -532,11 +532,11 @@ RedVSIParseTreeInterface* RedVSIParseFactory::RunVariableCompetition(RedVSIToken
     {
         // Data to go into the constructor (name already checked)
         RedString                 cVarName   = cTok.Text();
-        RedVSIParseTreeInterface* pIndexExpr = 0;
+        RedVSIParseTreeInterface* pIndexExpr = REDNULL;
     
         // check for an array index after the variable name
         cTok = cInputBuffer.GetToken();
-        if (cTok.Predef().IsSymbolOpenBracket())
+        if (cTok.Predef().IsSymbolOpenSquareBracket())
         {
             // Read the array index expression
             pIndexExpr = RunCompareExprCompetition(cInputBuffer, log);
@@ -548,7 +548,7 @@ RedVSIParseTreeInterface* RedVSIParseFactory::RunVariableCompetition(RedVSIToken
 
             // read the closing array bracket, which isn't part of the expression.
             cTok = cInputBuffer.GetToken();
-            if (!cTok.Predef().IsSymbolCloseBracket())
+            if (!cTok.Predef().IsSymbolCloseSquareBracket())
             {
                 log.AddText(cTok.GetPos().PosText() + RedVSIErrorCodes::GetErrorString(RedVSIErrorCodes::ePFact_Var_NoArrayExprEnd));
                 return REDNULL;
@@ -560,7 +560,7 @@ RedVSIParseTreeInterface* RedVSIParseFactory::RunVariableCompetition(RedVSIToken
             cInputBuffer.SetTokenIndexBackOne();
         }  
         
-        RedVSIParseTreeVar* pNewVar = new RedVSIParseTreeVar(cVarName);
+        RedVSIParseTreeVar* pNewVar = new RedVSIParseTreeVar(cVarName, pIndexExpr);
         return pNewVar;
     }
     return REDNULL;

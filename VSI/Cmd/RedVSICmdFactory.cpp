@@ -268,10 +268,11 @@ RedVSICmdInterface* RedVSICmdFactory::NewComp(RedVSITokenBuffer& cInputBuffer, R
         return REDNULL;
     }
     RedVSILangElement cType;
-    if      (cTypeTok.Predef().IsKeywordArray())    cType = RedVSILangElement::TypeArray();
-    else if (cTypeTok.Predef().IsKeywordBool())     cType = RedVSILangElement::TypeBool();
+    if      (cTypeTok.Predef().IsKeywordBool())     cType = RedVSILangElement::TypeBool();
     else if (cTypeTok.Predef().IsKeywordChar())     cType = RedVSILangElement::TypeChar();
+    else if (cTypeTok.Predef().IsKeywordList())     cType = RedVSILangElement::TypeList();
     else if (cTypeTok.Predef().IsKeywordNumber())   cType = RedVSILangElement::TypeNumber();
+    else if (cTypeTok.Predef().IsKeywordRecord())   cType = RedVSILangElement::TypeRecord();
     else if (cTypeTok.Predef().IsKeywordString())   cType = RedVSILangElement::TypeString();
 
     RedVSIToken cNameTok = cInputBuffer.GetToken();

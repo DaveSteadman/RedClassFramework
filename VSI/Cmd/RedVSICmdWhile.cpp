@@ -67,7 +67,7 @@ void RedVSICmdWhile::Execute(RedVSIContextInterface* pContext)
     RedVariant cExprResult = pContext->ExprResult(pConditionExpr);
 
     // check if the value is a positive statement
-    if (IsSuccessVal(cExprResult))
+    if (cExprResult.IsSuccessVal())
     {
         // First queue this command for re-evaluation, then queue the branch 
         // command on top of it
@@ -79,19 +79,6 @@ void RedVSICmdWhile::Execute(RedVSIContextInterface* pContext)
         // condition failed, so queue the next command and move on.
         pContext->QueueCommand(NextCmd());
     }
-}
-
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-bool RedVSICmdWhile::IsSuccessVal(const RedVariant& cVal)
-{
-    if (cVal.Type().IsNum())
-    {
-        if (!cVal.NumberValue().IsZero())
-            return true;
-    }
-    
-    return false;
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

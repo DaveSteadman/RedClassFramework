@@ -241,6 +241,23 @@ RedString RedVariant::StringValue(void) const
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+bool RedVariant::IsSuccessVal(void) const
+{
+    if (pData->Type().IsNum())
+    {
+        if (!NumberValue().IsZero())
+            return true;
+    }
+    else if (pData->Type().IsBool())
+    {
+        if (BoolValue().IsYes())
+            return true;
+    }
+    return false;
+}
+
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 // Operators
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 

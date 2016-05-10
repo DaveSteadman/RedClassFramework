@@ -213,10 +213,11 @@ RedTmlElement* RedVSILibFactory::OutputTmlClass (const RedString& classname)
                 RedVSILangElement paramType = paramIt.CurrentData();
                 RedVSIIOElement   paramTypeIoElem;
                 RedString         paramTypeStr;
-                if      (paramType.IsTypeArray())   paramTypeIoElem = RedVSIIOElement::KeywordArray();
-                else if (paramType.IsTypeBool())    paramTypeIoElem = RedVSIIOElement::KeywordBool();
+                if      (paramType.IsTypeBool())    paramTypeIoElem = RedVSIIOElement::KeywordBool();
                 else if (paramType.IsTypeChar())    paramTypeIoElem = RedVSIIOElement::KeywordChar();
+                else if (paramType.IsTypeList())    paramTypeIoElem = RedVSIIOElement::KeywordList();
                 else if (paramType.IsTypeNumber())  paramTypeIoElem = RedVSIIOElement::KeywordNumber();
+                else if (paramType.IsTypeRecord())  paramTypeIoElem = RedVSIIOElement::KeywordRecord();
                 else if (paramType.IsTypeString())  paramTypeIoElem = RedVSIIOElement::KeywordString();
 
                 if (cLibMap.cVSILibTokenMap.FindString(paramTypeIoElem, paramTypeStr))

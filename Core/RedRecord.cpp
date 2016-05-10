@@ -80,7 +80,9 @@ RedType* RedRecord::CreateObjectOfType(const RedDataType& NewAttribType)
 
     if      (NewAttribType.IsBool())    retData = new RedBoolean;
     else if (NewAttribType.IsChar())    retData = new RedChar;
+    //else if (NewAttribType.IsList())    retData = new RedL;
     else if (NewAttribType.IsNum())     retData = new RedNumber;
+    else if (NewAttribType.IsRecord())  retData = new RedRecord;
     else if (NewAttribType.IsStr())     retData = new RedString;
     else if (NewAttribType.IsVariant()) retData = new RedVariant;
 

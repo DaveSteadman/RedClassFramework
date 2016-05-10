@@ -627,7 +627,8 @@ RedResult RedTestVSI::TestFragment_NewTypes(void)
     RedString strCodeFragment = " \
         new local bool   testB = true \
         new local number testN = 123 \
-        new local string testS = 'Str' ";
+        new local string testS = 'Str' \
+        new local record testR ";
 
     // Turn the code into tokens
     RedVSILibTokenMap cTokenMap;
