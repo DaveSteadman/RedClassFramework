@@ -29,7 +29,7 @@ namespace VSI {
 
 RedVSIParseTreeCall::~RedVSIParseTreeCall()
 {
-    if (pParamList != REDNULL)
+    if (pParamList != NULL)
     {
         if (!pParamList->IsEmpty())
             pParamList->DelAll();

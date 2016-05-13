@@ -93,8 +93,8 @@ RedResult RedTestVSI::TestParseTreeVar(void)
         RedVSIContextRoutine testContext(cLog);
         testContext.CreateDataItem(RedVSILangElement::LocationStack(), RedVSILangElement::TypeNumber(), RedString("testVar1"));
 
-        RedNumber* testVar1  = REDNULL;
-        RedType*   pFoundDataItem = REDNULL;
+        RedNumber* testVar1  = NULL;
+        RedType*   pFoundDataItem = NULL;
         if (testContext.FindDataItem(RedString("testVar1"), pFoundDataItem))
         {
             if (pFoundDataItem->Type() != kDataTypeNum)
@@ -216,7 +216,7 @@ RedResult RedTestVSI::TestParseFactory_001(void)
 
         if (log.IsError())
             return kResultFail;
-        if (pt == REDNULL)
+        if (pt == NULL)
             return kResultFail;
 
         RedLog               cLog;
@@ -257,7 +257,7 @@ RedResult RedTestVSI::TestParseFactory_002(void)
 
         if (log.IsError())
             return kResultFail;
-        if (pt == REDNULL)
+        if (pt == NULL)
             return kResultFail;
 
         RedLog               cLog;
@@ -309,7 +309,7 @@ RedResult RedTestVSI::TestParseFactory_003(void)
 
         if (log.IsError())
             return kResultFail;
-        if (pt == REDNULL)
+        if (pt == NULL)
             return kResultFail;
 
         RedLog               cLog;
@@ -341,7 +341,7 @@ RedResult RedTestVSI::TestCmdNew(void)
 {
     RedVSICmdNew cmdNew;
     {
-        RedVSIParseTreeInterface* pt = REDNULL;
+        RedVSIParseTreeInterface* pt = NULL;
         {
             RedString testExpr("4300 + 12");
 
@@ -361,7 +361,7 @@ RedResult RedTestVSI::TestCmdNew(void)
 
             if (log.IsError())
                 return kResultFail;
-            if (pt == REDNULL)
+            if (pt == NULL)
                 return kResultFail;
         }
 
@@ -434,7 +434,7 @@ RedResult RedTestVSI::TestCmdNew(void)
 //        RedLog    log;
 //        RedString iPath("/tmp/TestBasicVSILibrary_0001.tml");
 //
-//        RedTmlElement* newX = REDNULL;
+//        RedTmlElement* newX = NULL;
 //
 //        if (RedTmlAction::CreateTmlFromFile(iPath, &newX) != kResultSuccess)
 //            return kResultFail;
@@ -457,7 +457,7 @@ RedResult RedTestVSI::TestCmdNew(void)
 //        RedLog    log;
 //        RedString iPath("/tmp/TestBasicVSILibrary_0003.tml");
 //
-//        RedTmlElement* newX2 = REDNULL;
+//        RedTmlElement* newX2 = NULL;
 //        RedString name("TestRoutines");
 //
 //        newX2 =  vsiCodeLibFactory.OutputTmlClass(name);
@@ -476,7 +476,7 @@ RedResult RedTestVSI::TestCmdNew(void)
 //RedResult RedTestVSI::TestSaveLibrary_001(void)
 //{
 //    {
-//        RedVSICmdNew pCmd1(kLangElementTypeNumber, kLangElementLocationStack, RedString("x"), REDNULL);
+//        RedVSICmdNew pCmd1(kLangElementTypeNumber, kLangElementLocationStack, RedString("x"), NULL);
 //        RedVSICmdLet();
 //    }
 //    return kResultSuccess;
@@ -541,9 +541,9 @@ RedResult RedTestVSI::TestRunProg_001(void)
 
         // Create the TML tree from the code buffer
         RedTmlElement* tmlTreeElement = RedTmlAction::ParseTinyML(codeBuffer);
-        RedTmlNode*    tmlTreeNode    = REDNULL;
+        RedTmlNode*    tmlTreeNode    = NULL;
 
-        if (tmlTreeElement == REDNULL)
+        if (tmlTreeElement == NULL)
             return kResultFail;
 
         if (tmlTreeElement->IsNode())
@@ -570,9 +570,9 @@ RedResult RedTestVSI::TestRunProg_001(void)
                 if (log.IsError()) return kResultFail;
 
                 // Analyse the data created by the code
-                RedType* pXVal = REDNULL;
+                RedType* pXVal = NULL;
                 tc->FindHeapDataItem("x2", pXVal);
-                if (pXVal == REDNULL)
+                if (pXVal == NULL)
                     return kResultFail;
                 if (!pXVal->Type().IsNum())
                     return kResultFail;
@@ -601,7 +601,7 @@ RedResult RedTestVSI::TestFragment_New(void)
 
     // Turn the tokens into code
     RedVSICmdInterface* topCmd = RedVSICmdFactory::RunConstuctionCompetition(cTokenList, cRedLog);
-    if (topCmd == REDNULL)
+    if (topCmd == NULL)
         return kResultFail;
     if (cRedLog.IsError())
         return kResultFail;
@@ -639,7 +639,7 @@ RedResult RedTestVSI::TestFragment_NewTypes(void)
 
     // Turn the tokens into code
     RedVSICmdInterface* topCmd = RedVSICmdFactory::RunConstuctionCompetition(cTokenList, cRedLog);
-    if (topCmd == REDNULL)
+    if (topCmd == NULL)
         return kResultFail;
     if (cRedLog.IsError())
         return kResultFail;
@@ -667,10 +667,13 @@ RedResult RedTestVSI::TestFragment_NewTypes(void)
 RedResult RedTestVSI::TestFragment_Expr(void)
 {
     // Define a small code fragment
+//    RedString strCodeFragment = "\
+//        new local number x   = 3 \
+//        x = x + 1 \
+//        x = x * 2";
     RedString strCodeFragment = "\
-        new local number x   = 3 \
-        x = x + 1 \
-        x = x * 2";
+        new local record x \
+        x[aa] = 12 ";
 
     // Turn the code into tokens
     RedVSILibTokenMap cTokenMap;
@@ -681,7 +684,7 @@ RedResult RedTestVSI::TestFragment_Expr(void)
 
     // Turn the tokens into code
     RedVSICmdInterface* topCmd = RedVSICmdFactory::RunConstuctionCompetition(cTokenList, cRedLog);
-    if (topCmd == REDNULL)
+    if (topCmd == NULL)
         return kResultFail;
     if (cRedLog.IsError())
         return kResultFail;
@@ -721,7 +724,7 @@ RedResult RedTestVSI::TestFragment_If(void)
 
     // Turn the tokens into code
     RedVSICmdInterface* topCmd = RedVSICmdFactory::RunConstuctionCompetition(cTokenList, cRedLog);
-    if (topCmd == REDNULL)
+    if (topCmd == NULL)
         return kResultFail;
     if (cRedLog.IsError())
         return kResultFail;
@@ -753,10 +756,10 @@ RedResult RedTestVSI::TestFragment_While(void)
         x = x + 1 ";
 
     RedLog                 cRedLog;
-    RedVSIContextFragment* testContext = REDNULL;
+    RedVSIContextFragment* testContext = NULL;
 
     RedVSIContextFactory::CreateContextForFragment(strCodeFragment, &testContext, cRedLog);
-    if ( (testContext == REDNULL) || (cRedLog.IsError()) ) return kResultFail;
+    if ( (testContext == NULL) || (cRedLog.IsError()) ) return kResultFail;
 
     // Execute the code in a context, while we have no completion and no error
     while ( (!testContext->IsExecutionComplete()) && (!cRedLog.IsError()) )
@@ -784,10 +787,10 @@ RedResult RedTestVSI::TestFragment_Log(void)
         log x ";
 
     RedLog                 cRedLog;
-    RedVSIContextFragment* testContext = REDNULL;
+    RedVSIContextFragment* testContext = NULL;
 
     RedVSIContextFactory::CreateContextForFragment(strCodeFragment, &testContext, cRedLog);
-    if ( (testContext == REDNULL) || (cRedLog.IsError()) ) return kResultFail;
+    if ( (testContext == NULL) || (cRedLog.IsError()) ) return kResultFail;
 
     // Execute the code in a context, while we have no completion and no error
     while ( (!testContext->IsExecutionComplete()) && (!cRedLog.IsError()) )

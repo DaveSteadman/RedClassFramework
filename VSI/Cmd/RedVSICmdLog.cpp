@@ -28,10 +28,10 @@ namespace VSI {
 RedVSICmdLog::RedVSICmdLog(void)
 {
     // This object's attributes
-    pLogExpr = REDNULL;
+    pLogExpr = NULL;
 
     // Parents attributes
-    SetNextCmd(REDNULL);
+    SetNextCmd(NULL);
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

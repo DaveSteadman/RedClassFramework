@@ -32,7 +32,7 @@ namespace Core {
 
 RedString::RedString(void)
 {
-    data        = REDNULL;
+    data        = NULL;
     allocsize   = 0;
     contentsize = 0;
 }
@@ -41,7 +41,7 @@ RedString::RedString(void)
 
 RedString::RedString(const char* instr)
 {
-    data        = REDNULL;
+    data        = NULL;
     allocsize   = 0;
     contentsize = 0;
 
@@ -52,11 +52,11 @@ RedString::RedString(const char* instr)
 
 RedString::RedString(const RedString& instr)
 {
-    data        = REDNULL;
+    data        = NULL;
     allocsize   = 0;
     contentsize = 0;
 
-    if (instr.TextPtr() != REDNULL)
+    if (instr.TextPtr() != NULL)
         Set(instr.TextPtr());
 }
 
@@ -110,7 +110,7 @@ void RedString::Set(const char Ch)
 
 void RedString::Set(const char* pText)
 {
-    if (pText == REDNULL)
+    if (pText == NULL)
     {
         Empty();
     }

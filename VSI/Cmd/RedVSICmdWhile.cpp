@@ -28,11 +28,11 @@ namespace VSI {
 RedVSICmdWhile::RedVSICmdWhile(void)
 {
     // this object's attributes
-    pConditionExpr = REDNULL;
-    pLoopBranch    = REDNULL;
+    pConditionExpr = NULL;
+    pLoopBranch    = NULL;
 
     // parents attributes
-    SetNextCmd(REDNULL);
+    SetNextCmd(NULL);
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

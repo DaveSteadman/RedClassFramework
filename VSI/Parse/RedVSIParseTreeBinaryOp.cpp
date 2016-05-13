@@ -34,9 +34,9 @@ namespace VSI {
 
 RedVSIParseTreeBinaryOp::RedVSIParseTreeBinaryOp(void)
 {
-    pLeft = REDNULL;
+    pLeft = NULL;
     cOp.Init();
-    pRight = REDNULL;
+    pRight = NULL;
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -55,12 +55,12 @@ RedVSIParseTreeBinaryOp::~RedVSIParseTreeBinaryOp(void)
 //    if (pLeft)
 //    {
 //        delete pLeft;
-//        pLeft = REDNULL;
+//        pLeft = NULL;
 //    }
 //    if (pRight)
 //    {
 //        delete pRight;
-//        pRight = REDNULL;
+//        pRight = NULL;
 //    }
 }
 

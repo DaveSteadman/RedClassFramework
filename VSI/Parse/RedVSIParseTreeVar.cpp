@@ -53,14 +53,13 @@ void RedVSIParseTreeVar::CalcResult(RedVSIContextInterface* pContext)
 
     // assign the result to the context
     pContext->SetExprResult(this, result);
-
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 void RedVSIParseTreeVar::AssignValue(RedVSIContextInterface* pContext, RedVariant& result)
 {
-    RedType* pVarObject = REDNULL;
+    RedType* pVarObject = NULL;
     if (!pContext->FindDataItem(cVarName, pVarObject))
         throw;
 

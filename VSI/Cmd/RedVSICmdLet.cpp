@@ -28,10 +28,10 @@ namespace VSI {
 RedVSICmdLet::RedVSICmdLet(void)
 {
     // this object's attributes
-    pExpr = REDNULL;
+    pExpr = NULL;
 
     // parents attributes
-    SetNextCmd(REDNULL);
+    SetNextCmd(NULL);
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

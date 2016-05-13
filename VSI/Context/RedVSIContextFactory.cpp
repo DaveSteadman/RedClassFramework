@@ -37,14 +37,14 @@ RedResult RedVSIContextFactory::CreateContextForFragment(const RedString& InputC
 
     // Turn the tokens into code
     RedVSICmdInterface* topCmd = RedVSICmdFactory::RunConstuctionCompetition(cTokenList, cLog);
-    if (topCmd == REDNULL)
+    if (topCmd == NULL)
         return kResultFail;
     if (cLog.IsError())
         return kResultFail;
 
     *OutputContext = new RedVSIContextFragment(cLog, topCmd);
 
-    if (*OutputContext == REDNULL)
+    if (*OutputContext == NULL)
         return kResultFail;
 
     return kResultSuccess;
@@ -54,7 +54,7 @@ RedResult RedVSIContextFactory::CreateContextForFragment(const RedString& InputC
 
 RedResult RedVSIContextFactory::LoadFragmentIntoContext (const RedString& InputCodeFragment, RedVSIContextFragment* UpdateContext, RedLog& cLog)
 {
-    if (UpdateContext == REDNULL)
+    if (UpdateContext == NULL)
         return kResultFail;
 
     // Turn the code into tokens
@@ -66,7 +66,7 @@ RedResult RedVSIContextFactory::LoadFragmentIntoContext (const RedString& InputC
 
     // Turn the tokens into code
     RedVSICmdInterface* topCmd = RedVSICmdFactory::RunConstuctionCompetition(cTokenList, cRedLog);
-    if (topCmd == REDNULL)
+    if (topCmd == NULL)
         return kResultFail;
     if (cRedLog.IsError())
         return kResultFail;
@@ -84,7 +84,7 @@ RedResult RedVSIContextFactory::CreateThreadContextForRoutine(const RedString& c
     // Find the routine to execute
     RedVSILibRoutineInterface* LibRoutine = pInputLib->FindRoutine(classname, routinename);
 
-    if (LibRoutine == REDNULL)
+    if (LibRoutine == NULL)
         return kResultFail;
 
     *OutputThreadContext = new RedVSIContextThread();

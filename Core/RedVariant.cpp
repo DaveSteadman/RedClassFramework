@@ -33,7 +33,7 @@ void RedVariant::Init(void)
     if (pData)
     {
         delete pData;
-        pData = REDNULL;
+        pData = NULL;
     }
 }
 
@@ -104,6 +104,14 @@ void RedVariant::SetValue(const RedChar& cNewCh)
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
+void RedVariant::SetValue(const RedRecord&  cNewRec)
+{
+    Init();
+    pData = new RedRecord(cNewRec);
+}
+
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
 void RedVariant::SetValue(const RedString& cNewStr)
 {
     Init();
@@ -117,7 +125,7 @@ RedType* RedVariant::Value(void)
     if (pData)
         return pData;
     
-    return REDNULL;
+    return NULL;
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -158,6 +166,13 @@ bool RedVariant::ExportTo(RedType* pExportToData) const
                 RedString* pSourceDataStr   = dynamic_cast<RedString*>(pData);
                 RedString* pExportToStr     = dynamic_cast<RedString*>(pExportToData);
                 *pExportToStr               = *pSourceDataStr;
+                is_success                  = true;
+            }
+            else if (pExportToData->Type().IsRecord())
+            {
+                RedRecord* pSourceDataRec   = dynamic_cast<RedRecord*>(pData);
+                RedRecord* pExportToRec     = dynamic_cast<RedRecord*>(pExportToData);
+                *pExportToRec               = *pSourceDataRec;
                 is_success                  = true;
             }
         }

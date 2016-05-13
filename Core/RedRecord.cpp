@@ -44,7 +44,11 @@ RedType* RedRecord::Clone(void) const
     RedRecord* pNewObj = new RedRecord();
 
     // delete the attrib list, replacing it with a cloned one.
-    delete[] pNewObj->pAttribList;
+    if (pNewObj->pAttribList)
+    {
+        delete pNewObj->pAttribList;
+        pNewObj->pAttribList = NULL;
+    }
     pNewObj->pAttribList = pAttribList->Clone();
 
     return (RedType*)pNewObj;
@@ -76,7 +80,7 @@ RedType* RedRecord::CreateAndAdd(const char* strNewAttribName, const RedDataType
 
 RedType* RedRecord::CreateObjectOfType(const RedDataType& NewAttribType)
 {
-    RedType* retData = REDNULL;
+    RedType* retData = NULL;
 
     if      (NewAttribType.IsBool())    retData = new RedBoolean;
     else if (NewAttribType.IsChar())    retData = new RedChar;

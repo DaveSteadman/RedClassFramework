@@ -45,9 +45,9 @@ public:
     RedString(const RedString& instr);
 
     // Inherited: RedType
-    void          Init(void)        { Empty(); };
-    RedDataType   Type(void)  const { return kDataTypeStr; };
-    RedType*      Clone(void) const { RedString* newS = new RedString(*this); return dynamic_cast<RedType*>(newS); };
+    void           Init(void)        { Empty(); };
+    RedDataType    Type(void)  const { return kDataTypeStr; };
+    RedType*       Clone(void) const { RedString* newS = new RedString(*this); return dynamic_cast<RedType*>(newS); };
 
     // Public Main Routines
     unsigned       FirstContentIndex(void) const { return 0; };
@@ -76,7 +76,6 @@ public:
     void           Append(const RedString& Str)                       { Append(Str.TextPtr()); };
     void           Insert(const unsigned Index, const RedString& Str) { Insert(Index, Str.TextPtr()); };
 
-    // Derived Routines
     unsigned       Length(void)                         const { return contentsize; };
     bool           IsEmpty(void)                        const { return (contentsize==0); };
     RedChar        CharObjAtIndex(const unsigned Index) const { return RedChar( CharAtIndex(Index) ); };
@@ -101,7 +100,6 @@ public:
     static unsigned NumBlocksForSize(const unsigned strsize)        { return (strsize/kRedStringAllocBlockSize) + 1; };
     static char*    AllocData(const unsigned NumBlocks);
 
-
     // Derived Assignment/Access Operators
     void operator  =(const char Ch)         { Set(Ch); };
     void operator  =(const RedChar& Ch)     { Set(Ch.Char()); };
@@ -116,7 +114,7 @@ public:
 
 private:
 
-    void DeleteData(void) { if (data != REDNULL) { delete [] data; data = REDNULL; } };
+    void DeleteData(void) { if (data != NULL) { delete [] data; data = NULL; } };
 
     void InitialiseNonContentChars(void);
 

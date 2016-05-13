@@ -79,7 +79,7 @@ void RedVSIParseStackTraverser::AddVariable(RedVSIParseStack& cStack, RedVSIPars
 //    RedVSIParseTreeVar* pVar = (RedVSIParseTreeVar*)pExpr;
 //    
 //    RedString cInVarName;
-//    RedVSIParseTreeInterface* pInVarIndexExpr = REDNULL;
+//    RedVSIParseTreeInterface* pInVarIndexExpr = NULL;
 //    
 //    //pVar->GetDetails(cInVarName, pInVarIndexExpr);
 //

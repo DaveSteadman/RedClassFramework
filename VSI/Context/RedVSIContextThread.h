@@ -42,7 +42,7 @@ class RedVSIContextThread
 {
 public:
 
-    RedVSIContextThread(void) { pCodeLib = REDNULL; };
+    RedVSIContextThread(void) { pCodeLib = NULL; };
 
 	// Code Library
     void                       SetCodeLib(RedVSILibInterface* pNewCodeLib) { pCodeLib = pNewCodeLib; };

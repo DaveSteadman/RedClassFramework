@@ -37,8 +37,8 @@ namespace VSI {
 
 RedVSICmdInterface* RedVSICmdFactory::RunConstuctionCompetition(RedVSITokenBuffer& cInputBuffer, RedLog& RedLog)
 {
-    RedVSICmdInterface* pFirstObject = REDNULL;
-    RedVSICmdInterface* pTailObject  = REDNULL;
+    RedVSICmdInterface* pFirstObject = NULL;
+    RedVSICmdInterface* pTailObject  = NULL;
     bool                iEndOrError  = false;
 
     // Loop until the end of the input buffer or an error has broken the process
@@ -101,10 +101,10 @@ RedVSICmdInterface* RedVSICmdFactory::RunConstuctionCompetition(RedVSITokenBuffe
     // Don't return any objects on error
     if (RedLog.IsError())
     {
-        if (pFirstObject != REDNULL)
+        if (pFirstObject != NULL)
         {
             delete pFirstObject;
-            pFirstObject = REDNULL;
+            pFirstObject = NULL;
         }
     }
 
@@ -134,24 +134,24 @@ RedVSICmdInterface* RedVSICmdFactory::IfComp(RedVSITokenBuffer& cInputBuffer, Re
 {
     // Read the if keyword
     RedVSIToken cTok  = cInputBuffer.GetToken();
-    if (!cTok.Predef().IsKeywordIf()) return REDNULL;
+    if (!cTok.Predef().IsKeywordIf()) return NULL;
 
-    RedVSIParseTreeInterface* pExpr      = REDNULL;
-    RedVSICmdInterface*       pPosBranch = REDNULL;
-    RedVSICmdInterface*       pNegBranch = REDNULL;
+    RedVSIParseTreeInterface* pExpr      = NULL;
+    RedVSICmdInterface*       pPosBranch = NULL;
+    RedVSICmdInterface*       pNegBranch = NULL;
 
     // Read the expression to assign. If okay, assign it, else delete the command
     pExpr = RedVSIParseFactory::ConstructAssignExpr(cInputBuffer, RedLog);
-    if ((pExpr == REDNULL) || (RedLog.IsError())) { RedLog.AddErrorEvent("IF command: cant construction expression"); return REDNULL; }
+    if ((pExpr == NULL) || (RedLog.IsError())) { RedLog.AddErrorEvent("IF command: cant construction expression"); return NULL; }
 
     // Check for the THEN keyword
     cTok = cInputBuffer.GetToken();
-    if (!cTok.Predef().IsKeywordThen()) { RedLog.AddErrorEvent("IF command: no Then keyword found"); delete pExpr; return REDNULL; }
+    if (!cTok.Predef().IsKeywordThen()) { RedLog.AddErrorEvent("IF command: no Then keyword found"); delete pExpr; return NULL; }
 
     // Create the positive branch, Read the list of commands, which ends with a token the 
     // competition doesn't understand
     pPosBranch = RunConstuctionCompetition(cInputBuffer, RedLog);
-    if ((pPosBranch == REDNULL) || (RedLog.IsError())) return REDNULL;
+    if ((pPosBranch == NULL) || (RedLog.IsError())) return NULL;
 
     // Read the ELSE related token and progress, or we have an error
     cTok = cInputBuffer.GetToken();
@@ -169,15 +169,15 @@ RedVSICmdInterface* RedVSICmdFactory::IfComp(RedVSITokenBuffer& cInputBuffer, Re
         RedLog.AddErrorEvent("IF command: no ENDIF keyword found");
         delete pExpr;
         delete pPosBranch;
-        if (pNegBranch != REDNULL) delete pNegBranch;
-        return REDNULL;
+        if (pNegBranch != NULL) delete pNegBranch;
+        return NULL;
     }
     if (RedLog.IsError())
     {
         delete pExpr;
         delete pPosBranch;
-        if (pNegBranch != REDNULL) delete pNegBranch;
-        return REDNULL;
+        if (pNegBranch != NULL) delete pNegBranch;
+        return NULL;
     }
 
     RedVSICmdIf* pIfCmd = new RedVSICmdIf();
@@ -219,7 +219,7 @@ RedVSICmdInterface* RedVSICmdFactory::LogComp(RedVSITokenBuffer& cInputBuffer, R
 {
     // New is started with a keyword, we can instantly return if not right.
     RedVSIToken cKeywordTok = cInputBuffer.GetToken();
-    if (!cKeywordTok.Predef().IsKeywordLog()) return REDNULL;
+    if (!cKeywordTok.Predef().IsKeywordLog()) return NULL;
 
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -228,7 +228,7 @@ RedVSICmdInterface* RedVSICmdFactory::LogComp(RedVSITokenBuffer& cInputBuffer, R
     if (!pExpr)
     {
         RedLog.AddErrorEvent("Log Command: Unable to read expression.");
-        return REDNULL;
+        return NULL;
     }
 
     // Create the command object to return, and assign the data.
@@ -244,7 +244,7 @@ RedVSICmdInterface* RedVSICmdFactory::NewComp(RedVSITokenBuffer& cInputBuffer, R
 {
     // New is started with a keyword, we can instantly return if not right.
     RedVSIToken cKeywordTok = cInputBuffer.GetToken();
-    if (!cKeywordTok.Predef().IsKeywordNew()) return REDNULL;
+    if (!cKeywordTok.Predef().IsKeywordNew()) return NULL;
 
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -253,7 +253,7 @@ RedVSICmdInterface* RedVSICmdFactory::NewComp(RedVSITokenBuffer& cInputBuffer, R
     if (!cLocTok.Predef().IsLocationKeyword())
     {
         RedLog.AddErrorEvent("New Command: Bad Location Keyword.");
-        return REDNULL;
+        return NULL;
     }
     RedVSILangElement cLoc;
     if      (cLocTok.Predef().IsKeywordAttribute()) cLoc = RedVSILangElement::LocationAttribute();
@@ -265,7 +265,7 @@ RedVSICmdInterface* RedVSICmdFactory::NewComp(RedVSITokenBuffer& cInputBuffer, R
     if (!cTypeTok.Predef().IsTypeKeyword())
     {
         RedLog.AddErrorEvent("New Command: Bad Type Keyword.");
-        return REDNULL;
+        return NULL;
     }
     RedVSILangElement cType;
     if      (cTypeTok.Predef().IsKeywordBool())     cType = RedVSILangElement::TypeBool();
@@ -279,11 +279,11 @@ RedVSICmdInterface* RedVSICmdFactory::NewComp(RedVSITokenBuffer& cInputBuffer, R
     if (!cNameTok.Type().IsName())
     {
         RedLog.AddErrorEvent("New Command: Bad Name Token.");
-        return REDNULL;
+        return NULL;
     }
 
     // Look for the optional initialisation clause
-    RedVSIParseTreeInterface* pInitExpr = REDNULL;
+    RedVSIParseTreeInterface* pInitExpr = NULL;
     RedVSIToken cEqTok = cInputBuffer.GetToken();
     if (cEqTok.Predef().IsSymbolAssignEqual())
     {
@@ -292,7 +292,7 @@ RedVSICmdInterface* RedVSICmdFactory::NewComp(RedVSITokenBuffer& cInputBuffer, R
         if (!pInitExpr)
         {
             RedLog.AddErrorEvent("New Command: Unable to read initialisation expression.");
-            return REDNULL;
+            return NULL;
         }
     }
     else
@@ -312,7 +312,7 @@ RedVSICmdInterface* RedVSICmdFactory::ReturnComp(RedVSITokenBuffer& cInputBuffer
 {
     // New is started with a keyword, we can instantly return if not right.
     RedVSIToken cKeywordTok = cInputBuffer.GetToken();
-    if (!cKeywordTok.Predef().IsKeywordReturn()) return REDNULL;
+    if (!cKeywordTok.Predef().IsKeywordReturn()) return NULL;
 
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -335,7 +335,7 @@ RedVSICmdInterface* RedVSICmdFactory::ReturnComp(RedVSITokenBuffer& cInputBuffer
     }
 
     // something didn't match, so return zero.
-    return REDNULL;
+    return NULL;
 }
     
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -344,19 +344,19 @@ RedVSICmdInterface* RedVSICmdFactory::WhileComp(RedVSITokenBuffer& cInputBuffer,
 {
     // Read the WHILE keyword
     RedVSIToken cTok  = cInputBuffer.GetToken();
-    if (!cTok.Predef().IsKeywordWhile()) return REDNULL;
+    if (!cTok.Predef().IsKeywordWhile()) return NULL;
 
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-    RedVSIParseTreeInterface* pExpr       = REDNULL;
-    RedVSICmdInterface*       pLoopBranch = REDNULL;
+    RedVSIParseTreeInterface* pExpr       = NULL;
+    RedVSICmdInterface*       pLoopBranch = NULL;
 
     // Read the expression to assign. If okay, assign it, else delete the command
     pExpr = RedVSIParseFactory::ConstructAssignExpr(cInputBuffer, RedLog);
     if (!pExpr)
     {
         RedLog.AddErrorEvent("Cmd Factory: While Cmd: unable to construct loop expression");
-        return REDNULL;
+        return NULL;
     }
 
     // Check for the LOOP keyword
@@ -365,7 +365,7 @@ RedVSICmdInterface* RedVSICmdFactory::WhileComp(RedVSITokenBuffer& cInputBuffer,
     {
         RedLog.AddErrorEvent("Cmd Factory: While Cmd: No loop keyword");
         delete pExpr;
-        return REDNULL;
+        return NULL;
     }
 
     // Create the positive branch, Read the list of commands, which ends with a token the 
@@ -379,7 +379,7 @@ RedVSICmdInterface* RedVSICmdFactory::WhileComp(RedVSITokenBuffer& cInputBuffer,
         RedLog.AddErrorEvent("Cmd Factory: While Cmd: No end-loop keyword");
         delete pExpr;
         delete pLoopBranch;
-        return REDNULL;
+        return NULL;
     }
 
     RedVSICmdWhile* pWhileCmd = new RedVSICmdWhile();

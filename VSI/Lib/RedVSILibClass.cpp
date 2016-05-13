@@ -52,14 +52,14 @@ RedVSILibRoutine* RedVSILibClass::FindRoutine(const RedVSIRoutineCallInterface& 
     }
 
     // failed to find the routine in this class
-    return REDNULL;
+    return NULL;
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 RedVSILibRoutine* RedVSILibClass::FindRoutineByName(const RedString& cNewRoutineName)
 {
-    RedVSILibRoutine* pCurrRoutine = REDNULL;
+    RedVSILibRoutine* pCurrRoutine = NULL;
     
     // look through all of the routines
     RoutineIteratorType cIt(&cRoutineList);
@@ -76,7 +76,7 @@ RedVSILibRoutine* RedVSILibClass::FindRoutineByName(const RedString& cNewRoutine
     }
 
     // failed to find the routine in this class
-    return REDNULL;
+    return NULL;
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

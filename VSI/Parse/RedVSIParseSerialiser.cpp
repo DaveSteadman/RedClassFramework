@@ -119,7 +119,7 @@ void RedVSIParseSerialiser::SerialiseVariable(RedVSITokenBuffer& cTokenBuffer, R
 {
     // define all the variables we will need
     RedString                 cOutVarName;
-    //RedVSIParseTreeInterface* pOutVarIndexExpr = REDNULL;
+    //RedVSIParseTreeInterface* pOutVarIndexExpr = NULL;
     RedVSIToken               cNameTok;
 
     // read the data out of the parse tree node

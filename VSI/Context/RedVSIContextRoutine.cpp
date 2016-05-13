@@ -37,8 +37,8 @@ RedVSIContextRoutine::RedVSIContextRoutine(RedLog& initAnalysis) : cAnalysis(ini
     // pThisObj     = 0;
 
     cReturnValue.Init();
-    pCurrCmd       = REDNULL;
-    pThreadContextRecord = REDNULL;
+    pCurrCmd       = NULL;
+    pThreadContextRecord = NULL;
 
     eCmdPhase = eCmdExecPhaseStart;
 }
@@ -51,7 +51,7 @@ RedVSIContextRoutine::RedVSIContextRoutine(RedLog& initAnalysis, RedVSICmdInterf
 
     cReturnValue.Init();
     pCurrCmd       = pFirstCmd;
-    pThreadContextRecord = REDNULL;
+    pThreadContextRecord = NULL;
 
     eCmdPhase = eCmdExecPhaseStart;
 }
@@ -63,7 +63,7 @@ RedVSIContextRoutine::RedVSIContextRoutine(const RedString& inClassName, const R
     ClassName      = inClassName;
     RoutineName    = inRoutineName;
     pCurrCmd       = pFirstCmd;
-    pThreadContextRecord = REDNULL;
+    pThreadContextRecord = NULL;
 
     eCmdPhase = eCmdExecPhaseStart;
 }
@@ -102,7 +102,7 @@ RedVSIContextRoutine::~RedVSIContextRoutine(void)
 
 RedType* RedVSIContextRoutine::CreateDataItem(const RedVSILangElement& cLocation, const RedVSILangElement& cType, const RedString& cName)
 {
-    RedType* pNewData = REDNULL;
+    RedType* pNewData = NULL;
 
     // Basic Validation
     if (!cLocation.IsLocation()) throw;
@@ -116,7 +116,7 @@ RedType* RedVSIContextRoutine::CreateDataItem(const RedVSILangElement& cLocation
     }
     else if (cLocation.IsLocationHeap())
     {
-        if (pThreadContextRecord != REDNULL)
+        if (pThreadContextRecord != NULL)
             pNewData = pThreadContextRecord->CreateHeapDataItem(cType, cName);
     }
 
@@ -139,7 +139,7 @@ RedType* RedVSIContextRoutine::DuplicateDataItem(const RedVSILangElement& cLocat
     }
     else if (cLocation.IsLocationHeap())
     {
-        if (pThreadContextRecord != REDNULL)
+        if (pThreadContextRecord != NULL)
         {
             pThreadContextRecord->Heap()->CloneAndAdd(cName, pDataItem);
         }
@@ -157,7 +157,7 @@ bool RedVSIContextRoutine::FindDataItem(const RedString& cName, RedType*& pData)
     if (cLocalVariables.Find(cName, pData))
         return true;
 
-    if (pThreadContextRecord != REDNULL)
+    if (pThreadContextRecord != NULL)
     {
         if (pThreadContextRecord->FindHeapDataItem(cName, pData))
             return true;
@@ -172,7 +172,7 @@ RedVariant RedVSIContextRoutine::DataItemAsVariant(const RedString& cName)
 {
     RedVariant RetVar;
 
-    RedType* pData = REDNULL;
+    RedType* pData = NULL;
 
     bool found = FindDataItem(cName, pData);
 
@@ -196,7 +196,7 @@ void RedVSIContextRoutine::SetValueToReturn(const RedVariant& cData)
 void RedVSIContextRoutine::SetReturnedValue(const RedVariant& cData)
 {
     // if we don't have an expression to write the data to, there is a serious issue.
-    if (pCurrExpr != REDNULL)
+    if (pCurrExpr != NULL)
     {
         cExprResultList.Add(pCurrExpr, cData);
     }
@@ -250,16 +250,16 @@ void RedVSIContextRoutine::ExecuteExprQueue(void)
 
 void RedVSIContextRoutine::SetupRoutineCall(const RedVSIRoutineCallInterface& cCallSignature)
 {
-    if (pThreadContextRecord != REDNULL)
+    if (pThreadContextRecord != NULL)
     {
         RedVSILibInterface* pLib = pThreadContextRecord->CodeLib();
 
-        if (pLib != REDNULL)
+        if (pLib != NULL)
         {
             RedVSILibRoutineInterface* pRtn = pLib->FindRoutine(cCallSignature);
 
             // If we found a routine in the library that matched the signature
-            if (pRtn != REDNULL)
+            if (pRtn != NULL)
             {
                 // Create the new routine context
                 RedVSIContextRoutine* pSubroutineContext = new RedVSIContextRoutine(cCallSignature.ClassName(), cCallSignature.FuncName(), pRtn->FirstCommand(), cAnalysis);
@@ -313,10 +313,10 @@ void RedVSIContextRoutine::SetupRoutineCall(const RedVSIRoutineCallInterface& cC
 
 bool RedVSIContextRoutine::IsContextBlocked(const RedVSIContextRoutine* pRoutineContext) const
 {
-    if (pRoutineContext == REDNULL)
+    if (pRoutineContext == NULL)
         return false;
 
-    if (pRoutineContext->pThreadContextRecord != REDNULL)
+    if (pRoutineContext->pThreadContextRecord != NULL)
     {
         if (pRoutineContext->pThreadContextRecord->TopRoutineOnStack() != this)
             return true;
@@ -329,7 +329,7 @@ bool RedVSIContextRoutine::IsContextBlocked(const RedVSIContextRoutine* pRoutine
 
 bool RedVSIContextRoutine::IsContextExecutionComplete(const RedVSIContextRoutine* pRoutineContext) const
 {
-    if (pRoutineContext == REDNULL)
+    if (pRoutineContext == NULL)
         return false;
 
     if (IsContextBlocked(pRoutineContext))
@@ -374,7 +374,7 @@ void RedVSIContextRoutine::Execute(const unsigned CmdCount)
         {
             // On entering the loop, check we have a command to execute. Prior HasCmd call ensures
             // this will pass.
-            if (pCurrCmd == REDNULL)
+            if (pCurrCmd == NULL)
                 pCurrCmd = cCmdStack.Pop();
 
             // Queue up all the expressions needed by the command
@@ -398,7 +398,7 @@ void RedVSIContextRoutine::Execute(const unsigned CmdCount)
             // Clean up after execution
             cExprResultList.DelAll();
             CommandCountdown--;
-            pCurrCmd = REDNULL;
+            pCurrCmd = NULL;
 
             // Look for the next command to execute
             if (!cCmdStack.IsEmpty())

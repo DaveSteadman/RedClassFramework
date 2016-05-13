@@ -18,5 +18,6 @@
 
 #pragma once
 
-#define REDNULL 0
-
+#ifndef NULL
+    #define NULL 0
+#endif

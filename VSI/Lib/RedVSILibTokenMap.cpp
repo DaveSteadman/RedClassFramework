@@ -87,6 +87,8 @@ void RedVSILibTokenMap::SetupTokenMap(void)
         cVSILibTokenMap.Add(RedString(")"),       RedVSIIOElement::SymbolCloseBracket());
         cVSILibTokenMap.Add(RedString("{"),       RedVSIIOElement::SymbolOpenBracket());
         cVSILibTokenMap.Add(RedString("}"),       RedVSIIOElement::SymbolCloseBracket());
+        cVSILibTokenMap.Add(RedString("["),       RedVSIIOElement::SymbolOpenSquareBracket());
+        cVSILibTokenMap.Add(RedString("]"),       RedVSIIOElement::SymbolCloseSquareBracket());
         cVSILibTokenMap.Add(RedString(","),       RedVSIIOElement::SymbolComma());
         cVSILibTokenMap.Add(RedString("."),       RedVSIIOElement::SymbolPeriod());
         cVSILibTokenMap.Add(RedString("::"),      RedVSIIOElement::SymbolDoubleColon());

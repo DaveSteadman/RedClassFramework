@@ -32,7 +32,7 @@ namespace VSI {
 
 RedVSIContextFragment::RedVSIContextFragment(RedLog& initAnalysis) : cAnalysis(initAnalysis)
 {
-    pCurrCmd = REDNULL;
+    pCurrCmd = NULL;
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -52,7 +52,7 @@ RedVSIContextFragment::~RedVSIContextFragment(void)
     //    delete pReturnValue;
 
     // Clear down any owned code
-    SetTopCmd(REDNULL);
+    SetTopCmd(NULL);
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -61,7 +61,7 @@ RedVSIContextFragment::~RedVSIContextFragment(void)
 
 RedType* RedVSIContextFragment::CreateDataItem(const RedVSILangElement& cLocation, const RedVSILangElement& cType, const RedString& cName)
 {
-    RedType* pNewData = REDNULL;
+    RedType* pNewData = NULL;
 
     // Basic Validation
     if (!cLocation.IsLocation()) throw;
@@ -117,7 +117,7 @@ RedVariant RedVSIContextFragment::DataItemAsVariant(const RedString& cName)
 {
     RedVariant RetVar;
 
-    RedType* pData = REDNULL;
+    RedType* pData = NULL;
 
     bool found = FindDataItem(cName, pData);
 
@@ -190,7 +190,7 @@ void RedVSIContextFragment::Execute(const unsigned CmdCount)
     {
         // On entering the loop, check we have a command to execute. Prior HasCmd call ensures this
         // will pass.
-        if (pCurrCmd == REDNULL)
+        if (pCurrCmd == NULL)
 			pCurrCmd = cCmdStack.Pop();
 
         // Queue up all the expressions needed by the command
@@ -203,7 +203,7 @@ void RedVSIContextFragment::Execute(const unsigned CmdCount)
         // Clean up after execution
         cExprResultList.DelAll();
         CommandCountdown--;
-        pCurrCmd = REDNULL;
+        pCurrCmd = NULL;
 
         // Look for the next command to execute
         if (!cCmdStack.IsEmpty())
@@ -225,7 +225,7 @@ bool RedVSIContextFragment::HasCmdToExecute(void)
 
 bool RedVSIContextFragment::IsExecutionComplete(void) const
 { 
-    if ( (cCmdStack.IsEmpty()) && (pCurrCmd == REDNULL) )
+    if ( (cCmdStack.IsEmpty()) && (pCurrCmd == NULL) )
         return true;
 
     return false;
@@ -241,15 +241,15 @@ bool RedVSIContextFragment::IsExecutionComplete(void) const
 void RedVSIContextFragment::SetTopCmd(RedVSICmdInterface* pFragmentCmd)
 {
     // Clear down any current execution
-    pCurrCmd = REDNULL;
+    pCurrCmd = NULL;
     cCmdStack.DelAll();
     cExprResultList.DelAll();
 
     // Delete any previous top command
-    if (pTopCmd == REDNULL)
+    if (pTopCmd == NULL)
     {
         delete pTopCmd;
-        pTopCmd = REDNULL;
+        pTopCmd = NULL;
     }
 
     pTopCmd = pFragmentCmd;

@@ -31,7 +31,6 @@ public:
 	RedVSITokenType(void)                      { Init(); };
 	
 	void Init(void)                            { eState = eDefaultInvalid; };
-	
 	void SetNumber(void)                       { eState = eNumber; };
 	void SetName(void)                         { eState = eName; };
 	void SetStringLiteral(void)                { eState = eStringLiteral; };

@@ -47,7 +47,7 @@ RedResult RedTestTml::TestOne(void)
     {
         RedString TestInTml = "{{name} content}";
         RedTmlElement* testElement = RedTmlAction::ParseTinyML(TestInTml);
-        if (testElement == REDNULL)
+        if (testElement == NULL)
         {
             delete testElement;
             return kResultFail;
@@ -71,7 +71,7 @@ RedResult RedTestTml::TestTwo(void)
 {
 //    {
 //        RedString pathFail  = "/tmp/TestNonExistentFile.tml";
-//        RedTmlElement* newTmlElement = REDNULL;
+//        RedTmlElement* newTmlElement = NULL;
 //
 //        // Check for a non-existant file. Has to return fail
 //        RedResult resultOne = RedTmlAction::CreateTmlFromFile(pathFail, &newTmlElement);
@@ -93,7 +93,7 @@ RedResult RedTestTml::TestTwo(void)
 //    }
 //
 //    {
-//        RedTmlElement* newTmlElement = REDNULL;
+//        RedTmlElement* newTmlElement = NULL;
 //        if (RedTmlAction::CreateTmlFromFile(pathSave1, &newTmlElement) != kResultSuccess)
 //            return kResultFail;
 //
@@ -125,7 +125,7 @@ RedResult RedTestTml::TestIterators(void)
         {
             RedTmlElement* pCurrElem = yIt.CurrentItem();
 
-            if (pCurrElem != REDNULL)
+            if (pCurrElem != NULL)
                 count++;
             yIt.Next();
         }
@@ -167,7 +167,7 @@ RedResult RedTestTml::TestIterators(void)
         {
             RedTmlElement* pCurrElem = yIt.CurrentItem();
 
-            if (pCurrElem != REDNULL)
+            if (pCurrElem != NULL)
                 count++;
             yIt.Next();
         }
@@ -213,7 +213,7 @@ RedResult RedTestTml::TestQuoteCharacters(void)
     {
         RedString TestInTml = "{{name} \"content\"}";
         RedTmlElement* testElement = RedTmlAction::ParseTinyML(TestInTml);
-        if (testElement == REDNULL) return kResultFail;
+        if (testElement == NULL) return kResultFail;
         if (!testElement->IsLeaf()) { delete testElement; return kResultFail; }
 
         RedTmlLeaf* pLeaf = dynamic_cast<RedTmlLeaf*>(testElement);

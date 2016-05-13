@@ -43,7 +43,7 @@ RedTmlElement* RedTmlAction::NodeFirstNamedElement(RedTmlNode& node, const RedSt
         yIt.Next();
     }
 
-    return REDNULL;
+    return NULL;
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -57,7 +57,7 @@ RedTmlNode* RedTmlAction::NodeFirstNamedNode(RedTmlNode& node, const RedString& 
     if ((pElem) && (pElem->IsNode()))
         return dynamic_cast<RedTmlNode*>(pElem);
 
-    return REDNULL;
+    return NULL;
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -71,7 +71,7 @@ RedTmlLeaf* RedTmlAction::NodeFirstNamedLeaf(RedTmlNode& node, const RedString& 
     if ((pElem) && (pElem->IsLeaf()))
         return dynamic_cast<RedTmlLeaf*>(pElem);
 
-    return REDNULL;
+    return NULL;
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -109,7 +109,7 @@ void RedTmlAction::SetChildLeaf(RedTmlNode& node, const RedString& leafname, con
 RedResult RedTmlAction::ChildLeafDataForName(RedTmlNode& node, const RedString& inleafname, RedString& outleafdata)
 {
     RedTmlLeaf* leafnode = RedTmlAction::NodeFirstNamedLeaf(node, inleafname);
-    if (leafnode == REDNULL)
+    if (leafnode == NULL)
         return kResultFail;
 
     outleafdata = leafnode->Data();
@@ -200,10 +200,10 @@ unsigned RedTmlAction::TreeElementCount(RedTmlNode& node)
 RedResult RedTmlAction::CreateTmlFromFile(const RedString& filepath, RedTmlElement** newTmlElement)
 {
     // Initialisation
-    if (*newTmlElement != REDNULL)
+    if (*newTmlElement != NULL)
     {
         delete *newTmlElement;
-        *newTmlElement = REDNULL;
+        *newTmlElement = NULL;
     }
 
     // Check the file exists to open
@@ -217,7 +217,7 @@ RedResult RedTmlAction::CreateTmlFromFile(const RedString& filepath, RedTmlEleme
 
     // Parse the file to create TML Element
     *newTmlElement = RedTmlAction::ParseTinyML(iB);
-    if (*newTmlElement == REDNULL)
+    if (*newTmlElement == NULL)
         return kResultFail;
 
     return kResultSuccess;
@@ -228,7 +228,7 @@ RedResult RedTmlAction::CreateTmlFromFile(const RedString& filepath, RedTmlEleme
 RedResult RedTmlAction::CreateFileFromTml(const RedTmlElement* tmlElement, const RedString& filepath, const TESerialiseType writeStyle)
 {
     // Check node is not null
-    if (tmlElement == REDNULL)
+    if (tmlElement == NULL)
         return kResultFail;
 
     // Write the validated tml node to the buffer
@@ -258,12 +258,12 @@ RedTmlElement* RedTmlAction::ParseTinyML(const RedString& inputStr)
 
 RedTmlElement* RedTmlAction::ParseTinyML(RedBufferInput& inputBuf)
 {
-    RedTmlElement* retTml = REDNULL;
+    RedTmlElement* retTml = NULL;
 
     if ( ReadTmlElement(inputBuf, &retTml) )
         return retTml;
 
-    return REDNULL;
+    return NULL;
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

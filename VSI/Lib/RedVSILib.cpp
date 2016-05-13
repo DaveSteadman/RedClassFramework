@@ -78,9 +78,9 @@ RedVSILibClass* RedVSILib::FindClass(const RedString& cClassName)
         if (RedIOHandler::FileExists(fullpath))
         {
             // Load the class
-            RedTmlElement* newX = REDNULL;
+            RedTmlElement* newX = NULL;
             if (RedTmlAction::CreateTmlFromFile(fullpath, &newX) != kResultSuccess)
-                return REDNULL;
+                return NULL;
 
             RedVSILibFactory vsiCodeLibFactory(this);
             RedTmlNode*    tmlTreeNode    =  dynamic_cast<RedTmlNode*>(newX);
@@ -101,7 +101,7 @@ RedVSILibClass* RedVSILib::FindClass(const RedString& cClassName)
         }
     }
 
-    return REDNULL;
+    return NULL;
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -109,7 +109,7 @@ RedVSILibClass* RedVSILib::FindClass(const RedString& cClassName)
 RedVSILibRoutineInterface* RedVSILib::FindRoutine(const RedVSIRoutineCallInterface& cSig)
 {
     RedVSILibClass*            pClass   = FindClass(cSig.ClassName());
-    RedVSILibRoutineInterface* pRoutine = REDNULL;
+    RedVSILibRoutineInterface* pRoutine = NULL;
 
     // if we found the first class
     if (pClass)
@@ -125,10 +125,10 @@ RedVSILibRoutineInterface* RedVSILib::FindRoutine(const RedVSIRoutineCallInterfa
             {
                 // find the parent class or exit
                 if (!pClass->HasParentClass())
-                    return REDNULL;
+                    return NULL;
                 pClass = FindClass(pClass->ParentClassName());
                 if (!pClass) 
-                    return REDNULL;
+                    return NULL;
             }
         }
     }
@@ -141,7 +141,7 @@ RedVSILibRoutineInterface* RedVSILib::FindRoutine(const RedVSIRoutineCallInterfa
 RedVSILibRoutineInterface* RedVSILib::FindRoutine(const RedString& cClassName, const RedString& cRoutineName)
 {
     RedVSILibClass*            pClass   = FindClass(cClassName);
-    RedVSILibRoutineInterface* pRoutine = REDNULL;
+    RedVSILibRoutineInterface* pRoutine = NULL;
 
     if (pClass)
         pRoutine = pClass->FindRoutineByName(cRoutineName);

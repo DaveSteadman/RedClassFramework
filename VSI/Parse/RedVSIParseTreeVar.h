@@ -36,7 +36,7 @@ public:
 
     // construction;
     RedVSIParseTreeVar(void)                                                               { cVarName=""; };
-    RedVSIParseTreeVar(const RedString& cNewVarName)                                       { cVarName=cNewVarName; pVarIndexExpr=REDNULL; };
+    RedVSIParseTreeVar(const RedString& cNewVarName)                                       { cVarName=cNewVarName; pVarIndexExpr=NULL; };
     RedVSIParseTreeVar(const RedString& cNewVarName, RedVSIParseTreeInterface* index_expr) { cVarName=cNewVarName; pVarIndexExpr=index_expr;  };
     ~RedVSIParseTreeVar();
 

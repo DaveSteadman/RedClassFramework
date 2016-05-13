@@ -75,7 +75,7 @@ void RedVSILibFactory::InputTmlClass(RedTmlNode cClassNode, RedLog& cAnalysis)
             {
                 RedVSILibRoutine* newRoutine = InputTmlRoutine(*pCurrNode, cAnalysis);
 
-                if ((newRoutine != REDNULL) && (!cAnalysis.IsError()))
+                if ((newRoutine != NULL) && (!cAnalysis.IsError()))
                     pNewClass->AddRoutine(newRoutine);
             }
         }
@@ -96,21 +96,21 @@ RedVSILibRoutine* RedVSILibFactory::InputTmlRoutine(RedTmlNode& cRoutineNode, Re
     if (cRoutineNode.Name() != kVSIIOElementKeywordRoutine)
     {
         cAnalysis.AddErrorEvent("Lib Factory: InputTmlRoutine: Top-level node not a routine");
-        return REDNULL;
+        return NULL;
     }
 
     RedVSILibRoutine* newRoutine = new RedVSILibRoutine;
 
     // name
     RedTmlLeaf* pName = RedTmlAction::NodeFirstNamedLeaf(cRoutineNode, kVSIIOElementKeywordName);
-    if (pName == REDNULL)
+    if (pName == NULL)
         cAnalysis.AddErrorEvent("Lib Factory: InputTmlRoutine: Routine has no name");
     else
         newRoutine->SetName(pName->Data());
 
     // params
     RedTmlNode* pParams = RedTmlAction::NodeFirstNamedNode(cRoutineNode, kVSIIOElementKeywordParams);
-    if (pParams != REDNULL)
+    if (pParams != NULL)
     {
         RedTmlNode::TmlNodeListItType paramIt = pParams->NodeIterator();
         paramIt.First();
@@ -137,7 +137,7 @@ RedVSILibRoutine* RedVSILibFactory::InputTmlRoutine(RedTmlNode& cRoutineNode, Re
 
     // code
     RedTmlLeaf* pTmlCode = RedTmlAction::NodeFirstNamedLeaf(cRoutineNode, kVSIIOElementKeywordCode);
-    if (pTmlCode == REDNULL)
+    if (pTmlCode == NULL)
         cAnalysis.AddErrorEvent("Lib Factory: InputTmlRoutine: Routine has no code");
     else
     {
@@ -164,7 +164,7 @@ RedVSILibRoutine* RedVSILibFactory::InputTmlRoutine(RedTmlNode& cRoutineNode, Re
     if (cAnalysis.IsError())
     {
         delete newRoutine;
-        newRoutine = REDNULL;
+        newRoutine = NULL;
     }
 
     return newRoutine;
@@ -176,7 +176,7 @@ RedTmlElement* RedVSILibFactory::OutputTmlClass (const RedString& classname)
 {
     // Find the class
     RedVSILibClass* pClass = pLib->FindClass(classname);
-    if (pClass == REDNULL) return REDNULL;
+    if (pClass == NULL) return NULL;
 
     // Create the class node
     RedTmlNode* pClassTml = new RedTmlNode("class");
@@ -278,7 +278,7 @@ RedTmlElement* RedVSILibFactory::OutputTmlRoutine(const RedString& classname, co
     }
 
 
-    return REDNULL;
+    return NULL;
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

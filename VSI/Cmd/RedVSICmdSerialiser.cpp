@@ -55,7 +55,7 @@ void RedVSICmdSerialiser::SerialiseCommandChain(RedVSITokenBuffer& cTokenBuffer,
 
         // Move onto the next command, write a new line if its valid.
         pCmd = pCmd->NextCmd();
-        if (pCmd != REDNULL)
+        if (pCmd != NULL)
             cTokenBuffer.AppendToken(cCRLFTok);
     }
 }
@@ -146,7 +146,7 @@ void RedVSICmdSerialiser::SerialiseNewCmd(RedVSITokenBuffer& cTokenBuffer, RedVS
     cTokenBuffer.AppendToken(cNameTok);
     
     // Serialise the expression
-    if (pOutInitExpr != REDNULL)
+    if (pOutInitExpr != NULL)
     {
         RedVSIToken cEqualTok(RedVSIIOElement::SymbolAssignEqual());
         cTokenBuffer.AppendToken(cEqualTok);
@@ -168,7 +168,7 @@ void RedVSICmdSerialiser::SerialiseReturnCmd(RedVSITokenBuffer& cTokenBuffer, Re
     cTokenBuffer.AppendToken(cCmdTok);
 
     // serialise the expression
-    if (pReturnExpr != REDNULL)
+    if (pReturnExpr != NULL)
         RedVSIParseSerialiser::SerialiseExpression(cTokenBuffer, pReturnExpr);
 }
 
@@ -186,7 +186,7 @@ void RedVSICmdSerialiser::SerialiseIfCmd(RedVSITokenBuffer& cTokenBuffer, RedVSI
     cTokenBuffer.AppendToken(cCmdTok);
 
     // Serialise positive branch
-    if (pPosBranch != REDNULL)
+    if (pPosBranch != NULL)
         RedVSICmdSerialiser::SerialiseCommandChain(cTokenBuffer, pPosBranch);
 
     // Write the ELSE command keyword
@@ -194,7 +194,7 @@ void RedVSICmdSerialiser::SerialiseIfCmd(RedVSITokenBuffer& cTokenBuffer, RedVSI
     cTokenBuffer.AppendToken(cElseCmdTok);
 
     // Serialise negative branch
-    if (pNegBranch != REDNULL)
+    if (pNegBranch != NULL)
         RedVSICmdSerialiser::SerialiseCommandChain(cTokenBuffer, pNegBranch);
 
     // Write the ENDIF command keyword
@@ -222,7 +222,7 @@ void RedVSICmdSerialiser::SerialiseWhileCmd(RedVSITokenBuffer& cTokenBuffer, Red
     cTokenBuffer.AppendToken(cLoopCmdTok);
 
     // Serialise the loop branch
-    if (pLoopBranch != REDNULL)
+    if (pLoopBranch != NULL)
         RedVSICmdSerialiser::SerialiseCommandChain(cTokenBuffer, pLoopBranch);
 
     // Write the ENDLOOP command keyword

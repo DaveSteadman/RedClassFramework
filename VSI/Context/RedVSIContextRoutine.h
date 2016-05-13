@@ -79,8 +79,8 @@ public:
 
     // Setup Calls
     void            SetupRoutineCall(const RedVSIRoutineCallInterface& cSignature);
-    void            QueueCommand(RedVSICmdInterface* pCmd)                   { if (pCmd != REDNULL) cCmdStack.Push(pCmd); else pCurrCmd = pCmd; };
-    void            ClearCommandQueue(void)                                  { cCmdStack.DelAll(); pCurrCmd=REDNULL; };
+    void            QueueCommand(RedVSICmdInterface* pCmd)                   { if (pCmd != NULL) cCmdStack.Push(pCmd); else pCurrCmd = pCmd; };
+    void            ClearCommandQueue(void)                                  { cCmdStack.DelAll(); pCurrCmd=NULL; };
     void            SetValueToReturn(const RedVariant& cData);
     bool            IsExecutionComplete(void) const;
 

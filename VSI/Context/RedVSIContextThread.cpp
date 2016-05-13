@@ -31,7 +31,7 @@ namespace VSI {
 
 RedType* RedVSIContextThread::CreateHeapDataItem(const RedVSILangElement& cType, const RedString& cName)
 {
-    RedType* pNewData = REDNULL;
+    RedType* pNewData = NULL;
 
     // Basic Validation
     if (!cType.IsType()) throw;
@@ -61,7 +61,7 @@ bool RedVSIContextThread::FindHeapDataItem(const RedString& cName, RedType*& pDa
 RedVSIContextRoutine* RedVSIContextThread::TopRoutineOnStack(void)
 {
     if (cRoutineStack.IsEmpty())
-        return REDNULL;
+        return NULL;
     else
         return cRoutineStack.NextPopItem();
 }
@@ -90,13 +90,13 @@ void RedVSIContextThread::Execute(const unsigned NumCmd)
 
     RedVSIContextRoutine* pTopRoutineContext = TopRoutineOnStack();
 
-    while (pTopRoutineContext != REDNULL)
+    while (pTopRoutineContext != NULL)
     {
         pTopRoutineContext->Execute(decementingCmdCount);
 
         // Refresh the top routine on the stack and see if its execution is complete
         pTopRoutineContext = TopRoutineOnStack();
-        if (pTopRoutineContext != REDNULL)
+        if (pTopRoutineContext != NULL)
         {
             // Its execution is complete
             if (pTopRoutineContext->IsContextExecutionComplete(pTopRoutineContext))
@@ -110,7 +110,7 @@ void RedVSIContextThread::Execute(const unsigned NumCmd)
                 pTopRoutineContext = TopRoutineOnStack();
 
                 // If there is a further routine on the stack, write to it (won't be for the last routine.
-                if (pTopRoutineContext != REDNULL)
+                if (pTopRoutineContext != NULL)
                     pTopRoutineContext->SetReturnedValue(retval);
             }
         }

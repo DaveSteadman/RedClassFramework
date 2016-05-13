@@ -61,7 +61,7 @@ RedVSIParseTreeInterface* RedVSIParseFactory::RunExprAssignCompetition(RedVSITok
 
     // Read the left hand expression item.
     RedVSIParseTreeInterface* pLeft = RunCompareExprCompetition(cInputBuffer, log);
-    if (pLeft==0) { return REDNULL; }
+    if (pLeft==0) { return NULL; }
     pTopElem = pLeft;
 
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -124,7 +124,7 @@ RedVSIParseTreeInterface* RedVSIParseFactory::RunCompareExprCompetition(RedVSITo
 
     // Read the left hand expression item.
     RedVSIParseTreeInterface* pLeft = RunLogicExprCompetition(cInputBuffer, log);
-    if (pLeft==0) { return REDNULL; }
+    if (pLeft==0) { return NULL; }
     pTopElem = pLeft;
 
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -186,7 +186,7 @@ RedVSIParseTreeInterface* RedVSIParseFactory::RunLogicExprCompetition(RedVSIToke
 
     // Read the left hand expression item.
     RedVSIParseTreeInterface* pLeft = RunSumExprCompetition(cInputBuffer, log);
-    if (pLeft==0) { return REDNULL; }
+    if (pLeft==0) { return NULL; }
     pTopElem = pLeft;
 
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -242,19 +242,19 @@ RedVSIParseTreeInterface* RedVSIParseFactory::RunLogicExprCompetition(RedVSIToke
 RedVSIParseTreeInterface* RedVSIParseFactory::RunSumExprCompetition(RedVSITokenBuffer& cInputBuffer, RedLog& log)
 {
     // Top Element, returned to the caller
-    RedVSIParseTreeInterface* pTopElem = REDNULL;
+    RedVSIParseTreeInterface* pTopElem = NULL;
 
     // Read the left hand expression item.
     RedVSIParseTreeInterface* pLeft = RunMultiExprCompetition(cInputBuffer, log);
-    if (pLeft==REDNULL) { return REDNULL; }
+    if (pLeft==NULL) { return NULL; }
     pTopElem = pLeft;
 
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
     int                       iOpFound = 1;
-    RedVSIParseTreeInterface* pRight   = REDNULL;
-    RedVSIParseTreeBinaryOp*  pCurrOp  = REDNULL;
-    RedVSIParseTreeBinaryOp*  pPrevOp  = REDNULL;
+    RedVSIParseTreeInterface* pRight   = NULL;
+    RedVSIParseTreeBinaryOp*  pCurrOp  = NULL;
+    RedVSIParseTreeBinaryOp*  pPrevOp  = NULL;
 
     while ( (iOpFound) && (!log.IsError()) )
     {
@@ -269,7 +269,7 @@ RedVSIParseTreeInterface* RedVSIParseFactory::RunSumExprCompetition(RedVSITokenB
 
             // shuffle nodes to accomodate the new operator
             pTopElem = pCurrOp;
-            if (pPrevOp == REDNULL)
+            if (pPrevOp == NULL)
                 pCurrOp->SetLeftChild(pLeft);
             else
                 pCurrOp->SetLeftChild(pPrevOp);
@@ -292,7 +292,7 @@ RedVSIParseTreeInterface* RedVSIParseFactory::RunSumExprCompetition(RedVSITokenB
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
     // properly delete any new object on an error
-    if ( (log.IsError()) && (pTopElem!=0) ) { delete pTopElem; pTopElem = REDNULL; }
+    if ( (log.IsError()) && (pTopElem!=0) ) { delete pTopElem; pTopElem = NULL; }
 
     return pTopElem;
 }
@@ -306,7 +306,7 @@ RedVSIParseTreeInterface* RedVSIParseFactory::RunMultiExprCompetition(RedVSIToke
 
     // Read the left hand expression item. Any errors already reported.
     RedVSIParseTreeInterface* pLeft = RunPowExprCompetition(cInputBuffer, log);
-    if (pLeft==0) { return REDNULL; }
+    if (pLeft==0) { return NULL; }
     pTopElem = pLeft;
 
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -366,15 +366,15 @@ RedVSIParseTreeInterface* RedVSIParseFactory::RunPowExprCompetition(RedVSITokenB
 
     // Read the left hand expression item. Any errors will already have been reported.
     RedVSIParseTreeInterface* pLeft = RunItemExprCompetition(cInputBuffer, log);
-    if (pLeft==0) { return REDNULL; }
+    if (pLeft==0) { return NULL; }
     pTopElem = pLeft;
 
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
     int                       iOpFound = 1;
-    RedVSIParseTreeInterface* pRight   = REDNULL;
-    RedVSIParseTreeBinaryOp*  pCurrOp  = REDNULL;
-    RedVSIParseTreeBinaryOp*  pPrevOp  = REDNULL;
+    RedVSIParseTreeInterface* pRight   = NULL;
+    RedVSIParseTreeBinaryOp*  pCurrOp  = NULL;
+    RedVSIParseTreeBinaryOp*  pPrevOp  = NULL;
 
     while ( (iOpFound) && (!log.IsError()) )
     {
@@ -421,7 +421,7 @@ RedVSIParseTreeInterface* RedVSIParseFactory::RunPowExprCompetition(RedVSITokenB
 
 RedVSIParseTreeInterface* RedVSIParseFactory::RunItemExprCompetition(RedVSITokenBuffer& cInputBuffer, RedLog& log)
 {
-    RedVSIParseTreeInterface* pEntry = REDNULL;
+    RedVSIParseTreeInterface* pEntry = NULL;
 
     // Record the start position in the competition, so we can reset it when we don't get a match
     int iCompStartPos = cInputBuffer.GetTokenIndex();
@@ -430,7 +430,7 @@ RedVSIParseTreeInterface* RedVSIParseFactory::RunItemExprCompetition(RedVSIToken
     bool runloop = true;
 
     // Loop until we have an entity or an error
-    while ( (pEntry == REDNULL) && (!log.IsError()) && (runloop == true) )
+    while ( (pEntry == NULL) && (!log.IsError()) && (runloop == true) )
     {
         // Reset the comp start position
         cInputBuffer.SetTokenIndex(iCompStartPos);
@@ -459,7 +459,7 @@ RedVSIParseTreeInterface* RedVSIParseFactory::RunItemExprCompetition(RedVSIToken
     }
 
     // Mop-up. If we have an entry and an error, delete the entity.
-    if ( (pEntry != REDNULL) && (log.IsError()) ) { delete pEntry; pEntry = REDNULL; }
+    if ( (pEntry != NULL) && (log.IsError()) ) { delete pEntry; pEntry = NULL; }
     
     return pEntry;
 }
@@ -491,7 +491,7 @@ RedVSIParseTreeInterface* RedVSIParseFactory::RunSubExprCompetition(RedVSITokenB
     }
 
     // Return valid zero
-    return REDNULL;
+    return NULL;
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -519,7 +519,7 @@ RedVSIParseTreeInterface* RedVSIParseFactory::RunValueCompetition(RedVSITokenBuf
     }
     
     // return valid zero
-    return REDNULL;
+    return NULL;
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -532,7 +532,7 @@ RedVSIParseTreeInterface* RedVSIParseFactory::RunVariableCompetition(RedVSIToken
     {
         // Data to go into the constructor (name already checked)
         RedString                 cVarName   = cTok.Text();
-        RedVSIParseTreeInterface* pIndexExpr = REDNULL;
+        RedVSIParseTreeInterface* pIndexExpr = NULL;
     
         // check for an array index after the variable name
         cTok = cInputBuffer.GetToken();
@@ -543,7 +543,7 @@ RedVSIParseTreeInterface* RedVSIParseFactory::RunVariableCompetition(RedVSIToken
             if (!pIndexExpr)
             {
                 log.AddText(cTok.GetPos().PosText() + RedVSIErrorCodes::GetErrorString(RedVSIErrorCodes::ePFact_Var_NoArrayExpr));
-                return REDNULL;
+                return NULL;
             }
 
             // read the closing array bracket, which isn't part of the expression.
@@ -551,7 +551,7 @@ RedVSIParseTreeInterface* RedVSIParseFactory::RunVariableCompetition(RedVSIToken
             if (!cTok.Predef().IsSymbolCloseSquareBracket())
             {
                 log.AddText(cTok.GetPos().PosText() + RedVSIErrorCodes::GetErrorString(RedVSIErrorCodes::ePFact_Var_NoArrayExprEnd));
-                return REDNULL;
+                return NULL;
             }
         }  
         else
@@ -563,7 +563,7 @@ RedVSIParseTreeInterface* RedVSIParseFactory::RunVariableCompetition(RedVSIToken
         RedVSIParseTreeVar* pNewVar = new RedVSIParseTreeVar(cVarName, pIndexExpr);
         return pNewVar;
     }
-    return REDNULL;
+    return NULL;
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -576,9 +576,9 @@ RedVSIParseTreeInterface* RedVSIParseFactory::RunExternalCallCompetition(RedVSIT
     RedVSIToken cFuncTok        = cInputBuffer.GetToken();
     RedVSIToken cOpenBracketTok = cInputBuffer.GetToken();
 
-    if (!cUnitNameTok.Type().IsName())                   { return REDNULL; }
-    if (!cFuncTok.Type().IsName())                       { return REDNULL; }
-    if (!cOpenBracketTok.Predef().IsSymbolOpenBracket()) { return REDNULL; }
+    if (!cUnitNameTok.Type().IsName())                   { return NULL; }
+    if (!cFuncTok.Type().IsName())                       { return NULL; }
+    if (!cOpenBracketTok.Predef().IsSymbolOpenBracket()) { return NULL; }
 
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     
@@ -634,7 +634,7 @@ RedVSIParseTreeInterface* RedVSIParseFactory::RunExternalCallCompetition(RedVSIT
                 log.AddText(cParamTok.GetPos().PosText() + RedVSIErrorCodes::GetErrorString(RedVSIErrorCodes::ePFact_Call_NoExpr));
                 delete pNewCmd; 
                 delete pParamList; 
-                return REDNULL;
+                return NULL;
             }
         }
     }
@@ -652,8 +652,8 @@ RedVSIParseTreeInterface* RedVSIParseFactory::RunInternalCallCompetition(RedVSIT
     RedVSIToken cFuncTok        = cInputBuffer.GetToken();    
     RedVSIToken cOpenBracketTok = cInputBuffer.GetToken();
 
-    if (!cFuncTok.Type().IsName())                       { return REDNULL; }
-    if (!cOpenBracketTok.Predef().IsSymbolOpenBracket()) { return REDNULL; }
+    if (!cFuncTok.Type().IsName())                       { return NULL; }
+    if (!cOpenBracketTok.Predef().IsSymbolOpenBracket()) { return NULL; }
 
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     
@@ -705,7 +705,7 @@ RedVSIParseTreeInterface* RedVSIParseFactory::RunInternalCallCompetition(RedVSIT
                 log.AddText(cParamTok.GetPos().PosText() + RedVSIErrorCodes::GetErrorString(RedVSIErrorCodes::ePFact_Call_NoExpr));
                 delete pNewCmd; 
                 delete pParamList; 
-                return REDNULL;
+                return NULL;
             }
         }
     }

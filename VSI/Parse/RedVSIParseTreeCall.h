@@ -35,7 +35,7 @@ class RedVSIParseTreeCall : public RedVSIParseTreeInterface
 public:
 
     // Constructors
-    RedVSIParseTreeCall(void) { pParamList = REDNULL; };
+    RedVSIParseTreeCall(void) { pParamList = NULL; };
     ~RedVSIParseTreeCall(void);
 
     RedVSILangElement Type(void) const { return RedVSILangElement::ParseFuncCall(); };

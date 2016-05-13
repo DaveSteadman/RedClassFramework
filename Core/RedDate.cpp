@@ -140,8 +140,46 @@ unsigned RedDate::SixDigitDate(void) const
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
+unsigned RedDate::DaysFromStartOfMonth(void) const
+{
+    return date;
+}
+
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+unsigned RedDate::DaysToEndOfMonth(void) const
+{
+    return (DaysInMonth(month, year) - date);
+}
+
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+unsigned RedDate::DaysFromStartOfYear(void) const
+{
+    unsigned retdays = 0;
+
+    for (unsigned m=1; m<month; m++)
+        retdays += DaysInMonth(m, year);
+
+    retdays += date;
+
+    return retdays;
+}
+
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+unsigned RedDate::DaysToEndOfYear(void) const
+{
+    return (DaysInYear(year) - DaysFromStartOfYear());
+}
+
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
 unsigned RedDate::DaysInMonth(const unsigned ForMonth, const unsigned ForYear)
 {
+    // Validate params
+    if ((ForMonth == 0) || (ForMonth > 12)) throw;
+
     if (ForMonth == 1) // January
         return 31;
     if (ForMonth == 2) // February
@@ -187,6 +225,16 @@ bool RedDate::IsLeapYear(const unsigned ForYear)
         return true;
 
     return false;
+}
+
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+unsigned RedDate::DaysInYear(const unsigned ForYear)
+{
+    if (IsLeapYear(ForYear))
+        return 366;
+    else
+        return 365;
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

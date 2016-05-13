@@ -24,6 +24,7 @@
 #include "RedDataType.h"
 #include "RedBoolean.h"
 #include "RedChar.h"
+#include "RedRecord.h"
 #include "RedString.h"
 #include "RedNumber.h"
 #include "RedCoreConsts.h"
@@ -39,17 +40,18 @@ class RedVariant : public RedType
 {
 public:
 
-    RedVariant(void):pData(REDNULL) { };
-    RedVariant(const RedType& cDataItem):pData(REDNULL)    { cDataItem.Clone(); };
-    RedVariant(const RedVariant& cDataItem):pData(REDNULL) { SetValue(cDataItem); };
-    RedVariant(const RedBoolean& cNewBool):pData(REDNULL)  { SetValue(cNewBool); };
-    RedVariant(const RedChar& cNewCh):pData(REDNULL)       { SetValue(RedChar(cNewCh)); };
-    RedVariant(const RedNumber& cNewNum):pData(REDNULL)    { SetValue(cNewNum); };
-    RedVariant(const RedString& cNewStr):pData(REDNULL)    { SetValue(RedString(cNewStr)); };
-    RedVariant(const int val):pData(REDNULL)               { SetValue(RedNumber(val)); };
-    RedVariant(const double val):pData(REDNULL)            { SetValue(RedNumber(val)); };
-    RedVariant(const char* val):pData(REDNULL)             { SetValue(RedString(val)); };
-    RedVariant(const bool val):pData(REDNULL)              { SetValue(RedBoolean(val)); };
+    RedVariant(void):pData(NULL) { };
+    RedVariant(const RedType& cDataItem):pData(NULL)    { cDataItem.Clone(); };
+    RedVariant(const RedVariant& cDataItem):pData(NULL) { SetValue(cDataItem); };
+    RedVariant(const RedBoolean& cNewBool):pData(NULL)  { SetValue(cNewBool); };
+    RedVariant(const RedChar& cNewCh):pData(NULL)       { SetValue(RedChar(cNewCh)); };
+    RedVariant(const RedNumber& cNewNum):pData(NULL)    { SetValue(cNewNum); };
+    RedVariant(const RedRecord& cNewRec):pData(NULL)    { SetValue(RedRecord(cNewRec)); };
+    RedVariant(const RedString& cNewStr):pData(NULL)    { SetValue(RedString(cNewStr)); };
+    RedVariant(const int val):pData(NULL)               { SetValue(RedNumber(val)); };
+    RedVariant(const double val):pData(NULL)            { SetValue(RedNumber(val)); };
+    RedVariant(const char* val):pData(NULL)             { SetValue(RedString(val)); };
+    RedVariant(const bool val):pData(NULL)              { SetValue(RedBoolean(val)); };
     ~RedVariant(void)                                      { Init(); };
 
     // Inherited: RedType
@@ -57,13 +59,14 @@ public:
     RedDataType         Type(void) const;
     RedType*            Clone(void) const;
 
-    bool                IsValid(void) const { return (pData!=REDNULL); };
+    bool                IsValid(void) const { return (pData!=NULL); };
 
     void                SetValue(const RedVariant& cDataItem);
     void                SetValue(const RedType*    pNewData);
     void                SetValue(const RedBoolean& cNewBool);
     void                SetValue(const RedChar&    cNewCh);
     void                SetValue(const RedNumber&  cNewNum);
+    void                SetValue(const RedRecord&  cNewRec);
     void                SetValue(const RedString&  cNewStr);
     void                SetValue(const int         val) { SetValue(RedNumber(val)); };
     void                SetValue(const unsigned    val) { SetValue(RedNumber((int)val)); };

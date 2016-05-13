@@ -64,8 +64,8 @@ public:
     void           SetSeconds(const double& NewSeconds)    { seconds = NewSeconds; };
 
     // Seconds In Day Routines
-    const double SecondsElapsedInDay(void) const { return (hour*kTimeSecondsInHour) + (minute*kTimeSecondsInMinute) + seconds; };
-    const double SecondsLeftInDay(void)    const { return kTimeSecondsInDay - SecondsElapsedInDay(); };
+    const double SecondsFromStartOfDay(void) const { return (hour*kTimeSecondsInHour) + (minute*kTimeSecondsInMinute) + seconds; };
+    const double SecondsToEndOfnDay(void)    const { return kTimeSecondsInDay - SecondsFromStartOfDay(); };
     void         SetTimeFromElapsedSeconds(const double& DayElapsedSeconds);
 
 private:

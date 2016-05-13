@@ -32,34 +32,41 @@ public:
 
     RedDate(void) { Init(); };
     RedDate(const unsigned y, const unsigned m, const unsigned d) { SetDate(y,m,d); };
-    void Init(void) { SetDate(2000, 01, 01); };
 
-    void SetDate(const unsigned y, const unsigned m, const unsigned d) { year=y; month=m; date=d; };
-    void SetDate(const RedString& datestr);
-
-    void    SetToday(void);
-    static RedDate Today(void);
+    void            Init(void) { SetDate(2000, 01, 01); };
+    void            SetDate(const unsigned y, const unsigned m, const unsigned d) { year=y; month=m; date=d; };
+    void            SetDate(const RedString& datestr);
+    void            SetToday(void);
+    static RedDate  Today(void);
 
 	// Simple Accessors
-	void     SetYear(const unsigned y)  { year  = y; };
-	void     SetMonth(const unsigned m) { month = m; };
-	void     SetDate(const unsigned d)  { date  = d; };
-    unsigned Year(void) const           { return year; };
-	unsigned Month(void) const          { return month; };
-    unsigned Date(void) const           { return date; };
+	void            SetYear(const unsigned y)  { year  = y; };
+	void            SetMonth(const unsigned m) { month = m; };
+	void            SetDate(const unsigned d)  { date  = d; };
+    unsigned        Year(void) const           { return year; };
+	unsigned        Month(void) const          { return month; };
+    unsigned        Date(void) const           { return date; };
 
 	// Involved Accessors
-    unsigned TwoDigitYear(void) const   { return (year % 100); };
-	unsigned EightDigitDate(void) const;
-	unsigned SixDigitDate(void) const;
+    unsigned        TwoDigitYear(void) const   { return (year % 100); };
+	unsigned        EightDigitDate(void) const;
+	unsigned        SixDigitDate(void) const;
+
+    // DaysFrom + DaysTo must equal DaysIn
+    // DaysFrom includes the current date. DaysTo is all in the future.
+    unsigned        DaysFromStartOfMonth(void) const;
+    unsigned        DaysToEndOfMonth(void) const;
+    unsigned        DaysFromStartOfYear(void) const;
+    unsigned        DaysToEndOfYear(void) const;
 
     static unsigned DaysInMonth(const unsigned ForMonth, const unsigned ForYear);
     static bool     IsLeapYear(const unsigned ForYear);
+    static unsigned DaysInYear(const unsigned ForYear);
 
 	// String output
-	RedString DateString(void) const;
-    RedString EightDigitDateString(void) const;
-	RedString SixDigitDateString(void) const;
+	RedString       DateString(void) const;
+    RedString       EightDigitDateString(void) const;
+	RedString       SixDigitDateString(void) const;
 
     // Operators
     void operator =(const RedDate& cNewVal);

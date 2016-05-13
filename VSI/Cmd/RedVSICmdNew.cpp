@@ -31,10 +31,10 @@ RedVSICmdNew::RedVSICmdNew(void)
     cType.Init();
     cLoc.Init();
     cName.Init();
-    pInitExpr = REDNULL;
+    pInitExpr = NULL;
 
     // Parents attributes
-    SetNextCmd(REDNULL);
+    SetNextCmd(NULL);
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -48,10 +48,10 @@ RedVSICmdNew::RedVSICmdNew(const RedVSILangElement& cInType, const RedVSILangEle
 
 RedVSICmdNew::~RedVSICmdNew(void)
 {
-    if (pInitExpr != REDNULL)
+    if (pInitExpr != NULL)
     {
         delete pInitExpr;
-        pInitExpr = REDNULL;
+        pInitExpr = NULL;
     }
 }
 
@@ -76,11 +76,11 @@ void RedVSICmdNew::Execute(RedVSIContextInterface* pContext)
     pData = pContext->CreateDataItem(cLoc, cType, cName);
 
     // Check we created a data item
-    if (pData == REDNULL)
+    if (pData == NULL)
         throw;
 
     // If we have an initialisation expression for the data item
-    if (pInitExpr != REDNULL)
+    if (pInitExpr != NULL)
     {
         RedVariant cInitExprResult = pContext->ExprResult(pInitExpr);
 
