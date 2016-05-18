@@ -34,6 +34,7 @@ namespace Red {
 namespace VSI {
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
 typedef enum TECmdExecutePhases
 {
     eCmdExecPhaseStart,
@@ -43,6 +44,8 @@ typedef enum TECmdExecutePhases
     eCmdExecPhaseCmdNextSetup
 
 } TECmdExecutePhases;
+
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 /// Class to represent the context required to execute a routine.
 /// Uses parent class RedVSIContextInterface, allowing code-fragments and simple command sequences to

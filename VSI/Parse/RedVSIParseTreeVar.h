@@ -25,10 +25,10 @@
 
 using namespace Red::Core;
 
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
 namespace Red {
 namespace VSI {
+
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 class RedVSIParseTreeVar : public RedVSIParseTreeInterface
 {

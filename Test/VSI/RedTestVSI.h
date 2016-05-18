@@ -52,8 +52,6 @@ private:
     static RedResult TestFragment_While(void);
     static RedResult TestFragment_Log(void);
 
-
-
 //    static RedResult TestLoadLibrary_001(void);
 //    static RedResult TestLoadLibrary_002(void);
 //    static RedResult TestSaveLibrary_001(void);

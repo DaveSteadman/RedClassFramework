@@ -45,8 +45,8 @@ public:
     // Create And Add
     void        CloneAndAdd (const RedString& cNewAttribName, const RedType* pNewAttrib) { pAttribList->Add(cNewAttribName,              pNewAttrib->Clone()); };
     void        CloneAndAdd (const char* strNewAttribName,    const RedType* pNewAttrib) { pAttribList->Add(RedString(strNewAttribName), pNewAttrib->Clone()); };
-    void        Add         (const RedString& cNewAttribName, RedType* pNewAttrib) { pAttribList->Add(cNewAttribName,              pNewAttrib); };
-    void        Add         (const char* strNewAttribName,    RedType* pNewAttrib) { pAttribList->Add(RedString(strNewAttribName), pNewAttrib); };
+    void        Add         (const RedString& cNewAttribName, RedType* pNewAttrib)       { pAttribList->Add(cNewAttribName,              pNewAttrib); };
+    void        Add         (const char* strNewAttribName,    RedType* pNewAttrib)       { pAttribList->Add(RedString(strNewAttribName), pNewAttrib); };
     RedType*    CreateAndAdd(const RedString& cNewAttribName, const RedDataType& NewAttribType);
     RedType*    CreateAndAdd(const char* strNewAttribName,    const RedDataType& NewAttribType);
     RedType*    CreateObjectOfType(const RedDataType& NewAttribType);

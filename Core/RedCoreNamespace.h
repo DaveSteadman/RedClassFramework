@@ -37,6 +37,7 @@
 
 // Wrappers
 #include "RedRecord.h"
+#include "RedFlexRecord.h"
 #include "RedVariant.h"
 #include "RedSmartPtr.h"
 #include "RedNumberRange.h"

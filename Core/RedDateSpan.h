@@ -39,7 +39,6 @@ public:
       double DaysToStartOfYear(void) const;
       double DaysToEndOfYear(void) const;
 
-      /// TODO Date: Days to start/end of year & Days in year. The span can get days and finer units.
 
 private:
       RedDate startdate;

@@ -83,7 +83,6 @@ void RedVSIParseStackTraverser::AddVariable(RedVSIParseStack& cStack, RedVSIPars
 //    
 //    //pVar->GetDetails(cInVarName, pInVarIndexExpr);
 //
-//
     // push expr onto stack
     cStack.Push(pExpr);
 //

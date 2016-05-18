@@ -25,10 +25,10 @@
 using namespace Red::Core;
 using namespace Red::VSI;
 
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
 namespace Red {
 namespace VSI {
+
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 /// Library interface, providing read-only access to find classes and routines.
 class RedVSILibInterface

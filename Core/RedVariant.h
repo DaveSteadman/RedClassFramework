@@ -18,8 +18,6 @@
 
 #pragma once
 
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
 #include "RedType.h"
 #include "RedDataType.h"
 #include "RedBoolean.h"

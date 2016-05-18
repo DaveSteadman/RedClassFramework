@@ -18,8 +18,6 @@
 
 #pragma once
 
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
 #include "RedDoubleLinkedList.h"
 #include "RedDoubleLinkedListIterator.h"
 

@@ -18,16 +18,14 @@
 
 #pragma once
 
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-// Definition of the Language IO Elements. This defines the tokens which are
-// required to input a textual representations of the language.
-// This type covers elements such as brackets and punctuation which are 
-// removed in the translation to the internal RedVSILangElement type.
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 namespace Red {
 namespace VSI {
 
+/// Definition of the Language IO Elements. This defines the tokens which are
+/// required to input a textual representations of the language.
+/// This type covers elements such as brackets and punctuation which are
+/// removed in the translation to the internal RedVSILangElement type.
 class RedVSIIOElement
 {
 public:

@@ -117,10 +117,11 @@ void RedVSICmdSerialiser::SerialiseNewCmd(RedVSITokenBuffer& cTokenBuffer, RedVS
     RedVSILangElement          cOutType;
     RedVSILangElement          cOutLoc;
     RedString                  cOutName;
-    RedVSIParseTreeInterface*  pOutInitExpr;
+    RedVSIParseTreeInterface*  pOutRecordIndexExpr = NULL;
+    RedVSIParseTreeInterface*  pOutInitExpr = NULL;
 
     // Get the data to tokenise
-    pCmd->GetDetails(cOutType, cOutLoc, cOutName, pOutInitExpr);
+    pCmd->GetDetails(cOutType, cOutLoc, cOutName, pOutRecordIndexExpr, pOutInitExpr);
 
     // Write the command keyword
     RedVSIToken cCmdTok(RedVSIIOElement::KeywordNew());
@@ -144,7 +145,19 @@ void RedVSICmdSerialiser::SerialiseNewCmd(RedVSITokenBuffer& cTokenBuffer, RedVS
     RedVSIToken cNameTok;
     cNameTok.SetName(cOutName);
     cTokenBuffer.AppendToken(cNameTok);
-    
+
+    // Serialise the record indexing expression
+    if (cOutLoc.IsLocationAttribute())
+    {
+        RedVSIToken cOpenBracket(RedVSIIOElement::SymbolOpenSquareBracket());
+        cTokenBuffer.AppendToken(cOpenBracket);
+
+        RedVSIParseSerialiser::SerialiseExpression(cTokenBuffer, pOutRecordIndexExpr);
+
+        RedVSIToken cCloseBracket(RedVSIIOElement::SymbolCloseSquareBracket());
+        cTokenBuffer.AppendToken(cCloseBracket);
+    }
+
     // Serialise the expression
     if (pOutInitExpr != NULL)
     {

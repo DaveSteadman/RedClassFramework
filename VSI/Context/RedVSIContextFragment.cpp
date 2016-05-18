@@ -73,6 +73,10 @@ RedType* RedVSIContextFragment::CreateDataItem(const RedVSILangElement& cLocatio
     {
         pNewData = cLocalVariables.CreateAndAdd(cName, DataType);
     }
+//    else if (cLocation.IsLocationAttribute())
+//    {
+//        RedFlexRecord* pData = FindDataItem(cName, kDataTypeRecord);
+//    }
     else
     {
         throw;

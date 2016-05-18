@@ -67,7 +67,6 @@ private:
     static bool            ReadName      (RedBufferInput& inputBuf, RedString& outputName);
     static bool            ReadContent   (RedBufferInput& inputBuf, RedString& outputContent);
     static bool            ReadTmlElement(RedBufferInput& inputBuf, RedTmlElement** newTml);
-
 };
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

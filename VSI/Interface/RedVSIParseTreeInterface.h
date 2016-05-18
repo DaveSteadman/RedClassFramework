@@ -18,8 +18,6 @@
 
 #pragma once
 
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
 #include "RedVSIContextInterface.h"
 #include "RedVSILangElement.h"
 

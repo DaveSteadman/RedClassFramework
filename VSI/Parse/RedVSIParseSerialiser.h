@@ -27,10 +27,10 @@
 #include "RedVSIParseTreeVal.h"
 #include "RedVSIParseTreeVar.h"
 
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
 namespace Red {
 namespace VSI {
+
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 class RedVSIParseSerialiser
 {

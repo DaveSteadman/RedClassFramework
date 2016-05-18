@@ -24,6 +24,8 @@
 namespace Red {
 namespace Core {
 
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
 typedef enum TEventLogType {
     eErrorEvent,
     eWarningEvent,

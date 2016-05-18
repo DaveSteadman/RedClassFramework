@@ -37,7 +37,7 @@ public:
 
     // Construction Routines
     RedVSICmdNew();
-    RedVSICmdNew(const RedVSILangElement& cInType, const RedVSILangElement& cInLoc, const RedString& cInName, RedVSIParseTreeInterface* pInInitExpr);
+    RedVSICmdNew(const RedVSILangElement& cInType, const RedVSILangElement& cInLoc, const RedString& cInName, RedVSIParseTreeInterface* pInRecordIndexExpr, RedVSIParseTreeInterface* pInInitExpr);
     ~RedVSICmdNew(void);
 
     // RedVSICmdInterface inherited routines
@@ -49,18 +49,20 @@ public:
     void SetType(RedVSILangElement cNewType)                 { if (!cLoc.IsType())     throw; cType=cNewType; };
     void SetLoc(RedVSILangElement cNewLoc)                   { if (!cLoc.IsLocation()) throw; cLoc=cNewLoc; };
     void SetName(const RedString& cNewName)                  { cName=cNewName; };
-    void SetInitExpr(RedVSIParseTreeInterface* pNewInitExpr) { pInitExpr=pNewInitExpr; };
+    void SetInitExpr(RedVSIParseTreeInterface* pNewInitExpr) { pDataInitExpr=pNewInitExpr; };
 
     // Wholesale access/assign operations
-    void SetDetails(const RedVSILangElement& cInType,  const RedVSILangElement& cInLoc, const RedString& cInName,  RedVSIParseTreeInterface* pInInitExpr);
-    void GetDetails(      RedVSILangElement& cOutType,       RedVSILangElement& cOutLoc,      RedString& cOutName, RedVSIParseTreeInterface*& pOutInitExpr) const;
+    void SetDetails(const RedVSILangElement& cInType,  const RedVSILangElement& cInLoc, const RedString& cInName,  RedVSIParseTreeInterface* pInRecordIndexExpr,  RedVSIParseTreeInterface* pInInitExpr);
+    void GetDetails(      RedVSILangElement& cOutType,       RedVSILangElement& cOutLoc,      RedString& cOutName, RedVSIParseTreeInterface* pOutRecordIndexExpr, RedVSIParseTreeInterface*& pOutInitExpr) const;
 
 private:
     
     RedVSILangElement         cType;
     RedVSILangElement         cLoc;
     RedString                 cName;
-    RedVSIParseTreeInterface* pInitExpr;
+    RedVSIParseTreeInterface* pRecordIndexExpr;
+    RedVSIParseTreeInterface* pDataInitExpr;
+
 };
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

@@ -18,6 +18,8 @@
 
 #pragma once
 
+#include "RedCoreConsts.h"
+
 namespace Red {
 namespace Core {
 
@@ -417,7 +419,7 @@ bool RedLinkedList<Element>::MakeListElement(TListElement** pNewElem)
     TListElement* pElem = new TListElement;
 
     // Initialise the data
-    pElem->pNext = 0;
+    pElem->pNext = NULL;
 
     // Assign the output value and return success
     *pNewElem = pElem;

@@ -18,15 +18,11 @@
 
 #pragma once
 
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
 #include "RedCoreNamespace.h"
 #include "RedVSILangElement.h"
 #include "RedVSILibInterface.h"
 
 using namespace Red::Core;
-
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 namespace Red {
 namespace VSI {

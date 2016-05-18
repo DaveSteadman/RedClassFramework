@@ -25,8 +25,8 @@ namespace TinyML {
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-static const RedChar openbr  = '{';
-static const RedChar closebr = '}';
+static const RedChar kOpenBracket  = '{';
+static const RedChar kCloseBracket = '}';
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -270,12 +270,12 @@ RedTmlElement* RedTmlAction::ParseTinyML(RedBufferInput& inputBuf)
 
 void RedTmlAction::SerialiseTinyML(RedBufferOutput& outputBuf, const RedTmlElement* topTmlNode, const TESerialiseType eMode)
 {
-    outputBuf.Append(openbr);
+    outputBuf.Append(kOpenBracket);
 
     // write name
-    outputBuf.Append(openbr);
+    outputBuf.Append(kOpenBracket);
     outputBuf.Append(topTmlNode->Name());
-    outputBuf.Append(closebr);
+    outputBuf.Append(kCloseBracket);
 
     if (topTmlNode->IsNode())
     {
@@ -318,7 +318,7 @@ void RedTmlAction::SerialiseTinyML(RedBufferOutput& outputBuf, const RedTmlEleme
         }
     }
 
-    outputBuf.Append(closebr);
+    outputBuf.Append(kCloseBracket);
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -332,13 +332,13 @@ bool RedTmlAction::ReadName(RedBufferInput& inputBuf, RedString& outputName)
 
     // second bracket
     ch = inputBuf.GetNextNonWhitespaceChar();
-    if (ch != openbr) return false;
+    if (ch != kOpenBracket) return false;
     if (ch.IsEOF())   return false;
 
     // read name
     ch = inputBuf.GetNextNonWhitespaceChar();
     if (ch.IsEOF()) return false;
-    while (ch != closebr)
+    while (ch != kCloseBracket)
     {
         outputName.Append(ch);
         ch = inputBuf.GetNextChar();
@@ -355,11 +355,14 @@ bool RedTmlAction::ReadContent(RedBufferInput& inputBuf, RedString& outputConten
     bool EndOfContentFound = false;
     RedString levelChars;
 
+    // Initialse the return data
     outputContent.Empty();
 
+    // Skip whitespace
     RedChar ch = inputBuf.PreviewNextNonWhitespaceChar();
     if (ch.IsEOF()) return false;
 
+    // Loop until EOF or unquoted close bracket
     while(!EndOfContentFound)
     {
         RedChar ch = inputBuf.GetNextChar();
@@ -372,10 +375,9 @@ bool RedTmlAction::ReadContent(RedBufferInput& inputBuf, RedString& outputConten
         if ((ch.IsQuote()) && (ch == levelChars.LastChar())) levelChars.DelLastChar();
 
         // check for final close bracket
-        if ( (ch == closebr) && (levelChars.IsEmpty()) )
+        if ( (ch == kCloseBracket) && (levelChars.IsEmpty()) )
         {
             inputBuf.UngetChar();
-            //EndOfContentFound = true;
             return true;
         }
         else
@@ -394,35 +396,34 @@ bool RedTmlAction::ReadTmlElement(RedBufferInput& inputBuf, RedTmlElement** newT
 {
     RedChar   ch;
     RedString leafname;
-    //RedTmlLeaf* newleaf;
 
-    // opening bracket
+    // Opening bracket
     ch = inputBuf.GetNextNonWhitespaceChar();
-    if (ch != openbr) return false;
-    if (ch.IsEOF()) return false;
+    if (ch != kOpenBracket) return false;
+    if (ch.IsEOF())         return false;
     
-    // read the name
+    // Read the name
     if ( !RedTmlAction::ReadName(inputBuf, leafname) ) return false;
 
-    // if the next character is {, its a collection
+    // If the next character is {, its a collection
     ch = inputBuf.PreviewNextNonWhitespaceChar();
 
-    if (ch == openbr)
+    if (ch == kOpenBracket)
     {
         RedTmlNode* newNode = new RedTmlNode(leafname);
 
-        // move onto the next non-whitespace character
+        // Move onto the next non-whitespace character
         ch = inputBuf.PreviewNextNonWhitespaceChar();
 
-        // check we are starting the object correctly.
-        if (ch != openbr)
+        // Check we are starting the object correctly.
+        if (ch != kOpenBracket)
         {
             delete newNode;
             return false;
         }
 
         // Iterate across the Tml entries
-        while (ch == openbr)
+        while (ch == kOpenBracket)
         {
             RedTmlElement* newChildNode;
             
@@ -432,9 +433,9 @@ bool RedTmlAction::ReadTmlElement(RedBufferInput& inputBuf, RedTmlElement** newT
              ch = inputBuf.PreviewNextNonWhitespaceChar();
         }
 
-        // read bracket to close statement
+        // Read bracket to close statement
         ch = inputBuf.GetNextNonWhitespaceChar();
-        if (ch == closebr)
+        if (ch == kCloseBracket)
         {
             *newTml = dynamic_cast<RedTmlElement*>(newNode);
             return true;
@@ -447,16 +448,16 @@ bool RedTmlAction::ReadTmlElement(RedBufferInput& inputBuf, RedTmlElement** newT
     }
     else
     {
-        RedString leafdata;
+        RedString   leafdata;
         RedTmlLeaf* newLeaf;
 
         // Attempt to read the content
         if (!RedTmlAction::ReadContent(inputBuf, leafdata))
             return false;
 
-        // read bracket to close statement
+        // Read bracket to close statement
         ch = inputBuf.GetNextNonWhitespaceChar();
-        if (ch == closebr)
+        if (ch == kCloseBracket)
         {
             // All read, construct returned object
             newLeaf = new RedTmlLeaf(leafname, leafdata);

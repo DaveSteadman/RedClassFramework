@@ -37,7 +37,7 @@ RedVSIContextRoutine::RedVSIContextRoutine(RedLog& initAnalysis) : cAnalysis(ini
     // pThisObj     = 0;
 
     cReturnValue.Init();
-    pCurrCmd       = NULL;
+    pCurrCmd             = NULL;
     pThreadContextRecord = NULL;
 
     eCmdPhase = eCmdExecPhaseStart;

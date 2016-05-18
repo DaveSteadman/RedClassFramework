@@ -22,13 +22,12 @@
 #include "RedDoubleLinkedList.h"
 #include "RedDoubleLinkedListIterator.h"
 
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-// Purpose: An unsorted, indexed list template.
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
 namespace Red {
 namespace Core {
 
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+/// A templated map class
 template<class IdClass, class DataClass>
 class RedMapList
 {

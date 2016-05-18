@@ -260,7 +260,6 @@ RedVSICmdInterface* RedVSICmdFactory::NewComp(RedVSITokenBuffer& cInputBuffer, R
     else if (cLocTok.Predef().IsKeywordStack())     cLoc = RedVSILangElement::LocationStack();
     else if (cLocTok.Predef().IsKeywordHeap())      cLoc = RedVSILangElement::LocationHeap();
 
-
     RedVSIToken cTypeTok = cInputBuffer.GetToken();
     if (!cTypeTok.Predef().IsTypeKeyword())
     {
@@ -282,6 +281,33 @@ RedVSICmdInterface* RedVSICmdFactory::NewComp(RedVSITokenBuffer& cInputBuffer, R
         return NULL;
     }
 
+    // If this is an attribute, we need to read an indexing expression after the name
+    RedVSIParseTreeInterface* pIndexExpr = NULL;
+    if (cLoc.IsLocationAttribute())
+    {
+        RedVSIToken bracketToken = cInputBuffer.GetToken();
+        if (!bracketToken.Predef().IsSymbolOpenSquareBracket())
+        {
+            RedLog.AddErrorEvent("New Command: Bad attribute indexing expression");
+            return NULL;
+        }
+
+        pIndexExpr = RedVSIParseFactory::ConstructStatementExpr(cInputBuffer, RedLog);
+        if (!pIndexExpr)
+        {
+            RedLog.AddErrorEvent("New Command: Bad attribute indexing expression");
+            return NULL;
+        }
+
+        bracketToken = cInputBuffer.GetToken();
+        if (!bracketToken.Predef().IsSymbolCloseSquareBracket())
+        {
+            RedLog.AddErrorEvent("New Command: Bad attribute indexing expression");
+            delete pIndexExpr;
+            return NULL;
+        }
+    }
+
     // Look for the optional initialisation clause
     RedVSIParseTreeInterface* pInitExpr = NULL;
     RedVSIToken cEqTok = cInputBuffer.GetToken();
@@ -301,7 +327,7 @@ RedVSICmdInterface* RedVSICmdFactory::NewComp(RedVSITokenBuffer& cInputBuffer, R
 
     // Create the command object to return, and assign the data.
     RedVSICmdNew* pNewCmd = new RedVSICmdNew();
-    pNewCmd->SetDetails(cType, cLoc, cNameTok.Text(), pInitExpr);
+    pNewCmd->SetDetails(cType, cLoc, cNameTok.Text(), NULL, pInitExpr);
 
     return pNewCmd;
 }

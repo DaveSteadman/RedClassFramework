@@ -365,7 +365,7 @@ RedResult RedTestVSI::TestCmdNew(void)
                 return kResultFail;
         }
 
-        cmdNew.SetDetails(kLangElementTypeNumber, kLangElementLocationStack, RedString("x"), pt);
+        cmdNew.SetDetails(kLangElementTypeNumber, kLangElementLocationStack, RedString("x"), NULL, pt);
 
         RedLog               cLog;
         RedVSIContextRoutine testContext(cLog);
@@ -627,8 +627,7 @@ RedResult RedTestVSI::TestFragment_NewTypes(void)
     RedString strCodeFragment = " \
         new local bool   testB = true \
         new local number testN = 123 \
-        new local string testS = 'Str' \
-        new local record testR ";
+        new local string testS = 'Str' ";
 
     // Turn the code into tokens
     RedVSILibTokenMap cTokenMap;
@@ -667,13 +666,13 @@ RedResult RedTestVSI::TestFragment_NewTypes(void)
 RedResult RedTestVSI::TestFragment_Expr(void)
 {
     // Define a small code fragment
-//    RedString strCodeFragment = "\
-//        new local number x   = 3 \
-//        x = x + 1 \
-//        x = x * 2";
     RedString strCodeFragment = "\
-        new local record x \
-        x[aa] = 12 ";
+        new local number x   = 3 \
+        x = x + 1 \
+        x = x * 2";
+//    RedString strCodeFragment = "\
+//        new local record x \
+//        x[aa] = 12 ";
 
     // Turn the code into tokens
     RedVSILibTokenMap cTokenMap;

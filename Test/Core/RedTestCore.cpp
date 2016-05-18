@@ -40,6 +40,7 @@ void RedTestCore::RunUnitTest(RedLog& log)
     if (RedTestCore::TestNumberRange().IsFail())  { log.AddErrorEvent("Core Unit Test: TestNumberRange Failed");  return; }
     if (RedTestCore::TestOutputBuffer().IsFail()) { log.AddErrorEvent("Core Unit Test: TestOutputBuffer Failed"); return; }
     if (RedTestCore::TestRecord().IsFail())       { log.AddErrorEvent("Core Unit Test: TestRecord Failed");       return; }
+    if (RedTestCore::TestFlexRecord().IsFail())   { log.AddErrorEvent("Core Unit Test: TestFlexRecord Failed");   return; }
     if (RedTestCore::TestResult().IsFail())       { log.AddErrorEvent("Core Unit Test: TestResult Failed");       return; }
     if (RedTestCore::TestSmartPtr().IsFail())     { log.AddErrorEvent("Core Unit Test: TestSmartPtr Failed");     return; }
     if (RedTestCore::TestString().IsFail())       { log.AddErrorEvent("Core Unit Test: TestString Failed");       return; }
@@ -503,6 +504,50 @@ RedResult RedTestCore::TestRecord(void)
     delete p;
     p = NULL;
     ps = NULL;
+
+    return kResultSuccess;
+}
+
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+RedResult RedTestCore::TestFlexRecord(void)
+{
+    // Define the record for the whole test
+    RedFlexRecord fRec;
+
+    // Add data items within limited scope
+    {
+        RedString IndexStr("indexqwerty");
+        RedString DataStr("dataqwerty");
+
+        fRec.CloneAndAdd(&IndexStr, &DataStr);
+    }
+    {
+        RedNumber indexNum(3);
+        RedString Datanum("data3");
+
+        fRec.CloneAndAdd(&indexNum, &Datanum);
+    }
+
+
+
+//    {
+//        RedNumber toFindNum(3);
+//        RedType* pdata = NULL;
+//        fRec.Find(&toFindNum, pdata);
+//
+//        if (pdata!=NULL)
+//        {
+//            if (pdata->Type()==kDataTypeStr)
+//            {
+//                RedString* pstr = dynamic_cast<RedString*>(pdata);
+//
+//                int a = pstr->Length();
+//            }
+//        }
+//
+//    }
+
 
     return kResultSuccess;
 }

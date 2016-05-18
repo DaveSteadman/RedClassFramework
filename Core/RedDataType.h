@@ -18,8 +18,6 @@
 
 #pragma once
 
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
 namespace Red {
 namespace Core {
 
@@ -75,8 +73,6 @@ protected:
         eDataTypeStr,
         eDataTypeVariant
     };
-
-    void ClearOtherTypeStr(void);
 
     RedDataType(TEDataType eNewState) : eState(eNewState) { };
 

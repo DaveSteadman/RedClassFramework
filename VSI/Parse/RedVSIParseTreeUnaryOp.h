@@ -18,8 +18,6 @@
 
 #pragma once
 
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
 #include "RedVSIParseTreeInterface.h"
 #include "RedVariant.h"
 #include "RedVSIErrorCodes.h"
@@ -27,10 +25,10 @@
 #include "RedVSIErrorCodes.h"
 #include "RedVSILangElement.h"
 
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
 namespace Red {
 namespace VSI {
+
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 class RedVSIParseTreeUnaryOp : public RedVSIParseTreeInterface
 {

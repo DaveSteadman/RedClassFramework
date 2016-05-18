@@ -28,10 +28,10 @@
 using namespace Red::Core;
 using namespace Red::TinyML;
 
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
 namespace Red {
 namespace VSI {
+
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 class RedVSILibFactory
 {

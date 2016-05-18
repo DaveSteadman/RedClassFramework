@@ -18,52 +18,74 @@
 
 #pragma once
 
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+#include "RedType.h"
 #include "RedString.h"
-#include "RedLogEvent.h"
-#include "RedDoubleLinkedList.h"
-#include "RedDoubleLinkedListIterator.h"
+#include "RedMapList.h"
+#include "RedMapListIterator.h"
 
 namespace Red {
 namespace Core {
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-typedef RedDoubleLinkedList<RedLogEvent*>         EventLogListType;
-typedef RedDoubleLinkedListIterator<RedLogEvent*> EventLogListItType;
-
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-/// Holds logged information, from text debug statements, info, warnings and
-/// error messages. Has additional methods to then query the information.
-class RedLog
+class RedFlexRecord : public RedType
 {
 public:
 
-    RedLog(void) : containsError(0) { };
-    void Init(void) { EventList.DelAll(); containsError=0; };
+    RedFlexRecord(void);
+    ~RedFlexRecord(void);
 
-    void      AddEvent(const RedLogEvent& event);
-    void      AddText (const RedString& NewText);
-    void      AddErrorEvent(const RedString& NewText);
-    void      AddErrorEvent(const char* NewText) { AddErrorEvent(RedString(NewText)); };
+    // Inherited: RedType
+    RedDataType Type(void) const { return RedDataType::Record(); };
+    RedType*          Clone(void) const;
+    void              Init(void) { DelAll(); };
 
-    RedString AllLoggedText(void);
+    // Create And Add
+    RedType*    CloneAndAdd (const RedType* cNewAttriIndex, RedType* pNewAttrib);
+    RedType*    Add         (RedType* cNewAttriIndex, RedType* pNewAttrib);
+    RedType*    CreateAndAdd(const RedType* cNewAttriIndex, const RedDataType& NewAttribType);
 
-    // Queries
-    //EventLogListType EventsByType();
+    // Locate
+    bool        Find(const RedType* cNewAttriIndex, RedType*& pData);
 
-    unsigned NumEvents(void) const { return EventList.NumItems(); };
-    bool     IsError(void)   const { return containsError; };
+    // Remove
+    void        DelFirst(void);
+    void        DelLast(void);
+    void        DelAll(void);
+    void        DelIndex(const RedType* cNewAttriIndex);
+
+    unsigned    NumItems(void) const { return num_items; };
+
+    // Operators
+    void operator =(const RedFlexRecord& cNewVal);
 
 private:
-    EventLogListType EventList;
-    bool             containsError;
+
+    typedef struct TListElement
+    {
+        RedType*      index_ptr;
+        RedType*      data_ptr;
+        TListElement* next_ptr;
+    } TListElement;
+
+    void            MakeListElement(TListElement** NewElemPtr) const;
+    static RedType* CreateObjectOfType(const RedDataType& NewAttribType);
+    void            AddElement(RedType* final_index_ptr, RedType* final_data_ptr);
+
+    bool            FindElementForIndex(RedType* search_index, TListElement** found_element);
+
+    bool            RedTypeMatcher(RedType* lhs, RedType* rhs);
+
+    TListElement* list_head_ptr;
+    TListElement* list_tail_ptr;
+    unsigned      num_items;
 };
-    
+
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 } // Core
 } // Red
-
 
 

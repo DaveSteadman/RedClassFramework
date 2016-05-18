@@ -22,13 +22,12 @@
 #include "RedSmartPtr.h"
 #include "RedString.h"
 #include "RedChar.h"
-
 #include "ConversionConstants.h"
-
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 namespace Red {
 namespace Core {
+
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 /// Default tollerance on floating point equality statements
 static const double kFloatCompTollerance = 0.0000001;

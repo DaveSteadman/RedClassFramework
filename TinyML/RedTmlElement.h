@@ -21,8 +21,6 @@
 // Include Namespaces
 #include "RedString.h"
 
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
 using namespace Red::Core;
 
 namespace Red {
