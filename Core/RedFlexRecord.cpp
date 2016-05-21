@@ -56,6 +56,23 @@ RedType* RedFlexRecord::Clone(void) const
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+// Create And Add
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+RedType* RedFlexRecord::CreateAndAdd(const RedType* cNewAttriIndex, const RedDataType& NewAttribType)
+{
+    // Create the two new objects
+    RedType* IndexValue = cNewAttriIndex->Clone();
+    RedType* DataValue  = CreateObjectOfType(NewAttribType);
+
+    // Add the object to the collection
+    AddElement(IndexValue, DataValue);
+
+    // Return the new data value
+    return DataValue;
+}
+
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 RedType* RedFlexRecord::CloneAndAdd(const RedType* cNewAttriIndex, RedType* pNewAttrib)
 {
@@ -87,23 +104,22 @@ RedType* RedFlexRecord::Add(RedType* cNewAttriIndex, RedType* pNewAttrib)
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-RedType* RedFlexRecord::CreateAndAdd(const RedType* cNewAttriIndex, const RedDataType& NewAttribType)
+bool RedFlexRecord::Find(RedType* cNewAttriIndex, RedType*& pData)
 {
-    // Create the two new objects
-    RedType* IndexValue = cNewAttriIndex->Clone();
-    RedType* DataValue  = CreateObjectOfType(NewAttribType);
+    TListElement* curr_element = list_head_ptr;
+    while (curr_element)
+    {
+        if (RedTypeMatcher(curr_element->index_ptr, cNewAttriIndex))
+        {
+            pData = curr_element->data_ptr;
+            return true;
+        }
+        else
+        {
+            curr_element = curr_element->next_ptr;
+        }
+    }
 
-    // Add the object to the collection
-    AddElement(IndexValue, DataValue);
-
-    // Return the new data value
-    return DataValue;
-}
-
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-bool RedFlexRecord::Find(const RedType* cNewAttriIndex, RedType*& pData)
-{
     return false;
 }
 

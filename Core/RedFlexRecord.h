@@ -34,29 +34,29 @@ class RedFlexRecord : public RedType
 {
 public:
 
+    // Construction
     RedFlexRecord(void);
     ~RedFlexRecord(void);
 
     // Inherited: RedType
     RedDataType Type(void) const { return RedDataType::Record(); };
-    RedType*          Clone(void) const;
-    void              Init(void) { DelAll(); };
+    RedType*    Clone(void) const;
+    void        Init(void) { DelAll(); };
 
     // Create And Add
+    RedType*    CreateAndAdd(const RedType* cNewAttriIndex, const RedDataType& NewAttribType);
     RedType*    CloneAndAdd (const RedType* cNewAttriIndex, RedType* pNewAttrib);
     RedType*    Add         (RedType* cNewAttriIndex, RedType* pNewAttrib);
-    RedType*    CreateAndAdd(const RedType* cNewAttriIndex, const RedDataType& NewAttribType);
 
     // Locate
-    bool        Find(const RedType* cNewAttriIndex, RedType*& pData);
+    bool        Find(RedType* cNewAttriIndex, RedType*& pData);
+    unsigned    NumItems(void) const { return num_items; };
 
     // Remove
     void        DelFirst(void);
     void        DelLast(void);
     void        DelAll(void);
     void        DelIndex(const RedType* cNewAttriIndex);
-
-    unsigned    NumItems(void) const { return num_items; };
 
     // Operators
     void operator =(const RedFlexRecord& cNewVal);

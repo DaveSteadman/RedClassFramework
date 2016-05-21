@@ -529,6 +529,16 @@ RedResult RedTestCore::TestFlexRecord(void)
         fRec.CloneAndAdd(&indexNum, &Datanum);
     }
 
+    // Find objects
+    {
+        RedString FindStr("indexqwerty");
+        RedType*  FindData = NULL;
+
+        RedType* FindIndex = dynamic_cast<RedType*>(&FindStr);
+
+        if (!fRec.Find(FindIndex, FindData))
+            return kResultFail;
+    }
 
 
 //    {
