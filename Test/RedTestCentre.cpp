@@ -21,7 +21,6 @@
 #include "RedTestCore.h"
 #include "RedTestGeometry.h"
 #include "RedTestTml.h"
-#include "RedTestExp.h"
 #include "RedTestVSI.h"
 
 namespace Red {
