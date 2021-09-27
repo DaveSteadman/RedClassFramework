@@ -24,6 +24,7 @@
 #include <string.h>
 #include <ctype.h>
 #include <stdio.h>
+#include <stdarg.h>
 
 namespace Red {
 namespace Core {

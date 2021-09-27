@@ -30,10 +30,10 @@ namespace Test {
 
 void RedTestCentre::RunAllUnitTests(RedLog& log)
 {
-    if (!log.IsError()) RedTestCore::RunUnitTest(log);
-    if (!log.IsError()) RedTestTml::RunUnitTest(log);
-    if (!log.IsError()) RedTestGeometry::RunUnitTest(log);
-    if (!log.IsError()) RedTestVSI::RunUnitTest(log);
+    if (!log.ContainsError()) RedTestCore::RunUnitTest(log);
+    if (!log.ContainsError()) RedTestTml::RunUnitTest(log);
+    if (!log.ContainsError()) RedTestGeometry::RunUnitTest(log);
+    if (!log.ContainsError()) RedTestVSI::RunUnitTest(log);
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

@@ -66,7 +66,7 @@ RedResult RedVSIContextFactory::LoadFragmentIntoContext(const RedString& InputCo
     RedVSICmdInterface* topCmd = RedVSICmdFactory::RunConstuctionCompetition(cTokenList, *pLog);
     if (topCmd == NULL)
         return kResultFail;
-    if (pLog->IsError())
+    if (pLog->ContainsError())
         return kResultFail;
 
     UpdateContext.ClearCommandQueue();

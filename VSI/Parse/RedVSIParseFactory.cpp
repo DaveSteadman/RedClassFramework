@@ -71,7 +71,7 @@ RedVSIParseTreeInterface* RedVSIParseFactory::RunExprAssignCompetition(RedVSITok
     RedVSIParseTreeBinaryOp*   pCurrOp  = 0;
     RedVSIParseTreeBinaryOp*   pPrevOp  = 0;
 
-    while ( (iOpFound) && (!log.IsError()) )
+    while ( (iOpFound) && (!log.ContainsError()) )
     {
         // Read the operator
         RedVSIToken cOp = cInputBuffer.GetToken();
@@ -110,7 +110,7 @@ RedVSIParseTreeInterface* RedVSIParseFactory::RunExprAssignCompetition(RedVSITok
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
     // properly delete any new object on an error
-    if ( (log.IsError()) && (pTopElem!=0) ) { delete pTopElem; pTopElem = 0; }
+    if ( (log.ContainsError()) && (pTopElem!=0) ) { delete pTopElem; pTopElem = 0; }
 
     return pTopElem;
 }
@@ -134,7 +134,7 @@ RedVSIParseTreeInterface* RedVSIParseFactory::RunCompareExprCompetition(RedVSITo
     RedVSIParseTreeBinaryOp*   pCurrOp  = 0;
     RedVSIParseTreeBinaryOp*   pPrevOp  = 0;
 
-    while ( (iOpFound) && (!log.IsError()) )
+    while ( (iOpFound) && (!log.ContainsError()) )
     {
         // Read the operator
         RedVSIToken cOp = cInputBuffer.GetToken();
@@ -172,7 +172,7 @@ RedVSIParseTreeInterface* RedVSIParseFactory::RunCompareExprCompetition(RedVSITo
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
     // properly delete any new object on an error
-    if ( (log.IsError()) && (pTopElem!=0) ) { delete pTopElem; pTopElem = 0; }
+    if ( (log.ContainsError()) && (pTopElem!=0) ) { delete pTopElem; pTopElem = 0; }
 
     return pTopElem;
 }
@@ -196,7 +196,7 @@ RedVSIParseTreeInterface* RedVSIParseFactory::RunLogicExprCompetition(RedVSIToke
     RedVSIParseTreeBinaryOp*     pCurrOp  = 0;
     RedVSIParseTreeBinaryOp*     pPrevOp  = 0;
 
-    while ( (iOpFound) && (!log.IsError()) )
+    while ( (iOpFound) && (!log.ContainsError()) )
     {
         // Read the operator
         RedVSIToken cOp = cInputBuffer.GetToken();
@@ -232,7 +232,7 @@ RedVSIParseTreeInterface* RedVSIParseFactory::RunLogicExprCompetition(RedVSIToke
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
     // properly delete any new object on an error
-    if ( (log.IsError()) && (pTopElem!=0) ) { delete pTopElem; pTopElem = 0; }
+    if ( (log.ContainsError()) && (pTopElem!=0) ) { delete pTopElem; pTopElem = 0; }
 
     return pTopElem;
 }
@@ -256,7 +256,7 @@ RedVSIParseTreeInterface* RedVSIParseFactory::RunSumExprCompetition(RedVSITokenB
     RedVSIParseTreeBinaryOp*  pCurrOp  = NULL;
     RedVSIParseTreeBinaryOp*  pPrevOp  = NULL;
 
-    while ( (iOpFound) && (!log.IsError()) )
+    while ( (iOpFound) && (!log.ContainsError()) )
     {
         // Read the operator
         RedVSIToken cOp = cInputBuffer.GetToken();
@@ -292,7 +292,7 @@ RedVSIParseTreeInterface* RedVSIParseFactory::RunSumExprCompetition(RedVSITokenB
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
     // properly delete any new object on an error
-    if ( (log.IsError()) && (pTopElem!=0) ) { delete pTopElem; pTopElem = NULL; }
+    if ( (log.ContainsError()) && (pTopElem!=0) ) { delete pTopElem; pTopElem = NULL; }
 
     return pTopElem;
 }
@@ -316,7 +316,7 @@ RedVSIParseTreeInterface* RedVSIParseFactory::RunMultiExprCompetition(RedVSIToke
     RedVSIParseTreeBinaryOp*   pCurrOp  = 0;
     RedVSIParseTreeBinaryOp*   pPrevOp  = 0;
 
-    while ( (iOpFound) && (!log.IsError()) )
+    while ( (iOpFound) && (!log.ContainsError()) )
     {
         // Read the operator
         RedVSIToken cOp = cInputBuffer.GetToken();
@@ -352,7 +352,7 @@ RedVSIParseTreeInterface* RedVSIParseFactory::RunMultiExprCompetition(RedVSIToke
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
     // properly delete any new object on an error
-    if ( (log.IsError()) && (pTopElem!=0) ) { delete pTopElem; pTopElem = 0; }
+    if ( (log.ContainsError()) && (pTopElem!=0) ) { delete pTopElem; pTopElem = 0; }
 
     return pTopElem;
 }
@@ -376,7 +376,7 @@ RedVSIParseTreeInterface* RedVSIParseFactory::RunPowExprCompetition(RedVSITokenB
     RedVSIParseTreeBinaryOp*  pCurrOp  = NULL;
     RedVSIParseTreeBinaryOp*  pPrevOp  = NULL;
 
-    while ( (iOpFound) && (!log.IsError()) )
+    while ( (iOpFound) && (!log.ContainsError()) )
     {
         // Read the operator
         RedVSIToken cOp = cInputBuffer.GetToken();
@@ -412,7 +412,7 @@ RedVSIParseTreeInterface* RedVSIParseFactory::RunPowExprCompetition(RedVSITokenB
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
     // properly delete any new object on an error
-    if ( (log.IsError()) && (pTopElem!=0) ) { delete pTopElem; pTopElem = 0; }
+    if ( (log.ContainsError()) && (pTopElem!=0) ) { delete pTopElem; pTopElem = 0; }
 
     return pTopElem;
 }
@@ -430,7 +430,7 @@ RedVSIParseTreeInterface* RedVSIParseFactory::RunItemExprCompetition(RedVSIToken
     bool runloop = true;
 
     // Loop until we have an entity or an error
-    while ( (pEntry == NULL) && (!log.IsError()) && (runloop == true) )
+    while ( (pEntry == NULL) && (!log.ContainsError()) && (runloop == true) )
     {
         // Reset the comp start position
         cInputBuffer.SetTokenIndex(iCompStartPos);
@@ -459,7 +459,7 @@ RedVSIParseTreeInterface* RedVSIParseFactory::RunItemExprCompetition(RedVSIToken
     }
 
     // Mop-up. If we have an entry and an error, delete the entity.
-    if ( (pEntry != NULL) && (log.IsError()) ) { delete pEntry; pEntry = NULL; }
+    if ( (pEntry != NULL) && (log.ContainsError()) ) { delete pEntry; pEntry = NULL; }
     
     return pEntry;
 }

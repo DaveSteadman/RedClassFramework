@@ -74,6 +74,7 @@ public:
     void           Set(const RedString& Str)                          { Set(Str.TextPtr()); };
     void           Append(const RedChar& Ch)                          { Append(Ch.Char()); };
     void           Append(const RedString& Str)                       { Append(Str.TextPtr()); };
+
     void           Insert(const unsigned Index, const RedString& Str) { Insert(Index, Str.TextPtr()); };
 
     unsigned       Length(void)                         const { return contentsize; };

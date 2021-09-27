@@ -31,27 +31,27 @@ namespace Geometry {
 class RedVector2D
 {
 public:
-    RedVector2D()                                         { Init(); };
-    RedVector2D(const RedNumber& nx, const RedNumber& ny) { x=nx; y=ny; };
+    RedVector2D()                                             { Init(); };
+    RedVector2D(const RedNumber& nang, const RedNumber& nmag) { angle = nang; magnitude = nmag; };
 
-    void Init(void)                                       { x=0; y=0; };
-    void Set(const RedVector2D& newvect)                  { x=newvect.x; y=newvect.y; };
-    void Set(const RedNumber& nx, const RedNumber& ny)    { x=nx; y=ny; };
+    void Init(void)                                           { angle = 0; magnitude=0; };
+    void Set(const RedVector2D& newvect)                      { angle = newvect.angle; magnitude =newvect.magnitude; };
+    void Set(const RedNumber& nang, const RedNumber& nmag)    { angle = nang; magnitude = nmag; };
 
     // Basic assessors
-    const RedNumber X(void) const                         { return x; };
-    const RedNumber Y(void) const                         { return y; };
-    void            SetX(const RedNumber& nx)             { x=nx; };
-    void            SetY(const RedNumber& ny)             { y=ny; };
+    const RedNumber X(void) const                         { return angle; };
+    const RedNumber Y(void) const                         { return magnitude; };
+    void            SetX(const RedNumber& nang)           { angle = nang; };
+    void            SetY(const RedNumber& nmag)           { magnitude = nmag; };
 
-    void            Scale(const RedNumber& f)             { x*=f; y*=f; };
-    const RedNumber Magnitude(void) const;
+    void            Scale(const RedNumber& f)             { magnitude *= f; };
+    const RedNumber Magnitude(void)                       { return magnitude; };
 
     void operator =(const RedVector2D& newvect)           { Set(newvect); };
 
 private: 
-    RedNumber x;
-    RedNumber y; 
+    RedNumber angle;
+    RedNumber magnitude; 
 };
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

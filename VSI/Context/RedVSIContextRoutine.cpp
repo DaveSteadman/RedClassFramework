@@ -120,6 +120,7 @@ RedType* RedVSIContextRoutine::CreateDataItem(const RedVSILangElement& cLocation
     {
         if (pThreadContextRecord != NULL)
             pNewData = pThreadContextRecord->CreateHeapDataItem(cType, cName);
+
     }
 
     // return the pointer to the new object (or zero)

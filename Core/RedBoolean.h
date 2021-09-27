@@ -84,6 +84,7 @@ private:
     int iState;
 };
 
+
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 bool operator==(const RedBoolean& lhs, const RedBoolean& rhs);

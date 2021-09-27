@@ -213,7 +213,7 @@ RedResult RedTestVSI::TestParseFactory_001(void)
         RedLog log;
         RedVSIParseTreeInterface* pt = RedVSIParseFactory::ConstructAssignExpr(tokBuf, log);
 
-        if (log.IsError())
+        if (log.ContainsError())
             return kResultFail;
         if (pt == NULL)
             return kResultFail;
@@ -254,7 +254,7 @@ RedResult RedTestVSI::TestParseFactory_002(void)
         RedLog log;
         RedVSIParseTreeInterface* pt = RedVSIParseFactory::ConstructAssignExpr(tokBuf, log);
 
-        if (log.IsError())
+        if (log.ContainsError())
             return kResultFail;
         if (pt == NULL)
             return kResultFail;
@@ -309,7 +309,7 @@ RedResult RedTestVSI::TestParseFactory_003(void)
         RedLog log;
         RedVSIParseTreeInterface* pt = RedVSIParseFactory::ConstructAssignExpr(tokBuf, log);
 
-        if (log.IsError())
+        if (log.ContainsError())
             return kResultFail;
         if (pt == NULL)
             return kResultFail;
@@ -322,7 +322,7 @@ RedResult RedTestVSI::TestParseFactory_003(void)
         testContext.QueueExpr(pt);
         testContext.ExecuteExprQueue();
 
-        if (log.IsError())
+        if (log.ContainsError())
             return kResultFail;
 
         // - - - Check the calculaterd balue - - - 
@@ -366,7 +366,7 @@ RedResult RedTestVSI::TestCmdNew(void)
             RedLog log;
             pt = RedVSIParseFactory::ConstructAssignExpr(tokBuf, log);
 
-            if (log.IsError())
+            if (log.ContainsError())
                 return kResultFail;
             if (pt == NULL)
                 return kResultFail;
@@ -563,7 +563,7 @@ RedResult RedTestVSI::TestRunProg_001(void)
         vsiCodeLibFactory.InputTmlClass(*tmlTreeNode, log);
         if (vsiCodeLib.NumClasses() == 0)
             return kResultFail;
-        if (log.IsError())
+        if (log.ContainsError())
             return kResultFail;
 
         // Execute code
@@ -574,7 +574,7 @@ RedResult RedTestVSI::TestRunProg_001(void)
             {
                 tc->Execute(10);
 
-                if (log.IsError()) return kResultFail;
+                if (log.ContainsError()) return kResultFail;
 
                 // Analyse the data created by the code
                 RedType* pXVal = NULL;
@@ -610,13 +610,13 @@ RedResult RedTestVSI::TestFragment_New(void)
     RedVSICmdInterface* topCmd = RedVSICmdFactory::RunConstuctionCompetition(cTokenList, cRedLog);
     if (topCmd == NULL)
         return kResultFail;
-    if (cRedLog.IsError())
+    if (cRedLog.ContainsError())
         return kResultFail;
 
     // Execute the code in a context
     RedVSIContextRoutine testContext(&cRedLog, topCmd);
     testContext.Execute(10);
-    if (cRedLog.IsError())
+    if (cRedLog.ContainsError())
         return kResultFail;
 
     // Check the execution result
@@ -647,14 +647,14 @@ new local string testS = 'Str' ";
     RedVSICmdInterface* topCmd = RedVSICmdFactory::RunConstuctionCompetition(cTokenList, cRedLog);
     if (topCmd == NULL)
         return kResultFail;
-    if (cRedLog.IsError())
+    if (cRedLog.ContainsError())
         return kResultFail;
 
     // Execute the code in a context
     RedVSIContextRoutine testContext(&cRedLog, topCmd);
     while (!testContext.IsExecutionComplete())
         testContext.Execute(1);
-    if (cRedLog.IsError())
+    if (cRedLog.ContainsError())
         return kResultFail;
 
     // Check the execution result
@@ -692,13 +692,13 @@ x = x * 2";
     RedVSICmdInterface* topCmd = RedVSICmdFactory::RunConstuctionCompetition(cTokenList, cRedLog);
     if (topCmd == NULL)
         return kResultFail;
-    if (cRedLog.IsError())
+    if (cRedLog.ContainsError())
         return kResultFail;
 
     // Execute the code in a context
     RedVSIContextRoutine testContext(&cRedLog, topCmd);
     testContext.Execute(10);
-    if (cRedLog.IsError())
+    if (cRedLog.ContainsError())
         return kResultFail;
 
     // Check the execution result
@@ -732,14 +732,14 @@ res = res * 3";
     RedVSICmdInterface* topCmd = RedVSICmdFactory::RunConstuctionCompetition(cTokenList, cRedLog);
     if (topCmd == NULL)
         return kResultFail;
-    if (cRedLog.IsError())
+    if (cRedLog.ContainsError())
         return kResultFail;
 
     // Execute the code in a context
     RedVSIContextRoutine testContext(&cRedLog);
     RedVSIContextFactory::LoadFragmentIntoContext(strCodeFragment, testContext);
     testContext.Execute(10);
-    if (cRedLog.IsError())
+    if (cRedLog.ContainsError())
         return kResultFail;
 
     // Check the execution result
@@ -766,13 +766,13 @@ x = x + 1 ";
     RedVSIContextRoutine  testContext(&cRedLog);
 
     RedVSIContextFactory::LoadFragmentIntoContext(strCodeFragment, testContext);
-    if (cRedLog.IsError()) return kResultFail;
+    if (cRedLog.ContainsError()) return kResultFail;
 
     // Execute the code in a context, while we have no completion and no error
-    while ((!testContext.IsExecutionComplete()) && (!cRedLog.IsError()))
+    while ((!testContext.IsExecutionComplete()) && (!cRedLog.ContainsError()))
         testContext.Execute(1);
 
-    if (cRedLog.IsError())
+    if (cRedLog.ContainsError())
         return kResultFail;
 
     // Check the execution result
@@ -797,13 +797,13 @@ log x ";
     RedVSIContextRoutine testContext(&cRedLog);
 
     RedVSIContextFactory::LoadFragmentIntoContext(strCodeFragment, testContext);
-    if (cRedLog.IsError()) return kResultFail;
+    if (cRedLog.ContainsError()) return kResultFail;
 
     // Execute the code in a context, while we have no completion and no error
-    while ((!testContext.IsExecutionComplete()) && (!cRedLog.IsError()))
+    while ((!testContext.IsExecutionComplete()) && (!cRedLog.ContainsError()))
         testContext.Execute(1);
 
-    if (cRedLog.IsError())
+    if (cRedLog.ContainsError())
         return kResultFail;
 
     // Check the execution result

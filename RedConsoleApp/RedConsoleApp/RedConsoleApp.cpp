@@ -23,11 +23,8 @@ int main()
     RedTestCentre::RunAllUnitTests(testlog);
     std::cout << testlog.AllLoggedText().TextPtr();
 
-    RedLog                 cRedLog;
+    RedLog               cRedLog;
     RedVSIContextRoutine testContext(&cRedLog);
-
-    //RedVSIContextFactory::CreateContext(testContext, cRedLog);
-
 
     while (1)
     {
@@ -39,10 +36,10 @@ int main()
 
         // Execute the code in a context, while we have no completion and no error
         RedVSIContextFactory::LoadFragmentIntoContext(rline, testContext); // <- not preserving context between commands.
-        while ((!testContext.IsExecutionComplete()) && (!cRedLog.IsError()))
+        while ((!testContext.IsExecutionComplete()) && (!cRedLog.ContainsError()))
             testContext.Execute(1);
 
-        if (cRedLog.IsError())
+        if (cRedLog.ContainsError())
             std::cout << cRedLog.AllLoggedText().TextPtr();
 
     }

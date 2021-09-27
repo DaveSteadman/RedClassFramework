@@ -75,14 +75,14 @@ void RedVSILibFactory::InputTmlClass(RedTmlNode cClassNode, RedLog& cAnalysis)
             {
                 RedVSILibRoutine* newRoutine = InputTmlRoutine(*pCurrNode, cAnalysis);
 
-                if ((newRoutine != NULL) && (!cAnalysis.IsError()))
+                if ((newRoutine != NULL) && (!cAnalysis.ContainsError()))
                     pNewClass->AddRoutine(newRoutine);
             }
         }
         routineIt.Next();
     }
 
-    if (!cAnalysis.IsError())
+    if (!cAnalysis.ContainsError())
     {
         pLib->AddClass(pNewClass);
     }
@@ -151,7 +151,7 @@ RedVSILibRoutine* RedVSILibFactory::InputTmlRoutine(RedTmlNode& cRoutineNode, Re
         RedString debugText = cInputBuffer.DebugDump();
 
 
-        if (iCreateResult && !cAnalysis.IsError())
+        if (iCreateResult && !cAnalysis.ContainsError())
         {
             // Process the code, creating the tree of code objects
             RedVSICmdInterface* pVsiCode = RedVSICmdFactory::RunConstuctionCompetition(cInputBuffer, cAnalysis);
@@ -161,7 +161,7 @@ RedVSILibRoutine* RedVSILibFactory::InputTmlRoutine(RedTmlNode& cRoutineNode, Re
     }
 
     // add or lose the new class
-    if (cAnalysis.IsError())
+    if (cAnalysis.ContainsError())
     {
         delete newRoutine;
         newRoutine = NULL;

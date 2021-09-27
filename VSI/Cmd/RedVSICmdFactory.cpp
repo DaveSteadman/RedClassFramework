@@ -75,7 +75,7 @@ RedVSICmdInterface* RedVSICmdFactory::RunConstuctionCompetition(RedVSITokenBuffe
             }
 
             // Check for any error in the competition
-            if (RedLog.IsError()) 
+            if (RedLog.ContainsError()) 
                 iEndOrError = true;
 
             // Move onto the next entry
@@ -99,7 +99,7 @@ RedVSICmdInterface* RedVSICmdFactory::RunConstuctionCompetition(RedVSITokenBuffe
     }
 
     // Don't return any objects on error
-    if (RedLog.IsError())
+    if (RedLog.ContainsError())
     {
         if (pFirstObject != NULL)
         {
@@ -142,7 +142,7 @@ RedVSICmdInterface* RedVSICmdFactory::IfComp(RedVSITokenBuffer& cInputBuffer, Re
 
     // Read the expression to assign. If okay, assign it, else delete the command
     pExpr = RedVSIParseFactory::ConstructAssignExpr(cInputBuffer, RedLog);
-    if ((pExpr == NULL) || (RedLog.IsError())) { RedLog.AddErrorEvent("IF command: cant construction expression"); return NULL; }
+    if ((pExpr == NULL) || (RedLog.ContainsError())) { RedLog.AddErrorEvent("IF command: cant construction expression"); return NULL; }
 
     // Check for the THEN keyword
     cTok = cInputBuffer.GetToken();
@@ -151,7 +151,7 @@ RedVSICmdInterface* RedVSICmdFactory::IfComp(RedVSITokenBuffer& cInputBuffer, Re
     // Create the positive branch, Read the list of commands, which ends with a token the 
     // competition doesn't understand
     pPosBranch = RunConstuctionCompetition(cInputBuffer, RedLog);
-    if ((pPosBranch == NULL) || (RedLog.IsError())) return NULL;
+    if ((pPosBranch == NULL) || (RedLog.ContainsError())) return NULL;
 
     // Read the ELSE related token and progress, or we have an error
     cTok = cInputBuffer.GetToken();
@@ -172,7 +172,7 @@ RedVSICmdInterface* RedVSICmdFactory::IfComp(RedVSITokenBuffer& cInputBuffer, Re
         if (pNegBranch != NULL) delete pNegBranch;
         return NULL;
     }
-    if (RedLog.IsError())
+    if (RedLog.ContainsError())
     {
         delete pExpr;
         delete pPosBranch;
@@ -195,7 +195,7 @@ RedVSICmdInterface* RedVSICmdFactory::ExprComp(RedVSITokenBuffer& cInputBuffer, 
     RedVSIParseTreeInterface* pExpr = RedVSIParseFactory::ConstructAssignExpr(cInputBuffer, RedLog);
     
     // if we have an expression and no error, then we can progress
-    if ((pExpr) && (!RedLog.IsError()))
+    if ((pExpr) && (!RedLog.ContainsError()))
     {
         // if the top level element of the parse tree is an assignment or a 
         // routine call, then its a valid expression
@@ -346,7 +346,7 @@ RedVSICmdInterface* RedVSICmdFactory::ReturnComp(RedVSITokenBuffer& cInputBuffer
     RedVSIParseTreeInterface* pExpr = RedVSIParseFactory::ConstructAssignExpr(cInputBuffer, RedLog);
     
     // if we have an expression and no error, then we can progress
-    if ((pExpr) && (!RedLog.IsError()))
+    if ((pExpr) && (!RedLog.ContainsError()))
     {
         // If the top level element of the parse tree is an assignment or a
         // routine call, then its a valid expression

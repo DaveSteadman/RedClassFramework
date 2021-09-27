@@ -55,7 +55,7 @@ public:
     //EventLogListType EventsByType();
 
     unsigned NumEvents(void) const { return EventList.NumItems(); };
-    bool     IsError(void)   const { return containsError; };
+    bool     ContainsError(void)   const { return containsError; };
 
 private:
     EventLogListType EventList;
