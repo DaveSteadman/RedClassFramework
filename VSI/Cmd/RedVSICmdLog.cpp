@@ -50,7 +50,7 @@ void RedVSICmdLog::Execute(RedVSIContextInterface* pContext)
     RedVariant cExprResult = pContext->ExprResult(pLogExpr);
 
     // Get a string representation of the value
-    pContext->Log().AddText(cExprResult.StringValue());
+    pContext->Log()->AddText(cExprResult.StringValue());
 
     // Expression will have been evaluated prior to the command,
     // so any actions already performed. Just queue up the next 

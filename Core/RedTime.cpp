@@ -16,6 +16,8 @@
 // (http://opensource.org/licenses/MIT)
 // -------------------------------------------------------------------------------------------------
 
+#define _CRT_SECURE_NO_WARNINGS
+
 #include "RedString.h"
 #include "RedNumber.h"
 #include "RedTime.h"

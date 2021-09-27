@@ -71,7 +71,7 @@ public:
     virtual void          ClearCommandQueue(void) =0;
 
     // Error reporting and debugging
-    virtual RedLog&       Log(void) =0;
+    virtual RedLog*       Log(void) = 0;
 };
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

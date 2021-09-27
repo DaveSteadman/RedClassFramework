@@ -55,10 +55,9 @@ class RedVSIContextRoutine : public RedVSIContextInterface
 public:
 
     // Construction Routines
-    RedVSIContextRoutine(RedLog& initAnalysis);
-    RedVSIContextRoutine(RedLog& initAnalysis, RedVSICmdInterface* pFirstCmd);
-
-    RedVSIContextRoutine(const RedString& inClassName, const RedString& inRoutineName, RedVSICmdInterface* pFirstCmd, RedLog& cAnalysis);
+    RedVSIContextRoutine(RedLog* pInitLog);
+    RedVSIContextRoutine(RedLog* pInitLog, RedVSICmdInterface* pFirstCmd);
+    RedVSIContextRoutine(RedLog* pInitLog, const RedString& inClassName, const RedString& inRoutineName, RedVSICmdInterface* pFirstCmd);
 
     ~RedVSIContextRoutine(void);
 
@@ -66,9 +65,9 @@ public:
     // RedVSIContextInterface Inhertied Interface
 
     // Data accessors (RedVSIContextInterface)
-    RedType*        CreateDataItem(const RedVSILangElement& cLocation, const RedVSILangElement& cType, const RedString& cName);
-    RedType*        DuplicateDataItem(const RedVSILangElement& cLocation, const RedType* pDataItem, const RedString& cName);
-    bool            FindDataItem  (const RedString& cName, RedType*& pData);
+    RedType* CreateDataItem(const RedVSILangElement& cLocation, const RedVSILangElement& cType, const RedString& cName);
+    RedType* DuplicateDataItem(const RedVSILangElement& cLocation, const RedType* pDataItem, const RedString& cName);
+    bool            FindDataItem(const RedString& cName, RedType*& pData);
     RedVariant      DataItemAsVariant(const RedString& cName);
 
     // Inhertied Expressions (RedVSIContextInterface)
@@ -78,12 +77,12 @@ public:
     void            ExecuteExprQueue(void);
 
     // Error reporting and debugging
-    RedLog&         Log(void) { return cAnalysis; };
+    RedLog*         Log(void) { return pLog; };
 
     // Setup Calls
     void            SetupRoutineCall(const RedVSIRoutineCallInterface& cSignature);
-    void            QueueCommand(RedVSICmdInterface* pCmd)                   { if (pCmd != NULL) cCmdStack.Push(pCmd); else pCurrCmd = pCmd; };
-    void            ClearCommandQueue(void)                                  { cCmdStack.DelAll(); pCurrCmd=NULL; };
+    void            QueueCommand(RedVSICmdInterface* pCmd) { if (pCmd != NULL) cCmdStack.Push(pCmd); else pCurrCmd = pCmd; };
+    void            ClearCommandQueue(void) { cCmdStack.DelAll(); pCurrCmd = NULL; };
     void            SetValueToReturn(const RedVariant& cData);
     bool            IsExecutionComplete(void) const;
 
@@ -94,12 +93,12 @@ public:
 
     void            SetParamsList(RedRecord* pParamData);
 
-//    void                       SetRoutineCallData(const RedVSIRoutineCallInterface& d) { cRoutineCall = d; };
-//    RedVSIRoutineCallInterface RoutineCallData(void)                                   { return cRoutineCall; };
+    //    void                       SetRoutineCallData(const RedVSIRoutineCallInterface& d) { cRoutineCall = d; };
+    //    RedVSIRoutineCallInterface RoutineCallData(void)                                   { return cRoutineCall; };
 
 
-    // Inherited Routine creation and control (RedVSIContextInterface)
-    RedVariant&  ValueToReturn(void)  { return cReturnValue; };
+        // Inherited Routine creation and control (RedVSIContextInterface)
+    RedVariant& ValueToReturn(void) { return cReturnValue; };
     void         SetReturnedValue(const RedVariant& cData);
 
 
@@ -111,9 +110,9 @@ public:
     bool            HasCmdToExecute(void) const;
 
     void  SetRoutineName(const RedString& rname) { RoutineName = rname; };
-    void  SetClassName  (const RedString& cname) { ClassName   = cname; };
+    void  SetClassName(const RedString& cname) { ClassName = cname; };
 
-    void                 SetThreadContextRecord(RedVSIContextThread* pCntxtRecord)        { pThreadContextRecord = pCntxtRecord; };
+    void                 SetThreadContextRecord(RedVSIContextThread* pCntxtRecord) { pThreadContextRecord = pCntxtRecord; };
     RedVSIContextThread* ThreadContextRecord(void)                                  const { return pThreadContextRecord; };
 
 private:
@@ -147,7 +146,7 @@ private:
 
     /// Pointer to the object associated to the routine call
     //RedVSIObject*        pThisObj;
-    
+
     /// Variables and values created during the execution of the routine, including the parameters
     RedRecord cLocalVariables;
 
@@ -158,7 +157,7 @@ private:
     RedVSIContextThread* pThreadContextRecord;
 
     /// Logging
-    RedLog& cAnalysis;
+    RedLog* pLog;
 };
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

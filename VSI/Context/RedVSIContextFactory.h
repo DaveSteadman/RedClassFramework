@@ -23,29 +23,28 @@
 #include "RedVSIContextRoutine.h"
 //#include "RedVSIContextThread.h"
 #include "RedVSILibRoutineInterface.h"
-#include "RedVSIContextFragment.h"
 #include "RedVSILibInterface.h"
 
 #include "RedVSILib.h"
 
 namespace Red {
-namespace VSI {
+    namespace VSI {
 
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+        // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-/// Factory and top-level library class controlling the creation of any context object.
-class RedVSIContextFactory
-{
-public:
+        /// Factory and top-level library class controlling the creation of any context object.
+        class RedVSIContextFactory
+        {
+        public:
 
-    static RedResult CreateContextForFragment(const RedString& InputCodeFragment, RedVSIContextFragment** OutputContext, RedLog& cLog);
-    static RedResult LoadFragmentIntoContext (const RedString& InputCodeFragment, RedVSIContextFragment* UpdateContext, RedLog& cLog);
+            static RedResult LoadFragmentIntoContext(const RedString& InputCodeFragment, RedVSIContextRoutine& UpdateContext);
 
-    static RedResult CreateThreadContextForRoutine(const RedString& classname, const RedString& routinename, RedVSILibInterface* pInputLib, RedVSIContextThread** OutputThreadContext, RedLog& cLog);
-};
+            static RedResult CreateContext(RedVSIContextRoutine** OutputContext, RedLog& cLog);
+            static RedResult CreateThreadContextForRoutine(const RedString& classname, const RedString& routinename, RedVSILibInterface* pInputLib, RedVSIContextThread** OutputThreadContext, RedLog& cLog);
+        };
 
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+        // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-} // VSI
+    } // VSI
 } // Red
 

@@ -27,22 +27,22 @@ namespace VSI {
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-RedResult RedVSIContextFactory::CreateContextForFragment(const RedString& InputCodeFragment, RedVSIContextFragment** OutputContext, RedLog& cLog)
+RedResult RedVSIContextFactory::CreateContext(RedVSIContextRoutine** OutputContext, RedLog& cLog)
 {
     // Turn the code into tokens
-    RedVSILibTokenMap cTokenMap;
-    RedVSITokenBuffer cTokenList;
-    if (!RedVSITokenFactory::CreateTokens(InputCodeFragment, cTokenMap.cVSILibTokenMap, cTokenList))
-        return kResultFail;
+    //RedVSILibTokenMap cTokenMap;
+    //RedVSITokenBuffer cTokenList;
+    //if (!RedVSITokenFactory::CreateTokens(InputCodeFragment, cTokenMap.cVSILibTokenMap, cTokenList))
+    //    return kResultFail;
 
-    // Turn the tokens into code
-    RedVSICmdInterface* topCmd = RedVSICmdFactory::RunConstuctionCompetition(cTokenList, cLog);
-    if (topCmd == NULL)
-        return kResultFail;
-    if (cLog.IsError())
-        return kResultFail;
+    //// Turn the tokens into code
+    //RedVSICmdInterface* topCmd = RedVSICmdFactory::RunConstuctionCompetition(cTokenList, cLog);
+    //if (topCmd == NULL)
+    //    return kResultFail;
+    //if (cLog.IsError())
+    //    return kResultFail;
 
-    *OutputContext = new RedVSIContextFragment(cLog, topCmd);
+    * OutputContext = new RedVSIContextRoutine(&cLog);
 
     if (*OutputContext == NULL)
         return kResultFail;
@@ -52,27 +52,25 @@ RedResult RedVSIContextFactory::CreateContextForFragment(const RedString& InputC
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-RedResult RedVSIContextFactory::LoadFragmentIntoContext (const RedString& InputCodeFragment, RedVSIContextFragment* UpdateContext, RedLog& cLog)
+RedResult RedVSIContextFactory::LoadFragmentIntoContext(const RedString& InputCodeFragment, RedVSIContextRoutine& UpdateContext)
 {
-    if (UpdateContext == NULL)
-        return kResultFail;
-
     // Turn the code into tokens
     RedVSILibTokenMap cTokenMap;
     RedVSITokenBuffer cTokenList;
-    RedLog            cRedLog;
     if (!RedVSITokenFactory::CreateTokens(InputCodeFragment, cTokenMap.cVSILibTokenMap, cTokenList))
         return kResultFail;
 
+    RedLog* pLog = UpdateContext.Log();
+
     // Turn the tokens into code
-    RedVSICmdInterface* topCmd = RedVSICmdFactory::RunConstuctionCompetition(cTokenList, cRedLog);
+    RedVSICmdInterface* topCmd = RedVSICmdFactory::RunConstuctionCompetition(cTokenList, *pLog);
     if (topCmd == NULL)
         return kResultFail;
-    if (cRedLog.IsError())
+    if (pLog->IsError())
         return kResultFail;
 
-    UpdateContext->ClearCommandQueue();
-    UpdateContext->QueueCommand(topCmd);
+    UpdateContext.ClearCommandQueue();
+    UpdateContext.QueueCommand(topCmd);
 
     return kResultSuccess;
 }
@@ -89,7 +87,7 @@ RedResult RedVSIContextFactory::CreateThreadContextForRoutine(const RedString& c
 
     *OutputThreadContext = new RedVSIContextThread();
 
-    RedVSIContextRoutine* pFirstRoutineContext = new RedVSIContextRoutine(classname, routinename, LibRoutine->FirstCommand(), cLog);
+    RedVSIContextRoutine* pFirstRoutineContext = new RedVSIContextRoutine(&cLog, classname, routinename, LibRoutine->FirstCommand());
 
     pFirstRoutineContext->SetThreadContextRecord(*OutputThreadContext);
     (*OutputThreadContext)->PushRoutineOnStack(pFirstRoutineContext);

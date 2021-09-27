@@ -19,7 +19,6 @@
 #include "RedTestVSI.h"
 #include "RedVSINamespace.h"
 #include "RedVSIContextRoutine.h"
-#include "RedVSIContextFragment.h"
 #include "RedVSIContextThread.h"
 
 #include "RedVSICmdSerialiser.h"
@@ -35,25 +34,25 @@ namespace Test {
 
 void RedTestVSI::RunUnitTest(RedLog& log)
 {
-    if (RedTestVSI::TestParseTreeVal().IsFail())      { log.AddErrorEvent("VSI Unit Test: TestParseTreeVal Failed");      return; }
-    if (RedTestVSI::TestParseTreeVar().IsFail())      { log.AddErrorEvent("VSI Unit Test: TestParseTreeVar Failed");      return; }
+    if (RedTestVSI::TestParseTreeVal().IsFail()) { log.AddErrorEvent("VSI Unit Test: TestParseTreeVal Failed");      return; }
+    if (RedTestVSI::TestParseTreeVar().IsFail()) { log.AddErrorEvent("VSI Unit Test: TestParseTreeVar Failed");      return; }
     if (RedTestVSI::TestParseTreeBinaryOp().IsFail()) { log.AddErrorEvent("VSI Unit Test: TestParseTreeBinaryOp Failed"); return; }
 
-    if (RedTestVSI::TestParseFactory_001().IsFail())  { log.AddErrorEvent("VSI Unit Test: TestParseFactory_001 Failed");  return; }
-    if (RedTestVSI::TestParseFactory_002().IsFail())  { log.AddErrorEvent("VSI Unit Test: TestParseFactory_002 Failed");  return; }
-    if (RedTestVSI::TestParseFactory_003().IsFail())  { log.AddErrorEvent("VSI Unit Test: TestParseFactory_003 Failed");  return; }
+    if (RedTestVSI::TestParseFactory_001().IsFail()) { log.AddErrorEvent("VSI Unit Test: TestParseFactory_001 Failed");  return; }
+    if (RedTestVSI::TestParseFactory_002().IsFail()) { log.AddErrorEvent("VSI Unit Test: TestParseFactory_002 Failed");  return; }
+    if (RedTestVSI::TestParseFactory_003().IsFail()) { log.AddErrorEvent("VSI Unit Test: TestParseFactory_003 Failed");  return; }
 
-    if (RedTestVSI::TestCmdNew().IsFail())            { log.AddErrorEvent("VSI Unit Test: TestCmdNew Failed");            return; }
-    if (RedTestVSI::TestTokeniseCode().IsFail())      { log.AddErrorEvent("VSI Unit Test: TestTokeniseCode Failed");      return; }
+    if (RedTestVSI::TestCmdNew().IsFail()) { log.AddErrorEvent("VSI Unit Test: TestCmdNew Failed");            return; }
+    if (RedTestVSI::TestTokeniseCode().IsFail()) { log.AddErrorEvent("VSI Unit Test: TestTokeniseCode Failed");      return; }
 
-    if (RedTestVSI::TestFragment_New().IsFail())      { log.AddErrorEvent("VSI Unit Test: TestFragment_New Failed");      return; }
+    if (RedTestVSI::TestFragment_New().IsFail()) { log.AddErrorEvent("VSI Unit Test: TestFragment_New Failed");      return; }
     if (RedTestVSI::TestFragment_NewTypes().IsFail()) { log.AddErrorEvent("VSI Unit Test: TestFragment_NewTypes Failed"); return; }
-    if (RedTestVSI::TestFragment_Expr().IsFail())     { log.AddErrorEvent("VSI Unit Test: TestFragment_Expr Failed");     return; }
-    if (RedTestVSI::TestFragment_If().IsFail())       { log.AddErrorEvent("VSI Unit Test: TestFragment_If Failed");       return; }
-    if (RedTestVSI::TestFragment_While().IsFail())    { log.AddErrorEvent("VSI Unit Test: TestFragment_While Failed");    return; }
-    if (RedTestVSI::TestFragment_Log().IsFail())      { log.AddErrorEvent("VSI Unit Test: TestFragment_Log Failed");      return; }
+    if (RedTestVSI::TestFragment_Expr().IsFail()) { log.AddErrorEvent("VSI Unit Test: TestFragment_Expr Failed");     return; }
+    if (RedTestVSI::TestFragment_If().IsFail()) { log.AddErrorEvent("VSI Unit Test: TestFragment_If Failed");       return; }
+    if (RedTestVSI::TestFragment_While().IsFail()) { log.AddErrorEvent("VSI Unit Test: TestFragment_While Failed");    return; }
+    if (RedTestVSI::TestFragment_Log().IsFail()) { log.AddErrorEvent("VSI Unit Test: TestFragment_Log Failed");      return; }
 
-    if (RedTestVSI::TestRunProg_001().IsFail())       { log.AddErrorEvent("VSI Unit Test: TestRunProg_001 Failed");       return; }
+    if (RedTestVSI::TestRunProg_001().IsFail()) { log.AddErrorEvent("VSI Unit Test: TestRunProg_001 Failed");       return; }
 
     log.AddText("VSI Unit Test: Passed");
 }
@@ -67,7 +66,7 @@ RedResult RedTestVSI::TestParseTreeVal(void)
         RedLog               cLog;
         RedVariant           testValue("Hello");
         RedVSIParseTreeVal   testPTVal;
-        RedVSIContextRoutine testContext(cLog);
+        RedVSIContextRoutine testContext(&cLog);
         RedVariant           expRes(12);
 
         testPTVal.SetValue(testValue);
@@ -78,7 +77,7 @@ RedResult RedTestVSI::TestParseTreeVal(void)
 
         if (expRes != testValue)
             return kResultFail;
-    
+
     }
     return kResultSuccess;
 }
@@ -90,11 +89,11 @@ RedResult RedTestVSI::TestParseTreeVar(void)
     // Basic Creation and calculation
     {
         RedLog               cLog;
-        RedVSIContextRoutine testContext(cLog);
+        RedVSIContextRoutine testContext(&cLog);
         testContext.CreateDataItem(RedVSILangElement::LocationStack(), RedVSILangElement::TypeNumber(), RedString("testVar1"));
 
-        RedNumber* testVar1  = NULL;
-        RedType*   pFoundDataItem = NULL;
+        RedNumber* testVar1 = NULL;
+        RedType* pFoundDataItem = NULL;
         if (testContext.FindDataItem(RedString("testVar1"), pFoundDataItem))
         {
             if (pFoundDataItem->Type() != kDataTypeNum)
@@ -131,7 +130,7 @@ RedResult RedTestVSI::TestParseTreeBinaryOp(void)
     // Simple Addition Test: Number
     {
         RedLog                  cLog;
-        RedVSIContextRoutine    testContext(cLog);
+        RedVSIContextRoutine    testContext(&cLog);
 
         RedVSIParseTreeVal      testPTVal1(RedNumber(1200));
         RedVSIParseTreeVal      testPTVal2(RedNumber(34));
@@ -153,7 +152,7 @@ RedResult RedTestVSI::TestParseTreeBinaryOp(void)
     // Simple Addition Test: String
     {
         RedLog                  cLog;
-        RedVSIContextRoutine    testContext(cLog);
+        RedVSIContextRoutine    testContext(&cLog);
 
         RedVSIParseTreeVal      testPTVal1(RedString("Hello"));
         RedVSIParseTreeVal      testPTVal2(RedString(" Red"));
@@ -206,7 +205,7 @@ RedResult RedTestVSI::TestParseFactory_001(void)
 
         RedVSITokenBuffer tokBuf;
 
-        int iCreateResult = RedVSITokenFactory::CreateTokens(testExpr,tokenMap, tokBuf);
+        int iCreateResult = RedVSITokenFactory::CreateTokens(testExpr, tokenMap, tokBuf);
 
         if (iCreateResult == 0)
             return kResultFail;
@@ -220,7 +219,7 @@ RedResult RedTestVSI::TestParseFactory_001(void)
             return kResultFail;
 
         RedLog               cLog;
-        RedVSIContextRoutine testContext(cLog);
+        RedVSIContextRoutine testContext(&cLog);
         testContext.QueueExpr(pt);
         testContext.ExecuteExprQueue();
 
@@ -247,7 +246,7 @@ RedResult RedTestVSI::TestParseFactory_002(void)
 
         RedVSITokenBuffer tokBuf;
 
-        int iCreateResult = RedVSITokenFactory::CreateTokens(testExpr,tokenMap, tokBuf);
+        int iCreateResult = RedVSITokenFactory::CreateTokens(testExpr, tokenMap, tokBuf);
 
         if (iCreateResult == 0)
             return kResultFail;
@@ -261,7 +260,7 @@ RedResult RedTestVSI::TestParseFactory_002(void)
             return kResultFail;
 
         RedLog               cLog;
-        RedVSIContextRoutine testContext(cLog);
+        RedVSIContextRoutine testContext(&cLog);
         testContext.CreateDataItem(RedVSILangElement::LocationStack(), RedVSILangElement::TypeString(), RedString("x"));
 
         testContext.QueueExpr(pt);
@@ -288,6 +287,8 @@ RedResult RedTestVSI::TestParseFactory_002(void)
 RedResult RedTestVSI::TestParseFactory_003(void)
 {
     {
+        // - - - Define the data - - - 
+
         RedString testExpr("x = (3 + 2) * 20");
 
         RedVSITokenElementMap tokenMap;
@@ -297,9 +298,10 @@ RedResult RedTestVSI::TestParseFactory_003(void)
         tokenMap.Add(RedString("("), RedVSIIOElement::SymbolOpenBracket());
         tokenMap.Add(RedString(")"), RedVSIIOElement::SymbolCloseBracket());
 
-        RedVSITokenBuffer tokBuf;
+        // - - - Extract the tokens - - - 
 
-        int iCreateResult = RedVSITokenFactory::CreateTokens(testExpr,tokenMap, tokBuf);
+        RedVSITokenBuffer tokBuf;
+        int iCreateResult = RedVSITokenFactory::CreateTokens(testExpr, tokenMap, tokBuf);
 
         if (iCreateResult == 0)
             return kResultFail;
@@ -311,16 +313,21 @@ RedResult RedTestVSI::TestParseFactory_003(void)
             return kResultFail;
         if (pt == NULL)
             return kResultFail;
+        log.Clear();
 
-        RedLog               cLog;
-        RedVSIContextRoutine testContext(cLog);
+        // - - - Execute the expression - - - 
+
+        RedVSIContextRoutine testContext(&log);
         testContext.CreateDataItem(RedVSILangElement::LocationStack(), RedVSILangElement::TypeNumber(), RedString("x"));
-
         testContext.QueueExpr(pt);
         testContext.ExecuteExprQueue();
 
-        RedVariant res = testContext.ExprResult(pt);
+        if (log.IsError())
+            return kResultFail;
 
+        // - - - Check the calculaterd balue - - - 
+
+        RedVariant res = testContext.ExprResult(pt);
         if (res.NumberValue() != RedNumber(100))
             return kResultFail;
 
@@ -368,7 +375,7 @@ RedResult RedTestVSI::TestCmdNew(void)
         cmdNew.SetDetails(kLangElementTypeNumber, kLangElementLocationStack, RedString("x"), NULL, pt);
 
         RedLog               cLog;
-        RedVSIContextRoutine testContext(cLog);
+        RedVSIContextRoutine testContext(&cLog);
         cmdNew.QueueExpr(&testContext);
         testContext.ExecuteExprQueue();
         cmdNew.Execute(&testContext);
@@ -491,57 +498,57 @@ RedResult RedTestVSI::TestRunProg_001(void)
 
     {
         RedBufferInput codeBuffer(RedString(" \
-            {{class} \
-              {{name}TestRoutines} \
-              {{routine} \
-                {{name}TwoPi} \
-                {{code} \
-                  new local number varX = 3.14159 \
-                  varX = varX * 2 \
-                  return varX \
-                } \
-              } \
-              {{routine} \
-                {{name}Double} \
-                {{params} \
-                  {{X}number} \
-                } \
-                {{code} \
-                  X = X * 2 \
-                  return X \
-                } \
-              } \
-              {{routine} \
-                {{name}Halve} \
-                {{params} \
-                  {{X}number} \
-                } \
-                {{code} \
-                  X = X / 2 \
-                  return X \
-                } \
-              } \
-              {{routine} \
-                {{name}TestCall} \
-                {{code} \
-                  new local number x1 = 1234 \
-                  new heap  number x2 = 0 \
-                  x2 = TestRoutines::Halve(x1) \
-                } \
-              } \
-              {{routine} \
-                {{name}TestExecute} \
-                {{code} \
-                  new local number varX = 3.14159 \
-                  new local number varY \
-                  varY = varX * 2 \
-                } \
-              } \
-            } "));
+    {{class} \
+        {{name}TestRoutines} \
+        {{routine} \
+        {{name}TwoPi} \
+        {{code} \
+            new local number varX = 3.14159 \
+            varX = varX * 2 \
+            return varX \
+        } \
+        } \
+        {{routine} \
+        {{name}Double} \
+        {{params} \
+            {{X}number} \
+        } \
+        {{code} \
+            X = X * 2 \
+            return X \
+        } \
+        } \
+        {{routine} \
+        {{name}Halve} \
+        {{params} \
+            {{X}number} \
+        } \
+        {{code} \
+            X = X / 2 \
+            return X \
+        } \
+        } \
+        {{routine} \
+        {{name}TestCall} \
+        {{code} \
+            new local number x1 = 1234 \
+            new heap  number x2 = 0 \
+            x2 = TestRoutines::Halve(x1) \
+        } \
+        } \
+        {{routine} \
+        {{name}TestExecute} \
+        {{code} \
+            new local number varX = 3.14159 \
+            new local number varY \
+            varY = varX * 2 \
+        } \
+        } \
+    } "));
 
         // Create the TML tree from the code buffer
         RedTmlElement* tmlTreeElement = RedTmlAction::ParseTinyML(codeBuffer);
-        RedTmlNode*    tmlTreeNode    = NULL;
+        RedTmlNode* tmlTreeNode = NULL;
 
         if (tmlTreeElement == NULL)
             return kResultFail;
@@ -607,7 +614,7 @@ RedResult RedTestVSI::TestFragment_New(void)
         return kResultFail;
 
     // Execute the code in a context
-    RedVSIContextFragment testContext(cRedLog, topCmd);
+    RedVSIContextRoutine testContext(&cRedLog, topCmd);
     testContext.Execute(10);
     if (cRedLog.IsError())
         return kResultFail;
@@ -625,9 +632,9 @@ RedResult RedTestVSI::TestFragment_NewTypes(void)
 {
     // Define a small code fragment
     RedString strCodeFragment = " \
-        new local bool   testB = true \
-        new local number testN = 123 \
-        new local string testS = 'Str' ";
+new local bool   testB = true \
+new local number testN = 123 \
+new local string testS = 'Str' ";
 
     // Turn the code into tokens
     RedVSILibTokenMap cTokenMap;
@@ -644,7 +651,7 @@ RedResult RedTestVSI::TestFragment_NewTypes(void)
         return kResultFail;
 
     // Execute the code in a context
-    RedVSIContextFragment testContext(cRedLog, topCmd);
+    RedVSIContextRoutine testContext(&cRedLog, topCmd);
     while (!testContext.IsExecutionComplete())
         testContext.Execute(1);
     if (cRedLog.IsError())
@@ -667,14 +674,14 @@ RedResult RedTestVSI::TestFragment_Expr(void)
 {
     // Define a small code fragment
     RedString strCodeFragment = "\
-        new local number x   = 3 \
-        x = x + 1 \
-        x = x * 2";
-//    RedString strCodeFragment = "\
-//        new local record x \
-//        x[aa] = 12 ";
+new local number x   = 3 \
+x = x + 1 \
+x = x * 2";
+    //    RedString strCodeFragment = "\
+    //        new local record x \
+    //        x[aa] = 12 ";
 
-    // Turn the code into tokens
+        // Turn the code into tokens
     RedVSILibTokenMap cTokenMap;
     RedVSITokenBuffer cTokenList;
     RedLog            cRedLog;
@@ -689,7 +696,7 @@ RedResult RedTestVSI::TestFragment_Expr(void)
         return kResultFail;
 
     // Execute the code in a context
-    RedVSIContextFragment testContext(cRedLog, topCmd);
+    RedVSIContextRoutine testContext(&cRedLog, topCmd);
     testContext.Execute(10);
     if (cRedLog.IsError())
         return kResultFail;
@@ -707,12 +714,12 @@ RedResult RedTestVSI::TestFragment_If(void)
 {
     // Define a small code fragment
     RedString strCodeFragment = "\
-        new local number x   = 3 \
-        new local number res = 0 \
-        if x < 4 then \
-            res = x + 1 \
-        endif \
-        res = res * 3";
+new local number x   = 3 \
+new local number res = 0 \
+if x < 4 then \
+    res = x + 1 \
+endif \
+res = res * 3";
 
     // Turn the code into tokens
     RedVSILibTokenMap cTokenMap;
@@ -729,7 +736,8 @@ RedResult RedTestVSI::TestFragment_If(void)
         return kResultFail;
 
     // Execute the code in a context
-    RedVSIContextFragment testContext(cRedLog, topCmd);
+    RedVSIContextRoutine testContext(&cRedLog);
+    RedVSIContextFactory::LoadFragmentIntoContext(strCodeFragment, testContext);
     testContext.Execute(10);
     if (cRedLog.IsError())
         return kResultFail;
@@ -748,27 +756,27 @@ RedResult RedTestVSI::TestFragment_While(void)
     // Define a small code fragment
     // The quick +1 on the end help check that we've correctly detected the endof the command
     RedString strCodeFragment = " \
-        new local number x = 2 \
-        while x < 99 loop \
-            x = x * 2 \
-        endloop \
-        x = x + 1 ";
+new local number x = 2 \
+while x < 99 loop \
+    x = x * 2 \
+endloop \
+x = x + 1 ";
 
     RedLog                 cRedLog;
-    RedVSIContextFragment* testContext = NULL;
+    RedVSIContextRoutine  testContext(&cRedLog);
 
-    RedVSIContextFactory::CreateContextForFragment(strCodeFragment, &testContext, cRedLog);
-    if ( (testContext == NULL) || (cRedLog.IsError()) ) return kResultFail;
+    RedVSIContextFactory::LoadFragmentIntoContext(strCodeFragment, testContext);
+    if (cRedLog.IsError()) return kResultFail;
 
     // Execute the code in a context, while we have no completion and no error
-    while ( (!testContext->IsExecutionComplete()) && (!cRedLog.IsError()) )
-        testContext->Execute(1);
-    
+    while ((!testContext.IsExecutionComplete()) && (!cRedLog.IsError()))
+        testContext.Execute(1);
+
     if (cRedLog.IsError())
         return kResultFail;
 
     // Check the execution result
-    RedVariant x = testContext->DataItemAsVariant("x");
+    RedVariant x = testContext.DataItemAsVariant("x");
     if (x != 129) return kResultFail;
 
     return kResultSuccess;
@@ -781,25 +789,25 @@ RedResult RedTestVSI::TestFragment_Log(void)
     // Define a small code fragment
     // The quick +1 on the end help check that we've correctly detected the endof the command
     RedString strCodeFragment = " \
-        new local number x = 2.2 \
-        new local string zxz = 'zz' \
-        log x ";
+new local number x = 2.2 \
+new local string zxz = 'zz' \
+log x ";
 
     RedLog                 cRedLog;
-    RedVSIContextFragment* testContext = NULL;
+    RedVSIContextRoutine testContext(&cRedLog);
 
-    RedVSIContextFactory::CreateContextForFragment(strCodeFragment, &testContext, cRedLog);
-    if ( (testContext == NULL) || (cRedLog.IsError()) ) return kResultFail;
+    RedVSIContextFactory::LoadFragmentIntoContext(strCodeFragment, testContext);
+    if (cRedLog.IsError()) return kResultFail;
 
     // Execute the code in a context, while we have no completion and no error
-    while ( (!testContext->IsExecutionComplete()) && (!cRedLog.IsError()) )
-        testContext->Execute(1);
-    
+    while ((!testContext.IsExecutionComplete()) && (!cRedLog.IsError()))
+        testContext.Execute(1);
+
     if (cRedLog.IsError())
         return kResultFail;
 
     // Check the execution result
-    RedVariant x = testContext->DataItemAsVariant("x");
+    RedVariant x = testContext.DataItemAsVariant("x");
     if (x != 2.2) return kResultFail;
 
     return kResultSuccess;

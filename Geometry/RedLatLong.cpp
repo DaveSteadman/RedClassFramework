@@ -16,10 +16,11 @@
 // (http://opensource.org/licenses/MIT)
 // -------------------------------------------------------------------------------------------------
 
+#define _CRT_SECURE_NO_WARNINGS
+
 #include "RedLatLong.h"
 
 #include <stdio.h>
-
 
 namespace Red {
 namespace Geometry {
@@ -56,6 +57,8 @@ int RedLatLong::PopulateFromString(const RedString& str)
 
     return ret;
 }
+
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 } // Geometry
 } // Red

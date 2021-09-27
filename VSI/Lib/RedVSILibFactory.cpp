@@ -58,7 +58,7 @@ void RedVSILibFactory::InputTmlClass(RedTmlNode cClassNode, RedLog& cAnalysis)
     RedVSILibClass* pNewClass = new RedVSILibClass;
 
     RedTmlLeaf* pName = RedTmlAction::NodeFirstNamedLeaf(cClassNode, kVSIIOElementKeywordName);
-    RedString x ( pName->Data() );
+    RedString x(pName->Data());
     pNewClass->SetClassName(x);
 
     Red::TinyML::RedTmlNode::TmlNodeListItType routineIt = cClassNode.NodeIterator();
@@ -124,10 +124,10 @@ RedVSILibRoutine* RedVSILibFactory::InputTmlRoutine(RedTmlNode& cRoutineNode, Re
                 RedString paramTypeStr(pLeaf->Data());
 
                 RedVSILangElement paramType;
-                if      (paramTypeStr == kVSIIOElementKeywordBool)   paramType=kLangElementTypeBool;
-                else if (paramTypeStr == kVSIIOElementKeywordChar)   paramType=kLangElementTypeChar;
-                else if (paramTypeStr == kVSIIOElementKeywordNumber) paramType=kLangElementTypeNumber;
-                else if (paramTypeStr == kVSIIOElementKeywordString) paramType=kLangElementTypeString;
+                if (paramTypeStr == kVSIIOElementKeywordBool)   paramType = kLangElementTypeBool;
+                else if (paramTypeStr == kVSIIOElementKeywordChar)   paramType = kLangElementTypeChar;
+                else if (paramTypeStr == kVSIIOElementKeywordNumber) paramType = kLangElementTypeNumber;
+                else if (paramTypeStr == kVSIIOElementKeywordString) paramType = kLangElementTypeString;
 
                 newRoutine->AddParam(paramName, paramType);
             }
@@ -172,7 +172,7 @@ RedVSILibRoutine* RedVSILibFactory::InputTmlRoutine(RedTmlNode& cRoutineNode, Re
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-RedTmlElement* RedVSILibFactory::OutputTmlClass (const RedString& classname)
+RedTmlElement* RedVSILibFactory::OutputTmlClass(const RedString& classname)
 {
     // Find the class
     RedVSILibClass* pClass = pLib->FindClass(classname);
@@ -185,7 +185,7 @@ RedTmlElement* RedVSILibFactory::OutputTmlClass (const RedString& classname)
     // Iterate across each routine in the class
     RedVSILibClass::RoutineIteratorType cIt = pClass->GetRoutineIterator();
     cIt.First();
-    while ( !cIt.IsDone() )
+    while (!cIt.IsDone())
     {
         // find the routine we want
         RedVSILibRoutine* pCurrRtn = cIt.CurrentItem();
@@ -193,7 +193,7 @@ RedTmlElement* RedVSILibFactory::OutputTmlClass (const RedString& classname)
         // get the routine details
         RedString                  cOutName;
         RedVSIStringLangElementMap cOutParamList;
-        RedVSICmdInterface*        pOutCode;
+        RedVSICmdInterface* pOutCode;
         pCurrRtn->GetDetails(cOutName, cOutParamList, pOutCode);
 
         // Create and name the routine node
@@ -213,7 +213,7 @@ RedTmlElement* RedVSILibFactory::OutputTmlClass (const RedString& classname)
                 RedVSILangElement paramType = paramIt.CurrentData();
                 RedVSIIOElement   paramTypeIoElem;
                 RedString         paramTypeStr;
-                if      (paramType.IsTypeBool())    paramTypeIoElem = RedVSIIOElement::KeywordBool();
+                if (paramType.IsTypeBool())    paramTypeIoElem = RedVSIIOElement::KeywordBool();
                 else if (paramType.IsTypeChar())    paramTypeIoElem = RedVSIIOElement::KeywordChar();
                 else if (paramType.IsTypeList())    paramTypeIoElem = RedVSIIOElement::KeywordList();
                 else if (paramType.IsTypeNumber())  paramTypeIoElem = RedVSIIOElement::KeywordNumber();
@@ -252,7 +252,7 @@ RedTmlElement* RedVSILibFactory::OutputTmlRoutine(const RedString& classname, co
 
     RedVSILibClass::RoutineIteratorType cIt = pClass->GetRoutineIterator();
     cIt.First();
-    while ( !cIt.IsDone() )
+    while (!cIt.IsDone())
     {
         // find the routine we want
         RedVSILibRoutine* pCurrRtn = cIt.CurrentItem();
@@ -261,7 +261,7 @@ RedTmlElement* RedVSILibFactory::OutputTmlRoutine(const RedString& classname, co
             // get the routine details
             RedString                  cOutName;
             RedVSIStringLangElementMap cOutParamList;
-            RedVSICmdInterface*        pOutCode;
+            RedVSICmdInterface* pOutCode;
             pCurrRtn->GetDetails(cOutName, cOutParamList, pOutCode);
 
             // convert the code into tokens
@@ -269,14 +269,12 @@ RedTmlElement* RedVSILibFactory::OutputTmlRoutine(const RedString& classname, co
             RedVSICmdSerialiser::SerialiseCommandChain(cTokenBuffer, pOutCode);
 
             // turn code tokens into a string
-
             RedTmlNode* pRoutine = new RedTmlNode("routine");
             pRoutine->CreateChildLeaf("name", cOutName);
         }
 
         cIt.Next();
     }
-
 
     return NULL;
 }

@@ -49,6 +49,8 @@ public:
 
     RedString AllLoggedText(void);
 
+    void      Clear(void) { EventList.DelAll(); containsError = false; };
+
     // Queries
     //EventLogListType EventsByType();
 
