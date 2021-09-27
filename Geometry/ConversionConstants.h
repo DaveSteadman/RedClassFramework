@@ -25,8 +25,9 @@ namespace Geometry {
 // Core
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-static const double pi     = 3.14159265;
-static const double two_pi = 6.28318531;
+static const double half_pi = 1.570796326794896619;
+static const double pi      = 3.141592653589793238;
+static const double two_pi  = 6.283185307179586476;
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 // Angles
