@@ -29,6 +29,10 @@ namespace TinyML {
 class RedTmlElement;
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+// Note: TinyML is focussed on passing data around. All data is stored in a string format. 
+//       The complexities of handling data types is left to code that extracts the strings from the 
+//       files/tree structure.
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 class RedTmlLeaf : public RedTmlElement
 {
