@@ -37,7 +37,7 @@ public:
     RedCircle(void) { Init(); };
     RedCircle(const RedPoint2D& o, const RedNumber& r) : origin(o), radius(r) {};
     RedCircle(const RedCircle& c) : origin(c.origin), radius(c.radius) {};
-    
+
     void Init(void) { origin.Init(); radius=0.0; };
 
     // Basic accessor operations

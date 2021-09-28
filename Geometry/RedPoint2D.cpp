@@ -39,7 +39,8 @@ const RedNumber RedPoint2D::DistanceTo(const RedPoint2D& newpos) const
 
 const RedVector2D RedPoint2D::VectorTo(const RedPoint2D& newpos) const
 {
-    RedVector2D v(newpos.x - x, newpos.y - y);
+    RedVector2D v;
+    // RedVector2D v(newpos.x - x, newpos.y - y);
 
     return v;    
 }

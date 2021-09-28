@@ -181,7 +181,7 @@ RedVariant RedVSIContextRoutine::DataItemAsVariant(const RedString& cName)
 
     if (found)
     {
-        RetVar = *pData;
+        RetVar = pData;
     }
 
     return RetVar;

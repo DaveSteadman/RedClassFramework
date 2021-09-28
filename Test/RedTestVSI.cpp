@@ -34,25 +34,25 @@ namespace Test {
 
 void RedTestVSI::RunUnitTest(RedLog& log)
 {
-    if (RedTestVSI::TestParseTreeVal().IsFail()) { log.AddErrorEvent("VSI Unit Test: TestParseTreeVal Failed");      return; }
-    if (RedTestVSI::TestParseTreeVar().IsFail()) { log.AddErrorEvent("VSI Unit Test: TestParseTreeVar Failed");      return; }
+    if (RedTestVSI::TestParseTreeVal().IsFail())      { log.AddErrorEvent("VSI Unit Test: TestParseTreeVal Failed");      return; }
+    if (RedTestVSI::TestParseTreeVar().IsFail())      { log.AddErrorEvent("VSI Unit Test: TestParseTreeVar Failed");      return; }
     if (RedTestVSI::TestParseTreeBinaryOp().IsFail()) { log.AddErrorEvent("VSI Unit Test: TestParseTreeBinaryOp Failed"); return; }
 
-    if (RedTestVSI::TestParseFactory_001().IsFail()) { log.AddErrorEvent("VSI Unit Test: TestParseFactory_001 Failed");  return; }
-    if (RedTestVSI::TestParseFactory_002().IsFail()) { log.AddErrorEvent("VSI Unit Test: TestParseFactory_002 Failed");  return; }
-    if (RedTestVSI::TestParseFactory_003().IsFail()) { log.AddErrorEvent("VSI Unit Test: TestParseFactory_003 Failed");  return; }
+    if (RedTestVSI::TestParseFactory_001().IsFail())  { log.AddErrorEvent("VSI Unit Test: TestParseFactory_001 Failed");  return; }
+    if (RedTestVSI::TestParseFactory_002().IsFail())  { log.AddErrorEvent("VSI Unit Test: TestParseFactory_002 Failed");  return; }
+    if (RedTestVSI::TestParseFactory_003().IsFail())  { log.AddErrorEvent("VSI Unit Test: TestParseFactory_003 Failed");  return; }
 
-    if (RedTestVSI::TestCmdNew().IsFail()) { log.AddErrorEvent("VSI Unit Test: TestCmdNew Failed");            return; }
-    if (RedTestVSI::TestTokeniseCode().IsFail()) { log.AddErrorEvent("VSI Unit Test: TestTokeniseCode Failed");      return; }
+    if (RedTestVSI::TestCmdNew().IsFail())            { log.AddErrorEvent("VSI Unit Test: TestCmdNew Failed");            return; }
+    if (RedTestVSI::TestTokeniseCode().IsFail())      { log.AddErrorEvent("VSI Unit Test: TestTokeniseCode Failed");      return; }
 
-    if (RedTestVSI::TestFragment_New().IsFail()) { log.AddErrorEvent("VSI Unit Test: TestFragment_New Failed");      return; }
+    if (RedTestVSI::TestFragment_New().IsFail())      { log.AddErrorEvent("VSI Unit Test: TestFragment_New Failed");      return; }
     if (RedTestVSI::TestFragment_NewTypes().IsFail()) { log.AddErrorEvent("VSI Unit Test: TestFragment_NewTypes Failed"); return; }
-    if (RedTestVSI::TestFragment_Expr().IsFail()) { log.AddErrorEvent("VSI Unit Test: TestFragment_Expr Failed");     return; }
-    if (RedTestVSI::TestFragment_If().IsFail()) { log.AddErrorEvent("VSI Unit Test: TestFragment_If Failed");       return; }
-    if (RedTestVSI::TestFragment_While().IsFail()) { log.AddErrorEvent("VSI Unit Test: TestFragment_While Failed");    return; }
-    if (RedTestVSI::TestFragment_Log().IsFail()) { log.AddErrorEvent("VSI Unit Test: TestFragment_Log Failed");      return; }
+    if (RedTestVSI::TestFragment_Expr().IsFail())     { log.AddErrorEvent("VSI Unit Test: TestFragment_Expr Failed");     return; }
+    if (RedTestVSI::TestFragment_If().IsFail())       { log.AddErrorEvent("VSI Unit Test: TestFragment_If Failed");       return; }
+    if (RedTestVSI::TestFragment_While().IsFail())    { log.AddErrorEvent("VSI Unit Test: TestFragment_While Failed");    return; }
+    if (RedTestVSI::TestFragment_Log().IsFail())      { log.AddErrorEvent("VSI Unit Test: TestFragment_Log Failed");      return; }
 
-    if (RedTestVSI::TestRunProg_001().IsFail()) { log.AddErrorEvent("VSI Unit Test: TestRunProg_001 Failed");       return; }
+    if (RedTestVSI::TestRunProg_001().IsFail())       { log.AddErrorEvent("VSI Unit Test: TestRunProg_001 Failed");       return; }
 
     log.AddText("VSI Unit Test: Passed");
 }
@@ -632,9 +632,9 @@ RedResult RedTestVSI::TestFragment_NewTypes(void)
 {
     // Define a small code fragment
     RedString strCodeFragment = " \
-new local bool   testB = true \
-new local number testN = 123 \
-new local string testS = 'Str' ";
+        new local bool   testB = true \
+        new local number testN = 123 \
+        new local string testS = 'Str' ";
 
     // Turn the code into tokens
     RedVSILibTokenMap cTokenMap;
@@ -674,9 +674,9 @@ RedResult RedTestVSI::TestFragment_Expr(void)
 {
     // Define a small code fragment
     RedString strCodeFragment = "\
-new local number x   = 3 \
-x = x + 1 \
-x = x * 2";
+        new local number x   = 3 \
+        x = x + 1 \
+        x = x * 2";
     //    RedString strCodeFragment = "\
     //        new local record x \
     //        x[aa] = 12 ";
@@ -714,12 +714,12 @@ RedResult RedTestVSI::TestFragment_If(void)
 {
     // Define a small code fragment
     RedString strCodeFragment = "\
-new local number x   = 3 \
-new local number res = 0 \
-if x < 4 then \
-    res = x + 1 \
-endif \
-res = res * 3";
+        new local number x   = 3 \
+        new local number res = 0 \
+        if x < 4 then \
+            res = x + 1 \
+        endif \
+        res = res * 3";
 
     // Turn the code into tokens
     RedVSILibTokenMap cTokenMap;
@@ -756,11 +756,11 @@ RedResult RedTestVSI::TestFragment_While(void)
     // Define a small code fragment
     // The quick +1 on the end help check that we've correctly detected the endof the command
     RedString strCodeFragment = " \
-new local number x = 2 \
-while x < 99 loop \
-    x = x * 2 \
-endloop \
-x = x + 1 ";
+        new local number x = 2 \
+        while x < 99 loop \
+            x = x * 2 \
+        endloop \
+        x = x + 1 ";
 
     RedLog                 cRedLog;
     RedVSIContextRoutine  testContext(&cRedLog);
@@ -789,9 +789,9 @@ RedResult RedTestVSI::TestFragment_Log(void)
     // Define a small code fragment
     // The quick +1 on the end help check that we've correctly detected the endof the command
     RedString strCodeFragment = " \
-new local number x = 2.2 \
-new local string zxz = 'zz' \
-log x ";
+        new local number x = 2.2 \
+        new local string zxz = 'zz' \
+        log x ";
 
     RedLog                 cRedLog;
     RedVSIContextRoutine testContext(&cRedLog);
