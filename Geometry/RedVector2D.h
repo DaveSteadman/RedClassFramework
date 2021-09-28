@@ -32,26 +32,21 @@ class RedVector2D
 {
 public:
     RedVector2D()                                             { Init(); };
-    RedVector2D(const RedNumber& nang, const RedNumber& nmag) { angle = nang; magnitude = nmag; };
+    RedVector2D(const RedVector2D& newvect)                   { Set(newvect); };
+    RedVector2D(const RedNumber& nang, const RedNumber& nmag) { Set(nang, nmag); };
 
-    void Init(void)                                           { angle = 0; magnitude=0; };
+    void Init(void)                                           { angle = 0; magnitude = 0; };
     void Set(const RedVector2D& newvect)                      { angle = newvect.angle; magnitude =newvect.magnitude; };
     void Set(const RedNumber& nang, const RedNumber& nmag)    { angle = nang; magnitude = nmag; };
 
-    // Basic assessors
-    const RedNumber X(void) const                         { return angle; };
-    const RedNumber Y(void) const                         { return magnitude; };
-    void            SetX(const RedNumber& nang)           { angle = nang; };
-    void            SetY(const RedNumber& nmag)           { magnitude = nmag; };
+    void Scale(const RedNumber& f)                            { magnitude *= f; };
+    void operator =(const RedVector2D& newvect)               { Set(newvect); };
 
-    void            Scale(const RedNumber& f)             { magnitude *= f; };
-    const RedNumber Magnitude(void)                       { return magnitude; };
-
-    void operator =(const RedVector2D& newvect)           { Set(newvect); };
-
-private: 
     RedNumber angle;
     RedNumber magnitude; 
+
+ private: 
+
 };
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
