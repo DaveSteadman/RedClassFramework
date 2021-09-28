@@ -695,6 +695,7 @@ RedResult RedTestCore::TestOutputBuffer(void)
         RedString yy("qwqw");
         outbuf << 34 << "\n " << zz << " " << yy;
         if (outbuf.ExtractData() != RedString("34\n 12 qwqw")) return kResultFail;
+
     }
     return kResultSuccess;
 }
