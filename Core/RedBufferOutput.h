@@ -58,6 +58,12 @@ public:
 
     void AppendIndented(const RedString& cStr);
 
+    friend RedBufferOutput& operator<<(RedBufferOutput& outputbuf, const char* newstr)      { outputbuf.Append(newstr);            return outputbuf; };
+    friend RedBufferOutput& operator<<(RedBufferOutput& outputbuf, const int newval)        { outputbuf.Append(RedNumber(newval)); return outputbuf; };
+    friend RedBufferOutput& operator<<(RedBufferOutput& outputbuf, const RedString& newstr) { outputbuf.Append(newstr);            return outputbuf; };
+    friend RedBufferOutput& operator<<(RedBufferOutput& outputbuf, const RedChar& newch)    { outputbuf.Append(newch);             return outputbuf; };
+    friend RedBufferOutput& operator<<(RedBufferOutput& outputbuf, const RedNumber& newnum) { outputbuf.Append(newnum);            return outputbuf; };
+    
 private:
 
     RedString cStrBuffer;
