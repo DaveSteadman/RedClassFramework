@@ -17,6 +17,7 @@
 // -------------------------------------------------------------------------------------------------
 
 #include "RedVSICmdNew.h"
+#include "RedVSIErrorCodes.h"
 
 namespace Red {
 namespace VSI {
@@ -77,8 +78,11 @@ void RedVSICmdNew::Execute(RedVSIContextInterface* pContext)
 
     // Check we created a data item
     if (pData == NULL)
-        throw;
-
+    {
+        pContext->Log()->AddErrorEvent(RedVSIErrorCodes::GetErrorString(eNew_CreateError));
+        return;
+    }
+    
     // If we have an initialisation expression for the data item
     if (pDataInitExpr != NULL)
     {
@@ -87,7 +91,7 @@ void RedVSICmdNew::Execute(RedVSIContextInterface* pContext)
         // If the type of the new variable and the expression don't match, raise an error
         if (!cInitExprResult.ExportTo(pData))
         {
-            pContext->Log()->AddErrorEvent("New Command Execution: Unable to export expression result into variable");
+            pContext->Log()->AddErrorEvent(RedVSIErrorCodes::GetErrorString(eNew_ResultTypeMismatch));
             return;
         }
     }
