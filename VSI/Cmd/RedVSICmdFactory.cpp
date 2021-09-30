@@ -227,7 +227,7 @@ RedVSICmdInterface* RedVSICmdFactory::LogComp(RedVSITokenBuffer& cInputBuffer, R
     RedVSIParseTreeInterface* pExpr = RedVSIParseFactory::ConstructAssignExpr(cInputBuffer, RedLog);
     if (!pExpr)
     {
-        RedLog.AddErrorEvent("Log Command: Unable to read expression.");
+        RedLog.AddErrorEvent(RedVSIErrorCodes::GetErrorString(eCFact_Log_NoExpr));
         return NULL;
     }
 
@@ -252,7 +252,7 @@ RedVSICmdInterface* RedVSICmdFactory::NewComp(RedVSITokenBuffer& cInputBuffer, R
     RedVSIToken cLocTok  = cInputBuffer.GetToken();
     if (!cLocTok.Predef().IsLocationKeyword())
     {
-        RedLog.AddErrorEvent("New Command: Bad Location Keyword.");
+        RedLog.AddErrorEvent(RedVSIErrorCodes::GetErrorString(eCFact_New_BadLoc));
         return NULL;
     }
     RedVSILangElement cLoc;
@@ -263,7 +263,7 @@ RedVSICmdInterface* RedVSICmdFactory::NewComp(RedVSITokenBuffer& cInputBuffer, R
     RedVSIToken cTypeTok = cInputBuffer.GetToken();
     if (!cTypeTok.Predef().IsTypeKeyword())
     {
-        RedLog.AddErrorEvent("New Command: Bad Type Keyword.");
+        RedLog.AddErrorEvent(RedVSIErrorCodes::GetErrorString(eCFact_New_BadType));
         return NULL;
     }
     RedVSILangElement cType;
@@ -277,7 +277,7 @@ RedVSICmdInterface* RedVSICmdFactory::NewComp(RedVSITokenBuffer& cInputBuffer, R
     RedVSIToken cNameTok = cInputBuffer.GetToken();
     if (!cNameTok.Type().IsName())
     {
-        RedLog.AddErrorEvent("New Command: Bad Name Token.");
+        RedLog.AddErrorEvent(RedVSIErrorCodes::GetErrorString(eCFact_New_BadName));
         return NULL;
     }
 
@@ -288,7 +288,7 @@ RedVSICmdInterface* RedVSICmdFactory::NewComp(RedVSITokenBuffer& cInputBuffer, R
         RedVSIToken bracketToken = cInputBuffer.GetToken();
         if (!bracketToken.Predef().IsSymbolOpenSquareBracket())
         {
-            RedLog.AddErrorEvent("New Command: Bad attribute indexing expression");
+            RedLog.AddErrorEvent(RedVSIErrorCodes::GetErrorString(eCFact_New_BadLoc));
             return NULL;
         }
 
@@ -317,7 +317,7 @@ RedVSICmdInterface* RedVSICmdFactory::NewComp(RedVSITokenBuffer& cInputBuffer, R
         pInitExpr = RedVSIParseFactory::ConstructAssignExpr(cInputBuffer, RedLog);
         if (!pInitExpr)
         {
-            RedLog.AddErrorEvent("New Command: Unable to read initialisation expression.");
+            RedLog.AddErrorEvent(RedVSIErrorCodes::GetErrorString(eCFact_New_NoInitExpr));
             return NULL;
         }
     }
@@ -381,7 +381,7 @@ RedVSICmdInterface* RedVSICmdFactory::WhileComp(RedVSITokenBuffer& cInputBuffer,
     pExpr = RedVSIParseFactory::ConstructAssignExpr(cInputBuffer, RedLog);
     if (!pExpr)
     {
-        RedLog.AddErrorEvent("Cmd Factory: While Cmd: unable to construct loop expression");
+        RedLog.AddErrorEvent(RedVSIErrorCodes::GetErrorString(eCFact_While_ExprError));
         return NULL;
     }
 
@@ -389,7 +389,7 @@ RedVSICmdInterface* RedVSICmdFactory::WhileComp(RedVSITokenBuffer& cInputBuffer,
     cTok = cInputBuffer.GetToken();
     if (!cTok.Predef().IsKeywordLoop())
     {
-        RedLog.AddErrorEvent("Cmd Factory: While Cmd: No loop keyword");
+        RedLog.AddErrorEvent(eCFact_While_NoLoopKeyword);
         delete pExpr;
         return NULL;
     }
@@ -402,7 +402,7 @@ RedVSICmdInterface* RedVSICmdFactory::WhileComp(RedVSITokenBuffer& cInputBuffer,
     cTok = cInputBuffer.GetToken();
     if (!cTok.Predef().IsKeywordEndloop())
     {
-        RedLog.AddErrorEvent("Cmd Factory: While Cmd: No end-loop keyword");
+        RedLog.AddErrorEvent(RedVSIErrorCodes::GetErrorString(eCFact_While_NoEndLoopKeyword));
         delete pExpr;
         delete pLoopBranch;
         return NULL;
