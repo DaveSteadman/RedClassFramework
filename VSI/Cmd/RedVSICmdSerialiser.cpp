@@ -101,6 +101,36 @@ void RedVSICmdSerialiser::TokenBufferToOutputBuffer(RedVSITokenBuffer& cInTokenB
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
+void RedVSICmdSerialiser::SerialiseIfCmd(RedVSITokenBuffer& cTokenBuffer, RedVSICmdIf* pCmd)
+{
+    RedVSIParseTreeInterface* pIfExpr;
+    RedVSICmdInterface*       pPosBranch;
+    RedVSICmdInterface*       pNegBranch;
+    pCmd->GetDetails(pIfExpr, pPosBranch, pNegBranch);
+
+    // write the IF command keyword
+    RedVSIToken cCmdTok(RedVSIIOElement::KeywordIf());
+    cTokenBuffer.AppendToken(cCmdTok);
+
+    // Serialise positive branch
+    if (pPosBranch != NULL)
+        RedVSICmdSerialiser::SerialiseCommandChain(cTokenBuffer, pPosBranch);
+
+    // Write the ELSE command keyword
+    RedVSIToken cElseCmdTok(RedVSIIOElement::KeywordElse());
+    cTokenBuffer.AppendToken(cElseCmdTok);
+
+    // Serialise negative branch
+    if (pNegBranch != NULL)
+        RedVSICmdSerialiser::SerialiseCommandChain(cTokenBuffer, pNegBranch);
+
+    // Write the ENDIF command keyword
+    RedVSIToken cEndCmdTok(RedVSIIOElement::KeywordEndif());
+    cTokenBuffer.AppendToken(cEndCmdTok);
+}
+
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
 void RedVSICmdSerialiser::SerialiseLetCmd(RedVSITokenBuffer& cTokenBuffer, RedVSICmdLet* pCmd)
 {
     RedVSIParseTreeInterface* pOutExpr;
@@ -110,6 +140,20 @@ void RedVSICmdSerialiser::SerialiseLetCmd(RedVSITokenBuffer& cTokenBuffer, RedVS
     RedVSIParseSerialiser::SerialiseExpression(cTokenBuffer, pOutExpr);
 }
 
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+void RedVSICmdSerialiser::SerialiseLogCmd(RedVSITokenBuffer& cTokenBuffer, RedVSICmdLog* pCmd)
+{
+    RedVSIParseTreeInterface* pOutExpr;
+    pCmd->GetDetails(pOutExpr);
+
+    // Write the command keyword
+    RedVSIToken cCmdTok(RedVSIIOElement::KeywordLog());
+    cTokenBuffer.AppendToken(cCmdTok);
+
+    // Serialise the expression
+    RedVSIParseSerialiser::SerialiseExpression(cTokenBuffer, pOutExpr);
+}
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 void RedVSICmdSerialiser::SerialiseNewCmd(RedVSITokenBuffer& cTokenBuffer, RedVSICmdNew* pCmd)
@@ -183,36 +227,6 @@ void RedVSICmdSerialiser::SerialiseReturnCmd(RedVSITokenBuffer& cTokenBuffer, Re
     // serialise the expression
     if (pReturnExpr != NULL)
         RedVSIParseSerialiser::SerialiseExpression(cTokenBuffer, pReturnExpr);
-}
-
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-void RedVSICmdSerialiser::SerialiseIfCmd(RedVSITokenBuffer& cTokenBuffer, RedVSICmdIf* pCmd)
-{
-    RedVSIParseTreeInterface* pIfExpr;
-    RedVSICmdInterface*       pPosBranch;
-    RedVSICmdInterface*       pNegBranch;
-    pCmd->GetDetails(pIfExpr, pPosBranch, pNegBranch);
-
-    // write the IF command keyword
-    RedVSIToken cCmdTok(RedVSIIOElement::KeywordIf());
-    cTokenBuffer.AppendToken(cCmdTok);
-
-    // Serialise positive branch
-    if (pPosBranch != NULL)
-        RedVSICmdSerialiser::SerialiseCommandChain(cTokenBuffer, pPosBranch);
-
-    // Write the ELSE command keyword
-    RedVSIToken cElseCmdTok(RedVSIIOElement::KeywordElse());
-    cTokenBuffer.AppendToken(cElseCmdTok);
-
-    // Serialise negative branch
-    if (pNegBranch != NULL)
-        RedVSICmdSerialiser::SerialiseCommandChain(cTokenBuffer, pNegBranch);
-
-    // Write the ENDIF command keyword
-    RedVSIToken cEndCmdTok(RedVSIIOElement::KeywordEndif());
-    cTokenBuffer.AppendToken(cEndCmdTok);
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
