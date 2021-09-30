@@ -52,7 +52,13 @@ public:
         eCFact_New_NoInitExpr,
         eCFact_If_KeywordError,
         eCFact_If_NoExpr,
+        eCFact_Log_NoExpr,
 
+        eCFact_While_ExprError,
+        eCFact_While_NoLoopKeyword,
+        eCFact_While_NoEndLoopKeyword,
+        
+        eNew_CreateError,
         eNew_ResultTypeMismatch,
 
         eParseVar_NoVar,
