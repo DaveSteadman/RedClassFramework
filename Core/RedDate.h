@@ -24,8 +24,8 @@ namespace Red {
 namespace Core {
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
 /// Class for dates formatted in YYYYMMDD format, ie 2013/10/20. Component values are all unsigned.
+
 class RedDate
 {
 public:
@@ -38,14 +38,6 @@ public:
     void            SetDate(const RedString& datestr);
     void            SetToday(void);
     static RedDate  Today(void);
-
-	// Simple Accessors
-	void            SetYear(const unsigned y)  { year  = y; };
-	void            SetMonth(const unsigned m) { month = m; };
-    void            SetDate(const unsigned d)  { date  = d; };
-    unsigned        Year(void) const           { return year; };
-    unsigned        Month(void) const          { return month; };
-    unsigned        Date(void) const           { return date; };
 
     // Involved Accessors
     unsigned        TwoDigitYear(void) const   { return (year % 100); };
@@ -63,15 +55,15 @@ public:
     static bool     IsLeapYear(const unsigned ForYear);
     static unsigned DaysInYear(const unsigned ForYear);
 
-	// String output
-	RedString       DateString(void) const;
+    // String output
+    RedString       DateString(void) const;
     RedString       EightDigitDateString(void) const;
-	RedString       SixDigitDateString(void) const;
+    RedString       SixDigitDateString(void) const;
 
     // Operators
     void operator =(const RedDate& cNewVal);
 
-private:
+public:
 
     unsigned    year;
     unsigned    month;
