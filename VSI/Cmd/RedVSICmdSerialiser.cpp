@@ -47,7 +47,7 @@ void RedVSICmdSerialiser::SerialiseCommandChain(RedVSITokenBuffer& cTokenBuffer,
         // Get the type, so we output with a specific command template
         RedVSILangElement cCmdType = pCmd->Type();
 
-        if      (cCmdType.IsCommandLet())    SerialiseExprCmd  (cTokenBuffer, dynamic_cast<RedVSICmdLet*>(pCmd));
+        if      (cCmdType.IsCommandLet())    SerialiseLetCmd   (cTokenBuffer, dynamic_cast<RedVSICmdLet*>(pCmd));
         else if (cCmdType.IsCommandNew())    SerialiseNewCmd   (cTokenBuffer, dynamic_cast<RedVSICmdNew*>(pCmd));
         else if (cCmdType.IsCommandReturn()) SerialiseReturnCmd(cTokenBuffer, dynamic_cast<RedVSICmdReturn*>(pCmd));
         else if (cCmdType.IsCommandIf())     SerialiseIfCmd    (cTokenBuffer, dynamic_cast<RedVSICmdIf*>(pCmd));
@@ -101,7 +101,7 @@ void RedVSICmdSerialiser::TokenBufferToOutputBuffer(RedVSITokenBuffer& cInTokenB
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-void RedVSICmdSerialiser::SerialiseExprCmd(RedVSITokenBuffer& cTokenBuffer, RedVSICmdLet* pCmd)
+void RedVSICmdSerialiser::SerialiseLetCmd(RedVSITokenBuffer& cTokenBuffer, RedVSICmdLet* pCmd)
 {
     RedVSIParseTreeInterface* pOutExpr;
     pCmd->GetDetails(pOutExpr);
