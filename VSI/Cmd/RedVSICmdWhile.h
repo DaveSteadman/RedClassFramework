@@ -20,7 +20,6 @@
 
 #include "RedVSICmdInterface.h"
 #include "RedVSIParseTreeInterface.h"
-#include "RedVSIErrorCodes.h"
 #include "RedVSIContextInterface.h"
 #include "RedVSILangElement.h"
 

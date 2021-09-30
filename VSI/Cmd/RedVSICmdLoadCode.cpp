@@ -18,6 +18,8 @@
 
 #include "RedVSICmdLoadCode.h"
 
+#include "RedVSIErrorCodes.h"
+
 namespace Red {
 namespace VSI {
 
@@ -51,6 +53,12 @@ void RedVSICmdLoadCode::Execute(RedVSIContextInterface* pContext)
 
     // Get a string representation of the value
     pContext->Log()->AddText(cExprResult.StringValue());
+
+    if (!RedIOHandler::FileExists(cExprResult.StringValue()))
+    {
+        pContext->Log()->AddErrorEvent(RedVSIErrorCodes::GetErrorString(RedVSIErrorCodes::eLoadCode_NoFile));
+        return;
+    }
 
     // Expression will have been evaluated prior to the command,
     // so any actions already performed. Just queue up the next 

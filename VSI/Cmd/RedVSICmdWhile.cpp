@@ -18,6 +18,8 @@
 
 #include "RedVSICmdWhile.h"
 
+#include "RedVSIErrorCodes.h"
+
 namespace Red {
 namespace VSI {
 

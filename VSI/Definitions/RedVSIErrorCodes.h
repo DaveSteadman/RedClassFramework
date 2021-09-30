@@ -60,6 +60,7 @@ public:
         
         eNew_CreateError,
         eNew_ResultTypeMismatch,
+        eLoadCode_NoFile,
 
         eParseVar_NoVar,
         eParseVar_NoAssign,
