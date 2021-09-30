@@ -41,11 +41,11 @@ class RedTime
 public:
 
     RedTime(void) { Init(); };
-    RedTime(const unsigned h, const unsigned m, const double& s) { hour=h; minute=m; seconds=s; };
+    RedTime(const unsigned h, const unsigned m, const double& s) { hours=h; minutes=m; seconds=s; };
 
     void Init(void) { hour=0; minute=0; seconds=0.0; };
 
-    void SetTime(const unsigned h, const unsigned m, const double& s) { hour=h; minute=m; seconds=s; };
+    void SetTime(const unsigned h, const unsigned m, const double& s) { hours=h; minutes=m; seconds=s; };
     void SetTime(const RedString& timestr);
     void SetNow(void);
 
@@ -55,24 +55,16 @@ public:
     const RedString TimeString(void) const;   // hh:mm:ss
     const unsigned  SixDigitTime(void) const; // hhmmss
 
-	// Simple Access Routines
-    const unsigned Hours     (void) const                  { return hour;    };
-    const unsigned Minutes   (void) const                  { return minute;  };
-    const double   Seconds   (void) const                  { return seconds; };
-    void           SetHours  (const unsigned& NewHours)    { hour    = NewHours;   };
-    void           SetMinutes(const unsigned& NewMinutes)  { minute  = NewMinutes; };
-    void           SetSeconds(const double& NewSeconds)    { seconds = NewSeconds; };
-
     // Seconds In Day Routines
-    const double SecondsFromStartOfDay(void) const { return (hour*kTimeSecondsInHour) + (minute*kTimeSecondsInMinute) + seconds; };
-    const double SecondsToEndOfnDay(void)    const { return kTimeSecondsInDay - SecondsFromStartOfDay(); };
+    const double SecondsSinceStartOfDay(void) const { return (hours*kTimeSecondsInHour) + (minutes*kTimeSecondsInMinute) + seconds; };
+    const double SecondsToEndOfDay(void)      const { return kTimeSecondsInDay - SecondsFromStartOfDay(); };
     void         SetTimeFromElapsedSeconds(const double& DayElapsedSeconds);
 
-private:
+public:
 
-	unsigned hour;
-	unsigned minute;
-	double   seconds;
+    unsigned hours;
+    unsigned minutes;
+    double   seconds;
 };
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
