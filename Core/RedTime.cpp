@@ -34,13 +34,13 @@ namespace Core {
 void RedTime::SetTime(const RedString& timestr)
 {
     unsigned h;
-	unsigned m;
+    unsigned m;
     double   s;
 
     sscanf(timestr.TextPtr(), "%u:%u:%lf", &h, &m, &s);
 
-    hour    = h;
-    minute  = m;
+    hours   = h;
+    minutes = m;
     seconds = s;
 }
 
@@ -51,8 +51,8 @@ const RedString RedTime::TimeString(void) const
 {
     RedString retstr;
 
-    RedNumber h(hour);
-    RedNumber m(minute);
+    RedNumber h(hours);
+    RedNumber m(minutes);
     RedNumber s(seconds);
 
     retstr.Append(h.DecimalStringWithMinDigitsAndDP(2, 0));
@@ -71,8 +71,8 @@ const unsigned RedTime::SixDigitTime(void) const
 {
     unsigned rettime = 0;
 
-    rettime += hour   * 10000;
-    rettime += minute * 100;
+    rettime += hours   * 10000;
+    rettime += minutes * 100;
     rettime += (unsigned)floor(seconds);
 
     return rettime;
@@ -88,8 +88,8 @@ void RedTime::SetNow(void)
     time ( &rawtime );
     timeinfo = localtime ( &rawtime );
 
-    hour    = timeinfo->tm_hour;
-    minute  = timeinfo->tm_min;
+    hours   = timeinfo->tm_hour;
+    minutes = timeinfo->tm_min;
     seconds = timeinfo->tm_sec;
 }
 
