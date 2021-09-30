@@ -79,7 +79,7 @@ void RedVSICmdNew::Execute(RedVSIContextInterface* pContext)
     // Check we created a data item
     if (pData == NULL)
     {
-        pContext->Log()->AddErrorEvent(RedVSIErrorCodes::GetErrorString(eNew_CreateError));
+        pContext->Log()->AddErrorEvent(RedVSIErrorCodes::GetErrorString(RedVSIErrorCodes::eNew_CreateError));
         return;
     }
     
@@ -91,7 +91,7 @@ void RedVSICmdNew::Execute(RedVSIContextInterface* pContext)
         // If the type of the new variable and the expression don't match, raise an error
         if (!cInitExprResult.ExportTo(pData))
         {
-            pContext->Log()->AddErrorEvent(RedVSIErrorCodes::GetErrorString(eNew_ResultTypeMismatch));
+            pContext->Log()->AddErrorEvent(RedVSIErrorCodes::GetErrorString(RedVSIErrorCodes::eNew_ResultTypeMismatch));
             return;
         }
     }

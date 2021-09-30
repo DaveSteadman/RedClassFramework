@@ -109,9 +109,9 @@ bool RedDoubleLinkedList<Element>::AddLast(Element Elem)
     TListElement* pNewElem  = 0;
     TListElement* pPrevElem = 0;
 
-	// Make the new object and assign the contents
-	MakeListElement(&pNewElem);
-	pNewElem->Elem = Elem;
+    // Make the new object and assign the contents
+    MakeListElement(&pNewElem);
+    pNewElem->Elem = Elem;
 
     // Update the pointers
     switch(iNumItems)
@@ -147,9 +147,9 @@ bool RedDoubleLinkedList<Element>::AddFirst(Element Elem)
     TListElement* pNewElem  = 0;
     TListElement* pNextElem = 0;
 
-	// Make the new object and assign the contents
-	MakeListElement(&pNewElem);
-	pNewElem->Elem = Elem;
+    // Make the new object and assign the contents
+    MakeListElement(&pNewElem);
+    pNewElem->Elem = Elem;
 
     // Update the pointers
     switch(iNumItems)
@@ -188,8 +188,8 @@ bool RedDoubleLinkedList<Element>::InsertAfter(const unsigned iElemIndex, Elemen
     if ( !GetListElement(iElemIndex, &pInsertAfterElem) )
         return false;
 
-	// Make the new object and assign the contents
-	MakeListElement(&pNewElem);
+    // Make the new object and assign the contents
+    MakeListElement(&pNewElem);
     pNewElem->Elem = Elem;
 
     // reassign the pointers to insert the new object

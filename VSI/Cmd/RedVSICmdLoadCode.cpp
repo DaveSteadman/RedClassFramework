@@ -16,7 +16,7 @@
 // (http://opensource.org/licenses/MIT)
 // -------------------------------------------------------------------------------------------------
 
-#include "RedVSICmdLog.h"
+#include "RedVSICmdLoadCode.h"
 
 namespace Red {
 namespace VSI {
@@ -25,10 +25,10 @@ namespace VSI {
 // Construction Routines
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-RedVSICmdLog::RedVSICmdLog(void)
+RedVSICmdLoadCode::RedVSICmdLoadCode(void)
 {
     // This object's attributes
-    pLogExpr = NULL;
+    pLoadPathExpr = NULL;
 
     // Parents attributes
     SetNextCmd(NULL);
@@ -36,18 +36,18 @@ RedVSICmdLog::RedVSICmdLog(void)
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-void RedVSICmdLog::QueueExpr(RedVSIContextInterface* pContext)
+void RedVSICmdLoadCode::QueueExpr(RedVSIContextInterface* pContext)
 {
-    if (pLogExpr)
-        pContext->QueueExpr(pLogExpr);
+    if (pLoadPathExpr)
+        pContext->QueueExpr(pLoadPathExpr);
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-void RedVSICmdLog::Execute(RedVSIContextInterface* pContext)
+void RedVSICmdLoadCode::Execute(RedVSIContextInterface* pContext)
 {
     // Get the result of the commands expression
-    RedVariant cExprResult = pContext->ExprResult(pLogExpr);
+    RedVariant cExprResult = pContext->ExprResult(pLoadPathExpr);
 
     // Get a string representation of the value
     pContext->Log()->AddText(cExprResult.StringValue());

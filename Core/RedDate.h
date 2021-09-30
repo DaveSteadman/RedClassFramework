@@ -39,17 +39,6 @@ public:
     void            SetToday(void);
     static RedDate  Today(void);
 
-<<<<<<< Updated upstream
-=======
-    // Simple Accessors
-    void            SetYear(const unsigned y)  { year  = y; };
-    void            SetMonth(const unsigned m) { month = m; };
-    void            SetDate(const unsigned d)  { date  = d; };
-    unsigned        Year(void) const           { return year; };
-    unsigned        Month(void) const          { return month; };
-    unsigned        Date(void) const           { return date; };
-
->>>>>>> Stashed changes
     // Involved Accessors
     unsigned        TwoDigitYear(void) const   { return (year % 100); };
     unsigned        EightDigitDate(void) const;

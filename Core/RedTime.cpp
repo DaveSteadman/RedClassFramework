@@ -108,21 +108,21 @@ RedTime RedTime::Now(void)
 
 void RedTime::SetTimeFromElapsedSeconds(const double& DayElapsedSeconds)
 {
-	Init();
+    Init();
 
-	double DecrementingSeconds = DayElapsedSeconds;
+    double DecrementingSeconds = DayElapsedSeconds;
 
-	while (DecrementingSeconds > kTimeSecondsInHour)
+    while (DecrementingSeconds > kTimeSecondsInHour)
     {
-        hour++;
+        hours++;
         DecrementingSeconds -= kTimeSecondsInHour;
-	}
-	while (DecrementingSeconds > kTimeSecondsInMinute)
-	{
-		minute++;
-		DecrementingSeconds -= kTimeSecondsInMinute;
-	}
-	seconds = DecrementingSeconds;
+    }
+    while (DecrementingSeconds > kTimeSecondsInMinute)
+    {
+        minutes++;
+        DecrementingSeconds -= kTimeSecondsInMinute;
+    }
+    seconds = DecrementingSeconds;
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

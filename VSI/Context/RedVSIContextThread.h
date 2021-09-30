@@ -40,19 +40,19 @@ public:
 
     RedVSIContextThread(void) { pCodeLib = NULL; };
 
-	// Code Library
+    // Code Library
     void                       SetCodeLib(RedVSILibInterface* pNewCodeLib) { pCodeLib = pNewCodeLib; };
     RedVSILibInterface*        CodeLib(void) const                         { return pCodeLib; };
 
-	// Heap Data
+    // Heap Data
     RedType*                   CreateHeapDataItem(const RedVSILangElement& cType, const RedString& cName);
     bool                       FindHeapDataItem(const RedString& cName, RedType*& pData);
     RedRecord*                 Heap(void) { return &cHeap; };
 
-	// Routine Stack
-	RedVSIContextRoutine*      TopRoutineOnStack(void);
-	void                       PushRoutineOnStack(RedVSIContextRoutine* newRtn);
-	RedVSIContextRoutine*      PopRoutineOffStack(void);
+    // Routine Stack
+    RedVSIContextRoutine*      TopRoutineOnStack(void);
+    void                       PushRoutineOnStack(RedVSIContextRoutine* newRtn);
+    RedVSIContextRoutine*      PopRoutineOffStack(void);
     unsigned                   NumRoutinesOnStack(void) const { return cRoutineStack.NumItems(); };
 
     // Routine Execution

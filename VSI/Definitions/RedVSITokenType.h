@@ -28,42 +28,42 @@ namespace VSI {
 class RedVSITokenType
 {
 public:
-	RedVSITokenType(void)                      { Init(); };
-	
-	void Init(void)                            { eState = eDefaultInvalid; };
-	void SetNumber(void)                       { eState = eNumber; };
-	void SetName(void)                         { eState = eName; };
-	void SetStringLiteral(void)                { eState = eStringLiteral; };
-	void SetNonPrintable(void)                 { eState = eNonPrintable; };
-	void SetWhitespace(void)                   { eState = eWhitespace; };
-	void SetPredefined(void)                   { eState = ePredefined; };
-	
-	bool IsValid(void) const                   { return (eState != eDefaultInvalid); };
-	bool IsNumber(void) const                  { return (eState == eNumber); };
-	bool IsName(void) const                    { return (eState == eName); };
-	bool IsStringLiteral(void) const           { return (eState == eStringLiteral); };
-	bool IsNonPrintable(void) const            { return (eState == eNonPrintable); };
-	bool IsWhitespace(void) const              { return (eState == eWhitespace); };
-	bool IsPredefined(void) const              { return (eState == ePredefined); };
-	
-	static RedVSITokenType Number(void)        { return RedVSITokenType(eNumber); };
-	static RedVSITokenType Name(void)          { return RedVSITokenType(eName); };
-	static RedVSITokenType StringLiteral(void) { return RedVSITokenType(eStringLiteral); };
-	static RedVSITokenType NonPrintable(void)  { return RedVSITokenType(eNonPrintable); };
-	static RedVSITokenType Whitespace(void)    { return RedVSITokenType(eWhitespace); };
-	static RedVSITokenType Predefined(void)    { return RedVSITokenType(ePredefined); };
+    RedVSITokenType(void)                      { Init(); };
+    
+    void Init(void)                            { eState = eDefaultInvalid; };
+    void SetNumber(void)                       { eState = eNumber; };
+    void SetName(void)                         { eState = eName; };
+    void SetStringLiteral(void)                { eState = eStringLiteral; };
+    void SetNonPrintable(void)                 { eState = eNonPrintable; };
+    void SetWhitespace(void)                   { eState = eWhitespace; };
+    void SetPredefined(void)                   { eState = ePredefined; };
+    
+    bool IsValid(void) const                   { return (eState != eDefaultInvalid); };
+    bool IsNumber(void) const                  { return (eState == eNumber); };
+    bool IsName(void) const                    { return (eState == eName); };
+    bool IsStringLiteral(void) const           { return (eState == eStringLiteral); };
+    bool IsNonPrintable(void) const            { return (eState == eNonPrintable); };
+    bool IsWhitespace(void) const              { return (eState == eWhitespace); };
+    bool IsPredefined(void) const              { return (eState == ePredefined); };
+    
+    static RedVSITokenType Number(void)        { return RedVSITokenType(eNumber); };
+    static RedVSITokenType Name(void)          { return RedVSITokenType(eName); };
+    static RedVSITokenType StringLiteral(void) { return RedVSITokenType(eStringLiteral); };
+    static RedVSITokenType NonPrintable(void)  { return RedVSITokenType(eNonPrintable); };
+    static RedVSITokenType Whitespace(void)    { return RedVSITokenType(eWhitespace); };
+    static RedVSITokenType Predefined(void)    { return RedVSITokenType(ePredefined); };
 
 protected:
 
     enum TETokenType
     {
-		eDefaultInvalid, 
-		eNumber, 
-		eName,
-		eStringLiteral,
-		eNonPrintable,
-		eWhitespace,
-		ePredefined
+        eDefaultInvalid, 
+        eNumber, 
+        eName,
+        eStringLiteral,
+        eNonPrintable,
+        eWhitespace,
+        ePredefined
     };
 
     RedVSITokenType(TETokenType eNewState) { eState = eNewState; };

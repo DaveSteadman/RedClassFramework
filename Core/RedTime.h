@@ -43,7 +43,7 @@ public:
     RedTime(void) { Init(); };
     RedTime(const unsigned h, const unsigned m, const double& s) { hours=h; minutes=m; seconds=s; };
 
-    void Init(void) { hour=0; minute=0; seconds=0.0; };
+    void Init(void) { hours=0; minutes=0; seconds=0.0; };
 
     void SetTime(const unsigned h, const unsigned m, const double& s) { hours=h; minutes=m; seconds=s; };
     void SetTime(const RedString& timestr);
@@ -57,7 +57,7 @@ public:
 
     // Seconds In Day Routines
     const double SecondsSinceStartOfDay(void) const { return (hours*kTimeSecondsInHour) + (minutes*kTimeSecondsInMinute) + seconds; };
-    const double SecondsToEndOfDay(void)      const { return kTimeSecondsInDay - SecondsFromStartOfDay(); };
+    const double SecondsToEndOfDay(void)      const { return kTimeSecondsInDay - SecondsSinceStartOfDay(); };
     void         SetTimeFromElapsedSeconds(const double& DayElapsedSeconds);
 
 public:

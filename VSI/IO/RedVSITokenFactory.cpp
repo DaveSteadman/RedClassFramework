@@ -276,7 +276,7 @@ RedResult RedVSITokenFactory::PredefinedComp(RedBufferInput& cInputBuffer, RedVS
     RedVSIIOElement  cFinalElem;
     bool             iExactMatchFound = false;
     
-	// skip over whitespace characters until we get to a character we want to deal with
+    // skip over whitespace characters until we get to a character we want to deal with
     cPreviewChar = cInputBuffer.PreviewNextChar();
 
     while (!iProcessingComplete)

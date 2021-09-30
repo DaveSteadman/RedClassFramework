@@ -40,7 +40,7 @@ public:
     // Inherited RedType
     void              Init(void)            { cVal.Init(); };
     RedVSILangElement Type(void) const      { return RedVSILangElement::ParseValue(); };
-	
+    
     // Query
     const RedVariant Value(void) const            { return cVal;  };
     void             SetValue(RedVariant& cInVal) { cVal = cInVal; };

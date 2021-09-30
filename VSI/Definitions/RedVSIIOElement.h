@@ -69,8 +69,8 @@ public:
     bool                   IsKeywordWhile(void) const                     { return eType == eKeywordWhile; };
     bool                   IsKeywordLoop(void) const                      { return eType == eKeywordLoop; };
     bool                   IsKeywordEndloop(void) const                   { return eType == eKeywordEndloop; };
-	bool                   IsKeywordLog(void) const                       { return eType == eKeywordLog; };
-	bool                   IsKeywordReturn(void) const                    { return eType == eKeywordReturn; };
+    bool                   IsKeywordLog(void) const                       { return eType == eKeywordLog; };
+    bool                   IsKeywordReturn(void) const                    { return eType == eKeywordReturn; };
     static RedVSIIOElement KeywordNew(void)                               { return RedVSIIOElement(eKeywordNew); };
     static RedVSIIOElement KeywordLet(void)                               { return RedVSIIOElement(eKeywordLet); };
     static RedVSIIOElement KeywordIf(void)                                { return RedVSIIOElement(eKeywordIf); };
@@ -80,8 +80,8 @@ public:
     static RedVSIIOElement KeywordWhile(void)                             { return RedVSIIOElement(eKeywordWhile); };
     static RedVSIIOElement KeywordLoop(void)                              { return RedVSIIOElement(eKeywordLoop); };
     static RedVSIIOElement KeywordEndloop(void)                           { return RedVSIIOElement(eKeywordEndloop); };
-	static RedVSIIOElement KeywordLog(void)                               { return RedVSIIOElement(eKeywordLog); };
-	static RedVSIIOElement KeywordReturn(void)                            { return RedVSIIOElement(eKeywordReturn); };
+    static RedVSIIOElement KeywordLog(void)                               { return RedVSIIOElement(eKeywordLog); };
+    static RedVSIIOElement KeywordReturn(void)                            { return RedVSIIOElement(eKeywordReturn); };
 
     // Bool values
     bool                   IsBoolKeyword(void) const;
@@ -217,7 +217,7 @@ private:
         eKeywordWhile,
         eKeywordLoop,
         eKeywordEndloop,
-		eKeywordLog,
+        eKeywordLog,
         eKeywordReturn,
 
         // Bool Values

@@ -40,17 +40,19 @@ public:
     bool                     IsCommand(void) const;
     bool                     IsCommandIf(void) const                         { return eType == eCommandIf; };
     bool                     IsCommandLet(void) const                        { return eType == eCommandLet; };
+    bool                     IsCommandLoadCode(void) const                   { return eType == eCommandLoadCode; };
     bool                     IsCommandLog(void) const                        { return eType == eCommandLog; };
     bool                     IsCommandNew(void) const                        { return eType == eCommandNew; };
-	bool                     IsCommandPrint(void) const                      { return eType == eCommandPrint; };
-	bool                     IsCommandReturn(void) const                     { return eType == eCommandReturn; };
+    bool                     IsCommandPrint(void) const                      { return eType == eCommandPrint; };
+    bool                     IsCommandReturn(void) const                     { return eType == eCommandReturn; };
     bool                     IsCommandWhile(void) const                      { return eType == eCommandWhile; };
     static RedVSILangElement CommandIf(void)                                 { return RedVSILangElement(eCommandIf); };
     static RedVSILangElement CommandLet(void)                                { return RedVSILangElement(eCommandLet); };
+    static RedVSILangElement CommandLoadCode(void)                           { return RedVSILangElement(eCommandLoadCode); };
     static RedVSILangElement CommandLog(void)                                { return RedVSILangElement(eCommandLog); };
     static RedVSILangElement CommandNew(void)                                { return RedVSILangElement(eCommandNew); };
     static RedVSILangElement CommandPrint(void)                              { return RedVSILangElement(eCommandPrint); };
-	static RedVSILangElement CommandReturn(void)                             { return RedVSILangElement(eCommandReturn); };
+    static RedVSILangElement CommandReturn(void)                             { return RedVSILangElement(eCommandReturn); };
     static RedVSILangElement CommandWhile(void)                              { return RedVSILangElement(eCommandWhile); };
 
     // Parse node types
@@ -161,10 +163,11 @@ protected:
 
         eCommandIf,
         eCommandLet,
+        eCommandLoadCode,
         eCommandLog,
         eCommandNew,
-		eCommandPrint,
-		eCommandReturn,
+        eCommandPrint,
+        eCommandReturn,
         eCommandWhile,
 
         eParseFuncCall,
@@ -233,6 +236,8 @@ static RedVSILangElement kLangElementLocationAttribute       = RedVSILangElement
 
 static RedVSILangElement kLangElementCommandNew              = RedVSILangElement::CommandNew();
 static RedVSILangElement kLangElementCommandLet              = RedVSILangElement::CommandLet();
+static RedVSILangElement kLangElementCommandLoadCode         = RedVSILangElement::CommandLoadCode();
+static RedVSILangElement kLangElementCommandLog              = RedVSILangElement::CommandLog();
 static RedVSILangElement kLangElementCommandIf               = RedVSILangElement::CommandIf();
 static RedVSILangElement kLangElementCommandReturn           = RedVSILangElement::CommandReturn();
 static RedVSILangElement kLangElementCommandWhile            = RedVSILangElement::CommandWhile();

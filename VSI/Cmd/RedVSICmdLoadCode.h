@@ -34,30 +34,30 @@ namespace VSI {
 
 /// Class to contain an expression, allowing the maths to exist in a sequence.
 /// Essentially a BASIC LET statement.
-class RedVSICmdLog : public RedVSICmdInterface
+class RedVSICmdLoadCode : public RedVSICmdInterface
 {
 public: 
 
     // Construction Routines
-    RedVSICmdLog(void);
-    RedVSICmdLog(RedVSIParseTreeInterface*& pExpr) { SetDetails(pLogExpr); };
-    ~RedVSICmdLog(void) {};
+    RedVSICmdLoadCode(void);
+    RedVSICmdLoadCode(RedVSIParseTreeInterface*& pInitLoadPathExpr) { SetDetails(pInitLoadPathExpr); };
+    ~RedVSICmdLoadCode(void) {};
 
     // RedVSICmdInterface inherited routines
-    RedVSILangElement Type(void) const { return kLangElementCommandLet; };
+    RedVSILangElement Type(void) const { return kLangElementCommandLoadCode; };
     void              QueueExpr(RedVSIContextInterface* pContext);
     void              Execute(RedVSIContextInterface* pContext);
 
     // Command Setup
-    void              SetExpr(RedVSIParseTreeInterface* pNewExpr)           { pLogExpr = pNewExpr; };
+    void              SetExpr(RedVSIParseTreeInterface* pNewExpr)           { pLoadPathExpr = pNewExpr; };
 
     // Wholesale access/assign operations
-    void              SetDetails(RedVSIParseTreeInterface*& pInExpr)        { pLogExpr = pInExpr; };
-    void              GetDetails(RedVSIParseTreeInterface*& pOutExpr) const { pOutExpr = pLogExpr; };
+    void              SetDetails(RedVSIParseTreeInterface*& pInLoadPathExpr)        { pLoadPathExpr = pInLoadPathExpr; };
+    void              GetDetails(RedVSIParseTreeInterface*& pOutLoadPathExpr) const { pOutLoadPathExpr = pLoadPathExpr; };
 
 private:
 
-    RedVSIParseTreeInterface* pLogExpr;
+    RedVSIParseTreeInterface* pLoadPathExpr;
 };
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

@@ -131,13 +131,13 @@ unsigned RedDate::EightDigitDate(void) const
 
 unsigned RedDate::SixDigitDate(void) const
 {
-	unsigned retdate = 0;
+    unsigned retdate = 0;
 
-	retdate += TwoDigitYear() * 10000;
-	retdate += month * 100;
-	retdate += date;
+    retdate += TwoDigitYear() * 10000;
+    retdate += month * 100;
+    retdate += date;
 
-	return retdate;
+    return retdate;
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
