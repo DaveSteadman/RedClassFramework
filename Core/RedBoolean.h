@@ -33,10 +33,9 @@ namespace Core {
 #define RED_FALSE 0
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-/// Boolean value class. As a child of RedType class, this allows a boolean value to exist in 
-/// collections and VSI expressions alongside other RedType objects.
-/// The primary purpose of the class isn't to replace a bool type in normal operation.
+// Boolean value class. As a child of RedType class, this allows a boolean value to exist in 
+// collections and VSI expressions alongside other RedType objects.
+// The primary purpose of the class isn't to replace a bool type in normal operation.
 class RedBoolean : public RedType
 {
 public:
@@ -73,17 +72,22 @@ public:
     static RedBoolean  Yes(void)   { RedBoolean cRetVal; cRetVal.SetYes();   return cRetVal; };
     static RedBoolean  No(void)    { RedBoolean cRetVal; cRetVal.SetNo();    return cRetVal; };
 
+    static RedBoolean  OR(RedBoolean v1, RedBoolean v2)   { return (v1.IsYes() || v2.IsYes()); };
+    static RedBoolean  NOR(RedBoolean v1, RedBoolean v2)  { return (v1.IsNo()  || v2.IsNo()); };
+    static RedBoolean  AND(RedBoolean v1, RedBoolean v2)  { return (v1.IsYes() && v2.IsYes()); };
+    static RedBoolean  XOR(RedBoolean v1, RedBoolean v2)  { return (v1.IsYes() != v2.IsYes()); };
+    static RedBoolean  NAND(RedBoolean v1, RedBoolean v2) { return (v1.IsNo()  && v2.IsNo()); };
+
     void      operator =(const RedBoolean& cVal) { iState = cVal.iState; };
     void      operator =(const bool        val ) { if (val) iState=RED_TRUE; else iState=RED_NO; };
     
-    /// Obtain the integer representation of the object for serialisation
+    // Obtain the integer representation of the object for serialisation
     const int intState(void) const { return iState; };
 
 private:
 
     int iState;
 };
-
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
