@@ -38,8 +38,9 @@ class RedVSIContextThread
 {
 public:
 
-    RedVSIContextThread(void) { pCodeLib = NULL; };
-
+    RedVSIContextThread(void) { };
+    ~RedVSIContextThread(void) { };
+    
     // Code Library
     void                       SetCodeLib(RedVSILibInterface* pNewCodeLib) { pCodeLib = pNewCodeLib; };
     RedVSILibInterface*        CodeLib(void) const                         { return pCodeLib; };
@@ -64,7 +65,7 @@ private:
     RedVSIRoutineContextStack cRoutineStack;
 
     // Code library
-    RedVSILibInterface pCodeLib;
+    RedVSILibInterface cCodeLib;
 
     // Data attributes
     RedRecord cHeap;
