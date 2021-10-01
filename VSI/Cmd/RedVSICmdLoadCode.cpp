@@ -60,6 +60,12 @@ void RedVSICmdLoadCode::Execute(RedVSIContextInterface* pContext)
         return;
     }
 
+    // Load the code into an available thread context
+    if (pContext->pThreadContextRecord != NULL)
+    {
+        RedVSILibFactory libFact(pContext->pThreadContextRecord->pCodeLib);
+    }
+    
     // Expression will have been evaluated prior to the command,
     // so any actions already performed. Just queue up the next 
     // command.
