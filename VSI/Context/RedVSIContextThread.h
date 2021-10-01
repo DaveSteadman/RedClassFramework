@@ -43,7 +43,7 @@ public:
     
     // Code Library
     void                       SetCodeLib(RedVSILibInterface* pNewCodeLib) { pCodeLib = pNewCodeLib; };
-    RedVSILibInterface*        CodeLib(void) const                         { return pCodeLib; };
+    RedVSILibInterface&        CodeLib(void)                               { return &cCodeLib; };
 
     // Heap Data
     RedType*                   CreateHeapDataItem(const RedVSILangElement& cType, const RedString& cName);
