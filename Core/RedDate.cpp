@@ -33,6 +33,10 @@ namespace Core {
 void RedDate::SetDate(const RedString& datestr)
 {
     sscanf(datestr.TextPtr(), "%u/%u/%u", &year, &month, &date);
+    
+    // Dates are stored as absolute/4-digit numbers
+    // 2 digit years are assumed to be in the 2000->2100 range
+    if (year < 100) year += 2000;
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
