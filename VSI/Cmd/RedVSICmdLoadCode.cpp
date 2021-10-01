@@ -52,9 +52,10 @@ void RedVSICmdLoadCode::Execute(RedVSIContextInterface* pContext)
     RedVariant cExprResult = pContext->ExprResult(pLoadPathExpr);
 
     // Get a string representation of the value
-    pContext->Log()->AddText(cExprResult.StringValue());
+    RedString filePath = cExprResult.StringValue();
+    //pContext->Log()->AddText(cExprResult.StringValue());
 
-    if (!RedIOHandler::FileExists(cExprResult.StringValue()))
+    if (!RedIOHandler::FileExists(filePath))
     {
         pContext->Log()->AddErrorEvent(RedVSIErrorCodes::GetErrorString(RedVSIErrorCodes::eLoadCode_NoFile));
         return;
@@ -64,6 +65,25 @@ void RedVSICmdLoadCode::Execute(RedVSIContextInterface* pContext)
     if (pContext->pThreadContextRecord != NULL)
     {
         RedVSILibFactory libFact(pContext->pThreadContextRecord->pCodeLib);
+        
+        RedTmlElement* pTopTmlNode = NULL;
+        RedResult fileLoadResult = RedTmlAction::CreateTmlFromFile(filePath, pTopTmlNode);
+        
+        // If we've created a TML structure, we're now responsible for deleting it.
+        if (pTopTmlNode != NULL)
+        {
+            if (fileLoadResult == kResultSuccess)
+            {
+                // Call the code lib to import the TML class structure
+                pContext->pThreadContextRecord->CodeLib().InputTmlClass(*pTopTmlNode, pContext->Log());
+            }
+            else
+                pContext->Log()->AddErrorEvent("Failed to fully load file to TML structure");
+            
+            delete pTopTmlNode;
+        }
+        else
+            pContext->Log()->AddErrorEvent("Failed to load file to TML structure");
     }
     
     // Expression will have been evaluated prior to the command,
