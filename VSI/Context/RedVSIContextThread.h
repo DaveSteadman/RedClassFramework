@@ -64,7 +64,7 @@ private:
     RedVSIRoutineContextStack cRoutineStack;
 
     // Code library
-    RedVSILibInterface* pCodeLib;
+    RedVSILibInterface pCodeLib;
 
     // Data attributes
     RedRecord cHeap;
