@@ -27,8 +27,6 @@ namespace Core {
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-#define RED_YES   1
-#define RED_NO    0
 #define RED_TRUE  1
 #define RED_FALSE 0
 
@@ -53,8 +51,6 @@ public:
     RedType*           Clone(void) const   { RedBoolean* newB = new RedBoolean(); newB->iState = iState; return dynamic_cast<RedType*>(newB); };
 
     // simple set/get operations
-    void               SetYes(void)        { iState=RED_YES; };
-    void               SetNo(void)         { iState=RED_NO; };
     void               SetTrue(void)       { iState=RED_TRUE; };
     void               SetFalse(void)      { iState=RED_FALSE; };
 
@@ -62,21 +58,17 @@ public:
     void               Set(const bool val) { if (val) SetYes(); else SetNo(); };
     void               Invert(void);
 
-    bool               IsYes(void)   const { return (iState == RED_YES);   };
-    bool               IsNo(void)    const { return (iState == RED_NO);    };
     bool               IsTrue(void)  const { return (iState == RED_TRUE);  };
     bool               IsFalse(void) const { return (iState == RED_FALSE); };
 
     static RedBoolean  True(void)  { RedBoolean cRetVal; cRetVal.SetTrue();  return cRetVal; };
     static RedBoolean  False(void) { RedBoolean cRetVal; cRetVal.SetFalse(); return cRetVal; };
-    static RedBoolean  Yes(void)   { RedBoolean cRetVal; cRetVal.SetYes();   return cRetVal; };
-    static RedBoolean  No(void)    { RedBoolean cRetVal; cRetVal.SetNo();    return cRetVal; };
 
-    static RedBoolean  OR(RedBoolean v1, RedBoolean v2)   { return (v1.IsYes() || v2.IsYes()); };
-    static RedBoolean  NOR(RedBoolean v1, RedBoolean v2)  { return (v1.IsNo()  || v2.IsNo()); };
-    static RedBoolean  AND(RedBoolean v1, RedBoolean v2)  { return (v1.IsYes() && v2.IsYes()); };
-    static RedBoolean  XOR(RedBoolean v1, RedBoolean v2)  { return (v1.IsYes() != v2.IsYes()); };
-    static RedBoolean  NAND(RedBoolean v1, RedBoolean v2) { return (v1.IsNo()  && v2.IsNo()); };
+    static RedBoolean  OR(RedBoolean v1, RedBoolean v2)   { return (v1.IsTrue()  || v2.IsTrue());  };
+    static RedBoolean  NOR(RedBoolean v1, RedBoolean v2)  { return (v1.IsFalse() || v2.IsFalse()); };
+    static RedBoolean  AND(RedBoolean v1, RedBoolean v2)  { return (v1.IsTrue()  && v2.IsTrue());  };
+    static RedBoolean  XOR(RedBoolean v1, RedBoolean v2)  { return (v1.IsTrue()  != v2.IsTrue());  };
+    static RedBoolean  NAND(RedBoolean v1, RedBoolean v2) { return (v1.IsFalse() && v2.IsFalse()); };
 
     void      operator =(const RedBoolean& cVal) { iState = cVal.iState; };
     void      operator =(const bool        val ) { if (val) iState=RED_TRUE; else iState=RED_NO; };
@@ -102,8 +94,6 @@ typedef RedSmartPtr<RedBoolean> RedBooleanSmartPtr;
 
 static const RedBoolean kBoolFALSE = RedBoolean::False();
 static const RedBoolean kBoolTRUE  = RedBoolean::True();
-static const RedBoolean kBoolYES   = RedBoolean::Yes();
-static const RedBoolean kBoolNO    = RedBoolean::No();
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
