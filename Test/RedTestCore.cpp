@@ -55,12 +55,12 @@ void RedTestCore::RunUnitTest(RedLog& log)
 RedResult RedTestCore::TestBoolean(void)
 {
     RedBoolean x;
-    x.SetYes();
-    if (!x.IsYes()) return kResultFail;
+    x.SetTrue();
+    if (!x.IsTrue()) return kResultFail;
 
     RedBoolean y;
-    y.SetNo();
-    if (!y.IsNo()) return kResultFail;
+    y.SetFalse();
+    if (!y.IsFalse()) return kResultFail;
 
     x = y;
     if (x != y) return kResultFail;
@@ -74,7 +74,15 @@ RedResult RedTestCore::TestBoolean(void)
         delete p;
         return kResultFail;
     }
-
+    
+    RedBoolean z;
+    x = kBoolTRUE;
+    y = kBoolTRUE;
+    z = RedBoolean::OR(x,y);
+    if (p->IsFalse()) return kResultFail;
+    z = RedBoolean::AND(x,y);
+    if (p->IsFalse()) return kResultFail;
+    
     delete p;
     return kResultSuccess;
 }
