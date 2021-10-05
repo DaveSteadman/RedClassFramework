@@ -57,7 +57,9 @@ void RedVSICmdLoadCode::Execute(RedVSIContextInterface* pContext)
 
     if (!RedIOHandler::FileExists(filePath))
     {
-        pContext->Log()->AddErrorEvent(RedVSIErrorCodes::GetErrorString(RedVSIErrorCodes::eLoadCode_NoFile));
+        RedOutputBuffer errMsg;
+        errMsg << RedVSIErrorCodes::GetErrorString(RedVSIErrorCodes::eLoadCode_NoFile) << " (" << RedIOHandler::BaseDir << filePath << ")";
+        pContext->Log()->AddErrorEvent(errMsg.StringBuffer());
         return;
     }
 
