@@ -18,6 +18,8 @@
 
 #pragma once
 
+#include "ConversionConstants.h"
+
 // 2D
 #include "RedCircle.h"
 #include "RedLine2D.h"
@@ -35,7 +37,6 @@
 #include "RedLatLongBox.h"
 
 // SI Units
-#include "ConversionConstants.h"
 #include "RedAngle.h"
 #include "RedArea.h"
 #include "RedDistance.h"
