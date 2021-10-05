@@ -44,7 +44,7 @@ public:
     RedNumber Volume(void)        const { return radius*radius*radius * (4.0 / 3.0) * pi; };  // =4/3.pi.r^3
     RedNumber Circumference(void) const { return radius * 2 * pi; }; // =2.pi.r
 
-private:
+public:
     RedPoint3D  origin;
     RedNumber   radius;
 };
