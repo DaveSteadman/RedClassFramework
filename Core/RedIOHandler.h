@@ -37,7 +37,7 @@ public:
     static RedResult OutputBufferToFile (const RedString& cFilepath, RedBufferOutput& cBuf);
     
 public:
-    static RedString basedir;
+    static RedString BaseDir;
 };
 
 RedString RedIOHandler::BaseDir = "";
