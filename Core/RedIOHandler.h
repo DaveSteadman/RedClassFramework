@@ -35,9 +35,14 @@ public:
 
     static RedResult InputBufferFromFile(const RedString& cFilepath, RedBufferInput&  cBuf);
     static RedResult OutputBufferToFile (const RedString& cFilepath, RedBufferOutput& cBuf);
+    
+public:
+    static RedString basedir;
 };
 
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+RedString RedIOHandler::BaseDir = "";
+
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -   
 
 } // Core
 } // Red
