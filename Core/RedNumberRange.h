@@ -53,7 +53,7 @@ public:
 
     // simple set/get operations
     void          SetRange(const RedNumber& l, const RedNumber& h) { cLow=l; cHigh=h; };
-    const int     IsInRange(const RedNumber& d) const;
+    const RedBoolan IsInRange(const RedNumber& d) const;
 
     // Calculations
     const RedNumber FractionThroughRange(const RedNumber& d) const;
