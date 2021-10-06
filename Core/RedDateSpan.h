@@ -33,9 +33,6 @@ public:
       RedDateSpan(const RedDate& RedDate1, const RedDate& d2) : startdate(d2), enddate(d2) { };
 
       double SpanInDays(void) const;
-      double SpanInHours(void) const;
-      double SpanInSeconds(void) const;
-
       double DaysToStartOfYear(void) const;
       double DaysToEndOfYear(void) const;
 
