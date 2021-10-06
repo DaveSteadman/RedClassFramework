@@ -40,12 +40,12 @@ void RedNumberRange::SetBehaviour(const int b)
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-const int RedNumberRange::IsInRange(const RedNumber& d) const 
+const RedBoolan RedNumberRange::IsInRange(const RedNumber& d) const 
 {
     if ((cLow <= d) && (d <= cHigh))
-        return 1;
+        return kBoolTRUE;
 
-    return 0;
+    return kBoolFALSE;
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
