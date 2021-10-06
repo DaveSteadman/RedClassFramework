@@ -91,6 +91,13 @@ const RedNumber RedNumberRange::RangeMax(void) const
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
+RedNumber RedNumberRange::RescaleNumber(const RedNumber& SourceNumber, const RedNumberRange& SourceRange, const RedNumberRange& DestRange)
+{
+    return RedNumber(0);
+}
+
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
 } // Core
 } // Red
 
