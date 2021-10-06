@@ -34,20 +34,6 @@ double RedDateSpan::SpanInDays(void) const
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-double RedDateSpan::SpanInHours(void) const
-{
-    return 0;
-}
-
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-double RedDateSpan::SpanInSeconds(void) const
-{
-    return 0;
-}
-
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
 double RedDateSpan::DaysToStartOfYear(void) const
 {
     return 0;
