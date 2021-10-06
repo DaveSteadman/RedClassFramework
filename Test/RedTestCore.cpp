@@ -202,6 +202,17 @@ RedResult RedTestCore::TestNumberRange(void)
     DegreesLongitude.CropNumber(x);
     if (!DegreesLongitude.IsInRange(x)) return kResultFail;
 
+    
+    RedNumberRange FullCircleDegrees(0.0, 360.0);
+    RedNumberRange FullCircleRadians(0.0, 2 * pi);
+    RedNumber angle = 90.0;
+    
+    if (FullCircleDegrees.FractionThroughRange(angle) != 0.25) return kResultFail;
+    
+    RedNumber angleRads = RedNumberRange::RescaleNumber(angle, FullCircleDegrees, FullCircleRadians);
+
+    if (angleRads != half_pi) return kResultFail;
+    
     return kResultSuccess;
 }
 
