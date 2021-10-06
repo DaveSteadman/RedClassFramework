@@ -50,6 +50,15 @@ const RedBoolan RedNumberRange::IsInRange(const RedNumber& d) const
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
+const RedNumber RedNumberRange::FractionThroughRange(const RedNumber& d) const
+{
+    RedNumber base(cLow - d);
+    RedNumber r(cHigh - cLow);
+    return base / r;
+}
+
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
 void RedNumberRange::WrapNumber(RedNumber& n) const
 {
     if ((cLow < n) || (n < cHigh))
