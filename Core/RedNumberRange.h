@@ -55,6 +55,8 @@ public:
     void          SetRange(const RedNumber& l, const RedNumber& h) { cLow=l; cHigh=h; };
     const int     IsInRange(const RedNumber& d) const;
 
+    // Calculations
+    const RedNumber FractionThroughRange(const RedNumber& d) const;
     static RedNumber RescaleNumber(const RedNumber& SourceNumber, const RedNumberRange& SourceRange, const RedNumberRange& DestRange);
 
     // Apply this objects range limits to a number
