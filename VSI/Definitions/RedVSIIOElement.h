@@ -87,12 +87,8 @@ public:
     bool                   IsBoolKeyword(void) const;
     bool                   IsKeywordTrue(void) const                      { return eType == eKeywordBoolValueTrue; };
     bool                   IsKeywordFalse(void) const                     { return eType == eKeywordBoolValueFalse; };
-    bool                   IsKeywordYes(void) const                       { return eType == eKeywordBoolValueYes; };
-    bool                   IsKeywordNo(void) const                        { return eType == eKeywordBoolValueNo; };
     static RedVSIIOElement KeywordTrue(void)                              { return RedVSIIOElement(eKeywordBoolValueTrue); };
     static RedVSIIOElement KeywordFalse(void)                             { return RedVSIIOElement(eKeywordBoolValueFalse); };
-    static RedVSIIOElement KeywordYes(void)                               { return RedVSIIOElement(eKeywordBoolValueYes); };
-    static RedVSIIOElement KeywordNo(void)                                { return RedVSIIOElement(eKeywordBoolValueNo); };
 
     // Library
     bool                   IsLibraryKeyword(void) const;
@@ -223,8 +219,6 @@ private:
         // Bool Values
         eKeywordBoolValueTrue,
         eKeywordBoolValueFalse,
-        eKeywordBoolValueYes,
-        eKeywordBoolValueNo,
 
         // Operators and separators
         eSymbolAssignDivide,
