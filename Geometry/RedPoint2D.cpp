@@ -25,7 +25,7 @@ namespace Geometry {
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-const RedNumber RedPoint2D::DistanceTo(const RedPoint2D& newpos) const
+const RedNumber RedPoint2D::DistanceToPoint(const RedPoint2D& newpos) const
 {
     double dx = x.DoubleValue() - newpos.x.DoubleValue();
     double dy = y.DoubleValue() - newpos.y.DoubleValue();
@@ -37,11 +37,17 @@ const RedNumber RedPoint2D::DistanceTo(const RedPoint2D& newpos) const
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-const RedVector2D RedPoint2D::VectorTo(const RedPoint2D& newpos) const
+const RedVector2D RedPoint2D::VectorToPoint(const RedPoint2D& newpos) const
 {
     RedVector2D v;
-    // RedVector2D v(newpos.x - x, newpos.y - y);
 
+    double dx = x.DoubleValue() - newpos.x.DoubleValue();
+    double dy = y.DoubleValue() - newpos.y.DoubleValue();
+
+    double mag = sqrt(dx*dx + dy*dy);
+    
+    // Dot product 
+    
     return v;    
 }
 
