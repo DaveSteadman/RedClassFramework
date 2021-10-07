@@ -77,8 +77,6 @@ bool RedVSIIOElement::IsBoolKeyword(void) const
 {
     if (IsKeywordTrue())  return true;
     if (IsKeywordFalse()) return true;
-    if (IsKeywordYes())   return true;
-    if (IsKeywordNo())    return true;
 
     return false;
 }
