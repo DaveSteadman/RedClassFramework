@@ -41,17 +41,14 @@ public:
     void      Set(const RedPoint2D& np)                     { x=np.x; y=np.y; };
     void      Set(const RedNumber& nx, const RedNumber& ny) { x=nx; y=ny; };
 
-    const RedNumber X(void) const { return x; };
-    const RedNumber Y(void) const { return y; };
+    const RedVector2D VectorToPoint(const RedPoint2D& newpos) const;
+    const RedNumber DistanceToPoint(const RedPoint2D& newpos) const;
 
-    const RedVector2D VectorTo(const RedPoint2D& newpos) const;
-    const RedNumber DistanceTo(const RedPoint2D& newpos) const;
-
-    void RelativeMove(const RedNumber& dx, const RedNumber& dy) { x+=dx; y+=dy; };
+    void offset(const RedNumber& dx, const RedNumber& dy) { x+=dx; y+=dy; };
 
     void operator =(const RedPoint2D& newpos) { Set(newpos); };
 
-private:
+public:
     RedNumber x;
     RedNumber y;
 };
