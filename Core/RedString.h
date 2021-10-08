@@ -56,48 +56,45 @@ public:
     unsigned       AllocSize(void)         const { return allocsize; };
     unsigned       ContentSize(void)       const { return contentsize; };
 
+    unsigned       Length(void) const { return contentsize; };
     void           Empty(void);
+    bool           IsEmpty(void) const { return (contentsize==0); };
+    
     void           Set(const char Ch);
     void           Set(const char* pText);
+    void           Set(const RedString& Str) { Set(Str.TextPtr()); };
+
     void           Append(const char Ch);
     void           Append(const char* Str);
-    void           Delete(const unsigned Index, const unsigned Count);
-    void           Insert(const unsigned Index, const char  Ch);
-    void           Insert(const unsigned Index, const char* Str);
+    void           Append(const RedChar& Ch)    { Append(Ch.Char()); };
+    void           Append(const RedString& Str) { Append(Str.TextPtr()); };    
+    void           InsertAtIndex(const unsigned Index, const char  Ch);
+    void           InsertAtIndex(const unsigned Index, const char* Str);
+    void           InsertAtIndex(const unsigned Index, const RedString& Str) { InsertAtIndex(Index, Str.TextPtr()); };
+
     char           CharAtIndex(const unsigned Index) const;
-    RedString      SubStr(const unsigned StartIndex, const unsigned Count) const;
-
-    bool           IsCharInString(char ch) const;
-    bool           IsAlphaNumeric(void) const;
-
-    // Derived Routines
-    void           Set(const RedString& Str)                          { Set(Str.TextPtr()); };
-    void           Append(const RedChar& Ch)                          { Append(Ch.Char()); };
-    void           Append(const RedString& Str)                       { Append(Str.TextPtr()); };
-
-    void           Insert(const unsigned Index, const RedString& Str) { Insert(Index, Str.TextPtr()); };
-
-    unsigned       Length(void)                         const { return contentsize; };
-    bool           IsEmpty(void)                        const { return (contentsize==0); };
     RedChar        CharObjAtIndex(const unsigned Index) const { return RedChar( CharAtIndex(Index) ); };
     char           FirstChar(void)                      const { return CharAtIndex(FirstContentIndex()); };
     RedChar        FirstCharObj(void)                   const { return RedChar( CharAtIndex(FirstContentIndex()) ); };
     char           LastChar(void)                       const { if (ContentSize() == 0) return '\0'; else return CharAtIndex(LastContentIndex()); };
     RedChar        LastCharObj(void)                    const { return RedChar( CharAtIndex(LastContentIndex()) ); };
 
-    unsigned       NumLines(void) const;
-    bool           LineAtNum(const unsigned LineNum, RedString& Line) const;
+    void           DeleteAtIndex(const unsigned Index, const unsigned Count);
+    void           DelFirstChar(void) { DeleteAtIndex(FirstContentIndex(), 1); };
+    void           DelLastChar(void)  { DeleteAtIndex(LastContentIndex(),  1); };
 
-    void           DelFirstChar(void) { Delete(FirstContentIndex(), 1); };
-    void           DelLastChar(void)  { Delete(LastContentIndex(),  1); };
+    RedString      SubStr(const unsigned StartIndex, const unsigned Count) const;
+    bool           IsCharInString(char ch) const;
+    bool           IsAlphaNumeric(void) const;
 
     // substring routines
     // CondenseAllocation
 
-    // Additional Routines (relying on Main Routines for operation)
+    unsigned       NumLines(void) const;
+    bool           LineAtNum(const unsigned LineNum, RedString& Line) const;
 
     // Internal Main Routines
-    static unsigned SizeForNumBlocks(const unsigned numblocks)      { return kRedStringAllocBlockSize* numblocks; };
+    static unsigned SizeForNumBlocks(const unsigned numblocks)      { return kRedStringAllocBlockSize * numblocks; };
     static unsigned NumBlocksForSize(const unsigned strsize)        { return (strsize/kRedStringAllocBlockSize) + 1; };
     static char*    AllocData(const unsigned NumBlocks);
 
