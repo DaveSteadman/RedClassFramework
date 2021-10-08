@@ -65,10 +65,12 @@ public:
     // RedVSIContextInterface Inhertied Interface
 
     // Data accessors (RedVSIContextInterface)
-    RedType* CreateDataItem(const RedVSILangElement& cLocation, const RedVSILangElement& cType, const RedString& cName);
-    RedType* DuplicateDataItem(const RedVSILangElement& cLocation, const RedType* pDataItem, const RedString& cName);
+    RedType*        CreateDataItem(const RedVSILangElement& cLocation, const RedVSILangElement& cType, const RedString& cName);
+    RedType*        DuplicateDataItem(const RedVSILangElement& cLocation, const RedType* pDataItem, const RedString& cName);
     bool            FindDataItem(const RedString& cName, RedType*& pData);
     RedVariant      DataItemAsVariant(const RedString& cName);
+
+    RedVSILib*      FindCodeLib(void);
 
     // Inhertied Expressions (RedVSIContextInterface)
     void            QueueExpr(RedVSIParseTreeInterface* pExpr);

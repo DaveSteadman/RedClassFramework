@@ -86,7 +86,7 @@ RedVSILibClass* RedVSILib::FindClass(const RedString& cClassName)
             RedTmlNode*    tmlTreeNode    =  dynamic_cast<RedTmlNode*>(newX);
 
             RedLog log;
-            vsiCodeLibFactory.InputTmlClass(*tmlTreeNode, log);
+            vsiCodeLibFactory.InputTmlClass(tmlTreeNode, log);
 
             cIt.First();
             while (!cIt.IsDone())

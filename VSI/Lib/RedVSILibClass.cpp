@@ -18,6 +18,8 @@
 
 #include "RedVSILibClass.h"
 
+#include "RedVSILib.h"
+
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 namespace Red {

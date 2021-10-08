@@ -241,10 +241,10 @@ RedString RedVariant::StringValue(void) const
     {
         RedBoolean b;
         ExportTo(&b);
-        if (b.IsYes())
-            cStr = "yes";
-        if (b.IsNo())
-            cStr = "no";
+        if (b.IsTrue())
+            cStr = "true";
+        if (b.IsFalse())
+            cStr = "false";
     }
     if (pData->Type().IsNum())
     {
@@ -266,7 +266,7 @@ bool RedVariant::IsSuccessVal(void) const
     }
     else if (pData->Type().IsBool())
     {
-        if (BoolValue().IsYes())
+        if (BoolValue().IsTrue())
             return true;
     }
     return false;

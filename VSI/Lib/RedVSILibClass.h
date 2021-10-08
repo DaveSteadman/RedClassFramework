@@ -21,7 +21,6 @@
 #include "RedCoreNamespace.h"
 #include "RedVSILibRoutine.h"
 #include "RedVSIRoutineCallInterface.h"
-#include "RedVSILibInterface.h"
 
 using namespace Red::Core;
 

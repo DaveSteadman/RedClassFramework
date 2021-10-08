@@ -55,7 +55,7 @@ public:
     void               SetFalse(void)      { iState=RED_FALSE; };
 
     void               Set(const int iVal);
-    void               Set(const bool val) { if (val) SetYes(); else SetNo(); };
+    void               Set(const bool val) { if (val) SetTrue(); else SetFalse(); };
     void               Invert(void);
 
     bool               IsTrue(void)  const { return (iState == RED_TRUE);  };
@@ -71,7 +71,7 @@ public:
     static RedBoolean  NAND(RedBoolean v1, RedBoolean v2) { return (v1.IsFalse() && v2.IsFalse()); };
 
     void      operator =(const RedBoolean& cVal) { iState = cVal.iState; };
-    void      operator =(const bool        val ) { if (val) iState=RED_TRUE; else iState=RED_NO; };
+    void      operator =(const bool        val ) { if (val) iState=RED_TRUE; else iState=RED_FALSE; };
     
     // Obtain the integer representation of the object for serialisation
     const int intState(void) const { return iState; };

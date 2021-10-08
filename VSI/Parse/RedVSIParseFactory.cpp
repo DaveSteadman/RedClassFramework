@@ -509,8 +509,6 @@ RedVSIParseTreeInterface* RedVSIParseFactory::RunValueCompetition(RedVSITokenBuf
         {
             if      (cTok.Predef().IsKeywordTrue())  cNodeVal = kBoolTRUE;
             else if (cTok.Predef().IsKeywordFalse()) cNodeVal = kBoolFALSE;
-            else if (cTok.Predef().IsKeywordYes())   cNodeVal = kBoolYES;
-            else if (cTok.Predef().IsKeywordNo())    cNodeVal = kBoolNO;
         }
 
         RedVSIParseTreeVal* pParseValNode = new RedVSIParseTreeVal(cNodeVal);

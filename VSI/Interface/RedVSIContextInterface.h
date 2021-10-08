@@ -36,6 +36,7 @@ namespace VSI {
 // a circular dependency.
 class RedVSICmdInterface;
 class RedVSIParseTreeInterface;
+class RedVSILib;
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -69,6 +70,9 @@ public:
     // Commands
     virtual void          QueueCommand(RedVSICmdInterface* pCmd) =0;
     virtual void          ClearCommandQueue(void) =0;
+
+    // Code accessors
+    virtual RedVSILib*    FindCodeLib(void) =0;
 
     // Error reporting and debugging
     virtual RedLog*       Log(void) = 0;

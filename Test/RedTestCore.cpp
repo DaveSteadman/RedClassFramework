@@ -17,11 +17,13 @@
 // -------------------------------------------------------------------------------------------------
 
 #include "RedTestCore.h"
+#include "ConversionConstants.h"
 
 #include <stdio.h>
 #include <stdlib.h>
 
 using namespace Red::Core;
+using namespace Red::Geometry;
 
 namespace Red {
 namespace Test {
@@ -306,33 +308,33 @@ RedResult RedTestCore::TestString(void)
     // Delete Char
     {
         RedString x1("11233");
-        x1.Delete(2,1);
+        x1.DeleteAtIndex(2,1);
         if (x1 != "1133") return kResultFail;
 
         x1.Set("1122222");
-        x1.Delete(2, 20);
+        x1.DeleteAtIndex(2, 20);
         if (x1 != "11") return kResultFail;
 
         x1.Set("1");
-        x1.Delete(0,1);
+        x1.DeleteAtIndex(0,1);
         if (!x1.IsEmpty()) return kResultFail;
     }
 
     // Insert Char
     {
         RedString x1("abc123");
-        x1.Insert(3,'A');
+        x1.InsertAtIndex(3,'A');
         if (x1 != "abcA123") return kResultFail;
     }
 
     // Insert Str
     {
         RedString x1("abc123");
-        x1.Insert(3, "ABC");
+        x1.InsertAtIndex(3, "ABC");
         if (x1 != "abcABC123") return kResultFail;
 
         x1 = "123";
-        x1.Insert(0, "ABC");
+        x1.InsertAtIndex(0, "ABC");
         if (x1 != "ABC123") return kResultFail;
     }
 

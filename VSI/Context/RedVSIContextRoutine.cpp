@@ -18,7 +18,7 @@
 
 #include "RedVSIContextRoutine.h"
 //#include "CDataArray.h"
-#include "RedVSILibInterface.h"
+#include "RedVSILib.h"
 #include "RedVSIParseStackTraverser.h"
 #include "RedVSICollections.h"
 
@@ -189,6 +189,13 @@ RedVariant RedVSIContextRoutine::DataItemAsVariant(const RedString& cName)
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
+RedVSILib* RedVSIContextRoutine::FindCodeLib(void)
+{
+    return NULL;
+}
+
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
 void RedVSIContextRoutine::SetValueToReturn(const RedVariant& cData)
 {
     cReturnValue = cData;
@@ -258,7 +265,7 @@ void RedVSIContextRoutine::SetupRoutineCall(const RedVSIRoutineCallInterface& cC
 {
     if (pThreadContextRecord != NULL)
     {
-        RedVSILibInterface* pLib = pThreadContextRecord->CodeLib();
+        RedVSILib* pLib = pThreadContextRecord->CodeLib();
 
         if (pLib != NULL)
         {

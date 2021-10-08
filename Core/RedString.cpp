@@ -244,7 +244,7 @@ void RedString::Append(const char* Str)
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-void RedString::Delete(const unsigned Index, const unsigned Count)
+void RedString::DeleteAtIndex(const unsigned Index, const unsigned Count)
 {
     if (Index > LastContentIndex())
         return;
@@ -272,7 +272,7 @@ void RedString::Delete(const unsigned Index, const unsigned Count)
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-void RedString::Insert(const unsigned Index, const char Ch)
+void RedString::InsertAtIndex(const unsigned Index, const char Ch)
 {
     const unsigned NumBlocksRequired = NumBlocksForSize(contentsize+1);
     const unsigned AllocSizeRequired = SizeForNumBlocks(NumBlocksRequired);
@@ -306,7 +306,7 @@ void RedString::Insert(const unsigned Index, const char Ch)
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-void RedString::Insert(const unsigned Index, const char* Str)
+void RedString::InsertAtIndex(const unsigned Index, const char* Str)
 {
     const unsigned InsertSize           = (unsigned)strlen(Str);
 

@@ -43,7 +43,7 @@ public:
     void Set(const RedPoint2D& np1, const RedPoint2D& np2) { p1=np1; p2=np2; };
     void Set(const RedNumber& p1x, const RedNumber& p1y, const RedNumber& p2x, const RedNumber& p2y) { p1.Set(p1x, p1y); p2.Set(p1x, p1y); };
 
-    const RedNumber GetLength(void) const  { return p1.DistanceTo(p2); };
+    const RedNumber GetLength(void) const  { return p1.DistanceToPoint(p2); };
 
     void operator =(const RedLine2D& nl) { Set(nl); };
 

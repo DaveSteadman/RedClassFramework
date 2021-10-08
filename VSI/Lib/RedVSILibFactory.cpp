@@ -18,6 +18,7 @@
 
 #include "RedCoreNamespace.h"
 #include "RedTmlNamespace.h"
+#include "RedCoreConsts.h"
 
 #include <stdio.h>
 #include "stdlib.h"
@@ -47,9 +48,15 @@ RedVSILibFactory::RedVSILibFactory(RedVSILib* pNewLib)
 // Tml
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-void RedVSILibFactory::InputTmlClass(RedTmlNode cClassNode, RedLog& cAnalysis)
+void RedVSILibFactory::InputTmlClass(RedTmlElement* pTopTmlNode, RedLog& cAnalysis)
 {
-    if (cClassNode.Name() != kVSIIOElementKeywordClass)
+    if ((pTopTmlNode == NULL) || (!pTopTmlNode->IsNode()))
+    {
+        cAnalysis.AddErrorEvent("Lib Factory: InputTmlClass: Top-level node not TML Node");
+        return;
+    }
+
+    if (pTopTmlNode->Name() != kVSIIOElementKeywordClass)
     {
         cAnalysis.AddErrorEvent("Lib Factory: InputTmlClass: Top-level node not a class");
         return;
@@ -57,11 +64,14 @@ void RedVSILibFactory::InputTmlClass(RedTmlNode cClassNode, RedLog& cAnalysis)
 
     RedVSILibClass* pNewClass = new RedVSILibClass;
 
-    RedTmlLeaf* pName = RedTmlAction::NodeFirstNamedLeaf(cClassNode, kVSIIOElementKeywordName);
+    RedTmlNode* pTmlNode = (RedTmlNode*)pTopTmlNode;
+
+
+    RedTmlLeaf* pName = RedTmlAction::NodeFirstNamedLeaf(*pTmlNode, kVSIIOElementKeywordName);
     RedString x(pName->Data());
     pNewClass->SetClassName(x);
 
-    Red::TinyML::RedTmlNode::TmlNodeListItType routineIt = cClassNode.NodeIterator();
+    Red::TinyML::RedTmlNode::TmlNodeListItType routineIt = pTmlNode->NodeIterator();
 
     routineIt.First();
     while (!routineIt.IsDone())

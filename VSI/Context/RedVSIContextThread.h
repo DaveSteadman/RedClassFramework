@@ -20,7 +20,7 @@
 
 #include "RedCoreNamespace.h"
 #include "RedVSILangElement.h"
-#include "RedVSILibInterface.h"
+#include "RedVSILib.h"
 
 using namespace Red::Core;
 
@@ -42,8 +42,8 @@ public:
     ~RedVSIContextThread(void) { };
     
     // Code Library
-    void                       SetCodeLib(RedVSILibInterface* pNewCodeLib) { pCodeLib = pNewCodeLib; };
-    RedVSILibInterface&        CodeLib(void)                               { return &cCodeLib; };
+    void         SetCodeLib(RedVSILib* newLib)                               { pCodeLib = newLib; };
+    RedVSILib*        CodeLib(void)                               { return pCodeLib; };
 
     // Heap Data
     RedType*                   CreateHeapDataItem(const RedVSILangElement& cType, const RedString& cName);
@@ -65,7 +65,8 @@ private:
     RedVSIRoutineContextStack cRoutineStack;
 
     // Code library
-    RedVSILibInterface cCodeLib;
+    // Using a pointer, as we would want ot craete libraries and pass them around between threads.
+    RedVSILib* pCodeLib;
 
     // Data attributes
     RedRecord cHeap;

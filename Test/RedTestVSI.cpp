@@ -560,7 +560,7 @@ RedResult RedTestVSI::TestRunProg_001(void)
 
         // Import the TML into the code library
         RedLog log;
-        vsiCodeLibFactory.InputTmlClass(*tmlTreeNode, log);
+        vsiCodeLibFactory.InputTmlClass(tmlTreeNode, log);
         if (vsiCodeLib.NumClasses() == 0)
             return kResultFail;
         if (log.ContainsError())

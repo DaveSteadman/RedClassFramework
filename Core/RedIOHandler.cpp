@@ -29,6 +29,10 @@ namespace Core {
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
+RedString RedIOHandler::BaseDir = "";
+
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
 bool RedIOHandler::FileExists(const RedString& cFilepath)
 {
     const RedString fullpath = BaseDir + cFilepath;
@@ -44,7 +48,7 @@ bool RedIOHandler::FileExists(const RedString& cFilepath)
 
 RedResult RedIOHandler::InputBufferFromFile(const RedString& cFilepath, RedBufferInput& cBuf)
 {
-    const RedString fullpath = BaseDir + filepath;
+    const RedString fullpath = BaseDir + cFilepath;
 
     // open the file, returning fail if required
     FILE* pFile = fopen (fullpath.TextPtr(),"r");

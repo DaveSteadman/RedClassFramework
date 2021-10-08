@@ -40,8 +40,6 @@ public:
     static RedString BaseDir;
 };
 
-RedString RedIOHandler::BaseDir = "";
-
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -   
 
 } // Core

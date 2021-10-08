@@ -77,7 +77,7 @@ RedResult RedVSIContextFactory::LoadFragmentIntoContext(const RedString& InputCo
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-RedResult RedVSIContextFactory::CreateThreadContextForRoutine(const RedString& classname, const RedString& routinename, RedVSILibInterface* pInputLib, RedVSIContextThread** OutputThreadContext, RedLog& cLog)
+RedResult RedVSIContextFactory::CreateThreadContextForRoutine(const RedString& classname, const RedString& routinename, RedVSILib* pInputLib, RedVSIContextThread** OutputThreadContext, RedLog& cLog)
 {
     // Find the routine to execute
     RedVSILibRoutineInterface* LibRoutine = pInputLib->FindRoutine(classname, routinename);

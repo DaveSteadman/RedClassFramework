@@ -21,7 +21,6 @@
 #include "RedCoreNamespace.h"
 
 #include "RedVSILibClass.h"
-#include "RedVSILibInterface.h"
 #include "RedVSILibRoutineInterface.h"
 
 using namespace Red::Core;
@@ -32,7 +31,7 @@ namespace VSI {
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 /// A VSI Code Library consists of a list of classes.
-class RedVSILib : public RedVSILibInterface
+class RedVSILib
 {
 public:
     typedef RedDoubleLinkedList<RedVSILibClass*>          ListType;

@@ -51,8 +51,8 @@ public:
     // Simple math
     const RedNumber   Cirumference(void) const { RedNumber c = radius * 2.0 * kPi; return c; };
     const RedNumber   Area(void) const { RedNumber c = radius * radius * kPi; return c; };
-    const RedVector2D VectorFromOriginToPoint(const RedPoint2D& p) const { RedVector2D v = origin.VectorTo(p); return v; };
-    const RedNumber   DistanceFromOriginToPoint(const RedPoint2D& p) const { RedNumber n = origin.DistanceTo(p); return n; };
+    const RedVector2D VectorFromOriginToPoint(const RedPoint2D& p) const { RedVector2D v = origin.VectorToPoint(p); return v; };
+    const RedNumber   DistanceFromOriginToPoint(const RedPoint2D& p) const { RedNumber n = origin.DistanceToPoint(p); return n; };
     const int         ContainsPoint(const RedPoint2D& p) const { if (DistanceFromOriginToPoint(p) > Radius()) return 1; return 0; };
 
     /// \todo Point routine to contribute to drawing

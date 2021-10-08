@@ -17,8 +17,14 @@
 // -------------------------------------------------------------------------------------------------
 
 #include "RedVSICmdLoadCode.h"
+#include "RedCoreNamespace.h"
+#include "RedTmlNamespace.h"
+#include "RedVSILibFactory.h"
 
 #include "RedVSIErrorCodes.h"
+
+using namespace Red::Core;
+using namespace Red::TinyML;
 
 namespace Red {
 namespace VSI {
@@ -57,19 +63,20 @@ void RedVSICmdLoadCode::Execute(RedVSIContextInterface* pContext)
 
     if (!RedIOHandler::FileExists(filePath))
     {
-        RedOutputBuffer errMsg;
+        RedBufferOutput errMsg;
         errMsg << RedVSIErrorCodes::GetErrorString(RedVSIErrorCodes::eLoadCode_NoFile) << " (" << RedIOHandler::BaseDir << filePath << ")";
-        pContext->Log()->AddErrorEvent(errMsg.StringBuffer());
+        pContext->Log()->AddErrorEvent(errMsg.ExtractData());
         return;
     }
 
     // Load the code into an available thread context
-    if (pContext->pThreadContextRecord != NULL)
+    RedVSILib* pCodeLib = pContext->FindCodeLib();
+    if (pCodeLib != NULL)
     {
-        RedVSILibFactory libFact(pContext->pThreadContextRecord->pCodeLib);
+        RedVSILibFactory libFact(pCodeLib);
         
         RedTmlElement* pTopTmlNode = NULL;
-        RedResult fileLoadResult = RedTmlAction::CreateTmlFromFile(filePath, pTopTmlNode);
+        RedResult fileLoadResult = RedTmlAction::CreateTmlFromFile(filePath, &pTopTmlNode);
         
         // If we've created a TML structure, we're now responsible for deleting it.
         if (pTopTmlNode != NULL)
@@ -77,7 +84,7 @@ void RedVSICmdLoadCode::Execute(RedVSIContextInterface* pContext)
             if (fileLoadResult == kResultSuccess)
             {
                 // Call the code lib to import the TML class structure
-                pContext->pThreadContextRecord->CodeLib().InputTmlClass(*pTopTmlNode, pContext->Log());
+                libFact.InputTmlClass(pTopTmlNode, *pContext->Log());
             }
             else
                 pContext->Log()->AddErrorEvent("Failed to fully load file to TML structure");

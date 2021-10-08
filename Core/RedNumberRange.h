@@ -20,6 +20,7 @@
 
 #include "RedType.h"
 #include "RedNumber.h"
+#include "RedBoolean.h"
 
 namespace Red {
 namespace Core {
@@ -52,8 +53,8 @@ public:
     void          SetBehaviour(const int b);
 
     // simple set/get operations
-    void          SetRange(const RedNumber& l, const RedNumber& h) { cLow=l; cHigh=h; };
-    const RedBoolan IsInRange(const RedNumber& d) const;
+    void             SetRange(const RedNumber& l, const RedNumber& h) { cLow=l; cHigh=h; };
+    const bool IsInRange(const RedNumber& d) const;
 
     // Calculations
     const RedNumber FractionThroughRange(const RedNumber& d) const;

@@ -29,13 +29,13 @@ namespace Geometry {
 
 const int RedRect::IsPointInRect(RedPoint2D p) const
 {
-    double minx = origin.X().DoubleValue();
-    double miny = origin.Y().DoubleValue();
+    double minx = origin.x.DoubleValue();
+    double miny = origin.y.DoubleValue();
     double maxx = minx + size.Width().DoubleValue();
     double maxy = miny + size.Height().DoubleValue();
 
-    double currx = p.X().DoubleValue();
-    double curry = p.Y().DoubleValue();
+    double currx = p.x.DoubleValue();
+    double curry = p.y.DoubleValue();
 
     if ( (minx <= currx) && (currx <= maxx) &&
          (miny <= curry) && (curry <= maxy) )
@@ -54,7 +54,7 @@ void RedRect::Inset(const RedNumber& i)
     // j is subtraced from size, which defines top-right.
     RedNumber j = i * -2;
 
-    origin.RelativeMove(i, i);
+    origin.offset(i, i);
     size.Adjust(j, j);
 }
 

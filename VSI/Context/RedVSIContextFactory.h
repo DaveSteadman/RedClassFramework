@@ -18,13 +18,11 @@
 
 #pragma once
 
-//#include "RedCoreNamespace.h"
+#include "RedCoreNamespace.h"
 
 #include "RedVSIContextRoutine.h"
-//#include "RedVSIContextThread.h"
+#include "RedVSIContextThread.h"
 #include "RedVSILibRoutineInterface.h"
-#include "RedVSILibInterface.h"
-
 #include "RedVSILib.h"
 
 namespace Red {
@@ -40,7 +38,7 @@ namespace Red {
             static RedResult LoadFragmentIntoContext(const RedString& InputCodeFragment, RedVSIContextRoutine& UpdateContext);
 
             static RedResult CreateContext(RedVSIContextRoutine** OutputContext, RedLog& cLog);
-            static RedResult CreateThreadContextForRoutine(const RedString& classname, const RedString& routinename, RedVSILibInterface* pInputLib, RedVSIContextThread** OutputThreadContext, RedLog& cLog);
+            static RedResult CreateThreadContextForRoutine(const RedString& classname, const RedString& routinename, RedVSILib* pInputLib, RedVSIContextThread** OutputThreadContext, RedLog& cLog);
         };
 
         // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
