@@ -37,6 +37,9 @@ public:
 
     // Constructor
     RedTmlNode(const RedString& NewName) : RedTmlElement(NewName) { nodelist.Init(); };
+    
+    // Destructor - delete all items in list
+    ~RedTmlNode();
 
     // Basic Queries
     bool     IsNode(void)           const { return true; };
