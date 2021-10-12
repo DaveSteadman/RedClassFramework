@@ -29,6 +29,14 @@ namespace TinyML {
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
+RedTmlNode::~RedTmlNode()
+{
+    //while(!this->nodelist.IsEmpty())
+    //    delete last item in list
+}
+    
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
 RedTmlNode* RedTmlNode::CreateChildNode(const RedString& NewName)
 {
     RedTmlNode* pNewNode = new RedTmlNode(NewName);
