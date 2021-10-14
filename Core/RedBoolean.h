@@ -32,8 +32,8 @@ namespace Core {
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 // Boolean value class. As a child of RedType class, this allows a boolean value to exist in 
-// collections and VSI expressions alongside other RedType objects.
-// The primary purpose of the class isn't to replace a bool type in normal operation.
+// collections and VSI expressions alongside other RedType objects. The primary purpose of the class 
+// isn't to replace a bool type in normal operation, which is useful in conditional statements.
 class RedBoolean : public RedType
 {
 public:
@@ -64,11 +64,12 @@ public:
     static RedBoolean  True(void)  { RedBoolean cRetVal; cRetVal.SetTrue();  return cRetVal; };
     static RedBoolean  False(void) { RedBoolean cRetVal; cRetVal.SetFalse(); return cRetVal; };
 
-    static RedBoolean  OR(RedBoolean v1, RedBoolean v2)   { return (v1.IsTrue()  || v2.IsTrue());  };
-    static RedBoolean  NOR(RedBoolean v1, RedBoolean v2)  { return (v1.IsFalse() || v2.IsFalse()); };
-    static RedBoolean  AND(RedBoolean v1, RedBoolean v2)  { return (v1.IsTrue()  && v2.IsTrue());  };
-    static RedBoolean  XOR(RedBoolean v1, RedBoolean v2)  { return (v1.IsTrue()  != v2.IsTrue());  };
-    static RedBoolean  NAND(RedBoolean v1, RedBoolean v2) { return (v1.IsFalse() && v2.IsFalse()); };
+    static RedBoolean  NOT(RedBoolean v1)                 { return RedBoolean(v1.IsFalse());                 };
+    static RedBoolean  OR(RedBoolean v1, RedBoolean v2)   { return RedBoolean(v1.IsTrue()  || v2.IsTrue());  };
+    static RedBoolean  NOR(RedBoolean v1, RedBoolean v2)  { return RedBoolean(v1.IsFalse() || v2.IsFalse()); };
+    static RedBoolean  AND(RedBoolean v1, RedBoolean v2)  { return RedBoolean(v1.IsTrue()  && v2.IsTrue());  };
+    static RedBoolean  XOR(RedBoolean v1, RedBoolean v2)  { return RedBoolean(v1.IsTrue()  != v2.IsTrue());  };
+    static RedBoolean  NAND(RedBoolean v1, RedBoolean v2) { return RedBoolean(v1.IsFalse() && v2.IsFalse()); };
 
     void      operator =(const RedBoolean& cVal) { iState = cVal.iState; };
     void      operator =(const bool        val ) { if (val) iState=RED_TRUE; else iState=RED_FALSE; };
