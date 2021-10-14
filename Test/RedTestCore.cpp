@@ -56,36 +56,49 @@ void RedTestCore::RunUnitTest(RedLog& log)
 
 RedResult RedTestCore::TestBoolean(void)
 {
-    RedBoolean x;
-    x.SetTrue();
-    if (!x.IsTrue()) return kResultFail;
-
-    RedBoolean y;
-    y.SetFalse();
-    if (!y.IsFalse()) return kResultFail;
-
-    x = y;
-    if (x != y) return kResultFail;
-
-    RedBoolean* p = dynamic_cast<RedBoolean*>(x.Clone());
-    p->SetFalse();
-    if (p->IsTrue()) return kResultFail;
-
-    if (p->Type() != RedDataType::Bool())
+    // Test basic operation
     {
+        RedBoolean x;
+        x.SetTrue();
+        if (!x.IsTrue()) return kResultFail;
+
+        RedBoolean y;
+        y.SetFalse();
+        if (!y.IsFalse()) return kResultFail;
+
+        x = y;
+        if (x != y) return kResultFail;
+    }
+
+    // Test cloning
+    {
+        RedBoolean x(true);
+        RedBoolean* p = dynamic_cast<RedBoolean*>(x.Clone());
+        if (p->IsFalse()) return kResultFail;
+
+        if (p->Type() != RedDataType::Bool())
+        {
+            delete p;
+            return kResultFail;
+        }
         delete p;
-        return kResultFail;
     }
     
-    RedBoolean z;
-    x = kBoolTRUE;
-    y = kBoolTRUE;
-    z = RedBoolean::OR(x,y);
-    if (p->IsFalse()) return kResultFail;
-    z = RedBoolean::AND(x,y);
-    if (p->IsFalse()) return kResultFail;
-    
-    delete p;
+    // Test Logic statements
+    {
+        RedBoolean a = kBoolTRUE;
+        RedBoolean b = kBoolTRUE;
+        RedBoolean c;
+
+        c = RedBoolean::OR(a,b);
+        if (c.IsFalse()) return kResultFail;
+        c = RedBoolean::AND(a,b);
+        if (c.IsFalse()) return kResultFail;
+        c = RedBoolean::NAND(a,b);
+        if (c.IsTrue()) return kResultFail;
+        c = RedBoolean::XOR(a,b);
+        if (c.IsTrue()) return kResultFail;
+    }
     return kResultSuccess;
 }
 
@@ -608,7 +621,6 @@ RedResult RedTestCore::TestSmartPtr(void)
 {
     RedNumberSmartPtr x(new RedNumber(1.23));
     if (x.RefCount() != 1) return kResultFail;
-
     {
         RedNumberSmartPtr y;
         if (y.RefCount() != 1) return kResultFail;
@@ -683,6 +695,7 @@ RedResult RedTestCore::TestInputBuffer(void)
 
 RedResult RedTestCore::TestOutputBuffer(void)
 {
+    // Test appending and indents
     {
         RedBufferOutput outbuf;
         outbuf.SetIndent(RedString("  "));
@@ -710,6 +723,7 @@ RedResult RedTestCore::TestOutputBuffer(void)
         if (outbuf.ExtractData() != RedString("aaa\n  111111\n  222222\nbbb")) return kResultFail;
     }
 
+    // Test stream operator
     {
         RedBufferOutput outbuf;
         RedNumber zz(12);
