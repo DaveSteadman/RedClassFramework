@@ -28,10 +28,6 @@ namespace TinyML {
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-typedef enum TESerialiseType { eDenseContent, eLinedIndentedContent } TESerialiseType;
-
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
 /// Class exists to provide complex actions on TinyML nodes. The TinyML node classes remain focussed
 /// on their role of storage and memory management, while this class can acquire increasingly complex
 /// bulky routines.
@@ -55,18 +51,6 @@ public:
 
     // Tree Query
     static unsigned        TreeElementCount(RedTmlNode& node);
-
-    // IO
-    static RedResult       CreateTmlFromFile(const RedString& filepath, RedTmlElement** newTmlElement);
-    static RedResult       CreateFileFromTml(const RedTmlElement* tmlElement, const RedString& filepath, const TESerialiseType writeStyle);
-    static RedTmlElement*  ParseTinyML(const RedString& inputStr);
-    static RedTmlElement*  ParseTinyML(RedBufferInput& inputBuf);
-    static void            SerialiseTinyML(RedBufferOutput& outputBuf, const RedTmlElement* topTmlNode, const TESerialiseType eMode);
-
-private:
-    static bool            ReadName      (RedBufferInput& inputBuf, RedString& outputName);
-    static bool            ReadContent   (RedBufferInput& inputBuf, RedString& outputContent);
-    static bool            ReadTmlElement(RedBufferInput& inputBuf, RedTmlElement** newTml);
 };
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
