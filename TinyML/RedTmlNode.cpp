@@ -29,23 +29,23 @@ namespace TinyML {
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-// RedTmlNode::~RedTmlNode()
-// {
-//     RedTmlNode* pCurrNode = 0;
+RedTmlNode::~RedTmlNode()
+{
+    RedTmlNode* pCurrNode = 0;
     
-//     // Loop until the list is empty
-//     while (!this->nodelist.IsEmpty())
-//     {
-//         // If we find the last node in the list alright
-//         if (this->nodelist.FindLast(&pCurrNode))
-//         {
-//             // if the node contents is not NULL, delete it, then delete the linked list node itself.
-//             if (pCurrNode != NULL)
-//                  delete pCurrNode;
-//             this->nodelist.DelLast();             
-//         }
-//     }
-// }
+    // Loop until the list is empty
+    while (!this->nodelist.IsEmpty())
+    {
+        // If we find the last node in the list alright
+        if (this->nodelist.FindLast(&pCurrNode))
+        {
+            // if the node contents is not NULL, delete it, then delete the linked list node itself.
+            // if (pCurrNode != NULL)
+            //      delete pCurrNode;
+            this->nodelist.DelLast();
+        }
+    }
+}
     
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
