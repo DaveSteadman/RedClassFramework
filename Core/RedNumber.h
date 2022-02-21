@@ -22,7 +22,7 @@
 #include "RedSmartPtr.h"
 #include "RedString.h"
 #include "RedChar.h"
-#include "ConversionConstants.h"
+//#include "ConversionConstants.h"
 
 namespace Red {
 namespace Core {

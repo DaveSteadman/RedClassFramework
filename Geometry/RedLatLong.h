@@ -39,14 +39,14 @@ public:
       
     // Constructors
     RedLatLong(void)                                               { Init(); };
-    RedLatLong(const RedNumber& nlat, const RedNumber& nlon)       { Set(nlat, nlon); };
+    RedLatLong(const RedAngle& nlat, const RedAngle& nlon)         { Set(nlat, nlon); };
 
     // Basic accessors
     void      Init(void)                                           { lat=0; lon=0; };
     void      Set(const RedLatLong& p)                             { lat=p.lat; lon=p.lon; };
-    void      Set(const RedNumber& nlat, const RedNumber& nlon)    { lat=nlat; lon=nlon; };
-    RedNumber Lat(void) const                                      { return lat; };
-    RedNumber Lon(void) const                                      { return lon; };
+    void      Set(const RedAngle& nlat, const RedAngle& nlon)      { lat=nlat; lon=nlon; };
+    RedAngle  Lat(void) const                                      { return lat; };
+    RedAngle  Lon(void) const                                      { return lon; };
 
     void      PlaceNumbersWithinRange(void) { kDegreesLatitudeRange.CropNumber(lat); kDegreesLongitudeRange.WrapNumber(lon); };
 
@@ -57,8 +57,8 @@ public:
     //operator==
 
 private:
-    RedNumber lat;
-    RedNumber lon;
+    RedAngle lat;
+    RedAngle lon;
 };
 
 } // Geometry
