@@ -36,7 +36,6 @@ public:
       double DaysToStartOfYear(void) const;
       double DaysToEndOfYear(void) const;
 
-
 private:
       RedDate startdate;
       RedDate enddate;

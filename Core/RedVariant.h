@@ -31,9 +31,9 @@ namespace Red {
 namespace Core {
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+// Class to hold any of the predefined data types.
+// Used in expressions, to pass a common type between parse tree elements.
 
-/// Class to hold any of the predefined data types. Primarily of use in
-/// expressions, to pass a common type between parse tree elements.
 class RedVariant : public RedType
 {
 public:
