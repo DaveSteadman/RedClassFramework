@@ -1,5 +1,6 @@
+
 // -------------------------------------------------------------------------------------------------
-// This file is covered by: The MIT License (MIT) Copyright (c) 2016 David G. Steadman
+// This file is covered by: The MIT License (MIT) Copyright (c) 2022 David G. Steadman
 // -------------------------------------------------------------------------------------------------
 // Permission is hereby granted, free of charge, to any person obtaining a copy of this software and
 // associated documentation files (the "Software"), to deal in the Software without restriction,
@@ -16,51 +17,42 @@
 // (http://opensource.org/licenses/MIT)
 // -------------------------------------------------------------------------------------------------
 
-#include "RedRect.h"
+#pragma once
 
-#include "math.h"
+#include "RedCoreNamespace.h"
 
 using namespace Red::Core;
 
 namespace Red {
-namespace Geometry {
+namespace Core {
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-const int RedRect::IsPointInRect(RedPoint2D p) const
+typedef enum TESerialiseType { eDenseContent, eLinedIndentedContent } TESerialiseType;
+
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+/// Class exists to provide complex actions on Core nodes. The Core node classes remain focussed
+/// on their role of storage and memory management, while this class can acquire increasingly complex
+/// bulky routines.
+class RedTinyMLFileIO
 {
-    double minx = origin.x.DoubleValue();
-    double miny = origin.y.DoubleValue();
-    double maxx = minx + size.Width().DoubleValue();
-    double maxy = miny + size.Height().DoubleValue();
+public:
 
-    double currx = p.x.DoubleValue();
-    double curry = p.y.DoubleValue();
+    // IO
+    static RedResult          CreateTmlFromFile(const RedString& filepath, RedTinyMLElement** newTmlElement);
+    static RedResult          CreateFileFromTml(const RedTinyMLElement* tmlElement, const RedString& filepath, const TESerialiseType writeStyle);
+    static RedTinyMLElement*  ParseCore(const RedString& inputStr);
+    static RedTinyMLElement*  ParseCore(RedBufferInput& inputBuf);
+    static void               SerialiseCore(RedBufferOutput& outputBuf, const RedTinyMLElement* topTmlNode, const TESerialiseType eMode);
 
-    if ( (minx <= currx) && (currx <= maxx) &&
-         (miny <= curry) && (curry <= maxy) )
-    {
-        return 1;
-    }
-    return 0;
-}
-
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-void RedRect::Inset(const RedNumber& i)
-{
-    // origin is bottom-left.
-    // i is added to origin
-    // j is subtraced from size, which defines top-right.
-    RedNumber j = i * -2;
-
-    origin.offset(i, i);
-    size.Adjust(j, j);
-}
+private:
+    static bool               ReadName      (RedBufferInput& inputBuf, RedString& outputName);
+    static bool               ReadContent   (RedBufferInput& inputBuf, RedString& outputContent);
+    static bool               ReadTmlElement(RedBufferInput& inputBuf, RedTinyMLElement** newTml);
+};
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-} // Geometry
+} // Core
 } // Red
-
-

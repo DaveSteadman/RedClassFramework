@@ -1,5 +1,5 @@
 // -------------------------------------------------------------------------------------------------
-// This file is covered by: The MIT License (MIT) Copyright (c) 2016 David G. Steadman
+// This file is covered by: The MIT License (MIT) Copyright (c) 2022 David G. Steadman
 // -------------------------------------------------------------------------------------------------
 // Permission is hereby granted, free of charge, to any person obtaining a copy of this software and
 // associated documentation files (the "Software"), to deal in the Software without restriction,
@@ -75,10 +75,10 @@ public:
 
     char           CharAtIndex(const unsigned Index) const;
     RedChar        CharObjAtIndex(const unsigned Index) const { return RedChar( CharAtIndex(Index) ); };
-	void           SetCharAtIndex(const unsigned Index, const char Ch);
-	void           SetCharObjAtIndex(const unsigned Index, const RedChar cCh) { SetCharAtIndex(Index, cCh.Char()); };
+    void           SetCharAtIndex(const unsigned Index, const char Ch);
+    void           SetCharObjAtIndex(const unsigned Index, const RedChar cCh) { SetCharAtIndex(Index, cCh.Char()); };
 
-	char           FirstChar(void)      const { return CharAtIndex(FirstContentIndex()); };
+    char           FirstChar(void)      const { return CharAtIndex(FirstContentIndex()); };
     RedChar        FirstCharObj(void)   const { return RedChar( CharAtIndex(FirstContentIndex()) ); };
     char           LastChar(void)       const { if (ContentSize() == 0) return '\0'; else return CharAtIndex(LastContentIndex()); };
     RedChar        LastCharObj(void)    const { return RedChar( CharAtIndex(LastContentIndex()) ); };

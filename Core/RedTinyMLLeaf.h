@@ -1,5 +1,5 @@
 // -------------------------------------------------------------------------------------------------
-// This file is covered by: The MIT License (MIT) Copyright (c) 2016 David G. Steadman
+// This file is covered by: The MIT License (MIT) Copyright (c) 2022 David G. Steadman
 // -------------------------------------------------------------------------------------------------
 // Permission is hereby granted, free of charge, to any person obtaining a copy of this software and
 // associated documentation files (the "Software"), to deal in the Software without restriction,
@@ -16,51 +16,40 @@
 // (http://opensource.org/licenses/MIT)
 // -------------------------------------------------------------------------------------------------
 
-#define _CRT_SECURE_NO_WARNINGS
+#pragma once
 
-#include "RedLatLong.h"
+// Include Namespaces
+#include "RedCoreNamespace.h"
 
-#include <stdio.h>
+using namespace Red::Core;
 
 namespace Red {
-namespace Geometry {
+namespace Core {
 
-static const unsigned kLatLongDecPlaces = 5; // The number of decimal places to resolve a lat/long to 1metre.
+class RedTinyMLElement;
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+// Note: TinyML core focus is on passing data around. All data is stored in a string format. 
+//       Handling data types is left to code that extracts the strings from the structure.
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-RedString RedLatLong::StringOfObject(void) const
+class RedTinyMLLeaf : public RedTinyMLElement
 {
-    RedString retStr;
+public:
+    RedTinyMLLeaf(const RedString& NewName, const RedString& NewData) : RedTinyMLElement(NewName) { data = NewData; };
 
-    retStr  = lat.DecimalStringWithDP(kLatLongDecPlaces);
-    retStr += ", ";
-    retStr += lon.DecimalStringWithDP(kLatLongDecPlaces);
+    // Override: RedTinyMLElement
+    bool      IsLeaf(void) const { return true; };
 
-    return retStr;
-}
+    RedString Data(void) const                  { return data; };
+    void      SetData(const RedString& NewData) { data = NewData; };
 
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-int RedLatLong::PopulateFromString(const RedString& str)
-{
-    double la = 0.0;
-    double lo = 0.0;
-
-    int ret = scanf(str.TextPtr(), "%f, %f", &la, &lo);
-
-    if (ret > 0)
-    {
-        lat = la;
-        lon = lo;
-    }
-
-    return ret;
-}
+private:
+    RedString data;
+};
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-} // Geometry
+} // Core
 } // Red
-
 

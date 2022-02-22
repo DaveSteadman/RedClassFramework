@@ -1,5 +1,5 @@
 // -------------------------------------------------------------------------------------------------
-// This file is covered by: The MIT License (MIT) Copyright (c) 2016 David G. Steadman
+// This file is covered by: The MIT License (MIT) Copyright (c) 2022 David G. Steadman
 // -------------------------------------------------------------------------------------------------
 // Permission is hereby granted, free of charge, to any person obtaining a copy of this software and
 // associated documentation files (the "Software"), to deal in the Software without restriction,
@@ -20,44 +20,39 @@
 
 #include "RedCoreNamespace.h"
 
-#include "RedVector3D.h"
-#include "RedPoint3D.h"
-
 using namespace Red::Core;
 
 namespace Red {
-namespace Geometry {
+namespace Core {
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-class RedLine3D
+/// Class exists to provide complex actions on Core nodes. The Core node classes remain focussed
+/// on their role of storage and memory management, while this class can acquire increasingly complex
+/// bulky routines.
+class RedTinyMLAction
 {
 public:
-      
-    // Constructors
-    RedLine3D(void)                                              { Init(); };
-    RedLine3D(const RedPoint3D& np1, const RedPoint3D& np2)      { Set(np1, np2); };
 
-    // Basic accessors
-    void       Init(void)                                        { p1.Init(); p2.Init(); };
-    void       Set(const RedPoint3D& np1, const RedPoint3D& np2) { p1=np1; p2=np2; };
-    void       SetP1(const RedPoint3D& np1)                      { p1=np1; };
-    void       SetP2(const RedPoint3D& np2)                      { p2=np2; };
-    RedPoint3D P1(void) const                                    { return p1; };
-    RedPoint3D P2(void) const                                    { return p1; };
+    // Set & Query Leaf elements
+    static void            SetChildLeaf   (RedTinyMLNode& node, const RedString& leafname, const RedString& leafdata);
+    static bool            ChildLeafExists(RedTinyMLNode& node, const RedString& leafname);
 
-    // Detailed Accessors
-    void       Translate(const RedVector3D& move)                { p1.Translate(move); p2.Translate(move); };
-    RedNumber  Length(void) const                                { RedVector3D v = p1.VectorToPoint(p2); return v.Magnitude(); };
+    // Leaf Name<->Data lookups
+    static RedResult       ChildLeafDataForName(RedTinyMLNode& node, const RedString& inleafname, RedString& outleafdata);
+    static RedResult       ChildLeafNameForData(RedTinyMLNode& node, const RedString& inleafdata, RedString& outleafname);
 
-private:
-    RedPoint3D p1;
-    RedPoint3D p2;
+    // Search Node For Child entries
+    static RedTinyMLElement*  NodeFirstNamedElement   (RedTinyMLNode& node, const RedString& SearchName);
+    static RedTinyMLNode*     NodeFirstNamedNode      (RedTinyMLNode& node, const RedString& SearchName);
+    static RedTinyMLLeaf*     NodeFirstNamedLeaf      (RedTinyMLNode& node, const RedString& SearchName);
+    static unsigned        NumberOfNamedChildLeaves(RedTinyMLNode& node, const RedString& SearchName);
+
+    // Tree Query
+    static unsigned        TreeElementCount(RedTinyMLNode& node);
 };
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-} // Geometry
+} // Core
 } // Red
-
-

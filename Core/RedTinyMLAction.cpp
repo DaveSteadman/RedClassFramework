@@ -1,5 +1,5 @@
 // -------------------------------------------------------------------------------------------------
-// This file is covered by: The MIT License (MIT) Copyright (c) 2016 David G. Steadman
+// This file is covered by: The MIT License (MIT) Copyright (c) 2022 David G. Steadman
 // -------------------------------------------------------------------------------------------------
 // Permission is hereby granted, free of charge, to any person obtaining a copy of this software and
 // associated documentation files (the "Software"), to deal in the Software without restriction,
@@ -16,22 +16,22 @@
 // (http://opensource.org/licenses/MIT)
 // -------------------------------------------------------------------------------------------------
 
-#include "RedTmlAction.h"
+#include "RedTinyMLAction.h"
 
 using namespace Red::Core;
 
 namespace Red {
-namespace TinyML {
+namespace Core {
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-RedTmlElement* RedTmlAction::NodeFirstNamedElement(RedTmlNode& node, const RedString& SearchName)
+RedTinyMLElement* RedTinyMLAction::NodeFirstNamedElement(RedTinyMLNode& node, const RedString& SearchName)
 {
-    TinyML::RedTmlNode::TmlNodeListItType yIt = node.NodeIterator();
+    Core::RedTinyMLNode::TmlNodeListItType yIt = node.NodeIterator();
     yIt.First();
     while (!yIt.IsDone())
     {
-        RedTmlElement* pCurrElem = yIt.CurrentItem();
+        RedTinyMLElement* pCurrElem = yIt.CurrentItem();
 
         if (pCurrElem->Name() == SearchName)
             return pCurrElem;
@@ -43,37 +43,37 @@ RedTmlElement* RedTmlAction::NodeFirstNamedElement(RedTmlNode& node, const RedSt
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-RedTmlNode* RedTmlAction::NodeFirstNamedNode(RedTmlNode& node, const RedString& SearchName)
+RedTinyMLNode* RedTinyMLAction::NodeFirstNamedNode(RedTinyMLNode& node, const RedString& SearchName)
 {
     // Basic search for the first matching element
-    RedTmlElement* pElem = RedTmlAction::NodeFirstNamedElement(node, SearchName);
+    RedTinyMLElement* pElem = RedTinyMLAction::NodeFirstNamedElement(node, SearchName);
 
     // work out the type and if we have a match without extra logic
     if ((pElem) && (pElem->IsNode()))
-        return dynamic_cast<RedTmlNode*>(pElem);
+        return dynamic_cast<RedTinyMLNode*>(pElem);
 
     return NULL;
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-RedTmlLeaf* RedTmlAction::NodeFirstNamedLeaf(RedTmlNode& node, const RedString& SearchName)
+RedTinyMLLeaf* RedTinyMLAction::NodeFirstNamedLeaf(RedTinyMLNode& node, const RedString& SearchName)
 {
     // Basic search for the first matching element
-    RedTmlElement* pElem = RedTmlAction::NodeFirstNamedElement(node, SearchName);
+    RedTinyMLElement* pElem = RedTinyMLAction::NodeFirstNamedElement(node, SearchName);
 
     // Work out the type and if we have a match without extra logic
     if ((pElem) && (pElem->IsLeaf()))
-        return dynamic_cast<RedTmlLeaf*>(pElem);
+        return dynamic_cast<RedTinyMLLeaf*>(pElem);
 
     return NULL;
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-bool RedTmlAction::ChildLeafExists(RedTmlNode& node, const RedString& leafname)
+bool RedTinyMLAction::ChildLeafExists(RedTinyMLNode& node, const RedString& leafname)
 {
-    RedTmlLeaf* leafnode = RedTmlAction::NodeFirstNamedLeaf(node, leafname);
+    RedTinyMLLeaf* leafnode = RedTinyMLAction::NodeFirstNamedLeaf(node, leafname);
 
     if (leafnode)
         return true;
@@ -82,10 +82,10 @@ bool RedTmlAction::ChildLeafExists(RedTmlNode& node, const RedString& leafname)
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-void RedTmlAction::SetChildLeaf(RedTmlNode& node, const RedString& leafname, const RedString& leafdata)
+void RedTinyMLAction::SetChildLeaf(RedTinyMLNode& node, const RedString& leafname, const RedString& leafdata)
 {
     // look for the named child leaf
-    RedTmlLeaf* leafnode = RedTmlAction::NodeFirstNamedLeaf(node, leafname);
+    RedTinyMLLeaf* leafnode = RedTinyMLAction::NodeFirstNamedLeaf(node, leafname);
 
     // set the leaf if we found it
     if (leafnode)
@@ -101,9 +101,9 @@ void RedTmlAction::SetChildLeaf(RedTmlNode& node, const RedString& leafname, con
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-RedResult RedTmlAction::ChildLeafDataForName(RedTmlNode& node, const RedString& inleafname, RedString& outleafdata)
+RedResult RedTinyMLAction::ChildLeafDataForName(RedTinyMLNode& node, const RedString& inleafname, RedString& outleafdata)
 {
-    RedTmlLeaf* leafnode = RedTmlAction::NodeFirstNamedLeaf(node, inleafname);
+    RedTinyMLLeaf* leafnode = RedTinyMLAction::NodeFirstNamedLeaf(node, inleafname);
     if (leafnode == NULL)
         return kResultFail;
 
@@ -113,18 +113,18 @@ RedResult RedTmlAction::ChildLeafDataForName(RedTmlNode& node, const RedString& 
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-RedResult RedTmlAction::ChildLeafNameForData(RedTmlNode& node, const RedString& inleafdata, RedString& outleafname)
+RedResult RedTinyMLAction::ChildLeafNameForData(RedTinyMLNode& node, const RedString& inleafdata, RedString& outleafname)
 {
-    RedTmlNode::TmlNodeListItType it = node.NodeIterator();
+    RedTinyMLNode::TmlNodeListItType it = node.NodeIterator();
 
     it.First();
     while(!it.IsDone())
     {
-        RedTmlElement* e = it.CurrentItem();
+        RedTinyMLElement* e = it.CurrentItem();
 
         if (e->IsLeaf())
         {
-            RedTmlLeaf* l = dynamic_cast<RedTmlLeaf*>(e);
+            RedTinyMLLeaf* l = dynamic_cast<RedTinyMLLeaf*>(e);
 
             if (l->Data() == inleafdata)
             {
@@ -139,15 +139,15 @@ RedResult RedTmlAction::ChildLeafNameForData(RedTmlNode& node, const RedString& 
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-unsigned RedTmlAction::NumberOfNamedChildLeaves(RedTmlNode& node, const RedString& SearchName)
+unsigned RedTinyMLAction::NumberOfNamedChildLeaves(RedTinyMLNode& node, const RedString& SearchName)
 {
-    RedTmlNode::TmlNodeListItType it = node.NodeIterator();
+    RedTinyMLNode::TmlNodeListItType it = node.NodeIterator();
     unsigned matchcount = 0;
 
     it.First();
     while(!it.IsDone())
     {
-        RedTmlElement* e = it.CurrentItem();
+        RedTinyMLElement* e = it.CurrentItem();
 
         if ((e->IsLeaf()) && (e->Name() == SearchName))
         {
@@ -162,16 +162,16 @@ unsigned RedTmlAction::NumberOfNamedChildLeaves(RedTmlNode& node, const RedStrin
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-unsigned RedTmlAction::TreeElementCount(RedTmlNode& node)
+unsigned RedTinyMLAction::TreeElementCount(RedTinyMLNode& node)
 {
     // 1 = starting node.
     unsigned currNodeCount = 1;
 
-    TinyML::RedTmlNode::TmlNodeListItType yIt = node.NodeIterator();
+    Core::RedTinyMLNode::TmlNodeListItType yIt = node.NodeIterator();
     yIt.First();
     while (!yIt.IsDone())
     {
-        RedTmlElement* pCurrElem = yIt.CurrentItem();
+        RedTinyMLElement* pCurrElem = yIt.CurrentItem();
 
         if (pCurrElem->IsLeaf())
         {
@@ -179,8 +179,8 @@ unsigned RedTmlAction::TreeElementCount(RedTmlNode& node)
         }
         else if (pCurrElem->IsNode())
         {
-            RedTmlNode* pNextNode = dynamic_cast<RedTmlNode*>(pCurrElem);
-            currNodeCount += RedTmlAction::TreeElementCount(*pNextNode);
+            RedTinyMLNode* pNextNode = dynamic_cast<RedTinyMLNode*>(pCurrElem);
+            currNodeCount += RedTinyMLAction::TreeElementCount(*pNextNode);
         }
         yIt.Next();
     }
@@ -190,6 +190,6 @@ unsigned RedTmlAction::TreeElementCount(RedTmlNode& node)
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-} // TinyML
+} // Core
 } // Red
 

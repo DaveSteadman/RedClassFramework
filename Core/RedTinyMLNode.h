@@ -1,5 +1,5 @@
 // -------------------------------------------------------------------------------------------------
-// This file is covered by: The MIT License (MIT) Copyright (c) 2016 David G. Steadman
+// This file is covered by: The MIT License (MIT) Copyright (c) 2022 David G. Steadman
 // -------------------------------------------------------------------------------------------------
 // Permission is hereby granted, free of charge, to any person obtaining a copy of this software and
 // associated documentation files (the "Software"), to deal in the Software without restriction,
@@ -19,27 +19,27 @@
 #pragma once
 
 #include "RedCoreNamespace.h"
-#include "RedTmlElement.h"
+#include "RedTinyMLElement.h"
 
 using namespace Red::Core;
 
 namespace Red {
-namespace TinyML {
+namespace Core {
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-class RedTmlNode : public RedTmlElement
+class RedTinyMLNode : public RedTinyMLElement
 {
 public:
 
-    typedef RedDoubleLinkedList<RedTmlElement*>         TmlNodeListType;
-    typedef RedDoubleLinkedListIterator<RedTmlElement*> TmlNodeListItType;
+    typedef RedDoubleLinkedList<RedTinyMLElement*>         TmlNodeListType;
+    typedef RedDoubleLinkedListIterator<RedTinyMLElement*> TmlNodeListItType;
 
     // Constructor
-    RedTmlNode(const RedString& NewName) : RedTmlElement(NewName) { nodelist.Init(); };
+    RedTinyMLNode(const RedString& NewName) : RedTinyMLElement(NewName) { nodelist.Init(); };
     
     // Destructor - delete all items in list
-    ~RedTmlNode();
+    ~RedTinyMLNode();
 
     // Basic Queries
     bool     IsNode(void)           const { return true; };
@@ -50,12 +50,12 @@ public:
     TmlNodeListItType NodeIterator(void) { return TmlNodeListItType(&nodelist); };
 
     // Create child elements within the tree and return a pointer to them
-    RedTmlNode*    CreateChildNode (const RedString& NewName);
-    RedTmlLeaf*    CreateChildLeaf (const RedString& NewName, const RedString& NewData);
+    RedTinyMLNode*    CreateChildNode (const RedString& NewName);
+    RedTinyMLLeaf*    CreateChildLeaf (const RedString& NewName, const RedString& NewData);
 
     // Add new child nodes without cloning
-    void AddChildNode (RedTmlNode* pNewNode) { nodelist.AddLast(dynamic_cast<RedTmlElement*>(pNewNode)); };
-    void AddChildLeaf (RedTmlLeaf* pNewLeaf) { nodelist.AddLast(dynamic_cast<RedTmlElement*>(pNewLeaf)); };
+    void AddChildNode (RedTinyMLNode* pNewNode) { nodelist.AddLast(dynamic_cast<RedTinyMLElement*>(pNewNode)); };
+    void AddChildLeaf (RedTinyMLLeaf* pNewLeaf) { nodelist.AddLast(dynamic_cast<RedTinyMLElement*>(pNewLeaf)); };
 
 private:
     TmlNodeListType nodelist;
@@ -63,7 +63,7 @@ private:
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-} // TinyML
+} // Core
 } // Red
 
 

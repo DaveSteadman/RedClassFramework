@@ -1,6 +1,6 @@
 
 // -------------------------------------------------------------------------------------------------
-// This file is covered by: The MIT License (MIT) Copyright (c) 2016 David G. Steadman
+// This file is covered by: The MIT License (MIT) Copyright (c) 2022 David G. Steadman
 // -------------------------------------------------------------------------------------------------
 // Permission is hereby granted, free of charge, to any person obtaining a copy of this software and
 // associated documentation files (the "Software"), to deal in the Software without restriction,
@@ -17,12 +17,12 @@
 // (http://opensource.org/licenses/MIT)
 // -------------------------------------------------------------------------------------------------
 
-#include "RedTmlFileIO.h"
+#include "RedTinyMLFileIO.h"
 
 using namespace Red::Core;
 
 namespace Red {
-namespace TinyML {
+namespace Core {
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -33,7 +33,7 @@ static const RedChar kCloseBracket = '}';
 // Top Level IO
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-RedResult RedTmlAction::CreateTmlFromFile(const RedString& filepath, RedTmlElement** newTmlElement)
+RedResult RedTinyMLFileIO::CreateTmlFromFile(const RedString& filepath, RedTinyMLElement** newTmlElement)
 {
     // Initialisation
     if (*newTmlElement != NULL)
@@ -52,7 +52,7 @@ RedResult RedTmlAction::CreateTmlFromFile(const RedString& filepath, RedTmlEleme
         return kResultFail;
 
     // Parse the file to create TML Element
-    *newTmlElement = RedTmlAction::ParseTinyML(iB);
+    *newTmlElement = RedTinyMLFileIO::ParseCore(iB);
     if (*newTmlElement == NULL)
         return kResultFail;
 
@@ -61,7 +61,7 @@ RedResult RedTmlAction::CreateTmlFromFile(const RedString& filepath, RedTmlEleme
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-RedResult RedTmlAction::CreateFileFromTml(const RedTmlElement* tmlElement, const RedString& filepath, const TESerialiseType writeStyle)
+RedResult RedTinyMLFileIO::CreateFileFromTml(const RedTinyMLElement* tmlElement, const RedString& filepath, const TESerialiseType writeStyle)
 {
     // Check node is not null
     if (tmlElement == NULL)
@@ -69,7 +69,7 @@ RedResult RedTmlAction::CreateFileFromTml(const RedTmlElement* tmlElement, const
 
     // Write the validated tml node to the buffer
     RedBufferOutput outBuf;
-    RedTmlAction::SerialiseTinyML(outBuf, tmlElement, writeStyle);
+    RedTinyMLFileIO::SerialiseCore(outBuf, tmlElement, writeStyle);
 
     // Final newline for asthetics
     outBuf.WriteNewLine();
@@ -83,18 +83,18 @@ RedResult RedTmlAction::CreateFileFromTml(const RedTmlElement* tmlElement, const
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-RedTmlElement* RedTmlAction::ParseTinyML(const RedString& inputStr)
+RedTinyMLElement* RedTinyMLFileIO::ParseCore(const RedString& inputStr)
 {
     RedBufferInput inputBuf(inputStr);
 
-    return RedTmlAction::ParseTinyML(inputBuf);
+    return RedTinyMLFileIO::ParseCore(inputBuf);
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-RedTmlElement* RedTmlAction::ParseTinyML(RedBufferInput& inputBuf)
+RedTinyMLElement* RedTinyMLFileIO::ParseCore(RedBufferInput& inputBuf)
 {
-    RedTmlElement* retTml = NULL;
+    RedTinyMLElement* retTml = NULL;
 
     if ( ReadTmlElement(inputBuf, &retTml) )
         return retTml;
@@ -104,7 +104,7 @@ RedTmlElement* RedTmlAction::ParseTinyML(RedBufferInput& inputBuf)
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-void RedTmlAction::SerialiseTinyML(RedBufferOutput& outputBuf, const RedTmlElement* topTmlNode, const TESerialiseType eMode)
+void RedTinyMLFileIO::SerialiseCore(RedBufferOutput& outputBuf, const RedTinyMLElement* topTmlNode, const TESerialiseType eMode)
 {
     outputBuf.Append(kOpenBracket);
 
@@ -115,19 +115,19 @@ void RedTmlAction::SerialiseTinyML(RedBufferOutput& outputBuf, const RedTmlEleme
 
     if (topTmlNode->IsNode())
     {
-        RedTmlNode* pCurrNode = (RedTmlNode*)topTmlNode;
+        RedTinyMLNode* pCurrNode = (RedTinyMLNode*)topTmlNode;
 
-        RedTmlNode::TmlNodeListItType ListIt = pCurrNode->NodeIterator();
+        RedTinyMLNode::TmlNodeListItType ListIt = pCurrNode->NodeIterator();
 
         if (eMode == eLinedIndentedContent) outputBuf.IncreaseIndent();
 
         while (!ListIt.IsDone())
         {
-            RedTmlElement* nextElem = ListIt.CurrentItem();
+            RedTinyMLElement* nextElem = ListIt.CurrentItem();
 
             if (eMode == eLinedIndentedContent) outputBuf.WriteNewLineWithIndent();
 
-            RedTmlAction::SerialiseTinyML(outputBuf, nextElem, eMode);
+            RedTinyMLFileIO::SerialiseCore(outputBuf, nextElem, eMode);
 
             ListIt.Next();
         }
@@ -140,7 +140,7 @@ void RedTmlAction::SerialiseTinyML(RedBufferOutput& outputBuf, const RedTmlEleme
     }
     else if (topTmlNode->IsLeaf())
     {
-        RedTmlLeaf* pCurrLeaf = (RedTmlLeaf*)topTmlNode;
+        RedTinyMLLeaf* pCurrLeaf = (RedTinyMLLeaf*)topTmlNode;
         if (pCurrLeaf->Data().NumLines() > 1)
         {
             outputBuf.IncreaseIndent();
@@ -161,17 +161,17 @@ void RedTmlAction::SerialiseTinyML(RedBufferOutput& outputBuf, const RedTmlEleme
 // Private
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-bool RedTmlAction::ReadName(RedBufferInput& inputBuf, RedString& outputName)
+bool RedTinyMLFileIO::ReadName(RedBufferInput& inputBuf, RedString& outputName)
 {
     RedChar ch;
     outputName.Empty();
 
-    // second bracket
+    // Second bracket
     ch = inputBuf.GetNextNonWhitespaceChar();
     if (ch != kOpenBracket) return false;
     if (ch.IsEOF())   return false;
 
-    // read name
+    // Read name
     ch = inputBuf.GetNextNonWhitespaceChar();
     if (ch.IsEOF()) return false;
     while (ch != kCloseBracket)
@@ -186,7 +186,7 @@ bool RedTmlAction::ReadName(RedBufferInput& inputBuf, RedString& outputName)
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-bool RedTmlAction::ReadContent(RedBufferInput& inputBuf, RedString& outputContent)
+bool RedTinyMLFileIO::ReadContent(RedBufferInput& inputBuf, RedString& outputContent)
 {
     bool EndOfContentFound = false;
     RedString levelChars;
@@ -203,10 +203,11 @@ bool RedTmlAction::ReadContent(RedBufferInput& inputBuf, RedString& outputConten
     {
         RedChar ch = inputBuf.GetNextChar();
 
-        // check for obvious invalid characters
+        // Check for obvious invalid characters
         if (ch.IsEOF()) return false;
 
-        // check for a quote level changes
+        // Check for a quote level changes, appending and deleting the latest quote character from a list.
+        // Offers some basic robustness against quotes in strings.
         if ((ch.IsQuote()) && (ch != levelChars.LastChar())) levelChars.Append(ch);
         if ((ch.IsQuote()) && (ch == levelChars.LastChar())) levelChars.DelLastChar();
 
@@ -222,13 +223,13 @@ bool RedTmlAction::ReadContent(RedBufferInput& inputBuf, RedString& outputConten
         }
     }
 
-    // default error return value
+    // Default error return value
     return false;
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-bool RedTmlAction::ReadTmlElement(RedBufferInput& inputBuf, RedTmlElement** newTml)
+bool RedTinyMLFileIO::ReadTmlElement(RedBufferInput& inputBuf, RedTinyMLElement** newTml)
 {
     RedChar   ch;
     RedString leafname;
@@ -239,14 +240,14 @@ bool RedTmlAction::ReadTmlElement(RedBufferInput& inputBuf, RedTmlElement** newT
     if (ch.IsEOF())         return false;
     
     // Read the name
-    if ( !RedTmlAction::ReadName(inputBuf, leafname) ) return false;
+    if ( !RedTinyMLFileIO::ReadName(inputBuf, leafname) ) return false;
 
     // If the next character is {, its a collection
     ch = inputBuf.PreviewNextNonWhitespaceChar();
 
     if (ch == kOpenBracket)
     {
-        RedTmlNode* newNode = new RedTmlNode(leafname);
+        RedTinyMLNode* newNode = new RedTinyMLNode(leafname);
 
         // Move onto the next non-whitespace character
         ch = inputBuf.PreviewNextNonWhitespaceChar();
@@ -261,9 +262,9 @@ bool RedTmlAction::ReadTmlElement(RedBufferInput& inputBuf, RedTmlElement** newT
         // Iterate across the Tml entries
         while (ch == kOpenBracket)
         {
-            RedTmlElement* newChildNode;
+            RedTinyMLElement* newChildNode;
             
-            if ( RedTmlAction::ReadTmlElement(inputBuf, &newChildNode) )
+            if (RedTinyMLFileIO::ReadTmlElement(inputBuf, &newChildNode) )
                 newNode->NodeList()->AddLast(newChildNode);
 
              ch = inputBuf.PreviewNextNonWhitespaceChar();
@@ -273,7 +274,7 @@ bool RedTmlAction::ReadTmlElement(RedBufferInput& inputBuf, RedTmlElement** newT
         ch = inputBuf.GetNextNonWhitespaceChar();
         if (ch == kCloseBracket)
         {
-            *newTml = dynamic_cast<RedTmlElement*>(newNode);
+            *newTml = dynamic_cast<RedTinyMLElement*>(newNode);
             return true;
         }
         else
@@ -285,10 +286,10 @@ bool RedTmlAction::ReadTmlElement(RedBufferInput& inputBuf, RedTmlElement** newT
     else
     {
         RedString   leafdata;
-        RedTmlLeaf* newLeaf;
+        RedTinyMLLeaf* newLeaf;
 
         // Attempt to read the content
-        if (!RedTmlAction::ReadContent(inputBuf, leafdata))
+        if (!RedTinyMLFileIO::ReadContent(inputBuf, leafdata))
             return false;
 
         // Read bracket to close statement
@@ -296,9 +297,9 @@ bool RedTmlAction::ReadTmlElement(RedBufferInput& inputBuf, RedTmlElement** newT
         if (ch == kCloseBracket)
         {
             // All read, construct returned object
-            newLeaf = new RedTmlLeaf(leafname, leafdata);
+            newLeaf = new RedTinyMLLeaf(leafname, leafdata);
 
-            *newTml = dynamic_cast<RedTmlElement*>(newLeaf);
+            *newTml = dynamic_cast<RedTinyMLElement*>(newLeaf);
             return true;
         }
     }
@@ -308,5 +309,5 @@ bool RedTmlAction::ReadTmlElement(RedBufferInput& inputBuf, RedTmlElement** newT
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-} // TinyML
+} // Core
 } // Red

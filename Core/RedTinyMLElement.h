@@ -1,5 +1,5 @@
 // -------------------------------------------------------------------------------------------------
-// This file is covered by: The MIT License (MIT) Copyright (c) 2016 David G. Steadman
+// This file is covered by: The MIT License (MIT) Copyright (c) 2022 David G. Steadman
 // -------------------------------------------------------------------------------------------------
 // Permission is hereby granted, free of charge, to any person obtaining a copy of this software and
 // associated documentation files (the "Software"), to deal in the Software without restriction,
@@ -18,41 +18,34 @@
 
 #pragma once
 
-#include "RedNumber.h"
+// Include Namespaces
+#include "RedString.h"
 
 using namespace Red::Core;
 
 namespace Red {
-namespace Geometry {
+namespace Core {
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-class RedRectSize
+/// A class defining the top-level class of any Core node. Contains the name, which all nodes
+/// have, and the default-false type functions.
+class RedTinyMLElement
 {
 public:
-    RedRectSize() { Init(); };
+    RedTinyMLElement(const RedString& initname) { SetName(initname); };
 
-    void Init(void)                                  { width=0; height=0; };
-    void Set(const RedRectSize& newsize)             { width=newsize.width; height=newsize.height; };
-    void Set(const RedNumber& w, const RedNumber& h) { width=w; height=h; };
+    RedString    Name(void) const { return name;  };
+    void         SetName(const RedString& initname) { name = initname; };
 
-    void Adjust(const RedNumber& dx, const RedNumber& dy) { width+=dx; height+=dy; };
+    virtual bool IsLeaf(void) const { return false; };
+    virtual bool IsNode(void) const { return false; };
 
-    void Scale(const RedNumber& f)     { width*=f; height*=f; };
-
-    const RedNumber Width(void)  const { return width;  };
-    const RedNumber Height(void) const { return height; };
-
-    void operator =(const RedRectSize& newsize) { Set(newsize); };
-    
-private: 
-    RedNumber width;
-    RedNumber height;
+private:
+    RedString name;
 };
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-} // Geometry
+} // Core
 } // Red
-
-

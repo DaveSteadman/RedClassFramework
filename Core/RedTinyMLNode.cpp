@@ -1,5 +1,5 @@
 // -------------------------------------------------------------------------------------------------
-// This file is covered by: The MIT License (MIT) Copyright (c) 2016 David G. Steadman
+// This file is covered by: The MIT License (MIT) Copyright (c) 2022 David G. Steadman
 // -------------------------------------------------------------------------------------------------
 // Permission is hereby granted, free of charge, to any person obtaining a copy of this software and
 // associated documentation files (the "Software"), to deal in the Software without restriction,
@@ -16,52 +16,51 @@
 // (http://opensource.org/licenses/MIT)
 // -------------------------------------------------------------------------------------------------
 
-#pragma once
-
 #include "RedCoreNamespace.h"
-#include "RedNumberRange.h"
+#include "RedTinyMLNode.h"
+#include "RedTinyMLElement.h"
 
 using namespace Red::Core;
 
 namespace Red {
-namespace Geometry {
+namespace Core {
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-static const RedNumberRange kDegreesLatitudeRange  = RedNumberRange(-90,   90, 0); // 0 = default range behaviour to crop
-static const RedNumberRange kDegreesLongitudeRange = RedNumberRange(-180, 180, kRedNumberRangeWrapOnUpper);
-
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-class RedLatLong
+RedTinyMLNode::~RedTinyMLNode()
 {
-public:
-      
-    // Constructors
-    RedLatLong(void)                                               { Init(); };
-    RedLatLong(const RedAngle& nlat, const RedAngle& nlon)         { Set(nlat, nlon); };
+    RedTinyMLNode* pCurrNode = 0;
+    
+    // Loop until the list is empty
+    while (!this->nodelist.IsEmpty())
+    {
+        this->nodelist.DelLast();
+    }
+}
+    
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-    // Basic accessors
-    void      Init(void)                                           { lat=0; lon=0; };
-    void      Set(const RedLatLong& p)                             { lat=p.lat; lon=p.lon; };
-    void      Set(const RedAngle& nlat, const RedAngle& nlon)      { lat=nlat; lon=nlon; };
-    RedAngle  Lat(void) const                                      { return lat; };
-    RedAngle  Lon(void) const                                      { return lon; };
+RedTinyMLNode* RedTinyMLNode::CreateChildNode(const RedString& NewName)
+{
+    RedTinyMLNode* pNewNode = new RedTinyMLNode(NewName);
+    this->nodelist.AddLast(dynamic_cast<RedTinyMLElement*>(pNewNode));
 
-    void      PlaceNumbersWithinRange(void) { kDegreesLatitudeRange.CropNumber(lat); kDegreesLongitudeRange.WrapNumber(lon); };
+    return pNewNode;
+}
 
-    RedString StringOfObject(void) const;
-    int       PopulateFromString(const RedString& str);
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-    void operator =(const RedLatLong& p) { Set(p); };
-    //operator==
+RedTinyMLLeaf* RedTinyMLNode::CreateChildLeaf(const RedString& NewName, const RedString& NewData)
+{
+    RedTinyMLLeaf *NewLeaf = new RedTinyMLLeaf(NewName, NewData);
 
-private:
-    RedAngle lat;
-    RedAngle lon;
-};
+    this->nodelist.AddLast(dynamic_cast<RedTinyMLElement*>(NewLeaf));
+    return NewLeaf;
+}
 
-} // Geometry
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+} // Core
 } // Red
 
 

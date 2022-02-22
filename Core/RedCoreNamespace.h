@@ -1,5 +1,5 @@
 // -------------------------------------------------------------------------------------------------
-// This file is covered by: The MIT License (MIT) Copyright (c) 2016 David G. Steadman
+// This file is covered by: The MIT License (MIT) Copyright (c) 2022 David G. Steadman
 // -------------------------------------------------------------------------------------------------
 // Permission is hereby granted, free of charge, to any person obtaining a copy of this software and
 // associated documentation files (the "Software"), to deal in the Software without restriction,
@@ -65,6 +65,13 @@
 #include "RedBufferInput.h"
 #include "RedBufferOutput.h"
 #include "RedIOHandler.h"
+
+// TimyML
+#include "RedTinyMLElement.h"
+#include "RedTinyMLLeaf.h"
+#include "RedTinyMLNode.h"
+#include "RedTinyMLAction.h"
+#include "RedTinyMLFileIO.h"
 
 // Event Logging
 #include "RedResult.h"
