@@ -39,9 +39,10 @@ class RedTinyMLFileIO
 {
 public:
 
-    // IO
+    // File IO (check base dir in file-io class)
     static RedResult          CreateTmlFromFile(const RedString& filepath, RedTinyMLElement** newTmlElement);
     static RedResult          CreateFileFromTml(const RedTinyMLElement* tmlElement, const RedString& filepath, const TESerialiseType writeStyle);
+
     static RedTinyMLElement*  ParseCore(const RedString& inputStr);
     static RedTinyMLElement*  ParseCore(RedBufferInput& inputBuf);
     static void               SerialiseCore(RedBufferOutput& outputBuf, const RedTinyMLElement* topTmlNode, const TESerialiseType eMode);
