@@ -8,5 +8,8 @@ int main()
 {
 	Red::Core::RedString cTestString = "Red Framework";
 
+	Red::Core::RedChar cTestCh = cTestString[2];
+	cTestString.SetCharAtIndex(2, 'e');
+
 	std::cout << "Hello " << cTestString.TextPtr() << "!\n";
 }

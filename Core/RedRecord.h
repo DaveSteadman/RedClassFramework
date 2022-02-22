@@ -49,7 +49,6 @@ public:
     void        Add         (const char* strNewAttribName,    RedType* pNewAttrib)       { pAttribList->Add(RedString(strNewAttribName), pNewAttrib); };
     RedType*    CreateAndAdd(const RedString& cNewAttribName, const RedDataType& NewAttribType);
     RedType*    CreateAndAdd(const char* strNewAttribName,    const RedDataType& NewAttribType);
-    RedType*    CreateObjectOfType(const RedDataType& NewAttribType);
 
     // Locate
     bool        Find(const RedString& cAttribName, RedType*& pData)       { return pAttribList->Find(cAttribName, pData); };
@@ -64,6 +63,8 @@ public:
     void operator =(const RedRecord& cNewVal);
 
 private:
+
+    RedType* CreateObjectOfType(const RedDataType& NewAttribType);
 
     typedef RedMapList<RedString, RedType*>           RedStringDataMap;
     typedef RedMapListIterator<RedString, RedType*>   RedStringDataMapIterator;

@@ -50,7 +50,7 @@ public:
     RedVariant(const double val):pData(NULL)            { SetValue(RedNumber(val)); };
     RedVariant(const char* val):pData(NULL)             { SetValue(RedString(val)); };
     RedVariant(const bool val):pData(NULL)              { SetValue(RedBoolean(val)); };
-    ~RedVariant(void)                                      { Init(); };
+    ~RedVariant(void)                                   { Init(); };
 
     // Inherited: RedType
     void                Init(void);

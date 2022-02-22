@@ -29,13 +29,13 @@ namespace Core {
 // Class Operations
 // =================================================================================================
 
-/// Query operation, determining if the int number is zero, or the float number is within kFloatCompTollerance of zero.
+/// Query operation, determining if the int number is zero, or the float number is within a tollerance of zero.
 bool RedNumber::IsZero(void) const
 {
     if (eNumType == eInt)
         return (iIntVal == 0);
     else
-        return ( fabs(dblFloatVal) < kFloatCompTollerance );
+        return ( fabs(dblFloatVal) < kDefaultFloatCompareTollerance);
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -63,8 +63,8 @@ bool RedNumber::IsEqualTo(const RedNumber& CheckVal) const
         const double dVal = DoubleValue();
 
         // Add / Subtract the tollerance to create the bounds
-        const double dUpperBounds = CheckVal.DoubleValue() + kFloatCompTollerance;
-        const double dLowerBounds = CheckVal.DoubleValue() - kFloatCompTollerance;
+        const double dUpperBounds = CheckVal.DoubleValue() + kDefaultFloatCompareTollerance;
+        const double dLowerBounds = CheckVal.DoubleValue() - kDefaultFloatCompareTollerance;
 
         if ( (dLowerBounds < dVal) && (dVal < dUpperBounds) )
             return true;

@@ -18,8 +18,6 @@
 
 #include "RedNumberRange.h"
 
-#include <time.h>
-
 namespace Red {
 namespace Core {
 
@@ -93,7 +91,7 @@ const RedNumber RedNumberRange::RangeMax(void) const
 {
     // If we have a floating point number, wrapping on the upper limit, we need to reduce it
     if (iIsWrapOnUpperLimit && !iIsIntegerOnly)
-        return (cHigh - kFloatCompTollerance);
+        return (cHigh - kDefaultFloatCompareTollerance);
 
     return cHigh;
 };

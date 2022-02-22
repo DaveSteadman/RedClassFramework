@@ -67,21 +67,25 @@ public:
     void           Append(const char Ch);
     void           Append(const char* Str);
     void           Append(const RedChar& Ch)    { Append(Ch.Char()); };
-    void           Append(const RedString& Str) { Append(Str.TextPtr()); };    
+    void           Append(const RedString& Str) { Append(Str.TextPtr()); };
+
     void           InsertAtIndex(const unsigned Index, const char  Ch);
     void           InsertAtIndex(const unsigned Index, const char* Str);
     void           InsertAtIndex(const unsigned Index, const RedString& Str) { InsertAtIndex(Index, Str.TextPtr()); };
 
     char           CharAtIndex(const unsigned Index) const;
     RedChar        CharObjAtIndex(const unsigned Index) const { return RedChar( CharAtIndex(Index) ); };
-    char           FirstChar(void)                      const { return CharAtIndex(FirstContentIndex()); };
-    RedChar        FirstCharObj(void)                   const { return RedChar( CharAtIndex(FirstContentIndex()) ); };
-    char           LastChar(void)                       const { if (ContentSize() == 0) return '\0'; else return CharAtIndex(LastContentIndex()); };
-    RedChar        LastCharObj(void)                    const { return RedChar( CharAtIndex(LastContentIndex()) ); };
+	void           SetCharAtIndex(const unsigned Index, const char Ch);
+	void           SetCharObjAtIndex(const unsigned Index, const RedChar cCh) { SetCharAtIndex(Index, cCh.Char()); };
 
-    void           DeleteAtIndex(const unsigned Index, const unsigned Count);
-    void           DelFirstChar(void) { DeleteAtIndex(FirstContentIndex(), 1); };
-    void           DelLastChar(void)  { DeleteAtIndex(LastContentIndex(),  1); };
+	char           FirstChar(void)      const { return CharAtIndex(FirstContentIndex()); };
+    RedChar        FirstCharObj(void)   const { return RedChar( CharAtIndex(FirstContentIndex()) ); };
+    char           LastChar(void)       const { if (ContentSize() == 0) return '\0'; else return CharAtIndex(LastContentIndex()); };
+    RedChar        LastCharObj(void)    const { return RedChar( CharAtIndex(LastContentIndex()) ); };
+
+    void           DelCharsAtIndex(const unsigned Index, const unsigned Count);
+    void           DelFirstChar(void) { DelCharsAtIndex(FirstContentIndex(), 1); };
+    void           DelLastChar(void)  { DelCharsAtIndex(LastContentIndex(),  1); };
 
     RedString      SubStr(const unsigned StartIndex, const unsigned Count) const;
     bool           IsCharInString(char ch) const;
@@ -108,7 +112,7 @@ public:
     void operator +=(const char* chStr)     { Append(chStr); };
     void operator +=(const RedString& Str)  { Append(Str.TextPtr()); };
 
-    char operator [](const unsigned Index) const { return CharAtIndex(FirstContentIndex()); };
+    char operator [](const unsigned Index) const { return CharAtIndex(Index); };
 
 private:
 

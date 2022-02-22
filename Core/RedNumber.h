@@ -22,7 +22,6 @@
 #include "RedSmartPtr.h"
 #include "RedString.h"
 #include "RedChar.h"
-//#include "ConversionConstants.h"
 
 namespace Red {
 namespace Core {
@@ -30,7 +29,7 @@ namespace Core {
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 /// Default tollerance on floating point equality statements
-static const double kFloatCompTollerance = 0.0000001;
+static const double kDefaultFloatCompareTollerance = 0.0000001;
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -119,7 +118,7 @@ typedef RedSmartPtr<RedNumber> RedNumberSmartPtr;
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 static const RedNumber kNumberOne                 = RedNumber(1);
-static const RedNumber kNumberFloatCompTollerance = RedNumber(kFloatCompTollerance);
+static const RedNumber kNumberFloatCompTollerance = RedNumber(kDefaultFloatCompareTollerance);
 static const RedNumber kNumberZero                = RedNumber(0);
 static const RedNumber kNumberMinusOne            = RedNumber(-1);
 

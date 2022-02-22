@@ -244,7 +244,7 @@ void RedString::Append(const char* Str)
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-void RedString::DeleteAtIndex(const unsigned Index, const unsigned Count)
+void RedString::DelCharsAtIndex(const unsigned Index, const unsigned Count)
 {
     if (Index > LastContentIndex())
         return;
@@ -345,6 +345,16 @@ void RedString::InsertAtIndex(const unsigned Index, const char* Str)
 
     // Loop to clear the rest of the string
     InitialiseNonContentChars();
+}
+
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+void RedString::SetCharAtIndex(const unsigned Index, const char Ch)
+{
+    if (Index > contentsize)
+        return;
+
+    data[Index] = Ch;
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
