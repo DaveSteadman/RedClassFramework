@@ -36,12 +36,14 @@ class RedList : public RedType
 public:
 
     RedList(void);
-    ~RedList(void) { delete pList; };
+	~RedList(void) { cList.DelAll(); };
 
     // Inherited: RedType
     RedDataType Type(void) const { return RedDataType::List(); };
     RedType*          Clone(void) const;
-    void              Init(void) { pAttribList->DelAll(); };
+    void              Init(void) { cList.DelAll(); };
+
+    void              Init(unsigned uNumItems, RedDataType eItemType);
 
     // Create And Add
     void        CloneAndAdd (const RedString& cNewAttribName, const RedType* pNewAttrib) { pAttribList->Add(cNewAttribName,              pNewAttrib->Clone()); };
@@ -53,9 +55,9 @@ public:
 
 
     // Remove
-    void        DelAll(void)                                              { pList->DelAll(); };
+    void        DelAll(void) { cList.DelAll(); };
 
-    unsigned    NumItems(void) const { return pList->NumItems(); };
+    unsigned    NumItems(void) const { return cList.NumItems(); };
 
     // Operators
     void operator =(const RedList& cNewVal);
@@ -68,7 +70,7 @@ private:
     typedef RedDoubleLinkedList<RedType*>   RedTypeListIterator;
 
     // Attributes
-	RedTypeList* pList;
+	RedTypeList cList;
 };
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
