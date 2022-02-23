@@ -33,27 +33,29 @@ namespace Core {
 
 RedList::RedList(void)
 {
-    pAttribList = new RedStringDataMap();
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 // Inhertied
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
+
 RedType* RedList::Clone(void) const 
 {
     RedList* pNewObj = new RedList();
 
     // delete the attrib list, replacing it with a cloned one.
-    if (pNewObj->pAttribList)
+    if (pNewObj->pList)
     {
-        delete pNewObj->pAttribList;
-        pNewObj->pAttribList = NULL;
+        delete pNewObj->pList;
+        pNewObj->pList = NULL;
     }
-    pNewObj->pAttribList = pAttribList->Clone();
+    pNewObj->pList = pList->Clone();
 
     return (RedType*)pNewObj;
 }
+
+/*
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -105,6 +107,9 @@ void RedList::operator =(const RedList& cNewVal)
     delete pAttribList;
     pAttribList = cNewVal.pAttribList->Clone();
 }
+
+
+*/ 
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 

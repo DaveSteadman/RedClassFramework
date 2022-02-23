@@ -399,7 +399,6 @@ RedResult RedTestCore::TestString(void)
 
         x2 = x1 + c1;
         if (x2 != "1") return kResultFail;
-
     }
 
     return kResultSuccess;

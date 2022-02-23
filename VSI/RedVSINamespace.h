@@ -48,7 +48,6 @@
 #include "RedVSIErrorCodes.h"
 #include "RedVSILangElement.h"
 #include "RedVSIIOElement.h"
-#include "RedVSIObject.h"
 #include "RedVSITokenType.h"
 
 // Interface

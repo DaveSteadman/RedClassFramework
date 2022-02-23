@@ -36,28 +36,28 @@ class RedList : public RedType
 public:
 
     RedList(void);
-	~RedList(void) { cList.DelAll(); };
+	~RedList(void) { pList->DelAll(); };
 
     // Inherited: RedType
     RedDataType Type(void) const { return RedDataType::List(); };
     RedType*          Clone(void) const;
-    void              Init(void) { cList.DelAll(); };
+    void              Init(void) { pList->DelAll(); };
 
-    void              Init(unsigned uNumItems, RedDataType eItemType);
+	// void              Init(unsigned uNumItems, RedDataType eItemType);
 
     // Create And Add
-    void        CloneAndAdd (const RedString& cNewAttribName, const RedType* pNewAttrib) { pAttribList->Add(cNewAttribName,              pNewAttrib->Clone()); };
-    void        CloneAndAdd (const char* strNewAttribName,    const RedType* pNewAttrib) { pAttribList->Add(RedString(strNewAttribName), pNewAttrib->Clone()); };
-    void        Add         (const RedString& cNewAttribName, RedType* pNewAttrib)       { pAttribList->Add(cNewAttribName,              pNewAttrib); };
-    void        Add         (const char* strNewAttribName,    RedType* pNewAttrib)       { pAttribList->Add(RedString(strNewAttribName), pNewAttrib); };
-    RedType*    CreateAndAdd(const RedString& cNewAttribName, const RedDataType& NewAttribType);
-    RedType*    CreateAndAdd(const char* strNewAttribName,    const RedDataType& NewAttribType);
+    // void        CloneAndAdd (const RedString& cNewAttribName, const RedType* pNewAttrib) { pAttribList->Add(cNewAttribName,              pNewAttrib->Clone()); };
+	// void        CloneAndAdd (const char* strNewAttribName,    const RedType* pNewAttrib) { pAttribList->Add(RedString(strNewAttribName), pNewAttrib->Clone()); };
+	// void        Add         (const RedString& cNewAttribName, RedType* pNewAttrib)       { pAttribList->Add(cNewAttribName,              pNewAttrib); };
+	// void        Add         (const char* strNewAttribName,    RedType* pNewAttrib)       { pAttribList->Add(RedString(strNewAttribName), pNewAttrib); };
+	// RedType*    CreateAndAdd(const RedString& cNewAttribName, const RedDataType& NewAttribType);
+	// RedType*    CreateAndAdd(const char* strNewAttribName,    const RedDataType& NewAttribType);
 
 
     // Remove
-    void        DelAll(void) { cList.DelAll(); };
+    void        DelAll(void) { pList->DelAll(); };
 
-    unsigned    NumItems(void) const { return cList.NumItems(); };
+    unsigned    NumItems(void) const { return pList->NumItems(); };
 
     // Operators
     void operator =(const RedList& cNewVal);
@@ -70,7 +70,7 @@ private:
     typedef RedDoubleLinkedList<RedType*>   RedTypeListIterator;
 
     // Attributes
-	RedTypeList cList;
+	RedTypeList* pList;
 };
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

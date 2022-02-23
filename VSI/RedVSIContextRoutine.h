@@ -23,7 +23,6 @@
 #include "RedVSICollections.h"
 #include "RedVSICmdInterface.h"
 #include "RedVSIContextInterface.h"
-#include "RedVSIObject.h"
 #include "RedVSILangElement.h"
 #include "RedVSIRoutineCallInterface.h"
 #include "RedVSIContextThread.h"

@@ -41,7 +41,7 @@ public:
     // Access Items
     bool     FindFirst(Element& Elem) const;
     bool     FindLast(Element& Elem) const;
-    bool     FindElementAtIndex(const unsigned iElemIndex, Element& Elem) const;
+    bool     FindElementAtIndex(unsigned iElemIndex, Element& Elem) const;
     unsigned NumItems(void)   const { return iNumItems; };
     bool     IsEmpty(void)    const { return (iNumItems==0); };
     unsigned FirstIndex(void) const;
@@ -214,7 +214,7 @@ bool RedDoubleLinkedList<Element>::InsertAfter(const unsigned iElemIndex, Elemen
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 template <class Element>
-bool RedDoubleLinkedList<Element>::FindElementAtIndex(const unsigned iElemIndex, Element& Elem) const
+bool RedDoubleLinkedList<Element>::FindElementAtIndex(unsigned iElemIndex, Element& Elem) const
 {
     TListElement* pGetElem = 0;
 
@@ -408,7 +408,7 @@ RedDoubleLinkedList<Element>* RedDoubleLinkedList<Element>::Clone(void)
     Element cCurrElem;
     for (unsigned i=0; i<iNumItems; i++)
     {
-        if (Find(i, &cCurrElem))
+        if (FindElementAtIndex(i, &cCurrElem))
             pNewList->AddLast(cCurrElem);
     }
 
