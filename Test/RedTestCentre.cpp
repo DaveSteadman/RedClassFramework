@@ -19,7 +19,6 @@
 #include "RedTestCentre.h"
 
 #include "RedTestCore.h"
-#include "RedTestGeometry.h"
 #include "RedTestTml.h"
 #include "RedTestVSI.h"
 
@@ -32,7 +31,6 @@ void RedTestCentre::RunAllUnitTests(RedLog& log)
 {
     if (!log.ContainsError()) RedTestCore::RunUnitTest(log);
     if (!log.ContainsError()) RedTestTml::RunUnitTest(log);
-    if (!log.ContainsError()) RedTestGeometry::RunUnitTest(log);
     if (!log.ContainsError()) RedTestVSI::RunUnitTest(log);
 }
 

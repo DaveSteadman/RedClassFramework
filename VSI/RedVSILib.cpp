@@ -17,10 +17,10 @@
 // -------------------------------------------------------------------------------------------------
 
 #include "RedVSILib.h"
-#include "RedTmlNamespace.h"
+#include "RedCoreNamespace.h"
 #include "RedVSILibFactory.h"
 
-using namespace Red::TinyML;
+using namespace Red::Core;
 
 namespace Red {
 namespace VSI {
@@ -78,12 +78,12 @@ RedVSILibClass* RedVSILib::FindClass(const RedString& cClassName)
         if (RedIOHandler::FileExists(fullpath))
         {
             // Load the class
-            RedTmlElement* newX = NULL;
-            if (RedTmlAction::CreateTmlFromFile(fullpath, &newX) != kResultSuccess)
+            RedTinyMLElement* newX = NULL;
+            if (RedTinyMLFileIO::CreateTmlFromFile(fullpath, &newX) != kResultSuccess)
                 return NULL;
 
             RedVSILibFactory vsiCodeLibFactory(this);
-            RedTmlNode*    tmlTreeNode    =  dynamic_cast<RedTmlNode*>(newX);
+            RedTinyMLNode*    tmlTreeNode    =  dynamic_cast<RedTinyMLNode*>(newX);
 
             RedLog log;
             vsiCodeLibFactory.InputTmlClass(tmlTreeNode, log);

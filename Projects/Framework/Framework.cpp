@@ -3,9 +3,19 @@
 
 #include <iostream>
 #include "RedCoreNamespace.h"
+#include "RedVSINamespace.h"
+#include "RedTestCentre.h"
 
 int main()
 {
+    // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+    Red::Core::RedLog cLog;
+    Red::Test::RedTestCentre::RunAllUnitTests(cLog);
+    std::cout << cLog.AllLoggedText().TextPtr();
+
+    // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
     Red::Core::RedString cTestString = "Red Framework";
 
     Red::Core::RedChar cTestCh = cTestString[2];

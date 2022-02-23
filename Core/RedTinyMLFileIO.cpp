@@ -52,7 +52,7 @@ RedResult RedTinyMLFileIO::CreateTmlFromFile(const RedString& filepath, RedTinyM
         return kResultFail;
 
     // Parse the file to create TML Element
-    *newTmlElement = RedTinyMLFileIO::ParseCore(iB);
+    *newTmlElement = RedTinyMLFileIO::ParseTinyML(iB);
     if (*newTmlElement == NULL)
         return kResultFail;
 
@@ -83,16 +83,16 @@ RedResult RedTinyMLFileIO::CreateFileFromTml(const RedTinyMLElement* tmlElement,
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-RedTinyMLElement* RedTinyMLFileIO::ParseCore(const RedString& inputStr)
+RedTinyMLElement* RedTinyMLFileIO::ParseTinyML(const RedString& inputStr)
 {
     RedBufferInput inputBuf(inputStr);
 
-    return RedTinyMLFileIO::ParseCore(inputBuf);
+    return RedTinyMLFileIO::ParseTinyML(inputBuf);
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-RedTinyMLElement* RedTinyMLFileIO::ParseCore(RedBufferInput& inputBuf)
+RedTinyMLElement* RedTinyMLFileIO::ParseTinyML(RedBufferInput& inputBuf)
 {
     RedTinyMLElement* retTml = NULL;
 

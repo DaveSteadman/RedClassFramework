@@ -17,7 +17,6 @@
 // -------------------------------------------------------------------------------------------------
 
 #include "RedCoreNamespace.h"
-#include "RedTmlNamespace.h"
 #include "RedCoreConsts.h"
 
 #include <stdio.h>
@@ -32,7 +31,6 @@
 #include "RedVSICmdSerialiser.h"
 
 using namespace Red::Core;
-using namespace Red::TinyML;
 
 namespace Red {
 namespace VSI {
@@ -48,7 +46,7 @@ RedVSILibFactory::RedVSILibFactory(RedVSILib* pNewLib)
 // Tml
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-void RedVSILibFactory::InputTmlClass(RedTmlElement* pTopTmlNode, RedLog& cAnalysis)
+void RedVSILibFactory::InputTmlClass(RedTinyMLElement* pTopTmlNode, RedLog& cAnalysis)
 {
     if ((pTopTmlNode == NULL) || (!pTopTmlNode->IsNode()))
     {
@@ -64,23 +62,23 @@ void RedVSILibFactory::InputTmlClass(RedTmlElement* pTopTmlNode, RedLog& cAnalys
 
     RedVSILibClass* pNewClass = new RedVSILibClass;
 
-    RedTmlNode* pTmlNode = (RedTmlNode*)pTopTmlNode;
+    RedTinyMLNode* pTmlNode = (RedTinyMLNode*)pTopTmlNode;
 
 
-    RedTmlLeaf* pName = RedTmlAction::NodeFirstNamedLeaf(*pTmlNode, kVSIIOElementKeywordName);
+    RedTinyMLLeaf* pName = RedTinyMLAction::NodeFirstNamedLeaf(*pTmlNode, kVSIIOElementKeywordName);
     RedString x(pName->Data());
     pNewClass->SetClassName(x);
 
-    Red::TinyML::RedTmlNode::TmlNodeListItType routineIt = pTmlNode->NodeIterator();
+    Red::Core::RedTinyMLNode::TmlNodeListItType routineIt = pTmlNode->NodeIterator();
 
     routineIt.First();
     while (!routineIt.IsDone())
     {
-        RedTmlElement* pCurrElem = routineIt.CurrentItem();
+        RedTinyMLElement* pCurrElem = routineIt.CurrentItem();
 
         if (pCurrElem->IsNode())
         {
-            RedTmlNode* pCurrNode = dynamic_cast<RedTmlNode*>(pCurrElem);
+            RedTinyMLNode* pCurrNode = dynamic_cast<RedTinyMLNode*>(pCurrElem);
             if (pCurrNode->Name() == kVSIIOElementKeywordRoutine)
             {
                 RedVSILibRoutine* newRoutine = InputTmlRoutine(*pCurrNode, cAnalysis);
@@ -101,7 +99,7 @@ void RedVSILibFactory::InputTmlClass(RedTmlElement* pTopTmlNode, RedLog& cAnalys
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 // Add a Tml-Class to library
-RedVSILibRoutine* RedVSILibFactory::InputTmlRoutine(RedTmlNode& cRoutineNode, RedLog& cAnalysis)
+RedVSILibRoutine* RedVSILibFactory::InputTmlRoutine(RedTinyMLNode& cRoutineNode, RedLog& cAnalysis)
 {
     if (cRoutineNode.Name() != kVSIIOElementKeywordRoutine)
     {
@@ -112,24 +110,24 @@ RedVSILibRoutine* RedVSILibFactory::InputTmlRoutine(RedTmlNode& cRoutineNode, Re
     RedVSILibRoutine* newRoutine = new RedVSILibRoutine;
 
     // name
-    RedTmlLeaf* pName = RedTmlAction::NodeFirstNamedLeaf(cRoutineNode, kVSIIOElementKeywordName);
+    RedTinyMLLeaf* pName = RedTinyMLAction::NodeFirstNamedLeaf(cRoutineNode, kVSIIOElementKeywordName);
     if (pName == NULL)
         cAnalysis.AddErrorEvent("Lib Factory: InputTmlRoutine: Routine has no name");
     else
         newRoutine->SetName(pName->Data());
 
     // params
-    RedTmlNode* pParams = RedTmlAction::NodeFirstNamedNode(cRoutineNode, kVSIIOElementKeywordParams);
+    RedTinyMLNode* pParams = RedTinyMLAction::NodeFirstNamedNode(cRoutineNode, kVSIIOElementKeywordParams);
     if (pParams != NULL)
     {
-        RedTmlNode::TmlNodeListItType paramIt = pParams->NodeIterator();
+        RedTinyMLNode::TmlNodeListItType paramIt = pParams->NodeIterator();
         paramIt.First();
         while (!paramIt.IsDone())
         {
-            RedTmlElement* pElem = paramIt.CurrentItem();
+            RedTinyMLElement* pElem = paramIt.CurrentItem();
             if (pElem->IsLeaf())
             {
-                RedTmlLeaf* pLeaf = (RedTmlLeaf*)pElem;
+                RedTinyMLLeaf* pLeaf = (RedTinyMLLeaf*)pElem;
                 RedString paramName(pLeaf->Name());
                 RedString paramTypeStr(pLeaf->Data());
 
@@ -146,7 +144,7 @@ RedVSILibRoutine* RedVSILibFactory::InputTmlRoutine(RedTmlNode& cRoutineNode, Re
     }
 
     // code
-    RedTmlLeaf* pTmlCode = RedTmlAction::NodeFirstNamedLeaf(cRoutineNode, kVSIIOElementKeywordCode);
+    RedTinyMLLeaf* pTmlCode = RedTinyMLAction::NodeFirstNamedLeaf(cRoutineNode, kVSIIOElementKeywordCode);
     if (pTmlCode == NULL)
         cAnalysis.AddErrorEvent("Lib Factory: InputTmlRoutine: Routine has no code");
     else
@@ -182,14 +180,14 @@ RedVSILibRoutine* RedVSILibFactory::InputTmlRoutine(RedTmlNode& cRoutineNode, Re
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-RedTmlElement* RedVSILibFactory::OutputTmlClass(const RedString& classname)
+RedTinyMLElement* RedVSILibFactory::OutputTmlClass(const RedString& classname)
 {
     // Find the class
     RedVSILibClass* pClass = pLib->FindClass(classname);
     if (pClass == NULL) return NULL;
 
     // Create the class node
-    RedTmlNode* pClassTml = new RedTmlNode("class");
+    RedTinyMLNode* pClassTml = new RedTinyMLNode("class");
     pClassTml->CreateChildLeaf("name", pClass->ClassName());
 
     // Iterate across each routine in the class
@@ -207,13 +205,13 @@ RedTmlElement* RedVSILibFactory::OutputTmlClass(const RedString& classname)
         pCurrRtn->GetDetails(cOutName, cOutParamList, pOutCode);
 
         // Create and name the routine node
-        RedTmlNode* pRoutine = new RedTmlNode("routine");
+        RedTinyMLNode* pRoutine = new RedTinyMLNode("routine");
         pRoutine->CreateChildLeaf("name", cOutName);
 
         // O=convert the params if we have any
         if (cOutParamList.NumItems() > 0)
         {
-            RedTmlNode* pParamNode = pRoutine->CreateChildNode("params");
+            RedTinyMLNode* pParamNode = pRoutine->CreateChildNode("params");
 
             RedVSIStringLangElementMapIterator paramIt(&cOutParamList);
             paramIt.First();
@@ -256,7 +254,7 @@ RedTmlElement* RedVSILibFactory::OutputTmlClass(const RedString& classname)
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-RedTmlElement* RedVSILibFactory::OutputTmlRoutine(const RedString& classname, const RedString& routinename)
+RedTinyMLElement* RedVSILibFactory::OutputTmlRoutine(const RedString& classname, const RedString& routinename)
 {
     RedVSILibClass* pClass = pLib->FindClass(classname);
 
@@ -279,7 +277,7 @@ RedTmlElement* RedVSILibFactory::OutputTmlRoutine(const RedString& classname, co
             RedVSICmdSerialiser::SerialiseCommandChain(cTokenBuffer, pOutCode);
 
             // turn code tokens into a string
-            RedTmlNode* pRoutine = new RedTmlNode("routine");
+            RedTinyMLNode* pRoutine = new RedTinyMLNode("routine");
             pRoutine->CreateChildLeaf("name", cOutName);
         }
 

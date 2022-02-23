@@ -16,15 +16,13 @@
 // (http://opensource.org/licenses/MIT)
 // -------------------------------------------------------------------------------------------------
 
-#include "RedVSICmdLoadCode.h"
 #include "RedCoreNamespace.h"
-#include "RedTmlNamespace.h"
-#include "RedVSILibFactory.h"
 
+#include "RedVSICmdLoadCode.h"
+#include "RedVSILibFactory.h"
 #include "RedVSIErrorCodes.h"
 
 using namespace Red::Core;
-using namespace Red::TinyML;
 
 namespace Red {
 namespace VSI {
@@ -75,8 +73,8 @@ void RedVSICmdLoadCode::Execute(RedVSIContextInterface* pContext)
     {
         RedVSILibFactory libFact(pCodeLib);
         
-        RedTmlElement* pTopTmlNode = NULL;
-        RedResult fileLoadResult = RedTmlAction::CreateTmlFromFile(filePath, &pTopTmlNode);
+        RedTinyMLElement* pTopTmlNode = NULL;
+        RedResult fileLoadResult = RedTinyMLFileIO::CreateTmlFromFile(filePath, &pTopTmlNode);
         
         // If we've created a TML structure, we're now responsible for deleting it.
         if (pTopTmlNode != NULL)

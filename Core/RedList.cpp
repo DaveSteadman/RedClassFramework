@@ -16,96 +16,101 @@
 // (http://opensource.org/licenses/MIT)
 // -------------------------------------------------------------------------------------------------
 
-#include "RedNumberRange.h"
+#include "RedList.h"
+
+#include "RedBoolean.h"
+#include "RedChar.h"
+#include "RedNumber.h"
+#include "RedString.h"
+#include "RedVariant.h"
 
 namespace Red {
 namespace Core {
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+// Construction
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-void RedNumberRange::SetBehaviour(const int b)
+RedList::RedList(void)
 {
-    if (b & kRedNumberRangeIntOnly)
-        iIsIntegerOnly = 1;
-    else
-        iIsIntegerOnly = 0;
-
-    if (b & kRedNumberRangeWrapOnUpper)
-        iIsWrapOnUpperLimit = 1;
-    else
-        iIsWrapOnUpperLimit = 0;
+    pAttribList = new RedStringDataMap();
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-const bool RedNumberRange::IsInRange(const RedNumber& d) const 
-{
-    if ((cLow <= d) && (d <= cHigh))
-        return true;
-
-    return false;
-}
-
+// Inhertied
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-const RedNumber RedNumberRange::FractionThroughRange(const RedNumber& d) const
+RedType* RedList::Clone(void) const 
 {
-    RedNumber base(d - cLow);
-    RedNumber r(cHigh - cLow);
-    return base / r;
-}
+    RedList* pNewObj = new RedList();
 
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-void RedNumberRange::WrapNumber(RedNumber& n) const
-{
-    if ((cLow < n) || (n < cHigh))
+    // delete the attrib list, replacing it with a cloned one.
+    if (pNewObj->pAttribList)
     {
-        RedNumber range         = cHigh - cLow;
-        RedNumber ZeroAdjustedN = n - cLow;
-        RedNumber wrapped       = ZeroAdjustedN.DivisionRemainder(range);
-
-        wrapped += cLow;
-        n = wrapped;
+        delete pNewObj->pAttribList;
+        pNewObj->pAttribList = NULL;
     }
+    pNewObj->pAttribList = pAttribList->Clone();
+
+    return (RedType*)pNewObj;
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-void RedNumberRange::CropNumber(RedNumber& n) const
+RedType* RedList::CreateAndAdd(const RedString& cNewAttribName, const RedDataType& NewAttribType)
 {
-    if (n > cHigh) n = cHigh;
-    if (n < cLow)  n = cLow;
+    RedType* retData = CreateObjectOfType(NewAttribType);
+
+    pAttribList->Add(cNewAttribName, retData);
+
+    return retData;
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-const RedNumber RedNumberRange::RangeMin(void) const
+RedType* RedList::CreateAndAdd(const char* strNewAttribName, const RedDataType& NewAttribType)
 {
-    return cLow;
-};
+    RedType* retData = CreateObjectOfType(NewAttribType);
+
+    pAttribList->Add(RedString(strNewAttribName), retData);
+
+    return retData;
+}
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-const RedNumber RedNumberRange::RangeMax(void) const
+RedType* RedList::CreateObjectOfType(const RedDataType& NewAttribType)
 {
-    // If we have a floating point number, wrapping on the upper limit, we need to reduce it
-    if (iIsWrapOnUpperLimit && !iIsIntegerOnly)
-        return (cHigh - kDefaultFloatCompareTollerance);
+    RedType* retData = NULL;
 
-    return cHigh;
-};
+    if      (NewAttribType.IsBool())    retData = new RedBoolean;
+    else if (NewAttribType.IsChar())    retData = new RedChar;
+    //else if (NewAttribType.IsList())    retData = new RedL;
+    else if (NewAttribType.IsNum())     retData = new RedNumber;
+    else if (NewAttribType.IsRecord())  retData = new RedList;
+    else if (NewAttribType.IsStr())     retData = new RedString;
+    else if (NewAttribType.IsVariant()) retData = new RedVariant;
+
+    return retData;
+}
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+// Operators
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-RedNumber RedNumberRange::RescaleNumber(const RedNumber& SourceNumber, const RedNumberRange& SourceRange, const RedNumberRange& DestRange)
+void RedList::operator =(const RedList& cNewVal)
 {
-    return RedNumber(0);
+    Init();
+
+    delete pAttribList;
+    pAttribList = cNewVal.pAttribList->Clone();
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 } // Core
 } // Red
+
+
 
 

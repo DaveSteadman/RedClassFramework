@@ -18,46 +18,49 @@
 
 #pragma once
 
-#include "RedGeometryNamespace.h"
+#include "RedCoreNamespace.h"
 
-namespace Red {
-namespace Test {
+#include "RedVSIParseTreeInterface.h"
+#include "RedVSICmdInterface.h"
+#include "RedVSIContextInterface.h"
+#include "RedVSIErrorCodes.h"
 
 using namespace Red::Core;
 
+namespace Red {
+namespace VSI {
+
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-class RedTestGeometry
+class RedVSICmdLoadCode : public RedVSICmdInterface
 {
-public:
-    static void RunUnitTest(RedLog& log);
+public: 
+
+    // Construction Routines
+    RedVSICmdLoadCode(void);
+    RedVSICmdLoadCode(RedVSIParseTreeInterface*& pInitLoadPathExpr) { SetDetails(pInitLoadPathExpr); };
+    ~RedVSICmdLoadCode(void) {};
+
+    // RedVSICmdInterface inherited routines
+    RedVSILangElement Type(void) const { return kLangElementCommandLoadCode; };
+    void              QueueExpr(RedVSIContextInterface* pContext);
+    void              Execute(RedVSIContextInterface* pContext);
+
+    // Command Setup
+    void              SetExpr(RedVSIParseTreeInterface* pNewExpr)           { pLoadPathExpr = pNewExpr; };
+
+    // Wholesale access/assign operations
+    void              SetDetails(RedVSIParseTreeInterface*& pInLoadPathExpr)        { pLoadPathExpr = pInLoadPathExpr; };
+    void              GetDetails(RedVSIParseTreeInterface*& pOutLoadPathExpr) const { pOutLoadPathExpr = pLoadPathExpr; };
 
 private:
 
-    // 2D
-    static RedResult TestCircle(void);
-    static RedResult TestLine2D(void);
-    static RedResult TestPoint2D(void);
-    static RedResult TestRect(void);
-    static RedResult TestRectSize(void);
-    static RedResult TestVector2D(void);
-
-    // 3D
-    static RedResult TestSphere(void);
-    static RedResult TestLine3D(void);
-    static RedResult TestLatLong(void);
-    static RedResult TestPoint3D(void);
-    static RedResult TestVector3D(void);
-
-    // Units
-    static RedResult TestAngle(void);
-    static RedResult TestArea(void);
-    static RedResult TestDistance(void);
-    static RedResult TestTemperature(void);
-    static RedResult TestVolume(void);
+    RedVSIParseTreeInterface* pLoadPathExpr;
 };
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-} // Test
+} // VSI
 } // Red
+
+

@@ -441,12 +441,12 @@ RedResult RedTestVSI::TestCmdNew(void)
 //        RedLog    log;
 //        RedString iPath("/tmp/TestBasicVSILibrary_0001.tml");
 //
-//        RedTmlElement* newX = NULL;
+//        RedTinyMLElement* newX = NULL;
 //
-//        if (RedTmlAction::CreateTmlFromFile(iPath, &newX) != kResultSuccess)
+//        if (RedTinyMLAction::CreateTmlFromFile(iPath, &newX) != kResultSuccess)
 //            return kResultFail;
 //
-//        RedTmlNode* newNodeX = (RedTmlNode*)newX;
+//        RedTinyMLNode* newNodeX = (RedTinyMLNode*)newX;
 //
 //
 //        
@@ -464,13 +464,13 @@ RedResult RedTestVSI::TestCmdNew(void)
 //        RedLog    log;
 //        RedString iPath("/tmp/TestBasicVSILibrary_0003.tml");
 //
-//        RedTmlElement* newX2 = NULL;
+//        RedTinyMLElement* newX2 = NULL;
 //        RedString name("TestRoutines");
 //
 //        newX2 =  vsiCodeLibFactory.OutputTmlClass(name);
 //
 //        RedBufferOutput oB2;
-//        RedTmlAction::SerialiseTinyML(oB2, newX2, eLinedIndentedContent);
+//        RedTinyMLAction::SerialiseTinyML(oB2, newX2, eLinedIndentedContent);
 //        oB2.WriteNewLine();
 //        RedIOHandler::OutputBufferToFile(iPath, oB2);
 //    }
@@ -547,14 +547,14 @@ RedResult RedTestVSI::TestRunProg_001(void)
     } "));
 
         // Create the TML tree from the code buffer
-        RedTmlElement* tmlTreeElement = RedTmlAction::ParseTinyML(codeBuffer);
-        RedTmlNode* tmlTreeNode = NULL;
+        RedTinyMLElement* tmlTreeElement = RedTinyMLFileIO::ParseTinyML(codeBuffer);
+        RedTinyMLNode* tmlTreeNode = NULL;
 
         if (tmlTreeElement == NULL)
             return kResultFail;
 
         if (tmlTreeElement->IsNode())
-            tmlTreeNode = dynamic_cast<RedTmlNode*>(tmlTreeElement);
+            tmlTreeNode = dynamic_cast<RedTinyMLNode*>(tmlTreeElement);
         else
             return kResultFail;
 

@@ -19,14 +19,12 @@
 #pragma once
 
 #include "RedCoreNamespace.h"
-#include "RedTmlNamespace.h"
 
 #include "RedVSILib.h"
 #include "RedVSILibTokenMap.h"
 #include "RedVSILibRoutine.h"
 
 using namespace Red::Core;
-using namespace Red::TinyML;
 
 namespace Red {
 namespace VSI {
@@ -40,11 +38,11 @@ public:
     RedVSILibFactory(RedVSILib* pNewLib);
 
     // Add a Tml-Class to library
-    void              InputTmlClass  (RedTmlElement* pTopTmlNode,   RedLog& cAnalysis);
-    RedVSILibRoutine* InputTmlRoutine(RedTmlNode& cRoutineNode, RedLog& cAnalysis);
+    void              InputTmlClass  (RedTinyMLElement* pTopTmlNode,   RedLog& cAnalysis);
+    RedVSILibRoutine* InputTmlRoutine(RedTinyMLNode& cRoutineNode, RedLog& cAnalysis);
 
-    RedTmlElement*    OutputTmlClass  (const RedString& classname);
-    RedTmlElement*    OutputTmlRoutine(const RedString& classname, const RedString& routinename);
+    RedTinyMLElement*    OutputTmlClass  (const RedString& classname);
+    RedTinyMLElement*    OutputTmlRoutine(const RedString& classname, const RedString& routinename);
 
 // attributes
 

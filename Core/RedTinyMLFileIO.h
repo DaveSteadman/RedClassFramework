@@ -43,8 +43,8 @@ public:
     static RedResult          CreateTmlFromFile(const RedString& filepath, RedTinyMLElement** newTmlElement);
     static RedResult          CreateFileFromTml(const RedTinyMLElement* tmlElement, const RedString& filepath, const TESerialiseType writeStyle);
 
-    static RedTinyMLElement*  ParseCore(const RedString& inputStr);
-    static RedTinyMLElement*  ParseCore(RedBufferInput& inputBuf);
+    static RedTinyMLElement*  ParseTinyML(const RedString& inputStr);
+    static RedTinyMLElement*  ParseTinyML(RedBufferInput& inputBuf);
     static void               SerialiseCore(RedBufferOutput& outputBuf, const RedTinyMLElement* topTmlNode, const TESerialiseType eMode);
 
 private:

@@ -17,13 +17,12 @@
 // -------------------------------------------------------------------------------------------------
 
 #include "RedTestCore.h"
-#include "ConversionConstants.h"
+#include "RedCoreNamespace.h"
 
 #include <stdio.h>
 #include <stdlib.h>
 
 using namespace Red::Core;
-using namespace Red::Geometry;
 
 namespace Red {
 namespace Test {
@@ -222,12 +221,12 @@ RedResult RedTestCore::TestNumberRange(void)
     RedNumberRange FullCircleRadians(0.0, 2 * pi);
     RedNumber angle = 90.0;
     
-    if (FullCircleDegrees.FractionThroughRange(angle) != 0.25) return kResultFail;
-    
-    RedNumber angleRads = RedNumberRange::RescaleNumber(angle, FullCircleDegrees, FullCircleRadians);
+    RedNumber ftr(FullCircleDegrees.FractionThroughRange(angle));
+    if (ftr != 0.25) return kResultFail;
+ 
+    // RedNumber angleRads = RedNumberRange::RescaleNumber(angle, FullCircleDegrees, FullCircleRadians);
+    // if (angleRads != half_pi) return kResultFail;
 
-    if (angleRads != half_pi) return kResultFail;
-    
     return kResultSuccess;
 }
 
@@ -321,15 +320,15 @@ RedResult RedTestCore::TestString(void)
     // Delete Char
     {
         RedString x1("11233");
-        x1.DeleteAtIndex(2,1);
+        x1.DelCharsAtIndex(2,1);
         if (x1 != "1133") return kResultFail;
 
         x1.Set("1122222");
-        x1.DeleteAtIndex(2, 20);
+        x1.DelCharsAtIndex(2, 20);
         if (x1 != "11") return kResultFail;
 
         x1.Set("1");
-        x1.DeleteAtIndex(0,1);
+        x1.DelCharsAtIndex(0,1);
         if (!x1.IsEmpty()) return kResultFail;
     }
 

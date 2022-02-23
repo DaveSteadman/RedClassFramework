@@ -17,12 +17,10 @@
 // -------------------------------------------------------------------------------------------------
 
 #include "RedCoreNamespace.h"
-#include "RedTmlNamespace.h"
 
 #include "RedTestTml.h"
 
 using namespace Red::Core;
-using namespace Red::TinyML;
 
 namespace Red {
 namespace Test {
@@ -46,7 +44,7 @@ RedResult RedTestTml::TestOne(void)
 {
     {
         RedString TestInTml = "{{name} content}";
-        RedTmlElement* testElement = RedTmlAction::ParseTinyML(TestInTml);
+        RedTinyMLElement* testElement = RedTinyMLFileIO::ParseTinyML(TestInTml);
         if (testElement == NULL)
         {
             delete testElement;
@@ -71,10 +69,10 @@ RedResult RedTestTml::TestTwo(void)
 {
 //    {
 //        RedString pathFail  = "/tmp/TestNonExistentFile.tml";
-//        RedTmlElement* newTmlElement = NULL;
+//        RedTinyMLElement* newTmlElement = NULL;
 //
 //        // Check for a non-existant file. Has to return fail
-//        RedResult resultOne = RedTmlAction::CreateTmlFromFile(pathFail, &newTmlElement);
+//        RedResult resultOne = RedTinyMLAction::CreateTmlFromFile(pathFail, &newTmlElement);
 //        if (resultOne != kResultFail)
 //            return kResultFail;
 //    }
@@ -83,21 +81,21 @@ RedResult RedTestTml::TestTwo(void)
 //    RedString pathSave2  = "/tmp/TestTwo2.tml";
 //    {
 //        // Create small Tml Structure
-//        RedTmlNode oTop("tmltree");
-//        RedTmlNode* y = oTop.CreateChildNode("childnode");
+//        RedTinyMLNode oTop("tmltree");
+//        RedTinyMLNode* y = oTop.CreateChildNode("childnode");
 //        y->CreateChildLeaf("xyzname1", "xyzdata1");
 //        y->CreateChildLeaf("xyzname2", "xyzdata2");
 //
-//        if (RedTmlAction::CreateFileFromTml(&oTop, pathSave1, eLinedIndentedContent) != kResultSuccess)
+//        if (RedTinyMLAction::CreateFileFromTml(&oTop, pathSave1, eLinedIndentedContent) != kResultSuccess)
 //            return kResultFail;
 //    }
 //
 //    {
-//        RedTmlElement* newTmlElement = NULL;
-//        if (RedTmlAction::CreateTmlFromFile(pathSave1, &newTmlElement) != kResultSuccess)
+//        RedTinyMLElement* newTmlElement = NULL;
+//        if (RedTinyMLAction::CreateTmlFromFile(pathSave1, &newTmlElement) != kResultSuccess)
 //            return kResultFail;
 //
-//        if (RedTmlAction::CreateFileFromTml(newTmlElement, pathSave2, eLinedIndentedContent) != kResultSuccess)
+//        if (RedTinyMLAction::CreateFileFromTml(newTmlElement, pathSave2, eLinedIndentedContent) != kResultSuccess)
 //            return kResultFail;
 //    }
     return kResultSuccess;
@@ -109,21 +107,21 @@ RedResult RedTestTml::TestIterators(void)
 {
     {
         // Create small Tml Structure
-        RedTmlNode x("topnode");
-        RedTmlNode* y = x.CreateChildNode("contentnode");
+        RedTinyMLNode x("topnode");
+        RedTinyMLNode* y = x.CreateChildNode("contentnode");
         y->CreateChildLeaf("name1", "data1");
         y->CreateChildLeaf("name2", "data2");
         y->CreateChildLeaf("name3", "data3");
         y->CreateChildLeaf("name4", "data4");
         y->CreateChildLeaf("name5", "data5");
 
-        TinyML::RedTmlNode::TmlNodeListItType yIt = y->NodeIterator();
+        Red::Core::RedTinyMLNode::TmlNodeListItType yIt = y->NodeIterator();
 
         int count = 0;
         yIt.First();
         while (!yIt.IsDone())
         {
-            RedTmlElement* pCurrElem = yIt.CurrentItem();
+            RedTinyMLElement* pCurrElem = yIt.CurrentItem();
 
             if (pCurrElem != NULL)
                 count++;
@@ -136,8 +134,8 @@ RedResult RedTestTml::TestIterators(void)
 
     {
         // Create small Tml Structure
-        RedTmlNode x("topnode");
-        RedTmlNode* y = x.CreateChildNode("contentnode");
+        RedTinyMLNode x("topnode");
+        RedTinyMLNode* y = x.CreateChildNode("contentnode");
         y->CreateChildLeaf("name1", "data1");
         y->CreateChildLeaf("name2", "data2");
         y->CreateChildLeaf("name3", "data3");
@@ -145,15 +143,15 @@ RedResult RedTestTml::TestIterators(void)
         y->CreateChildLeaf("name3", "data5");
 
         // Child search checks
-        if (!RedTmlAction::ChildLeafExists(*y, RedString("name2")))
+        if (!RedTinyMLAction::ChildLeafExists(*y, RedString("name2")))
             return kResultFail;
-        if (RedTmlAction::NumberOfNamedChildLeaves(*y, RedString("name3")) != 3)
+        if (RedTinyMLAction::NumberOfNamedChildLeaves(*y, RedString("name3")) != 3)
             return kResultFail;
 
         // Tree count checks
-        if (RedTmlAction::TreeElementCount(x) != 7)
+        if (RedTinyMLAction::TreeElementCount(x) != 7)
             return kResultFail;
-        if (RedTmlAction::TreeElementCount(*y) != 6)
+        if (RedTinyMLAction::TreeElementCount(*y) != 6)
             return kResultFail;
         if (x.NodeElementCount() != 1)
             return kResultFail;
@@ -161,11 +159,11 @@ RedResult RedTestTml::TestIterators(void)
             return kResultFail;
 
         int count = 0;
-        TinyML::RedTmlNode::TmlNodeListItType yIt = y->NodeIterator();
+        Red::Core::RedTinyMLNode::TmlNodeListItType yIt = y->NodeIterator();
         yIt.First();
         while (!yIt.IsDone())
         {
-            RedTmlElement* pCurrElem = yIt.CurrentItem();
+            RedTinyMLElement* pCurrElem = yIt.CurrentItem();
 
             if (pCurrElem != NULL)
                 count++;
@@ -185,18 +183,18 @@ RedResult RedTestTml::TestTreeEdit(void)
 {
     {
         // Create small Tml Structure
-        RedTmlNode x("topnode");
-        RedTmlNode* y = x.CreateChildNode("contentnode");
+        RedTinyMLNode x("topnode");
+        RedTinyMLNode* y = x.CreateChildNode("contentnode");
         y->CreateChildLeaf("name1", "data1");
         y->CreateChildLeaf("name2", "data2");
         y->CreateChildLeaf("name3", "data3");
         y->CreateChildLeaf("name4", "data4");
         y->CreateChildLeaf("name5", "data5");
 
-        RedTmlAction::SetChildLeaf(*y, RedString("name2"), RedString("NEWDATA2"));
+        RedTinyMLAction::SetChildLeaf(*y, RedString("name2"), RedString("NEWDATA2"));
 
         RedString resultName;
-        if (RedTmlAction::ChildLeafNameForData(*y, RedString("NEWDATA2"), resultName) != kResultSuccess)
+        if (RedTinyMLAction::ChildLeafNameForData(*y, RedString("NEWDATA2"), resultName) != kResultSuccess)
             return kResultFail;
 
         if (resultName != RedString("name2"))
@@ -212,11 +210,11 @@ RedResult RedTestTml::TestQuoteCharacters(void)
 {
     {
         RedString TestInTml = "{{name} \"content\"}";
-        RedTmlElement* testElement = RedTmlAction::ParseTinyML(TestInTml);
+        RedTinyMLElement* testElement = RedTinyMLFileIO::ParseTinyML(TestInTml);
         if (testElement == NULL) return kResultFail;
         if (!testElement->IsLeaf()) { delete testElement; return kResultFail; }
 
-        RedTmlLeaf* pLeaf = dynamic_cast<RedTmlLeaf*>(testElement);
+        RedTinyMLLeaf* pLeaf = dynamic_cast<RedTinyMLLeaf*>(testElement);
         if (pLeaf->Data() != "\"content\"") { delete testElement; return kResultFail; }
 
     }
