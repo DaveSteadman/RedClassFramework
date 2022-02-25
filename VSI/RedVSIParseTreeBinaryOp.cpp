@@ -69,13 +69,13 @@ RedVSIParseTreeBinaryOp::~RedVSIParseTreeBinaryOp(void)
 void RedVSIParseTreeBinaryOp::CalcResult(RedVSIContextInterface* pContext)
 {
     // Get the left/right node results
-    RedVariant cLeftVal;
-    RedVariant cRightVal;
+    RedDataVariant cLeftVal;
+    RedDataVariant cRightVal;
     cLeftVal  = pContext->ExprResult(pLeft);
     cRightVal = pContext->ExprResult(pRight);
 
     // Create the output
-    RedVariant cRetVal;
+    RedDataVariant cRetVal;
 
     // if the left of the expression is an object, we need an object operator
     //if (cLeftVal.Type().IsObj())
@@ -115,12 +115,12 @@ void RedVSIParseTreeBinaryOp::CalcResult(RedVSIContextInterface* pContext)
         else if (cOp.IsBinaryOpDivide())                    cRetVal = cLeftVal / cRightVal;
         else if (cOp.IsBinaryOpPower())                     cRetVal = CalcPowerOp(cLeftVal, cRightVal);
 
-        else if (cOp.IsBinaryOpCompareNotEqual())           cRetVal.SetValue(RedBoolean(cLeftVal != cRightVal));
-        else if (cOp.IsBinaryOpCompareEqual())              cRetVal.SetValue(RedBoolean(cLeftVal == cRightVal));
-        else if (cOp.IsBinaryOpCompareLessThan())           cRetVal.SetValue(RedBoolean(cLeftVal <  cRightVal));
-        else if (cOp.IsBinaryOpCompareGreaterThan())        cRetVal.SetValue(RedBoolean(cLeftVal >  cRightVal));
-        else if (cOp.IsBinaryOpCompareLessThanOrEqual())    cRetVal.SetValue(RedBoolean(cLeftVal <= cRightVal));
-        else if (cOp.IsBinaryOpCompareGreaterThanOrEqual()) cRetVal.SetValue(RedBoolean(cLeftVal >= cRightVal));
+        else if (cOp.IsBinaryOpCompareNotEqual())           cRetVal.SetValue(RedDataBoolean(cLeftVal != cRightVal));
+        else if (cOp.IsBinaryOpCompareEqual())              cRetVal.SetValue(RedDataBoolean(cLeftVal == cRightVal));
+        else if (cOp.IsBinaryOpCompareLessThan())           cRetVal.SetValue(RedDataBoolean(cLeftVal <  cRightVal));
+        else if (cOp.IsBinaryOpCompareGreaterThan())        cRetVal.SetValue(RedDataBoolean(cLeftVal >  cRightVal));
+        else if (cOp.IsBinaryOpCompareLessThanOrEqual())    cRetVal.SetValue(RedDataBoolean(cLeftVal <= cRightVal));
+        else if (cOp.IsBinaryOpCompareGreaterThanOrEqual()) cRetVal.SetValue(RedDataBoolean(cLeftVal >= cRightVal));
     }
 
     // Determine the validity of the outcome, raise an error if the operation
@@ -133,18 +133,18 @@ void RedVSIParseTreeBinaryOp::CalcResult(RedVSIContextInterface* pContext)
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-RedVariant RedVSIParseTreeBinaryOp::CalcPowerOp(RedVariant cLeftVal, RedVariant cRightVal)
+RedDataVariant RedVSIParseTreeBinaryOp::CalcPowerOp(RedDataVariant cLeftVal, RedDataVariant cRightVal)
 {
-    RedVariant cRetVal;
+    RedDataVariant cRetVal;
 
     if ( (cLeftVal.Type().IsNum()) && (cRightVal.Type().IsNum()) )
     {
-        RedNumber cLeftNum  = cLeftVal.NumberValue();
-        RedNumber cRightNum = cRightVal.NumberValue();
+        RedDataNumber cLeftNum  = cLeftVal.NumberValue();
+        RedDataNumber cRightNum = cRightVal.NumberValue();
 
         double dblResult = pow(cLeftNum.DoubleValue(), cRightNum.DoubleValue());
 
-        RedNumber RedResultNum = dblResult;
+        RedDataNumber RedResultNum = dblResult;
         cRetVal.SetValue(RedResultNum);
     }
 

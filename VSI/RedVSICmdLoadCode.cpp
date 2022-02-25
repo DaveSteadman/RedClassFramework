@@ -53,10 +53,10 @@ void RedVSICmdLoadCode::QueueExpr(RedVSIContextInterface* pContext)
 void RedVSICmdLoadCode::Execute(RedVSIContextInterface* pContext)
 {
     // Get the result of the commands expression
-    RedVariant cExprResult = pContext->ExprResult(pLoadPathExpr);
+    RedDataVariant cExprResult = pContext->ExprResult(pLoadPathExpr);
 
     // Get a string representation of the value
-    RedString filePath = cExprResult.StringValue();
+    RedDataString filePath = cExprResult.StringValue();
     //pContext->Log()->AddText(cExprResult.StringValue());
 
     if (!RedIOHandler::FileExists(filePath))

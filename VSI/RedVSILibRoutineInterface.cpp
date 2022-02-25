@@ -41,7 +41,7 @@ bool RedVSILibRoutineInterface::IsValid(void) const
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-void RedVSILibRoutineInterface::GetDetails(RedString& cOutName, RedVSIStringLangElementMap& cOutParamList, RedVSICmdInterface*& pOutCode)
+void RedVSILibRoutineInterface::GetDetails(RedDataString& cOutName, RedVSIStringLangElementMap& cOutParamList, RedVSICmdInterface*& pOutCode)
 {
     cOutName      = cName;
     cOutParamList = cParamList;

@@ -70,27 +70,27 @@ void RedVSILibTokenMap::SetupTokenMap(void)
         cVSILibTokenMap.Add(kVSIIOElementSymbolDivide,         RedVSIIOElement::SymbolDivide());
         cVSILibTokenMap.Add(kVSIIOElementSymbolPower,          RedVSIIOElement::SymbolPower());
 
-        cVSILibTokenMap.Add(RedString("=="),      RedVSIIOElement::SymbolCompareEqual());
-        cVSILibTokenMap.Add(RedString("!="),      RedVSIIOElement::SymbolCompareNotEqual());
-        cVSILibTokenMap.Add(RedString("<"),       RedVSIIOElement::SymbolCompareLessThan());
-        cVSILibTokenMap.Add(RedString(">"),       RedVSIIOElement::SymbolCompareGreaterThan());
-        cVSILibTokenMap.Add(RedString("<="),      RedVSIIOElement::SymbolCompareGreaterThanOrEqual());
-        cVSILibTokenMap.Add(RedString(">="),      RedVSIIOElement::SymbolCompareLessThanOrEqual());
+        cVSILibTokenMap.Add(RedDataString("=="),      RedVSIIOElement::SymbolCompareEqual());
+        cVSILibTokenMap.Add(RedDataString("!="),      RedVSIIOElement::SymbolCompareNotEqual());
+        cVSILibTokenMap.Add(RedDataString("<"),       RedVSIIOElement::SymbolCompareLessThan());
+        cVSILibTokenMap.Add(RedDataString(">"),       RedVSIIOElement::SymbolCompareGreaterThan());
+        cVSILibTokenMap.Add(RedDataString("<="),      RedVSIIOElement::SymbolCompareGreaterThanOrEqual());
+        cVSILibTokenMap.Add(RedDataString(">="),      RedVSIIOElement::SymbolCompareLessThanOrEqual());
 
-        cVSILibTokenMap.Add(RedString("&&"),      RedVSIIOElement::SymbolLogicAnd());
-        cVSILibTokenMap.Add(RedString("!!"),      RedVSIIOElement::SymbolLogicNot());
-        cVSILibTokenMap.Add(RedString("||"),      RedVSIIOElement::SymbolLogicOr());
+        cVSILibTokenMap.Add(RedDataString("&&"),      RedVSIIOElement::SymbolLogicAnd());
+        cVSILibTokenMap.Add(RedDataString("!!"),      RedVSIIOElement::SymbolLogicNot());
+        cVSILibTokenMap.Add(RedDataString("||"),      RedVSIIOElement::SymbolLogicOr());
 
-        cVSILibTokenMap.Add(RedString("("),       RedVSIIOElement::SymbolOpenBracket());
-        cVSILibTokenMap.Add(RedString(")"),       RedVSIIOElement::SymbolCloseBracket());
-        cVSILibTokenMap.Add(RedString("{"),       RedVSIIOElement::SymbolOpenBracket());
-        cVSILibTokenMap.Add(RedString("}"),       RedVSIIOElement::SymbolCloseBracket());
-        cVSILibTokenMap.Add(RedString("["),       RedVSIIOElement::SymbolOpenSquareBracket());
-        cVSILibTokenMap.Add(RedString("]"),       RedVSIIOElement::SymbolCloseSquareBracket());
-        cVSILibTokenMap.Add(RedString(","),       RedVSIIOElement::SymbolComma());
-        cVSILibTokenMap.Add(RedString("."),       RedVSIIOElement::SymbolPeriod());
-        cVSILibTokenMap.Add(RedString("::"),      RedVSIIOElement::SymbolDoubleColon());
-        //cVSILibTokenMap.Add(RedString("'"),       RedVSIIOElement::SymbolStringContent());
+        cVSILibTokenMap.Add(RedDataString("("),       RedVSIIOElement::SymbolOpenBracket());
+        cVSILibTokenMap.Add(RedDataString(")"),       RedVSIIOElement::SymbolCloseBracket());
+        cVSILibTokenMap.Add(RedDataString("{"),       RedVSIIOElement::SymbolOpenBracket());
+        cVSILibTokenMap.Add(RedDataString("}"),       RedVSIIOElement::SymbolCloseBracket());
+        cVSILibTokenMap.Add(RedDataString("["),       RedVSIIOElement::SymbolOpenSquareBracket());
+        cVSILibTokenMap.Add(RedDataString("]"),       RedVSIIOElement::SymbolCloseSquareBracket());
+        cVSILibTokenMap.Add(RedDataString(","),       RedVSIIOElement::SymbolComma());
+        cVSILibTokenMap.Add(RedDataString("."),       RedVSIIOElement::SymbolPeriod());
+        cVSILibTokenMap.Add(RedDataString("::"),      RedVSIIOElement::SymbolDoubleColon());
+        //cVSILibTokenMap.Add(RedDataString("'"),       RedVSIIOElement::SymbolStringContent());
     }
 }
 

@@ -41,68 +41,68 @@ public:
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-static const RedString kVSIIOElementKeywordAttrib        = RedString("attrib");
-static const RedString kVSIIOElementKeywordBool          = RedString("bool");
-static const RedString kVSIIOElementKeywordChar          = RedString("char");
-static const RedString kVSIIOElementKeywordClass         = RedString("class");
-static const RedString kVSIIOElementKeywordCode          = RedString("code");
-static const RedString kVSIIOElementKeywordElse          = RedString("else");
-static const RedString kVSIIOElementKeywordEndif         = RedString("endif");
-static const RedString kVSIIOElementKeywordEndloop       = RedString("endloop");
-static const RedString kVSIIOElementKeywordFalse         = RedString("false");
-static const RedString kVSIIOElementKeywordHeap          = RedString("heap");
-static const RedString kVSIIOElementKeywordIf            = RedString("if");
-static const RedString kVSIIOElementKeywordLet           = RedString("let");
-static const RedString kVSIIOElementKeywordList          = RedString("list");
-static const RedString kVSIIOElementKeywordLog           = RedString("log");
-static const RedString kVSIIOElementKeywordLoop          = RedString("loop");
-static const RedString kVSIIOElementKeywordName          = RedString("name");
-static const RedString kVSIIOElementKeywordNew           = RedString("new");
-static const RedString kVSIIOElementKeywordNo            = RedString("no");
-static const RedString kVSIIOElementKeywordNumber        = RedString("number");
-static const RedString kVSIIOElementKeywordParams        = RedString("params");
-static const RedString kVSIIOElementKeywordParent        = RedString("parent");
-static const RedString kVSIIOElementKeywordReturn        = RedString("return");
-static const RedString kVSIIOElementKeywordRoutine       = RedString("routine");
-static const RedString kVSIIOElementKeywordStack         = RedString("local");
-static const RedString kVSIIOElementKeywordRecord        = RedString("record");
-static const RedString kVSIIOElementKeywordString        = RedString("string");
-static const RedString kVSIIOElementKeywordThen          = RedString("then");
-static const RedString kVSIIOElementKeywordTrue          = RedString("true");
-static const RedString kVSIIOElementKeywordWhile         = RedString("while");
-static const RedString kVSIIOElementKeywordYes           = RedString("yes");
+static const RedDataString kVSIIOElementKeywordAttrib        = RedDataString("attrib");
+static const RedDataString kVSIIOElementKeywordBool          = RedDataString("bool");
+static const RedDataString kVSIIOElementKeywordChar          = RedDataString("char");
+static const RedDataString kVSIIOElementKeywordClass         = RedDataString("class");
+static const RedDataString kVSIIOElementKeywordCode          = RedDataString("code");
+static const RedDataString kVSIIOElementKeywordElse          = RedDataString("else");
+static const RedDataString kVSIIOElementKeywordEndif         = RedDataString("endif");
+static const RedDataString kVSIIOElementKeywordEndloop       = RedDataString("endloop");
+static const RedDataString kVSIIOElementKeywordFalse         = RedDataString("false");
+static const RedDataString kVSIIOElementKeywordHeap          = RedDataString("heap");
+static const RedDataString kVSIIOElementKeywordIf            = RedDataString("if");
+static const RedDataString kVSIIOElementKeywordLet           = RedDataString("let");
+static const RedDataString kVSIIOElementKeywordList          = RedDataString("list");
+static const RedDataString kVSIIOElementKeywordLog           = RedDataString("log");
+static const RedDataString kVSIIOElementKeywordLoop          = RedDataString("loop");
+static const RedDataString kVSIIOElementKeywordName          = RedDataString("name");
+static const RedDataString kVSIIOElementKeywordNew           = RedDataString("new");
+static const RedDataString kVSIIOElementKeywordNo            = RedDataString("no");
+static const RedDataString kVSIIOElementKeywordNumber        = RedDataString("number");
+static const RedDataString kVSIIOElementKeywordParams        = RedDataString("params");
+static const RedDataString kVSIIOElementKeywordParent        = RedDataString("parent");
+static const RedDataString kVSIIOElementKeywordReturn        = RedDataString("return");
+static const RedDataString kVSIIOElementKeywordRoutine       = RedDataString("routine");
+static const RedDataString kVSIIOElementKeywordStack         = RedDataString("local");
+static const RedDataString kVSIIOElementKeywordRecord        = RedDataString("record");
+static const RedDataString kVSIIOElementKeywordString        = RedDataString("string");
+static const RedDataString kVSIIOElementKeywordThen          = RedDataString("then");
+static const RedDataString kVSIIOElementKeywordTrue          = RedDataString("true");
+static const RedDataString kVSIIOElementKeywordWhile         = RedDataString("while");
+static const RedDataString kVSIIOElementKeywordYes           = RedDataString("yes");
 
-static const RedString kVSIIOElementSymbolAssignPlus     = RedString("+=");
-static const RedString kVSIIOElementSymbolAssignMinus    = RedString("-=");
-static const RedString kVSIIOElementSymbolAssignMultiply = RedString("*=");
-static const RedString kVSIIOElementSymbolAssignDivide   = RedString("/=");
-static const RedString kVSIIOElementSymbolAssignEqual    = RedString("=");
-static const RedString kVSIIOElementSymbolPlus           = RedString("+");
-static const RedString kVSIIOElementSymbolMinus          = RedString("-");
-static const RedString kVSIIOElementSymbolMultiply       = RedString("*");
-static const RedString kVSIIOElementSymbolDivide         = RedString("/");
-static const RedString kVSIIOElementSymbolPower          = RedString("^");
+static const RedDataString kVSIIOElementSymbolAssignPlus     = RedDataString("+=");
+static const RedDataString kVSIIOElementSymbolAssignMinus    = RedDataString("-=");
+static const RedDataString kVSIIOElementSymbolAssignMultiply = RedDataString("*=");
+static const RedDataString kVSIIOElementSymbolAssignDivide   = RedDataString("/=");
+static const RedDataString kVSIIOElementSymbolAssignEqual    = RedDataString("=");
+static const RedDataString kVSIIOElementSymbolPlus           = RedDataString("+");
+static const RedDataString kVSIIOElementSymbolMinus          = RedDataString("-");
+static const RedDataString kVSIIOElementSymbolMultiply       = RedDataString("*");
+static const RedDataString kVSIIOElementSymbolDivide         = RedDataString("/");
+static const RedDataString kVSIIOElementSymbolPower          = RedDataString("^");
 
 //
-//        cVSILibTokenMap.Add(RedString("=="),      RedVSIIOElement::SymbolCompareEqual());
-//        cVSILibTokenMap.Add(RedString("!="),      RedVSIIOElement::SymbolCompareNotEqual());
-//        cVSILibTokenMap.Add(RedString("<"),       RedVSIIOElement::SymbolCompareLessThan());
-//        cVSILibTokenMap.Add(RedString(">"),       RedVSIIOElement::SymbolCompareGreaterThan());
-//        cVSILibTokenMap.Add(RedString("<="),      RedVSIIOElement::SymbolCompareGreaterThanOrEqual());
-//        cVSILibTokenMap.Add(RedString(">="),      RedVSIIOElement::SymbolCompareLessThanOrEqual());
+//        cVSILibTokenMap.Add(RedDataString("=="),      RedVSIIOElement::SymbolCompareEqual());
+//        cVSILibTokenMap.Add(RedDataString("!="),      RedVSIIOElement::SymbolCompareNotEqual());
+//        cVSILibTokenMap.Add(RedDataString("<"),       RedVSIIOElement::SymbolCompareLessThan());
+//        cVSILibTokenMap.Add(RedDataString(">"),       RedVSIIOElement::SymbolCompareGreaterThan());
+//        cVSILibTokenMap.Add(RedDataString("<="),      RedVSIIOElement::SymbolCompareGreaterThanOrEqual());
+//        cVSILibTokenMap.Add(RedDataString(">="),      RedVSIIOElement::SymbolCompareLessThanOrEqual());
 //
-//        cVSILibTokenMap.Add(RedString("&&"),      RedVSIIOElement::SymbolLogicAnd());
-//        cVSILibTokenMap.Add(RedString("!!"),      RedVSIIOElement::SymbolLogicNot());
-//        cVSILibTokenMap.Add(RedString("||"),      RedVSIIOElement::SymbolLogicOr());
+//        cVSILibTokenMap.Add(RedDataString("&&"),      RedVSIIOElement::SymbolLogicAnd());
+//        cVSILibTokenMap.Add(RedDataString("!!"),      RedVSIIOElement::SymbolLogicNot());
+//        cVSILibTokenMap.Add(RedDataString("||"),      RedVSIIOElement::SymbolLogicOr());
 //
-//        cVSILibTokenMap.Add(RedString("("),       RedVSIIOElement::SymbolOpenBracket());
-//        cVSILibTokenMap.Add(RedString(")"),       RedVSIIOElement::SymbolCloseBracket());
-//        cVSILibTokenMap.Add(RedString("{"),       RedVSIIOElement::SymbolOpenBracket());
-//        cVSILibTokenMap.Add(RedString("}"),       RedVSIIOElement::SymbolCloseBracket());
-//        cVSILibTokenMap.Add(RedString(","),       RedVSIIOElement::SymbolComma());
-//        cVSILibTokenMap.Add(RedString("."),       RedVSIIOElement::SymbolPeriod());
-//        cVSILibTokenMap.Add(RedString("::"),      RedVSIIOElement::SymbolDoubleColon());
-//        cVSILibTokenMap.Add(RedString("'"),       RedVSIIOElement::SymbolStringContent());
+//        cVSILibTokenMap.Add(RedDataString("("),       RedVSIIOElement::SymbolOpenBracket());
+//        cVSILibTokenMap.Add(RedDataString(")"),       RedVSIIOElement::SymbolCloseBracket());
+//        cVSILibTokenMap.Add(RedDataString("{"),       RedVSIIOElement::SymbolOpenBracket());
+//        cVSILibTokenMap.Add(RedDataString("}"),       RedVSIIOElement::SymbolCloseBracket());
+//        cVSILibTokenMap.Add(RedDataString(","),       RedVSIIOElement::SymbolComma());
+//        cVSILibTokenMap.Add(RedDataString("."),       RedVSIIOElement::SymbolPeriod());
+//        cVSILibTokenMap.Add(RedDataString("::"),      RedVSIIOElement::SymbolDoubleColon());
+//        cVSILibTokenMap.Add(RedDataString("'"),       RedVSIIOElement::SymbolStringContent());
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 

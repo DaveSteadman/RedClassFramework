@@ -25,29 +25,29 @@
 namespace Red {
 namespace Core {
 
-class RedString;
+class RedDataString;
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 /// Class representing a character. A child of RedType. Contains many type querying operations.
-class RedChar : public RedType
+class RedDataChar : public RedType
 {
 public:
 
     // constructor
-    RedChar(void)        { Init();     };
-    RedChar(char NewCh)  { Set(NewCh); };
-    ~RedChar(void)       { };
+    RedDataChar(void)        { Init();     };
+    RedDataChar(char NewCh)  { Set(NewCh); };
+    ~RedDataChar(void)       { };
 
     // Inherited: RedType
     void        Init(void)        { Set('\0'); };
     RedDataType Type(void) const  { return kDataTypeChar; };
-    RedType*    Clone(void) const { RedChar* newC = new RedChar(); newC->ch = ch; return dynamic_cast<RedChar*>(newC); };
+    RedType*    Clone(void) const { RedDataChar* newC = new RedDataChar(); newC->ch = ch; return dynamic_cast<RedDataChar*>(newC); };
 
     // simple set & get operations
     void       Set(const char NewCh)        { ch = NewCh; };
     void       Set(int NewCh)               { if ((NewCh > 0) && (NewCh<256)) ch = NewCh; };
-    void       Set(const RedChar& cNewVal)  { ch = cNewVal.ch; };
+    void       Set(const RedDataChar& cNewVal)  { ch = cNewVal.ch; };
 
     char       Char(void)             const { return ch; };
     bool       IsChar(char NewCh)     const { return ch == NewCh; };
@@ -77,7 +77,7 @@ public:
     // Assignment Operators
     void operator =(const int      newVal)  { Set(newVal); };
     void operator =(const char     newVal)  { Set(newVal); };
-    void operator =(const RedChar& newVal)  { Set(newVal); };
+    void operator =(const RedDataChar& newVal)  { Set(newVal); };
 
 private:
 
@@ -86,12 +86,12 @@ private:
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-bool operator==(const RedChar& lhs, const RedChar& rhs);
-bool operator!=(const RedChar& lhs, const RedChar& rhs);
+bool operator==(const RedDataChar& lhs, const RedDataChar& rhs);
+bool operator!=(const RedDataChar& lhs, const RedDataChar& rhs);
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-typedef RedSmartPtr<RedChar> RedCharSmartPtr;
+typedef RedSmartPtr<RedDataChar> RedDataCharSmartPtr;
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 

@@ -21,7 +21,7 @@
 #include "RedType.h"
 #include "RedDataType.h"
 #include "RedCoreConsts.h"
-#include "RedChar.h"
+#include "RedDataChar.h"
 
 namespace Red {
 namespace Core {
@@ -29,25 +29,25 @@ namespace Core {
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 /// Default tollerance on floating point equality statements
-static const unsigned kRedStringAllocBlockSize = 32;
+static const unsigned kRedDataStringAllocBlockSize = 32;
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 /// String class, containing numerous string search & manipulation functions and operators.
 /// All Index values start from zero.
-class RedString : public RedType
+class RedDataString : public RedType
 {
 public:
 
     // Construction
-    RedString(void);
-    RedString(const char* instr);
-    RedString(const RedString& instr);
+    RedDataString(void);
+    RedDataString(const char* instr);
+    RedDataString(const RedDataString& instr);
 
     // Inherited: RedType
     void           Init(void)        { Empty(); };
     RedDataType    Type(void)  const { return kDataTypeStr; };
-    RedType*       Clone(void) const { RedString* newS = new RedString(*this); return dynamic_cast<RedType*>(newS); };
+    RedType*       Clone(void) const { RedDataString* newS = new RedDataString(*this); return dynamic_cast<RedType*>(newS); };
 
     // Public Main Routines
     unsigned       FirstContentIndex(void) const { return 0; };
@@ -62,32 +62,32 @@ public:
     
     void           Set(const char Ch);
     void           Set(const char* pText);
-    void           Set(const RedString& Str) { Set(Str.TextPtr()); };
+    void           Set(const RedDataString& Str) { Set(Str.TextPtr()); };
 
     void           Append(const char Ch);
     void           Append(const char* Str);
-    void           Append(const RedChar& Ch)    { Append(Ch.Char()); };
-    void           Append(const RedString& Str) { Append(Str.TextPtr()); };
+    void           Append(const RedDataChar& Ch)    { Append(Ch.Char()); };
+    void           Append(const RedDataString& Str) { Append(Str.TextPtr()); };
 
     void           InsertAtIndex(const unsigned Index, const char  Ch);
     void           InsertAtIndex(const unsigned Index, const char* Str);
-    void           InsertAtIndex(const unsigned Index, const RedString& Str) { InsertAtIndex(Index, Str.TextPtr()); };
+    void           InsertAtIndex(const unsigned Index, const RedDataString& Str) { InsertAtIndex(Index, Str.TextPtr()); };
 
     char           CharAtIndex(const unsigned Index) const;
-    RedChar        CharObjAtIndex(const unsigned Index) const { return RedChar( CharAtIndex(Index) ); };
+    RedDataChar    CharObjAtIndex(const unsigned Index) const { return RedDataChar( CharAtIndex(Index) ); };
     void           SetCharAtIndex(const unsigned Index, const char Ch);
-    void           SetCharObjAtIndex(const unsigned Index, const RedChar cCh) { SetCharAtIndex(Index, cCh.Char()); };
+    void           SetCharObjAtIndex(const unsigned Index, const RedDataChar cCh) { SetCharAtIndex(Index, cCh.Char()); };
 
     char           FirstChar(void)      const { return CharAtIndex(FirstContentIndex()); };
-    RedChar        FirstCharObj(void)   const { return RedChar( CharAtIndex(FirstContentIndex()) ); };
+    RedDataChar    FirstCharObj(void)   const { return RedDataChar( CharAtIndex(FirstContentIndex()) ); };
     char           LastChar(void)       const { if (ContentSize() == 0) return '\0'; else return CharAtIndex(LastContentIndex()); };
-    RedChar        LastCharObj(void)    const { return RedChar( CharAtIndex(LastContentIndex()) ); };
+    RedDataChar    LastCharObj(void)    const { return RedDataChar( CharAtIndex(LastContentIndex()) ); };
 
     void           DelCharsAtIndex(const unsigned Index, const unsigned Count);
     void           DelFirstChar(void) { DelCharsAtIndex(FirstContentIndex(), 1); };
     void           DelLastChar(void)  { DelCharsAtIndex(LastContentIndex(),  1); };
 
-    RedString      SubStr(const unsigned StartIndex, const unsigned Count) const;
+    RedDataString      SubStr(const unsigned StartIndex, const unsigned Count) const;
     bool           IsCharInString(char ch) const;
     bool           IsAlphaNumeric(void) const;
 
@@ -95,22 +95,22 @@ public:
     // CondenseAllocation
 
     unsigned       NumLines(void) const;
-    bool           LineAtNum(const unsigned LineNum, RedString& Line) const;
+    bool           LineAtNum(const unsigned LineNum, RedDataString& Line) const;
 
     // Internal Main Routines
-    static unsigned SizeForNumBlocks(const unsigned numblocks)      { return kRedStringAllocBlockSize * numblocks; };
-    static unsigned NumBlocksForSize(const unsigned strsize)        { return (strsize/kRedStringAllocBlockSize) + 1; };
+    static unsigned SizeForNumBlocks(const unsigned numblocks)      { return kRedDataStringAllocBlockSize * numblocks; };
+    static unsigned NumBlocksForSize(const unsigned strsize)        { return (strsize/kRedDataStringAllocBlockSize) + 1; };
     static char*    AllocData(const unsigned NumBlocks);
 
     // Derived Assignment/Access Operators
     void operator  =(const char Ch)         { Set(Ch); };
-    void operator  =(const RedChar& Ch)     { Set(Ch.Char()); };
+    void operator  =(const RedDataChar& Ch)     { Set(Ch.Char()); };
     void operator  =(const char* chStr)     { Set(chStr); };
-    void operator  =(const RedString& Str)  { Set(Str.TextPtr()); };
+    void operator  =(const RedDataString& Str)  { Set(Str.TextPtr()); };
     void operator +=(const char Ch)         { Append(Ch); };
-    void operator +=(const RedChar& Ch)     { Append(Ch.Char()); };
+    void operator +=(const RedDataChar& Ch)     { Append(Ch.Char()); };
     void operator +=(const char* chStr)     { Append(chStr); };
-    void operator +=(const RedString& Str)  { Append(Str.TextPtr()); };
+    void operator +=(const RedDataString& Str)  { Append(Str.TextPtr()); };
 
     char operator [](const unsigned Index) const { return CharAtIndex(Index); };
 
@@ -133,14 +133,14 @@ private:
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 // Non-Member Operators
-bool      operator ==(const RedString& lhs, const char* rhs);
-bool      operator !=(const RedString& lhs, const char* rhs);
+bool      operator ==(const RedDataString& lhs, const char* rhs);
+bool      operator !=(const RedDataString& lhs, const char* rhs);
 
-bool      operator ==(const RedString& lhs, const RedString& rhs);
-bool      operator !=(const RedString& lhs, const RedString& rhs);
+bool      operator ==(const RedDataString& lhs, const RedDataString& rhs);
+bool      operator !=(const RedDataString& lhs, const RedDataString& rhs);
 
-RedString operator +(const RedString& Str1, const RedString& Str2);
-RedString operator +(const RedString& Str1, const RedChar& Chr2);
+RedDataString operator +(const RedDataString& Str1, const RedDataString& Str2);
+RedDataString operator +(const RedDataString& Str1, const RedDataChar& Chr2);
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 

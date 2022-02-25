@@ -53,18 +53,18 @@ public:
     virtual void          SetupRoutineCall(const RedVSIRoutineCallInterface& cSignature) =0;
 
     // Data accessors
-    virtual RedType*      CreateDataItem(const RedVSILangElement& cLocation, const RedVSILangElement& cType, const RedString& cName) =0;
-    virtual RedType*      DuplicateDataItem(const RedVSILangElement& cLocation, const RedType* pDataItem, const RedString& cName) =0;
-    virtual bool          FindDataItem(const RedString& cName, RedType*& pData) =0;
-    virtual RedVariant    DataItemAsVariant(const RedString& cName) =0;
+    virtual RedType*      CreateDataItem(const RedVSILangElement& cLocation, const RedVSILangElement& cType, const RedDataString& cName) =0;
+    virtual RedType*      DuplicateDataItem(const RedVSILangElement& cLocation, const RedType* pDataItem, const RedDataString& cName) =0;
+    virtual bool          FindDataItem(const RedDataString& cName, RedType*& pData) =0;
+    virtual RedDataVariant    DataItemAsVariant(const RedDataString& cName) =0;
 
     // Return value
-    virtual void          SetValueToReturn(const RedVariant& cData) =0;
+    virtual void          SetValueToReturn(const RedDataVariant& cData) =0;
 
     // Expressions
     virtual void          QueueExpr(RedVSIParseTreeInterface* pExpr) =0;
-    virtual void          SetExprResult(RedVSIParseTreeInterface* pExpr, const RedVariant& result) =0;
-    virtual RedVariant    ExprResult(RedVSIParseTreeInterface* pExpr) =0;
+    virtual void          SetExprResult(RedVSIParseTreeInterface* pExpr, const RedDataVariant& result) =0;
+    virtual RedDataVariant    ExprResult(RedVSIParseTreeInterface* pExpr) =0;
     virtual void          ExecuteExprQueue(void) =0;
 
     // Commands

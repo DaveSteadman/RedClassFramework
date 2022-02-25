@@ -40,29 +40,29 @@ public:
 
     void            Init(void) { cClassName.Init(); cObjName.Init(); cFuncName.Init(); cParams.DelAll(); };
 
-    void            SetupObjectCall(const RedString& cNewObjName,   const RedString& cNewFuncName) { cObjName   = cNewObjName;   cFuncName = cNewFuncName; };
-    void            SetupClassCall (const RedString& cNewClassName, const RedString& cNewFuncName) { cClassName = cNewClassName; cFuncName = cNewFuncName; };
+    void            SetupObjectCall(const RedDataString& cNewObjName,   const RedDataString& cNewFuncName) { cObjName   = cNewObjName;   cFuncName = cNewFuncName; };
+    void            SetupClassCall (const RedDataString& cNewClassName, const RedDataString& cNewFuncName) { cClassName = cNewClassName; cFuncName = cNewFuncName; };
 
-    void            SetupCall(const RedString& cNewClassName, const RedString& cNewObjName, const RedString& cNewFuncName) { cClassName = cNewClassName; cObjName = cNewObjName; cFuncName = cNewFuncName; };
+    void            SetupCall(const RedDataString& cNewClassName, const RedDataString& cNewObjName, const RedDataString& cNewFuncName) { cClassName = cNewClassName; cObjName = cNewObjName; cFuncName = cNewFuncName; };
 
 
-    void            SetClassName   (const RedString& cNewClassName)        { cClassName = cNewClassName;  };
-    void            SetObjectName  (const RedString& cNewObjectName)       { cObjName   = cNewObjectName; };
-    void            SetFuncName    (const RedString& cNewFuncName)         { cFuncName  = cNewFuncName;   };
-    RedString       ClassName      (void)                            const { return cClassName; };
-    RedString       ObjectName     (void)                            const { return cObjName;   };
-    RedString       FuncName       (void)                            const { return cFuncName;  };
+    void            SetClassName   (const RedDataString& cNewClassName)        { cClassName = cNewClassName;  };
+    void            SetObjectName  (const RedDataString& cNewObjectName)       { cObjName   = cNewObjectName; };
+    void            SetFuncName    (const RedDataString& cNewFuncName)         { cFuncName  = cNewFuncName;   };
+    RedDataString       ClassName      (void)                            const { return cClassName; };
+    RedDataString       ObjectName     (void)                            const { return cObjName;   };
+    RedDataString       FuncName       (void)                            const { return cFuncName;  };
 
     const RedVSIVariantList* Params(void)                                  const { return &cParams; };
-    void               AddParam(const RedVariant& newParam)       { cParams.AddLast(newParam); };
+    void               AddParam(const RedDataVariant& newParam)       { cParams.AddLast(newParam); };
 
     void operator =(const RedVSIRoutineCallInterface& cSig);
 
 protected:
 
-    RedString         cClassName;
-    RedString         cObjName;
-    RedString         cFuncName;
+    RedDataString         cClassName;
+    RedDataString         cObjName;
+    RedDataString         cFuncName;
     RedVSIVariantList cParams;
 };
 

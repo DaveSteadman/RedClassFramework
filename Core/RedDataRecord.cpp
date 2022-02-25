@@ -16,12 +16,12 @@
 // (http://opensource.org/licenses/MIT)
 // -------------------------------------------------------------------------------------------------
 
-#include "RedRecord.h"
-#include "RedBoolean.h"
-#include "RedChar.h"
-#include "RedNumber.h"
-#include "RedString.h"
-#include "RedVariant.h"
+#include "RedDataRecord.h"
+#include "RedDataBoolean.h"
+#include "RedDataChar.h"
+#include "RedDataNumber.h"
+#include "RedDataString.h"
+#include "RedDataVariant.h"
 
 namespace Red {
 namespace Core {
@@ -30,18 +30,18 @@ namespace Core {
 // Construction
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-RedRecord::RedRecord(void)
+RedDataRecord::RedDataRecord(void)
 {
-    pAttribList = new RedStringDataMap();
+    pAttribList = new RedDataStringDataMap();
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 // Inhertied
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-RedType* RedRecord::Clone(void) const 
+RedType* RedDataRecord::Clone(void) const 
 {
-    RedRecord* pNewObj = new RedRecord();
+    RedDataRecord* pNewObj = new RedDataRecord();
 
     // delete the attrib list, replacing it with a cloned one.
     if (pNewObj->pAttribList)
@@ -56,7 +56,7 @@ RedType* RedRecord::Clone(void) const
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-RedType* RedRecord::CreateAndAdd(const RedString& cNewAttribName, const RedDataType& NewAttribType)
+RedType* RedDataRecord::CreateAndAdd(const RedDataString& cNewAttribName, const RedDataType& NewAttribType)
 {
     RedType* retData = CreateObjectOfType(NewAttribType);
 
@@ -67,28 +67,28 @@ RedType* RedRecord::CreateAndAdd(const RedString& cNewAttribName, const RedDataT
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-RedType* RedRecord::CreateAndAdd(const char* strNewAttribName, const RedDataType& NewAttribType)
+RedType* RedDataRecord::CreateAndAdd(const char* strNewAttribName, const RedDataType& NewAttribType)
 {
     RedType* retData = CreateObjectOfType(NewAttribType);
 
-    pAttribList->Add(RedString(strNewAttribName), retData);
+    pAttribList->Add(RedDataString(strNewAttribName), retData);
 
     return retData;
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-RedType* RedRecord::CreateObjectOfType(const RedDataType& NewAttribType)
+RedType* RedDataRecord::CreateObjectOfType(const RedDataType& NewAttribType)
 {
     RedType* retData = NULL;
 
-    if      (NewAttribType.IsBool())    retData = new RedBoolean;
-    else if (NewAttribType.IsChar())    retData = new RedChar;
+    if      (NewAttribType.IsBool())    retData = new RedDataBoolean;
+    else if (NewAttribType.IsChar())    retData = new RedDataChar;
     //else if (NewAttribType.IsList())    retData = new RedL;
-    else if (NewAttribType.IsNum())     retData = new RedNumber;
-    else if (NewAttribType.IsRecord())  retData = new RedRecord;
-    else if (NewAttribType.IsStr())     retData = new RedString;
-    else if (NewAttribType.IsVariant()) retData = new RedVariant;
+    else if (NewAttribType.IsNum())     retData = new RedDataNumber;
+    else if (NewAttribType.IsRecord())  retData = new RedDataRecord;
+    else if (NewAttribType.IsStr())     retData = new RedDataString;
+    else if (NewAttribType.IsVariant()) retData = new RedDataVariant;
 
     return retData;
 }
@@ -97,7 +97,7 @@ RedType* RedRecord::CreateObjectOfType(const RedDataType& NewAttribType)
 // Operators
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-void RedRecord::operator =(const RedRecord& cNewVal)
+void RedDataRecord::operator =(const RedDataRecord& cNewVal)
 {
     Init();
 

@@ -19,8 +19,8 @@
 #define _CRT_SECURE_NO_WARNINGS
 
 #include "RedDate.h"
-#include "RedNumber.h"
-#include "RedString.h"
+#include "RedDataNumber.h"
+#include "RedDataString.h"
 
 #include <time.h>
 #include <stdio.h>
@@ -30,7 +30,7 @@ namespace Core {
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-void RedDate::SetDate(const RedString& datestr)
+void RedDate::SetDate(const RedDataString& datestr)
 {
     sscanf(datestr.TextPtr(), "%u/%u/%u", &year, &month, &date);
     
@@ -67,13 +67,13 @@ void RedDate::SetToday(void)
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-RedString RedDate::DateString(void) const
+RedDataString RedDate::DateString(void) const
 {
-    RedString retstr;
+    RedDataString retstr;
 
-    RedNumber y(year);
-    RedNumber m(month);
-    RedNumber d(date);
+    RedDataNumber y(year);
+    RedDataNumber m(month);
+    RedDataNumber d(date);
 
     retstr.Append(y.DecimalString());
     retstr.Append("/");
@@ -86,13 +86,13 @@ RedString RedDate::DateString(void) const
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-RedString RedDate::EightDigitDateString(void) const
+RedDataString RedDate::EightDigitDateString(void) const
 {
-    RedString retstr;
+    RedDataString retstr;
 
-    RedNumber y(year);
-    RedNumber m(month);
-    RedNumber d(date);
+    RedDataNumber y(year);
+    RedDataNumber m(month);
+    RedDataNumber d(date);
 
     retstr.Append(y.DecimalString());
     retstr.Append(m.DecimalString());
@@ -103,13 +103,13 @@ RedString RedDate::EightDigitDateString(void) const
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-RedString RedDate::SixDigitDateString(void) const
+RedDataString RedDate::SixDigitDateString(void) const
 {
-    RedString retstr;
+    RedDataString retstr;
 
-    RedNumber y(TwoDigitYear());
-    RedNumber m(month);
-    RedNumber d(date);
+    RedDataNumber y(TwoDigitYear());
+    RedDataNumber m(month);
+    RedDataNumber d(date);
 
     retstr.Append(y.DecimalString());
     retstr.Append(m.DecimalString());

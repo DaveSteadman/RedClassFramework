@@ -16,13 +16,13 @@
 // (http://opensource.org/licenses/MIT)
 // -------------------------------------------------------------------------------------------------
 
-#include "RedList.h"
+#include "RedDataList.h"
 
-#include "RedBoolean.h"
-#include "RedChar.h"
-#include "RedNumber.h"
-#include "RedString.h"
-#include "RedVariant.h"
+#include "RedDataBoolean.h"
+#include "RedDataChar.h"
+#include "RedDataNumber.h"
+#include "RedDataString.h"
+#include "RedDataVariant.h"
 
 namespace Red {
 namespace Core {
@@ -31,18 +31,14 @@ namespace Core {
 // Construction
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-RedList::RedList(void)
-{
-}
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 // Inhertied
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-
-RedType* RedList::Clone(void) const 
+RedType* RedDataList::Clone(void) const 
 {
-    RedList* pNewObj = new RedList();
+    RedDataList* pNewObj = new RedDataList();
 
     // delete the attrib list, replacing it with a cloned one.
     if (pNewObj->pList)
@@ -55,11 +51,34 @@ RedType* RedList::Clone(void) const
     return (RedType*)pNewObj;
 }
 
-/*
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+void RedDataList::InitToSize(unsigned uNumItems, RedDataType cItemType)
+{
+    // Clear any existing list
+    if (pList) { delete pList; pList = NULL; }
+
+    pList = new RedTypeList;
+
+    RedType* pNewListObj = NULL;
+    for (unsigned i = 0; i < uNumItems; i++)
+    {
+        if (cItemType.IsBool())    pNewListObj = new RedDataBoolean();
+        if (cItemType.IsChar())    pNewListObj = new RedDataChar();
+        if (cItemType.IsList())    pNewListObj = new RedDataList();
+        if (cItemType.IsNum())     pNewListObj = new RedDataNumber();
+        if (cItemType.IsRecord())  pNewListObj = new RedDataRecord();
+        if (cItemType.IsStr())     pNewListObj = new RedDataString();
+        if (cItemType.IsNum())     pNewListObj = new RedDataNumber();
+        if (cItemType.IsVariant()) pNewListObj = new RedDataVariant();
+    }
+}
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-RedType* RedList::CreateAndAdd(const RedString& cNewAttribName, const RedDataType& NewAttribType)
+/*
+
+RedType* RedDataList::CreateAndAdd(const RedDataString& cNewAttribName, const RedDataType& NewAttribType)
 {
     RedType* retData = CreateObjectOfType(NewAttribType);
 
@@ -70,28 +89,28 @@ RedType* RedList::CreateAndAdd(const RedString& cNewAttribName, const RedDataTyp
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-RedType* RedList::CreateAndAdd(const char* strNewAttribName, const RedDataType& NewAttribType)
+RedType* RedDataList::CreateAndAdd(const char* strNewAttribName, const RedDataType& NewAttribType)
 {
     RedType* retData = CreateObjectOfType(NewAttribType);
 
-    pAttribList->Add(RedString(strNewAttribName), retData);
+    pAttribList->Add(RedDataString(strNewAttribName), retData);
 
     return retData;
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-RedType* RedList::CreateObjectOfType(const RedDataType& NewAttribType)
+RedType* RedDataList::CreateObjectOfType(const RedDataType& NewAttribType)
 {
     RedType* retData = NULL;
 
-    if      (NewAttribType.IsBool())    retData = new RedBoolean;
-    else if (NewAttribType.IsChar())    retData = new RedChar;
+    if      (NewAttribType.IsBool())    retData = new RedDataBoolean;
+    else if (NewAttribType.IsChar())    retData = new RedDataChar;
     //else if (NewAttribType.IsList())    retData = new RedL;
-    else if (NewAttribType.IsNum())     retData = new RedNumber;
-    else if (NewAttribType.IsRecord())  retData = new RedList;
-    else if (NewAttribType.IsStr())     retData = new RedString;
-    else if (NewAttribType.IsVariant()) retData = new RedVariant;
+    else if (NewAttribType.IsNum())     retData = new RedDataNumber;
+    else if (NewAttribType.IsRecord())  retData = new RedDataList;
+    else if (NewAttribType.IsStr())     retData = new RedDataString;
+    else if (NewAttribType.IsVariant()) retData = new RedDataVariant;
 
     return retData;
 }
@@ -100,7 +119,7 @@ RedType* RedList::CreateObjectOfType(const RedDataType& NewAttribType)
 // Operators
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-void RedList::operator =(const RedList& cNewVal)
+void RedDataList::operator =(const RedDataList& cNewVal)
 {
     Init();
 

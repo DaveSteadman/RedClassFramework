@@ -78,7 +78,7 @@ void RedVSIParseStackTraverser::AddVariable(RedVSIParseStack& cStack, RedVSIPars
 {
 //    RedVSIParseTreeVar* pVar = (RedVSIParseTreeVar*)pExpr;
 //    
-//    RedString cInVarName;
+//    RedDataString cInVarName;
 //    RedVSIParseTreeInterface* pInVarIndexExpr = NULL;
 //    
 //    //pVar->GetDetails(cInVarName, pInVarIndexExpr);
@@ -109,9 +109,9 @@ void RedVSIParseStackTraverser::AddCall(RedVSIParseStack& cStack, RedVSIParseTre
     RedVSIParseTreeCall* pCall = dynamic_cast<RedVSIParseTreeCall*>(pExpr);
 
     // Get the call details
-    RedString        cOutObjectName;
-    RedString        cOutClassName;
-    RedString        cOutFuncName;
+    RedDataString        cOutObjectName;
+    RedDataString        cOutClassName;
+    RedDataString        cOutFuncName;
     RedVSIParseList* pOutParamList;
     pCall->GetDetails(cOutObjectName, cOutClassName, cOutFuncName, pOutParamList);
     

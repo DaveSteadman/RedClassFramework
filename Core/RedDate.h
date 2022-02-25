@@ -18,7 +18,7 @@
 
 #pragma once
 
-#include "RedString.h"
+#include "RedDataString.h"
 
 namespace Red {
 namespace Core {
@@ -35,7 +35,7 @@ public:
 
     void            Init(void) { SetDate(2000, 01, 01); };
     void            SetDate(const unsigned y, const unsigned m, const unsigned d) { year=y; month=m; date=d; };
-    void            SetDate(const RedString& datestr);
+    void            SetDate(const RedDataString& datestr);
     void            SetToday(void);
     static RedDate  Today(void);
 
@@ -56,9 +56,9 @@ public:
     static unsigned DaysInYear(const unsigned ForYear);
 
     // String output
-    RedString       DateString(void) const;
-    RedString       EightDigitDateString(void) const;
-    RedString       SixDigitDateString(void) const;
+    RedDataString       DateString(void) const;
+    RedDataString       EightDigitDateString(void) const;
+    RedDataString       SixDigitDateString(void) const;
 
     // Operators
     void operator =(const RedDate& cNewVal);

@@ -16,9 +16,9 @@ int main()
 
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-    Red::Core::RedString cTestString = "Red Framework";
+    Red::Core::RedDataString cTestString = "Red Framework";
 
-    Red::Core::RedChar cTestCh = cTestString[2];
+    Red::Core::RedDataChar cTestCh = cTestString[2];
     cTestString.SetCharAtIndex(2, 'e');
 
     Red::Core::RedTinyMLNode cRootNode("root");

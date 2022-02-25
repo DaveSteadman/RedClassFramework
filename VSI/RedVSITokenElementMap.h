@@ -35,20 +35,20 @@ public:
     RedVSITokenElementMap(void);
     ~RedVSITokenElementMap(void);
 
-    void      Add(const RedString& cStr, const RedVSIIOElement& cElem);
+    void      Add(const RedDataString& cStr, const RedVSIIOElement& cElem);
 
-    bool      Find(RedString& cCheckStr, RedVSIIOElement& cElem);
-    bool      FindString(RedVSIIOElement& cCheckElem, RedString& cStr);
+    bool      Find(RedDataString& cCheckStr, RedVSIIOElement& cElem);
+    bool      FindString(RedVSIIOElement& cCheckElem, RedDataString& cStr);
 
-    unsigned  CountMatchCandidates(RedString& cCheckStr);
+    unsigned  CountMatchCandidates(RedDataString& cCheckStr);
 
     unsigned  NumItems(void) const { return cMap.NumItems(); };
     bool      IsEmpty(void)  const { return cMap.IsEmpty();  };
 
 private:
 
-    typedef RedMapList<RedString, RedVSIIOElement>         MapListType;
-    typedef RedMapListIterator<RedString, RedVSIIOElement> MapListItType;
+    typedef RedMapList<RedDataString, RedVSIIOElement>         MapListType;
+    typedef RedMapListIterator<RedDataString, RedVSIIOElement> MapListItType;
 
     MapListType cMap;
 };

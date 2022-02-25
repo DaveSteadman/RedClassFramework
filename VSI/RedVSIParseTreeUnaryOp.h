@@ -19,7 +19,7 @@
 #pragma once
 
 #include "RedVSIParseTreeInterface.h"
-#include "RedVariant.h"
+#include "RedDataVariant.h"
 #include "RedVSIErrorCodes.h"
 #include "RedVSIContextInterface.h"
 #include "RedVSIErrorCodes.h"
@@ -54,9 +54,9 @@ protected:
 
     void CalcNegateResult(RedVSIContextInterface* pContext);
 
-//    void CalcNegateResult    (RedVSIContextInterface& cContext, RedVariant& cResult, int& iComplete);
-//    void CalcAddrOfItemResult(RedVSIContextInterface& cContext, RedVariant& cResult, int& iComplete);
-//    void CalcItemAtAddrResult(RedVSIContextInterface& cContext, RedVariant& cResult, int& iComplete);
+//    void CalcNegateResult    (RedVSIContextInterface& cContext, RedDataVariant& cResult, int& iComplete);
+//    void CalcAddrOfItemResult(RedVSIContextInterface& cContext, RedDataVariant& cResult, int& iComplete);
+//    void CalcItemAtAddrResult(RedVSIContextInterface& cContext, RedDataVariant& cResult, int& iComplete);
 
 private:
 

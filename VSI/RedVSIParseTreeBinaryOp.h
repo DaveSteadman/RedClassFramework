@@ -56,7 +56,7 @@ public:
 
 private:
 
-    RedVariant                  CalcPowerOp(RedVariant cLeftVal, RedVariant cRightVal);
+    RedDataVariant                  CalcPowerOp(RedDataVariant cLeftVal, RedDataVariant cRightVal);
 
     RedVSILangElement         cOp;
     RedVSIParseTreeInterface* pLeft;

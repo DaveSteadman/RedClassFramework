@@ -38,7 +38,7 @@ void RedNumberRange::SetBehaviour(const int b)
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-const bool RedNumberRange::IsInRange(const RedNumber& d) const 
+const bool RedNumberRange::IsInRange(const RedDataNumber& d) const 
 {
     if ((cLow <= d) && (d <= cHigh))
         return true;
@@ -48,22 +48,22 @@ const bool RedNumberRange::IsInRange(const RedNumber& d) const
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-const RedNumber RedNumberRange::FractionThroughRange(const RedNumber& d) const
+const RedDataNumber RedNumberRange::FractionThroughRange(const RedDataNumber& d) const
 {
-    RedNumber base(d - cLow);
-    RedNumber r(cHigh - cLow);
+    RedDataNumber base(d - cLow);
+    RedDataNumber r(cHigh - cLow);
     return base / r;
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-void RedNumberRange::WrapNumber(RedNumber& n) const
+void RedNumberRange::WrapNumber(RedDataNumber& n) const
 {
     if ((cLow < n) || (n < cHigh))
     {
-        RedNumber range         = cHigh - cLow;
-        RedNumber ZeroAdjustedN = n - cLow;
-        RedNumber wrapped       = ZeroAdjustedN.DivisionRemainder(range);
+        RedDataNumber range         = cHigh - cLow;
+        RedDataNumber ZeroAdjustedN = n - cLow;
+        RedDataNumber wrapped       = ZeroAdjustedN.DivisionRemainder(range);
 
         wrapped += cLow;
         n = wrapped;
@@ -72,7 +72,7 @@ void RedNumberRange::WrapNumber(RedNumber& n) const
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-void RedNumberRange::CropNumber(RedNumber& n) const
+void RedNumberRange::CropNumber(RedDataNumber& n) const
 {
     if (n > cHigh) n = cHigh;
     if (n < cLow)  n = cLow;
@@ -80,14 +80,14 @@ void RedNumberRange::CropNumber(RedNumber& n) const
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-const RedNumber RedNumberRange::RangeMin(void) const
+const RedDataNumber RedNumberRange::RangeMin(void) const
 {
     return cLow;
 };
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-const RedNumber RedNumberRange::RangeMax(void) const
+const RedDataNumber RedNumberRange::RangeMax(void) const
 {
     // If we have a floating point number, wrapping on the upper limit, we need to reduce it
     if (iIsWrapOnUpperLimit && !iIsIntegerOnly)
@@ -98,9 +98,9 @@ const RedNumber RedNumberRange::RangeMax(void) const
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-RedNumber RedNumberRange::RescaleNumber(const RedNumber& SourceNumber, const RedNumberRange& SourceRange, const RedNumberRange& DestRange)
+RedDataNumber RedNumberRange::RescaleNumber(const RedDataNumber& SourceNumber, const RedNumberRange& SourceRange, const RedNumberRange& DestRange)
 {
-    return RedNumber(0);
+    return RedDataNumber(0);
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

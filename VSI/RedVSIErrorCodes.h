@@ -71,7 +71,7 @@ public:
         eParseBinOp_RightOnlyObj
     } TErrorCodes;
 
-    static RedString GetErrorString(TErrorCodes eErrCode);
+    static RedDataString GetErrorString(TErrorCodes eErrCode);
 };
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

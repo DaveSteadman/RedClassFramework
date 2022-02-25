@@ -52,7 +52,7 @@ RedResult RedVSIContextFactory::CreateContext(RedVSIContextRoutine** OutputConte
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-RedResult RedVSIContextFactory::LoadFragmentIntoContext(const RedString& InputCodeFragment, RedVSIContextRoutine& UpdateContext)
+RedResult RedVSIContextFactory::LoadFragmentIntoContext(const RedDataString& InputCodeFragment, RedVSIContextRoutine& UpdateContext)
 {
     // Turn the code into tokens
     RedVSILibTokenMap cTokenMap;
@@ -77,7 +77,7 @@ RedResult RedVSIContextFactory::LoadFragmentIntoContext(const RedString& InputCo
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-RedResult RedVSIContextFactory::CreateThreadContextForRoutine(const RedString& classname, const RedString& routinename, RedVSILib* pInputLib, RedVSIContextThread** OutputThreadContext, RedLog& cLog)
+RedResult RedVSIContextFactory::CreateThreadContextForRoutine(const RedDataString& classname, const RedDataString& routinename, RedVSILib* pInputLib, RedVSIContextThread** OutputThreadContext, RedLog& cLog)
 {
     // Find the routine to execute
     RedVSILibRoutineInterface* LibRoutine = pInputLib->FindRoutine(classname, routinename);

@@ -25,7 +25,7 @@ namespace VSI {
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-bool RedVSITokenFactory::CreateTokens(const RedString& cInputText, RedVSITokenElementMap& cTokenMap, RedVSITokenBuffer& cOutputTokenList)
+bool RedVSITokenFactory::CreateTokens(const RedDataString& cInputText, RedVSITokenElementMap& cTokenMap, RedVSITokenBuffer& cOutputTokenList)
 {
     cOutputTokenList.Init();
     RedBufferInput cCodeBuffer(cInputText);
@@ -53,7 +53,7 @@ bool RedVSITokenFactory::CreateTokens(RedBufferInput& cInputBuffer, RedVSITokenE
     }
     while( (!cNewTok.IsEOF()) && (cNewTok.IsValid()) );
 
-    //RedString cRep = Test_RedVSITokenBuffer::CreateBufferReport(cOutputTokenList, cTokenMap);
+    //RedDataString cRep = Test_RedVSITokenBuffer::CreateBufferReport(cOutputTokenList, cTokenMap);
 
     // Initialise if we've not interpreted all the tokens right.
     if (!cNewTok.IsValid()) 
@@ -83,7 +83,7 @@ RedResult RedVSITokenFactory::RunTokenComp(RedBufferInput& cInputBuffer, RedVSIT
     int        iStartPos = cInputBuffer.GetPos();
     RedBufferPos cBufPos = cInputBuffer.GetRowColPos();
     
-    //RedChar cPreviewChar = cInputBuffer.PreviewNextChar();
+    //RedDataChar cPreviewChar = cInputBuffer.PreviewNextChar();
     
     unsigned iCompetitionEntry = 1;
 
@@ -118,10 +118,10 @@ RedResult RedVSITokenFactory::NumberComp(RedBufferInput& cInputBuffer, RedVSITok
 {
     bool      iProcessingComplete = false;
     bool      iDecimalPointUsed   = false;
-    RedChar   cPreviewChar1;
-    RedChar   cPreviewChar2;
-    RedChar   cNewChar;
-    RedString cTokenText;
+    RedDataChar   cPreviewChar1;
+    RedDataChar   cPreviewChar2;
+    RedDataChar   cNewChar;
+    RedDataString cTokenText;
     
     // If the first character isn't numeric, return false.
     cPreviewChar1 = cInputBuffer.PreviewAhead(1);
@@ -153,7 +153,7 @@ RedResult RedVSITokenFactory::NumberComp(RedBufferInput& cInputBuffer, RedVSITok
 
         // We have a number token, so convert the input string to a numeric
         // value.
-        cNewTok.SetNumber(RedNumber(cTokenText));
+        cNewTok.SetNumber(RedDataNumber(cTokenText));
         return RedResult::Success();
     }
     else
@@ -166,12 +166,12 @@ RedResult RedVSITokenFactory::NumberComp(RedBufferInput& cInputBuffer, RedVSITok
 
 RedResult RedVSITokenFactory::StringLiteralComp(RedBufferInput& cInputBuffer, RedVSIToken& cNewTok)
 {
-    RedChar   cPreviewChar;
-    RedChar   cNewChar;
-    RedString cTokenText;
+    RedDataChar   cPreviewChar;
+    RedDataChar   cNewChar;
+    RedDataString cTokenText;
 
     // create a quick list, so we can store a number of nested quote characters
-    RedChar   aQuoteList[10];
+    RedDataChar   aQuoteList[10];
     int         iQuotePos = 0;
     for (int i=0; i<10; i++) aQuoteList[i]='\0';
             
@@ -219,8 +219,8 @@ RedResult RedVSITokenFactory::StringLiteralComp(RedBufferInput& cInputBuffer, Re
 
 RedResult RedVSITokenFactory::NonPrintableComp(RedBufferInput& cInputBuffer, RedVSIToken& cNewTok)
 {
-    RedChar   cPreviewChar;
-    RedChar   cNewChar;
+    RedDataChar   cPreviewChar;
+    RedDataChar   cNewChar;
         
     // If the first character isn't a quote character, return false.
     cPreviewChar = cInputBuffer.PreviewNextChar();
@@ -238,10 +238,10 @@ RedResult RedVSITokenFactory::NonPrintableComp(RedBufferInput& cInputBuffer, Red
 
 RedResult RedVSITokenFactory::NameComp(RedBufferInput& cInputBuffer, RedVSIToken& cNewTok)
 {
-    RedChar       cPreviewChar;
-    RedChar       cNewChar;
-    RedString     cPreviewStr;
-    RedString     cValidStr;
+    RedDataChar       cPreviewChar;
+    RedDataChar       cNewChar;
+    RedDataString     cPreviewStr;
+    RedDataString     cValidStr;
     
     RedVSIIOElement  cElem;
     RedVSIIOElement  cFinalElem;
@@ -267,10 +267,10 @@ RedResult RedVSITokenFactory::NameComp(RedBufferInput& cInputBuffer, RedVSIToken
 RedResult RedVSITokenFactory::PredefinedComp(RedBufferInput& cInputBuffer, RedVSITokenElementMap& cTokenMap, RedVSIToken& cNewTok)
 {
     bool          iProcessingComplete = false;
-    RedChar       cPreviewChar;
-    RedChar       cNewChar;
-    RedString     cPreviewStr;
-    RedString     cValidStr;
+    RedDataChar       cPreviewChar;
+    RedDataChar       cNewChar;
+    RedDataString     cPreviewStr;
+    RedDataString     cValidStr;
     
     RedVSIIOElement  cElem;
     RedVSIIOElement  cFinalElem;

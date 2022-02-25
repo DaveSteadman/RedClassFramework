@@ -16,19 +16,19 @@
 // (http://opensource.org/licenses/MIT)
 // -------------------------------------------------------------------------------------------------
 
-#include "RedVariant.h"
-#include "RedBoolean.h"
+#include "RedDataVariant.h"
+#include "RedDataBoolean.h"
 
-#include "RedChar.h"
-#include "RedString.h"
-#include "RedNumber.h"
+#include "RedDataChar.h"
+#include "RedDataString.h"
+#include "RedDataNumber.h"
 
 namespace Red {
 namespace Core {
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-void RedVariant::Init(void)
+void RedDataVariant::Init(void)
 {
     if (pData)
     {
@@ -39,7 +39,7 @@ void RedVariant::Init(void)
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-RedDataType RedVariant::Type(void) const
+RedDataType RedDataVariant::Type(void) const
 {
     if (pData)
         return pData->Type();
@@ -49,9 +49,9 @@ RedDataType RedVariant::Type(void) const
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-RedType* RedVariant::Clone(void) const
+RedType* RedDataVariant::Clone(void) const
 {
-    RedVariant* pNewData = new RedVariant();
+    RedDataVariant* pNewData = new RedDataVariant();
     
     if (pData)
         pNewData->SetValue(pData->Clone());
@@ -62,7 +62,7 @@ RedType* RedVariant::Clone(void) const
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 // Set a new value to the object. It maintains its own data, so any existing
 // data is deleted and the input is cloned.
-void RedVariant::SetValue(const RedType* pNewData)
+void RedDataVariant::SetValue(const RedType* pNewData)
 {
     Init();
     if (pNewData)
@@ -71,7 +71,7 @@ void RedVariant::SetValue(const RedType* pNewData)
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-void RedVariant::SetValue(const RedVariant& cDataItem)
+void RedDataVariant::SetValue(const RedDataVariant& cDataItem)
 { 
     Init();
     if (cDataItem.IsValid())
@@ -80,47 +80,47 @@ void RedVariant::SetValue(const RedVariant& cDataItem)
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-void RedVariant::SetValue(const RedBoolean& cNewBool)
+void RedDataVariant::SetValue(const RedDataBoolean& cNewBool)
 {
     Init();
-    pData = new RedBoolean(cNewBool);
+    pData = new RedDataBoolean(cNewBool);
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-void RedVariant::SetValue(const RedNumber& cNewNum)
+void RedDataVariant::SetValue(const RedDataNumber& cNewNum)
 {
     Init();
-    pData = new RedNumber(cNewNum);
+    pData = new RedDataNumber(cNewNum);
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-void RedVariant::SetValue(const RedChar& cNewCh)
+void RedDataVariant::SetValue(const RedDataChar& cNewCh)
 {
     Init();
-    pData = new RedChar(cNewCh);
+    pData = new RedDataChar(cNewCh);
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-void RedVariant::SetValue(const RedRecord&  cNewRec)
+void RedDataVariant::SetValue(const RedDataRecord&  cNewRec)
 {
     Init();
-    pData = new RedRecord(cNewRec);
+    pData = new RedDataRecord(cNewRec);
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-void RedVariant::SetValue(const RedString& cNewStr)
+void RedDataVariant::SetValue(const RedDataString& cNewStr)
 {
     Init();
-    pData = new RedString(cNewStr);
+    pData = new RedDataString(cNewStr);
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-RedType* RedVariant::Value(void)
+RedType* RedDataVariant::Value(void)
 {
     if (pData)
         return pData;
@@ -130,7 +130,7 @@ RedType* RedVariant::Value(void)
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-bool RedVariant::ExportTo(RedType* pExportToData) const
+bool RedDataVariant::ExportTo(RedType* pExportToData) const
 {
     bool is_success = false;
 
@@ -142,36 +142,36 @@ bool RedVariant::ExportTo(RedType* pExportToData) const
         {
             if (pExportToData->Type().IsBool())
             {
-                RedBoolean* pSourceDataBool = dynamic_cast<RedBoolean*>(pData);
-                RedBoolean* pExportToBool   = dynamic_cast<RedBoolean*>(pExportToData);
+                RedDataBoolean* pSourceDataBool = dynamic_cast<RedDataBoolean*>(pData);
+                RedDataBoolean* pExportToBool   = dynamic_cast<RedDataBoolean*>(pExportToData);
                 *pExportToBool              = *pSourceDataBool;
                 is_success                  = true;
             }
             else if (pExportToData->Type().IsChar())
             {
-                RedChar* pSourceDataChar    = dynamic_cast<RedChar*>(pData);
-                RedChar* pExportToChar      = dynamic_cast<RedChar*>(pExportToData);
+                RedDataChar* pSourceDataChar    = dynamic_cast<RedDataChar*>(pData);
+                RedDataChar* pExportToChar      = dynamic_cast<RedDataChar*>(pExportToData);
                 *pExportToChar              = *pSourceDataChar;
                 is_success                  = true;
             }
             else if (pExportToData->Type().IsNum())
             {
-                RedNumber* pSourceDataNum   = dynamic_cast<RedNumber*>(pData);
-                RedNumber* pExportToNum     = dynamic_cast<RedNumber*>(pExportToData);
+                RedDataNumber* pSourceDataNum   = dynamic_cast<RedDataNumber*>(pData);
+                RedDataNumber* pExportToNum     = dynamic_cast<RedDataNumber*>(pExportToData);
                 *pExportToNum               = *pSourceDataNum;
                 is_success                  = true;
             }
             else if (pExportToData->Type().IsStr())
             {
-                RedString* pSourceDataStr   = dynamic_cast<RedString*>(pData);
-                RedString* pExportToStr     = dynamic_cast<RedString*>(pExportToData);
+                RedDataString* pSourceDataStr   = dynamic_cast<RedDataString*>(pData);
+                RedDataString* pExportToStr     = dynamic_cast<RedDataString*>(pExportToData);
                 *pExportToStr               = *pSourceDataStr;
                 is_success                  = true;
             }
             else if (pExportToData->Type().IsRecord())
             {
-                RedRecord* pSourceDataRec   = dynamic_cast<RedRecord*>(pData);
-                RedRecord* pExportToRec     = dynamic_cast<RedRecord*>(pExportToData);
+                RedDataRecord* pSourceDataRec   = dynamic_cast<RedDataRecord*>(pData);
+                RedDataRecord* pExportToRec     = dynamic_cast<RedDataRecord*>(pExportToData);
                 *pExportToRec               = *pSourceDataRec;
                 is_success                  = true;
             }
@@ -182,8 +182,8 @@ bool RedVariant::ExportTo(RedType* pExportToData) const
         // Exporting a one character string into a char type
         else if (pData->Type().IsStr() && pExportToData->Type().IsChar())
         {
-            RedString* pSourceDataStr = dynamic_cast<RedString*>(pData);
-            RedChar*   pExportToChr   = dynamic_cast<RedChar*>(pExportToData);
+            RedDataString* pSourceDataStr = dynamic_cast<RedDataString*>(pData);
+            RedDataChar*   pExportToChr   = dynamic_cast<RedDataChar*>(pExportToData);
 
             if (pSourceDataStr->Length() == 1)
             {
@@ -197,14 +197,14 @@ bool RedVariant::ExportTo(RedType* pExportToData) const
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-RedBoolean RedVariant::BoolValue(void) const
+RedDataBoolean RedDataVariant::BoolValue(void) const
 {
-    RedBoolean cBool;
+    RedDataBoolean cBool;
     
     // Assign the data to the return type only if its numeric.
     if (pData->Type().IsBool())
     {
-        RedBoolean* pBoolData = dynamic_cast<RedBoolean*>(pData);
+        RedDataBoolean* pBoolData = dynamic_cast<RedDataBoolean*>(pData);
         cBool = *pBoolData;
     }
     return cBool;
@@ -212,14 +212,14 @@ RedBoolean RedVariant::BoolValue(void) const
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-RedNumber RedVariant::NumberValue(void) const
+RedDataNumber RedDataVariant::NumberValue(void) const
 {
-    RedNumber cNum;
+    RedDataNumber cNum;
     
     // Assign the data to the return type only if its numeric.
     if (pData->Type().IsNum())
     {
-        RedNumber* pNumData = dynamic_cast<RedNumber*>(pData);
+        RedDataNumber* pNumData = dynamic_cast<RedDataNumber*>(pData);
         cNum = *pNumData; 
     }
     return cNum;
@@ -227,28 +227,28 @@ RedNumber RedVariant::NumberValue(void) const
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-RedString RedVariant::StringValue(void) const
+RedDataString RedDataVariant::StringValue(void) const
 {
-    RedString cStr;
+    RedDataString cStr;
     
     // Assign the data to the return type only if its numeric.
     if (pData->Type().IsStr())
     {
-        RedString* pStrData = dynamic_cast<RedString*>(pData);
+        RedDataString* pStrData = dynamic_cast<RedDataString*>(pData);
         cStr = *pStrData;
     }
-    if (pData->Type().IsBool())
+    else if (pData->Type().IsBool())
     {
-        RedBoolean b;
+        RedDataBoolean b;
         ExportTo(&b);
         if (b.IsTrue())
             cStr = "true";
         if (b.IsFalse())
             cStr = "false";
     }
-    if (pData->Type().IsNum())
+    else if (pData->Type().IsNum())
     {
-        RedNumber* pNumData = dynamic_cast<RedNumber*>(pData);
+        RedDataNumber* pNumData = dynamic_cast<RedDataNumber*>(pData);
         cStr = pNumData->DecimalString();
     }
 
@@ -257,7 +257,54 @@ RedString RedVariant::StringValue(void) const
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-bool RedVariant::IsSuccessVal(void) const
+RedDataChar RedDataVariant::CharValue(void) const
+{
+    RedDataChar cChr;
+
+    if (pData->Type().IsStr())
+    {
+        RedDataString* pStrData = dynamic_cast<RedDataString*>(pData);
+        cChr = pStrData->FirstCharObj();
+    }
+    else if (pData->Type().IsBool())
+    {
+        RedDataBoolean b;
+        ExportTo(&b);
+        if (b.IsTrue())
+            cChr = '1';
+        if (b.IsFalse())
+            cChr = '0';
+    }
+    else if (pData->Type().IsChar())
+    {
+        RedDataChar* pChrData = dynamic_cast<RedDataChar*>(pData);
+        cChr = *pChrData;
+    }
+
+    return cChr;
+}
+
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+RedDataList RedDataVariant::ListValue(void) const
+{
+    RedDataList cLst;
+
+    return cLst;
+}
+
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+RedDataRecord RedDataVariant::RecordValue(void) const
+{
+    RedDataRecord cRec;
+
+    return cRec;
+}
+
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+bool RedDataVariant::IsSuccessVal(void) const
 {
     if (pData->Type().IsNum())
     {
@@ -276,7 +323,7 @@ bool RedVariant::IsSuccessVal(void) const
 // Operators
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-void RedVariant::operator =(const RedType* pNewData)
+void RedDataVariant::operator =(const RedType* pNewData)
 {
     Init();
 
@@ -285,7 +332,7 @@ void RedVariant::operator =(const RedType* pNewData)
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-void RedVariant::operator =(const RedVariant& cVarData)
+void RedDataVariant::operator =(const RedDataVariant& cVarData)
 {
     Init();
 
@@ -295,21 +342,21 @@ void RedVariant::operator =(const RedVariant& cVarData)
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-RedVariant RedVariant::operator+(const RedVariant& cVarData)
+RedDataVariant RedDataVariant::operator+(const RedDataVariant& cVarData)
 {
-    RedVariant cRetVal;
+    RedDataVariant cRetVal;
     
     // Number + Number
     if ( (pData->Type().IsNum()) && (cVarData.Type().IsNum()) )
     {
-        RedNumber cRes = NumberValue() + cVarData.NumberValue();
+        RedDataNumber cRes = NumberValue() + cVarData.NumberValue();
         cRetVal.SetValue(&cRes);
     }
 
     // String + String
     if ( (pData->Type().IsStr()) && (cVarData.Type().IsStr()) )
     {
-        RedString cRes = StringValue() + cVarData.StringValue();
+        RedDataString cRes = StringValue() + cVarData.StringValue();
         cRetVal.SetValue(&cRes);
     }
     
@@ -318,13 +365,13 @@ RedVariant RedVariant::operator+(const RedVariant& cVarData)
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-RedVariant RedVariant::operator-(const RedVariant& cVarData)
+RedDataVariant RedDataVariant::operator-(const RedDataVariant& cVarData)
 {
-    RedVariant cRetVal;
+    RedDataVariant cRetVal;
     
     if ( (pData->Type().IsNum()) && (cVarData.Type().IsNum()) )
     {
-        RedNumber cRes = *((RedNumber*)pData) - cVarData.NumberValue();
+        RedDataNumber cRes = *((RedDataNumber*)pData) - cVarData.NumberValue();
         cRetVal.SetValue(&cRes);
     }
     
@@ -333,13 +380,13 @@ RedVariant RedVariant::operator-(const RedVariant& cVarData)
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-RedVariant RedVariant::operator*(const RedVariant& cVarData)
+RedDataVariant RedDataVariant::operator*(const RedDataVariant& cVarData)
 {
-    RedVariant cRetVal;
+    RedDataVariant cRetVal;
     
     if ( (pData->Type().IsNum()) && (cVarData.Type().IsNum()) )
     {
-        RedNumber cRes = *((RedNumber*)pData) * cVarData.NumberValue();
+        RedDataNumber cRes = *((RedDataNumber*)pData) * cVarData.NumberValue();
         cRetVal.SetValue(&cRes);
     }
     
@@ -348,13 +395,13 @@ RedVariant RedVariant::operator*(const RedVariant& cVarData)
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-RedVariant RedVariant::operator/(const RedVariant& cVarData)
+RedDataVariant RedDataVariant::operator/(const RedDataVariant& cVarData)
 {
-    RedVariant cRetVal;
+    RedDataVariant cRetVal;
     
     if ( (pData->Type().IsNum()) && (cVarData.Type().IsNum()) )
     {
-        RedNumber cRes = *((RedNumber*)pData) / cVarData.NumberValue();
+        RedDataNumber cRes = *((RedDataNumber*)pData) / cVarData.NumberValue();
         cRetVal.SetValue(&cRes);
     }
 
@@ -365,7 +412,7 @@ RedVariant RedVariant::operator/(const RedVariant& cVarData)
 // Comparison Operators
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-bool operator==(const RedVariant& lhs, const RedVariant& rhs)
+bool operator==(const RedDataVariant& lhs, const RedDataVariant& rhs)
 {
     if (!lhs.IsValid() &&  rhs.IsValid()) return false;
     if ( lhs.IsValid() && !rhs.IsValid()) return false;
@@ -397,7 +444,7 @@ bool operator==(const RedVariant& lhs, const RedVariant& rhs)
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-bool operator!=(const RedVariant& lhs, const RedVariant& rhs)
+bool operator!=(const RedDataVariant& lhs, const RedDataVariant& rhs)
 {
     if (!lhs.IsValid() &&  rhs.IsValid()) return true;
     if ( lhs.IsValid() && !rhs.IsValid()) return true;
@@ -446,7 +493,7 @@ bool operator!=(const RedVariant& lhs, const RedVariant& rhs)
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-bool operator >(const RedVariant& lhs, const RedVariant& rhs)
+bool operator >(const RedDataVariant& lhs, const RedDataVariant& rhs)
 {
     if ( (lhs.Type().IsNum()) && (rhs.Type().IsNum()) )
     {
@@ -457,7 +504,7 @@ bool operator >(const RedVariant& lhs, const RedVariant& rhs)
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-bool operator <(const RedVariant& lhs, const RedVariant& rhs)
+bool operator <(const RedDataVariant& lhs, const RedDataVariant& rhs)
 {
     if ( (lhs.Type().IsNum()) && (rhs.Type().IsNum()) )
     {
@@ -468,7 +515,7 @@ bool operator <(const RedVariant& lhs, const RedVariant& rhs)
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-bool operator>=(const RedVariant& lhs, const RedVariant& rhs)
+bool operator>=(const RedDataVariant& lhs, const RedDataVariant& rhs)
 {
     if ( (lhs.Type().IsNum()) && (rhs.Type().IsNum()) )
     {
@@ -479,7 +526,7 @@ bool operator>=(const RedVariant& lhs, const RedVariant& rhs)
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-bool operator<=(const RedVariant& lhs, const RedVariant& rhs)
+bool operator<=(const RedDataVariant& lhs, const RedDataVariant& rhs)
 {
     if ( (lhs.Type().IsNum()) && (rhs.Type().IsNum()) )
     {

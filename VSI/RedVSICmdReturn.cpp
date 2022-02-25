@@ -51,7 +51,7 @@ void RedVSICmdReturn::Execute(RedVSIContextInterface* pContext)
     if (pReturnExpr)
     {
         // Get the expression value
-        RedVariant res = pContext->ExprResult(pReturnExpr);
+        RedDataVariant res = pContext->ExprResult(pReturnExpr);
         
         // Assign the return value
         pContext->SetValueToReturn(res);

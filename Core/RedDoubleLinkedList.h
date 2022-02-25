@@ -408,7 +408,7 @@ RedDoubleLinkedList<Element>* RedDoubleLinkedList<Element>::Clone(void)
     Element cCurrElem;
     for (unsigned i=0; i<iNumItems; i++)
     {
-        if (FindElementAtIndex(i, &cCurrElem))
+        if (FindElementAtIndex(i, cCurrElem))
             pNewList->AddLast(cCurrElem);
     }
 

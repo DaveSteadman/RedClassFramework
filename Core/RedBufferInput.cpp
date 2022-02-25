@@ -34,10 +34,10 @@ void RedBufferInput::Init(void)
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-RedChar RedBufferInput::GetNextChar(void)
+RedDataChar RedBufferInput::GetNextChar(void)
 {
     // get the character
-    RedChar cCharObj( cStrBuffer.CharAtIndex(iCharPos) );
+    RedDataChar cCharObj( cStrBuffer.CharAtIndex(iCharPos) );
 
     // increment to the next read position. The string class deals with any 
     // boundary checks.
@@ -53,28 +53,28 @@ RedChar RedBufferInput::GetNextChar(void)
 
 // routine to get the next character, but not move the position along.
 
-RedChar RedBufferInput::PreviewNextChar(void)
+RedDataChar RedBufferInput::PreviewNextChar(void)
 {
     // get the character
-    RedChar cCharObj( cStrBuffer.CharAtIndex(iCharPos) );
+    RedDataChar cCharObj( cStrBuffer.CharAtIndex(iCharPos) );
 
     return cCharObj;
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-RedChar RedBufferInput::PreviewAhead(const unsigned IndexAhead)
+RedDataChar RedBufferInput::PreviewAhead(const unsigned IndexAhead)
 {
     const unsigned required_index = (iCharPos - 1) + IndexAhead;
 
-    RedChar retch( cStrBuffer.CharAtIndex(required_index));
+    RedDataChar retch( cStrBuffer.CharAtIndex(required_index));
 
     return retch;
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-void RedBufferInput::GetCharAndPreview(RedChar& ch, RedChar& previewch)
+void RedBufferInput::GetCharAndPreview(RedDataChar& ch, RedDataChar& previewch)
 {
     ch = this->GetNextChar();
     previewch = this->PreviewNextChar();
@@ -84,7 +84,7 @@ void RedBufferInput::GetCharAndPreview(RedChar& ch, RedChar& previewch)
 
 void RedBufferInput::SkipWhitespace(void)
 {
-    RedChar cChar;
+    RedDataChar cChar;
 
     // look ahead to the next character
     cChar = PreviewNextChar();

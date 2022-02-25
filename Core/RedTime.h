@@ -46,13 +46,13 @@ public:
     void Init(void) { hours=0; minutes=0; seconds=0.0; };
 
     void SetTime(const unsigned h, const unsigned m, const double& s) { hours=h; minutes=m; seconds=s; };
-    void SetTime(const RedString& timestr);
+    void SetTime(const RedDataString& timestr);
     void SetNow(void);
 
     static RedTime Now(void);
 
     // Time Presentation
-    const RedString TimeString(void) const;   // hh:mm:ss
+    const RedDataString TimeString(void) const;   // hh:mm:ss
     const unsigned  SixDigitTime(void) const; // hhmmss
 
     // Seconds In Day Routines

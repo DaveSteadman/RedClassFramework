@@ -19,7 +19,7 @@
 #pragma once
 
 // Include Namespaces
-#include "RedString.h"
+#include "RedDataString.h"
 
 using namespace Red::Core;
 
@@ -33,16 +33,16 @@ namespace Core {
 class RedTinyMLElement
 {
 public:
-    RedTinyMLElement(const RedString& initname) { SetName(initname); };
+    RedTinyMLElement(const RedDataString& initname) { SetName(initname); };
 
-    RedString    Name(void) const { return name;  };
-    void         SetName(const RedString& initname) { name = initname; };
+    RedDataString    Name(void) const { return name;  };
+    void         SetName(const RedDataString& initname) { name = initname; };
 
     virtual bool IsLeaf(void) const { return false; };
     virtual bool IsNode(void) const { return false; };
 
 private:
-    RedString name;
+    RedDataString name;
 };
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

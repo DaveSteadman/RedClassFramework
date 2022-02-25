@@ -35,21 +35,21 @@ class RedVSIParseTreeVal : public RedVSIParseTreeInterface
 public:
 
     RedVSIParseTreeVal(void)                      { Init(); };
-    RedVSIParseTreeVal(RedVariant cNewVal)        { SetValue(cNewVal); };
+    RedVSIParseTreeVal(RedDataVariant cNewVal)        { SetValue(cNewVal); };
     ~RedVSIParseTreeVal(void)                     { };
     // Inherited RedType
     void              Init(void)            { cVal.Init(); };
     RedVSILangElement Type(void) const      { return RedVSILangElement::ParseValue(); };
     
     // Query
-    const RedVariant Value(void) const            { return cVal;  };
-    void             SetValue(RedVariant& cInVal) { cVal = cInVal; };
+    const RedDataVariant Value(void) const            { return cVal;  };
+    void             SetValue(RedDataVariant& cInVal) { cVal = cInVal; };
 
     // Inherited RedVSIParseTreeInterface
     void CalcResult(RedVSIContextInterface* pContext) { pContext->SetExprResult(this, cVal); };
 
 private:
-    RedVariant cVal;
+    RedDataVariant cVal;
 };
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

@@ -41,14 +41,14 @@ RedVSITokenElementMap::~RedVSITokenElementMap(void)
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-void RedVSITokenElementMap::Add(const RedString& cStr, const RedVSIIOElement& cElem)
+void RedVSITokenElementMap::Add(const RedDataString& cStr, const RedVSIIOElement& cElem)
 {
     cMap.Add(cStr, cElem); 
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-bool RedVSITokenElementMap::Find(RedString& cCheckStr, RedVSIIOElement& cElem)
+bool RedVSITokenElementMap::Find(RedDataString& cCheckStr, RedVSIIOElement& cElem)
 {
     MapListItType cIt(&cMap);
 
@@ -57,7 +57,7 @@ bool RedVSITokenElementMap::Find(RedString& cCheckStr, RedVSIIOElement& cElem)
     while (!cIt.IsDone()) 
     {
         // Get the item from the list
-        RedString       cCurrMapStr  = cIt.CurrentId();
+        RedDataString       cCurrMapStr  = cIt.CurrentId();
         RedVSIIOElement cCurrMapElem = cIt.CurrentData();
 
         // If the strings match, return the corresponding element
@@ -75,7 +75,7 @@ bool RedVSITokenElementMap::Find(RedString& cCheckStr, RedVSIIOElement& cElem)
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-bool RedVSITokenElementMap::FindString(RedVSIIOElement& cCheckElem, RedString& cStr)
+bool RedVSITokenElementMap::FindString(RedVSIIOElement& cCheckElem, RedDataString& cStr)
 {
     MapListItType cIt(&cMap);
 
@@ -84,7 +84,7 @@ bool RedVSITokenElementMap::FindString(RedVSIIOElement& cCheckElem, RedString& c
     while (!cIt.IsDone()) 
     {
         // Get the item from the list
-        RedString       cCurrMapStr  = cIt.CurrentId();
+        RedDataString       cCurrMapStr  = cIt.CurrentId();
         RedVSIIOElement cCurrMapElem = cIt.CurrentData();
 
         // If the strings match, return the corresponding element
@@ -102,7 +102,7 @@ bool RedVSITokenElementMap::FindString(RedVSIIOElement& cCheckElem, RedString& c
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-unsigned RedVSITokenElementMap::CountMatchCandidates(RedString& cCheckStr)
+unsigned RedVSITokenElementMap::CountMatchCandidates(RedDataString& cCheckStr)
 {
     // create map iterator and initialise outputs
     MapListItType   cIt(&cMap);
@@ -115,14 +115,14 @@ unsigned RedVSITokenElementMap::CountMatchCandidates(RedString& cCheckStr)
     while (!cIt.IsDone())
     {
         // Get the item from the list
-        RedString       cCurrMapStr  = cIt.CurrentId();
+        RedDataString       cCurrMapStr  = cIt.CurrentId();
         //RedVSIIOElement cCurrMapElem = cIt.CurrentData();
 
         // if the map string is longer than the check string, create a cropped
         // version of the map string to check against
         if (cCurrMapStr.Length() > cCheckStr.Length())
         {
-            RedString cCroppedMapStr = cCurrMapStr.SubStr(0, cCheckStr.ContentSize());
+            RedDataString cCroppedMapStr = cCurrMapStr.SubStr(0, cCheckStr.ContentSize());
             
             // if the cropped match string matches the check string, we have a potential match
             if (cCroppedMapStr == cCheckStr)

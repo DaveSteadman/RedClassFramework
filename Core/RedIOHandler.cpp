@@ -29,13 +29,13 @@ namespace Core {
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-RedString RedIOHandler::BaseDir = "";
+RedDataString RedIOHandler::BaseDir = "";
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-bool RedIOHandler::FileExists(const RedString& cFilepath)
+bool RedIOHandler::FileExists(const RedDataString& cFilepath)
 {
-    const RedString fullpath = BaseDir + cFilepath;
+    const RedDataString fullpath = BaseDir + cFilepath;
     if (FILE * file = fopen(fullpath.TextPtr(), "r"))
     {
         fclose(file);
@@ -46,9 +46,9 @@ bool RedIOHandler::FileExists(const RedString& cFilepath)
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-RedResult RedIOHandler::InputBufferFromFile(const RedString& cFilepath, RedBufferInput& cBuf)
+RedResult RedIOHandler::InputBufferFromFile(const RedDataString& cFilepath, RedBufferInput& cBuf)
 {
-    const RedString fullpath = BaseDir + cFilepath;
+    const RedDataString fullpath = BaseDir + cFilepath;
 
     // open the file, returning fail if required
     FILE* pFile = fopen (fullpath.TextPtr(),"r");
@@ -56,7 +56,7 @@ RedResult RedIOHandler::InputBufferFromFile(const RedString& cFilepath, RedBuffe
         return kResultFail;
 
     // create and/or initialise the variables to read the data
-    RedString cData;
+    RedDataString cData;
     int c;
 
     // loop, read each character until we run out of file
@@ -72,9 +72,9 @@ RedResult RedIOHandler::InputBufferFromFile(const RedString& cFilepath, RedBuffe
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-RedResult RedIOHandler::OutputBufferToFile(const RedString& cFilepath, RedBufferOutput& cBuf)
+RedResult RedIOHandler::OutputBufferToFile(const RedDataString& cFilepath, RedBufferOutput& cBuf)
 {
-    const RedString fullpath = BaseDir + cFilepath;    
+    const RedDataString fullpath = BaseDir + cFilepath;    
     
     // open the file, returning fail if required
     FILE* pFile = fopen (fullpath.TextPtr(),"w");
@@ -83,7 +83,7 @@ RedResult RedIOHandler::OutputBufferToFile(const RedString& cFilepath, RedBuffer
         return kResultFail;
     }
 
-    RedString strBuf = cBuf.ExtractData();
+    RedDataString strBuf = cBuf.ExtractData();
     int iLen = strBuf.Length();
     
     for (int i=0; i<iLen; i++)

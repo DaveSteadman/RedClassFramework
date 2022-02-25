@@ -35,10 +35,10 @@ namespace Red {
         {
         public:
 
-            static RedResult LoadFragmentIntoContext(const RedString& InputCodeFragment, RedVSIContextRoutine& UpdateContext);
+            static RedResult LoadFragmentIntoContext(const RedDataString& InputCodeFragment, RedVSIContextRoutine& UpdateContext);
 
             static RedResult CreateContext(RedVSIContextRoutine** OutputContext, RedLog& cLog);
-            static RedResult CreateThreadContextForRoutine(const RedString& classname, const RedString& routinename, RedVSILib* pInputLib, RedVSIContextThread** OutputThreadContext, RedLog& cLog);
+            static RedResult CreateThreadContextForRoutine(const RedDataString& classname, const RedDataString& routinename, RedVSILib* pInputLib, RedVSIContextThread** OutputThreadContext, RedLog& cLog);
         };
 
         // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

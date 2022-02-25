@@ -19,8 +19,8 @@
 #pragma once
 
 #include "RedType.h"
-#include "RedNumber.h"
-#include "RedBoolean.h"
+#include "RedDataNumber.h"
+#include "RedDataBoolean.h"
 
 namespace Red {
 namespace Core {
@@ -40,8 +40,8 @@ public:
     // constructors
     RedNumberRange() { Init(); };
     RedNumberRange(const double l, const double h) { cLow=l; cHigh=h; SetBehaviour(0); };
-    RedNumberRange(const RedNumber& l, const RedNumber& h) { SetRange(l, h); SetBehaviour(0); };
-    RedNumberRange(const RedNumber& l, const RedNumber& h, const int b) { SetRange(l, h); SetBehaviour(b); };
+    RedNumberRange(const RedDataNumber& l, const RedDataNumber& h) { SetRange(l, h); SetBehaviour(0); };
+    RedNumberRange(const RedDataNumber& l, const RedDataNumber& h, const int b) { SetRange(l, h); SetBehaviour(b); };
 
     ~RedNumberRange() { };
 
@@ -53,19 +53,19 @@ public:
     void          SetBehaviour(const int b);
 
     // simple set/get operations
-    void             SetRange(const RedNumber& l, const RedNumber& h) { cLow=l; cHigh=h; };
-    const bool IsInRange(const RedNumber& d) const;
+    void             SetRange(const RedDataNumber& l, const RedDataNumber& h) { cLow=l; cHigh=h; };
+    const bool IsInRange(const RedDataNumber& d) const;
 
     // Calculations
-    const RedNumber FractionThroughRange(const RedNumber& d) const;
-    static RedNumber RescaleNumber(const RedNumber& SourceNumber, const RedNumberRange& SourceRange, const RedNumberRange& DestRange);
+    const RedDataNumber FractionThroughRange(const RedDataNumber& d) const;
+    static RedDataNumber RescaleNumber(const RedDataNumber& SourceNumber, const RedNumberRange& SourceRange, const RedNumberRange& DestRange);
 
     // Apply this objects range limits to a number
-    void WrapNumber(RedNumber& n) const;
-    void CropNumber(RedNumber& n) const;
+    void WrapNumber(RedDataNumber& n) const;
+    void CropNumber(RedDataNumber& n) const;
 
-    const RedNumber RangeMin(void) const;
-    const RedNumber RangeMax(void) const;
+    const RedDataNumber RangeMin(void) const;
+    const RedDataNumber RangeMax(void) const;
 
 private:
 
@@ -75,8 +75,8 @@ private:
     // Is the range made strictly of integer values
     int iIsIntegerOnly;
 
-    RedNumber cLow;
-    RedNumber cHigh;
+    RedDataNumber cLow;
+    RedDataNumber cHigh;
 };
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

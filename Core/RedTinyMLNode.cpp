@@ -40,7 +40,7 @@ RedTinyMLNode::~RedTinyMLNode()
     
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-RedTinyMLNode* RedTinyMLNode::CreateChildNode(const RedString& NewName)
+RedTinyMLNode* RedTinyMLNode::CreateChildNode(const RedDataString& NewName)
 {
     RedTinyMLNode* pNewNode = new RedTinyMLNode(NewName);
     this->nodelist.AddLast(dynamic_cast<RedTinyMLElement*>(pNewNode));
@@ -50,7 +50,7 @@ RedTinyMLNode* RedTinyMLNode::CreateChildNode(const RedString& NewName)
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-RedTinyMLLeaf* RedTinyMLNode::CreateChildLeaf(const RedString& NewName, const RedString& NewData)
+RedTinyMLLeaf* RedTinyMLNode::CreateChildLeaf(const RedDataString& NewName, const RedDataString& NewData)
 {
     RedTinyMLLeaf *NewLeaf = new RedTinyMLLeaf(NewName, NewData);
 

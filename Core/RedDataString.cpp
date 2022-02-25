@@ -18,7 +18,7 @@
 
 #define _CRT_SECURE_NO_WARNINGS
 
-#include "RedString.h"
+#include "RedDataString.h"
 
 #include <memory.h>
 #include <string.h>
@@ -33,7 +33,7 @@ namespace Core {
 // Construction
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-RedString::RedString(void)
+RedDataString::RedDataString(void)
 {
     data        = NULL;
     allocsize   = 0;
@@ -42,7 +42,7 @@ RedString::RedString(void)
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-RedString::RedString(const char* instr)
+RedDataString::RedDataString(const char* instr)
 {
     data        = NULL;
     allocsize   = 0;
@@ -53,7 +53,7 @@ RedString::RedString(const char* instr)
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-RedString::RedString(const RedString& instr)
+RedDataString::RedDataString(const RedDataString& instr)
 {
     data        = NULL;
     allocsize   = 0;
@@ -67,7 +67,7 @@ RedString::RedString(const RedString& instr)
 // Public Main Routines
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-void RedString::Empty(void)
+void RedDataString::Empty(void)
 {
     // Delete recreate the stored string
     DeleteData();
@@ -80,7 +80,7 @@ void RedString::Empty(void)
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-void RedString::Set(const char Ch)
+void RedDataString::Set(const char Ch)
 {
     if (Ch == '\0')
     {
@@ -91,7 +91,7 @@ void RedString::Set(const char Ch)
         const unsigned NumBlocksRequired = NumBlocksForSize(1);
         const unsigned AllocSizeRequired = SizeForNumBlocks(NumBlocksRequired);
 
-        char*          NewData           = RedString::AllocData(NumBlocksRequired);
+        char*          NewData           = RedDataString::AllocData(NumBlocksRequired);
 
         // Clear Existing Data
         DeleteData();
@@ -111,7 +111,7 @@ void RedString::Set(const char Ch)
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-void RedString::Set(const char* pText)
+void RedDataString::Set(const char* pText)
 {
     if (pText == NULL)
     {
@@ -123,7 +123,7 @@ void RedString::Set(const char* pText)
         const unsigned NumBlocksRequired = NumBlocksForSize(StrLenNewData);
         const unsigned AllocSizeRequired = SizeForNumBlocks(NumBlocksRequired);
 
-        char*          NewData           = RedString::AllocData(NumBlocksRequired);
+        char*          NewData           = RedDataString::AllocData(NumBlocksRequired);
 
         // Clear Existing Data
         DeleteData();
@@ -143,7 +143,7 @@ void RedString::Set(const char* pText)
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-void RedString::Append(const char Ch)
+void RedDataString::Append(const char Ch)
 {
     if (IsEmpty())
     {
@@ -170,7 +170,7 @@ void RedString::Append(const char Ch)
         else
         {
             // Create the new data
-            char* NewData = RedString::AllocData(NumBlocksRequired);
+            char* NewData = RedDataString::AllocData(NumBlocksRequired);
 
             // Copy the existing data
             strncpy(NewData, data, contentsize);
@@ -194,7 +194,7 @@ void RedString::Append(const char Ch)
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-void RedString::Append(const char* Str)
+void RedDataString::Append(const char* Str)
 {
     if (IsEmpty())
     {
@@ -222,7 +222,7 @@ void RedString::Append(const char* Str)
         else
         {
             // Create the new data
-            char* NewData = RedString::AllocData(NumBlocksRequired);
+            char* NewData = RedDataString::AllocData(NumBlocksRequired);
 
             // Copy the existing data
             strncpy(NewData, data, contentsize);
@@ -244,7 +244,7 @@ void RedString::Append(const char* Str)
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-void RedString::DelCharsAtIndex(const unsigned Index, const unsigned Count)
+void RedDataString::DelCharsAtIndex(const unsigned Index, const unsigned Count)
 {
     if (Index > LastContentIndex())
         return;
@@ -272,7 +272,7 @@ void RedString::DelCharsAtIndex(const unsigned Index, const unsigned Count)
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-void RedString::InsertAtIndex(const unsigned Index, const char Ch)
+void RedDataString::InsertAtIndex(const unsigned Index, const char Ch)
 {
     const unsigned NumBlocksRequired = NumBlocksForSize(contentsize+1);
     const unsigned AllocSizeRequired = SizeForNumBlocks(NumBlocksRequired);
@@ -281,7 +281,7 @@ void RedString::InsertAtIndex(const unsigned Index, const char Ch)
     const unsigned SecondHalfLength = LastContentIndex() - Index + 1;
 
     // Create the new data
-    char* NewData = RedString::AllocData(NumBlocksRequired);
+    char* NewData = RedDataString::AllocData(NumBlocksRequired);
 
     // Copy the first half
     strncpy(NewData, data, FirstHalfLength);
@@ -306,7 +306,7 @@ void RedString::InsertAtIndex(const unsigned Index, const char Ch)
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-void RedString::InsertAtIndex(const unsigned Index, const char* Str)
+void RedDataString::InsertAtIndex(const unsigned Index, const char* Str)
 {
     const unsigned InsertSize           = (unsigned)strlen(Str);
 
@@ -324,7 +324,7 @@ void RedString::InsertAtIndex(const unsigned Index, const char* Str)
     const unsigned SecondHalfWriteindex = InsertWriteIndex + InsertSize;
 
     // Create the new data
-    char* NewData = RedString::AllocData(NumBlocksRequired);
+    char* NewData = RedDataString::AllocData(NumBlocksRequired);
 
     // Copy the first half
     strncpy(&NewData[FirstHalfWriteIndex], &data[FirstHalfReadIndex], FirstHalfLength);
@@ -349,7 +349,7 @@ void RedString::InsertAtIndex(const unsigned Index, const char* Str)
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-void RedString::SetCharAtIndex(const unsigned Index, const char Ch)
+void RedDataString::SetCharAtIndex(const unsigned Index, const char Ch)
 {
     if (Index > contentsize)
         return;
@@ -359,7 +359,7 @@ void RedString::SetCharAtIndex(const unsigned Index, const char Ch)
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-char RedString::CharAtIndex(const unsigned Index) const
+char RedDataString::CharAtIndex(const unsigned Index) const
 {
     char x = '\0';
 
@@ -373,9 +373,9 @@ char RedString::CharAtIndex(const unsigned Index) const
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-RedString RedString::SubStr(const unsigned StartIndex, const unsigned Count) const
+RedDataString RedDataString::SubStr(const unsigned StartIndex, const unsigned Count) const
 {
-    RedString OutStr;
+    RedDataString OutStr;
 
     if (StartIndex > LastContentIndex())
         return OutStr;
@@ -398,7 +398,7 @@ RedString RedString::SubStr(const unsigned StartIndex, const unsigned Count) con
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-bool RedString::IsCharInString(char ch) const
+bool RedDataString::IsCharInString(char ch) const
 {
     for (unsigned Pos = 0; Pos < contentsize; ++Pos)
     {
@@ -410,14 +410,14 @@ bool RedString::IsCharInString(char ch) const
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-bool RedString::IsAlphaNumeric(void) const
+bool RedDataString::IsAlphaNumeric(void) const
 {
-    RedChar RedChar;
+    RedDataChar RedDataChar;
     for (unsigned iPos = 0; iPos < contentsize; ++iPos)
     {
-        RedChar = CharObjAtIndex(iPos);
+        RedDataChar = CharObjAtIndex(iPos);
 
-        if (!RedChar.IsAlphaNumeric())
+        if (!RedDataChar.IsAlphaNumeric())
             return false;
     }
     return true;
@@ -427,7 +427,7 @@ bool RedString::IsAlphaNumeric(void) const
 // Derived Routines
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-unsigned RedString::NumLines(void) const
+unsigned RedDataString::NumLines(void) const
 {
     unsigned NumLines = 0;
 
@@ -446,7 +446,7 @@ unsigned RedString::NumLines(void) const
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-bool RedString::LineAtNum(const unsigned LineNum, RedString& Line) const
+bool RedDataString::LineAtNum(const unsigned LineNum, RedDataString& Line) const
 {
     unsigned iLineStartIndex, iLineLength, iCurrIndex;
     unsigned iOnLine;
@@ -494,7 +494,7 @@ bool RedString::LineAtNum(const unsigned LineNum, RedString& Line) const
 // Internal Main Routines
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-char* RedString::AllocData(const unsigned NumBlocks)
+char* RedDataString::AllocData(const unsigned NumBlocks)
 {
     const unsigned FirstIndex = 0;
     const unsigned LastIndex  = SizeForNumBlocks(NumBlocks);
@@ -509,7 +509,7 @@ char* RedString::AllocData(const unsigned NumBlocks)
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-void RedString::InitialiseNonContentChars(void)
+void RedDataString::InitialiseNonContentChars(void)
 {
     unsigned CurrIndex = LastContentIndex() + 1;
 
@@ -525,7 +525,7 @@ void RedString::InitialiseNonContentChars(void)
 // Non-Member Operators
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-bool operator ==(const RedString& lhs, const char* rhs)
+bool operator ==(const RedDataString& lhs, const char* rhs)
 {
     // If the strings are different lengths, fail.
     if (strlen(rhs) != lhs.ContentSize())
@@ -546,7 +546,7 @@ bool operator ==(const RedString& lhs, const char* rhs)
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-bool operator !=(const RedString& lhs, const char* rhs)
+bool operator !=(const RedDataString& lhs, const char* rhs)
 {
     // If the strings are different lengths, fail.
     if (strlen(rhs) != lhs.ContentSize())
@@ -567,23 +567,23 @@ bool operator !=(const RedString& lhs, const char* rhs)
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-bool operator ==(const RedString& lhs, const RedString& rhs)
+bool operator ==(const RedDataString& lhs, const RedDataString& rhs)
 {
     return (lhs == rhs.TextPtr());
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-bool operator !=(const RedString& lhs, const RedString& rhs)
+bool operator !=(const RedDataString& lhs, const RedDataString& rhs)
 {
     return (lhs != rhs.TextPtr());
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-RedString operator +(const RedString& Str1, const RedString& Str2)
+RedDataString operator +(const RedDataString& Str1, const RedDataString& Str2)
 {
-    RedString RetStr(Str1);
+    RedDataString RetStr(Str1);
 
     RetStr.Append(Str2);
 
@@ -592,9 +592,9 @@ RedString operator +(const RedString& Str1, const RedString& Str2)
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-RedString operator +(const RedString& Str1, const RedChar& Chr2)
+RedDataString operator +(const RedDataString& Str1, const RedDataChar& Chr2)
 {
-    RedString RetStr(Str1);
+    RedDataString RetStr(Str1);
 
     RetStr.Append(Chr2);
 

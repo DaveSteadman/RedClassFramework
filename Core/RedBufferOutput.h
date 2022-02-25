@@ -18,9 +18,9 @@
 
 #pragma once
 
-#include "RedString.h"
-#include "RedNumber.h"
-#include "RedChar.h"
+#include "RedDataString.h"
+#include "RedDataNumber.h"
+#include "RedDataChar.h"
 
 namespace Red {
 namespace Core {
@@ -36,7 +36,7 @@ public:
     RedBufferOutput(void)                { Init(); };
     
     void Init(void)                      { cStrBuffer.Init(); cIndentStr="  "; indentlevel=0; };
-    void SetIndent(const RedString& str) { cIndentStr=str; };
+    void SetIndent(const RedDataString& str) { cIndentStr=str; };
 
     void Empty(void)                     { Init(); };
     bool IsEmpty(void) const             { return cStrBuffer.IsEmpty(); };
@@ -50,24 +50,24 @@ public:
     int  IndentLevel(void)               { return indentlevel; };
     void SetIndentLevel(const int l)     { indentlevel=l; };
 
-    void Append(const RedString& cStr)   { cStrBuffer+=cStr; };
-    void Append(const RedChar& cCh)      { cStrBuffer+=cCh; };
-    void Append(const RedNumber& cNum)   { cStrBuffer+=cNum.DecimalString(); };
+    void Append(const RedDataString& cStr)   { cStrBuffer+=cStr; };
+    void Append(const RedDataChar& cCh)      { cStrBuffer+=cCh; };
+    void Append(const RedDataNumber& cNum)   { cStrBuffer+=cNum.DecimalString(); };
 
-    RedString ExtractData(void) const    { return cStrBuffer; };
+    RedDataString ExtractData(void) const    { return cStrBuffer; };
 
-    void AppendIndented(const RedString& cStr);
+    void AppendIndented(const RedDataString& cStr);
 
     friend RedBufferOutput& operator<<(RedBufferOutput& outputbuf, const char* newstr)      { outputbuf.Append(newstr);            return outputbuf; };
-    friend RedBufferOutput& operator<<(RedBufferOutput& outputbuf, const int newval)        { outputbuf.Append(RedNumber(newval)); return outputbuf; };
-    friend RedBufferOutput& operator<<(RedBufferOutput& outputbuf, const RedString& newstr) { outputbuf.Append(newstr);            return outputbuf; };
-    friend RedBufferOutput& operator<<(RedBufferOutput& outputbuf, const RedChar& newch)    { outputbuf.Append(newch);             return outputbuf; };
-    friend RedBufferOutput& operator<<(RedBufferOutput& outputbuf, const RedNumber& newnum) { outputbuf.Append(newnum);            return outputbuf; };
+    friend RedBufferOutput& operator<<(RedBufferOutput& outputbuf, const int newval)        { outputbuf.Append(RedDataNumber(newval)); return outputbuf; };
+    friend RedBufferOutput& operator<<(RedBufferOutput& outputbuf, const RedDataString& newstr) { outputbuf.Append(newstr);            return outputbuf; };
+    friend RedBufferOutput& operator<<(RedBufferOutput& outputbuf, const RedDataChar& newch)    { outputbuf.Append(newch);             return outputbuf; };
+    friend RedBufferOutput& operator<<(RedBufferOutput& outputbuf, const RedDataNumber& newnum) { outputbuf.Append(newnum);            return outputbuf; };
     
 private:
 
-    RedString cStrBuffer;
-    RedString cIndentStr;
+    RedDataString cStrBuffer;
+    RedDataString cIndentStr;
     int       indentlevel;
 };
 

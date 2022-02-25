@@ -35,7 +35,7 @@ void RedVSILib::AddClass(RedVSILibClass* pNewClass)
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-void RedVSILib::DelClass(const RedString& cClassName)
+void RedVSILib::DelClass(const RedDataString& cClassName)
 {
     IteratorType cIt(&cClassList);
 
@@ -54,7 +54,7 @@ void RedVSILib::DelClass(const RedString& cClassName)
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-RedVSILibClass* RedVSILib::FindClass(const RedString& cClassName)
+RedVSILibClass* RedVSILib::FindClass(const RedDataString& cClassName)
 {
     IteratorType cIt(&cClassList);
 
@@ -73,7 +73,7 @@ RedVSILibClass* RedVSILib::FindClass(const RedString& cClassName)
     // Not found, search for the class in a library directory if one is setup
     if (!LibFilePath.IsEmpty())
     {
-        RedString fullpath = LibFilePath + cClassName + ".tml";
+        RedDataString fullpath = LibFilePath + cClassName + ".tml";
 
         if (RedIOHandler::FileExists(fullpath))
         {
@@ -138,7 +138,7 @@ RedVSILibRoutineInterface* RedVSILib::FindRoutine(const RedVSIRoutineCallInterfa
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-RedVSILibRoutineInterface* RedVSILib::FindRoutine(const RedString& cClassName, const RedString& cRoutineName)
+RedVSILibRoutineInterface* RedVSILib::FindRoutine(const RedDataString& cClassName, const RedDataString& cRoutineName)
 {
     RedVSILibClass*            pClass   = FindClass(cClassName);
     RedVSILibRoutineInterface* pRoutine = NULL;
@@ -151,11 +151,11 @@ RedVSILibRoutineInterface* RedVSILib::FindRoutine(const RedString& cClassName, c
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-bool RedVSILib::DoesClassFileExist(const RedString& classname)
+bool RedVSILib::DoesClassFileExist(const RedDataString& classname)
 {
     bool retval = false;
 
-    RedString fullpath = LibFilePath + classname + ".tml";
+    RedDataString fullpath = LibFilePath + classname + ".tml";
 
     retval = RedIOHandler::FileExists(fullpath);
 

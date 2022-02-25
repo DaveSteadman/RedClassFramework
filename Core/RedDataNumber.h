@@ -20,8 +20,8 @@
 
 #include "RedType.h"
 #include "RedSmartPtr.h"
-#include "RedString.h"
-#include "RedChar.h"
+#include "RedDataString.h"
+#include "RedDataChar.h"
 
 namespace Red {
 namespace Core {
@@ -34,64 +34,64 @@ static const double kDefaultFloatCompareTollerance = 0.0000001;
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 /// Class representing a mutable number. Internally differentiates between int and float values.
-class RedNumber : public RedType
+class RedDataNumber : public RedType
 {
 public:
 
-    RedNumber(void)                    { Init(); };
-    RedNumber(const int iNum)          { Set(iNum); };
-    RedNumber(const unsigned iNum)     { Set((int)iNum); };
-    RedNumber(const double dblNum)     { Set(dblNum); };
-    RedNumber(const RedNumber& objNum) { Set(objNum); };
-    RedNumber(const RedString& cNewDecimalVal) { SetDecimalString(cNewDecimalVal); };
-    ~RedNumber(void) { };
+    RedDataNumber(void)                    { Init(); };
+    RedDataNumber(const int iNum)          { Set(iNum); };
+    RedDataNumber(const unsigned iNum)     { Set((int)iNum); };
+    RedDataNumber(const double dblNum)     { Set(dblNum); };
+    RedDataNumber(const RedDataNumber& objNum) { Set(objNum); };
+    RedDataNumber(const RedDataString& cNewDecimalVal) { SetDecimalString(cNewDecimalVal); };
+    ~RedDataNumber(void) { };
 
     // Inherited: RedType
     void          Init(void)        { eNumType=eInt; iIntVal=0; dblFloatVal=0.0; };
     RedDataType   Type(void) const  { return kDataTypeNum; };
-    RedType*      Clone(void) const { RedNumber* newN = new RedNumber(*this); return (RedType*)newN; };
+    RedType*      Clone(void) const { RedDataNumber* newN = new RedDataNumber(*this); return (RedType*)newN; };
 
     // Class operations
     bool          IsZero(void)     const;
     bool          IsPositive(void) const;
     bool          IsInteger(void)  const { return (eNumType == eInt);   };
     bool          IsReal(void)     const { return (eNumType == eFloat); };
-    bool          IsEqualTo(const RedNumber& CheckVal) const;
-    bool          IsEqualToWithinTollerance(const RedNumber& CheckVal, const RedNumber& tollerance) const;
+    bool          IsEqualTo(const RedDataNumber& CheckVal) const;
+    bool          IsEqualToWithinTollerance(const RedDataNumber& CheckVal, const RedDataNumber& tollerance) const;
 
-    RedString     DecimalString(void) const;
-    RedString     DecimalStringWithDP(const unsigned decimalplaces) const;
-    RedString     DecimalStringWithMinDigitsAndDP(const unsigned mindigits, const unsigned decimalplaces) const;
-    RedChar       CharValue(void) const;
+    RedDataString     DecimalString(void) const;
+    RedDataString     DecimalStringWithDP(const unsigned decimalplaces) const;
+    RedDataString     DecimalStringWithMinDigitsAndDP(const unsigned mindigits, const unsigned decimalplaces) const;
+    RedDataChar       CharValue(void) const;
     int           IntegerValue(void) const;
     double        DoubleValue(void) const;
 
-    void          Set(const RedNumber& cNewVal) { eNumType=cNewVal.eNumType; iIntVal=cNewVal.iIntVal; dblFloatVal=cNewVal.dblFloatVal; };
+    void          Set(const RedDataNumber& cNewVal) { eNumType=cNewVal.eNumType; iIntVal=cNewVal.iIntVal; dblFloatVal=cNewVal.dblFloatVal; };
     void          Set(const double dblNewVal)   { eNumType=eFloat;           iIntVal=0;               dblFloatVal=dblNewVal; };
     void          Set(const int iNewVal)        { eNumType=eInt;             iIntVal=iNewVal;         dblFloatVal=0.0; };
     void          SetZero(void)                 { Init(); };
-    void          SetDecimalString(const RedString& cNewDecimalVal);
+    void          SetDecimalString(const RedDataString& cNewDecimalVal);
 
     void          MakePositive(void);
     void          MakeNegative(void);
 
-    RedNumber     IntegerPart(void) const;
-    RedNumber     FractionalPart(void) const;
-    RedNumber     DivisionQuotient(const RedNumber& d) const;
-    RedNumber     DivisionRemainder(const RedNumber& d) const;
+    RedDataNumber     IntegerPart(void) const;
+    RedDataNumber     FractionalPart(void) const;
+    RedDataNumber     DivisionQuotient(const RedDataNumber& d) const;
+    RedDataNumber     DivisionRemainder(const RedDataNumber& d) const;
 
     // Arithemtic operators
-    RedNumber operator  +(const RedNumber& n) const;
-    RedNumber operator  -(const RedNumber& n) const;
-    RedNumber operator  *(const RedNumber& n) const;
-    RedNumber operator  /(const RedNumber& n) const;
-    void      operator +=(const RedNumber& n);
-    void      operator -=(const RedNumber& n);
-    void      operator *=(const RedNumber& n);
-    void      operator /=(const RedNumber& n);
+    RedDataNumber operator  +(const RedDataNumber& n) const;
+    RedDataNumber operator  -(const RedDataNumber& n) const;
+    RedDataNumber operator  *(const RedDataNumber& n) const;
+    RedDataNumber operator  /(const RedDataNumber& n) const;
+    void      operator +=(const RedDataNumber& n);
+    void      operator -=(const RedDataNumber& n);
+    void      operator *=(const RedDataNumber& n);
+    void      operator /=(const RedDataNumber& n);
 
-    RedNumber& operator ++(); // Prefix
-    RedNumber  operator ++(int); // Postfix
+    RedDataNumber& operator ++(); // Prefix
+    RedDataNumber  operator ++(int); // Postfix
 
 private:
 
@@ -104,23 +104,23 @@ private:
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-bool operator ==(const RedNumber& lhs, const RedNumber& rhs);
-bool operator !=(const RedNumber& lhs, const RedNumber& rhs);
-bool operator >=(const RedNumber& lhs, const RedNumber& rhs);
-bool operator <=(const RedNumber& lhs, const RedNumber& rhs);
-bool operator  >(const RedNumber& lhs, const RedNumber& rhs);
-bool operator  <(const RedNumber& lhs, const RedNumber& rhs);
+bool operator ==(const RedDataNumber& lhs, const RedDataNumber& rhs);
+bool operator !=(const RedDataNumber& lhs, const RedDataNumber& rhs);
+bool operator >=(const RedDataNumber& lhs, const RedDataNumber& rhs);
+bool operator <=(const RedDataNumber& lhs, const RedDataNumber& rhs);
+bool operator  >(const RedDataNumber& lhs, const RedDataNumber& rhs);
+bool operator  <(const RedDataNumber& lhs, const RedDataNumber& rhs);
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-typedef RedSmartPtr<RedNumber> RedNumberSmartPtr;
+typedef RedSmartPtr<RedDataNumber> RedDataNumberSmartPtr;
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-static const RedNumber kNumberOne                 = RedNumber(1);
-static const RedNumber kNumberFloatCompTollerance = RedNumber(kDefaultFloatCompareTollerance);
-static const RedNumber kNumberZero                = RedNumber(0);
-static const RedNumber kNumberMinusOne            = RedNumber(-1);
+static const RedDataNumber kNumberOne                 = RedDataNumber(1);
+static const RedDataNumber kNumberFloatCompTollerance = RedDataNumber(kDefaultFloatCompareTollerance);
+static const RedDataNumber kNumberZero                = RedDataNumber(0);
+static const RedDataNumber kNumberMinusOne            = RedDataNumber(-1);
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 

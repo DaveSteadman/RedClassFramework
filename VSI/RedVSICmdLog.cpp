@@ -47,7 +47,7 @@ void RedVSICmdLog::QueueExpr(RedVSIContextInterface* pContext)
 void RedVSICmdLog::Execute(RedVSIContextInterface* pContext)
 {
     // Get the result of the commands expression
-    RedVariant cExprResult = pContext->ExprResult(pLogExpr);
+    RedDataVariant cExprResult = pContext->ExprResult(pLogExpr);
 
     // Get a string representation of the value
     pContext->Log()->AddText(cExprResult.StringValue());

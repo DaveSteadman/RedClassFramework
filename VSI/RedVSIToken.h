@@ -41,15 +41,15 @@ public:
     void Init(void);
 
     // operations to construct specific tokens from a known input
-    void SetNumber(const RedNumber& cNewNum)              { Init(); cType.SetNumber();        cNumber=cNewNum; };
-    void SetName(const RedString& cNewStr)                { Init(); cType.SetName();          cText=cNewStr; };
-    void SetStringLiteral(const RedString& cNewStr)       { Init(); cType.SetStringLiteral(); cText=cNewStr; };
-    void SetNonPrintable(const RedChar& cNewChar)         { Init(); cType.SetNonPrintable();  cText=cNewChar; };
-    void SetWhitespace(const RedString& cNewStr)          { Init(); cType.SetWhitespace();    cText=cNewStr; };
-    void SetPredefined(const RedVSIIOElement& cNewPredef) { Init(); cType.SetPredefined();    cPredef=cNewPredef; };
+    void SetNumber(const RedDataNumber& cNewNum)              { Init(); cType.SetNumber();        cNumber=cNewNum; };
+    void SetName(const RedDataString& cNewStr)                { Init(); cType.SetName();          cText=cNewStr; };
+    void SetStringLiteral(const RedDataString& cNewStr)       { Init(); cType.SetStringLiteral(); cText=cNewStr; };
+    void SetNonPrintable(const RedDataChar& cNewChar)         { Init(); cType.SetNonPrintable();  cText=cNewChar; };
+    void SetWhitespace(const RedDataString& cNewStr)          { Init(); cType.SetWhitespace();    cText=cNewStr; };
+    void SetPredefined(const RedVSIIOElement& cNewPredef)     { Init(); cType.SetPredefined();    cPredef=cNewPredef; };
 
     // Setup
-    static RedVSIToken WhitespaceSpaceToken(void)  { RedVSIToken t; t.SetWhitespace(RedString(" "));               return t; };
+    static RedVSIToken WhitespaceSpaceToken(void)  { RedVSIToken t; t.SetWhitespace(RedDataString(" "));           return t; };
     static RedVSIToken EOFToken(void)              { RedVSIToken t; t.SetPredefined(RedVSIIOElement::SymbolEOF()); return t; };
 
     void         SetPos(RedBufferPos cNewPos) { cCodePos = cNewPos; };
@@ -61,10 +61,10 @@ public:
 
     // Data Access
     RedVSITokenType Type(void) const     { return cType; };
-    RedNumber       Number(void) const   { return cNumber; };
-    RedString       Text(void) const     { return cText; }
+    RedDataNumber   Number(void) const   { return cNumber; };
+    RedDataString   Text(void) const     { return cText; }
     RedVSIIOElement Predef(void) const   { return cPredef; };
-    RedString       DebugText(RedVSITokenElementMap& RedVSITokenMap);
+    RedDataString   DebugText(RedVSITokenElementMap& RedVSITokenMap);
 
     // Operators
     void operator =(const RedVSIToken& cTok);
@@ -75,13 +75,13 @@ private:
     RedVSITokenType cType;
     
     // The text extracted from the buffer
-    RedString cText;
+    RedDataString cText;
 
     // If the type is predefined, this is relevant
     RedVSIIOElement cPredef;
 
     // If the type is number, this is relevant
-    RedNumber cNumber;
+    RedDataNumber cNumber;
 
     // Buffer position the token was extracted from. Useful in debugging/logging functionality
     RedBufferPos cCodePos;

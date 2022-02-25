@@ -33,8 +33,8 @@ class RedVSILangElement;
 
 typedef RedStackLIFO<RedVSICmdInterface*> RedVSICmdStack;
 
-typedef RedDoubleLinkedList<RedVariant>         RedVSIVariantList;
-typedef RedDoubleLinkedListIterator<RedVariant> RedVSIVariantListIterator;
+typedef RedDoubleLinkedList<RedDataVariant>         RedVSIVariantList;
+typedef RedDoubleLinkedListIterator<RedDataVariant> RedVSIVariantListIterator;
 
 typedef RedMapList<int, RedType*>           RedVSIIntDataMap;
 typedef RedMapListIterator<int, RedType*>   RedVSIIntDataMapIterator;
@@ -43,15 +43,15 @@ typedef RedMapListIterator<int, RedType*>   RedVSIIntDataMapIterator;
 typedef RedStackLIFO<RedVSIParseTreeInterface*> RedVSIParseStack;
 
 // Map of parse tree elements and results
-typedef RedMapList<RedVSIParseTreeInterface*, RedVariant>         RedVSIParseDataMap;
-typedef RedMapListIterator<RedVSIParseTreeInterface*, RedVariant> RedVSIParseDataMapIterator;
+typedef RedMapList<RedVSIParseTreeInterface*, RedDataVariant>         RedVSIParseDataMap;
+typedef RedMapListIterator<RedVSIParseTreeInterface*, RedDataVariant> RedVSIParseDataMapIterator;
 
 typedef RedDoubleLinkedList<RedVSIParseTreeInterface*>         RedVSIParseList;
 typedef RedDoubleLinkedListIterator<RedVSIParseTreeInterface*> RedVSIParseListIterator;
 
 
-typedef RedMapList<RedString, RedVSILangElement>           RedVSIStringLangElementMap;
-typedef RedMapListIterator<RedString, RedVSILangElement>   RedVSIStringLangElementMapIterator;
+typedef RedMapList<RedDataString, RedVSILangElement>           RedVSIStringLangElementMap;
+typedef RedMapListIterator<RedDataString, RedVSILangElement>   RedVSIStringLangElementMapIterator;
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 

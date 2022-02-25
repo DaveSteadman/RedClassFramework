@@ -26,14 +26,14 @@ namespace Core {
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-static const RedChar kOpenBracket  = '{';
-static const RedChar kCloseBracket = '}';
+static const RedDataChar kOpenBracket  = '{';
+static const RedDataChar kCloseBracket = '}';
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 // Top Level IO
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-RedResult RedTinyMLFileIO::CreateTmlFromFile(const RedString& filepath, RedTinyMLElement** newTmlElement)
+RedResult RedTinyMLFileIO::CreateTmlFromFile(const RedDataString& filepath, RedTinyMLElement** newTmlElement)
 {
     // Initialisation
     if (*newTmlElement != NULL)
@@ -61,7 +61,7 @@ RedResult RedTinyMLFileIO::CreateTmlFromFile(const RedString& filepath, RedTinyM
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-RedResult RedTinyMLFileIO::CreateFileFromTml(const RedTinyMLElement* tmlElement, const RedString& filepath, const TESerialiseType writeStyle)
+RedResult RedTinyMLFileIO::CreateFileFromTml(const RedTinyMLElement* tmlElement, const RedDataString& filepath, const TESerialiseType writeStyle)
 {
     // Check node is not null
     if (tmlElement == NULL)
@@ -83,7 +83,7 @@ RedResult RedTinyMLFileIO::CreateFileFromTml(const RedTinyMLElement* tmlElement,
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-RedTinyMLElement* RedTinyMLFileIO::ParseTinyML(const RedString& inputStr)
+RedTinyMLElement* RedTinyMLFileIO::ParseTinyML(const RedDataString& inputStr)
 {
     RedBufferInput inputBuf(inputStr);
 
@@ -161,9 +161,9 @@ void RedTinyMLFileIO::SerialiseCore(RedBufferOutput& outputBuf, const RedTinyMLE
 // Private
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-bool RedTinyMLFileIO::ReadName(RedBufferInput& inputBuf, RedString& outputName)
+bool RedTinyMLFileIO::ReadName(RedBufferInput& inputBuf, RedDataString& outputName)
 {
-    RedChar ch;
+    RedDataChar ch;
     outputName.Empty();
 
     // Second bracket
@@ -186,22 +186,22 @@ bool RedTinyMLFileIO::ReadName(RedBufferInput& inputBuf, RedString& outputName)
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-bool RedTinyMLFileIO::ReadContent(RedBufferInput& inputBuf, RedString& outputContent)
+bool RedTinyMLFileIO::ReadContent(RedBufferInput& inputBuf, RedDataString& outputContent)
 {
     bool EndOfContentFound = false;
-    RedString levelChars;
+    RedDataString levelChars;
 
     // Initialse the return data
     outputContent.Empty();
 
     // Skip whitespace
-    RedChar ch = inputBuf.PreviewNextNonWhitespaceChar();
+    RedDataChar ch = inputBuf.PreviewNextNonWhitespaceChar();
     if (ch.IsEOF()) return false;
 
     // Loop until EOF or unquoted close bracket
     while(!EndOfContentFound)
     {
-        RedChar ch = inputBuf.GetNextChar();
+        RedDataChar ch = inputBuf.GetNextChar();
 
         // Check for obvious invalid characters
         if (ch.IsEOF()) return false;
@@ -231,8 +231,8 @@ bool RedTinyMLFileIO::ReadContent(RedBufferInput& inputBuf, RedString& outputCon
 
 bool RedTinyMLFileIO::ReadTmlElement(RedBufferInput& inputBuf, RedTinyMLElement** newTml)
 {
-    RedChar   ch;
-    RedString leafname;
+    RedDataChar   ch;
+    RedDataString leafname;
 
     // Opening bracket
     ch = inputBuf.GetNextNonWhitespaceChar();
@@ -285,7 +285,7 @@ bool RedTinyMLFileIO::ReadTmlElement(RedBufferInput& inputBuf, RedTinyMLElement*
     }
     else
     {
-        RedString   leafdata;
+        RedDataString   leafdata;
         RedTinyMLLeaf* newLeaf;
 
         // Attempt to read the content

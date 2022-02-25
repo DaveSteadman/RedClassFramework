@@ -62,15 +62,15 @@ void RedVSIParseTreeUnaryOp::GetDetails(RedVSILangElement& cOutOp, RedVSIParseTr
 void RedVSIParseTreeUnaryOp::CalcNegateResult(RedVSIContextInterface* pContext)
 {
     // First check for previous execution and a return value
-    RedVariant cInputExprVal;
+    RedDataVariant cInputExprVal;
     cInputExprVal = pContext->ExprResult(pExpr);
 
     if (cInputExprVal.IsValid())
     {
         if (cInputExprVal.Type().IsNum())
         {
-            RedVariant cRetVal;
-            RedNumber cRetNum;
+            RedDataVariant cRetVal;
+            RedDataNumber cRetNum;
             cRetNum = cInputExprVal.NumberValue() * -1;
             cRetVal = cRetNum;
 
@@ -79,8 +79,8 @@ void RedVSIParseTreeUnaryOp::CalcNegateResult(RedVSIContextInterface* pContext)
 
         else if (cInputExprVal.Type().IsBool())
         {
-            RedVariant cRetVal;
-            RedBoolean cB = cInputExprVal.BoolValue();
+            RedDataVariant cRetVal;
+            RedDataBoolean cB = cInputExprVal.BoolValue();
             cB.Invert();
 
             cRetVal = cB;

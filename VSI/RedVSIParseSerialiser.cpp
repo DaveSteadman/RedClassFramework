@@ -100,7 +100,7 @@ void RedVSIParseSerialiser::SerialiseUnaryOp(RedVSITokenBuffer& cTokenBuffer, Re
 void RedVSIParseSerialiser::SerialiseValue(RedVSITokenBuffer& cTokenBuffer, RedVSIParseTreeVal* pExpr)
 {
     // define all the variables we will need
-    RedVariant cOutVal;
+    RedDataVariant cOutVal;
     RedVSIToken cValTok;
     
     // read the data out of the parse tree node
@@ -118,7 +118,7 @@ void RedVSIParseSerialiser::SerialiseValue(RedVSITokenBuffer& cTokenBuffer, RedV
 void RedVSIParseSerialiser::SerialiseVariable(RedVSITokenBuffer& cTokenBuffer, RedVSIParseTreeVar* pExpr)
 {
     // define all the variables we will need
-    RedString                 cOutVarName;
+    RedDataString                 cOutVarName;
     //RedVSIParseTreeInterface* pOutVarIndexExpr = NULL;
     RedVSIToken               cNameTok;
 

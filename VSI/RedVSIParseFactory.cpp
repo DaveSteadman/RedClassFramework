@@ -502,7 +502,7 @@ RedVSIParseTreeInterface* RedVSIParseFactory::RunValueCompetition(RedVSITokenBuf
   
     if (IsValueToken(cTok))
     {
-        RedVariant cNodeVal;
+        RedDataVariant cNodeVal;
         if      (cTok.Type().IsNumber())        cNodeVal = cTok.Number();
         else if (cTok.Type().IsStringLiteral()) cNodeVal = cTok.Text();
         else if (cTok.Type().IsPredefined() && cTok.Predef().IsBoolKeyword())
@@ -529,7 +529,7 @@ RedVSIParseTreeInterface* RedVSIParseFactory::RunVariableCompetition(RedVSIToken
     if (IsVariableToken(cTok))
     {
         // Data to go into the constructor (name already checked)
-        RedString                 cVarName   = cTok.Text();
+        RedDataString                 cVarName   = cTok.Text();
         RedVSIParseTreeInterface* pIndexExpr = NULL;
     
         // check for an array index after the variable name
@@ -587,8 +587,8 @@ RedVSIParseTreeInterface* RedVSIParseFactory::RunExternalCallCompetition(RedVSIT
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
     // determine the class/object names from the inputs
-    RedString cClassName;
-    RedString cObjectName;
+    RedDataString cClassName;
+    RedDataString cObjectName;
     if (cSeparatorTok.Predef().IsSymbolPeriod())
         cObjectName = cUnitNameTok.Text();
     else if (cSeparatorTok.Predef().IsSymbolDoubleColon())
@@ -662,8 +662,8 @@ RedVSIParseTreeInterface* RedVSIParseFactory::RunInternalCallCompetition(RedVSIT
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
     // determine the class/object names from the inputs
-    RedString cClassName;
-    RedString cObjectName;
+    RedDataString cClassName;
+    RedDataString cObjectName;
 
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -709,7 +709,7 @@ RedVSIParseTreeInterface* RedVSIParseFactory::RunInternalCallCompetition(RedVSIT
     }
     
     // Assign the final details and return the command
-    RedString cNullClassName;
+    RedDataString cNullClassName;
     pNewCmd->SetDetails(cClassName, cObjectName, cFuncTok.Text(), pParamList);
     return pNewCmd;
 }

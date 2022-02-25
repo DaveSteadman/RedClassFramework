@@ -37,7 +37,7 @@ RedVSIParseTreeVar::~RedVSIParseTreeVar()
 
 void RedVSIParseTreeVar::CalcResult(RedVSIContextInterface* pContext)
 {
-    RedVariant result;
+    RedDataVariant result;
 
     // get the data item
     RedType* pDataItem = 0;
@@ -57,7 +57,7 @@ void RedVSIParseTreeVar::CalcResult(RedVSIContextInterface* pContext)
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-void RedVSIParseTreeVar::AssignValue(RedVSIContextInterface* pContext, RedVariant& result)
+void RedVSIParseTreeVar::AssignValue(RedVSIContextInterface* pContext, RedDataVariant& result)
 {
     RedType* pVarObject = NULL;
     if (!pContext->FindDataItem(cVarName, pVarObject))

@@ -34,21 +34,21 @@ namespace Core {
 // Boolean value class. As a child of RedType class, this allows a boolean value to exist in 
 // collections and VSI expressions alongside other RedType objects. The primary purpose of the class 
 // isn't to replace a bool type in normal operation, which is useful in conditional statements.
-class RedBoolean : public RedType
+class RedDataBoolean : public RedType
 {
 public:
 
     // constructors
-    RedBoolean()                           { SetFalse(); };
-    RedBoolean(const RedBoolean& cVal)     { iState = cVal.iState; };
-    RedBoolean(const int& iVal)            { Set(iVal); };
-    RedBoolean(const bool Val)             { Set(Val); };
-    ~RedBoolean()                          { };
+    RedDataBoolean()                           { SetFalse(); };
+    RedDataBoolean(const RedDataBoolean& cVal) { iState = cVal.iState; };
+    RedDataBoolean(const int& iVal)            { Set(iVal); };
+    RedDataBoolean(const bool Val)             { Set(Val); };
+    ~RedDataBoolean()                          { };
     
     // Inherited: RedType
     void               Init(void)          { SetFalse(); };
     RedDataType        Type(void) const    { return kDataTypeBool; };
-    RedType*           Clone(void) const   { RedBoolean* newB = new RedBoolean(); newB->iState = iState; return dynamic_cast<RedType*>(newB); };
+    RedType*           Clone(void) const   { RedDataBoolean* newB = new RedDataBoolean(); newB->iState = iState; return dynamic_cast<RedType*>(newB); };
 
     // simple set/get operations
     void               SetTrue(void)       { iState=RED_TRUE; };
@@ -61,17 +61,17 @@ public:
     bool               IsTrue(void)  const { return (iState == RED_TRUE);  };
     bool               IsFalse(void) const { return (iState == RED_FALSE); };
 
-    static RedBoolean  True(void)  { RedBoolean cRetVal; cRetVal.SetTrue();  return cRetVal; };
-    static RedBoolean  False(void) { RedBoolean cRetVal; cRetVal.SetFalse(); return cRetVal; };
+    static RedDataBoolean  True(void)  { RedDataBoolean cRetVal; cRetVal.SetTrue();  return cRetVal; };
+    static RedDataBoolean  False(void) { RedDataBoolean cRetVal; cRetVal.SetFalse(); return cRetVal; };
 
-    static RedBoolean  NOT(RedBoolean v1)                 { return RedBoolean(v1.IsFalse());                 };
-    static RedBoolean  OR(RedBoolean v1, RedBoolean v2)   { return RedBoolean(v1.IsTrue()  || v2.IsTrue());  };
-    static RedBoolean  NOR(RedBoolean v1, RedBoolean v2)  { return RedBoolean(v1.IsFalse() || v2.IsFalse()); };
-    static RedBoolean  AND(RedBoolean v1, RedBoolean v2)  { return RedBoolean(v1.IsTrue()  && v2.IsTrue());  };
-    static RedBoolean  XOR(RedBoolean v1, RedBoolean v2)  { return RedBoolean(v1.IsTrue()  != v2.IsTrue());  };
-    static RedBoolean  NAND(RedBoolean v1, RedBoolean v2) { return RedBoolean(v1.IsFalse() && v2.IsFalse()); };
+    static RedDataBoolean  NOT(RedDataBoolean v1)                     { return RedDataBoolean(v1.IsFalse());                 };
+    static RedDataBoolean  OR(RedDataBoolean v1, RedDataBoolean v2)   { return RedDataBoolean(v1.IsTrue()  || v2.IsTrue());  };
+    static RedDataBoolean  NOR(RedDataBoolean v1, RedDataBoolean v2)  { return RedDataBoolean(v1.IsFalse() || v2.IsFalse()); };
+    static RedDataBoolean  AND(RedDataBoolean v1, RedDataBoolean v2)  { return RedDataBoolean(v1.IsTrue()  && v2.IsTrue());  };
+    static RedDataBoolean  XOR(RedDataBoolean v1, RedDataBoolean v2)  { return RedDataBoolean(v1.IsTrue()  != v2.IsTrue());  };
+    static RedDataBoolean  NAND(RedDataBoolean v1, RedDataBoolean v2) { return RedDataBoolean(v1.IsFalse() && v2.IsFalse()); };
 
-    void      operator =(const RedBoolean& cVal) { iState = cVal.iState; };
+    void      operator =(const RedDataBoolean& cVal) { iState = cVal.iState; };
     void      operator =(const bool        val ) { if (val) iState=RED_TRUE; else iState=RED_FALSE; };
     
     // Obtain the integer representation of the object for serialisation
@@ -84,17 +84,17 @@ private:
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-bool operator==(const RedBoolean& lhs, const RedBoolean& rhs);
-bool operator!=(const RedBoolean& lhs, const RedBoolean& rhs);
+bool operator==(const RedDataBoolean& lhs, const RedDataBoolean& rhs);
+bool operator!=(const RedDataBoolean& lhs, const RedDataBoolean& rhs);
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-typedef RedSmartPtr<RedBoolean> RedBooleanSmartPtr;
+typedef RedSmartPtr<RedDataBoolean> RedDataBooleanSmartPtr;
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-static const RedBoolean kBoolFALSE = RedBoolean::False();
-static const RedBoolean kBoolTRUE  = RedBoolean::True();
+static const RedDataBoolean kBoolFALSE = RedDataBoolean::False();
+static const RedDataBoolean kBoolTRUE  = RedDataBoolean::True();
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 

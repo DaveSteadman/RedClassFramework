@@ -42,7 +42,6 @@ private:
     static RedResult TestVariant(void);
     static RedResult TestLinkedList(void);
     static RedResult TestRecord(void);
-    static RedResult TestFlexRecord(void);
     static RedResult TestEventLog(void);
     static RedResult TestSmartPtr(void);
     static RedResult TestResult(void);

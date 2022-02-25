@@ -23,9 +23,9 @@ namespace VSI {
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-RedString RedVSIErrorCodes::GetErrorString(TErrorCodes eErrCode)
+RedDataString RedVSIErrorCodes::GetErrorString(TErrorCodes eErrCode)
 {
-    RedString cErrStr = "Undefined Error Code";
+    RedDataString cErrStr = "Undefined Error Code";
 
     switch(eErrCode)
     {

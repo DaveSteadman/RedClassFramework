@@ -64,10 +64,10 @@ RedResult RedTestVSI::TestParseTreeVal(void)
     // Basic Creation and calculation
     {
         RedLog               cLog;
-        RedVariant           testValue("Hello");
+        RedDataVariant           testValue("Hello");
         RedVSIParseTreeVal   testPTVal;
         RedVSIContextRoutine testContext(&cLog);
-        RedVariant           expRes(12);
+        RedDataVariant           expRes(12);
 
         testPTVal.SetValue(testValue);
 
@@ -90,24 +90,24 @@ RedResult RedTestVSI::TestParseTreeVar(void)
     {
         RedLog               cLog;
         RedVSIContextRoutine testContext(&cLog);
-        testContext.CreateDataItem(RedVSILangElement::LocationStack(), RedVSILangElement::TypeNumber(), RedString("testVar1"));
+        testContext.CreateDataItem(RedVSILangElement::LocationStack(), RedVSILangElement::TypeNumber(), RedDataString("testVar1"));
 
-        RedNumber* testVar1 = NULL;
+        RedDataNumber* testVar1 = NULL;
         RedType* pFoundDataItem = NULL;
-        if (testContext.FindDataItem(RedString("testVar1"), pFoundDataItem))
+        if (testContext.FindDataItem(RedDataString("testVar1"), pFoundDataItem))
         {
             if (pFoundDataItem->Type() != kDataTypeNum)
                 return kResultFail;
 
-            testVar1 = (RedNumber*)pFoundDataItem;
+            testVar1 = (RedDataNumber*)pFoundDataItem;
             *testVar1 = 1.234;
 
             RedVSIParseTreeVar ptv;
-            ptv.SetVarName(RedString("testVar1"));
+            ptv.SetVarName(RedDataString("testVar1"));
 
             ptv.CalcResult(&testContext);
 
-            RedVariant exprRes = testContext.ExprResult(&ptv);
+            RedDataVariant exprRes = testContext.ExprResult(&ptv);
 
             if (!exprRes.Type().IsNum())
                 return kResultFail;
@@ -132,16 +132,16 @@ RedResult RedTestVSI::TestParseTreeBinaryOp(void)
         RedLog                  cLog;
         RedVSIContextRoutine    testContext(&cLog);
 
-        RedVSIParseTreeVal      testPTVal1(RedNumber(1200));
-        RedVSIParseTreeVal      testPTVal2(RedNumber(34));
+        RedVSIParseTreeVal      testPTVal1(RedDataNumber(1200));
+        RedVSIParseTreeVal      testPTVal2(RedDataNumber(34));
         RedVSIParseTreeBinaryOp testPTOp1(&testPTVal1, RedVSILangElement::BinaryOpPlus(), &testPTVal2);
 
         testPTVal1.CalcResult(&testContext);
         testPTVal2.CalcResult(&testContext);
         testPTOp1.CalcResult(&testContext);
 
-        RedNumber expectRes(1234);
-        RedVariant exprRes = testContext.ExprResult(&testPTOp1);
+        RedDataNumber expectRes(1234);
+        RedDataVariant exprRes = testContext.ExprResult(&testPTOp1);
 
         if (!exprRes.Type().IsNum())
             return kResultFail;
@@ -154,16 +154,16 @@ RedResult RedTestVSI::TestParseTreeBinaryOp(void)
         RedLog                  cLog;
         RedVSIContextRoutine    testContext(&cLog);
 
-        RedVSIParseTreeVal      testPTVal1(RedString("Hello"));
-        RedVSIParseTreeVal      testPTVal2(RedString(" Red"));
+        RedVSIParseTreeVal      testPTVal1(RedDataString("Hello"));
+        RedVSIParseTreeVal      testPTVal2(RedDataString(" Red"));
         RedVSIParseTreeBinaryOp testPTOp1(&testPTVal1, RedVSILangElement::BinaryOpPlus(), &testPTVal2);
 
         testPTVal1.CalcResult(&testContext);
         testPTVal2.CalcResult(&testContext);
         testPTOp1.CalcResult(&testContext);
 
-        RedString expectRes("Hello Red");
-        RedVariant exprRes = testContext.ExprResult(&testPTOp1);
+        RedDataString expectRes("Hello Red");
+        RedDataVariant exprRes = testContext.ExprResult(&testPTOp1);
 
         if (!exprRes.Type().IsStr())
             return kResultFail;
@@ -178,13 +178,13 @@ RedResult RedTestVSI::TestParseTreeBinaryOp(void)
 RedResult RedTestVSI::TestTokeniseCode(void)
 {
     RedVSILibTokenMap map;
-    RedString testCode = "new local number varX = 3.14159 varX = varX * 2 return varX";
+    RedDataString testCode = "new local number varX = 3.14159 varX = varX * 2 return varX";
     {
         RedVSITokenBuffer cInputBuffer;
 
         int iCreateResult = RedVSITokenFactory::CreateTokens(testCode, map.cVSILibTokenMap, cInputBuffer);
 
-        RedString debugText = cInputBuffer.DebugDump();
+        RedDataString debugText = cInputBuffer.DebugDump();
 
         if (iCreateResult == 0)
             return kResultFail;
@@ -197,11 +197,11 @@ RedResult RedTestVSI::TestTokeniseCode(void)
 RedResult RedTestVSI::TestParseFactory_001(void)
 {
     {
-        RedString testExpr("4300 + 21");
+        RedDataString testExpr("4300 + 21");
 
         RedVSITokenElementMap tokenMap;
-        tokenMap.Add(RedString("+"), RedVSIIOElement::SymbolPlus());
-        tokenMap.Add(RedString("-"), RedVSIIOElement::SymbolMinus());
+        tokenMap.Add(RedDataString("+"), RedVSIIOElement::SymbolPlus());
+        tokenMap.Add(RedDataString("-"), RedVSIIOElement::SymbolMinus());
 
         RedVSITokenBuffer tokBuf;
 
@@ -223,9 +223,9 @@ RedResult RedTestVSI::TestParseFactory_001(void)
         testContext.QueueExpr(pt);
         testContext.ExecuteExprQueue();
 
-        RedVariant res = testContext.ExprResult(pt);
+        RedDataVariant res = testContext.ExprResult(pt);
 
-        if (res.NumberValue() != RedNumber(4321))
+        if (res.NumberValue() != RedDataNumber(4321))
             return kResultFail;
     }
 
@@ -237,12 +237,12 @@ RedResult RedTestVSI::TestParseFactory_001(void)
 RedResult RedTestVSI::TestParseFactory_002(void)
 {
     {
-        RedString testExpr("x = 'hello' + ' red'");
+        RedDataString testExpr("x = 'hello' + ' red'");
 
         RedVSITokenElementMap tokenMap;
-        tokenMap.Add(RedString("+"), RedVSIIOElement::SymbolPlus());
-        tokenMap.Add(RedString("="), RedVSIIOElement::SymbolAssignEqual());
-        //tokenMap.Add(RedString("'"), RedVSIIOElement::SymbolStringContent());
+        tokenMap.Add(RedDataString("+"), RedVSIIOElement::SymbolPlus());
+        tokenMap.Add(RedDataString("="), RedVSIIOElement::SymbolAssignEqual());
+        //tokenMap.Add(RedDataString("'"), RedVSIIOElement::SymbolStringContent());
 
         RedVSITokenBuffer tokBuf;
 
@@ -261,21 +261,21 @@ RedResult RedTestVSI::TestParseFactory_002(void)
 
         RedLog               cLog;
         RedVSIContextRoutine testContext(&cLog);
-        testContext.CreateDataItem(RedVSILangElement::LocationStack(), RedVSILangElement::TypeString(), RedString("x"));
+        testContext.CreateDataItem(RedVSILangElement::LocationStack(), RedVSILangElement::TypeString(), RedDataString("x"));
 
         testContext.QueueExpr(pt);
         testContext.ExecuteExprQueue();
 
-        RedVariant res = testContext.ExprResult(pt);
+        RedDataVariant res = testContext.ExprResult(pt);
 
-        if (res.NumberValue() != RedString("hello red"))
+        if (res.NumberValue() != RedDataString("hello red"))
             return kResultFail;
 
         RedType* resultX;
-        testContext.FindDataItem(RedString("x"), resultX);
+        testContext.FindDataItem(RedDataString("x"), resultX);
         if (resultX->Type() != kDataTypeStr)
             return kResultFail;
-        if (*(RedString*)resultX != RedString("hello red"))
+        if (*(RedDataString*)resultX != RedDataString("hello red"))
             return kResultFail;
     }
 
@@ -289,14 +289,14 @@ RedResult RedTestVSI::TestParseFactory_003(void)
     {
         // - - - Define the data - - - 
 
-        RedString testExpr("x = (3 + 2) * 20");
+        RedDataString testExpr("x = (3 + 2) * 20");
 
         RedVSITokenElementMap tokenMap;
-        tokenMap.Add(RedString("+"), RedVSIIOElement::SymbolPlus());
-        tokenMap.Add(RedString("*"), RedVSIIOElement::SymbolMultiply());
-        tokenMap.Add(RedString("="), RedVSIIOElement::SymbolAssignEqual());
-        tokenMap.Add(RedString("("), RedVSIIOElement::SymbolOpenBracket());
-        tokenMap.Add(RedString(")"), RedVSIIOElement::SymbolCloseBracket());
+        tokenMap.Add(RedDataString("+"), RedVSIIOElement::SymbolPlus());
+        tokenMap.Add(RedDataString("*"), RedVSIIOElement::SymbolMultiply());
+        tokenMap.Add(RedDataString("="), RedVSIIOElement::SymbolAssignEqual());
+        tokenMap.Add(RedDataString("("), RedVSIIOElement::SymbolOpenBracket());
+        tokenMap.Add(RedDataString(")"), RedVSIIOElement::SymbolCloseBracket());
 
         // - - - Extract the tokens - - - 
 
@@ -318,7 +318,7 @@ RedResult RedTestVSI::TestParseFactory_003(void)
         // - - - Execute the expression - - - 
 
         RedVSIContextRoutine testContext(&log);
-        testContext.CreateDataItem(RedVSILangElement::LocationStack(), RedVSILangElement::TypeNumber(), RedString("x"));
+        testContext.CreateDataItem(RedVSILangElement::LocationStack(), RedVSILangElement::TypeNumber(), RedDataString("x"));
         testContext.QueueExpr(pt);
         testContext.ExecuteExprQueue();
 
@@ -327,15 +327,15 @@ RedResult RedTestVSI::TestParseFactory_003(void)
 
         // - - - Check the calculaterd balue - - - 
 
-        RedVariant res = testContext.ExprResult(pt);
-        if (res.NumberValue() != RedNumber(100))
+        RedDataVariant res = testContext.ExprResult(pt);
+        if (res.NumberValue() != RedDataNumber(100))
             return kResultFail;
 
         RedType* resultX;
-        testContext.FindDataItem(RedString("x"), resultX);
+        testContext.FindDataItem(RedDataString("x"), resultX);
         if (resultX->Type() != kDataTypeNum)
             return kResultFail;
-        if (*(RedNumber*)resultX != RedNumber(100))
+        if (*(RedDataNumber*)resultX != RedDataNumber(100))
             return kResultFail;
     }
 
@@ -350,11 +350,11 @@ RedResult RedTestVSI::TestCmdNew(void)
     {
         RedVSIParseTreeInterface* pt = NULL;
         {
-            RedString testExpr("4300 + 12");
+            RedDataString testExpr("4300 + 12");
 
             RedVSITokenElementMap tokenMap;
-            tokenMap.Add(RedString("+"), RedVSIIOElement::SymbolPlus());
-            tokenMap.Add(RedString("-"), RedVSIIOElement::SymbolMinus());
+            tokenMap.Add(RedDataString("+"), RedVSIIOElement::SymbolPlus());
+            tokenMap.Add(RedDataString("-"), RedVSIIOElement::SymbolMinus());
 
             RedVSITokenBuffer tokBuf;
 
@@ -372,7 +372,7 @@ RedResult RedTestVSI::TestCmdNew(void)
                 return kResultFail;
         }
 
-        cmdNew.SetDetails(kLangElementTypeNumber, kLangElementLocationStack, RedString("x"), NULL, pt);
+        cmdNew.SetDetails(kLangElementTypeNumber, kLangElementLocationStack, RedDataString("x"), NULL, pt);
 
         RedLog               cLog;
         RedVSIContextRoutine testContext(&cLog);
@@ -381,10 +381,10 @@ RedResult RedTestVSI::TestCmdNew(void)
         cmdNew.Execute(&testContext);
 
         RedType* resultX;
-        testContext.FindDataItem(RedString("x"), resultX);
+        testContext.FindDataItem(RedDataString("x"), resultX);
         if (resultX->Type() != kDataTypeNum)
             return kResultFail;
-        if (*(RedNumber*)resultX != RedNumber(4312))
+        if (*(RedDataNumber*)resultX != RedDataNumber(4312))
             return kResultFail;
     }
 
@@ -397,7 +397,7 @@ RedResult RedTestVSI::TestCmdNew(void)
         RedBufferOutput outBuf;
         RedVSICmdSerialiser::TokenBufferToOutputBuffer(cTokenBuffer, cLibMap.cVSILibTokenMap, outBuf);
 
-        if (outBuf.ExtractData() != RedString("new local number x = 4300 + 12 "))
+        if (outBuf.ExtractData() != RedDataString("new local number x = 4300 + 12 "))
             return kResultFail;
     }
 
@@ -410,7 +410,7 @@ RedResult RedTestVSI::TestCmdNew(void)
 //{
 //    {
 //        RedLog    log;
-//        RedString path("/tmp/TestBasicVSILibrary_0001.tml");
+//        RedDataString path("/tmp/TestBasicVSILibrary_0001.tml");
 //
 //        RedVSILibTokenMap tokenMap;
 //        tokenMap.SetupTokenMap();
@@ -439,7 +439,7 @@ RedResult RedTestVSI::TestCmdNew(void)
 //    // Test read in class
 //    {
 //        RedLog    log;
-//        RedString iPath("/tmp/TestBasicVSILibrary_0001.tml");
+//        RedDataString iPath("/tmp/TestBasicVSILibrary_0001.tml");
 //
 //        RedTinyMLElement* newX = NULL;
 //
@@ -462,10 +462,10 @@ RedResult RedTestVSI::TestCmdNew(void)
 //    // Test output class
 //    {
 //        RedLog    log;
-//        RedString iPath("/tmp/TestBasicVSILibrary_0003.tml");
+//        RedDataString iPath("/tmp/TestBasicVSILibrary_0003.tml");
 //
 //        RedTinyMLElement* newX2 = NULL;
-//        RedString name("TestRoutines");
+//        RedDataString name("TestRoutines");
 //
 //        newX2 =  vsiCodeLibFactory.OutputTmlClass(name);
 //
@@ -483,7 +483,7 @@ RedResult RedTestVSI::TestCmdNew(void)
 //RedResult RedTestVSI::TestSaveLibrary_001(void)
 //{
 //    {
-//        RedVSICmdNew pCmd1(kLangElementTypeNumber, kLangElementLocationStack, RedString("x"), NULL);
+//        RedVSICmdNew pCmd1(kLangElementTypeNumber, kLangElementLocationStack, RedDataString("x"), NULL);
 //        RedVSICmdLet();
 //    }
 //    return kResultSuccess;
@@ -497,7 +497,7 @@ RedResult RedTestVSI::TestRunProg_001(void)
     RedVSILibFactory vsiCodeLibFactory(&vsiCodeLib);
 
     {
-        RedBufferInput codeBuffer(RedString(" \
+        RedBufferInput codeBuffer(RedDataString(" \
     {{class} \
         {{name}TestRoutines} \
         {{routine} \
@@ -583,7 +583,7 @@ RedResult RedTestVSI::TestRunProg_001(void)
                     return kResultFail;
                 if (!pXVal->Type().IsNum())
                     return kResultFail;
-                RedNumber* pXNum = dynamic_cast<RedNumber*>(pXVal);
+                RedDataNumber* pXNum = dynamic_cast<RedDataNumber*>(pXVal);
                 if (!pXNum->IsEqualToWithinTollerance(617, kNumberFloatCompTollerance))
                     return kResultFail;
             }
@@ -597,7 +597,7 @@ RedResult RedTestVSI::TestRunProg_001(void)
 RedResult RedTestVSI::TestFragment_New(void)
 {
     // Define a small code fragment
-    RedString strCodeFragment = "new local number x = 3.2 x = x * 2";
+    RedDataString strCodeFragment = "new local number x = 3.2 x = x * 2";
 
     // Turn the code into tokens
     RedVSILibTokenMap cTokenMap;
@@ -620,7 +620,7 @@ RedResult RedTestVSI::TestFragment_New(void)
         return kResultFail;
 
     // Check the execution result
-    RedVariant x = testContext.DataItemAsVariant("x");
+    RedDataVariant x = testContext.DataItemAsVariant("x");
     if (x != 6.4) return kResultFail;
 
     return kResultSuccess;
@@ -631,7 +631,7 @@ RedResult RedTestVSI::TestFragment_New(void)
 RedResult RedTestVSI::TestFragment_NewTypes(void)
 {
     // Define a small code fragment
-    RedString strCodeFragment = " \
+    RedDataString strCodeFragment = " \
         new local bool   testB = true \
         new local number testN = 123 \
         new local string testS = 'Str' ";
@@ -658,11 +658,11 @@ RedResult RedTestVSI::TestFragment_NewTypes(void)
         return kResultFail;
 
     // Check the execution result
-    RedVariant testB = testContext.DataItemAsVariant("testB");
+    RedDataVariant testB = testContext.DataItemAsVariant("testB");
     if (testB != true) return kResultFail;
-    RedVariant testN = testContext.DataItemAsVariant("testN");
+    RedDataVariant testN = testContext.DataItemAsVariant("testN");
     if (testN != 123) return kResultFail;
-    RedVariant testS = testContext.DataItemAsVariant("testS");
+    RedDataVariant testS = testContext.DataItemAsVariant("testS");
     if (testS != "Str") return kResultFail;
 
     return kResultSuccess;
@@ -673,11 +673,11 @@ RedResult RedTestVSI::TestFragment_NewTypes(void)
 RedResult RedTestVSI::TestFragment_Expr(void)
 {
     // Define a small code fragment
-    RedString strCodeFragment = "\
+    RedDataString strCodeFragment = "\
         new local number x   = 3 \
         x = x + 1 \
         x = x * 2";
-    //    RedString strCodeFragment = "\
+    //    RedDataString strCodeFragment = "\
     //        new local record x \
     //        x[aa] = 12 ";
 
@@ -702,7 +702,7 @@ RedResult RedTestVSI::TestFragment_Expr(void)
         return kResultFail;
 
     // Check the execution result
-    RedVariant x = testContext.DataItemAsVariant("x");
+    RedDataVariant x = testContext.DataItemAsVariant("x");
     if (x != 8) return kResultFail;
 
     return kResultSuccess;
@@ -713,7 +713,7 @@ RedResult RedTestVSI::TestFragment_Expr(void)
 RedResult RedTestVSI::TestFragment_If(void)
 {
     // Define a small code fragment
-    RedString strCodeFragment = "\
+    RedDataString strCodeFragment = "\
         new local number x   = 3 \
         new local number res = 0 \
         if x < 4 then \
@@ -743,7 +743,7 @@ RedResult RedTestVSI::TestFragment_If(void)
         return kResultFail;
 
     // Check the execution result
-    RedVariant x = testContext.DataItemAsVariant("res");
+    RedDataVariant x = testContext.DataItemAsVariant("res");
     if (x != 12) return kResultFail;
 
     return kResultSuccess;
@@ -755,7 +755,7 @@ RedResult RedTestVSI::TestFragment_While(void)
 {
     // Define a small code fragment
     // The quick +1 on the end help check that we've correctly detected the endof the command
-    RedString strCodeFragment = " \
+    RedDataString strCodeFragment = " \
         new local number x = 2 \
         while x < 99 loop \
             x = x * 2 \
@@ -776,7 +776,7 @@ RedResult RedTestVSI::TestFragment_While(void)
         return kResultFail;
 
     // Check the execution result
-    RedVariant x = testContext.DataItemAsVariant("x");
+    RedDataVariant x = testContext.DataItemAsVariant("x");
     if (x != 129) return kResultFail;
 
     return kResultSuccess;
@@ -788,7 +788,7 @@ RedResult RedTestVSI::TestFragment_Log(void)
 {
     // Define a small code fragment
     // The quick +1 on the end help check that we've correctly detected the endof the command
-    RedString strCodeFragment = " \
+    RedDataString strCodeFragment = " \
         new local number x = 2.2 \
         new local string zxz = 'zz' \
         log x ";
@@ -807,7 +807,7 @@ RedResult RedTestVSI::TestFragment_Log(void)
         return kResultFail;
 
     // Check the execution result
-    RedVariant x = testContext.DataItemAsVariant("x");
+    RedDataVariant x = testContext.DataItemAsVariant("x");
     if (x != 2.2) return kResultFail;
 
     return kResultSuccess;

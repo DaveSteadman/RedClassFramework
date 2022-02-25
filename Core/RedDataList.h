@@ -21,7 +21,7 @@
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 #include "RedType.h"
-#include "RedString.h"
+#include "RedDataString.h"
 #include "RedMapList.h"
 #include "RedMapListIterator.h"
 
@@ -29,63 +29,53 @@ namespace Red {
 namespace Core {
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+// A List data type, parented on RedType, so we can create collections of them and use them as VSI variables.
 
-class RedFlexRecord : public RedType
+class RedDataList : public RedType
 {
 public:
 
-    // Construction
-    RedFlexRecord(void);
-    ~RedFlexRecord(void);
+    RedDataList(void) { pList = NULL; };
+    RedDataList(unsigned uNumItems, RedDataType eItemType) { InitToSize(uNumItems, eItemType); };
+
+    ~RedDataList(void) { pList->DelAll(); };
 
     // Inherited: RedType
-    RedDataType Type(void) const { return RedDataType::Record(); };
-    RedType*    Clone(void) const;
-    void        Init(void) { DelAll(); };
+    RedDataType Type(void) const { return RedDataType::List(); };
+    RedType*          Clone(void) const;
+    void              Init(void) { pList->DelAll(); };
+
+    void              InitToSize(unsigned uNumItems, RedDataType eItemType);
 
     // Create And Add
-    RedType*    CreateAndAdd(const RedType* cNewAttriIndex, const RedDataType& NewAttribType);
-    RedType*    CloneAndAdd (const RedType* cNewAttriIndex, RedType* pNewAttrib);
-    RedType*    Add         (RedType* cNewAttriIndex, RedType* pNewAttrib);
+    // void        CloneAndAdd (const RedDataString& cNewAttribName, const RedType* pNewAttrib) { pAttribList->Add(cNewAttribName,              pNewAttrib->Clone()); };
+    // void        CloneAndAdd (const char* strNewAttribName,    const RedType* pNewAttrib) { pAttribList->Add(RedDataString(strNewAttribName), pNewAttrib->Clone()); };
+    // void        Add         (const RedDataString& cNewAttribName, RedType* pNewAttrib)       { pAttribList->Add(cNewAttribName,              pNewAttrib); };
+    // void        Add         (const char* strNewAttribName,    RedType* pNewAttrib)       { pAttribList->Add(RedDataString(strNewAttribName), pNewAttrib); };
+    // RedType*    CreateAndAdd(const RedDataString& cNewAttribName, const RedDataType& NewAttribType);
+    // RedType*    CreateAndAdd(const char* strNewAttribName,    const RedDataType& NewAttribType);
 
-    // Locate
-    bool        Find(RedType* cNewAttriIndex, RedType*& pData);
-    unsigned    NumItems(void) const { return num_items; };
 
     // Remove
-    void        DelFirst(void);
-    void        DelLast(void);
-    void        DelAll(void);
-    void        DelIndex(const RedType* cNewAttriIndex);
+    void        DelAll(void) { pList->DelAll(); };
+
+    unsigned    NumItems(void) const { return pList->NumItems(); };
 
     // Operators
-    void operator =(const RedFlexRecord& cNewVal);
+    void operator =(const RedDataList& cNewVal);
 
 private:
 
-    typedef struct TListElement
-    {
-        RedType*      index_ptr;
-        RedType*      data_ptr;
-        TListElement* next_ptr;
-    } TListElement;
+    RedType* CreateObjectOfType(const RedDataType& NewAttribType);
 
-    void            MakeListElement(TListElement** NewElemPtr) const;
-    static RedType* CreateObjectOfType(const RedDataType& NewAttribType);
-    void            AddElement(RedType* final_index_ptr, RedType* final_data_ptr);
+    typedef RedDoubleLinkedList<RedType*>   RedTypeList;
+    typedef RedDoubleLinkedList<RedType*>   RedTypeListIterator;
 
-    bool            FindElementForIndex(RedType* search_index, TListElement** found_element);
-
-    bool            RedTypeMatcher(RedType* lhs, RedType* rhs);
-
-    TListElement* list_head_ptr;
-    TListElement* list_tail_ptr;
-    unsigned      num_items;
+    // Attributes
+    RedTypeList* pList;
 };
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 } // Core
 } // Red
-
-

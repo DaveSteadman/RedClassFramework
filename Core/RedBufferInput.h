@@ -20,8 +20,8 @@
 
 #include "RedLinkedList.h"
 #include "RedLinkedListIterator.h"
-#include "RedString.h"
-#include "RedChar.h"
+#include "RedDataString.h"
+#include "RedDataChar.h"
 #include "RedBufferPos.h"
 
 namespace Red {
@@ -36,22 +36,22 @@ class RedBufferInput
 public:
 
     RedBufferInput(void) { Init(); };
-    RedBufferInput(const RedString& cNewStr) { Assign(cNewStr); };
+    RedBufferInput(const RedDataString& cNewStr) { Assign(cNewStr); };
 
-    void      Assign(const RedString& cNewStr) { Init(); cStrBuffer=cNewStr; };
+    void      Assign(const RedDataString& cNewStr) { Init(); cStrBuffer=cNewStr; };
     void      Init(void);
 
-    RedChar   GetNextChar(void);
-    RedChar   PreviewNextChar(void);
-    void      GetCharAndPreview(RedChar& ch, RedChar& previewch);
+    RedDataChar   GetNextChar(void);
+    RedDataChar   PreviewNextChar(void);
+    void      GetCharAndPreview(RedDataChar& ch, RedDataChar& previewch);
 
-    RedChar   PreviewAhead(const unsigned IndexAhead);
+    RedDataChar   PreviewAhead(const unsigned IndexAhead);
 
     void      UngetChar(void) { SetPos(iCharPos-1); };
     void      SkipWhitespace(void);
 
-    RedChar   GetNextNonWhitespaceChar(void)     { SkipWhitespace(); return GetNextChar(); };
-    RedChar   PreviewNextNonWhitespaceChar(void) { SkipWhitespace(); return PreviewNextChar(); };
+    RedDataChar   GetNextNonWhitespaceChar(void)     { SkipWhitespace(); return GetNextChar(); };
+    RedDataChar   PreviewNextNonWhitespaceChar(void) { SkipWhitespace(); return PreviewNextChar(); };
 
     void      SetStartPos(void) { SetPos(0); };
     void      SetPos(int iNewPos);
@@ -59,7 +59,7 @@ public:
 
     RedBufferPos  GetRowColPos(void) { return RedBufferPos(iRow, iCol); };
 
-    const RedString   StringBuffer(void) const { return cStrBuffer; };
+    const RedDataString   StringBuffer(void) const { return cStrBuffer; };
 private:
 
     void AddRow(void);
@@ -71,7 +71,7 @@ private:
     int         iCharPos;
     int         iRow;
     int         iCol;
-    RedString   cStrBuffer;
+    RedDataString   cStrBuffer;
 };
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

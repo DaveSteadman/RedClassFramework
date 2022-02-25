@@ -17,7 +17,7 @@
 // -------------------------------------------------------------------------------------------------
 
 #include "RedType.h"
-#include "RedString.h"
+#include "RedDataString.h"
 #include "RedLogEvent.h"
 #include "RedLog.h"
 
@@ -38,7 +38,7 @@ void RedLog::AddEvent(const RedLogEvent& event)
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-void RedLog::AddText(const RedString& NewText)
+void RedLog::AddText(const RedDataString& NewText)
 {
     RedLogEvent* storedEvent = new RedLogEvent(NewText);
 
@@ -47,7 +47,7 @@ void RedLog::AddText(const RedString& NewText)
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-void RedLog::AddErrorEvent(const RedString& NewText)
+void RedLog::AddErrorEvent(const RedDataString& NewText)
 {
     RedLogEvent* storedEvent = new RedLogEvent(eErrorEvent, NewText);
 
@@ -57,9 +57,9 @@ void RedLog::AddErrorEvent(const RedString& NewText)
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-RedString RedLog::AllLoggedText(void)
+RedDataString RedLog::AllLoggedText(void)
 {
-    RedString          outStr;
+    RedDataString          outStr;
     EventLogListItType logIt(&EventList);
 
     logIt.First();

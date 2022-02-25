@@ -25,20 +25,20 @@
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 // Fundamental Elements
-#include "RedType.h"
-#include "RedDataType.h"
 #include "RedCoreConsts.h"
 
 // Core Types
-#include "RedBoolean.h"
-#include "RedChar.h"
-#include "RedNumber.h"
-#include "RedString.h"
+#include "RedDataType.h"
+#include "RedType.h"
+#include "RedDataBoolean.h"
+#include "RedDataChar.h"
+#include "RedDataNumber.h"
+#include "RedDataString.h"
+#include "RedDataRecord.h"
+#include "RedDataList.h"
+#include "RedDataVariant.h"
 
 // Wrappers
-#include "RedRecord.h"
-#include "RedFlexRecord.h"
-#include "RedVariant.h"
 #include "RedSmartPtr.h"
 #include "RedNumberRange.h"
 

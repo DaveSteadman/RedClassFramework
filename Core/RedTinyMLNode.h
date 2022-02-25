@@ -36,7 +36,7 @@ public:
     typedef RedDoubleLinkedListIterator<RedTinyMLElement*> TmlNodeListItType;
 
     // Constructor
-    RedTinyMLNode(const RedString& NewName) : RedTinyMLElement(NewName) { nodelist.Init(); };
+    RedTinyMLNode(const RedDataString& NewName) : RedTinyMLElement(NewName) { nodelist.Init(); };
     
     // Destructor - delete all items in list
     ~RedTinyMLNode();
@@ -50,8 +50,8 @@ public:
     TmlNodeListItType NodeIterator(void) { return TmlNodeListItType(&nodelist); };
 
     // Create child elements within the tree and return a pointer to them
-    RedTinyMLNode*    CreateChildNode (const RedString& NewName);
-    RedTinyMLLeaf*    CreateChildLeaf (const RedString& NewName, const RedString& NewData);
+    RedTinyMLNode*    CreateChildNode (const RedDataString& NewName);
+    RedTinyMLLeaf*    CreateChildLeaf (const RedDataString& NewName, const RedDataString& NewData);
 
     // Add new child nodes without cloning
     void AddChildNode (RedTinyMLNode* pNewNode) { nodelist.AddLast(dynamic_cast<RedTinyMLElement*>(pNewNode)); };

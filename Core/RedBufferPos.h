@@ -18,8 +18,8 @@
 
 #pragma once
 
-#include "RedNumber.h"
-#include "RedString.h"
+#include "RedDataNumber.h"
+#include "RedDataString.h"
 
 namespace Red {
 namespace Core {
@@ -37,13 +37,13 @@ public:
     unsigned Row(void) const { return iRow.IntegerValue(); };
     unsigned Col(void) const { return iCol.IntegerValue(); };
 
-    RedString PosText(void) { RedString x="(row:" + iRow.DecimalString() + ", col:" + iCol.DecimalString() + ")"; return x; };
+    RedDataString PosText(void) { RedDataString x="(row:" + iRow.DecimalString() + ", col:" + iCol.DecimalString() + ")"; return x; };
 
     void operator =(const RedBufferPos cNewPos) { iRow = cNewPos.iRow; iCol = cNewPos.iCol; };
 
 private:
-    RedNumber iRow;
-    RedNumber iCol;
+    RedDataNumber iRow;
+    RedDataNumber iCol;
 };
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

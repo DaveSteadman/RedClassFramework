@@ -21,7 +21,7 @@
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 #include "RedType.h"
-#include "RedString.h"
+#include "RedDataString.h"
 #include "RedMapList.h"
 #include "RedMapListIterator.h"
 
@@ -29,48 +29,48 @@ namespace Red {
 namespace Core {
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-// A List data type, parented on RedType, so we can create collections of them and use them as VSI variables.
 
-class RedList : public RedType
+class RedDataRecord : public RedType
 {
 public:
 
-    RedList(void);
-	~RedList(void) { pList->DelAll(); };
+    RedDataRecord(void);
+    ~RedDataRecord(void) { delete pAttribList; };
 
     // Inherited: RedType
-    RedDataType Type(void) const { return RedDataType::List(); };
+    RedDataType Type(void) const { return RedDataType::Record(); };
     RedType*          Clone(void) const;
-    void              Init(void) { pList->DelAll(); };
-
-	// void              Init(unsigned uNumItems, RedDataType eItemType);
+    void              Init(void) { pAttribList->DelAll(); };
 
     // Create And Add
-    // void        CloneAndAdd (const RedString& cNewAttribName, const RedType* pNewAttrib) { pAttribList->Add(cNewAttribName,              pNewAttrib->Clone()); };
-	// void        CloneAndAdd (const char* strNewAttribName,    const RedType* pNewAttrib) { pAttribList->Add(RedString(strNewAttribName), pNewAttrib->Clone()); };
-	// void        Add         (const RedString& cNewAttribName, RedType* pNewAttrib)       { pAttribList->Add(cNewAttribName,              pNewAttrib); };
-	// void        Add         (const char* strNewAttribName,    RedType* pNewAttrib)       { pAttribList->Add(RedString(strNewAttribName), pNewAttrib); };
-	// RedType*    CreateAndAdd(const RedString& cNewAttribName, const RedDataType& NewAttribType);
-	// RedType*    CreateAndAdd(const char* strNewAttribName,    const RedDataType& NewAttribType);
+    void        CloneAndAdd (const RedDataString& cNewAttribName, const RedType* pNewAttrib) { pAttribList->Add(cNewAttribName,              pNewAttrib->Clone()); };
+    void        CloneAndAdd (const char* strNewAttribName,    const RedType* pNewAttrib) { pAttribList->Add(RedDataString(strNewAttribName), pNewAttrib->Clone()); };
+    void        Add         (const RedDataString& cNewAttribName, RedType* pNewAttrib)       { pAttribList->Add(cNewAttribName,              pNewAttrib); };
+    void        Add         (const char* strNewAttribName,    RedType* pNewAttrib)       { pAttribList->Add(RedDataString(strNewAttribName), pNewAttrib); };
+    RedType*    CreateAndAdd(const RedDataString& cNewAttribName, const RedDataType& NewAttribType);
+    RedType*    CreateAndAdd(const char* strNewAttribName,    const RedDataType& NewAttribType);
 
+    // Locate
+    bool        Find(const RedDataString& cAttribName, RedType*& pData)       { return pAttribList->Find(cAttribName, pData); };
 
     // Remove
-    void        DelAll(void) { pList->DelAll(); };
+    void        Del(const RedDataString& cNewAttribName)                      { pAttribList->Del(cNewAttribName); };
+    void        DelAll(void)                                              { pAttribList->DelAll(); };
 
-    unsigned    NumItems(void) const { return pList->NumItems(); };
+    unsigned    NumItems(void) const { return pAttribList->NumItems(); };
 
     // Operators
-    void operator =(const RedList& cNewVal);
+    void operator =(const RedDataRecord& cNewVal);
 
 private:
 
     RedType* CreateObjectOfType(const RedDataType& NewAttribType);
 
-    typedef RedDoubleLinkedList<RedType*>   RedTypeList;
-    typedef RedDoubleLinkedList<RedType*>   RedTypeListIterator;
+    typedef RedMapList<RedDataString, RedType*>           RedDataStringDataMap;
+    typedef RedMapListIterator<RedDataString, RedType*>   RedDataStringDataMapIterator;
 
     // Attributes
-	RedTypeList* pList;
+    RedDataStringDataMap* pAttribList;
 };
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

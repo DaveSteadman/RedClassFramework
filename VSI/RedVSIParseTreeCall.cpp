@@ -38,7 +38,7 @@ RedVSIParseTreeCall::~RedVSIParseTreeCall()
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-void RedVSIParseTreeCall::SetDetails(const RedString& cInObjName, const RedString& cInClassName, const RedString& cInFuncName, RedVSIParseList*& pInParamList)
+void RedVSIParseTreeCall::SetDetails(const RedDataString& cInObjName, const RedDataString& cInClassName, const RedDataString& cInFuncName, RedVSIParseList*& pInParamList)
 {
     cObjectName = cInObjName;
     cClassName  = cInClassName;
@@ -48,7 +48,7 @@ void RedVSIParseTreeCall::SetDetails(const RedString& cInObjName, const RedStrin
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-void RedVSIParseTreeCall::GetDetails(RedString& cOutObjName, RedString& cOutClassName, RedString& cOutFuncName, RedVSIParseList*& pOutParamList)
+void RedVSIParseTreeCall::GetDetails(RedDataString& cOutObjName, RedDataString& cOutClassName, RedDataString& cOutFuncName, RedVSIParseList*& pOutParamList)
 {
     cOutObjName   = cObjectName;
     cOutClassName = cClassName;
@@ -80,7 +80,7 @@ void RedVSIParseTreeCall::CalcResult(RedVSIContextInterface* pContext)
         // get the current parameter
         RedVSIParseTreeInterface* pCurrParam = cParseIt.CurrentItem();
 
-        RedVariant r = pContext->ExprResult(pCurrParam);
+        RedDataVariant r = pContext->ExprResult(pCurrParam);
 
         // add the result of the expr to the param list
         cCall.AddParam(pContext->ExprResult(pCurrParam));

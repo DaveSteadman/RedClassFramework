@@ -35,18 +35,18 @@ class RedTinyMLAction
 public:
 
     // Set & Query Leaf elements
-    static void               SetChildLeaf   (RedTinyMLNode& node, const RedString& leafname, const RedString& leafdata);
-    static bool               ChildLeafExists(RedTinyMLNode& node, const RedString& leafname);
+    static void               SetChildLeaf   (RedTinyMLNode& node, const RedDataString& leafname, const RedDataString& leafdata);
+    static bool               ChildLeafExists(RedTinyMLNode& node, const RedDataString& leafname);
 
     // Leaf Name<->Data lookups
-    static RedResult          ChildLeafDataForName(RedTinyMLNode& node, const RedString& inleafname, RedString& outleafdata);
-    static RedResult          ChildLeafNameForData(RedTinyMLNode& node, const RedString& inleafdata, RedString& outleafname);
+    static RedResult          ChildLeafDataForName(RedTinyMLNode& node, const RedDataString& inleafname, RedDataString& outleafdata);
+    static RedResult          ChildLeafNameForData(RedTinyMLNode& node, const RedDataString& inleafdata, RedDataString& outleafname);
 
     // Search Node For Child entries
-    static RedTinyMLElement*  NodeFirstNamedElement   (RedTinyMLNode& node, const RedString& SearchName);
-    static RedTinyMLNode*     NodeFirstNamedNode      (RedTinyMLNode& node, const RedString& SearchName);
-    static RedTinyMLLeaf*     NodeFirstNamedLeaf      (RedTinyMLNode& node, const RedString& SearchName);
-    static unsigned           NumberOfNamedChildLeaves(RedTinyMLNode& node, const RedString& SearchName);
+    static RedTinyMLElement*  NodeFirstNamedElement   (RedTinyMLNode& node, const RedDataString& SearchName);
+    static RedTinyMLNode*     NodeFirstNamedNode      (RedTinyMLNode& node, const RedDataString& SearchName);
+    static RedTinyMLLeaf*     NodeFirstNamedLeaf      (RedTinyMLNode& node, const RedDataString& SearchName);
+    static unsigned           NumberOfNamedChildLeaves(RedTinyMLNode& node, const RedDataString& SearchName);
 
     // Tree Query
     static unsigned           TreeElementCount(RedTinyMLNode& node);

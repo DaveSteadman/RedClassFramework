@@ -18,8 +18,8 @@
 
 #define _CRT_SECURE_NO_WARNINGS
 
-#include "RedString.h"
-#include "RedNumber.h"
+#include "RedDataString.h"
+#include "RedDataNumber.h"
 #include "RedTime.h"
 
 #include <time.h>
@@ -31,7 +31,7 @@ namespace Core {
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-void RedTime::SetTime(const RedString& timestr)
+void RedTime::SetTime(const RedDataString& timestr)
 {
     unsigned h;
     unsigned m;
@@ -47,13 +47,13 @@ void RedTime::SetTime(const RedString& timestr)
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 /// Returns a string formatted: hh:mm:ss
-const RedString RedTime::TimeString(void) const
+const RedDataString RedTime::TimeString(void) const
 {
-    RedString retstr;
+    RedDataString retstr;
 
-    RedNumber h(hours);
-    RedNumber m(minutes);
-    RedNumber s(seconds);
+    RedDataNumber h(hours);
+    RedDataNumber m(minutes);
+    RedDataNumber s(seconds);
 
     retstr.Append(h.DecimalStringWithMinDigitsAndDP(2, 0));
     retstr.Append(":");

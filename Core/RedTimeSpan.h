@@ -18,7 +18,7 @@
 
 #pragma once
 
-#include "RedNumber.h"
+#include "RedDataNumber.h"
 #include "RedTime.h"
 
 namespace Red {

@@ -20,7 +20,7 @@
 #include <stdlib.h>
 #include <math.h>
 
-#include "RedNumber.h"
+#include "RedDataNumber.h"
 
 namespace Red {
 namespace Core {
@@ -30,7 +30,7 @@ namespace Core {
 // =================================================================================================
 
 /// Query operation, determining if the int number is zero, or the float number is within a tollerance of zero.
-bool RedNumber::IsZero(void) const
+bool RedDataNumber::IsZero(void) const
 {
     if (eNumType == eInt)
         return (iIntVal == 0);
@@ -40,7 +40,7 @@ bool RedNumber::IsZero(void) const
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-bool RedNumber::IsPositive(void) const
+bool RedDataNumber::IsPositive(void) const
 {
     if (eNumType == eInt)
         return (iIntVal > 0);
@@ -50,7 +50,7 @@ bool RedNumber::IsPositive(void) const
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-bool RedNumber::IsEqualTo(const RedNumber& CheckVal) const
+bool RedDataNumber::IsEqualTo(const RedDataNumber& CheckVal) const
 {
     // If Integers, just compare, no tollerance
     if ( IsInteger() && CheckVal.IsInteger() )
@@ -74,7 +74,7 @@ bool RedNumber::IsEqualTo(const RedNumber& CheckVal) const
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-bool RedNumber::IsEqualToWithinTollerance(const RedNumber& CheckVal, const RedNumber& tollerance) const
+bool RedDataNumber::IsEqualToWithinTollerance(const RedDataNumber& CheckVal, const RedDataNumber& tollerance) const
 {
     // If Integers, just compare, no tollerance
     if ( IsInteger() && CheckVal.IsInteger() )
@@ -102,10 +102,10 @@ bool RedNumber::IsEqualToWithinTollerance(const RedNumber& CheckVal, const RedNu
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-RedString RedNumber::DecimalString(void) const
+RedDataString RedDataNumber::DecimalString(void) const
 {
     const int   iStrLen = 32;
-    RedString   cRetStr;
+    RedDataString   cRetStr;
     char        pChrBuf[iStrLen];
 
     // Initialise the string we're going to be using
@@ -127,12 +127,12 @@ RedString RedNumber::DecimalString(void) const
 
 /// @brief Convert the number into a string with specific formatting
 /// @param decimalplaces The number of characters after the decimal place.
-RedString RedNumber::DecimalStringWithDP(const unsigned decimalplaces) const
+RedDataString RedDataNumber::DecimalStringWithDP(const unsigned decimalplaces) const
 {
     const int  iStrLen = 32;
     char       formatstr[iStrLen];
     char       numstr[iStrLen];
-    RedString  cRetStr;
+    RedDataString  cRetStr;
 
     double     dblVal = 0.0;
     if (eNumType == eInt)
@@ -153,12 +153,12 @@ RedString RedNumber::DecimalStringWithDP(const unsigned decimalplaces) const
 /// Convert the number into a string with specific formatting
 /// @param minchars      The minimum number of characters to make up the output string, including a decimal place.
 /// @param decimalplaces The number of characters after the decimal place.
-RedString RedNumber::DecimalStringWithMinDigitsAndDP(const unsigned minchars, const unsigned decimalplaces) const
+RedDataString RedDataNumber::DecimalStringWithMinDigitsAndDP(const unsigned minchars, const unsigned decimalplaces) const
 {
     const int  iStrLen = 32;
     char       formatstr[iStrLen];
     char       numstr[iStrLen];
-    RedString  cRetStr;
+    RedDataString  cRetStr;
 
     double     dblVal = 0.0;
     if (eNumType == eInt)
@@ -176,10 +176,10 @@ RedString RedNumber::DecimalStringWithMinDigitsAndDP(const unsigned minchars, co
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-RedChar RedNumber::CharValue(void) const
+RedDataChar RedDataNumber::CharValue(void) const
 {
     // define return value, self-initialised to \0
-    RedChar cRetChar;
+    RedDataChar cRetChar;
 
     if (eNumType == eInt)
     {
@@ -192,7 +192,7 @@ RedChar RedNumber::CharValue(void) const
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-int RedNumber::IntegerValue(void) const
+int RedDataNumber::IntegerValue(void) const
 {
     int iRetVal = 0;
 
@@ -206,7 +206,7 @@ int RedNumber::IntegerValue(void) const
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-double RedNumber::DoubleValue(void) const
+double RedDataNumber::DoubleValue(void) const
 {
     double dblRetVal = 0.0;
 
@@ -220,7 +220,7 @@ double RedNumber::DoubleValue(void) const
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-void RedNumber::MakePositive(void)
+void RedDataNumber::MakePositive(void)
 {
     if (eNumType == eInt)
         iIntVal = abs(iIntVal);
@@ -230,7 +230,7 @@ void RedNumber::MakePositive(void)
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-void RedNumber::MakeNegative(void)
+void RedDataNumber::MakeNegative(void)
 {
     if (eNumType == eInt)
     {
@@ -246,9 +246,9 @@ void RedNumber::MakeNegative(void)
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-RedNumber RedNumber::IntegerPart(void) const
+RedDataNumber RedDataNumber::IntegerPart(void) const
 {
-    RedNumber r;
+    RedDataNumber r;
  
     if (eNumType == eInt)
     {
@@ -268,9 +268,9 @@ RedNumber RedNumber::IntegerPart(void) const
  
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-RedNumber RedNumber::FractionalPart(void) const
+RedDataNumber RedDataNumber::FractionalPart(void) const
 {
-    RedNumber r;
+    RedDataNumber r;
 
     if (eNumType == eInt)
     {
@@ -293,9 +293,9 @@ RedNumber RedNumber::FractionalPart(void) const
 /// Return the integer part from the division of this number with another.
 /// Example: This = 3.14 & d = 2. Division Remainder returns 1.
 
-RedNumber RedNumber::DivisionQuotient(const RedNumber& d) const
+RedDataNumber RedDataNumber::DivisionQuotient(const RedDataNumber& d) const
 {
-    RedNumber r;
+    RedDataNumber r;
  
     double param, intpart;
  
@@ -314,9 +314,9 @@ RedNumber RedNumber::DivisionQuotient(const RedNumber& d) const
 /// Return the remainder from the division of this number with another.
 /// Example: This = 3.14 & d = 2. Division Remainder returns 1.14.
 
-RedNumber RedNumber::DivisionRemainder(const RedNumber& d) const
+RedDataNumber RedDataNumber::DivisionRemainder(const RedDataNumber& d) const
 {
-    RedNumber r;
+    RedDataNumber r;
  
     double numerator   = dblFloatVal;
     double denominator = d.DoubleValue();
@@ -330,7 +330,7 @@ RedNumber RedNumber::DivisionRemainder(const RedNumber& d) const
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-void RedNumber::SetDecimalString(const RedString& cNewDecimalVal)
+void RedDataNumber::SetDecimalString(const RedDataString& cNewDecimalVal)
 {
 
     const char* txtptr = cNewDecimalVal.TextPtr();
@@ -353,9 +353,9 @@ void RedNumber::SetDecimalString(const RedString& cNewDecimalVal)
 // Arithmetic Operators
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-RedNumber RedNumber::operator +(const RedNumber& n) const 
+RedDataNumber RedDataNumber::operator +(const RedDataNumber& n) const 
 {
-    RedNumber cReturnVal;
+    RedDataNumber cReturnVal;
 
     if ((eNumType == eFloat) || (n.eNumType == eFloat))
     {
@@ -382,9 +382,9 @@ RedNumber RedNumber::operator +(const RedNumber& n) const
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-RedNumber RedNumber::operator -(const RedNumber& n) const 
+RedDataNumber RedDataNumber::operator -(const RedDataNumber& n) const 
 {
-    RedNumber cReturnVal;
+    RedDataNumber cReturnVal;
 
     if ((eNumType == eFloat) || (n.eNumType == eFloat))
     {
@@ -411,9 +411,9 @@ RedNumber RedNumber::operator -(const RedNumber& n) const
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-RedNumber RedNumber::operator *(const RedNumber& n) const 
+RedDataNumber RedDataNumber::operator *(const RedDataNumber& n) const 
 {
-    RedNumber cReturnVal;
+    RedDataNumber cReturnVal;
 
     if ((eNumType == eFloat) || (n.eNumType == eFloat))
     {
@@ -440,9 +440,9 @@ RedNumber RedNumber::operator *(const RedNumber& n) const
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-RedNumber RedNumber::operator /(const RedNumber& n) const 
+RedDataNumber RedDataNumber::operator /(const RedDataNumber& n) const 
 {
-    RedNumber cReturnVal;
+    RedDataNumber cReturnVal;
 
     if ((eNumType == eFloat) || (n.eNumType == eFloat))
     {
@@ -479,39 +479,39 @@ RedNumber RedNumber::operator /(const RedNumber& n) const
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-void RedNumber::operator +=(const RedNumber& n)
+void RedDataNumber::operator +=(const RedDataNumber& n)
 {
-    RedNumber cRes = *this + n;
+    RedDataNumber cRes = *this + n;
     *this = cRes;
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-void RedNumber::operator -=(const RedNumber& n)
+void RedDataNumber::operator -=(const RedDataNumber& n)
 {
-    RedNumber cRes = *this - n;
+    RedDataNumber cRes = *this - n;
     *this = cRes;
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-void RedNumber::operator *=(const RedNumber& n)
+void RedDataNumber::operator *=(const RedDataNumber& n)
 {
-    RedNumber cRes = *this * n;
+    RedDataNumber cRes = *this * n;
     *this = cRes;
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-void RedNumber::operator /=(const RedNumber& n)
+void RedDataNumber::operator /=(const RedDataNumber& n)
 {
-    RedNumber cRes = *this / n;
+    RedDataNumber cRes = *this / n;
     *this = cRes;
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-RedNumber& RedNumber::operator ++() // Prefix
+RedDataNumber& RedDataNumber::operator ++() // Prefix
 {
     if (eNumType == eInt)
         iIntVal++;
@@ -523,7 +523,7 @@ RedNumber& RedNumber::operator ++() // Prefix
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-RedNumber RedNumber::operator ++(int) // Postfix
+RedDataNumber RedDataNumber::operator ++(int) // Postfix
 {
     if (eNumType == eInt)
         iIntVal++;
@@ -537,7 +537,7 @@ RedNumber RedNumber::operator ++(int) // Postfix
 // Comparison Operators
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-bool operator==(const RedNumber& lhs, const RedNumber& rhs)
+bool operator==(const RedDataNumber& lhs, const RedDataNumber& rhs)
 {
     if (lhs.IsEqualTo(rhs))
         return true;
@@ -547,7 +547,7 @@ bool operator==(const RedNumber& lhs, const RedNumber& rhs)
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-bool operator!=(const RedNumber& lhs, const RedNumber& rhs)
+bool operator!=(const RedDataNumber& lhs, const RedDataNumber& rhs)
 {
     if (!lhs.IsEqualTo(rhs))
         return true;
@@ -557,7 +557,7 @@ bool operator!=(const RedNumber& lhs, const RedNumber& rhs)
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-bool operator >=(const RedNumber& lhs, const RedNumber& rhs)
+bool operator >=(const RedDataNumber& lhs, const RedDataNumber& rhs)
 {
     if (lhs.IsInteger() && rhs.IsInteger())
         return (lhs.IntegerValue() >= rhs.IntegerValue());
@@ -567,7 +567,7 @@ bool operator >=(const RedNumber& lhs, const RedNumber& rhs)
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-bool operator <=(const RedNumber& lhs, const RedNumber& rhs)
+bool operator <=(const RedDataNumber& lhs, const RedDataNumber& rhs)
 {
     if (lhs.IsInteger() && rhs.IsInteger())
         return (lhs.IntegerValue() <= rhs.IntegerValue());
@@ -577,7 +577,7 @@ bool operator <=(const RedNumber& lhs, const RedNumber& rhs)
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-bool operator  >(const RedNumber& lhs, const RedNumber& rhs)
+bool operator  >(const RedDataNumber& lhs, const RedDataNumber& rhs)
 {
     if (lhs.IsInteger() && rhs.IsInteger())
         return (lhs.IntegerValue() > rhs.IntegerValue());
@@ -587,7 +587,7 @@ bool operator  >(const RedNumber& lhs, const RedNumber& rhs)
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-bool operator  <(const RedNumber& lhs, const RedNumber& rhs)
+bool operator  <(const RedDataNumber& lhs, const RedDataNumber& rhs)
 {
     if (lhs.IsInteger() && rhs.IsInteger())
         return (lhs.IntegerValue() < rhs.IntegerValue());

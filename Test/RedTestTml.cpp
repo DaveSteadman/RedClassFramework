@@ -43,7 +43,7 @@ void RedTestTml::RunUnitTest(RedLog& log)
 RedResult RedTestTml::TestOne(void)
 {
     {
-        RedString TestInTml = "{{name} content}";
+        RedDataString TestInTml = "{{name} content}";
         RedTinyMLElement* testElement = RedTinyMLFileIO::ParseTinyML(TestInTml);
         if (testElement == NULL)
         {
@@ -68,7 +68,7 @@ RedResult RedTestTml::TestOne(void)
 RedResult RedTestTml::TestTwo(void)
 {
 //    {
-//        RedString pathFail  = "/tmp/TestNonExistentFile.tml";
+//        RedDataString pathFail  = "/tmp/TestNonExistentFile.tml";
 //        RedTinyMLElement* newTmlElement = NULL;
 //
 //        // Check for a non-existant file. Has to return fail
@@ -77,8 +77,8 @@ RedResult RedTestTml::TestTwo(void)
 //            return kResultFail;
 //    }
 //
-//    RedString pathSave1  = "/tmp/TestTwo1.tml";
-//    RedString pathSave2  = "/tmp/TestTwo2.tml";
+//    RedDataString pathSave1  = "/tmp/TestTwo1.tml";
+//    RedDataString pathSave2  = "/tmp/TestTwo2.tml";
 //    {
 //        // Create small Tml Structure
 //        RedTinyMLNode oTop("tmltree");
@@ -143,9 +143,9 @@ RedResult RedTestTml::TestIterators(void)
         y->CreateChildLeaf("name3", "data5");
 
         // Child search checks
-        if (!RedTinyMLAction::ChildLeafExists(*y, RedString("name2")))
+        if (!RedTinyMLAction::ChildLeafExists(*y, RedDataString("name2")))
             return kResultFail;
-        if (RedTinyMLAction::NumberOfNamedChildLeaves(*y, RedString("name3")) != 3)
+        if (RedTinyMLAction::NumberOfNamedChildLeaves(*y, RedDataString("name3")) != 3)
             return kResultFail;
 
         // Tree count checks
@@ -191,13 +191,13 @@ RedResult RedTestTml::TestTreeEdit(void)
         y->CreateChildLeaf("name4", "data4");
         y->CreateChildLeaf("name5", "data5");
 
-        RedTinyMLAction::SetChildLeaf(*y, RedString("name2"), RedString("NEWDATA2"));
+        RedTinyMLAction::SetChildLeaf(*y, RedDataString("name2"), RedDataString("NEWDATA2"));
 
-        RedString resultName;
-        if (RedTinyMLAction::ChildLeafNameForData(*y, RedString("NEWDATA2"), resultName) != kResultSuccess)
+        RedDataString resultName;
+        if (RedTinyMLAction::ChildLeafNameForData(*y, RedDataString("NEWDATA2"), resultName) != kResultSuccess)
             return kResultFail;
 
-        if (resultName != RedString("name2"))
+        if (resultName != RedDataString("name2"))
             return kResultFail;
 
     }
@@ -209,7 +209,7 @@ RedResult RedTestTml::TestTreeEdit(void)
 RedResult RedTestTml::TestQuoteCharacters(void)
 {
     {
-        RedString TestInTml = "{{name} \"content\"}";
+        RedDataString TestInTml = "{{name} \"content\"}";
         RedTinyMLElement* testElement = RedTinyMLFileIO::ParseTinyML(TestInTml);
         if (testElement == NULL) return kResultFail;
         if (!testElement->IsLeaf()) { delete testElement; return kResultFail; }

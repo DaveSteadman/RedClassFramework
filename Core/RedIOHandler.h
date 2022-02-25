@@ -18,7 +18,7 @@
 
 #pragma once 
 
-#include "RedString.h"
+#include "RedDataString.h"
 #include "RedResult.h"
 #include "RedBufferInput.h"
 #include "RedBufferOutput.h"
@@ -31,13 +31,13 @@ namespace Core {
 class RedIOHandler
 {
 public:
-    static bool FileExists(const RedString& filepath);
+    static bool FileExists(const RedDataString& filepath);
 
-    static RedResult InputBufferFromFile(const RedString& cFilepath, RedBufferInput&  cBuf);
-    static RedResult OutputBufferToFile (const RedString& cFilepath, RedBufferOutput& cBuf);
+    static RedResult InputBufferFromFile(const RedDataString& cFilepath, RedBufferInput&  cBuf);
+    static RedResult OutputBufferToFile (const RedDataString& cFilepath, RedBufferOutput& cBuf);
     
 public:
-    static RedString BaseDir;
+    static RedDataString BaseDir;
 };
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -   

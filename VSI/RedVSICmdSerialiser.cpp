@@ -39,7 +39,7 @@ namespace VSI {
 void RedVSICmdSerialiser::SerialiseCommandChain(RedVSITokenBuffer& cTokenBuffer, RedVSICmdInterface* pCmd)
 {
     RedVSIToken cCRLFTok;
-    cCRLFTok.SetWhitespace(RedString("\n"));
+    cCRLFTok.SetWhitespace(RedDataString("\n"));
 
     // Loop until we run out of commands
     while (pCmd)
@@ -83,7 +83,7 @@ void RedVSICmdSerialiser::TokenBufferToOutputBuffer(RedVSITokenBuffer& cInTokenB
         else if (CurrToken.Type().IsPredefined())
         {
             RedVSIIOElement ioElem = CurrToken.Predef();
-            RedString       ioStr;
+            RedDataString       ioStr;
 
             if (tokenMap.FindString(ioElem, ioStr))
                 outBuffer.Append(ioStr);
@@ -160,7 +160,7 @@ void RedVSICmdSerialiser::SerialiseNewCmd(RedVSITokenBuffer& cTokenBuffer, RedVS
 {
     RedVSILangElement          cOutType;
     RedVSILangElement          cOutLoc;
-    RedString                  cOutName;
+    RedDataString                  cOutName;
     RedVSIParseTreeInterface*  pOutRecordIndexExpr = NULL;
     RedVSIParseTreeInterface*  pOutInitExpr = NULL;
 

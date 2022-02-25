@@ -40,7 +40,7 @@ bool RedVSIToken::IsEOF(void) const
     if (!cType.IsNonPrintable())
         return false;
  
-    RedString cEOFStr;
+    RedDataString cEOFStr;
     
     cEOFStr.Append('\0');
 
@@ -52,16 +52,16 @@ bool RedVSIToken::IsEOF(void) const
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-RedString RedVSIToken::DebugText(RedVSITokenElementMap& RedVSITokenMap)
+RedDataString RedVSIToken::DebugText(RedVSITokenElementMap& RedVSITokenMap)
 {
-    RedString cRetStr;
+    RedDataString cRetStr;
 
     if      (cType.IsNumber())         { cRetStr = "[num ";    cRetStr += cNumber.DecimalString(); cRetStr += "] "; }
     else if (cType.IsName())           { cRetStr = "[name ";   cRetStr += cText; cRetStr += "] ";}
     else if (cType.IsStringLiteral())  { cRetStr = "[str "; cRetStr += cText; cRetStr += "] ";}
     else if (IsEOF())                  { cRetStr = "<<EOF>> "; }
-    else if (cType.IsNonPrintable())   { RedNumber cCh = cText[1]; cRetStr = "[chr: "; cRetStr += cCh.DecimalString(); cRetStr += "] "; }
-    else if (cType.IsPredefined())     { cRetStr = "[predef "; RedString lookup; RedVSITokenMap.FindString(cPredef, lookup); cRetStr += lookup; cRetStr += "] ";}
+    else if (cType.IsNonPrintable())   { RedDataNumber cCh = cText[1]; cRetStr = "[chr: "; cRetStr += cCh.DecimalString(); cRetStr += "] "; }
+    else if (cType.IsPredefined())     { cRetStr = "[predef "; RedDataString lookup; RedVSITokenMap.FindString(cPredef, lookup); cRetStr += lookup; cRetStr += "] ";}
     else if (!cType.IsValid())         { cRetStr = "<<Undefined>>"; }
 
     return cRetStr;

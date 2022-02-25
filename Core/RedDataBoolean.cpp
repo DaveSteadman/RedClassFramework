@@ -16,28 +16,45 @@
 // (http://opensource.org/licenses/MIT)
 // -------------------------------------------------------------------------------------------------
 
-#include "RedBoolean.h"
-#include "RedString.h"
+#include "RedDataBoolean.h"
 
 namespace Red {
 namespace Core {
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-// External operators
+/// Set assigns internals state as a 1 or 0 value, or a default negative
+void RedDataBoolean::Set(const int iVal)
+{
+    if      (iVal == RED_TRUE)  iState = RED_TRUE;
+    else if (iVal == RED_FALSE) iState = RED_FALSE;
+    else                        iState = RED_FALSE;
+}
+
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-bool operator==(const RedChar& lhs, const RedChar& rhs)
+void RedDataBoolean::Invert(void)
 {
-    if (lhs.Char() == rhs.Char())
+    if      (iState == RED_TRUE)  iState = RED_FALSE;
+    else if (iState == RED_FALSE) iState = RED_TRUE;
+    else                          iState = RED_FALSE;
+}
+
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+// Comparison Operators
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+bool operator==(const RedDataBoolean& lhs, const RedDataBoolean& rhs)
+{
+    if (lhs.intState() == rhs.intState())
         return true;
     return false;
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-bool operator!=(const RedChar& lhs, const RedChar& rhs)
+bool operator!=(const RedDataBoolean& lhs, const RedDataBoolean& rhs)
 {
-    if (lhs.Char() != rhs.Char())
+    if (lhs.intState() != rhs.intState())
         return true;
     return false;
 }

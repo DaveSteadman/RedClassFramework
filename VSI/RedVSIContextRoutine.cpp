@@ -58,7 +58,7 @@ RedVSIContextRoutine::RedVSIContextRoutine(RedLog* pInitLog, RedVSICmdInterface*
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-RedVSIContextRoutine::RedVSIContextRoutine(RedLog* pInitLog, const RedString& inClassName, const RedString& inRoutineName, RedVSICmdInterface* pFirstCmd) : pLog(pInitLog)
+RedVSIContextRoutine::RedVSIContextRoutine(RedLog* pInitLog, const RedDataString& inClassName, const RedDataString& inRoutineName, RedVSICmdInterface* pFirstCmd) : pLog(pInitLog)
 {
     ClassName = inClassName;
     RoutineName = inRoutineName;
@@ -84,7 +84,7 @@ RedVSIContextRoutine::~RedVSIContextRoutine(void)
 // Setup Calls
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-//void RedVSIContextRoutine::SetNameDetails(RedString& cNewObjectName, RedString& cNewClassName, RedString& cNewFuncName)
+//void RedVSIContextRoutine::SetNameDetails(RedDataString& cNewObjectName, RedDataString& cNewClassName, RedDataString& cNewFuncName)
 //{ 
 //    //cObjectName = cNewObjectName;
 //    cClassName  = cNewClassName; 
@@ -93,7 +93,7 @@ RedVSIContextRoutine::~RedVSIContextRoutine(void)
 //
 //// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 //
-//void RedVSIContextRoutine::AddParam(RedString cName, RedType* pData)
+//void RedVSIContextRoutine::AddParam(RedDataString cName, RedType* pData)
 //{
 //     cRoutineData.Add(cName, pData->Clone());
 //}
@@ -102,7 +102,7 @@ RedVSIContextRoutine::~RedVSIContextRoutine(void)
 // Data
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-RedType* RedVSIContextRoutine::CreateDataItem(const RedVSILangElement& cLocation, const RedVSILangElement& cType, const RedString& cName)
+RedType* RedVSIContextRoutine::CreateDataItem(const RedVSILangElement& cLocation, const RedVSILangElement& cType, const RedDataString& cName)
 {
     RedType* pNewData = NULL;
 
@@ -129,7 +129,7 @@ RedType* RedVSIContextRoutine::CreateDataItem(const RedVSILangElement& cLocation
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-RedType* RedVSIContextRoutine::DuplicateDataItem(const RedVSILangElement& cLocation, const RedType* pDataItem, const RedString& cName)
+RedType* RedVSIContextRoutine::DuplicateDataItem(const RedVSILangElement& cLocation, const RedType* pDataItem, const RedDataString& cName)
 {
     RedType* pNewData = pDataItem->Clone();
 
@@ -154,7 +154,7 @@ RedType* RedVSIContextRoutine::DuplicateDataItem(const RedVSILangElement& cLocat
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-bool RedVSIContextRoutine::FindDataItem(const RedString& cName, RedType*& pData)
+bool RedVSIContextRoutine::FindDataItem(const RedDataString& cName, RedType*& pData)
 {
     // first try and get the data from the local routine
     if (cLocalVariables.Find(cName, pData))
@@ -171,9 +171,9 @@ bool RedVSIContextRoutine::FindDataItem(const RedString& cName, RedType*& pData)
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-RedVariant RedVSIContextRoutine::DataItemAsVariant(const RedString& cName)
+RedDataVariant RedVSIContextRoutine::DataItemAsVariant(const RedDataString& cName)
 {
-    RedVariant RetVar;
+    RedDataVariant RetVar;
 
     RedType* pData = NULL;
 
@@ -196,14 +196,14 @@ RedVSILib* RedVSIContextRoutine::FindCodeLib(void)
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-void RedVSIContextRoutine::SetValueToReturn(const RedVariant& cData)
+void RedVSIContextRoutine::SetValueToReturn(const RedDataVariant& cData)
 {
     cReturnValue = cData;
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-void RedVSIContextRoutine::SetReturnedValue(const RedVariant& cData)
+void RedVSIContextRoutine::SetReturnedValue(const RedDataVariant& cData)
 {
     // if we don't have an expression to write the data to, there is a serious issue.
     if (pCurrExpr != NULL)
@@ -225,16 +225,16 @@ void RedVSIContextRoutine::QueueExpr(RedVSIParseTreeInterface* pExpr)
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-void RedVSIContextRoutine::SetExprResult(RedVSIParseTreeInterface* pExpr, const RedVariant& result)
+void RedVSIContextRoutine::SetExprResult(RedVSIParseTreeInterface* pExpr, const RedDataVariant& result)
 {
     cExprResultList.Add(pExpr, result);
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-RedVariant RedVSIContextRoutine::ExprResult(RedVSIParseTreeInterface* pExpr)
+RedDataVariant RedVSIContextRoutine::ExprResult(RedVSIParseTreeInterface* pExpr)
 {
-    RedVariant cResult;
+    RedDataVariant cResult;
     if (!cExprResultList.Find(pExpr, cResult))
     {
         pLog->AddErrorEvent("Failed to find expression result.");
@@ -290,8 +290,8 @@ void RedVSIContextRoutine::SetupRoutineCall(const RedVSIRoutineCallInterface& cC
                         if (RtnLibParamFirstIndex != RtnCallParamFirstIndex) throw;
                         if (RtnLibParamLastIndex != RtnCallParamLastIndex)  throw;
 
-                        RedString  CurrLibParamName;
-                        RedVariant CurrCallParamData;
+                        RedDataString  CurrLibParamName;
+                        RedDataVariant CurrCallParamData;
 
                         for (unsigned CurrParamIndex = RtnLibParamFirstIndex; CurrParamIndex <= RtnLibParamLastIndex; CurrParamIndex++)
                         {

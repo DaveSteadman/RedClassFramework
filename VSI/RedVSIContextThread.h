@@ -46,9 +46,9 @@ public:
     RedVSILib*        CodeLib(void)                               { return pCodeLib; };
 
     // Heap Data
-    RedType*                   CreateHeapDataItem(const RedVSILangElement& cType, const RedString& cName);
-    bool                       FindHeapDataItem(const RedString& cName, RedType*& pData);
-    RedRecord*                 Heap(void) { return &cHeap; };
+    RedType*                   CreateHeapDataItem(const RedVSILangElement& cType, const RedDataString& cName);
+    bool                       FindHeapDataItem(const RedDataString& cName, RedType*& pData);
+    RedDataRecord*                 Heap(void) { return &cHeap; };
 
     // Routine Stack
     RedVSIContextRoutine*      TopRoutineOnStack(void);
@@ -69,7 +69,7 @@ private:
     RedVSILib* pCodeLib;
 
     // Data attributes
-    RedRecord cHeap;
+    RedDataRecord cHeap;
 };
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

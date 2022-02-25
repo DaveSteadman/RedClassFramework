@@ -18,7 +18,7 @@
 
 #pragma once
 
-#include "RedString.h"
+#include "RedDataString.h"
 #include "RedLogEvent.h"
 #include "RedDoubleLinkedList.h"
 #include "RedDoubleLinkedListIterator.h"
@@ -43,11 +43,11 @@ public:
     void Init(void) { EventList.DelAll(); containsError=0; };
 
     void      AddEvent(const RedLogEvent& event);
-    void      AddText (const RedString& NewText);
-    void      AddErrorEvent(const RedString& NewText);
-    void      AddErrorEvent(const char* NewText) { AddErrorEvent(RedString(NewText)); };
+    void      AddText (const RedDataString& NewText);
+    void      AddErrorEvent(const RedDataString& NewText);
+    void      AddErrorEvent(const char* NewText) { AddErrorEvent(RedDataString(NewText)); };
 
-    RedString AllLoggedText(void);
+    RedDataString AllLoggedText(void);
 
     void      Clear(void) { EventList.DelAll(); containsError = false; };
 

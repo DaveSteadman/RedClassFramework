@@ -70,7 +70,7 @@ void RedVSICmdIf::Execute(RedVSIContextInterface* pContext)
     pContext->QueueCommand(NextCmd());
 
     // Get the result of the conditional expression
-    RedVariant cExprResult = pContext->ExprResult(pCmdExpr);
+    RedDataVariant cExprResult = pContext->ExprResult(pCmdExpr);
 
     // Queue a branch depending on the expression
     if (cExprResult.IsSuccessVal())

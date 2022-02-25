@@ -25,7 +25,7 @@ namespace Core {
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-RedTinyMLElement* RedTinyMLAction::NodeFirstNamedElement(RedTinyMLNode& node, const RedString& SearchName)
+RedTinyMLElement* RedTinyMLAction::NodeFirstNamedElement(RedTinyMLNode& node, const RedDataString& SearchName)
 {
     Core::RedTinyMLNode::TmlNodeListItType yIt = node.NodeIterator();
     yIt.First();
@@ -43,7 +43,7 @@ RedTinyMLElement* RedTinyMLAction::NodeFirstNamedElement(RedTinyMLNode& node, co
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-RedTinyMLNode* RedTinyMLAction::NodeFirstNamedNode(RedTinyMLNode& node, const RedString& SearchName)
+RedTinyMLNode* RedTinyMLAction::NodeFirstNamedNode(RedTinyMLNode& node, const RedDataString& SearchName)
 {
     // Basic search for the first matching element
     RedTinyMLElement* pElem = RedTinyMLAction::NodeFirstNamedElement(node, SearchName);
@@ -57,7 +57,7 @@ RedTinyMLNode* RedTinyMLAction::NodeFirstNamedNode(RedTinyMLNode& node, const Re
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-RedTinyMLLeaf* RedTinyMLAction::NodeFirstNamedLeaf(RedTinyMLNode& node, const RedString& SearchName)
+RedTinyMLLeaf* RedTinyMLAction::NodeFirstNamedLeaf(RedTinyMLNode& node, const RedDataString& SearchName)
 {
     // Basic search for the first matching element
     RedTinyMLElement* pElem = RedTinyMLAction::NodeFirstNamedElement(node, SearchName);
@@ -71,7 +71,7 @@ RedTinyMLLeaf* RedTinyMLAction::NodeFirstNamedLeaf(RedTinyMLNode& node, const Re
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-bool RedTinyMLAction::ChildLeafExists(RedTinyMLNode& node, const RedString& leafname)
+bool RedTinyMLAction::ChildLeafExists(RedTinyMLNode& node, const RedDataString& leafname)
 {
     RedTinyMLLeaf* leafnode = RedTinyMLAction::NodeFirstNamedLeaf(node, leafname);
 
@@ -82,7 +82,7 @@ bool RedTinyMLAction::ChildLeafExists(RedTinyMLNode& node, const RedString& leaf
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-void RedTinyMLAction::SetChildLeaf(RedTinyMLNode& node, const RedString& leafname, const RedString& leafdata)
+void RedTinyMLAction::SetChildLeaf(RedTinyMLNode& node, const RedDataString& leafname, const RedDataString& leafdata)
 {
     // look for the named child leaf
     RedTinyMLLeaf* leafnode = RedTinyMLAction::NodeFirstNamedLeaf(node, leafname);
@@ -101,7 +101,7 @@ void RedTinyMLAction::SetChildLeaf(RedTinyMLNode& node, const RedString& leafnam
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-RedResult RedTinyMLAction::ChildLeafDataForName(RedTinyMLNode& node, const RedString& inleafname, RedString& outleafdata)
+RedResult RedTinyMLAction::ChildLeafDataForName(RedTinyMLNode& node, const RedDataString& inleafname, RedDataString& outleafdata)
 {
     RedTinyMLLeaf* leafnode = RedTinyMLAction::NodeFirstNamedLeaf(node, inleafname);
     if (leafnode == NULL)
@@ -113,7 +113,7 @@ RedResult RedTinyMLAction::ChildLeafDataForName(RedTinyMLNode& node, const RedSt
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-RedResult RedTinyMLAction::ChildLeafNameForData(RedTinyMLNode& node, const RedString& inleafdata, RedString& outleafname)
+RedResult RedTinyMLAction::ChildLeafNameForData(RedTinyMLNode& node, const RedDataString& inleafdata, RedDataString& outleafname)
 {
     RedTinyMLNode::TmlNodeListItType it = node.NodeIterator();
 
@@ -139,7 +139,7 @@ RedResult RedTinyMLAction::ChildLeafNameForData(RedTinyMLNode& node, const RedSt
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-unsigned RedTinyMLAction::NumberOfNamedChildLeaves(RedTinyMLNode& node, const RedString& SearchName)
+unsigned RedTinyMLAction::NumberOfNamedChildLeaves(RedTinyMLNode& node, const RedDataString& SearchName)
 {
     RedTinyMLNode::TmlNodeListItType it = node.NodeIterator();
     unsigned matchcount = 0;

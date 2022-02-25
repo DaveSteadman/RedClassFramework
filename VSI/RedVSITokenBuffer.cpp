@@ -49,7 +49,7 @@ RedVSIToken RedVSITokenBuffer::GetToken(void)
     if (cTokenList.FindElementAtIndex(iCurrListIndex, cRetTok))
         iCurrListIndex++;
     else
-        cRetTok.SetNonPrintable(RedChar('\0'));
+        cRetTok.SetNonPrintable(RedDataChar('\0'));
 
     return cRetTok;
 }
@@ -69,9 +69,9 @@ RedVSIToken RedVSITokenBuffer::GetToken(const unsigned iTokenIndex)
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-RedString RedVSITokenBuffer::DebugDump(void)
+RedDataString RedVSITokenBuffer::DebugDump(void)
 {
-    RedString         RetStr;
+    RedDataString         RetStr;
     RedVSILibTokenMap map;
 
     IteratorType cIt = GetIterator();

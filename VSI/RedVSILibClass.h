@@ -40,25 +40,25 @@ public:
 
     // constructor
     RedVSILibClass(void)                           { cClassName = ""; cParentClassName=""; };
-    RedVSILibClass(const RedString& cNewClassName) { cClassName=cNewClassName; cParentClassName=""; };
+    RedVSILibClass(const RedDataString& cNewClassName) { cClassName=cNewClassName; cParentClassName=""; };
 
-    void                SetClassName(const RedString& cNewClassName)             { cClassName = cNewClassName; };
-    RedString           ClassName(void) const                                    { return cClassName; };
+    void                SetClassName(const RedDataString& cNewClassName)             { cClassName = cNewClassName; };
+    RedDataString           ClassName(void) const                                    { return cClassName; };
 
-    void                SetParentClassName(const RedString& cNewParentClassName) { cParentClassName=cNewParentClassName; };
-    RedString           ParentClassName(void) const                              { return cParentClassName; };
+    void                SetParentClassName(const RedDataString& cNewParentClassName) { cParentClassName=cNewParentClassName; };
+    RedDataString           ParentClassName(void) const                              { return cParentClassName; };
     bool                HasParentClass(void) const                               { return (!cParentClassName.IsEmpty()); };
 
     void                AddRoutine(RedVSILibRoutine* pNewRoutine);
     RedVSILibRoutine*   FindRoutine(const RedVSIRoutineCallInterface& cSig);
-    RedVSILibRoutine*   FindRoutineByName(const RedString& cNewRoutineName);
+    RedVSILibRoutine*   FindRoutineByName(const RedDataString& cNewRoutineName);
 
     RoutineIteratorType GetRoutineIterator(void) { RoutineIteratorType cIt(&cRoutineList); return cIt; };
     
 private:
 
-    RedString        cClassName;
-    RedString        cParentClassName;
+    RedDataString        cClassName;
+    RedDataString        cParentClassName;
     RoutineListType  cRoutineList;
 };
 

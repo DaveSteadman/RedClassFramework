@@ -41,9 +41,9 @@ bool RedVSILibRoutine::IsMatching(const RedVSIRoutineCallInterface& cSig)
 
     unsigned CallParamIndex = CallParamList->FirstIndex();
 
-    RedString         CurrLibParamName;
+    RedDataString         CurrLibParamName;
     RedVSILangElement CurrLibDataType;
-    RedVariant        CurrCallParam;
+    RedDataVariant        CurrCallParam;
 
     for (unsigned LibParamIndex = LibParamList->FirstIndex(); LibParamIndex <= LibParamList->LastIndex(); LibParamIndex++)
     {
@@ -73,7 +73,7 @@ bool RedVSILibRoutine::IsMatching(const RedVSIRoutineCallInterface& cSig)
 //        // Get the type from the local parameter and the call parameter
 //        // return fail if they don't match.
 //        RedVSILangElement cCurrType      = cParamIt.CurrentData();
-//        RedVariant        cCurrCallParam = cCallParamIt.CurrentItem();
+//        RedDataVariant        cCurrCallParam = cCallParamIt.CurrentItem();
 //
 //        RedVSILangElement cCurrCallParamType;
 //        if (cCurrCallParam.Type().IsBool()) cCurrCallParamType = kLangElementTypeBool;

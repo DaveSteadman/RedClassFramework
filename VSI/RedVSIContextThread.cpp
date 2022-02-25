@@ -29,7 +29,7 @@ namespace VSI {
 // Heap Data
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-RedType* RedVSIContextThread::CreateHeapDataItem(const RedVSILangElement& cType, const RedString& cName)
+RedType* RedVSIContextThread::CreateHeapDataItem(const RedVSILangElement& cType, const RedDataString& cName)
 {
     RedType* pNewData = NULL;
 
@@ -46,7 +46,7 @@ RedType* RedVSIContextThread::CreateHeapDataItem(const RedVSILangElement& cType,
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-bool RedVSIContextThread::FindHeapDataItem(const RedString& cName, RedType*& pData)
+bool RedVSIContextThread::FindHeapDataItem(const RedDataString& cName, RedType*& pData)
 {
     if (cHeap.Find(cName, pData))
         return true;
@@ -102,7 +102,7 @@ void RedVSIContextThread::Execute(const unsigned NumCmd)
             if (pTopRoutineContext->IsContextExecutionComplete(pTopRoutineContext))
             {
                 // copy the return value to the calling routine
-                RedVariant retval = pTopRoutineContext->ValueToReturn();
+                RedDataVariant retval = pTopRoutineContext->ValueToReturn();
 
                 // remove the record from the routine stack
                 PopRoutineOffStack();

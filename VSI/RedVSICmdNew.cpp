@@ -40,7 +40,7 @@ RedVSICmdNew::RedVSICmdNew(void)
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-RedVSICmdNew::RedVSICmdNew(const RedVSILangElement& cInType, const RedVSILangElement& cInLoc, const RedString& cInName, RedVSIParseTreeInterface* pInRecordIndexExpr, RedVSIParseTreeInterface* pInInitExpr)
+RedVSICmdNew::RedVSICmdNew(const RedVSILangElement& cInType, const RedVSILangElement& cInLoc, const RedDataString& cInName, RedVSIParseTreeInterface* pInRecordIndexExpr, RedVSIParseTreeInterface* pInInitExpr)
 {
     SetDetails(cInType, cInLoc, cInName, pInRecordIndexExpr, pInInitExpr);
 }
@@ -86,7 +86,7 @@ void RedVSICmdNew::Execute(RedVSIContextInterface* pContext)
     // If we have an initialisation expression for the data item
     if (pDataInitExpr != NULL)
     {
-        RedVariant cInitExprResult = pContext->ExprResult(pDataInitExpr);
+        RedDataVariant cInitExprResult = pContext->ExprResult(pDataInitExpr);
 
         // If the type of the new variable and the expression don't match, raise an error
         if (!cInitExprResult.ExportTo(pData))
@@ -104,7 +104,7 @@ void RedVSICmdNew::Execute(RedVSIContextInterface* pContext)
 // Wholesale access/assign operations
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-void RedVSICmdNew::SetDetails(const RedVSILangElement& cInType, const RedVSILangElement& cInLoc, const RedString& cInName, RedVSIParseTreeInterface* pInRecordIndexExpr, RedVSIParseTreeInterface* pInInitExpr)
+void RedVSICmdNew::SetDetails(const RedVSILangElement& cInType, const RedVSILangElement& cInLoc, const RedDataString& cInName, RedVSIParseTreeInterface* pInRecordIndexExpr, RedVSIParseTreeInterface* pInInitExpr)
 {
     cType            = cInType;
     cLoc             = cInLoc;
@@ -115,7 +115,7 @@ void RedVSICmdNew::SetDetails(const RedVSILangElement& cInType, const RedVSILang
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-void RedVSICmdNew::GetDetails(RedVSILangElement& cOutType, RedVSILangElement& cOutLoc, RedString& cOutName, RedVSIParseTreeInterface* pOutRecordIndexExpr, RedVSIParseTreeInterface*& pOutInitExpr) const
+void RedVSICmdNew::GetDetails(RedVSILangElement& cOutType, RedVSILangElement& cOutLoc, RedDataString& cOutName, RedVSIParseTreeInterface* pOutRecordIndexExpr, RedVSIParseTreeInterface*& pOutInitExpr) const
 {
     cOutType            = cType;
     cOutLoc             = cLoc;

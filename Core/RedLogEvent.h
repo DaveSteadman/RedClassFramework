@@ -18,8 +18,8 @@
 
 #pragma once
 
-#include "RedString.h"
-#include "RedNumber.h"
+#include "RedDataString.h"
+#include "RedDataNumber.h"
 
 namespace Red {
 namespace Core {
@@ -40,24 +40,24 @@ public:
 
     // Constructors
     RedLogEvent(const TEventLogType NewLogType)                           : LogType(NewLogType) {};
-    RedLogEvent(const TEventLogType NewLogType, const RedString& NewText) : LogType(NewLogType), text(NewText) {};
-    RedLogEvent(const RedString& NewText)                                 : LogType(eInfoEvent), text(NewText) {};
+    RedLogEvent(const TEventLogType NewLogType, const RedDataString& NewText) : LogType(NewLogType), text(NewText) {};
+    RedLogEvent(const RedDataString& NewText)                                 : LogType(eInfoEvent), text(NewText) {};
     RedLogEvent(const RedLogEvent& CurrEvent)                             : LogType(CurrEvent.LogType), text(CurrEvent.text) {};
 
     // Basic Accessors
     void                Init(void)                           { LogType = eInfoEvent; text.Init(); };
     TEventLogType       EventType(void) const                { return LogType; };
-    RedString           Text(void) const                     { return text; };
-    void                AppendText(const RedString& newText) { text.Append(newText); };
-    void                AppendText(const RedNumber& newNum)  { text.Append(newNum.DecimalString()); };
+    RedDataString           Text(void) const                     { return text; };
+    void                AppendText(const RedDataString& newText) { text.Append(newText); };
+    void                AppendText(const RedDataNumber& newNum)  { text.Append(newNum.DecimalString()); };
 
-    void                Set(const TEventLogType newtype, const RedString& newtext) { LogType=newtype; text=newtext; };
+    void                Set(const TEventLogType newtype, const RedDataString& newtext) { LogType=newtype; text=newtext; };
 
     void operator =(const RedLogEvent& newVal)      { Set(newVal.EventType(), newVal.Text()); };
 
 private:
     TEventLogType LogType;
-    RedString     text;
+    RedDataString     text;
 };
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

@@ -53,7 +53,7 @@ public:
 
     bool        CurrIndexAtLastToken(void) { return (iCurrListIndex == cTokenList.NumItems()); };
 
-    RedString   DebugDump(void);
+    RedDataString   DebugDump(void);
 
 private:
 

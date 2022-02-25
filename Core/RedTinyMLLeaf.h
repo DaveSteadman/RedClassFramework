@@ -36,16 +36,16 @@ class RedTinyMLElement;
 class RedTinyMLLeaf : public RedTinyMLElement
 {
 public:
-    RedTinyMLLeaf(const RedString& NewName, const RedString& NewData) : RedTinyMLElement(NewName) { data = NewData; };
+    RedTinyMLLeaf(const RedDataString& NewName, const RedDataString& NewData) : RedTinyMLElement(NewName) { data = NewData; };
 
     // Override: RedTinyMLElement
     bool      IsLeaf(void) const { return true; };
 
-    RedString Data(void) const                  { return data; };
-    void      SetData(const RedString& NewData) { data = NewData; };
+    RedDataString Data(void) const                  { return data; };
+    void      SetData(const RedDataString& NewData) { data = NewData; };
 
 private:
-    RedString data;
+    RedDataString data;
 };
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
