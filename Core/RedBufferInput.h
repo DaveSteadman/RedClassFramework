@@ -38,28 +38,29 @@ public:
     RedBufferInput(void) { Init(); };
     RedBufferInput(const RedDataString& cNewStr) { Assign(cNewStr); };
 
-    void      Assign(const RedDataString& cNewStr) { Init(); cStrBuffer=cNewStr; };
-    void      Init(void);
+    void          Assign(const RedDataString& cNewStr) { Init(); cStrBuffer=cNewStr; };
+    void          Init(void);
 
     RedDataChar   GetNextChar(void);
     RedDataChar   PreviewNextChar(void);
-    void      GetCharAndPreview(RedDataChar& ch, RedDataChar& previewch);
+    void          GetCharAndPreview(RedDataChar& ch, RedDataChar& previewch);
 
     RedDataChar   PreviewAhead(const unsigned IndexAhead);
 
-    void      UngetChar(void) { SetPos(iCharPos-1); };
-    void      SkipWhitespace(void);
+    void          UngetChar(void) { SetPos(iCharPos-1); };
+    void          SkipWhitespace(void);
 
     RedDataChar   GetNextNonWhitespaceChar(void)     { SkipWhitespace(); return GetNextChar(); };
     RedDataChar   PreviewNextNonWhitespaceChar(void) { SkipWhitespace(); return PreviewNextChar(); };
 
-    void      SetStartPos(void) { SetPos(0); };
-    void      SetPos(int iNewPos);
-    int       GetPos(void) const { return iCharPos; };
+    void          SetStartPos(void) { SetPos(0); };
+    void          SetPos(int iNewPos);
+    int           GetPos(void) const { return iCharPos; };
 
     RedBufferPos  GetRowColPos(void) { return RedBufferPos(iRow, iCol); };
 
-    const RedDataString   StringBuffer(void) const { return cStrBuffer; };
+    const RedDataString StringBuffer(void) const { return cStrBuffer; };
+
 private:
 
     void AddRow(void);
@@ -67,11 +68,11 @@ private:
     typedef RedLinkedList<int>         ListType;
     typedef RedLinkedListIterator<int> ListItType;
 
-    ListType    cNewLineCharPosList;
-    int         iCharPos;
-    int         iRow;
-    int         iCol;
-    RedDataString   cStrBuffer;
+    ListType      cNewLineCharPosList;
+    int           iCharPos;
+    int           iRow;
+    int           iCol;
+    RedDataString cStrBuffer;
 };
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

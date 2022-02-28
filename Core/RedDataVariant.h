@@ -77,12 +77,12 @@ public:
 
     RedType*            Value(void);
     bool                ExportTo(RedType* pExportToData) const;
-    RedDataBoolean          BoolValue(void) const;
-    RedDataNumber           NumberValue(void) const;
-    RedDataString           StringValue(void) const;
-    RedDataChar             CharValue(void) const;
-    RedDataList             ListValue(void) const;
-    RedDataRecord           RecordValue(void) const;
+    RedDataBoolean      BoolValue(void) const;
+    RedDataNumber       NumberValue(void) const;
+    RedDataString       StringValue(void) const;
+    RedDataChar         CharValue(void) const;
+    RedDataList         ListValue(void) const;
+    RedDataRecord       RecordValue(void) const;
 
     bool                IsSuccessVal(void) const;
 

@@ -64,10 +64,10 @@ RedResult RedTestVSI::TestParseTreeVal(void)
     // Basic Creation and calculation
     {
         RedLog               cLog;
-        RedDataVariant           testValue("Hello");
+        RedDataVariant       testValue("Hello");
         RedVSIParseTreeVal   testPTVal;
         RedVSIContextRoutine testContext(&cLog);
-        RedDataVariant           expRes(12);
+        RedDataVariant       expRes(12);
 
         testPTVal.SetValue(testValue);
 
@@ -268,7 +268,7 @@ RedResult RedTestVSI::TestParseFactory_002(void)
 
         RedDataVariant res = testContext.ExprResult(pt);
 
-        if (res.NumberValue() != RedDataString("hello red"))
+        if (res.StringValue() != RedDataString("hello red"))
             return kResultFail;
 
         RedType* resultX;

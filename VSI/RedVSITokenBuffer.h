@@ -36,8 +36,7 @@ public:
     typedef RedDoubleLinkedListIterator<RedVSIToken>  IteratorType;
 
     RedVSITokenBuffer(void) { Init(); };
-    
-    // Inherited: RedType    
+
     void    Init(void);
     
     void    AppendToken(const RedVSIToken& cNewTok);
