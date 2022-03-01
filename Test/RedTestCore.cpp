@@ -481,6 +481,23 @@ RedResult RedTestCore::TestVariant(void)
             return kResultFail;
     }
 
+	{
+		RedDataVariant x(1);
+
+		if (!x.Type().IsNum())
+			return kResultFail;
+		if (x.Type() != kDataTypeNum)
+			return kResultFail;
+
+		RedDataString  xstr  = x.StringValue();
+		RedDataNumber  xnum  = x.NumberValue();
+		RedDataBoolean xbool = x.BoolValue();
+
+		if (xstr != "1") return kResultFail;
+		if (xnum != 1) return kResultFail;
+		if (xbool != kBoolTRUE) return kResultFail;
+	}
+
     return kResultSuccess;
 }
 
@@ -526,10 +543,13 @@ RedResult RedTestCore::TestResult(void)
 
 RedResult RedTestCore::TestRecord(void)
 {
-    RedDataRecord x;
-    RedDataString y("Data1");
+	{
+		RedDataRecord x;
 
-    x.CloneAndAdd("Field1", &y);
+		x.CloneAndAdd("Field1", );
+
+	}
+
 
     y = "Data2";
     x.CloneAndAdd("Field2", &y);

@@ -87,7 +87,7 @@ public:
     void           DelFirstChar(void) { DelCharsAtIndex(FirstContentIndex(), 1); };
     void           DelLastChar(void)  { DelCharsAtIndex(LastContentIndex(),  1); };
 
-    RedDataString      SubStr(const unsigned StartIndex, const unsigned Count) const;
+    RedDataString  SubStr(const unsigned StartIndex, const unsigned Count) const;
     bool           IsCharInString(char ch) const;
     bool           IsAlphaNumeric(void) const;
 
@@ -98,18 +98,18 @@ public:
     bool           LineAtNum(const unsigned LineNum, RedDataString& Line) const;
 
     // Internal Main Routines
-    static unsigned SizeForNumBlocks(const unsigned numblocks)      { return kRedDataStringAllocBlockSize * numblocks; };
-    static unsigned NumBlocksForSize(const unsigned strsize)        { return (strsize/kRedDataStringAllocBlockSize) + 1; };
+    static unsigned SizeForNumBlocks(const unsigned numblocks) { return kRedDataStringAllocBlockSize * numblocks; };
+    static unsigned NumBlocksForSize(const unsigned strsize)   { return (strsize/kRedDataStringAllocBlockSize) + 1; };
     static char*    AllocData(const unsigned NumBlocks);
 
     // Derived Assignment/Access Operators
-    void operator  =(const char Ch)         { Set(Ch); };
+    void operator  =(const char Ch)             { Set(Ch); };
     void operator  =(const RedDataChar& Ch)     { Set(Ch.Char()); };
-    void operator  =(const char* chStr)     { Set(chStr); };
+    void operator  =(const char* chStr)         { Set(chStr); };
     void operator  =(const RedDataString& Str)  { Set(Str.TextPtr()); };
-    void operator +=(const char Ch)         { Append(Ch); };
+    void operator +=(const char Ch)             { Append(Ch); };
     void operator +=(const RedDataChar& Ch)     { Append(Ch.Char()); };
-    void operator +=(const char* chStr)     { Append(chStr); };
+    void operator +=(const char* chStr)         { Append(chStr); };
     void operator +=(const RedDataString& Str)  { Append(Str.TextPtr()); };
 
     char operator [](const unsigned Index) const { return CharAtIndex(Index); };
@@ -133,11 +133,11 @@ private:
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 // Non-Member Operators
-bool      operator ==(const RedDataString& lhs, const char* rhs);
-bool      operator !=(const RedDataString& lhs, const char* rhs);
+bool          operator ==(const RedDataString& lhs, const char* rhs);
+bool          operator !=(const RedDataString& lhs, const char* rhs);
 
-bool      operator ==(const RedDataString& lhs, const RedDataString& rhs);
-bool      operator !=(const RedDataString& lhs, const RedDataString& rhs);
+bool          operator ==(const RedDataString& lhs, const RedDataString& rhs);
+bool          operator !=(const RedDataString& lhs, const RedDataString& rhs);
 
 RedDataString operator +(const RedDataString& Str1, const RedDataString& Str2);
 RedDataString operator +(const RedDataString& Str1, const RedDataChar& Chr2);

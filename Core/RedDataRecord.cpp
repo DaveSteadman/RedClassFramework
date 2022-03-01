@@ -30,11 +30,6 @@ namespace Core {
 // Construction
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-RedDataRecord::RedDataRecord(void)
-{
-    pAttribList = new RedDataStringDataMap();
-}
-
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 // Inhertied
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -92,6 +87,13 @@ RedType* RedDataRecord::CreateObjectOfType(const RedDataType& NewAttribType)
 
     return retData;
 }
+
+void RedDataRecord::Add(const RedDataString& cNewAttribName, int iVal)
+{ 
+	RedDataNumber* pNewNum = new RedDataNumber(iVal);
+	pAttribList->Add(cNewAttribName, (RedType* )pNewNum);
+};
+
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 // Operators

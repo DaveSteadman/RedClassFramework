@@ -207,7 +207,18 @@ RedDataBoolean RedDataVariant::BoolValue(void) const
         RedDataBoolean* pBoolData = dynamic_cast<RedDataBoolean*>(pData);
         cBool = *pBoolData;
     }
-    return cBool;
+
+	if (pData->Type().IsNum())
+	{
+		RedDataNumber* pNumData = dynamic_cast<RedDataNumber*>(pData);
+
+		if (!pNumData->IsZero())
+			cBool.SetTrue();
+		else
+			cBool.SetFalse();
+	}
+
+	return cBool;
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

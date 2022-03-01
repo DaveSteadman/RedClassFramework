@@ -34,28 +34,33 @@ class RedDataRecord : public RedType
 {
 public:
 
-    RedDataRecord(void);
-    ~RedDataRecord(void) { delete pAttribList; };
+    RedDataRecord(void)  { pAttribList = new RedDataStringDataMap; };
+    ~RedDataRecord(void) { pAttribList->DelAll(); delete pAttribList; };
 
     // Inherited: RedType
     RedDataType Type(void) const { return RedDataType::Record(); };
-    RedType*          Clone(void) const;
-    void              Init(void) { pAttribList->DelAll(); };
+    RedType*    Clone(void) const;
+    void        Init(void) { pAttribList->DelAll(); };
 
     // Create And Add
-    void        CloneAndAdd (const RedDataString& cNewAttribName, const RedType* pNewAttrib) { pAttribList->Add(cNewAttribName,              pNewAttrib->Clone()); };
-    void        CloneAndAdd (const char* strNewAttribName,    const RedType* pNewAttrib) { pAttribList->Add(RedDataString(strNewAttribName), pNewAttrib->Clone()); };
-    void        Add         (const RedDataString& cNewAttribName, RedType* pNewAttrib)       { pAttribList->Add(cNewAttribName,              pNewAttrib); };
-    void        Add         (const char* strNewAttribName,    RedType* pNewAttrib)       { pAttribList->Add(RedDataString(strNewAttribName), pNewAttrib); };
+    void        CloneAndAdd (const RedDataString& cNewAttribName, const RedType* pNewAttrib) { pAttribList->Add(cNewAttribName,                  pNewAttrib->Clone()); };
+    void        CloneAndAdd (const char* strNewAttribName,        const RedType* pNewAttrib) { pAttribList->Add(RedDataString(strNewAttribName), pNewAttrib->Clone()); };
+    
+	void        Add         (const RedDataString& cNewAttribName, RedType* pNewAttrib)       { pAttribList->Add(cNewAttribName,                  pNewAttrib); };
+    void        Add         (const char* strNewAttribName,        RedType* pNewAttrib)       { pAttribList->Add(RedDataString(strNewAttribName), pNewAttrib); };
+
+	void        Add(const RedDataString& cNewAttribName, int iVal);
+
+
     RedType*    CreateAndAdd(const RedDataString& cNewAttribName, const RedDataType& NewAttribType);
-    RedType*    CreateAndAdd(const char* strNewAttribName,    const RedDataType& NewAttribType);
+    RedType*    CreateAndAdd(const char* strNewAttribName,        const RedDataType& NewAttribType);
 
     // Locate
     bool        Find(const RedDataString& cAttribName, RedType*& pData)       { return pAttribList->Find(cAttribName, pData); };
 
     // Remove
     void        Del(const RedDataString& cNewAttribName)                      { pAttribList->Del(cNewAttribName); };
-    void        DelAll(void)                                              { pAttribList->DelAll(); };
+    void        DelAll(void)                                                  { pAttribList->DelAll(); };
 
     unsigned    NumItems(void) const { return pAttribList->NumItems(); };
 
