@@ -29,7 +29,7 @@ class RedDataString;
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-/// Class representing a character. A child of RedType. Contains many type querying operations.
+// Class representing a character. A child of RedType. Contains many type querying operations.
 class RedDataChar : public RedType
 {
 public:

@@ -28,8 +28,8 @@ namespace VSI {
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-/// Class encapsulating a routine call. A container for a routine name and the parameters, as well
-/// as the initial class of object name.
+// Class encapsulating a routine call. A container for a routine name and the parameters, as well
+// as the initial class of object name.
 class RedVSIRoutineCallInterface
 {
 public:

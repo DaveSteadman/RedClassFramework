@@ -30,7 +30,7 @@ namespace Red {
 
         // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-        /// Factory and top-level library class controlling the creation of any context object.
+        // Factory and top-level library class controlling the creation of any context object.
         class RedVSIContextFactory
         {
         public:

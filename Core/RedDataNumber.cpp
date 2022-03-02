@@ -29,7 +29,7 @@ namespace Core {
 // Class Operations
 // =================================================================================================
 
-/// Query operation, determining if the int number is zero, or the float number is within a tollerance of zero.
+// Query operation, determining if the int number is zero, or the float number is within a tollerance of zero.
 bool RedDataNumber::IsZero(void) const
 {
     if (eNumType == eInt)
@@ -125,8 +125,8 @@ RedDataString RedDataNumber::DecimalString(void) const
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-/// @brief Convert the number into a string with specific formatting
-/// @param decimalplaces The number of characters after the decimal place.
+// @brief Convert the number into a string with specific formatting
+// @param decimalplaces The number of characters after the decimal place.
 RedDataString RedDataNumber::DecimalStringWithDP(const unsigned decimalplaces) const
 {
     const int  iStrLen = 32;
@@ -150,9 +150,9 @@ RedDataString RedDataNumber::DecimalStringWithDP(const unsigned decimalplaces) c
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-/// Convert the number into a string with specific formatting
-/// @param minchars      The minimum number of characters to make up the output string, including a decimal place.
-/// @param decimalplaces The number of characters after the decimal place.
+// Convert the number into a string with specific formatting
+// @param minchars      The minimum number of characters to make up the output string, including a decimal place.
+// @param decimalplaces The number of characters after the decimal place.
 RedDataString RedDataNumber::DecimalStringWithMinDigitsAndDP(const unsigned minchars, const unsigned decimalplaces) const
 {
     const int  iStrLen = 32;
@@ -290,8 +290,8 @@ RedDataNumber RedDataNumber::FractionalPart(void) const
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-/// Return the integer part from the division of this number with another.
-/// Example: This = 3.14 & d = 2. Division Remainder returns 1.
+// Return the integer part from the division of this number with another.
+// Example: This = 3.14 & d = 2. Division Remainder returns 1.
 
 RedDataNumber RedDataNumber::DivisionQuotient(const RedDataNumber& d) const
 {
@@ -311,8 +311,8 @@ RedDataNumber RedDataNumber::DivisionQuotient(const RedDataNumber& d) const
  
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-/// Return the remainder from the division of this number with another.
-/// Example: This = 3.14 & d = 2. Division Remainder returns 1.14.
+// Return the remainder from the division of this number with another.
+// Example: This = 3.14 & d = 2. Division Remainder returns 1.14.
 
 RedDataNumber RedDataNumber::DivisionRemainder(const RedDataNumber& d) const
 {

@@ -25,9 +25,9 @@ using namespace Red::Core;
 namespace Red {
 namespace VSI {
 
-/// Definition of the Language Elements. This is an internal type, which does
-/// not get affected by external issues such as textual or graphical
-/// representations of the language.
+// Definition of the Language Elements. This is an internal type, which does
+// not get affected by external issues such as textual or graphical
+// representations of the language.
 class RedVSILangElement
 {
 public:

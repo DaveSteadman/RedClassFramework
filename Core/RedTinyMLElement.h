@@ -28,8 +28,8 @@ namespace Core {
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-/// A class defining the top-level class of any Core node. Contains the name, which all nodes
-/// have, and the default-false type functions.
+// A class defining the top-level class of any Core node. Contains the name, which all nodes
+// have, and the default-false type functions.
 class RedTinyMLElement
 {
 public:

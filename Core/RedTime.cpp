@@ -46,7 +46,7 @@ void RedTime::SetTime(const RedDataString& timestr)
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-/// Returns a string formatted: hh:mm:ss
+// Returns a string formatted: hh:mm:ss
 const RedDataString RedTime::TimeString(void) const
 {
     RedDataString retstr;
@@ -66,7 +66,7 @@ const RedDataString RedTime::TimeString(void) const
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-/// Returns an unsigned number, fomatted: hhmmss
+// Returns an unsigned number, fomatted: hhmmss
 const unsigned RedTime::SixDigitTime(void) const 
 {
     unsigned rettime = 0;

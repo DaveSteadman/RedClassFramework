@@ -91,7 +91,7 @@ RedVSIContextRoutine::~RedVSIContextRoutine(void)
 //    cFuncName   = cNewFuncName; 
 //}
 //
-//// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+/// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 //
 //void RedVSIContextRoutine::AddParam(RedDataString cName, RedType* pData)
 //{
@@ -322,7 +322,7 @@ void RedVSIContextRoutine::SetupRoutineCall(const RedVSIRoutineCallInterface& cC
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-/// Routine is blocked if it is not the top routine on the thread-record routine stack.
+// Routine is blocked if it is not the top routine on the thread-record routine stack.
 
 bool RedVSIContextRoutine::IsContextBlocked(const RedVSIContextRoutine* pRoutineContext) const
 {

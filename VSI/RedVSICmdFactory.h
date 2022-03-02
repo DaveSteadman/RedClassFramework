@@ -29,11 +29,11 @@ namespace VSI {
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-/// Class to create all the command classes.
-/// The construction code was taken out of the command classes to allow them to
-/// focus on their core functionality of performing commands. Additional processing
-/// will use SetDetails/GetDetails on each of the commands and deal with their
-/// own domain (such as GUI or serialisation).
+// Class to create all the command classes.
+// The construction code was taken out of the command classes to allow them to
+// focus on their core functionality of performing commands. Additional processing
+// will use SetDetails/GetDetails on each of the commands and deal with their
+// own domain (such as GUI or serialisation).
 class RedVSICmdFactory
 {
 public:

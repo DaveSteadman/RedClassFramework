@@ -23,7 +23,7 @@ namespace Core {
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-/// Class to represent a pass/fail of unknown tri-state value.
+// Class to represent a pass/fail of unknown tri-state value.
 class RedResult
 {
 public:

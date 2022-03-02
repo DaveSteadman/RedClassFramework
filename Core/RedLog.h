@@ -33,8 +33,8 @@ typedef RedDoubleLinkedListIterator<RedLogEvent*> EventLogListItType;
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-/// Holds logged information, from text debug statements, info, warnings and
-/// error messages. Has additional methods to then query the information.
+// Holds logged information, from text debug statements, info, warnings and
+// error messages. Has additional methods to then query the information.
 class RedLog
 {
 public:

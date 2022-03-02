@@ -27,7 +27,7 @@ namespace Core {
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-/// A templated map class
+// A templated map class
 template<class IdClass, class DataClass>
 class RedMapList
 {
@@ -69,8 +69,8 @@ private:
 
     bool MakeListElement(TMapElement** pNewElem);
 
-    /// The FindElement operation is not const because it creates an iterator, which has the
-    /// capability to delete an element from the list.
+    // The FindElement operation is not const because it creates an iterator, which has the
+    // capability to delete an element from the list.
     bool FindElement(IdClass Id, TMapElement& Elem, unsigned& iElemIndex);
 
     ListType cList;

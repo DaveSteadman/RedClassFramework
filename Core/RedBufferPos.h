@@ -26,7 +26,7 @@ namespace Core {
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-/// Class for the position within a buffer. Generates a small string for logging.
+// Class for the position within a buffer. Generates a small string for logging.
 class RedBufferPos
 {
 public:

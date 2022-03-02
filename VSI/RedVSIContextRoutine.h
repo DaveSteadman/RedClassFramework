@@ -46,9 +46,9 @@ typedef enum TECmdExecutePhases
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-/// Class to represent the context required to execute a routine.
-/// Uses parent class RedVSIContextInterface, allowing code-fragments and simple command sequences to
-/// be executed in a lightweight environment.
+// Class to represent the context required to execute a routine.
+// Uses parent class RedVSIContextInterface, allowing code-fragments and simple command sequences to
+// be executed in a lightweight environment.
 class RedVSIContextRoutine : public RedVSIContextInterface
 {
 public:
@@ -67,14 +67,14 @@ public:
     RedType*        CreateDataItem(const RedVSILangElement& cLocation, const RedVSILangElement& cType, const RedDataString& cName);
     RedType*        DuplicateDataItem(const RedVSILangElement& cLocation, const RedType* pDataItem, const RedDataString& cName);
     bool            FindDataItem(const RedDataString& cName, RedType*& pData);
-    RedDataVariant      DataItemAsVariant(const RedDataString& cName);
+    RedDataVariant  DataItemAsVariant(const RedDataString& cName);
 
     RedVSILib*      FindCodeLib(void);
 
     // Inhertied Expressions (RedVSIContextInterface)
     void            QueueExpr(RedVSIParseTreeInterface* pExpr);
     void            SetExprResult(RedVSIParseTreeInterface* pExpr, const RedDataVariant& result);
-    RedDataVariant      ExprResult(RedVSIParseTreeInterface* pExpr);
+    RedDataVariant  ExprResult(RedVSIParseTreeInterface* pExpr);
     void            ExecuteExprQueue(void);
 
     // Error reporting and debugging
@@ -121,42 +121,42 @@ private:
     RedDataString RoutineName;
     RedDataString ClassName;
 
-    /// Curr command initialised to zero, command popped off the stack.
-    /// expressions for that command evaluated, then the command is evaluated
-    /// which leads to a change on the stack. Following exection, the curr is cleared.
+    // Curr command initialised to zero, command popped off the stack.
+    // expressions for that command evaluated, then the command is evaluated
+    // which leads to a change on the stack. Following exection, the curr is cleared.
     RedVSICmdInterface* pCurrCmd;
 
     TECmdExecutePhases eCmdPhase;
 
-    /// The stack of commands in the routine. Added to by commands stacking up their
-    /// branched and subsequent commands. Reduced by the context executing them.
+    // The stack of commands in the routine. Added to by commands stacking up their
+    // branched and subsequent commands. Reduced by the context executing them.
     RedVSICmdStack cCmdStack;
 
-    /// The currently considered expression. Zero when starting a routine or between commands,
-    /// but maintains the address of the expression when the routine is blocked.
+    // The currently considered expression. Zero when starting a routine or between commands,
+    // but maintains the address of the expression when the routine is blocked.
     RedVSIParseTreeInterface* pCurrExpr;
 
-    /// The list of parse tree nodes which need to be executed IN ORDER before
-    /// the pCurrCmd can be executed
+    // The list of parse tree nodes which need to be executed IN ORDER before
+    // the pCurrCmd can be executed
     RedVSIParseStack cExprStack;
 
-    /// The list of working data items from the evaluation of expressions. Cleared between
-    /// each command call.
+    // The list of working data items from the evaluation of expressions. Cleared between
+    // each command call.
     RedVSIParseDataMap cExprResultList;
 
-    /// Pointer to the object associated to the routine call
+    // Pointer to the object associated to the routine call
     //RedVSIObject*        pThisObj;
 
-    /// Variables and values created during the execution of the routine, including the parameters
+    // Variables and values created during the execution of the routine, including the parameters
     RedDataRecord cLocalVariables;
 
     // The data to be returned to the calling routine
     RedDataVariant cReturnValue;
 
-    /// Record holding thread data
+    // Record holding thread data
     RedVSIContextThread* pThreadContextRecord;
 
-    /// Logging
+    // Logging
     RedLog* pLog;
 };
 

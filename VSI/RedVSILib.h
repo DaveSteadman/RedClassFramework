@@ -30,7 +30,7 @@ namespace VSI {
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-/// A VSI Code Library consists of a list of classes.
+// A VSI Code Library consists of a list of classes.
 class RedVSILib
 {
 public:
@@ -45,7 +45,7 @@ public:
     RedVSILibRoutineInterface* FindRoutine(const RedVSIRoutineCallInterface& cSig);
     RedVSILibRoutineInterface* FindRoutine(const RedDataString& cClassName, const RedDataString& cRoutineName);
 
-    /// Returns number of classes in library
+    // Returns number of classes in library
     unsigned NumClasses(void) const { return cClassList.NumItems(); };
 
     void SetLibFilePath(const RedDataString& newlibpath) { LibFilePath = newlibpath; };

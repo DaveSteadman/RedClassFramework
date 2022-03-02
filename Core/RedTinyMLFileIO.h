@@ -32,9 +32,9 @@ typedef enum TESerialiseType { eDenseContent, eLinedIndentedContent } TESerialis
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-/// Class exists to provide complex actions on Core nodes. The Core node classes remain focussed
-/// on their role of storage and memory management, while this class can acquire increasingly complex
-/// bulky routines.
+// Class exists to provide complex actions on Core nodes. The Core node classes remain focussed
+// on their role of storage and memory management, while this class can acquire increasingly complex
+// bulky routines.
 class RedTinyMLFileIO
 {
 public:

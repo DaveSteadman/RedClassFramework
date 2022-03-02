@@ -30,8 +30,8 @@ namespace VSI {
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-/// Class has only read-only routines, so the consumers of the routines have no access to change anything.
-/// The Child RedVSILibRoutine class is contained within the library construction code.
+// Class has only read-only routines, so the consumers of the routines have no access to change anything.
+// The Child RedVSILibRoutine class is contained within the library construction code.
 class RedVSILibRoutineInterface
 {
 public:

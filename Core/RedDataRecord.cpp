@@ -75,11 +75,11 @@ RedType* RedDataRecord::CreateAddReturn(const char* strNewAttribName, const RedD
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-////void RedDataRecord::Add(const RedDataString& cNewAttribName, int iVal)
-////{ 
-////	RedDataNumber* pNewNum = new RedDataNumber(iVal);
-////	pAttribList->Add(cNewAttribName, (RedType* )pNewNum);
-////};
+///void RedDataRecord::Add(const RedDataString& cNewAttribName, int iVal)
+///{ 
+///	RedDataNumber* pNewNum = new RedDataNumber(iVal);
+///	pAttribList->Add(cNewAttribName, (RedType* )pNewNum);
+///};
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 //
@@ -88,7 +88,7 @@ RedType* RedDataRecord::CreateAddReturn(const char* strNewAttribName, const RedD
 //	pAttribList->Add(cNewAttribName, (RedType*)numVal->Clone());
 //}
 //
-//// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+/// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 //
 //void RedDataRecord::Add(const RedDataString& cNewAttribName, const char* strVal)
 //{
@@ -96,7 +96,7 @@ RedType* RedDataRecord::CreateAddReturn(const char* strNewAttribName, const RedD
 //	pAttribList->Add(cNewAttribName, (RedType*)pNewStr);
 //}
 //
-//// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+/// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 //
 //void RedDataRecord::Add(const RedDataString& cNewAttribName, const bool bVal)
 //{

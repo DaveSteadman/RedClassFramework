@@ -26,7 +26,7 @@ namespace Core {
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-/// Template queue class with First-In-First-Out Push() and Pop() operations.
+// Template queue class with First-In-First-Out Push() and Pop() operations.
 template<class ElementType>
 class RedQueueFIFO
 {

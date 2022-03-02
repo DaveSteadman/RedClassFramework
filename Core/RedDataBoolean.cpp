@@ -22,7 +22,7 @@ namespace Red {
 namespace Core {
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-/// Set assigns internals state as a 1 or 0 value, or a default negative
+// Set assigns internals state as a 1 or 0 value, or a default negative
 void RedDataBoolean::Set(const int iVal)
 {
     if      (iVal == RED_TRUE)  iState = RED_TRUE;

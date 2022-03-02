@@ -25,8 +25,8 @@ class RedDataType;
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-/// Parent class to any data type: string, number char, boolean etc. Exists to allow RedType*
-/// elements to be put into collections etc.
+// Parent class to any data type: string, number char, boolean etc. Exists to allow RedType*
+// elements to be put into collections etc.
 class RedType
 {
 public:

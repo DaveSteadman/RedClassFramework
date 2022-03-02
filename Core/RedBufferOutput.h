@@ -27,8 +27,8 @@ namespace Core {
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-/// Output buffer class, accumulating output strings. Has additional functionality to handle indented
-/// lines.
+// Output buffer class, accumulating output strings. Has additional functionality to handle indented
+// lines.
 class RedBufferOutput
 {
 public:

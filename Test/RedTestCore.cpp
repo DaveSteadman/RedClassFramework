@@ -31,23 +31,27 @@ namespace Test {
 
 void RedTestCore::RunUnitTest(RedLog& log)
 {
-    // Test Core classes
+    // Test Core Classes
     if (RedTestCore::TestDataType().IsFail())     { log.AddErrorEvent("Core Unit Test: TestDataType Failed");     return; }
  
-    // Test Data types
-    if (RedTestCore::TestBoolean().IsFail())      { log.AddErrorEvent("Core Unit Test: TestBoolean Failed");      return; }
-    if (RedTestCore::TestChar().IsFail())         { log.AddErrorEvent("Core Unit Test: TestChar Failed");         return; }
-    if (RedTestCore::TestNumber().IsFail())       { log.AddErrorEvent("Core Unit Test: TestNumber Failed");       return; }
-    if (RedTestCore::TestRecord().IsFail())       { log.AddErrorEvent("Core Unit Test: TestRecord Failed");       return; }
-    if (RedTestCore::TestString().IsFail())       { log.AddErrorEvent("Core Unit Test: TestString Failed");       return; }
-    if (RedTestCore::TestVariant().IsFail())      { log.AddErrorEvent("Core Unit Test: TestVariant Failed");      return; }
+    // Test Data Types
+    if (RedTestCore::TestDataBoolean().IsFail())  { log.AddErrorEvent("Core Unit Test: TestDataBoolean Failed");  return; }
+    if (RedTestCore::TestDataChar().IsFail())     { log.AddErrorEvent("Core Unit Test: TestDataChar Failed");     return; }
+    if (RedTestCore::TestDataList().IsFail())     { log.AddErrorEvent("Core Unit Test: TestDataList Failed");     return; }
+    if (RedTestCore::TestDataNumber().IsFail())   { log.AddErrorEvent("Core Unit Test: TestDataNumber Failed");   return; }
+    if (RedTestCore::TestDataRecord().IsFail())   { log.AddErrorEvent("Core Unit Test: TestDataRecord Failed");   return; }
+    if (RedTestCore::TestDataString().IsFail())   { log.AddErrorEvent("Core Unit Test: TestDataString Failed");   return; }
+    if (RedTestCore::TestDataVariant().IsFail())  { log.AddErrorEvent("Core Unit Test: TestDataVariant Failed");  return; }
 
-    // Test Time types
+    // Test Time Types
     if (RedTestCore::TestTime().IsFail())         { log.AddErrorEvent("Core Unit Test: TestTime Failed");         return; }
     if (RedTestCore::TestDate().IsFail())         { log.AddErrorEvent("Core Unit Test: TestDate Failed");         return; }
 
+	// Test Collections
+	if (RedTestCore::TestLinkedList().IsFail()) { log.AddErrorEvent("Core Unit Test: TestLinkedList Failed");   return; }
+
+	// Test Misc Types
     if (RedTestCore::TestEventLog().IsFail())     { log.AddErrorEvent("Core Unit Test: TestEventLog Failed");     return; }
-    if (RedTestCore::TestLinkedList().IsFail())   { log.AddErrorEvent("Core Unit Test: TestLinkedList Failed");   return; }
     if (RedTestCore::TestNumberRange().IsFail())  { log.AddErrorEvent("Core Unit Test: TestNumberRange Failed");  return; }
     if (RedTestCore::TestOutputBuffer().IsFail()) { log.AddErrorEvent("Core Unit Test: TestOutputBuffer Failed"); return; }
     if (RedTestCore::TestResult().IsFail())       { log.AddErrorEvent("Core Unit Test: TestResult Failed");       return; }
@@ -77,7 +81,7 @@ RedResult RedTestCore::TestDataType(void)
 // Test Data types
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-RedResult RedTestCore::TestBoolean(void)
+RedResult RedTestCore::TestDataBoolean(void)
 {
     // Test basic operation
     {
@@ -127,7 +131,7 @@ RedResult RedTestCore::TestBoolean(void)
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-RedResult RedTestCore::TestChar(void)
+RedResult RedTestCore::TestDataChar(void)
 {
     RedDataChar a = RedDataChar(0);
     RedDataChar b = RedDataChar('A');
@@ -161,7 +165,20 @@ RedResult RedTestCore::TestChar(void)
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-RedResult RedTestCore::TestNumber(void)
+RedResult RedTestCore::TestDataList(void)
+{
+	{
+		RedDataList cList;
+
+		cList.AddByValue(123);
+		cList.AddByValue(234);
+	}
+	return kResultSuccess;
+}
+
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+RedResult RedTestCore::TestDataNumber(void)
 {
     // Comparisons
     {
@@ -226,7 +243,41 @@ RedResult RedTestCore::TestNumber(void)
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-RedResult RedTestCore::TestString(void)
+RedResult RedTestCore::TestDataRecord(void)
+{
+	{
+		RedDataRecord x;
+
+		x.AddByPtr("Field1", RedDataNumber(12).Clone());
+		x.AddByPtr("Field2", RedDataString("str12").Clone());
+		x.AddByPtr("Field3", RedDataBoolean(true).Clone());
+		x.AddByPtr("Field4", RedDataNumber(345.5).Clone());
+		if (x.NumItems() != 4) return kResultFail;
+
+		x.Del("Field1");
+
+		RedDataChar c('q');
+		x.CloneAndAdd("Field5", &c);
+
+		RedDataType t1 = x.TypeForName("Field3");
+		RedDataBoolean* pB = dynamic_cast<RedDataBoolean*>(x.PtrForName("Field3"));
+		RedDataNumber* pErr = dynamic_cast<RedDataNumber*>(x.PtrForName("Field3"));
+
+		RedDataBoolean* pB2 = dynamic_cast<RedDataBoolean*>(x.CreateAddReturn("FieldBool", kDataTypeBool));
+		pB2->SetTrue();
+
+		RedDataVariant* pV = dynamic_cast<RedDataVariant*>(x.CreateAddReturn("FieldBool", kDataTypeVariant));
+		*pV = "qq";
+		*pV = 1234;
+
+	}
+
+	return kResultSuccess;
+}
+
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+RedResult RedTestCore::TestDataString(void)
 {
     // Allocation sizes
     {
@@ -398,39 +449,10 @@ RedResult RedTestCore::TestString(void)
     return kResultSuccess;
 }
 
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-RedResult RedTestCore::TestNumberRange(void)
-{
-    RedNumberRange DegreesLongitude(-180.0, 180.0);
-    RedDataNumber x = 300;
-
-    if (DegreesLongitude.IsInRange(x)) return kResultFail;
-
-    DegreesLongitude.WrapNumber(x);
-    if (!DegreesLongitude.IsInRange(x)) return kResultFail;
-
-    x = 300;
-    DegreesLongitude.CropNumber(x);
-    if (!DegreesLongitude.IsInRange(x)) return kResultFail;
-
-
-    RedNumberRange FullCircleDegrees(0.0, 360.0);
-    RedNumberRange FullCircleRadians(0.0, 2 * pi);
-    RedDataNumber angle = 90.0;
-
-    RedDataNumber ftr(FullCircleDegrees.FractionThroughRange(angle));
-    if (ftr != 0.25) return kResultFail;
-
-    // RedDataNumber angleRads = RedNumberRange::RescaleNumber(angle, FullCircleDegrees, FullCircleRadians);
-    // if (angleRads != half_pi) return kResultFail;
-
-    return kResultSuccess;
-}
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-RedResult RedTestCore::TestVariant(void)
+RedResult RedTestCore::TestDataVariant(void)
 {
     {
         RedDataVariant x;
@@ -502,6 +524,12 @@ RedResult RedTestCore::TestVariant(void)
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+// Test Time Classes
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+// Test Collections
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 RedResult RedTestCore::TestLinkedList(void)
 {
@@ -527,6 +555,37 @@ RedResult RedTestCore::TestLinkedList(void)
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+// Test Misc Classes
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+RedResult RedTestCore::TestNumberRange(void)
+{
+	RedNumberRange DegreesLongitude(-180.0, 180.0);
+	RedDataNumber x = 300;
+
+	if (DegreesLongitude.IsInRange(x)) return kResultFail;
+
+	DegreesLongitude.WrapNumber(x);
+	if (!DegreesLongitude.IsInRange(x)) return kResultFail;
+
+	x = 300;
+	DegreesLongitude.CropNumber(x);
+	if (!DegreesLongitude.IsInRange(x)) return kResultFail;
+
+
+	RedNumberRange FullCircleDegrees(0.0, 360.0);
+	RedNumberRange FullCircleRadians(0.0, 2 * pi);
+	RedDataNumber angle = 90.0;
+
+	RedDataNumber ftr(FullCircleDegrees.FractionThroughRange(angle));
+	if (ftr != 0.25) return kResultFail;
+
+	// RedDataNumber angleRads = RedNumberRange::RescaleNumber(angle, FullCircleDegrees, FullCircleRadians);
+	// if (angleRads != half_pi) return kResultFail;
+
+	return kResultSuccess;
+}
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 RedResult RedTestCore::TestResult(void)
 {
@@ -539,40 +598,7 @@ RedResult RedTestCore::TestResult(void)
     return kResultSuccess;
 }
 
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-RedResult RedTestCore::TestRecord(void)
-{
-	{
-		RedDataRecord x;
-
-		x.AddByPtr("Field1", RedDataNumber(12).Clone());
-		x.AddByPtr("Field2", RedDataString("str12").Clone());
-		x.AddByPtr("Field3", RedDataBoolean(true).Clone());
-		x.AddByPtr("Field4", RedDataNumber(345.5).Clone());
-		if (x.NumItems() != 4) return kResultFail;
-
-		x.Del("Field1");
-
-		RedDataChar c('q');
-		x.CloneAndAdd("Field5", &c);
-
-		RedDataType t1 = x.TypeForName("Field3");
-		RedDataBoolean* pB   = dynamic_cast<RedDataBoolean*>(x.PtrForName("Field3"));
-		RedDataNumber*  pErr = dynamic_cast<RedDataNumber*>(x.PtrForName("Field3")); 
-
-		RedDataBoolean* pB2 = dynamic_cast<RedDataBoolean*>(x.CreateAddReturn("FieldBool", kDataTypeBool));
-		pB2->SetTrue();
-
-		RedDataVariant* pV = dynamic_cast<RedDataVariant*>(x.CreateAddReturn("FieldBool", kDataTypeVariant));
-		*pV = "qq";
-		*pV = 1234;
-
-	}
-
-    return kResultSuccess;
-}
- 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 RedResult RedTestCore::TestEventLog(void)

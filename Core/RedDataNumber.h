@@ -28,12 +28,12 @@ namespace Core {
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-/// Default tollerance on floating point equality statements
+// Default tollerance on floating point equality statements
 static const double kDefaultFloatCompareTollerance = 0.0000001;
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-/// Class representing a mutable number. Internally differentiates between int and float values.
+// Class representing a mutable number. Internally differentiates between int and float values.
 class RedDataNumber : public RedType
 {
 public:

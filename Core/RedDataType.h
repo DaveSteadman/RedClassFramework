@@ -23,7 +23,7 @@ namespace Core {
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-/// Enumeration based class to encapsulate the possible RedType objects.
+// Enumeration based class to encapsulate the possible RedType objects.
 class RedDataType 
 {
 public:

@@ -32,8 +32,8 @@ namespace VSI {
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-/// Class to contain an expression, allowing the maths to exist in a sequence.
-/// Essentially a BASIC LET statement.
+// Class to contain an expression, allowing the maths to exist in a sequence.
+// Essentially a BASIC LET statement.
 class RedVSICmdLet : public RedVSICmdInterface
 {
 public: 

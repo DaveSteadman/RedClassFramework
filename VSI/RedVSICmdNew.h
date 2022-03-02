@@ -29,8 +29,8 @@ namespace VSI {
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-/// A new command creates a data item, with a specific name and in a specific location (stack or heap)
-/// The data item has an optional initialising expression.
+// A new command creates a data item, with a specific name and in a specific location (stack or heap)
+// The data item has an optional initialising expression.
 class RedVSICmdNew : public RedVSICmdInterface
 {
 public:

@@ -28,13 +28,13 @@ namespace Core {
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-/// Default tollerance on floating point equality statements
+// Default tollerance on floating point equality statements
 static const unsigned kRedDataStringAllocBlockSize = 32;
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-/// String class, containing numerous string search & manipulation functions and operators.
-/// All Index values start from zero.
+// String class, containing numerous string search & manipulation functions and operators.
+// All Index values start from zero.
 class RedDataString : public RedType
 {
 public:

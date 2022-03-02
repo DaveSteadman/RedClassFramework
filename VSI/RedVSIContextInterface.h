@@ -40,11 +40,11 @@ class RedVSILib;
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-/// Class interface to pass to commands and parse-tree elements. Interface does not need to be
-/// complicated with the additional operations the routine/thread contexts will need to manage
-/// the execution at a higher level.
-/// Interface allows for routines/fragments to exist without commands/expressions needing to know
-/// about this level of detail.
+// Class interface to pass to commands and parse-tree elements. Interface does not need to be
+// complicated with the additional operations the routine/thread contexts will need to manage
+// the execution at a higher level.
+// Interface allows for routines/fragments to exist without commands/expressions needing to know
+// about this level of detail.
 class RedVSIContextInterface
 {
 public:

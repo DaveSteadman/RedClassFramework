@@ -39,7 +39,7 @@ void RedTestTml::RunUnitTest(RedLog& log)
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-/// Simple Tml Tests
+// Simple Tml Tests
 RedResult RedTestTml::TestOne(void)
 {
     {

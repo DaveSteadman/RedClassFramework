@@ -24,7 +24,7 @@ namespace Red {
 namespace Core {
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-/// Class for dates formatted in YYYYMMDD format, ie 2013/10/20. Component values are all unsigned.
+// Class for dates formatted in YYYYMMDD format, ie 2013/10/20. Component values are all unsigned.
 
 class RedDate
 {

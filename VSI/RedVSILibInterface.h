@@ -30,7 +30,7 @@ namespace VSI {
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-/// Library interface, providing read-only access to find classes and routines.
+// Library interface, providing read-only access to find classes and routines.
 class RedVSILibInterface
 {
 public:

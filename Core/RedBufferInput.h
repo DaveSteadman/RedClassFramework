@@ -29,8 +29,8 @@ namespace Core {
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-/// Input buffer constructed from a string, allowing character to be read sequentially while
-/// tracking position in the file.
+// Input buffer constructed from a string, allowing character to be read sequentially while
+// tracking position in the file.
 class RedBufferInput
 {
 public:

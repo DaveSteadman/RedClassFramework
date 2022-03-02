@@ -35,7 +35,7 @@ RedResult RedVSIContextFactory::CreateContext(RedVSIContextRoutine** OutputConte
     //if (!RedVSITokenFactory::CreateTokens(InputCodeFragment, cTokenMap.cVSILibTokenMap, cTokenList))
     //    return kResultFail;
 
-    //// Turn the tokens into code
+    /// Turn the tokens into code
     //RedVSICmdInterface* topCmd = RedVSICmdFactory::RunConstuctionCompetition(cTokenList, cLog);
     //if (topCmd == NULL)
     //    return kResultFail;

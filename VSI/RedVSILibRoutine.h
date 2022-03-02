@@ -29,7 +29,7 @@ namespace VSI {
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-/// A VSI-Routine consists of a Routine-name, and a list of parameters which together make up its signature.
+// A VSI-Routine consists of a Routine-name, and a list of parameters which together make up its signature.
 class RedVSILibRoutine : public RedVSILibRoutineInterface
 {
 public:

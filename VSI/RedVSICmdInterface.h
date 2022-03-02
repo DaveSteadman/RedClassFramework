@@ -33,23 +33,23 @@ public:
 
     virtual ~RedVSICmdInterface(void) { };
 
-    /// Get the command type, allowing a caller to determine the type of a RedVSICmdInterface
-    /// pointer.
+    // Get the command type, allowing a caller to determine the type of a RedVSICmdInterface
+    // pointer.
     virtual RedVSILangElement Type(void) const =0;
 
-    /// Operation to queue up the top level expressions in a command. A separate class
-    /// determines the actual traversing of the parse-tree.
+    // Operation to queue up the top level expressions in a command. A separate class
+    // determines the actual traversing of the parse-tree.
     virtual void QueueExpr(RedVSIContextInterface* pContext) =0;
     
-    /// Execute the command, assuming the expressions are all fully executed and the
-    /// results are available in the context.
+    // Execute the command, assuming the expressions are all fully executed and the
+    // results are available in the context.
     virtual void Execute(RedVSIContextInterface* pContext) =0;
     
-    /// Get the next command in the sequence (not including the branches of
-    /// conditional/iterative commands)
+    // Get the next command in the sequence (not including the branches of
+    // conditional/iterative commands)
     RedVSICmdInterface* NextCmd(void) const { return pNextCmd; };
     
-    /// Assign the next command in the sequence (not including command branches)
+    // Assign the next command in the sequence (not including command branches)
     void SetNextCmd(RedVSICmdInterface* pNewNextCmd) { pNextCmd = pNewNextCmd; };
 
 private:
