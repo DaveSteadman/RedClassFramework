@@ -38,7 +38,7 @@ RedType* RedVSIContextThread::CreateHeapDataItem(const RedVSILangElement& cType,
 
     RedDataType DataType = RedVSILangElement::DataTypeForLangElemType(cType);
 
-    pNewData = cHeap.CreateAndAdd(cName, DataType);
+    pNewData = cHeap.CreateAddReturn(cName, DataType);
 
     // return the pointer to the new object (or zero)
     return pNewData;
@@ -48,7 +48,7 @@ RedType* RedVSIContextThread::CreateHeapDataItem(const RedVSILangElement& cType,
 
 bool RedVSIContextThread::FindHeapDataItem(const RedDataString& cName, RedType*& pData)
 {
-    if (cHeap.Find(cName, pData))
+    if (cHeap.FindFieldPtr(cName, pData))
         return true;
 
     return false;

@@ -16,6 +16,8 @@
 // (http://opensource.org/licenses/MIT)
 // -------------------------------------------------------------------------------------------------
 
+#include "RedType.h"
+
 #include "RedDataRecord.h"
 #include "RedDataBoolean.h"
 #include "RedDataChar.h"
@@ -51,9 +53,9 @@ RedType* RedDataRecord::Clone(void) const
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-RedType* RedDataRecord::CreateAndAdd(const RedDataString& cNewAttribName, const RedDataType& NewAttribType)
+RedType* RedDataRecord::CreateAddReturn(const RedDataString& cNewAttribName, const RedDataType& NewAttribType)
 {
-    RedType* retData = CreateObjectOfType(NewAttribType);
+    RedType* retData = RedType::NewRedObj(NewAttribType);
 
     pAttribList->Add(cNewAttribName, retData);
 
@@ -62,9 +64,9 @@ RedType* RedDataRecord::CreateAndAdd(const RedDataString& cNewAttribName, const 
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-RedType* RedDataRecord::CreateAndAdd(const char* strNewAttribName, const RedDataType& NewAttribType)
+RedType* RedDataRecord::CreateAddReturn(const char* strNewAttribName, const RedDataType& NewAttribType)
 {
-    RedType* retData = CreateObjectOfType(NewAttribType);
+    RedType* retData = RedType::NewRedObj(NewAttribType);
 
     pAttribList->Add(RedDataString(strNewAttribName), retData);
 
@@ -73,27 +75,57 @@ RedType* RedDataRecord::CreateAndAdd(const char* strNewAttribName, const RedData
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-RedType* RedDataRecord::CreateObjectOfType(const RedDataType& NewAttribType)
+////void RedDataRecord::Add(const RedDataString& cNewAttribName, int iVal)
+////{ 
+////	RedDataNumber* pNewNum = new RedDataNumber(iVal);
+////	pAttribList->Add(cNewAttribName, (RedType* )pNewNum);
+////};
+
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+//
+//void RedDataRecord::Add(const RedDataString& cNewAttribName, const RedDataNumber numVal)
+//{
+//	pAttribList->Add(cNewAttribName, (RedType*)numVal->Clone());
+//}
+//
+//// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+//
+//void RedDataRecord::Add(const RedDataString& cNewAttribName, const char* strVal)
+//{
+//	RedDataString* pNewStr = new RedDataString(strVal);
+//	pAttribList->Add(cNewAttribName, (RedType*)pNewStr);
+//}
+//
+//// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+//
+//void RedDataRecord::Add(const RedDataString& cNewAttribName, const bool bVal)
+//{
+//	RedDataBoolean* pNewBool = new RedDataBoolean(bVal);
+//	pAttribList->Add(cNewAttribName, (RedType*)pNewBool);
+//}
+
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+RedDataType RedDataRecord::TypeForName(const RedDataString& cAttribName)
 {
-    RedType* retData = NULL;
+	RedType* pData = NULL;
 
-    if      (NewAttribType.IsBool())    retData = new RedDataBoolean;
-    else if (NewAttribType.IsChar())    retData = new RedDataChar;
-    //else if (NewAttribType.IsList())    retData = new RedL;
-    else if (NewAttribType.IsNum())     retData = new RedDataNumber;
-    else if (NewAttribType.IsRecord())  retData = new RedDataRecord;
-    else if (NewAttribType.IsStr())     retData = new RedDataString;
-    else if (NewAttribType.IsVariant()) retData = new RedDataVariant;
-
-    return retData;
+	if (FindFieldPtr(cAttribName, pData))
+		return pData->Type();
+	else
+		return kDataTypeInvalid;
 }
 
-void RedDataRecord::Add(const RedDataString& cNewAttribName, int iVal)
-{ 
-	RedDataNumber* pNewNum = new RedDataNumber(iVal);
-	pAttribList->Add(cNewAttribName, (RedType* )pNewNum);
-};
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
+RedType* RedDataRecord::PtrForName(const RedDataString& cAttribName)
+{
+	RedType* pData = NULL;
+	if (FindFieldPtr(cAttribName, pData))
+		return pData;
+	else
+		return NULL;
+}
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 // Operators

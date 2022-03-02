@@ -114,7 +114,7 @@ RedType* RedVSIContextRoutine::CreateDataItem(const RedVSILangElement& cLocation
 
     if (cLocation.IsLocationStack())
     {
-        pNewData = cLocalVariables.CreateAndAdd(cName, DataType);
+        pNewData = cLocalVariables.CreateAddReturn(cName, DataType);
     }
     else if (cLocation.IsLocationHeap())
     {
@@ -157,7 +157,7 @@ RedType* RedVSIContextRoutine::DuplicateDataItem(const RedVSILangElement& cLocat
 bool RedVSIContextRoutine::FindDataItem(const RedDataString& cName, RedType*& pData)
 {
     // first try and get the data from the local routine
-    if (cLocalVariables.Find(cName, pData))
+    if (cLocalVariables.FindFieldPtr(cName, pData))
         return true;
 
     if (pThreadContextRecord != NULL)

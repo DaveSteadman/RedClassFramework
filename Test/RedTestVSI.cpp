@@ -547,7 +547,7 @@ RedResult RedTestVSI::TestRunProg_001(void)
     } "));
 
         // Create the TML tree from the code buffer
-        RedTinyMLElement* tmlTreeElement = RedTinyMLFileIO::ParseTinyML(codeBuffer);
+        RedTinyMLElement* tmlTreeElement = RedTinyMLFileIO::CreateTinyML(codeBuffer);
         RedTinyMLNode* tmlTreeNode = NULL;
 
         if (tmlTreeElement == NULL)

@@ -73,21 +73,13 @@ void RedVSICmdLoadCode::Execute(RedVSIContextInterface* pContext)
     {
         RedVSILibFactory libFact(pCodeLib);
         
-        RedTinyMLElement* pTopTmlNode = NULL;
-        RedResult fileLoadResult = RedTinyMLFileIO::CreateTmlFromFile(filePath, &pTopTmlNode);
+        RedTinyMLElement* pTopTmlNode = RedTinyMLFileIO::CreateTinyMLFromFile(filePath);
         
         // If we've created a TML structure, we're now responsible for deleting it.
         if (pTopTmlNode != NULL)
         {
-            if (fileLoadResult == kResultSuccess)
-            {
-                // Call the code lib to import the TML class structure
-                libFact.InputTmlClass(pTopTmlNode, *pContext->Log());
-            }
-            else
-                pContext->Log()->AddErrorEvent("Failed to fully load file to TML structure");
-            
-            delete pTopTmlNode;
+            // Call the code lib to import the TML class structure
+            libFact.InputTmlClass(pTopTmlNode, *pContext->Log());
         }
         else
             pContext->Log()->AddErrorEvent("Failed to load file to TML structure");

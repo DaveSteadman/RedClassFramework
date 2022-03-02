@@ -78,8 +78,8 @@ RedVSILibClass* RedVSILib::FindClass(const RedDataString& cClassName)
         if (RedIOHandler::FileExists(fullpath))
         {
             // Load the class
-            RedTinyMLElement* newX = NULL;
-            if (RedTinyMLFileIO::CreateTmlFromFile(fullpath, &newX) != kResultSuccess)
+            RedTinyMLElement* newX = RedTinyMLFileIO::CreateTinyMLFromFile(fullpath);
+            if (newX == NULL)
                 return NULL;
 
             RedVSILibFactory vsiCodeLibFactory(this);

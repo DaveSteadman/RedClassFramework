@@ -546,24 +546,29 @@ RedResult RedTestCore::TestRecord(void)
 	{
 		RedDataRecord x;
 
-		x.CloneAndAdd("Field1", );
+		x.AddByPtr("Field1", RedDataNumber(12).Clone());
+		x.AddByPtr("Field2", RedDataString("str12").Clone());
+		x.AddByPtr("Field3", RedDataBoolean(true).Clone());
+		x.AddByPtr("Field4", RedDataNumber(345.5).Clone());
+		if (x.NumItems() != 4) return kResultFail;
+
+		x.Del("Field1");
+
+		RedDataChar c('q');
+		x.CloneAndAdd("Field5", &c);
+
+		RedDataType t1 = x.TypeForName("Field3");
+		RedDataBoolean* pB   = dynamic_cast<RedDataBoolean*>(x.PtrForName("Field3"));
+		RedDataNumber*  pErr = dynamic_cast<RedDataNumber*>(x.PtrForName("Field3")); 
+
+		RedDataBoolean* pB2 = dynamic_cast<RedDataBoolean*>(x.CreateAddReturn("FieldBool", kDataTypeBool));
+		pB2->SetTrue();
+
+		RedDataVariant* pV = dynamic_cast<RedDataVariant*>(x.CreateAddReturn("FieldBool", kDataTypeVariant));
+		*pV = "qq";
+		*pV = 1234;
 
 	}
-
-
-    y = "Data2";
-    x.CloneAndAdd("Field2", &y);
-
-    RedType* p = NULL;
-    x.Find("Field1", p);
-
-    if ((p == NULL) || (p->Type() != kDataTypeStr)) return kResultFail;
-    RedDataString* ps = (RedDataString*)p;
-    if (*ps != "Data1") return kResultFail;
-
-    delete p;
-    p = NULL;
-    ps = NULL;
 
     return kResultSuccess;
 }

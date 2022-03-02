@@ -44,7 +44,7 @@ RedResult RedTestTml::TestOne(void)
 {
     {
         RedDataString TestInTml = "{{name} content}";
-        RedTinyMLElement* testElement = RedTinyMLFileIO::ParseTinyML(TestInTml);
+        RedTinyMLElement* testElement = RedTinyMLFileIO::CreateTinyML(TestInTml);
         if (testElement == NULL)
         {
             delete testElement;
@@ -210,7 +210,7 @@ RedResult RedTestTml::TestQuoteCharacters(void)
 {
     {
         RedDataString TestInTml = "{{name} \"content\"}";
-        RedTinyMLElement* testElement = RedTinyMLFileIO::ParseTinyML(TestInTml);
+        RedTinyMLElement* testElement = RedTinyMLFileIO::CreateTinyML(TestInTml);
         if (testElement == NULL) return kResultFail;
         if (!testElement->IsLeaf()) { delete testElement; return kResultFail; }
 

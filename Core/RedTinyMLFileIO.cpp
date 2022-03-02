@@ -33,35 +33,26 @@ static const RedDataChar kCloseBracket = '}';
 // Top Level IO
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-RedResult RedTinyMLFileIO::CreateTmlFromFile(const RedDataString& filepath, RedTinyMLElement** newTmlElement)
+RedTinyMLElement* RedTinyMLFileIO::CreateTinyMLFromFile(const RedDataString& filepath)
 {
-    // Initialisation
-    if (*newTmlElement != NULL)
-    {
-        delete *newTmlElement;
-        *newTmlElement = NULL;
-    }
-
     // Check the file exists to open
     if (!RedIOHandler::FileExists(filepath))
-        return kResultFail;
+        return NULL;
 
     // Open the file and copy into input buffer
     RedBufferInput iB;
     if (RedIOHandler::InputBufferFromFile(filepath, iB) == kResultFail)
-        return kResultFail;
+        return NULL;
 
     // Parse the file to create TML Element
-    *newTmlElement = RedTinyMLFileIO::ParseTinyML(iB);
-    if (*newTmlElement == NULL)
-        return kResultFail;
+	RedTinyMLElement* pTmlElement = RedTinyMLFileIO::CreateTinyML(iB);
 
-    return kResultSuccess;
+    return pTmlElement;
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-RedResult RedTinyMLFileIO::CreateFileFromTml(const RedTinyMLElement* tmlElement, const RedDataString& filepath, const TESerialiseType writeStyle)
+RedResult RedTinyMLFileIO::CreateFileFromTinyML(const RedTinyMLElement* tmlElement, const RedDataString& filepath, const TESerialiseType writeStyle)
 {
     // Check node is not null
     if (tmlElement == NULL)
@@ -83,16 +74,16 @@ RedResult RedTinyMLFileIO::CreateFileFromTml(const RedTinyMLElement* tmlElement,
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-RedTinyMLElement* RedTinyMLFileIO::ParseTinyML(const RedDataString& inputStr)
+RedTinyMLElement* RedTinyMLFileIO::CreateTinyML(const RedDataString& inputStr)
 {
     RedBufferInput inputBuf(inputStr);
 
-    return RedTinyMLFileIO::ParseTinyML(inputBuf);
+    return RedTinyMLFileIO::CreateTinyML(inputBuf);
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-RedTinyMLElement* RedTinyMLFileIO::ParseTinyML(RedBufferInput& inputBuf)
+RedTinyMLElement* RedTinyMLFileIO::CreateTinyML(RedBufferInput& inputBuf)
 {
     RedTinyMLElement* retTml = NULL;
 
@@ -100,6 +91,14 @@ RedTinyMLElement* RedTinyMLFileIO::ParseTinyML(RedBufferInput& inputBuf)
         return retTml;
 
     return NULL;
+}
+
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+RedTinyMLElement* RedTinyMLFileIO::CreateTinyML(RedDataRecord& inputRec)
+{
+	return NULL;
+
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

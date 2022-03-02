@@ -22,6 +22,8 @@
 
 #include "RedType.h"
 #include "RedDataString.h"
+#include "RedDataNumber.h"
+#include "RedDataBoolean.h"
 #include "RedMapList.h"
 #include "RedMapListIterator.h"
 
@@ -42,25 +44,28 @@ public:
     RedType*    Clone(void) const;
     void        Init(void) { pAttribList->DelAll(); };
 
-    // Create And Add
-    void        CloneAndAdd (const RedDataString& cNewAttribName, const RedType* pNewAttrib) { pAttribList->Add(cNewAttribName,                  pNewAttrib->Clone()); };
-    void        CloneAndAdd (const char* strNewAttribName,        const RedType* pNewAttrib) { pAttribList->Add(RedDataString(strNewAttribName), pNewAttrib->Clone()); };
-    
-	void        Add         (const RedDataString& cNewAttribName, RedType* pNewAttrib)       { pAttribList->Add(cNewAttribName,                  pNewAttrib); };
-    void        Add         (const char* strNewAttribName,        RedType* pNewAttrib)       { pAttribList->Add(RedDataString(strNewAttribName), pNewAttrib); };
+    // Generic Add
+    void        CloneAndAdd (const RedDataString& cNewAttribName, const RedType* pNewAttrib) { pAttribList->Add(cNewAttribName, pNewAttrib->Clone()); };
+	void        AddByPtr(const RedDataString& cNewAttribName, RedType* pNewAttrib)           { pAttribList->Add(cNewAttribName, pNewAttrib); };
 
-	void        Add(const RedDataString& cNewAttribName, int iVal);
+	// Generic add operations
+	RedType*    CreateAddReturn(const RedDataString& cNewAttribName, const RedDataType& NewAttribType);
+	RedType*    CreateAddReturn(const char* strNewAttribName,        const RedDataType& NewAttribType);
 
-
-    RedType*    CreateAndAdd(const RedDataString& cNewAttribName, const RedDataType& NewAttribType);
-    RedType*    CreateAndAdd(const char* strNewAttribName,        const RedDataType& NewAttribType);
+	// Shortcut add operations
+	void        AddByValue(const RedDataString& cNewAttribName, const int iVal)     { pAttribList->Add(cNewAttribName, new RedDataNumber(iVal));  };
+	void        AddByValue(const RedDataString& cNewAttribName, const char* strVal) { pAttribList->Add(cNewAttribName, new RedDataString(strVal)); };
+	void        AddByValue(const RedDataString& cNewAttribName, const bool bVal)    { pAttribList->Add(cNewAttribName, new RedDataBoolean(bVal)); };
 
     // Locate
-    bool        Find(const RedDataString& cAttribName, RedType*& pData)       { return pAttribList->Find(cAttribName, pData); };
+    bool        FindFieldPtr(const RedDataString& cAttribName, RedType*& pData) { return pAttribList->Find(cAttribName, pData); };
+
+	RedDataType TypeForName(const RedDataString& cAttribName);
+	RedType*    PtrForName (const RedDataString& cAttribName);
 
     // Remove
-    void        Del(const RedDataString& cNewAttribName)                      { pAttribList->Del(cNewAttribName); };
-    void        DelAll(void)                                                  { pAttribList->DelAll(); };
+    void        Del(const RedDataString& cNewAttribName)          { pAttribList->Del(cNewAttribName); };
+    void        DelAll(void)                                      { pAttribList->DelAll(); };
 
     unsigned    NumItems(void) const { return pAttribList->NumItems(); };
 
@@ -68,8 +73,6 @@ public:
     void operator =(const RedDataRecord& cNewVal);
 
 private:
-
-    RedType* CreateObjectOfType(const RedDataType& NewAttribType);
 
     typedef RedMapList<RedDataString, RedType*>           RedDataStringDataMap;
     typedef RedMapListIterator<RedDataString, RedType*>   RedDataStringDataMapIterator;

@@ -21,6 +21,8 @@
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 #include "RedType.h"
+#include "RedDataBoolean.h"
+#include "RedDataNumber.h"
 #include "RedDataString.h"
 #include "RedMapList.h"
 #include "RedMapListIterator.h"
@@ -41,32 +43,35 @@ public:
     ~RedDataList(void) { pList->DelAll(); };
 
     // Inherited: RedType
-    RedDataType Type(void) const { return RedDataType::List(); };
+    RedDataType       Type(void) const { return RedDataType::List(); };
     RedType*          Clone(void) const;
     void              Init(void) { pList->DelAll(); };
 
     void              InitToSize(unsigned uNumItems, RedDataType eItemType);
 
-    // Create And Add
-    // void        CloneAndAdd (const RedDataString& cNewAttribName, const RedType* pNewAttrib) { pAttribList->Add(cNewAttribName,              pNewAttrib->Clone()); };
-    // void        CloneAndAdd (const char* strNewAttribName,    const RedType* pNewAttrib) { pAttribList->Add(RedDataString(strNewAttribName), pNewAttrib->Clone()); };
-    // void        Add         (const RedDataString& cNewAttribName, RedType* pNewAttrib)       { pAttribList->Add(cNewAttribName,              pNewAttrib); };
-    // void        Add         (const char* strNewAttribName,    RedType* pNewAttrib)       { pAttribList->Add(RedDataString(strNewAttribName), pNewAttrib); };
-    // RedType*    CreateAndAdd(const RedDataString& cNewAttribName, const RedDataType& NewAttribType);
-    // RedType*    CreateAndAdd(const char* strNewAttribName,    const RedDataType& NewAttribType);
+	void        CloneAndAdd(const RedType* pNewAttrib) { pList->AddLast(pNewAttrib->Clone()); };
+	void        AddByPtr(RedType* pNewAttrib)          { pList->AddLast(pNewAttrib); };
 
+	// Generic add operations
+	RedType*    CreateAddReturn(const RedDataType& NewAttribType);
+
+	// Shortcut add operations
+	void        AddByValue(const int iVal)     { pList->AddLast(new RedDataNumber(iVal));   };
+	void        AddByValue(const char* strVal) { pList->AddLast(new RedDataString(strVal)); };
+	void        AddByValue(const bool bVal)    { pList->AddLast(new RedDataBoolean(bVal));  };
 
     // Remove
     void        DelAll(void) { pList->DelAll(); };
 
     unsigned    NumItems(void) const { return pList->NumItems(); };
 
+	RedType*    PtrForIndex(const unsigned uIndex) const;
+
     // Operators
     void operator =(const RedDataList& cNewVal);
+	RedType* operator [](const unsigned Index) const { return PtrForIndex(Index); };
 
 private:
-
-    RedType* CreateObjectOfType(const RedDataType& NewAttribType);
 
     typedef RedDoubleLinkedList<RedType*>   RedTypeList;
     typedef RedDoubleLinkedList<RedType*>   RedTypeListIterator;
@@ -74,6 +79,9 @@ private:
     // Attributes
     RedTypeList* pList;
 };
+
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 

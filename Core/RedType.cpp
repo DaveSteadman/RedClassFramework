@@ -1,4 +1,3 @@
-
 // -------------------------------------------------------------------------------------------------
 // This file is covered by: The MIT License (MIT) Copyright (c) 2022 David G. Steadman
 // -------------------------------------------------------------------------------------------------
@@ -17,47 +16,40 @@
 // (http://opensource.org/licenses/MIT)
 // -------------------------------------------------------------------------------------------------
 
-#pragma once
+#include "RedType.h"
 
-#include "RedCoreNamespace.h"
-
-using namespace Red::Core;
+#include "RedDataBoolean.h"
+#include "RedDataChar.h"
+#include "RedDataList.h"
+#include "RedDataNumber.h"
+#include "RedDataRecord.h"
+#include "RedDataString.h"
+#include "RedDataVariant.h"
 
 namespace Red {
 namespace Core {
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-typedef enum TESerialiseType { eDenseContent, eLinedIndentedContent } TESerialiseType;
-
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-/// Class exists to provide complex actions on Core nodes. The Core node classes remain focussed
-/// on their role of storage and memory management, while this class can acquire increasingly complex
-/// bulky routines.
-class RedTinyMLFileIO
+RedType* RedType::NewRedObj(const RedDataType eType)
 {
-public:
+	RedType* retData = NULL;
 
-    // File IO (check base dir in file-io class)
-    static RedTinyMLElement*  CreateTinyMLFromFile(const RedDataString& filepath);
+	if      (eType.IsBool())    retData = new RedDataBoolean;
+	else if (eType.IsChar())    retData = new RedDataChar;
+	else if (eType.IsList())    retData = new RedDataList;
+	else if (eType.IsNum())     retData = new RedDataNumber;
+	else if (eType.IsRecord())  retData = new RedDataRecord;
+	else if (eType.IsStr())     retData = new RedDataString;
+	else if (eType.IsVariant()) retData = new RedDataVariant;
 
-    static RedTinyMLElement*  CreateTinyML(const RedDataString& inputStr);
-    static RedTinyMLElement*  CreateTinyML(RedBufferInput& inputBuf);
-    static RedTinyMLElement*  CreateTinyML(RedDataRecord& inputRec);
-
-
-	static RedResult          CreateFileFromTinyML(const RedTinyMLElement* tmlElement, const RedDataString& filepath, const TESerialiseType writeStyle);
-
-    static void               SerialiseCore(RedBufferOutput& outputBuf, const RedTinyMLElement* topTmlNode, const TESerialiseType eMode);
-
-private:
-    static bool               ReadName      (RedBufferInput& inputBuf, RedDataString& outputName);
-    static bool               ReadContent   (RedBufferInput& inputBuf, RedDataString& outputContent);
-    static bool               ReadTmlElement(RedBufferInput& inputBuf, RedTinyMLElement** newTml);
-};
-
+	return retData;
+}
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 } // Core
 } // Red
+
+
+
+
