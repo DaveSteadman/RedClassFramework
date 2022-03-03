@@ -33,17 +33,17 @@ namespace Core {
 
 RedType* RedType::NewRedObj(const RedDataType eType)
 {
-	RedType* retData = NULL;
+    RedType* retData = NULL;
 
-	if      (eType.IsBool())    retData = new RedDataBoolean;
-	else if (eType.IsChar())    retData = new RedDataChar;
-	else if (eType.IsList())    retData = new RedDataList;
-	else if (eType.IsNum())     retData = new RedDataNumber;
-	else if (eType.IsRecord())  retData = new RedDataRecord;
-	else if (eType.IsStr())     retData = new RedDataString;
-	else if (eType.IsVariant()) retData = new RedDataVariant;
+    if      (eType.IsBool())    retData = new RedDataBoolean;
+    else if (eType.IsChar())    retData = new RedDataChar;
+    else if (eType.IsList())    retData = new RedDataList;
+    else if (eType.IsNum())     retData = new RedDataNumber;
+    else if (eType.IsRecord())  retData = new RedDataRecord;
+    else if (eType.IsStr())     retData = new RedDataString;
+    else if (eType.IsVariant()) retData = new RedDataVariant;
 
-	return retData;
+    return retData;
 }
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 

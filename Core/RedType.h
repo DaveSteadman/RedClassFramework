@@ -35,7 +35,7 @@ public:
     virtual RedType*    Clone(void) const = 0;
     virtual             ~RedType(void) { };
 
-	static RedType* NewRedObj(const RedDataType eType);
+    static RedType* NewRedObj(const RedDataType eType);
 };
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

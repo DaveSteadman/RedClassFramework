@@ -46,22 +46,22 @@ public:
 
     // Generic Add
     void        CloneAndAdd (const RedDataString& cNewAttribName, const RedType* pNewAttrib) { pAttribList->Add(cNewAttribName, pNewAttrib->Clone()); };
-	void        AddByPtr(const RedDataString& cNewAttribName, RedType* pNewAttrib)           { pAttribList->Add(cNewAttribName, pNewAttrib); };
+    void        AddByPtr(const RedDataString& cNewAttribName, RedType* pNewAttrib)           { pAttribList->Add(cNewAttribName, pNewAttrib); };
 
-	// Generic add operations
-	RedType*    CreateAddReturn(const RedDataString& cNewAttribName, const RedDataType& NewAttribType);
-	RedType*    CreateAddReturn(const char* strNewAttribName,        const RedDataType& NewAttribType);
+    // Generic add operations
+    RedType*    CreateAddReturn(const RedDataString& cNewAttribName, const RedDataType& NewAttribType);
+    RedType*    CreateAddReturn(const char* strNewAttribName,        const RedDataType& NewAttribType);
 
-	// Shortcut add operations
-	void        AddByValue(const RedDataString& cNewAttribName, const int iVal)     { pAttribList->Add(cNewAttribName, new RedDataNumber(iVal));  };
-	void        AddByValue(const RedDataString& cNewAttribName, const char* strVal) { pAttribList->Add(cNewAttribName, new RedDataString(strVal)); };
-	void        AddByValue(const RedDataString& cNewAttribName, const bool bVal)    { pAttribList->Add(cNewAttribName, new RedDataBoolean(bVal)); };
+    // Shortcut add operations
+    void        AddByValue(const RedDataString& cNewAttribName, const int iVal)     { pAttribList->Add(cNewAttribName, new RedDataNumber(iVal));  };
+    void        AddByValue(const RedDataString& cNewAttribName, const char* strVal) { pAttribList->Add(cNewAttribName, new RedDataString(strVal)); };
+    void        AddByValue(const RedDataString& cNewAttribName, const bool bVal)    { pAttribList->Add(cNewAttribName, new RedDataBoolean(bVal)); };
 
     // Locate
     bool        FindFieldPtr(const RedDataString& cAttribName, RedType*& pData) { return pAttribList->Find(cAttribName, pData); };
 
-	RedDataType TypeForName(const RedDataString& cAttribName);
-	RedType*    PtrForName (const RedDataString& cAttribName);
+    RedDataType TypeForName(const RedDataString& cAttribName);
+    RedType*    PtrForName (const RedDataString& cAttribName);
 
     // Remove
     void        Del(const RedDataString& cNewAttribName)          { pAttribList->Del(cNewAttribName); };

@@ -50,7 +50,7 @@ void RedVSILibFactory::InputTmlClass(RedTinyMLElement* pTopTmlNode, RedLog& cAna
 {
     if ((pTopTmlNode == NULL) || (!pTopTmlNode->IsNode()))
     {
-        cAnalysis.AddErrorEvent("Lib Factory: InputTmlClass: Top-level node not TML Node");
+        cAnalysis.AddErrorEvent("Lib Factory: InputTmlClass: Top-level node not TinyML Node");
         return;
     }
 

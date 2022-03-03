@@ -32,15 +32,17 @@ namespace Core {
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 // A List data type, parented on RedType, so we can create collections of them and use them as VSI variables.
+// All items stored as pointers, either addig from externally created objects, or by value that creates the object on the fly.
+// All objects deleted when deleted from the collection.
 
 class RedDataList : public RedType
 {
 public:
 
-    RedDataList(void) { pList = NULL; };
+    RedDataList(void) { pList = NULL; pList = new RedTypeList; };
     RedDataList(unsigned uNumItems, RedDataType eItemType) { InitToSize(uNumItems, eItemType); };
 
-    ~RedDataList(void) { pList->DelAll(); };
+    ~RedDataList(void) { pList->DelAll(); delete pList; };
 
     // Inherited: RedType
     RedDataType       Type(void) const { return RedDataType::List(); };
@@ -49,27 +51,28 @@ public:
 
     void              InitToSize(unsigned uNumItems, RedDataType eItemType);
 
-	void        CloneAndAdd(const RedType* pNewAttrib) { pList->AddLast(pNewAttrib->Clone()); };
-	void        AddByPtr(RedType* pNewAttrib)          { pList->AddLast(pNewAttrib); };
+    void        CloneAndAdd(const RedType* pNewAttrib) { pList->AddLast(pNewAttrib->Clone()); };
+    void        AddByPtr(RedType* pNewAttrib)          { pList->AddLast(pNewAttrib); };
 
-	// Generic add operations
-	RedType*    CreateAddReturn(const RedDataType& NewAttribType);
+    // Generic add operations
+    RedType*    CreateAddReturn(const RedDataType& NewAttribType);
 
-	// Shortcut add operations
-	void        AddByValue(const int iVal)     { pList->AddLast(new RedDataNumber(iVal));   };
-	void        AddByValue(const char* strVal) { pList->AddLast(new RedDataString(strVal)); };
-	void        AddByValue(const bool bVal)    { pList->AddLast(new RedDataBoolean(bVal));  };
+    // Shortcut add operations
+    void        AddByValue(const int iVal)     { pList->AddLast(new RedDataNumber(iVal));   };
+    void        AddByValue(const char* strVal) { pList->AddLast(new RedDataString(strVal)); };
+    void        AddByValue(const bool bVal)    { pList->AddLast(new RedDataBoolean(bVal));  };
 
     // Remove
     void        DelAll(void) { pList->DelAll(); };
+    void        DelAtIndex(const unsigned uIndex);
 
     unsigned    NumItems(void) const { return pList->NumItems(); };
 
-	RedType*    PtrForIndex(const unsigned uIndex) const;
+    RedType*    PtrForIndex(const unsigned uIndex) const;
 
     // Operators
     void operator =(const RedDataList& cNewVal);
-	RedType* operator [](const unsigned Index) const { return PtrForIndex(Index); };
+    RedType* operator [](const unsigned Index) const { return PtrForIndex(Index); };
 
 private:
 
@@ -79,9 +82,6 @@ private:
     // Attributes
     RedTypeList* pList;
 };
-
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 

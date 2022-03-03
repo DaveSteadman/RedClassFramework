@@ -55,6 +55,9 @@ public:
     static bool     IsLeapYear(const unsigned ForYear);
     static unsigned DaysInYear(const unsigned ForYear);
 
+    void            NextDay(void);
+    void            PrevDay(void);
+
     // String output
     RedDataString       DateString(void) const;
     RedDataString       EightDigitDateString(void) const;
@@ -62,6 +65,12 @@ public:
 
     // Operators
     void operator =(const RedDate& cNewVal);
+
+    RedDate& operator ++()    { NextDay(); return *this; };
+    RedDate& operator ++(int) { NextDay(); return *this; };
+    RedDate& operator --()    { PrevDay(); return *this; };
+    RedDate& operator --(int) { PrevDay(); return *this; };
+
 
 public:
 

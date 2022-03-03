@@ -77,54 +77,54 @@ RedType* RedDataRecord::CreateAddReturn(const char* strNewAttribName, const RedD
 
 ///void RedDataRecord::Add(const RedDataString& cNewAttribName, int iVal)
 ///{ 
-///	RedDataNumber* pNewNum = new RedDataNumber(iVal);
-///	pAttribList->Add(cNewAttribName, (RedType* )pNewNum);
+///    RedDataNumber* pNewNum = new RedDataNumber(iVal);
+///    pAttribList->Add(cNewAttribName, (RedType* )pNewNum);
 ///};
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 //
 //void RedDataRecord::Add(const RedDataString& cNewAttribName, const RedDataNumber numVal)
 //{
-//	pAttribList->Add(cNewAttribName, (RedType*)numVal->Clone());
+//    pAttribList->Add(cNewAttribName, (RedType*)numVal->Clone());
 //}
 //
 /// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 //
 //void RedDataRecord::Add(const RedDataString& cNewAttribName, const char* strVal)
 //{
-//	RedDataString* pNewStr = new RedDataString(strVal);
-//	pAttribList->Add(cNewAttribName, (RedType*)pNewStr);
+//    RedDataString* pNewStr = new RedDataString(strVal);
+//    pAttribList->Add(cNewAttribName, (RedType*)pNewStr);
 //}
 //
 /// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 //
 //void RedDataRecord::Add(const RedDataString& cNewAttribName, const bool bVal)
 //{
-//	RedDataBoolean* pNewBool = new RedDataBoolean(bVal);
-//	pAttribList->Add(cNewAttribName, (RedType*)pNewBool);
+//    RedDataBoolean* pNewBool = new RedDataBoolean(bVal);
+//    pAttribList->Add(cNewAttribName, (RedType*)pNewBool);
 //}
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 RedDataType RedDataRecord::TypeForName(const RedDataString& cAttribName)
 {
-	RedType* pData = NULL;
+    RedType* pData = NULL;
 
-	if (FindFieldPtr(cAttribName, pData))
-		return pData->Type();
-	else
-		return kDataTypeInvalid;
+    if (FindFieldPtr(cAttribName, pData))
+        return pData->Type();
+    else
+        return kDataTypeInvalid;
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 RedType* RedDataRecord::PtrForName(const RedDataString& cAttribName)
 {
-	RedType* pData = NULL;
-	if (FindFieldPtr(cAttribName, pData))
-		return pData;
-	else
-		return NULL;
+    RedType* pData = NULL;
+    if (FindFieldPtr(cAttribName, pData))
+        return pData;
+    else
+        return NULL;
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

@@ -33,18 +33,18 @@ public:
     static void RunUnitTest(RedLog& log);
 
 private:
-	static RedResult TestDataType(void);
-	
-	static RedResult TestDataBoolean(void);
+    static RedResult TestDataType(void);
+    
+    static RedResult TestDataBoolean(void);
     static RedResult TestDataChar(void);
     static RedResult TestDataNumber(void);
-	static RedResult TestDataList(void);
-	static RedResult TestDataRecord(void);
-	static RedResult TestDataString(void);
-	static RedResult TestDataVariant(void);
-	
-	static RedResult TestNumberRange(void);
-	static RedResult TestLinkedList(void);
+    static RedResult TestDataList(void);
+    static RedResult TestDataRecord(void);
+    static RedResult TestDataString(void);
+    static RedResult TestDataVariant(void);
+    
+    static RedResult TestNumberRange(void);
+    static RedResult TestLinkedList(void);
     static RedResult TestEventLog(void);
     static RedResult TestSmartPtr(void);
     static RedResult TestResult(void);

@@ -52,7 +52,7 @@ RedDataType RedDataVariant::Type(void) const
 RedType* RedDataVariant::Clone(void) const
 {
     RedDataVariant* pNewData = new RedDataVariant();
-    
+
     if (pData)
         pNewData->SetValue(pData->Clone());
 
@@ -208,17 +208,17 @@ RedDataBoolean RedDataVariant::BoolValue(void) const
         cBool = *pBoolData;
     }
 
-	if (pData->Type().IsNum())
-	{
-		RedDataNumber* pNumData = dynamic_cast<RedDataNumber*>(pData);
+    if (pData->Type().IsNum())
+    {
+        RedDataNumber* pNumData = dynamic_cast<RedDataNumber*>(pData);
 
-		if (!pNumData->IsZero())
-			cBool.SetTrue();
-		else
-			cBool.SetFalse();
-	}
+        if (!pNumData->IsZero())
+            cBool.SetTrue();
+        else
+            cBool.SetFalse();
+    }
 
-	return cBool;
+    return cBool;
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

@@ -82,7 +82,7 @@ void RedVSICmdLoadCode::Execute(RedVSIContextInterface* pContext)
             libFact.InputTmlClass(pTopTmlNode, *pContext->Log());
         }
         else
-            pContext->Log()->AddErrorEvent("Failed to load file to TML structure");
+            pContext->Log()->AddErrorEvent("Failed to load file to TinyML structure");
     }
     
     // Expression will have been evaluated prior to the command,

@@ -255,9 +255,11 @@ bool RedDoubleLinkedList<Element>::FindLast(Element& Elem) const
 template <class Element>
 unsigned RedDoubleLinkedList<Element>::FirstIndex(void) const
 {
-    if (iNumItems==0) 
-        return 0;
-    return 1;
+    return 0;
+
+    // if (iNumItems == 0) 
+    //     return 0;
+    // return 1;
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -265,7 +267,7 @@ unsigned RedDoubleLinkedList<Element>::FirstIndex(void) const
 template <class Element>
 unsigned RedDoubleLinkedList<Element>::LastIndex(void) const
 {
-    return iNumItems;
+    return (iNumItems == 0) ? 0 : (iNumItems - 1);
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -457,7 +459,7 @@ bool RedDoubleLinkedList<Element>::FindListElement(
     pCurrElem = pListHead;
 
     // Get the next element until we're at the requested one, or we run out of list
-    for (unsigned i=1; i<iElemIndex; i++)
+    for (unsigned i=0; i<iElemIndex; i++)
     {
         // if we're out of list, fail
         if (pCurrElem->pNext == 0)

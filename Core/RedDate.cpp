@@ -238,9 +238,66 @@ bool RedDate::IsLeapYear(const unsigned ForYear)
 unsigned RedDate::DaysInYear(const unsigned ForYear)
 {
     if (IsLeapYear(ForYear))
-        return 366;
+        return daysPerLeapYear;
     else
-        return 365;
+        return daysPerRegularYear;
+}
+
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+void RedDate::NextDay(void)
+{
+    // update just the date if we can
+    if (date < DaysInMonth(month, year))
+    {
+        date++;
+    }
+    else
+    {
+        // update just the month if we can
+        if (month)
+        {
+            if (month < monthsPerYear)
+            {
+                date = 1;
+                month++;
+            }
+            else
+            {
+                // else, update the year
+                date = 1;
+                month = 1;
+                year++;
+            }
+        }
+    }
+}
+
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+void RedDate::PrevDay(void)
+{
+    // update just the date if we can
+    if (date > 1)
+    {
+        date--;
+    }
+    else
+    {
+        // update just the month if we can
+        if (month > 1)
+        {
+            month--;
+            date = DaysInMonth(month, year);
+        }
+        else
+        {
+            // else, update the year
+            year--;
+            month = monthsPerYear;
+            date = DaysInMonth(month, year);
+        }
+    }
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

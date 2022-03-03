@@ -145,6 +145,7 @@ static const int daysPerWeek        =   7;
 static const int weeksPerYear       =  52;
 static const int daysPerRegularYear = 355;
 static const int daysPerLeapYear    = 356;
+static const int monthsPerYear      =  12;
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 // Volume 

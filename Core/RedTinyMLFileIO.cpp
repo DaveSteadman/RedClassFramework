@@ -45,7 +45,7 @@ RedTinyMLElement* RedTinyMLFileIO::CreateTinyMLFromFile(const RedDataString& fil
         return NULL;
 
     // Parse the file to create TML Element
-	RedTinyMLElement* pTmlElement = RedTinyMLFileIO::CreateTinyML(iB);
+    RedTinyMLElement* pTmlElement = RedTinyMLFileIO::CreateTinyML(iB);
 
     return pTmlElement;
 }
@@ -97,7 +97,7 @@ RedTinyMLElement* RedTinyMLFileIO::CreateTinyML(RedBufferInput& inputBuf)
 
 RedTinyMLElement* RedTinyMLFileIO::CreateTinyML(RedDataRecord& inputRec)
 {
-	return NULL;
+    return NULL;
 
 }
 

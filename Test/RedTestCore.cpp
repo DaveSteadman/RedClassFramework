@@ -47,10 +47,10 @@ void RedTestCore::RunUnitTest(RedLog& log)
     if (RedTestCore::TestTime().IsFail())         { log.AddErrorEvent("Core Unit Test: TestTime Failed");         return; }
     if (RedTestCore::TestDate().IsFail())         { log.AddErrorEvent("Core Unit Test: TestDate Failed");         return; }
 
-	// Test Collections
-	if (RedTestCore::TestLinkedList().IsFail()) { log.AddErrorEvent("Core Unit Test: TestLinkedList Failed");   return; }
+    // Test Collections
+    if (RedTestCore::TestLinkedList().IsFail())   { log.AddErrorEvent("Core Unit Test: TestLinkedList Failed");   return; }
 
-	// Test Misc Types
+    // Test Misc Types
     if (RedTestCore::TestEventLog().IsFail())     { log.AddErrorEvent("Core Unit Test: TestEventLog Failed");     return; }
     if (RedTestCore::TestNumberRange().IsFail())  { log.AddErrorEvent("Core Unit Test: TestNumberRange Failed");  return; }
     if (RedTestCore::TestOutputBuffer().IsFail()) { log.AddErrorEvent("Core Unit Test: TestOutputBuffer Failed"); return; }
@@ -167,13 +167,17 @@ RedResult RedTestCore::TestDataChar(void)
 
 RedResult RedTestCore::TestDataList(void)
 {
-	{
-		RedDataList cList;
+    {
+        RedDataList cList;
 
-		cList.AddByValue(123);
-		cList.AddByValue(234);
-	}
-	return kResultSuccess;
+        cList.AddByValue(123);
+        cList.AddByValue(234);
+        cList.DelAtIndex(0);
+
+        RedDataNumber* pNum = dynamic_cast<RedDataNumber*>(cList.PtrForIndex(0));
+        if (*pNum != 234) return kResultFail;
+    }
+    return kResultSuccess;
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -245,34 +249,34 @@ RedResult RedTestCore::TestDataNumber(void)
 
 RedResult RedTestCore::TestDataRecord(void)
 {
-	{
-		RedDataRecord x;
+    {
+        RedDataRecord x;
 
-		x.AddByPtr("Field1", RedDataNumber(12).Clone());
-		x.AddByPtr("Field2", RedDataString("str12").Clone());
-		x.AddByPtr("Field3", RedDataBoolean(true).Clone());
-		x.AddByPtr("Field4", RedDataNumber(345.5).Clone());
-		if (x.NumItems() != 4) return kResultFail;
+        x.AddByPtr("Field1", RedDataNumber(12).Clone());
+        x.AddByPtr("Field2", RedDataString("str12").Clone());
+        x.AddByPtr("Field3", RedDataBoolean(true).Clone());
+        x.AddByPtr("Field4", RedDataNumber(345.5).Clone());
+        if (x.NumItems() != 4) return kResultFail;
 
-		x.Del("Field1");
+        x.Del("Field1");
 
-		RedDataChar c('q');
-		x.CloneAndAdd("Field5", &c);
+        RedDataChar c('q');
+        x.CloneAndAdd("Field5", &c);
 
-		RedDataType t1 = x.TypeForName("Field3");
-		RedDataBoolean* pB = dynamic_cast<RedDataBoolean*>(x.PtrForName("Field3"));
-		RedDataNumber* pErr = dynamic_cast<RedDataNumber*>(x.PtrForName("Field3"));
+        RedDataType t1 = x.TypeForName("Field3");
+        RedDataBoolean* pB = dynamic_cast<RedDataBoolean*>(x.PtrForName("Field3"));
+        RedDataNumber* pErr = dynamic_cast<RedDataNumber*>(x.PtrForName("Field3"));
 
-		RedDataBoolean* pB2 = dynamic_cast<RedDataBoolean*>(x.CreateAddReturn("FieldBool", kDataTypeBool));
-		pB2->SetTrue();
+        RedDataBoolean* pB2 = dynamic_cast<RedDataBoolean*>(x.CreateAddReturn("FieldBool", kDataTypeBool));
+        pB2->SetTrue();
 
-		RedDataVariant* pV = dynamic_cast<RedDataVariant*>(x.CreateAddReturn("FieldBool", kDataTypeVariant));
-		*pV = "qq";
-		*pV = 1234;
+        RedDataVariant* pV = dynamic_cast<RedDataVariant*>(x.CreateAddReturn("FieldBool", kDataTypeVariant));
+        *pV = "qq";
+        *pV = 1234;
 
-	}
+    }
 
-	return kResultSuccess;
+    return kResultSuccess;
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -503,22 +507,22 @@ RedResult RedTestCore::TestDataVariant(void)
             return kResultFail;
     }
 
-	{
-		RedDataVariant x(1);
+    {
+        RedDataVariant x(1);
 
-		if (!x.Type().IsNum())
-			return kResultFail;
-		if (x.Type() != kDataTypeNum)
-			return kResultFail;
+        if (!x.Type().IsNum())
+            return kResultFail;
+        if (x.Type() != kDataTypeNum)
+            return kResultFail;
 
-		RedDataString  xstr  = x.StringValue();
-		RedDataNumber  xnum  = x.NumberValue();
-		RedDataBoolean xbool = x.BoolValue();
+        RedDataString  xstr  = x.StringValue();
+        RedDataNumber  xnum  = x.NumberValue();
+        RedDataBoolean xbool = x.BoolValue();
 
-		if (xstr != "1") return kResultFail;
-		if (xnum != 1) return kResultFail;
-		if (xbool != kBoolTRUE) return kResultFail;
-	}
+        if (xstr != "1") return kResultFail;
+        if (xnum != 1) return kResultFail;
+        if (xbool != kBoolTRUE) return kResultFail;
+    }
 
     return kResultSuccess;
 }
@@ -526,6 +530,80 @@ RedResult RedTestCore::TestDataVariant(void)
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 // Test Time Classes
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+RedResult RedTestCore::TestDate(void)
+{
+    {
+        RedDate d(2021, 10, 10);
+
+        unsigned x = d.EightDigitDate();
+        if (x != 20211010) return kResultFail;
+
+        unsigned x2 = d.SixDigitDate();
+        if (x2 != 211010) return kResultFail;
+
+        unsigned x3 = d.TwoDigitYear();
+        if (x3 != 21) return kResultFail;
+
+        RedDataString xstr = d.DateString();
+        if (xstr != "2021/10/10") return kResultFail;
+
+        RedDataString xstr2 = d.SixDigitDateString();
+        if (xstr2 != "211010") return kResultFail;
+
+        RedDataString xstr3 = d.EightDigitDateString();
+        if (xstr3 != "20211010") return kResultFail;
+
+        RedDate dateToday1 = RedDate::Today();
+        RedDate dateToday2 = RedDate::Today();
+        if (dateToday1 != dateToday2) return kResultFail;
+    }
+
+    {
+        RedDate      d1(2022, 02, 28);
+        RedDate Checkd1(2022, 03, 01);
+        d1.NextDay();
+        if (d1 != Checkd1) return kResultFail;
+    }
+    {
+        RedDate      d1(2022, 12, 31);
+        RedDate Checkd1(2023, 01, 01);
+        d1.NextDay();
+        if (d1 != Checkd1) return kResultFail;
+    }
+    {
+        RedDate      d1(2022, 01, 01);
+        RedDate Checkd1(2021, 12, 31);
+        d1.PrevDay();
+        if (d1 != Checkd1) return kResultFail;
+    }
+    {
+        RedDate      d1(2020, 03, 01);
+        RedDate Checkd1(2020, 02, 29);
+        d1.PrevDay();
+        if (d1 != Checkd1) return kResultFail;
+    }
+    {
+        RedDate      d1(2000, 02, 02);
+        RedDate Checkd1(2000, 02, 03);
+        d1++;
+        if (d1 != Checkd1) return kResultFail;
+    }
+
+    return kResultSuccess;
+}
+
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+RedResult RedTestCore::TestTime(void)
+{
+    RedTime t(12, 0, 0.0);
+
+    RedDataString xstr = t.TimeString();
+    if (xstr != "12:00:00.00") return kResultFail;
+
+    return kResultSuccess;
+}
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 // Test Collections
@@ -560,30 +638,30 @@ RedResult RedTestCore::TestLinkedList(void)
 
 RedResult RedTestCore::TestNumberRange(void)
 {
-	RedNumberRange DegreesLongitude(-180.0, 180.0);
-	RedDataNumber x = 300;
+    RedNumberRange DegreesLongitude(-180.0, 180.0);
+    RedDataNumber x = 300;
 
-	if (DegreesLongitude.IsInRange(x)) return kResultFail;
+    if (DegreesLongitude.IsInRange(x)) return kResultFail;
 
-	DegreesLongitude.WrapNumber(x);
-	if (!DegreesLongitude.IsInRange(x)) return kResultFail;
+    DegreesLongitude.WrapNumber(x);
+    if (!DegreesLongitude.IsInRange(x)) return kResultFail;
 
-	x = 300;
-	DegreesLongitude.CropNumber(x);
-	if (!DegreesLongitude.IsInRange(x)) return kResultFail;
+    x = 300;
+    DegreesLongitude.CropNumber(x);
+    if (!DegreesLongitude.IsInRange(x)) return kResultFail;
 
 
-	RedNumberRange FullCircleDegrees(0.0, 360.0);
-	RedNumberRange FullCircleRadians(0.0, 2 * pi);
-	RedDataNumber angle = 90.0;
+    RedNumberRange FullCircleDegrees(0.0, 360.0);
+    RedNumberRange FullCircleRadians(0.0, 2 * pi);
+    RedDataNumber angle = 90.0;
 
-	RedDataNumber ftr(FullCircleDegrees.FractionThroughRange(angle));
-	if (ftr != 0.25) return kResultFail;
+    RedDataNumber ftr(FullCircleDegrees.FractionThroughRange(angle));
+    if (ftr != 0.25) return kResultFail;
 
-	// RedDataNumber angleRads = RedNumberRange::RescaleNumber(angle, FullCircleDegrees, FullCircleRadians);
-	// if (angleRads != half_pi) return kResultFail;
+    // RedDataNumber angleRads = RedNumberRange::RescaleNumber(angle, FullCircleDegrees, FullCircleRadians);
+    // if (angleRads != half_pi) return kResultFail;
 
-	return kResultSuccess;
+    return kResultSuccess;
 }
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -638,49 +716,6 @@ RedResult RedTestCore::TestSmartPtr(void)
     }
 
     if (x.RefCount() != 1) return kResultFail;
-
-    return kResultSuccess;
-}
-
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-RedResult RedTestCore::TestDate(void)
-{
-    RedDate d(2021,10,10);
-
-    unsigned x = d.EightDigitDate();
-    if (x != 20211010) return kResultFail;
-
-    unsigned x2 = d.SixDigitDate();
-    if (x2 != 211010) return kResultFail;
-
-    unsigned x3 = d.TwoDigitYear();
-    if (x3 != 21) return kResultFail;
-
-    RedDataString xstr = d.DateString();
-    if (xstr != "2021/10/10") return kResultFail;
-
-    RedDataString xstr2 = d.SixDigitDateString();
-    if (xstr2 != "211010") return kResultFail;
-
-    RedDataString xstr3 = d.EightDigitDateString();
-    if (xstr3 != "20211010") return kResultFail;
-
-    RedDate dateToday1 = RedDate::Today();
-    RedDate dateToday2 = RedDate::Today();
-    if (dateToday1 != dateToday2) return kResultFail;
-
-    return kResultSuccess;
-}
-
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-RedResult RedTestCore::TestTime(void)
-{
-    RedTime t(12, 0, 0.0);
-
-    RedDataString xstr = t.TimeString();
-    if (xstr != "12:00:00.00") return kResultFail;
 
     return kResultSuccess;
 }

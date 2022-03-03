@@ -84,12 +84,19 @@ RedType* RedDataList::CreateAddReturn(const RedDataType& NewAttribType)
 
 RedType* RedDataList::PtrForIndex(const unsigned uIndex) const
 {
-	RedType* retData = NULL;
+    RedType* retData = NULL;
 
-	if (pList->FindElementAtIndex(uIndex, retData))
-		return retData;
-	else
-		return NULL;
+    if (pList->FindElementAtIndex(uIndex, retData))
+        return retData;
+    else
+        return NULL;
+}
+
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+void RedDataList::DelAtIndex(const unsigned uIndex)
+{ 
+    pList->Del(uIndex);
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

@@ -118,6 +118,9 @@ RedResult RedTestTml::TestIterators(void)
         Red::Core::RedTinyMLNode::TmlNodeListItType yIt = y->NodeIterator();
 
         int count = 0;
+
+        int count2 = y->NodeElementCount();
+
         yIt.First();
         while (!yIt.IsDone())
         {
@@ -169,6 +172,8 @@ RedResult RedTestTml::TestIterators(void)
                 count++;
             yIt.Next();
         }
+
+        int count2 = y->NodeElementCount();
 
         if (count != 5)
             return kResultFail;
