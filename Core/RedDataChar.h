@@ -18,7 +18,6 @@
 
 #pragma once
 
-#include "RedSmartPtr.h"
 #include "RedType.h"
 #include "RedDataType.h"
 
@@ -88,10 +87,6 @@ private:
 
 bool operator==(const RedDataChar& lhs, const RedDataChar& rhs);
 bool operator!=(const RedDataChar& lhs, const RedDataChar& rhs);
-
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-typedef RedSmartPtr<RedDataChar> RedDataCharSmartPtr;
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 

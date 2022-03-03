@@ -56,8 +56,6 @@ void RedTestCore::RunUnitTest(RedLog& log)
     if (RedTestCore::TestOutputBuffer().IsFail()) { log.AddErrorEvent("Core Unit Test: TestOutputBuffer Failed"); return; }
     if (RedTestCore::TestResult().IsFail())       { log.AddErrorEvent("Core Unit Test: TestResult Failed");       return; }
 
-    if (RedTestCore::TestSmartPtr().IsFail())     { log.AddErrorEvent("Core Unit Test: TestSmartPtr Failed");     return; }
-
     log.AddText("Core Unit Test: Passed");
 }
 
@@ -692,30 +690,6 @@ RedResult RedTestCore::TestEventLog(void)
     log.AddEvent(e);
     if (log.NumEvents() != 3) return kResultFail;
     if (!log.ContainsError()) return kResultFail;
-
-    return kResultSuccess;
-}
-
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-RedResult RedTestCore::TestSmartPtr(void)
-{
-    RedDataNumberSmartPtr x(new RedDataNumber(1.23));
-    if (x.RefCount() != 1) return kResultFail;
-    {
-        RedDataNumberSmartPtr y;
-        if (y.RefCount() != 1) return kResultFail;
-
-        y = x;
-        if (x.RefCount() != 2) return kResultFail;
-        if (y.RefCount() != 2) return kResultFail;
-
-        y->Set(1.123);
-        if (!y->IsEqualTo(RedDataNumber(1.123)))
-            return kResultFail;
-    }
-
-    if (x.RefCount() != 1) return kResultFail;
 
     return kResultSuccess;
 }

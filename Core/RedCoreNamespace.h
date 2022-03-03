@@ -39,7 +39,6 @@
 #include "RedDataVariant.h"
 
 // Wrappers
-#include "RedSmartPtr.h"
 #include "RedNumberRange.h"
 
 // Collections

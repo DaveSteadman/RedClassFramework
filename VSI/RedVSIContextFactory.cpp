@@ -20,6 +20,7 @@
 //
 #include "RedVSILibTokenMap.h"
 #include "RedVSITokenFactory.h"
+#include "RedVSILibRoutineInterface.h"
 #include "RedVSICmdFactory.h"
 
 namespace Red {

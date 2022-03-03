@@ -19,7 +19,6 @@
 #pragma once
 
 #include "RedType.h"
-#include "RedSmartPtr.h"
 #include "RedDataString.h"
 #include "RedDataChar.h"
 
@@ -112,10 +111,6 @@ bool operator  >(const RedDataNumber& lhs, const RedDataNumber& rhs);
 bool operator  <(const RedDataNumber& lhs, const RedDataNumber& rhs);
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-typedef RedSmartPtr<RedDataNumber> RedDataNumberSmartPtr;
-
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 static const RedDataNumber kNumberOne                 = RedDataNumber(1);
 static const RedDataNumber kNumberFloatCompTollerance = RedDataNumber(kDefaultFloatCompareTollerance);

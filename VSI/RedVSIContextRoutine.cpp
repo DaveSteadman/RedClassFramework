@@ -21,6 +21,7 @@
 #include "RedVSILib.h"
 #include "RedVSIParseStackTraverser.h"
 #include "RedVSICollections.h"
+#include "RedVSILibRoutineInterface.h"
 
 #include "RedCoreNamespace.h"
 using namespace Red::Core;

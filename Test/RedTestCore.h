@@ -46,7 +46,6 @@ private:
     static RedResult TestNumberRange(void);
     static RedResult TestLinkedList(void);
     static RedResult TestEventLog(void);
-    static RedResult TestSmartPtr(void);
     static RedResult TestResult(void);
 
     // Time

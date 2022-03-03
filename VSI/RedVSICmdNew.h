@@ -48,7 +48,7 @@ public:
     // Command Setup
     void SetType(RedVSILangElement cNewType)                 { if (!cLoc.IsType())     throw; cType=cNewType; };
     void SetLoc(RedVSILangElement cNewLoc)                   { if (!cLoc.IsLocation()) throw; cLoc=cNewLoc; };
-    void SetName(const RedDataString& cNewName)                  { cName=cNewName; };
+    void SetName(const RedDataString& cNewName)              { cName=cNewName; };
     void SetInitExpr(RedVSIParseTreeInterface* pNewInitExpr) { pDataInitExpr=pNewInitExpr; };
 
     // Wholesale access/assign operations
@@ -59,7 +59,7 @@ private:
     
     RedVSILangElement         cType;
     RedVSILangElement         cLoc;
-    RedDataString                 cName;
+    RedDataString             cName;
     RedVSIParseTreeInterface* pRecordIndexExpr;
     RedVSIParseTreeInterface* pDataInitExpr;
 

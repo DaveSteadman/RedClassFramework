@@ -46,7 +46,6 @@ public:
     static RedTinyMLElement*  CreateTinyML(RedBufferInput& inputBuf);
     static RedTinyMLElement*  CreateTinyML(RedDataRecord& inputRec);
 
-
     static RedResult          CreateFileFromTinyML(const RedTinyMLElement* tmlElement, const RedDataString& filepath, const TESerialiseType writeStyle);
 
     static void               SerialiseCore(RedBufferOutput& outputBuf, const RedTinyMLElement* topTmlNode, const TESerialiseType eMode);

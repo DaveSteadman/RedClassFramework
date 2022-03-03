@@ -19,7 +19,7 @@
 #pragma once
 
 #include "RedVSIParseTreeInterface.h"
-#include "RedVSILibRoutineInterface.h"
+//#include "RedVSILibRoutineInterface.h"
 //#include "RedVSIObject.h"
 #include "RedVSIErrorCodes.h"
 #include "RedVSILangElement.h"
@@ -50,9 +50,9 @@ private:
 
     // The static representation of the function-call parse-tree node is that it has a name and links to
     // parameters that are sub parse-tree nodes. On execution, the param list will become a list of variants.
-    RedDataString          cObjectName;
-    RedDataString          cClassName;
-    RedDataString          cFuncName;
+    RedDataString      cObjectName;
+    RedDataString      cClassName;
+    RedDataString      cFuncName;
     RedVSIParseList*   pParamList;
 };
 

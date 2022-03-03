@@ -42,7 +42,7 @@ public:
     void Init(void);
     bool IsValid(void) const;
     
-    RedDataString                   Name(void)              { return cName; };
+    RedDataString               Name(void)              { return cName; };
     unsigned                    NumParams(void)         { return cParamList.NumItems(); };
     RedVSIStringLangElementMap* Params(void)            { return &cParamList; };
     RedVSICmdInterface*         FirstCommand(void)      { return pCode; };
@@ -50,7 +50,7 @@ public:
     void GetDetails(RedDataString& cOutName, RedVSIStringLangElementMap& cOutParamList, RedVSICmdInterface*& pOutCode);
 
 protected:
-    RedDataString                   cName;
+    RedDataString               cName;
     RedVSIStringLangElementMap  cParamList;
     RedVSICmdInterface*         pCode;
 };

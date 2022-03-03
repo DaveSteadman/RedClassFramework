@@ -108,8 +108,6 @@ private:
     RedType* pData;
 };
 
-typedef RedSmartPtr<RedDataVariant> RedDataVariantSmartPtr;
-
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 bool operator==(const RedDataVariant& lhs, const RedDataVariant& rhs);

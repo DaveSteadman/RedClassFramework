@@ -30,32 +30,32 @@ class RedVSITokenType
 public:
     RedVSITokenType(void)                      { Init(); };
     
-    void Init(void)                            { eState = eDefaultInvalid; };
-    void SetNumber(void)                       { eState = eNumber; };
-    void SetName(void)                         { eState = eName; };
-    void SetStringLiteral(void)                { eState = eStringLiteral; };
-    void SetNonPrintable(void)                 { eState = eNonPrintable; };
-    void SetWhitespace(void)                   { eState = eWhitespace; };
-    void SetPredefined(void)                   { eState = ePredefined; };
+    void Init(void)                            { eState = TETokenType::eDefaultInvalid; };
+    void SetNumber(void)                       { eState = TETokenType::eNumber; };
+    void SetName(void)                         { eState = TETokenType::eName; };
+    void SetStringLiteral(void)                { eState = TETokenType::eStringLiteral; };
+    void SetNonPrintable(void)                 { eState = TETokenType::eNonPrintable; };
+    void SetWhitespace(void)                   { eState = TETokenType::eWhitespace; };
+    void SetPredefined(void)                   { eState = TETokenType::ePredefined; };
     
-    bool IsValid(void) const                   { return (eState != eDefaultInvalid); };
-    bool IsNumber(void) const                  { return (eState == eNumber); };
-    bool IsName(void) const                    { return (eState == eName); };
-    bool IsStringLiteral(void) const           { return (eState == eStringLiteral); };
-    bool IsNonPrintable(void) const            { return (eState == eNonPrintable); };
-    bool IsWhitespace(void) const              { return (eState == eWhitespace); };
-    bool IsPredefined(void) const              { return (eState == ePredefined); };
+    bool IsValid(void) const                   { return (eState != TETokenType::eDefaultInvalid); };
+    bool IsNumber(void) const                  { return (eState == TETokenType::eNumber); };
+    bool IsName(void) const                    { return (eState == TETokenType::eName); };
+    bool IsStringLiteral(void) const           { return (eState == TETokenType::eStringLiteral); };
+    bool IsNonPrintable(void) const            { return (eState == TETokenType::eNonPrintable); };
+    bool IsWhitespace(void) const              { return (eState == TETokenType::eWhitespace); };
+    bool IsPredefined(void) const              { return (eState == TETokenType::ePredefined); };
     
-    static RedVSITokenType Number(void)        { return RedVSITokenType(eNumber); };
-    static RedVSITokenType Name(void)          { return RedVSITokenType(eName); };
-    static RedVSITokenType StringLiteral(void) { return RedVSITokenType(eStringLiteral); };
-    static RedVSITokenType NonPrintable(void)  { return RedVSITokenType(eNonPrintable); };
-    static RedVSITokenType Whitespace(void)    { return RedVSITokenType(eWhitespace); };
-    static RedVSITokenType Predefined(void)    { return RedVSITokenType(ePredefined); };
+    static RedVSITokenType Number(void)        { return RedVSITokenType(TETokenType::eNumber); };
+    static RedVSITokenType Name(void)          { return RedVSITokenType(TETokenType::eName); };
+    static RedVSITokenType StringLiteral(void) { return RedVSITokenType(TETokenType::eStringLiteral); };
+    static RedVSITokenType NonPrintable(void)  { return RedVSITokenType(TETokenType::eNonPrintable); };
+    static RedVSITokenType Whitespace(void)    { return RedVSITokenType(TETokenType::eWhitespace); };
+    static RedVSITokenType Predefined(void)    { return RedVSITokenType(TETokenType::ePredefined); };
 
 protected:
 
-    enum TETokenType
+    enum class TETokenType
     {
         eDefaultInvalid, 
         eNumber, 
@@ -69,7 +69,7 @@ protected:
     RedVSITokenType(TETokenType eNewState) { eState = eNewState; };
 
 private:
-    TETokenType eState;
+    TETokenType eState = TETokenType::eDefaultInvalid;
 };
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

@@ -22,7 +22,6 @@
 
 #include "RedVSIContextRoutine.h"
 #include "RedVSIContextThread.h"
-#include "RedVSILibRoutineInterface.h"
 #include "RedVSILib.h"
 
 namespace Red {

@@ -19,7 +19,6 @@
 #pragma once
 
 #include "RedType.h"
-#include "RedSmartPtr.h"
 #include "RedDataType.h"
 
 namespace Red {
@@ -86,10 +85,6 @@ private:
 
 bool operator==(const RedDataBoolean& lhs, const RedDataBoolean& rhs);
 bool operator!=(const RedDataBoolean& lhs, const RedDataBoolean& rhs);
-
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-typedef RedSmartPtr<RedDataBoolean> RedDataBooleanSmartPtr;
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
