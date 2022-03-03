@@ -54,7 +54,7 @@ public:
 
 private:
 
-    RedVSICmdInterface* pNextCmd;
+    RedVSICmdInterface* pNextCmd = NULL;
 };
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

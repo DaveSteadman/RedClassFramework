@@ -62,9 +62,9 @@ public:
 
 public:
 
-    unsigned hours;
-    unsigned minutes;
-    double   seconds;
+    unsigned hours = 0;
+    unsigned minutes = 0;
+    double   seconds = 0.0;
 };
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

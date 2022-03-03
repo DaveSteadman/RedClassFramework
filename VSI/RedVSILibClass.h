@@ -39,26 +39,26 @@ public:
     typedef RedLinkedListIterator<RedVSILibRoutine*>  RoutineIteratorType;
 
     // constructor
-    RedVSILibClass(void)                           { cClassName = ""; cParentClassName=""; };
+    RedVSILibClass(void)                               { cClassName = ""; cParentClassName=""; };
     RedVSILibClass(const RedDataString& cNewClassName) { cClassName=cNewClassName; cParentClassName=""; };
 
     void                SetClassName(const RedDataString& cNewClassName)             { cClassName = cNewClassName; };
-    RedDataString           ClassName(void) const                                    { return cClassName; };
+    RedDataString       ClassName(void) const                                        { return cClassName; };
 
     void                SetParentClassName(const RedDataString& cNewParentClassName) { cParentClassName=cNewParentClassName; };
-    RedDataString           ParentClassName(void) const                              { return cParentClassName; };
-    bool                HasParentClass(void) const                               { return (!cParentClassName.IsEmpty()); };
+    RedDataString       ParentClassName(void) const                                  { return cParentClassName; };
+    bool                HasParentClass(void) const                                   { return (!cParentClassName.IsEmpty()); };
 
     void                AddRoutine(RedVSILibRoutine* pNewRoutine);
     RedVSILibRoutine*   FindRoutine(const RedVSIRoutineCallInterface& cSig);
     RedVSILibRoutine*   FindRoutineByName(const RedDataString& cNewRoutineName);
 
     RoutineIteratorType GetRoutineIterator(void) { RoutineIteratorType cIt(&cRoutineList); return cIt; };
-    
+
 private:
 
-    RedDataString        cClassName;
-    RedDataString        cParentClassName;
+    RedDataString    cClassName;
+    RedDataString    cParentClassName;
     RoutineListType  cRoutineList;
 };
 

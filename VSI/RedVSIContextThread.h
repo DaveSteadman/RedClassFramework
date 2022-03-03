@@ -42,13 +42,14 @@ public:
     ~RedVSIContextThread(void) { };
     
     // Code Library
-    void         SetCodeLib(RedVSILib* newLib)                               { pCodeLib = newLib; };
-    RedVSILib*        CodeLib(void)                               { return pCodeLib; };
+    void         SetCodeLib(RedVSILib* newLib) { pCodeLib = newLib; };
+    RedVSILib*   CodeLib(void)                 { return pCodeLib; };
 
     // Heap Data
     RedType*                   CreateHeapDataItem(const RedVSILangElement& cType, const RedDataString& cName);
     bool                       FindHeapDataItem(const RedDataString& cName, RedType*& pData);
-    RedDataRecord*                 Heap(void) { return &cHeap; };
+    RedType* HeapDataItem(const RedDataString& cName) { return cHeap.PtrForName(cName); };
+    RedDataRecord*             Heap(void) { return &cHeap; };
 
     // Routine Stack
     RedVSIContextRoutine*      TopRoutineOnStack(void);

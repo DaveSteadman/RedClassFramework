@@ -27,7 +27,7 @@ namespace Test {
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-class RedTestTml
+class RedTestTinyML
 {
 public:
     static void RunUnitTest(RedLog& log);

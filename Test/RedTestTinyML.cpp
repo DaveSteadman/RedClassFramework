@@ -18,7 +18,7 @@
 
 #include "RedCoreNamespace.h"
 
-#include "RedTestTml.h"
+#include "RedTestTinyML.h"
 
 using namespace Red::Core;
 
@@ -27,20 +27,20 @@ namespace Test {
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-void RedTestTml::RunUnitTest(RedLog& log)
+void RedTestTinyML::RunUnitTest(RedLog& log)
 {
-    if (RedTestTml::TestOne().IsFail())             { log.AddErrorEvent("TinyML Unit Test: TestOne Failed");              return; }
-    if (RedTestTml::TestTwo().IsFail())             { log.AddErrorEvent("TinyML Unit Test: TestTwo Failed");              return; }
-    if (RedTestTml::TestIterators().IsFail())       { log.AddErrorEvent("TinyML Unit Test: TestIterators Failed");        return; }
-    if (RedTestTml::TestTreeEdit().IsFail())        { log.AddErrorEvent("TinyML Unit Test: TestTreeEdit Failed");         return; }
-    if (RedTestTml::TestQuoteCharacters().IsFail()) { log.AddErrorEvent("TinyML Unit Test: TestQuoteCharacters Failed");  return; }
+    if (RedTestTinyML::TestOne().IsFail())             { log.AddErrorEvent("TinyML Unit Test: TestOne Failed");              return; }
+    if (RedTestTinyML::TestTwo().IsFail())             { log.AddErrorEvent("TinyML Unit Test: TestTwo Failed");              return; }
+    if (RedTestTinyML::TestIterators().IsFail())       { log.AddErrorEvent("TinyML Unit Test: TestIterators Failed");        return; }
+    if (RedTestTinyML::TestTreeEdit().IsFail())        { log.AddErrorEvent("TinyML Unit Test: TestTreeEdit Failed");         return; }
+    if (RedTestTinyML::TestQuoteCharacters().IsFail()) { log.AddErrorEvent("TinyML Unit Test: TestQuoteCharacters Failed");  return; }
 
     log.AddText("TinyML Unit Test: Passed");
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 // Simple Tml Tests
-RedResult RedTestTml::TestOne(void)
+RedResult RedTestTinyML::TestOne(void)
 {
     {
         RedDataString TestInTml = "{{name} content}";
@@ -65,7 +65,7 @@ RedResult RedTestTml::TestOne(void)
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-RedResult RedTestTml::TestTwo(void)
+RedResult RedTestTinyML::TestTwo(void)
 {
 //    {
 //        RedDataString pathFail  = "/tmp/TestNonExistentFile.tml";
@@ -103,7 +103,7 @@ RedResult RedTestTml::TestTwo(void)
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-RedResult RedTestTml::TestIterators(void)
+RedResult RedTestTinyML::TestIterators(void)
 {
     {
         // Create small Tml Structure
@@ -184,7 +184,7 @@ RedResult RedTestTml::TestIterators(void)
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-RedResult RedTestTml::TestTreeEdit(void)
+RedResult RedTestTinyML::TestTreeEdit(void)
 {
     {
         // Create small Tml Structure
@@ -211,7 +211,7 @@ RedResult RedTestTml::TestTreeEdit(void)
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-RedResult RedTestTml::TestQuoteCharacters(void)
+RedResult RedTestTinyML::TestQuoteCharacters(void)
 {
     {
         RedDataString TestInTml = "{{name} \"content\"}";

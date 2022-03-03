@@ -41,8 +41,8 @@ public:
     void              InputTmlClass  (RedTinyMLElement* pTopTmlNode,   RedLog& cAnalysis);
     RedVSILibRoutine* InputTmlRoutine(RedTinyMLNode& cRoutineNode, RedLog& cAnalysis);
 
-    RedTinyMLElement*    OutputTmlClass  (const RedDataString& classname);
-    RedTinyMLElement*    OutputTmlRoutine(const RedDataString& classname, const RedDataString& routinename);
+    RedTinyMLElement* OutputTmlClass  (const RedDataString& classname);
+    RedTinyMLElement* OutputTmlRoutine(const RedDataString& classname, const RedDataString& routinename);
 
 // attributes
 

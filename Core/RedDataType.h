@@ -29,40 +29,40 @@ class RedDataType
 public:
 
     RedDataType(void)        { Init(); };
-    void Init(void)          { eState=eDataTypeInvalid; };
+    void Init(void)          { eState = TEDataType::eDataTypeInvalid; };
 
-    void SetInvalid(void)    { eState=eDataTypeInvalid; };
-    void SetBool(void)       { eState=eDataTypeBool; };
-    void SetChar(void)       { eState=eDataTypeChar; };
-    void SetList(void)       { eState=eDataTypeList; };
-    void SetNum(void)        { eState=eDataTypeNum; };
-    void SetRecord(void)     { eState=eDataTypeRecord; };
-    void SetStr(void)        { eState=eDataTypeStr; };
-    void SetVariant(void)    { eState=eDataTypeVariant; };
+    void SetInvalid(void)    { eState = TEDataType::eDataTypeInvalid; };
+    void SetBool(void)       { eState = TEDataType::eDataTypeBool; };
+    void SetChar(void)       { eState = TEDataType::eDataTypeChar; };
+    void SetList(void)       { eState = TEDataType::eDataTypeList; };
+    void SetNum(void)        { eState = TEDataType::eDataTypeNum; };
+    void SetRecord(void)     { eState = TEDataType::eDataTypeRecord; };
+    void SetStr(void)        { eState = TEDataType::eDataTypeStr; };
+    void SetVariant(void)    { eState = TEDataType::eDataTypeVariant; };
+     
+    bool IsValid(void)      const { return (eState != TEDataType::eDataTypeInvalid); };
+    bool IsBool(void)       const { return (eState == TEDataType::eDataTypeBool); };
+    bool IsChar(void)       const { return (eState == TEDataType::eDataTypeChar); };
+    bool IsList(void)       const { return (eState == TEDataType::eDataTypeList); };
+    bool IsNum(void)        const { return (eState == TEDataType::eDataTypeNum); };
+    bool IsRecord(void)     const { return (eState == TEDataType::eDataTypeRecord); };
+    bool IsStr(void)        const { return (eState == TEDataType::eDataTypeStr); };
+    bool IsVariant(void)    const { return (eState == TEDataType::eDataTypeVariant); };
 
-    bool IsValid(void)      const { return (eState!=eDataTypeInvalid); };
-    bool IsBool(void)       const { return (eState==eDataTypeBool); };
-    bool IsChar(void)       const { return (eState==eDataTypeChar); };
-    bool IsList(void)       const { return (eState==eDataTypeList); };
-    bool IsNum(void)        const { return (eState==eDataTypeNum); };
-    bool IsRecord(void)     const { return (eState==eDataTypeRecord); };
-    bool IsStr(void)        const { return (eState==eDataTypeStr); };
-    bool IsVariant(void)    const { return (eState==eDataTypeVariant); };
-
-    static RedDataType Invalid(void)    { return RedDataType(eDataTypeInvalid); };
-    static RedDataType Bool(void)       { return RedDataType(eDataTypeBool); };
-    static RedDataType Char(void)       { return RedDataType(eDataTypeChar); };
-    static RedDataType List(void)       { return RedDataType(eDataTypeList); };
-    static RedDataType Num(void)        { return RedDataType(eDataTypeNum); };
-    static RedDataType Record(void)     { return RedDataType(eDataTypeRecord); };
-    static RedDataType Str(void)        { return RedDataType(eDataTypeStr); };
-    static RedDataType Variant(void)    { return RedDataType(eDataTypeVariant); };
+    static RedDataType Invalid(void)    { return RedDataType(TEDataType::eDataTypeInvalid); };
+    static RedDataType Bool(void)       { return RedDataType(TEDataType::eDataTypeBool); };
+    static RedDataType Char(void)       { return RedDataType(TEDataType::eDataTypeChar); };
+    static RedDataType List(void)       { return RedDataType(TEDataType::eDataTypeList); };
+    static RedDataType Num(void)        { return RedDataType(TEDataType::eDataTypeNum); };
+    static RedDataType Record(void)     { return RedDataType(TEDataType::eDataTypeRecord); };
+    static RedDataType Str(void)        { return RedDataType(TEDataType::eDataTypeStr); };
+    static RedDataType Variant(void)    { return RedDataType(TEDataType::eDataTypeVariant); };
 
     int iState(void) const { return (int)eState; };
 
 protected:
 
-    enum TEDataType
+    enum class TEDataType
     {
         eDataTypeInvalid = 0,
         eDataTypeBool,

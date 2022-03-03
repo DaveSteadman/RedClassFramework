@@ -235,7 +235,7 @@ void RedVSIContextRoutine::SetExprResult(RedVSIParseTreeInterface* pExpr, const 
 RedDataVariant RedVSIContextRoutine::ExprResult(RedVSIParseTreeInterface* pExpr)
 {
     RedDataVariant cResult;
-    if (!cExprResultList.Find(pExpr, cResult))
+    if (!cExprResultList.FindDataById(pExpr, cResult))
     {
         pLog->AddErrorEvent("Failed to find expression result.");
     }

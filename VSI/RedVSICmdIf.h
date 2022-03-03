@@ -49,9 +49,9 @@ public:
 
 private:
 
-    RedVSIParseTreeInterface* pCmdExpr;
-    RedVSICmdInterface*       pPosBranch;
-    RedVSICmdInterface*       pNegBranch;
+    RedVSIParseTreeInterface* pCmdExpr   = NULL;
+    RedVSICmdInterface*       pPosBranch = NULL;
+    RedVSICmdInterface*       pNegBranch = NULL;
 };
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

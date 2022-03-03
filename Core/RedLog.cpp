@@ -28,7 +28,7 @@ namespace Core {
 
 void RedLog::AddEvent(const RedLogEvent& event)
 {
-    if (event.EventType() == eErrorEvent)
+    if (event.EventType() == TEventLogType::eErrorEvent)
         containsError = true;
 
     RedLogEvent* storedEvent = new RedLogEvent(event);
@@ -49,7 +49,7 @@ void RedLog::AddText(const RedDataString& NewText)
 
 void RedLog::AddErrorEvent(const RedDataString& NewText)
 {
-    RedLogEvent* storedEvent = new RedLogEvent(eErrorEvent, NewText);
+    RedLogEvent* storedEvent = new RedLogEvent(TEventLogType::eErrorEvent, NewText);
 
     EventList.AddLast(storedEvent);
     containsError = true;
@@ -67,9 +67,9 @@ RedDataString RedLog::AllLoggedText(void)
     {
         RedLogEvent* pCurrItem = logIt.CurrentItem();
 
-        if      (pCurrItem->EventType() == eErrorEvent)   outStr.Append("Error:   ");
-        else if (pCurrItem->EventType() == eWarningEvent) outStr.Append("Warning: ");
-        else if (pCurrItem->EventType() == eInfoEvent)    outStr.Append("Info:    ");
+        if      (pCurrItem->EventType() == TEventLogType::eErrorEvent)   outStr.Append("Error:   ");
+        else if (pCurrItem->EventType() == TEventLogType::eWarningEvent) outStr.Append("Warning: ");
+        else if (pCurrItem->EventType() == TEventLogType::eInfoEvent)    outStr.Append("Info:    ");
 
         outStr.Append(pCurrItem->Text());
         outStr.Append("\n");

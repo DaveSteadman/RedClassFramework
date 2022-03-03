@@ -58,7 +58,7 @@ public:
     void        AddByValue(const RedDataString& cNewAttribName, const bool bVal)    { pAttribList->Add(cNewAttribName, new RedDataBoolean(bVal)); };
 
     // Locate
-    bool        FindFieldPtr(const RedDataString& cAttribName, RedType*& pData) { return pAttribList->Find(cAttribName, pData); };
+    bool        FindFieldPtr(const RedDataString& cAttribName, RedType*& pData) { return pAttribList->FindDataById(cAttribName, pData); };
 
     RedDataType TypeForName(const RedDataString& cAttribName);
     RedType*    PtrForName (const RedDataString& cAttribName);

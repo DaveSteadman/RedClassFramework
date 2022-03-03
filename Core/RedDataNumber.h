@@ -47,15 +47,15 @@ public:
     ~RedDataNumber(void) { };
 
     // Inherited: RedType
-    void          Init(void)        { eNumType=eInt; iIntVal=0; dblFloatVal=0.0; };
+    void          Init(void)        { eNumType= TENumberType::eInt; iIntVal=0; dblFloatVal=0.0; };
     RedDataType   Type(void) const  { return kDataTypeNum; };
     RedType*      Clone(void) const { RedDataNumber* newN = new RedDataNumber(*this); return (RedType*)newN; };
 
     // Class operations
     bool          IsZero(void)     const;
     bool          IsPositive(void) const;
-    bool          IsInteger(void)  const { return (eNumType == eInt);   };
-    bool          IsReal(void)     const { return (eNumType == eFloat); };
+    bool          IsInteger(void)  const { return (eNumType == TENumberType::eInt);   };
+    bool          IsReal(void)     const { return (eNumType == TENumberType::eFloat); };
     bool          IsEqualTo(const RedDataNumber& CheckVal) const;
     bool          IsEqualToWithinTollerance(const RedDataNumber& CheckVal, const RedDataNumber& tollerance) const;
 
@@ -67,8 +67,8 @@ public:
     double        DoubleValue(void) const;
 
     void          Set(const RedDataNumber& cNewVal) { eNumType=cNewVal.eNumType; iIntVal=cNewVal.iIntVal; dblFloatVal=cNewVal.dblFloatVal; };
-    void          Set(const double dblNewVal)   { eNumType=eFloat;           iIntVal=0;               dblFloatVal=dblNewVal; };
-    void          Set(const int iNewVal)        { eNumType=eInt;             iIntVal=iNewVal;         dblFloatVal=0.0; };
+    void          Set(const double dblNewVal)   { eNumType= TENumberType::eFloat;           iIntVal=0;               dblFloatVal=dblNewVal; };
+    void          Set(const int iNewVal)        { eNumType= TENumberType::eInt;             iIntVal=iNewVal;         dblFloatVal=0.0; };
     void          SetZero(void)                 { Init(); };
     void          SetDecimalString(const RedDataString& cNewDecimalVal);
 
@@ -95,7 +95,7 @@ public:
 
 private:
 
-    typedef enum {eFloat=1, eInt=2} TENumberType;
+    enum class TENumberType {eFloat=1, eInt=2};
 
     TENumberType    eNumType;
     int             iIntVal;

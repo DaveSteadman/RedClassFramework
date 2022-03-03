@@ -26,11 +26,11 @@ namespace Core {
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-typedef enum TEventLogType {
+enum class TEventLogType {
     eErrorEvent,
     eWarningEvent,
     eInfoEvent
-} TEventLogType;
+};
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -39,15 +39,15 @@ class RedLogEvent
 public:
 
     // Constructors
-    RedLogEvent(const TEventLogType NewLogType)                           : LogType(NewLogType) {};
+    RedLogEvent(const TEventLogType NewLogType)                               : LogType(NewLogType) {};
     RedLogEvent(const TEventLogType NewLogType, const RedDataString& NewText) : LogType(NewLogType), text(NewText) {};
-    RedLogEvent(const RedDataString& NewText)                                 : LogType(eInfoEvent), text(NewText) {};
-    RedLogEvent(const RedLogEvent& CurrEvent)                             : LogType(CurrEvent.LogType), text(CurrEvent.text) {};
+    RedLogEvent(const RedDataString& NewText)                                 : LogType(TEventLogType::eInfoEvent), text(NewText) {};
+    RedLogEvent(const RedLogEvent& CurrEvent)                                 : LogType(CurrEvent.LogType), text(CurrEvent.text) {};
 
     // Basic Accessors
-    void                Init(void)                           { LogType = eInfoEvent; text.Init(); };
-    TEventLogType       EventType(void) const                { return LogType; };
-    RedDataString           Text(void) const                     { return text; };
+    void                Init(void)                               { LogType = TEventLogType::eInfoEvent; text.Init(); };
+    TEventLogType       EventType(void) const                    { return LogType; };
+    RedDataString       Text(void) const                         { return text; };
     void                AppendText(const RedDataString& newText) { text.Append(newText); };
     void                AppendText(const RedDataNumber& newNum)  { text.Append(newNum.DecimalString()); };
 
@@ -56,8 +56,8 @@ public:
     void operator =(const RedLogEvent& newVal)      { Set(newVal.EventType(), newVal.Text()); };
 
 private:
-    TEventLogType LogType;
-    RedDataString     text;
+    TEventLogType LogType = TEventLogType::eInfoEvent;
+    RedDataString text    = "";
 };
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

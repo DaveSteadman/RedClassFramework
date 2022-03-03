@@ -32,7 +32,7 @@ namespace Core {
 // Query operation, determining if the int number is zero, or the float number is within a tollerance of zero.
 bool RedDataNumber::IsZero(void) const
 {
-    if (eNumType == eInt)
+    if (eNumType == TENumberType::eInt)
         return (iIntVal == 0);
     else
         return ( fabs(dblFloatVal) < kDefaultFloatCompareTollerance);
@@ -42,7 +42,7 @@ bool RedDataNumber::IsZero(void) const
 
 bool RedDataNumber::IsPositive(void) const
 {
-    if (eNumType == eInt)
+    if (eNumType == TENumberType::eInt)
         return (iIntVal > 0);
     else
         return (dblFloatVal > 0.0);
@@ -113,7 +113,7 @@ RedDataString RedDataNumber::DecimalString(void) const
         pChrBuf[i] = '\0';
 
     // Assign the string depending on the type of the number
-    if (eNumType == eInt)
+    if (eNumType == TENumberType::eInt)
         snprintf(pChrBuf, iStrLen, "%d", iIntVal);
     else
         snprintf(pChrBuf, iStrLen, "%f", dblFloatVal);
@@ -135,7 +135,7 @@ RedDataString RedDataNumber::DecimalStringWithDP(const unsigned decimalplaces) c
     RedDataString  cRetStr;
 
     double     dblVal = 0.0;
-    if (eNumType == eInt)
+    if (eNumType == TENumberType::eInt)
         dblVal = (double)iIntVal;
     else
         dblVal = dblFloatVal;
@@ -161,7 +161,7 @@ RedDataString RedDataNumber::DecimalStringWithMinDigitsAndDP(const unsigned minc
     RedDataString  cRetStr;
 
     double     dblVal = 0.0;
-    if (eNumType == eInt)
+    if (eNumType == TENumberType::eInt)
         dblVal = (double)iIntVal;
     else
         dblVal = dblFloatVal;
@@ -181,7 +181,7 @@ RedDataChar RedDataNumber::CharValue(void) const
     // define return value, self-initialised to \0
     RedDataChar cRetChar;
 
-    if (eNumType == eInt)
+    if (eNumType == TENumberType::eInt)
     {
         if ((iIntVal > 0) && (iIntVal < 256))
             cRetChar.Set( (char)iIntVal );
@@ -196,7 +196,7 @@ int RedDataNumber::IntegerValue(void) const
 {
     int iRetVal = 0;
 
-    if (eNumType == eInt)
+    if (eNumType == TENumberType::eInt)
         iRetVal = iIntVal;
     else
         iRetVal = (int)dblFloatVal;
@@ -210,7 +210,7 @@ double RedDataNumber::DoubleValue(void) const
 {
     double dblRetVal = 0.0;
 
-    if (eNumType == eInt)
+    if (eNumType == TENumberType::eInt)
         dblRetVal = (double)iIntVal;
     else
         dblRetVal = dblFloatVal;
@@ -222,7 +222,7 @@ double RedDataNumber::DoubleValue(void) const
 
 void RedDataNumber::MakePositive(void)
 {
-    if (eNumType == eInt)
+    if (eNumType == TENumberType::eInt)
         iIntVal = abs(iIntVal);
     else
         dblFloatVal = fabs(dblFloatVal);
@@ -232,7 +232,7 @@ void RedDataNumber::MakePositive(void)
 
 void RedDataNumber::MakeNegative(void)
 {
-    if (eNumType == eInt)
+    if (eNumType == TENumberType::eInt)
     {
         if (iIntVal > 0)
             iIntVal *= -1;
@@ -250,7 +250,7 @@ RedDataNumber RedDataNumber::IntegerPart(void) const
 {
     RedDataNumber r;
  
-    if (eNumType == eInt)
+    if (eNumType == TENumberType::eInt)
     {
         r = iIntVal;
     }
@@ -272,7 +272,7 @@ RedDataNumber RedDataNumber::FractionalPart(void) const
 {
     RedDataNumber r;
 
-    if (eNumType == eInt)
+    if (eNumType == TENumberType::eInt)
     {
         r = 0;
     }
@@ -337,13 +337,13 @@ void RedDataNumber::SetDecimalString(const RedDataString& cNewDecimalVal)
 
     if (cNewDecimalVal.IsCharInString('.'))
     {
-        eNumType    = eFloat;
+        eNumType    = TENumberType::eFloat;
         dblFloatVal = atof(txtptr);
         iIntVal     = 0;
     }
     else
     {
-        eNumType    = eInt;
+        eNumType    = TENumberType::eInt;
         iIntVal     = atoi(txtptr);
         dblFloatVal = 0.0;
     }
@@ -357,23 +357,23 @@ RedDataNumber RedDataNumber::operator +(const RedDataNumber& n) const
 {
     RedDataNumber cReturnVal;
 
-    if ((eNumType == eFloat) || (n.eNumType == eFloat))
+    if ((eNumType == TENumberType::eFloat) || (n.eNumType == TENumberType::eFloat))
     {
-        cReturnVal.eNumType = eFloat;
+        cReturnVal.eNumType = TENumberType::eFloat;
 
-        if (eNumType == eFloat)
+        if (eNumType == TENumberType::eFloat)
             cReturnVal.dblFloatVal = dblFloatVal;
         else
             cReturnVal.dblFloatVal = (double)iIntVal;
 
-        if (n.eNumType == eFloat)
+        if (n.eNumType == TENumberType::eFloat)
             cReturnVal.dblFloatVal += n.dblFloatVal;
         else
             cReturnVal.dblFloatVal += n.iIntVal;
     }
     else
     {
-        cReturnVal.eNumType = eInt;
+        cReturnVal.eNumType = TENumberType::eInt;
         cReturnVal.iIntVal  = iIntVal + n.iIntVal;
     }
 
@@ -386,23 +386,23 @@ RedDataNumber RedDataNumber::operator -(const RedDataNumber& n) const
 {
     RedDataNumber cReturnVal;
 
-    if ((eNumType == eFloat) || (n.eNumType == eFloat))
+    if ((eNumType == TENumberType::eFloat) || (n.eNumType == TENumberType::eFloat))
     {
-        cReturnVal.eNumType = eFloat;
+        cReturnVal.eNumType = TENumberType::eFloat;
 
-        if (eNumType == eFloat)
+        if (eNumType == TENumberType::eFloat)
             cReturnVal.dblFloatVal = dblFloatVal;
         else
             cReturnVal.dblFloatVal = iIntVal;
 
-        if (n.eNumType == eFloat)
+        if (n.eNumType == TENumberType::eFloat)
             cReturnVal.dblFloatVal -= n.dblFloatVal;
         else
             cReturnVal.dblFloatVal -= n.iIntVal;
     }
     else
     {
-        cReturnVal.eNumType = eInt;
+        cReturnVal.eNumType = TENumberType::eInt;
         cReturnVal.iIntVal  = iIntVal - n.iIntVal;
     }
 
@@ -415,23 +415,23 @@ RedDataNumber RedDataNumber::operator *(const RedDataNumber& n) const
 {
     RedDataNumber cReturnVal;
 
-    if ((eNumType == eFloat) || (n.eNumType == eFloat))
+    if ((eNumType == TENumberType::eFloat) || (n.eNumType == TENumberType::eFloat))
     {
-        cReturnVal.eNumType = eFloat;
+        cReturnVal.eNumType = TENumberType::eFloat;
 
-        if (eNumType == eFloat)
+        if (eNumType == TENumberType::eFloat)
             cReturnVal.dblFloatVal = dblFloatVal;
         else
             cReturnVal.dblFloatVal = iIntVal;
 
-        if (n.eNumType == eFloat)
+        if (n.eNumType == TENumberType::eFloat)
             cReturnVal.dblFloatVal *= n.dblFloatVal;
         else
             cReturnVal.dblFloatVal *= n.iIntVal;
     }
     else
     {
-        cReturnVal.eNumType = eInt;
+        cReturnVal.eNumType = TENumberType::eInt;
         cReturnVal.iIntVal  = iIntVal * n.iIntVal;
     }
 
@@ -444,16 +444,16 @@ RedDataNumber RedDataNumber::operator /(const RedDataNumber& n) const
 {
     RedDataNumber cReturnVal;
 
-    if ((eNumType == eFloat) || (n.eNumType == eFloat))
+    if ((eNumType == TENumberType::eFloat) || (n.eNumType == TENumberType::eFloat))
     {
-        cReturnVal.eNumType = eFloat;
+        cReturnVal.eNumType = TENumberType::eFloat;
 
-        if (eNumType == eFloat)
+        if (eNumType == TENumberType::eFloat)
             cReturnVal.dblFloatVal = dblFloatVal;
         else
             cReturnVal.dblFloatVal = iIntVal;
 
-        if (n.eNumType == eFloat)
+        if (n.eNumType == TENumberType::eFloat)
             cReturnVal.dblFloatVal /= n.dblFloatVal;
         else
             cReturnVal.dblFloatVal /= n.iIntVal;
@@ -464,12 +464,12 @@ RedDataNumber RedDataNumber::operator /(const RedDataNumber& n) const
         // else produce a floating point result.
         if ((iIntVal % n.iIntVal) == 0)
         {
-            cReturnVal.eNumType = eInt;
+            cReturnVal.eNumType = TENumberType::eInt;
             cReturnVal.iIntVal  = iIntVal / n.iIntVal;
         }
         else
         {
-            cReturnVal.eNumType = eFloat;
+            cReturnVal.eNumType = TENumberType::eFloat;
             cReturnVal.dblFloatVal  = ((double)iIntVal) / ((double)n.iIntVal);
         }
     }
@@ -513,7 +513,7 @@ void RedDataNumber::operator /=(const RedDataNumber& n)
 
 RedDataNumber& RedDataNumber::operator ++() // Prefix
 {
-    if (eNumType == eInt)
+    if (eNumType == TENumberType::eInt)
         iIntVal++;
     else
         dblFloatVal++;
@@ -525,7 +525,7 @@ RedDataNumber& RedDataNumber::operator ++() // Prefix
 
 RedDataNumber RedDataNumber::operator ++(int) // Postfix
 {
-    if (eNumType == eInt)
+    if (eNumType == TENumberType::eInt)
         iIntVal++;
     else
         dblFloatVal++;

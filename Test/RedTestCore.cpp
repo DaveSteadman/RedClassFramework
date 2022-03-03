@@ -688,7 +688,7 @@ RedResult RedTestCore::TestEventLog(void)
     if (log.NumEvents() != 2) return kResultFail;
     if (log.ContainsError()) return kResultFail;
 
-    RedLogEvent e(eErrorEvent, "ErrorText1");
+    RedLogEvent e(TEventLogType::eErrorEvent, "ErrorText1");
     log.AddEvent(e);
     if (log.NumEvents() != 3) return kResultFail;
     if (!log.ContainsError()) return kResultFail;
@@ -776,7 +776,4 @@ RedResult RedTestCore::TestOutputBuffer(void)
 
 } // Test
 } // Red
-
-
-
 

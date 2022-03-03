@@ -30,33 +30,33 @@ public:
 
     RedResult(void) { Init(); };
 
-    void             Init(void)              { eState = eNoResult; };
-    void             SetSuccess(void)        { eState = eSuccess;  };
-    void             SetNoResult(void)       { eState = eNoResult; };
-    void             SetFail(void)           { eState = eFail;     };
+    void             Init(void)              { eState = TEResult::eNoResult; };
+    void             SetSuccess(void)        { eState = TEResult::eSuccess;  };
+    void             SetNoResult(void)       { eState = TEResult::eNoResult; };
+    void             SetFail(void)           { eState = TEResult::eFail;     };
 
-    bool             IsSuccess(void) const   { return (eState == eSuccess);  };
-    bool             IsNoResult(void) const  { return (eState == eNoResult); };
-    bool             IsFail(void) const      { return (eState == eFail);     };
+    bool             IsSuccess(void) const   { return (eState == TEResult::eSuccess);  };
+    bool             IsNoResult(void) const  { return (eState == TEResult::eNoResult); };
+    bool             IsFail(void) const      { return (eState == TEResult::eFail);     };
 
-    static RedResult Success(void)           { return RedResult(eSuccess);   };
-    static RedResult NoResult(void)          { return RedResult(eNoResult);  };
-    static RedResult Fail(void)              { return RedResult(eFail);      };
+    static RedResult Success(void)           { return RedResult(TEResult::eSuccess);   };
+    static RedResult NoResult(void)          { return RedResult(TEResult::eNoResult);  };
+    static RedResult Fail(void)              { return RedResult(TEResult::eFail);      };
 
-    const int        iState(void) const      { return (int)eState;           };
+    const int        iState(void) const      { return (int)eState; };
 
 protected:
 
-    typedef enum TEResult {
+    enum class TEResult {
         eNoResult = 0,
         eSuccess,
         eFail
-    } TEResult;
+    };
 
     RedResult(TEResult eNewState) { eState = eNewState; };
 
 private:
-    TEResult eState;
+    TEResult eState = TEResult::eNoResult;
 };
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -74,6 +74,4 @@ static const RedResult kResultFail     = RedResult::Fail();
 
 } // Core
 } // Red
-
-
 

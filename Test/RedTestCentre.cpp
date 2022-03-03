@@ -19,7 +19,7 @@
 #include "RedTestCentre.h"
 
 #include "RedTestCore.h"
-#include "RedTestTml.h"
+#include "RedTestTinyML.h"
 #include "RedTestVSI.h"
 
 namespace Red {
@@ -30,7 +30,7 @@ namespace Test {
 void RedTestCentre::RunAllUnitTests(RedLog& log)
 {
     if (!log.ContainsError()) RedTestCore::RunUnitTest(log);
-    if (!log.ContainsError()) RedTestTml::RunUnitTest(log);
+    if (!log.ContainsError()) RedTestTinyML::RunUnitTest(log);
     if (!log.ContainsError()) RedTestVSI::RunUnitTest(log);
 }
 

@@ -38,7 +38,7 @@ public:
 
     void    SetName (const RedDataString& cNewName)                            { cName = cNewName; };
     void    AddParam(const RedDataString& cParamName, RedVSILangElement cType) { cParamList.Add(cParamName, cType); };
-    void    SetCode (RedVSICmdInterface* pNewCode)                         { pCode = pNewCode; };
+    void    SetCode (RedVSICmdInterface* pNewCode)                             { pCode = pNewCode; };
 
     bool    IsMatching(const RedVSIRoutineCallInterface& cSig);
 };

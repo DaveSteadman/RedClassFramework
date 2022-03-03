@@ -39,7 +39,7 @@ public:
 
     // Access Items
     bool      Add(IdClass Id, DataClass Data);
-    bool      Find(IdClass Id, DataClass& Data);
+    bool      FindDataById(IdClass Id, DataClass& Data);
     void      Del(IdClass Id);
     bool      DelAll(void);
     
@@ -115,14 +115,14 @@ bool RedMapList<IdClass, DataClass>::Add(IdClass Id, DataClass Data)
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 template <class IdClass, class DataClass>
-bool RedMapList<IdClass, DataClass>::Find(IdClass Id, DataClass& Data)
+bool RedMapList<IdClass, DataClass>::FindDataById(IdClass Id, DataClass& Data)
 {
     unsigned iElemIndex;
     TMapElement Elem;
 
     if (!FindElement(Id, Elem, iElemIndex))
         return false;
-    
+
     Data = Elem.cData;
     return true;
 }

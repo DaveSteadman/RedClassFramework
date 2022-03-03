@@ -498,65 +498,67 @@ RedResult RedTestVSI::TestRunProg_001(void)
 
     {
         RedBufferInput codeBuffer(RedDataString(" \
-    {{class} \
-        {{name}TestRoutines} \
-        {{routine} \
-        {{name}TwoPi} \
-        {{code} \
-            new local number varX = 3.14159 \
-            varX = varX * 2 \
-            return varX \
-        } \
-        } \
-        {{routine} \
-        {{name}Double} \
-        {{params} \
-            {{X}number} \
-        } \
-        {{code} \
-            X = X * 2 \
-            return X \
-        } \
-        } \
-        {{routine} \
-        {{name}Halve} \
-        {{params} \
-            {{X}number} \
-        } \
-        {{code} \
-            X = X / 2 \
-            return X \
-        } \
-        } \
-        {{routine} \
-        {{name}TestCall} \
-        {{code} \
-            new local number x1 = 1234 \
-            new heap  number x2 = 0 \
-            x2 = TestRoutines::Halve(x1) \
-        } \
-        } \
-        {{routine} \
-        {{name}TestExecute} \
-        {{code} \
-            new local number varX = 3.14159 \
-            new local number varY \
-            varY = varX * 2 \
-        } \
-        } \
-    } "));
+            {{class} \
+                {{name}TestRoutines} \
+                {{routine} \
+                    {{name}TwoPi} \
+                    {{code} \
+                        new local number varX = 3.14159 \
+                        varX = varX * 2 \
+                        return varX \
+                    } \
+                } \
+                {{routine} \
+                    {{name}Double} \
+                    {{params} \
+                        {{X}number} \
+                    } \
+                    {{code} \
+                        X = X * 2 \
+                        return X \
+                    } \
+                } \
+                {{routine} \
+                    {{name}Halve} \
+                    {{params} \
+                        {{X}number} \
+                    } \
+                    {{code} \
+                        X = X / 2 \
+                        return X \
+                    } \
+                } \
+                {{routine} \
+                    {{name}TestCall} \
+                    {{code} \
+                        new local number x1 = 1234 \
+                        new heap  number x2 = 0 \
+                        x2 = TestRoutines::Halve(x1) \
+                    } \
+                } \
+                {{routine} \
+                    {{name}TestExecute} \
+                    {{code} \
+                        new local number varX = 3.14159 \
+                        new local number varY \
+                        varY = varX * 2 \
+                    } \
+                } \
+            } "));
 
         // Create the TML tree from the code buffer
         RedTinyMLElement* tmlTreeElement = RedTinyMLFileIO::CreateTinyML(codeBuffer);
-        RedTinyMLNode* tmlTreeNode = NULL;
+        RedTinyMLNode* tmlTreeNode = dynamic_cast<RedTinyMLNode*>(tmlTreeElement);
 
         if (tmlTreeElement == NULL)
             return kResultFail;
 
-        if (tmlTreeElement->IsNode())
-            tmlTreeNode = dynamic_cast<RedTinyMLNode*>(tmlTreeElement);
-        else
+        // Paint after which we own the created structure
+        if (tmlTreeNode == NULL)
+        {
+            delete tmlTreeElement;
             return kResultFail;
+        }
 
         // Import the TML into the code library
         RedLog log;
@@ -576,15 +578,13 @@ RedResult RedTestVSI::TestRunProg_001(void)
 
                 if (log.ContainsError()) return kResultFail;
 
-                // Analyse the data created by the code
-                RedType* pXVal = NULL;
-                tc->FindHeapDataItem("x2", pXVal);
-                if (pXVal == NULL)
-                    return kResultFail;
-                if (!pXVal->Type().IsNum())
-                    return kResultFail;
-                RedDataNumber* pXNum = dynamic_cast<RedDataNumber*>(pXVal);
-                if (!pXNum->IsEqualToWithinTollerance(617, kNumberFloatCompTollerance))
+                RedDataNumber* pXNum = dynamic_cast<RedDataNumber*>(tc->HeapDataItem("x2"));
+                if (pXNum)
+                {
+                    if (!pXNum->IsEqualToWithinTollerance(617, kNumberFloatCompTollerance))
+                        return kResultFail;
+                }
+                else
                     return kResultFail;
             }
         }
