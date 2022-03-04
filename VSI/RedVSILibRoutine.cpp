@@ -1,5 +1,5 @@
 // -------------------------------------------------------------------------------------------------
-// This file is covered by: The MIT License (MIT) Copyright (c) 2016 David G. Steadman
+// This file is covered by: The MIT License (MIT) Copyright (c) 2022 David G. Steadman
 // -------------------------------------------------------------------------------------------------
 // Permission is hereby granted, free of charge, to any person obtaining a copy of this software and
 // associated documentation files (the "Software"), to deal in the Software without restriction,
@@ -23,7 +23,16 @@ namespace VSI {
 
 RedVSILibRoutine::RedVSILibRoutine(void)
 {
-    pCode = 0;
+    pCode = NULL;
+}
+
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+void RedVSILibRoutine::Init(void)
+{
+    cName.Init();
+    cParamList.DelAll();
+    delete pCode;
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -51,8 +60,6 @@ bool RedVSILibRoutine::IsMatching(const RedVSIRoutineCallInterface& cSig)
         LibParamList->FindDataByIndex(LibParamIndex, CurrLibDataType);
 
         CallParamList->FindElementAtIndex(CallParamIndex, CurrCallParam);
-
-
     }
 
 //    // Check the basics, that the routine name and the number of parameters match
@@ -93,6 +100,15 @@ bool RedVSILibRoutine::IsMatching(const RedVSIRoutineCallInterface& cSig)
 //    // the initial check guarantees the lists were the same length, so its
 //    // okay to return success at this point.
     return true;
+}
+
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+void RedVSILibRoutine::GetDetails(RedDataString& cOutName, RedVSIStringLangElementMap& cOutParamList, RedVSICmd*& pOutCode)
+{
+    cOutName = cName;
+    cOutParamList = cParamList;
+    pOutCode = pCode;
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

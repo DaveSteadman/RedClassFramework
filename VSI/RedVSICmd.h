@@ -1,5 +1,5 @@
 // -------------------------------------------------------------------------------------------------
-// This file is covered by: The MIT License (MIT) Copyright (c) 2016 David G. Steadman
+// This file is covered by: The MIT License (MIT) Copyright (c) 2022 David G. Steadman
 // -------------------------------------------------------------------------------------------------
 // Permission is hereby granted, free of charge, to any person obtaining a copy of this software and
 // associated documentation files (the "Software"), to deal in the Software without restriction,
@@ -16,37 +16,46 @@
 // (http://opensource.org/licenses/MIT)
 // -------------------------------------------------------------------------------------------------
 
-#include "RedVSILibRoutineInterface.h"
+#pragma once
 
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+#include "RedLog.h"
+#include "RedVSIContextInterface.h"
+#include "RedVSILangElement.h"
 
 namespace Red {
 namespace VSI {
 
-void RedVSILibRoutineInterface::Init(void)
-{
-    cName.Init(); 
-    cParamList.DelAll();
-}
-
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-bool RedVSILibRoutineInterface::IsValid(void) const
+class RedVSICmd
 {
-    if (cName.IsEmpty())
-        return false;
+public:
+
+    virtual ~RedVSICmd(void) { };
+
+    // Get the command type, allowing a caller to determine the type of a RedVSICmd
+    // pointer.
+    virtual RedVSILangElement Type(void) const =0;
+
+    // Operation to queue up the top level expressions in a command. A separate class
+    // determines the actual traversing of the parse-tree.
+    virtual void QueueExpr(RedVSIContextInterface* pContext) =0;
     
-    return true;
-}
+    // Execute the command, assuming the expressions are all fully executed and the
+    // results are available in the context.
+    virtual void Execute(RedVSIContextInterface* pContext) =0;
+    
+    // Get the next command in the sequence (not including the branches of
+    // conditional/iterative commands)
+    RedVSICmd* NextCmd(void) const { return pNextCmd; };
+    
+    // Assign the next command in the sequence (not including command branches)
+    void SetNextCmd(RedVSICmd* pNewNextCmd) { pNextCmd = pNewNextCmd; };
 
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+private:
 
-void RedVSILibRoutineInterface::GetDetails(RedDataString& cOutName, RedVSIStringLangElementMap& cOutParamList, RedVSICmdInterface*& pOutCode)
-{
-    cOutName      = cName;
-    cOutParamList = cParamList;
-    pOutCode      = pCode;
-}
+    RedVSICmd* pNextCmd = NULL;
+};
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 

@@ -1,5 +1,5 @@
 // -------------------------------------------------------------------------------------------------
-// This file is covered by: The MIT License (MIT) Copyright (c) 2016 David G. Steadman
+// This file is covered by: The MIT License (MIT) Copyright (c) 2022 David G. Steadman
 // -------------------------------------------------------------------------------------------------
 // Permission is hereby granted, free of charge, to any person obtaining a copy of this software and
 // associated documentation files (the "Software"), to deal in the Software without restriction,
@@ -21,7 +21,7 @@
 #include "RedCoreNamespace.h"
 
 #include "RedVSIParseTreeInterface.h"
-#include "RedVSICmdInterface.h"
+#include "RedVSICmd.h"
 #include "RedVSIContextInterface.h"
 #include "RedVSIErrorCodes.h"
 
@@ -34,7 +34,7 @@ namespace VSI {
 
 // Class to contain an expression, allowing the maths to exist in a sequence.
 // Essentially a BASIC LET statement.
-class RedVSICmdLet : public RedVSICmdInterface
+class RedVSICmdLet : public RedVSICmd
 {
 public: 
 
@@ -43,7 +43,7 @@ public:
     RedVSICmdLet(RedVSIParseTreeInterface*& pExpr) { SetDetails(pExpr); };
     ~RedVSICmdLet(void) {};
 
-    // RedVSICmdInterface inherited routines
+    // RedVSICmd inherited routines
     RedVSILangElement Type(void) const { return kLangElementCommandLet; };
     void              QueueExpr(RedVSIContextInterface* pContext);
     void              Execute(RedVSIContextInterface* pContext);

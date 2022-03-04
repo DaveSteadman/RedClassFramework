@@ -69,7 +69,7 @@ public:
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-static const RedTime kTimeStartOfDay = RedTime(0,   0,  0.0);
+static const RedTime kTimeStartOfDay = RedTime( 0,  0,  0.0);
 static const RedTime kTimeMidday     = RedTime(12,  0,  0.0);
 static const RedTime kTimeEndOfDay   = RedTime(24, 60, 60.0);
 

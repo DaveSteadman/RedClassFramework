@@ -1,5 +1,5 @@
 // -------------------------------------------------------------------------------------------------
-// This file is covered by: The MIT License (MIT) Copyright (c) 2016 David G. Steadman
+// This file is covered by: The MIT License (MIT) Copyright (c) 2022 David G. Steadman
 // -------------------------------------------------------------------------------------------------
 // Permission is hereby granted, free of charge, to any person obtaining a copy of this software and
 // associated documentation files (the "Software"), to deal in the Software without restriction,
@@ -38,7 +38,7 @@ RedVSICmdIf::RedVSICmdIf(void)
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-void RedVSICmdIf::SetDetails(RedVSIParseTreeInterface*& pInCmdExpr,  RedVSICmdInterface*& pInPosBranch,  RedVSICmdInterface*& pInNegBranch)
+void RedVSICmdIf::SetDetails(RedVSIParseTreeInterface*& pInCmdExpr,  RedVSICmd*& pInPosBranch,  RedVSICmd*& pInNegBranch)
 {
     pCmdExpr   = pInCmdExpr;
     pPosBranch = pInPosBranch;
@@ -47,7 +47,7 @@ void RedVSICmdIf::SetDetails(RedVSIParseTreeInterface*& pInCmdExpr,  RedVSICmdIn
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-void RedVSICmdIf::GetDetails(RedVSIParseTreeInterface*& pOutCmdExpr, RedVSICmdInterface*& pOutPosBranch, RedVSICmdInterface*& pOutNegBranch) const
+void RedVSICmdIf::GetDetails(RedVSIParseTreeInterface*& pOutCmdExpr, RedVSICmd*& pOutPosBranch, RedVSICmd*& pOutNegBranch) const
 {
     pOutCmdExpr   = pCmdExpr;
     pOutPosBranch = pPosBranch;

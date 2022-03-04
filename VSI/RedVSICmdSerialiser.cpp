@@ -1,5 +1,5 @@
 // -------------------------------------------------------------------------------------------------
-// This file is covered by: The MIT License (MIT) Copyright (c) 2016 David G. Steadman
+// This file is covered by: The MIT License (MIT) Copyright (c) 2022 David G. Steadman
 // -------------------------------------------------------------------------------------------------
 // Permission is hereby granted, free of charge, to any person obtaining a copy of this software and
 // associated documentation files (the "Software"), to deal in the Software without restriction,
@@ -36,7 +36,7 @@ namespace VSI {
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-void RedVSICmdSerialiser::SerialiseCommandChain(RedVSITokenBuffer& cTokenBuffer, RedVSICmdInterface* pCmd)
+void RedVSICmdSerialiser::SerialiseCommandChain(RedVSITokenBuffer& cTokenBuffer, RedVSICmd* pCmd)
 {
     RedVSIToken cCRLFTok;
     cCRLFTok.SetWhitespace(RedDataString("\n"));
@@ -104,8 +104,8 @@ void RedVSICmdSerialiser::TokenBufferToOutputBuffer(RedVSITokenBuffer& cInTokenB
 void RedVSICmdSerialiser::SerialiseIfCmd(RedVSITokenBuffer& cTokenBuffer, RedVSICmdIf* pCmd)
 {
     RedVSIParseTreeInterface* pIfExpr;
-    RedVSICmdInterface*       pPosBranch;
-    RedVSICmdInterface*       pNegBranch;
+    RedVSICmd*       pPosBranch;
+    RedVSICmd*       pNegBranch;
     pCmd->GetDetails(pIfExpr, pPosBranch, pNegBranch);
 
     // write the IF command keyword
@@ -234,7 +234,7 @@ void RedVSICmdSerialiser::SerialiseReturnCmd(RedVSITokenBuffer& cTokenBuffer, Re
 void RedVSICmdSerialiser::SerialiseWhileCmd(RedVSITokenBuffer& cTokenBuffer, RedVSICmdWhile* pCmd)
 {
     RedVSIParseTreeInterface* pConditionExpr;
-    RedVSICmdInterface*       pLoopBranch;
+    RedVSICmd*       pLoopBranch;
     pCmd->GetDetails(pConditionExpr, pLoopBranch);
 
     // Write the WHILE command keyword

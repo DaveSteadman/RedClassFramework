@@ -1,5 +1,5 @@
 // -------------------------------------------------------------------------------------------------
-// This file is covered by: The MIT License (MIT) Copyright (c) 2016 David G. Steadman
+// This file is covered by: The MIT License (MIT) Copyright (c) 2022 David G. Steadman
 // -------------------------------------------------------------------------------------------------
 // Permission is hereby granted, free of charge, to any person obtaining a copy of this software and
 // associated documentation files (the "Software"), to deal in the Software without restriction,
@@ -71,7 +71,7 @@ RedVSILibRoutine* RedVSILibClass::FindRoutineByName(const RedDataString& cNewRou
         pCurrRoutine = cIt.CurrentItem();
 
         // If we get a match on the routine name
-        if (pCurrRoutine->Name() == cNewRoutineName)
+        if (pCurrRoutine->cName == cNewRoutineName)
             return pCurrRoutine;        
 
         cIt.Next();

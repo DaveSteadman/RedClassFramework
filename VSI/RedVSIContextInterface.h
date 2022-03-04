@@ -1,5 +1,5 @@
 // -------------------------------------------------------------------------------------------------
-// This file is covered by: The MIT License (MIT) Copyright (c) 2016 David G. Steadman
+// This file is covered by: The MIT License (MIT) Copyright (c) 2022 David G. Steadman
 // -------------------------------------------------------------------------------------------------
 // Permission is hereby granted, free of charge, to any person obtaining a copy of this software and
 // associated documentation files (the "Software"), to deal in the Software without restriction,
@@ -32,9 +32,9 @@ namespace VSI {
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-// define the RedVSICmdInterface class without a #include specifically to avoid
+// define the RedVSICmd class without a #include specifically to avoid
 // a circular dependency.
-class RedVSICmdInterface;
+class RedVSICmd;
 class RedVSIParseTreeInterface;
 class RedVSILib;
 
@@ -68,7 +68,7 @@ public:
     virtual void          ExecuteExprQueue(void) =0;
 
     // Commands
-    virtual void          QueueCommand(RedVSICmdInterface* pCmd) =0;
+    virtual void          QueueCommand(RedVSICmd* pCmd) =0;
     virtual void          ClearCommandQueue(void) =0;
 
     // Code accessors

@@ -1,5 +1,5 @@
 // -------------------------------------------------------------------------------------------------
-// This file is covered by: The MIT License (MIT) Copyright (c) 2016 David G. Steadman
+// This file is covered by: The MIT License (MIT) Copyright (c) 2022 David G. Steadman
 // -------------------------------------------------------------------------------------------------
 // Permission is hereby granted, free of charge, to any person obtaining a copy of this software and
 // associated documentation files (the "Software"), to deal in the Software without restriction,
@@ -114,7 +114,7 @@ RedVSILibRoutine* RedVSILibFactory::InputTmlRoutine(RedTinyMLNode& cRoutineNode,
     if (pName == NULL)
         cAnalysis.AddErrorEvent("Lib Factory: InputTmlRoutine: Routine has no name");
     else
-        newRoutine->SetName(pName->Data());
+        newRoutine->cName = pName->Data();
 
     // params
     RedTinyMLNode* pParams = RedTinyMLAction::NodeFirstNamedNode(cRoutineNode, kVSIIOElementKeywordParams);
@@ -162,7 +162,7 @@ RedVSILibRoutine* RedVSILibFactory::InputTmlRoutine(RedTinyMLNode& cRoutineNode,
         if (iCreateResult && !cAnalysis.ContainsError())
         {
             // Process the code, creating the tree of code objects
-            RedVSICmdInterface* pVsiCode = RedVSICmdFactory::RunConstuctionCompetition(cInputBuffer, cAnalysis);
+            RedVSICmd* pVsiCode = RedVSICmdFactory::RunConstuctionCompetition(cInputBuffer, cAnalysis);
 
             newRoutine->SetCode(pVsiCode);
         }
@@ -201,7 +201,7 @@ RedTinyMLElement* RedVSILibFactory::OutputTmlClass(const RedDataString& classnam
         // get the routine details
         RedDataString                  cOutName;
         RedVSIStringLangElementMap cOutParamList;
-        RedVSICmdInterface* pOutCode;
+        RedVSICmd* pOutCode;
         pCurrRtn->GetDetails(cOutName, cOutParamList, pOutCode);
 
         // Create and name the routine node
@@ -264,12 +264,12 @@ RedTinyMLElement* RedVSILibFactory::OutputTmlRoutine(const RedDataString& classn
     {
         // find the routine we want
         RedVSILibRoutine* pCurrRtn = cIt.CurrentItem();
-        if (pCurrRtn->Name() == routinename)
+        if (pCurrRtn->cName == routinename)
         {
             // get the routine details
             RedDataString                  cOutName;
             RedVSIStringLangElementMap cOutParamList;
-            RedVSICmdInterface* pOutCode;
+            RedVSICmd* pOutCode;
             pCurrRtn->GetDetails(cOutName, cOutParamList, pOutCode);
 
             // convert the code into tokens

@@ -1,5 +1,5 @@
 // -------------------------------------------------------------------------------------------------
-// This file is covered by: The MIT License (MIT) Copyright (c) 2016 David G. Steadman
+// This file is covered by: The MIT License (MIT) Copyright (c) 2022 David G. Steadman
 // -------------------------------------------------------------------------------------------------
 // Permission is hereby granted, free of charge, to any person obtaining a copy of this software and
 // associated documentation files (the "Software"), to deal in the Software without restriction,
@@ -607,7 +607,7 @@ RedResult RedTestVSI::TestFragment_New(void)
         return kResultFail;
 
     // Turn the tokens into code
-    RedVSICmdInterface* topCmd = RedVSICmdFactory::RunConstuctionCompetition(cTokenList, cRedLog);
+    RedVSICmd* topCmd = RedVSICmdFactory::RunConstuctionCompetition(cTokenList, cRedLog);
     if (topCmd == NULL)
         return kResultFail;
     if (cRedLog.ContainsError())
@@ -644,7 +644,7 @@ RedResult RedTestVSI::TestFragment_NewTypes(void)
         return kResultFail;
 
     // Turn the tokens into code
-    RedVSICmdInterface* topCmd = RedVSICmdFactory::RunConstuctionCompetition(cTokenList, cRedLog);
+    RedVSICmd* topCmd = RedVSICmdFactory::RunConstuctionCompetition(cTokenList, cRedLog);
     if (topCmd == NULL)
         return kResultFail;
     if (cRedLog.ContainsError())
@@ -689,7 +689,7 @@ RedResult RedTestVSI::TestFragment_Expr(void)
         return kResultFail;
 
     // Turn the tokens into code
-    RedVSICmdInterface* topCmd = RedVSICmdFactory::RunConstuctionCompetition(cTokenList, cRedLog);
+    RedVSICmd* topCmd = RedVSICmdFactory::RunConstuctionCompetition(cTokenList, cRedLog);
     if (topCmd == NULL)
         return kResultFail;
     if (cRedLog.ContainsError())
@@ -729,7 +729,7 @@ RedResult RedTestVSI::TestFragment_If(void)
         return kResultFail;
 
     // Turn the tokens into code
-    RedVSICmdInterface* topCmd = RedVSICmdFactory::RunConstuctionCompetition(cTokenList, cRedLog);
+    RedVSICmd* topCmd = RedVSICmdFactory::RunConstuctionCompetition(cTokenList, cRedLog);
     if (topCmd == NULL)
         return kResultFail;
     if (cRedLog.ContainsError())

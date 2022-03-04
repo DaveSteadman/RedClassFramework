@@ -1,5 +1,5 @@
 // -------------------------------------------------------------------------------------------------
-// This file is covered by: The MIT License (MIT) Copyright (c) 2016 David G. Steadman
+// This file is covered by: The MIT License (MIT) Copyright (c) 2022 David G. Steadman
 // -------------------------------------------------------------------------------------------------
 // Permission is hereby granted, free of charge, to any person obtaining a copy of this software and
 // associated documentation files (the "Software"), to deal in the Software without restriction,
@@ -18,7 +18,7 @@
 
 #pragma once
 
-#include "RedVSICmdInterface.h"
+#include "RedVSICmd.h"
 #include "RedVSIErrorCodes.h"
 #include "RedLog.h"
 #include "RedVSIContextInterface.h"
@@ -30,7 +30,7 @@ namespace VSI {
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-class RedVSICmdIf : public RedVSICmdInterface
+class RedVSICmdIf : public RedVSICmd
 {
 public:
 
@@ -38,20 +38,20 @@ public:
     RedVSICmdIf(void);
     ~RedVSICmdIf(void) {};
 
-    // RedVSICmdInterface inherited routines
+    // RedVSICmd inherited routines
     RedVSILangElement Type(void) const { return kLangElementCommandIf; };
     void              QueueExpr(RedVSIContextInterface* pContext);
     void              Execute(RedVSIContextInterface* pContext);
 
     // Wholesale access/assign operations
-    void              SetDetails(RedVSIParseTreeInterface*& pInCmdExpr,  RedVSICmdInterface*& pInPosBranch,  RedVSICmdInterface*& pInNegBranch);
-    void              GetDetails(RedVSIParseTreeInterface*& pOutCmdExpr, RedVSICmdInterface*& pOutPosBranch, RedVSICmdInterface*& pOutNegBranch) const;
+    void              SetDetails(RedVSIParseTreeInterface*& pInCmdExpr,  RedVSICmd*& pInPosBranch,  RedVSICmd*& pInNegBranch);
+    void              GetDetails(RedVSIParseTreeInterface*& pOutCmdExpr, RedVSICmd*& pOutPosBranch, RedVSICmd*& pOutNegBranch) const;
 
 private:
 
     RedVSIParseTreeInterface* pCmdExpr   = NULL;
-    RedVSICmdInterface*       pPosBranch = NULL;
-    RedVSICmdInterface*       pNegBranch = NULL;
+    RedVSICmd*       pPosBranch = NULL;
+    RedVSICmd*       pNegBranch = NULL;
 };
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

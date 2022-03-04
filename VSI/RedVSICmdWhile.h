@@ -1,5 +1,5 @@
 // -------------------------------------------------------------------------------------------------
-// This file is covered by: The MIT License (MIT) Copyright (c) 2016 David G. Steadman
+// This file is covered by: The MIT License (MIT) Copyright (c) 2022 David G. Steadman
 // -------------------------------------------------------------------------------------------------
 // Permission is hereby granted, free of charge, to any person obtaining a copy of this software and
 // associated documentation files (the "Software"), to deal in the Software without restriction,
@@ -18,7 +18,7 @@
 
 #pragma once
 
-#include "RedVSICmdInterface.h"
+#include "RedVSICmd.h"
 #include "RedVSIParseTreeInterface.h"
 #include "RedVSIContextInterface.h"
 #include "RedVSILangElement.h"
@@ -28,7 +28,7 @@ namespace VSI {
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-class RedVSICmdWhile : public RedVSICmdInterface
+class RedVSICmdWhile : public RedVSICmd
 {
 public:
 
@@ -40,15 +40,15 @@ public:
     
     void QueueExpr(RedVSIContextInterface* pContext);
 
-    void SetDetails(RedVSIParseTreeInterface*& pInConditionExpr,  RedVSICmdInterface*& pInLoopBranch);
-    void GetDetails(RedVSIParseTreeInterface*& pOutConditionExpr, RedVSICmdInterface*& pOutLoopBranch) const;
+    void SetDetails(RedVSIParseTreeInterface*& pInConditionExpr,  RedVSICmd*& pInLoopBranch);
+    void GetDetails(RedVSIParseTreeInterface*& pOutConditionExpr, RedVSICmd*& pOutLoopBranch) const;
 
     void Execute(RedVSIContextInterface* pContext);
 
 private:
 
     RedVSIParseTreeInterface* pConditionExpr;
-    RedVSICmdInterface*       pLoopBranch;
+    RedVSICmd*       pLoopBranch;
 };
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

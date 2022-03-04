@@ -1,5 +1,5 @@
 // -------------------------------------------------------------------------------------------------
-// This file is covered by: The MIT License (MIT) Copyright (c) 2016 David G. Steadman
+// This file is covered by: The MIT License (MIT) Copyright (c) 2022 David G. Steadman
 // -------------------------------------------------------------------------------------------------
 // Permission is hereby granted, free of charge, to any person obtaining a copy of this software and
 // associated documentation files (the "Software"), to deal in the Software without restriction,
@@ -19,8 +19,7 @@
 #pragma once
 
 #include "RedDataString.h"
-#include "RedVSICmdInterface.h"
-#include "RedVSILibRoutineInterface.h"
+#include "RedVSICmd.h"
 
 using namespace Red::Core;
 
@@ -30,17 +29,32 @@ namespace VSI {
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 // A VSI-Routine consists of a Routine-name, and a list of parameters which together make up its signature.
-class RedVSILibRoutine : public RedVSILibRoutineInterface
+class RedVSILibRoutine
 {
 public:
 
     RedVSILibRoutine(void);
+    void Init(void);
+    bool IsValid(void) const;
 
-    void    SetName (const RedDataString& cNewName)                            { cName = cNewName; };
-    void    AddParam(const RedDataString& cParamName, RedVSILangElement cType) { cParamList.Add(cParamName, cType); };
-    void    SetCode (RedVSICmdInterface* pNewCode)                             { pCode = pNewCode; };
+    unsigned                    NumParams(void) { return cParamList.NumItems(); };
+    RedVSIStringLangElementMap* Params(void) { return &cParamList; };
+    void                        AddParam(const RedDataString& cParamName, RedVSILangElement cType) { cParamList.Add(cParamName, cType); };
+
+    void    SetCode (RedVSICmd* pNewCode) { pCode = pNewCode; };
+    RedVSICmd* FirstCommand(void) { return pCode; };
+
+    void GetDetails(RedDataString& cOutName, RedVSIStringLangElementMap& cOutParamList, RedVSICmd*& pOutCode);
 
     bool    IsMatching(const RedVSIRoutineCallInterface& cSig);
+
+public: 
+    RedDataString               cName = "";
+
+protected:
+    
+    RedVSIStringLangElementMap  cParamList;
+    RedVSICmd*         pCode = NULL;
 };
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

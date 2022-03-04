@@ -1,5 +1,5 @@
 // -------------------------------------------------------------------------------------------------
-// This file is covered by: The MIT License (MIT) Copyright (c) 2016 David G. Steadman
+// This file is covered by: The MIT License (MIT) Copyright (c) 2022 David G. Steadman
 // -------------------------------------------------------------------------------------------------
 // Permission is hereby granted, free of charge, to any person obtaining a copy of this software and
 // associated documentation files (the "Software"), to deal in the Software without restriction,
@@ -106,10 +106,10 @@ RedVSILibClass* RedVSILib::FindClass(const RedDataString& cClassName)
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-RedVSILibRoutineInterface* RedVSILib::FindRoutine(const RedVSIRoutineCallInterface& cSig)
+RedVSILibRoutine* RedVSILib::FindRoutine(const RedVSIRoutineCallInterface& cSig)
 {
-    RedVSILibClass*            pClass   = FindClass(cSig.ClassName());
-    RedVSILibRoutineInterface* pRoutine = NULL;
+    RedVSILibClass*   pClass   = FindClass(cSig.ClassName());
+    RedVSILibRoutine* pRoutine = NULL;
 
     // if we found the first class
     if (pClass)
@@ -138,10 +138,10 @@ RedVSILibRoutineInterface* RedVSILib::FindRoutine(const RedVSIRoutineCallInterfa
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-RedVSILibRoutineInterface* RedVSILib::FindRoutine(const RedDataString& cClassName, const RedDataString& cRoutineName)
+RedVSILibRoutine* RedVSILib::FindRoutine(const RedDataString& cClassName, const RedDataString& cRoutineName)
 {
-    RedVSILibClass*            pClass   = FindClass(cClassName);
-    RedVSILibRoutineInterface* pRoutine = NULL;
+    RedVSILibClass*   pClass   = FindClass(cClassName);
+    RedVSILibRoutine* pRoutine = NULL;
 
     if (pClass)
         pRoutine = pClass->FindRoutineByName(cRoutineName);

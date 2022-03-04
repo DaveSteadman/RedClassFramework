@@ -1,5 +1,5 @@
 // -------------------------------------------------------------------------------------------------
-// This file is covered by: The MIT License (MIT) Copyright (c) 2016 David G. Steadman
+// This file is covered by: The MIT License (MIT) Copyright (c) 2022 David G. Steadman
 // -------------------------------------------------------------------------------------------------
 // Permission is hereby granted, free of charge, to any person obtaining a copy of this software and
 // associated documentation files (the "Software"), to deal in the Software without restriction,
@@ -21,7 +21,7 @@
 #include "RedCoreNamespace.h"
 
 #include "RedVSICollections.h"
-#include "RedVSICmdInterface.h"
+#include "RedVSICmd.h"
 #include "RedVSIContextInterface.h"
 #include "RedVSILangElement.h"
 #include "RedVSIRoutineCallInterface.h"
@@ -55,8 +55,8 @@ public:
 
     // Construction Routines
     RedVSIContextRoutine(RedLog* pInitLog);
-    RedVSIContextRoutine(RedLog* pInitLog, RedVSICmdInterface* pFirstCmd);
-    RedVSIContextRoutine(RedLog* pInitLog, const RedDataString& inClassName, const RedDataString& inRoutineName, RedVSICmdInterface* pFirstCmd);
+    RedVSIContextRoutine(RedLog* pInitLog, RedVSICmd* pFirstCmd);
+    RedVSIContextRoutine(RedLog* pInitLog, const RedDataString& inClassName, const RedDataString& inRoutineName, RedVSICmd* pFirstCmd);
 
     ~RedVSIContextRoutine(void);
 
@@ -82,7 +82,7 @@ public:
 
     // Setup Calls
     void            SetupRoutineCall(const RedVSIRoutineCallInterface& cSignature);
-    void            QueueCommand(RedVSICmdInterface* pCmd) { if (pCmd != NULL) cCmdStack.Push(pCmd); else pCurrCmd = pCmd; };
+    void            QueueCommand(RedVSICmd* pCmd) { if (pCmd != NULL) cCmdStack.Push(pCmd); else pCurrCmd = pCmd; };
     void            ClearCommandQueue(void) { cCmdStack.DelAll(); pCurrCmd = NULL; };
     void            SetValueToReturn(const RedDataVariant& cData);
     bool            IsExecutionComplete(void) const;
@@ -124,7 +124,7 @@ private:
     // Curr command initialised to zero, command popped off the stack.
     // expressions for that command evaluated, then the command is evaluated
     // which leads to a change on the stack. Following exection, the curr is cleared.
-    RedVSICmdInterface* pCurrCmd;
+    RedVSICmd* pCurrCmd;
 
     TECmdExecutePhases eCmdPhase;
 

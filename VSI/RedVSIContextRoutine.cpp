@@ -1,5 +1,5 @@
 // -------------------------------------------------------------------------------------------------
-// This file is covered by: The MIT License (MIT) Copyright (c) 2016 David G. Steadman
+// This file is covered by: The MIT License (MIT) Copyright (c) 2022 David G. Steadman
 // -------------------------------------------------------------------------------------------------
 // Permission is hereby granted, free of charge, to any person obtaining a copy of this software and
 // associated documentation files (the "Software"), to deal in the Software without restriction,
@@ -21,7 +21,7 @@
 #include "RedVSILib.h"
 #include "RedVSIParseStackTraverser.h"
 #include "RedVSICollections.h"
-#include "RedVSILibRoutineInterface.h"
+#include "RedVSILibRoutine.h"
 
 #include "RedCoreNamespace.h"
 using namespace Red::Core;
@@ -46,7 +46,7 @@ RedVSIContextRoutine::RedVSIContextRoutine(RedLog* pInitLog) : pLog(pInitLog)
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-RedVSIContextRoutine::RedVSIContextRoutine(RedLog* pInitLog, RedVSICmdInterface* pFirstCmd) : pLog(pInitLog)
+RedVSIContextRoutine::RedVSIContextRoutine(RedLog* pInitLog, RedVSICmd* pFirstCmd) : pLog(pInitLog)
 {
     // pThisObj     = 0;
 
@@ -59,7 +59,7 @@ RedVSIContextRoutine::RedVSIContextRoutine(RedLog* pInitLog, RedVSICmdInterface*
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-RedVSIContextRoutine::RedVSIContextRoutine(RedLog* pInitLog, const RedDataString& inClassName, const RedDataString& inRoutineName, RedVSICmdInterface* pFirstCmd) : pLog(pInitLog)
+RedVSIContextRoutine::RedVSIContextRoutine(RedLog* pInitLog, const RedDataString& inClassName, const RedDataString& inRoutineName, RedVSICmd* pFirstCmd) : pLog(pInitLog)
 {
     ClassName = inClassName;
     RoutineName = inRoutineName;
@@ -270,7 +270,7 @@ void RedVSIContextRoutine::SetupRoutineCall(const RedVSIRoutineCallInterface& cC
 
         if (pLib != NULL)
         {
-            RedVSILibRoutineInterface* pRtn = pLib->FindRoutine(cCallSignature);
+            RedVSILibRoutine* pRtn = pLib->FindRoutine(cCallSignature);
 
             // If we found a routine in the library that matched the signature
             if (pRtn != NULL)

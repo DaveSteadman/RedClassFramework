@@ -1,5 +1,5 @@
 // -------------------------------------------------------------------------------------------------
-// This file is covered by: The MIT License (MIT) Copyright (c) 2016 David G. Steadman
+// This file is covered by: The MIT License (MIT) Copyright (c) 2022 David G. Steadman
 // -------------------------------------------------------------------------------------------------
 // Permission is hereby granted, free of charge, to any person obtaining a copy of this software and
 // associated documentation files (the "Software"), to deal in the Software without restriction,
@@ -20,7 +20,7 @@
 //
 #include "RedVSILibTokenMap.h"
 #include "RedVSITokenFactory.h"
-#include "RedVSILibRoutineInterface.h"
+#include "RedVSILibRoutine.h"
 #include "RedVSICmdFactory.h"
 
 namespace Red {
@@ -37,7 +37,7 @@ RedResult RedVSIContextFactory::CreateContext(RedVSIContextRoutine** OutputConte
     //    return kResultFail;
 
     /// Turn the tokens into code
-    //RedVSICmdInterface* topCmd = RedVSICmdFactory::RunConstuctionCompetition(cTokenList, cLog);
+    //RedVSICmd* topCmd = RedVSICmdFactory::RunConstuctionCompetition(cTokenList, cLog);
     //if (topCmd == NULL)
     //    return kResultFail;
     //if (cLog.IsError())
@@ -64,7 +64,7 @@ RedResult RedVSIContextFactory::LoadFragmentIntoContext(const RedDataString& Inp
     RedLog* pLog = UpdateContext.Log();
 
     // Turn the tokens into code
-    RedVSICmdInterface* topCmd = RedVSICmdFactory::RunConstuctionCompetition(cTokenList, *pLog);
+    RedVSICmd* topCmd = RedVSICmdFactory::RunConstuctionCompetition(cTokenList, *pLog);
     if (topCmd == NULL)
         return kResultFail;
     if (pLog->ContainsError())
@@ -81,7 +81,7 @@ RedResult RedVSIContextFactory::LoadFragmentIntoContext(const RedDataString& Inp
 RedResult RedVSIContextFactory::CreateThreadContextForRoutine(const RedDataString& classname, const RedDataString& routinename, RedVSILib* pInputLib, RedVSIContextThread** OutputThreadContext, RedLog& cLog)
 {
     // Find the routine to execute
-    RedVSILibRoutineInterface* LibRoutine = pInputLib->FindRoutine(classname, routinename);
+    RedVSILibRoutine* LibRoutine = pInputLib->FindRoutine(classname, routinename);
 
     if (LibRoutine == NULL)
         return kResultFail;

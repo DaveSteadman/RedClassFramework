@@ -1,5 +1,5 @@
 // -------------------------------------------------------------------------------------------------
-// This file is covered by: The MIT License (MIT) Copyright (c) 2016 David G. Steadman
+// This file is covered by: The MIT License (MIT) Copyright (c) 2022 David G. Steadman
 // -------------------------------------------------------------------------------------------------
 // Permission is hereby granted, free of charge, to any person obtaining a copy of this software and
 // associated documentation files (the "Software"), to deal in the Software without restriction,
@@ -16,7 +16,7 @@
 // (http://opensource.org/licenses/MIT)
 // -------------------------------------------------------------------------------------------------
 
-#include "RedVSICmdInterface.h"
+#include "RedVSICmd.h"
 
 #include "RedVSICmdFactory.h"
 
@@ -35,19 +35,19 @@ namespace VSI {
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-RedVSICmdInterface* RedVSICmdFactory::RunConstuctionCompetition(RedVSITokenBuffer& cInputBuffer, RedLog& RedLog)
+RedVSICmd* RedVSICmdFactory::RunConstuctionCompetition(RedVSITokenBuffer& cInputBuffer, RedLog& RedLog)
 {
-    RedVSICmdInterface* pFirstObject = NULL;
-    RedVSICmdInterface* pTailObject  = NULL;
-    bool                iEndOrError  = false;
+    RedVSICmd* pFirstObject = NULL;
+    RedVSICmd* pTailObject  = NULL;
+    bool       iEndOrError  = false;
 
     // Loop until the end of the input buffer or an error has broken the process
     while (!iEndOrError)
     {
         // The competition is run for each command, setup the starting conditions
-        RedVSICmdInterface* pNewObject      = 0;
-        int                 iCompEntry      = 1;
-        int                 iStartTokenPos  = cInputBuffer.GetTokenIndex();
+        RedVSICmd* pNewObject      = 0;
+        int        iCompEntry      = 1;
+        int        iStartTokenPos  = cInputBuffer.GetTokenIndex();
 
         // Loop until we have a winner an error, or the end of the input.
         while ((pNewObject == 0) && (!iEndOrError))
@@ -130,15 +130,15 @@ bool RedVSICmdFactory::EOFComp(RedVSITokenBuffer& cInputBuffer, RedLog& RedLog)
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-RedVSICmdInterface* RedVSICmdFactory::IfComp(RedVSITokenBuffer& cInputBuffer, RedLog& RedLog)
+RedVSICmd* RedVSICmdFactory::IfComp(RedVSITokenBuffer& cInputBuffer, RedLog& RedLog)
 {
     // Read the if keyword
     RedVSIToken cTok  = cInputBuffer.GetToken();
     if (!cTok.Predef().IsKeywordIf()) return NULL;
 
     RedVSIParseTreeInterface* pExpr      = NULL;
-    RedVSICmdInterface*       pPosBranch = NULL;
-    RedVSICmdInterface*       pNegBranch = NULL;
+    RedVSICmd*       pPosBranch = NULL;
+    RedVSICmd*       pNegBranch = NULL;
 
     // Read the expression to assign. If okay, assign it, else delete the command
     pExpr = RedVSIParseFactory::ConstructAssignExpr(cInputBuffer, RedLog);
@@ -189,7 +189,7 @@ RedVSICmdInterface* RedVSICmdFactory::IfComp(RedVSITokenBuffer& cInputBuffer, Re
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-RedVSICmdInterface* RedVSICmdFactory::ExprComp(RedVSITokenBuffer& cInputBuffer, RedLog& RedLog)
+RedVSICmd* RedVSICmdFactory::ExprComp(RedVSITokenBuffer& cInputBuffer, RedLog& RedLog)
 {
     // read an expression
     RedVSIParseTreeInterface* pExpr = RedVSIParseFactory::ConstructAssignExpr(cInputBuffer, RedLog);
@@ -215,7 +215,7 @@ RedVSICmdInterface* RedVSICmdFactory::ExprComp(RedVSITokenBuffer& cInputBuffer, 
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-RedVSICmdInterface* RedVSICmdFactory::LogComp(RedVSITokenBuffer& cInputBuffer, RedLog& RedLog)
+RedVSICmd* RedVSICmdFactory::LogComp(RedVSITokenBuffer& cInputBuffer, RedLog& RedLog)
 {
     // New is started with a keyword, we can instantly return if not right.
     RedVSIToken cKeywordTok = cInputBuffer.GetToken();
@@ -240,7 +240,7 @@ RedVSICmdInterface* RedVSICmdFactory::LogComp(RedVSITokenBuffer& cInputBuffer, R
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-RedVSICmdInterface* RedVSICmdFactory::NewComp(RedVSITokenBuffer& cInputBuffer, RedLog& RedLog)
+RedVSICmd* RedVSICmdFactory::NewComp(RedVSITokenBuffer& cInputBuffer, RedLog& RedLog)
 {
     // New is started with a keyword, we can instantly return if not right.
     RedVSIToken cKeywordTok = cInputBuffer.GetToken();
@@ -334,7 +334,7 @@ RedVSICmdInterface* RedVSICmdFactory::NewComp(RedVSITokenBuffer& cInputBuffer, R
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-RedVSICmdInterface* RedVSICmdFactory::ReturnComp(RedVSITokenBuffer& cInputBuffer, RedLog& RedLog)
+RedVSICmd* RedVSICmdFactory::ReturnComp(RedVSITokenBuffer& cInputBuffer, RedLog& RedLog)
 {
     // New is started with a keyword, we can instantly return if not right.
     RedVSIToken cKeywordTok = cInputBuffer.GetToken();
@@ -366,7 +366,7 @@ RedVSICmdInterface* RedVSICmdFactory::ReturnComp(RedVSITokenBuffer& cInputBuffer
     
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-RedVSICmdInterface* RedVSICmdFactory::WhileComp(RedVSITokenBuffer& cInputBuffer, RedLog& RedLog)
+RedVSICmd* RedVSICmdFactory::WhileComp(RedVSITokenBuffer& cInputBuffer, RedLog& RedLog)
 {
     // Read the WHILE keyword
     RedVSIToken cTok  = cInputBuffer.GetToken();
@@ -375,7 +375,7 @@ RedVSICmdInterface* RedVSICmdFactory::WhileComp(RedVSITokenBuffer& cInputBuffer,
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
     RedVSIParseTreeInterface* pExpr       = NULL;
-    RedVSICmdInterface*       pLoopBranch = NULL;
+    RedVSICmd*       pLoopBranch = NULL;
 
     // Read the expression to assign. If okay, assign it, else delete the command
     pExpr = RedVSIParseFactory::ConstructAssignExpr(cInputBuffer, RedLog);

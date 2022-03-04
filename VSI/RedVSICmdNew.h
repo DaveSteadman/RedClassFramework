@@ -1,5 +1,5 @@
 // -------------------------------------------------------------------------------------------------
-// This file is covered by: The MIT License (MIT) Copyright (c) 2016 David G. Steadman
+// This file is covered by: The MIT License (MIT) Copyright (c) 2022 David G. Steadman
 // -------------------------------------------------------------------------------------------------
 // Permission is hereby granted, free of charge, to any person obtaining a copy of this software and
 // associated documentation files (the "Software"), to deal in the Software without restriction,
@@ -18,7 +18,7 @@
 
 #pragma once
 
-#include "RedVSICmdInterface.h"
+#include "RedVSICmd.h"
 #include "RedVSIContextInterface.h"
 #include "RedDataType.h"
 #include "RedVSIParseTreeInterface.h"
@@ -31,7 +31,7 @@ namespace VSI {
 
 // A new command creates a data item, with a specific name and in a specific location (stack or heap)
 // The data item has an optional initialising expression.
-class RedVSICmdNew : public RedVSICmdInterface
+class RedVSICmdNew : public RedVSICmd
 {
 public:
 
@@ -40,7 +40,7 @@ public:
     RedVSICmdNew(const RedVSILangElement& cInType, const RedVSILangElement& cInLoc, const RedDataString& cInName, RedVSIParseTreeInterface* pInRecordIndexExpr, RedVSIParseTreeInterface* pInInitExpr);
     ~RedVSICmdNew(void);
 
-    // RedVSICmdInterface inherited routines
+    // RedVSICmd inherited routines
     RedVSILangElement Type(void) const { return kLangElementCommandNew; };
     void              QueueExpr(RedVSIContextInterface* pContext);
     void              Execute(RedVSIContextInterface* pContext);

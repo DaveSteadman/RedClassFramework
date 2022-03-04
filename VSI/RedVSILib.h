@@ -1,5 +1,5 @@
 // -------------------------------------------------------------------------------------------------
-// This file is covered by: The MIT License (MIT) Copyright (c) 2016 David G. Steadman
+// This file is covered by: The MIT License (MIT) Copyright (c) 2022 David G. Steadman
 // -------------------------------------------------------------------------------------------------
 // Permission is hereby granted, free of charge, to any person obtaining a copy of this software and
 // associated documentation files (the "Software"), to deal in the Software without restriction,
@@ -21,7 +21,7 @@
 #include "RedCoreNamespace.h"
 
 #include "RedVSILibClass.h"
-#include "RedVSILibRoutineInterface.h"
+#include "RedVSILibRoutine.h"
 
 using namespace Red::Core;
 
@@ -41,9 +41,9 @@ public:
     void       DelClass(const RedDataString& cClassName);
 
     // Find routines not const, as they may lead to the library loading a class from file.
-    RedVSILibClass*            FindClass(const RedDataString& cClassName);
-    RedVSILibRoutineInterface* FindRoutine(const RedVSIRoutineCallInterface& cSig);
-    RedVSILibRoutineInterface* FindRoutine(const RedDataString& cClassName, const RedDataString& cRoutineName);
+    RedVSILibClass*   FindClass(const RedDataString& cClassName);
+    RedVSILibRoutine* FindRoutine(const RedVSIRoutineCallInterface& cSig);
+    RedVSILibRoutine* FindRoutine(const RedDataString& cClassName, const RedDataString& cRoutineName);
 
     // Returns number of classes in library
     unsigned NumClasses(void) const { return cClassList.NumItems(); };

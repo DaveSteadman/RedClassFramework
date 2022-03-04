@@ -1,5 +1,5 @@
 // -------------------------------------------------------------------------------------------------
-// This file is covered by: The MIT License (MIT) Copyright (c) 2016 David G. Steadman
+// This file is covered by: The MIT License (MIT) Copyright (c) 2022 David G. Steadman
 // -------------------------------------------------------------------------------------------------
 // Permission is hereby granted, free of charge, to any person obtaining a copy of this software and
 // associated documentation files (the "Software"), to deal in the Software without restriction,
@@ -18,7 +18,7 @@
 
 #pragma once
 
-#include "RedVSICmdInterface.h"
+#include "RedVSICmd.h"
 #include "RedVSITokenBuffer.h"
 #include "RedLog.h"
 #include "RedVSIContextInterface.h"
@@ -38,18 +38,18 @@ class RedVSICmdFactory
 {
 public:
 
-    static RedVSICmdInterface* RunConstuctionCompetition(RedVSITokenBuffer& cInputBuffer, RedLog& RedLog);
+    static RedVSICmd* RunConstuctionCompetition(RedVSITokenBuffer& cInputBuffer, RedLog& RedLog);
 
 private:
 
     static bool                EOFComp   (RedVSITokenBuffer& cInputBuffer, RedLog& RedLog);
 
-    static RedVSICmdInterface* ExprComp  (RedVSITokenBuffer& cInputBuffer, RedLog& RedLog);
-    static RedVSICmdInterface* IfComp    (RedVSITokenBuffer& cInputBuffer, RedLog& RedLog);
-    static RedVSICmdInterface* LogComp   (RedVSITokenBuffer& cInputBuffer, RedLog& RedLog);
-    static RedVSICmdInterface* NewComp   (RedVSITokenBuffer& cInputBuffer, RedLog& RedLog);
-    static RedVSICmdInterface* ReturnComp(RedVSITokenBuffer& cInputBuffer, RedLog& RedLog);
-    static RedVSICmdInterface* WhileComp (RedVSITokenBuffer& cInputBuffer, RedLog& RedLog);
+    static RedVSICmd* ExprComp  (RedVSITokenBuffer& cInputBuffer, RedLog& RedLog);
+    static RedVSICmd* IfComp    (RedVSITokenBuffer& cInputBuffer, RedLog& RedLog);
+    static RedVSICmd* LogComp   (RedVSITokenBuffer& cInputBuffer, RedLog& RedLog);
+    static RedVSICmd* NewComp   (RedVSITokenBuffer& cInputBuffer, RedLog& RedLog);
+    static RedVSICmd* ReturnComp(RedVSITokenBuffer& cInputBuffer, RedLog& RedLog);
+    static RedVSICmd* WhileComp (RedVSITokenBuffer& cInputBuffer, RedLog& RedLog);
 };
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

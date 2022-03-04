@@ -1,5 +1,5 @@
 // -------------------------------------------------------------------------------------------------
-// This file is covered by: The MIT License (MIT) Copyright (c) 2016 David G. Steadman
+// This file is covered by: The MIT License (MIT) Copyright (c) 2022 David G. Steadman
 // -------------------------------------------------------------------------------------------------
 // Permission is hereby granted, free of charge, to any person obtaining a copy of this software and
 // associated documentation files (the "Software"), to deal in the Software without restriction,
@@ -25,13 +25,13 @@ using namespace Red::Core;
 namespace Red {
 namespace VSI {
 
-class RedVSICmdInterface;
+class RedVSICmd;
 class RedVSIParseTreeInterface;
 class RedVSILangElement;
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-typedef RedStackLIFO<RedVSICmdInterface*> RedVSICmdStack;
+typedef RedStackLIFO<RedVSICmd*> RedVSICmdStack;
 
 typedef RedDoubleLinkedList<RedDataVariant>         RedVSIVariantList;
 typedef RedDoubleLinkedListIterator<RedDataVariant> RedVSIVariantListIterator;

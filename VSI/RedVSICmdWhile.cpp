@@ -1,5 +1,5 @@
 // -------------------------------------------------------------------------------------------------
-// This file is covered by: The MIT License (MIT) Copyright (c) 2016 David G. Steadman
+// This file is covered by: The MIT License (MIT) Copyright (c) 2022 David G. Steadman
 // -------------------------------------------------------------------------------------------------
 // Permission is hereby granted, free of charge, to any person obtaining a copy of this software and
 // associated documentation files (the "Software"), to deal in the Software without restriction,
@@ -39,7 +39,7 @@ RedVSICmdWhile::RedVSICmdWhile(void)
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-void RedVSICmdWhile::SetDetails(RedVSIParseTreeInterface*& pInConditionExpr, RedVSICmdInterface*& pInLoopBranch)
+void RedVSICmdWhile::SetDetails(RedVSIParseTreeInterface*& pInConditionExpr, RedVSICmd*& pInLoopBranch)
 {
     pConditionExpr = pInConditionExpr;
     pLoopBranch    = pInLoopBranch;
@@ -47,7 +47,7 @@ void RedVSICmdWhile::SetDetails(RedVSIParseTreeInterface*& pInConditionExpr, Red
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-void RedVSICmdWhile::GetDetails(RedVSIParseTreeInterface*& pOutConditionExpr, RedVSICmdInterface*& pOutLoopBranch) const
+void RedVSICmdWhile::GetDetails(RedVSIParseTreeInterface*& pOutConditionExpr, RedVSICmd*& pOutLoopBranch) const
 {
     pOutConditionExpr = pConditionExpr;
     pOutLoopBranch    = pLoopBranch;
