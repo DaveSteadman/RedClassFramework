@@ -25,7 +25,7 @@ int main()
     cRootNode.CreateChildNode("OptA");
 
     Red::Core::RedBufferOutput outputBuf;
-    RedTinyMLFileIO::SerialiseCore(outputBuf, &cRootNode, eLinedIndentedContent);
+    RedTinyMLFileIO::SerialiseCore(outputBuf, &cRootNode, TESerialiseType::LinedIndentedContent);
 
     std::cout << "Hello " << cTestString.TextPtr() << "!\n" << outputBuf.ExtractData().TextPtr();
 }

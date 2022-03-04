@@ -122,7 +122,7 @@ bool RedVSICmdFactory::EOFComp(RedVSITokenBuffer& cInputBuffer, RedLog& RedLog)
     cInputBuffer.SetTokenIndexBackOne();
 
     if (cInputBuffer.CurrIndexAtLastToken())  return true;
-    if (cTok.Predef().IsSymbolCloseBracket()) return true;
+    if (cTok.Predef().IsSymbolBracketClose()) return true;
     if (cTok.IsEOF())                         return true;
 
     return false;
@@ -286,7 +286,7 @@ RedVSICmd* RedVSICmdFactory::NewComp(RedVSITokenBuffer& cInputBuffer, RedLog& Re
     if (cLoc.IsLocationAttribute())
     {
         RedVSIToken bracketToken = cInputBuffer.GetToken();
-        if (!bracketToken.Predef().IsSymbolOpenSquareBracket())
+        if (!bracketToken.Predef().IsSymbolBracketOpenSquare())
         {
             RedLog.AddErrorEvent(RedVSIErrorCodes::GetErrorString(RedVSIErrorCodes::eCFact_New_BadLoc));
             return NULL;
@@ -300,7 +300,7 @@ RedVSICmd* RedVSICmdFactory::NewComp(RedVSITokenBuffer& cInputBuffer, RedLog& Re
         }
 
         bracketToken = cInputBuffer.GetToken();
-        if (!bracketToken.Predef().IsSymbolCloseSquareBracket())
+        if (!bracketToken.Predef().IsSymbolBracketCloseSquare())
         {
             RedLog.AddErrorEvent("New Command: Bad attribute indexing expression");
             delete pIndexExpr;

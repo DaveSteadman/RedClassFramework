@@ -193,12 +193,12 @@ void RedVSICmdSerialiser::SerialiseNewCmd(RedVSITokenBuffer& cTokenBuffer, RedVS
     // Serialise the record indexing expression
     if (cOutLoc.IsLocationAttribute())
     {
-        RedVSIToken cOpenBracket(RedVSIIOElement::SymbolOpenSquareBracket());
+        RedVSIToken cOpenBracket(RedVSIIOElement::SymbolBracketOpenSquare());
         cTokenBuffer.AppendToken(cOpenBracket);
 
         RedVSIParseSerialiser::SerialiseExpression(cTokenBuffer, pOutRecordIndexExpr);
 
-        RedVSIToken cCloseBracket(RedVSIIOElement::SymbolCloseSquareBracket());
+        RedVSIToken cCloseBracket(RedVSIIOElement::SymbolBracketCloseSquare());
         cTokenBuffer.AppendToken(cCloseBracket);
     }
 

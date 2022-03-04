@@ -118,20 +118,20 @@ void RedTinyMLFileIO::SerialiseCore(RedBufferOutput& outputBuf, const RedTinyMLE
 
         RedTinyMLNode::TmlNodeListItType ListIt = pCurrNode->NodeIterator();
 
-        if (eMode == eLinedIndentedContent) outputBuf.IncreaseIndent();
+        if (eMode == TESerialiseType::LinedIndentedContent) outputBuf.IncreaseIndent();
 
         while (!ListIt.IsDone())
         {
             RedTinyMLElement* nextElem = ListIt.CurrentItem();
 
-            if (eMode == eLinedIndentedContent) outputBuf.WriteNewLineWithIndent();
+            if (eMode == TESerialiseType::LinedIndentedContent) outputBuf.WriteNewLineWithIndent();
 
             RedTinyMLFileIO::SerialiseCore(outputBuf, nextElem, eMode);
 
             ListIt.Next();
         }
 
-        if (eMode == eLinedIndentedContent)
+        if (eMode == TESerialiseType::LinedIndentedContent)
         {
             outputBuf.DecreaseIndent();
             outputBuf.WriteNewLineWithIndent();

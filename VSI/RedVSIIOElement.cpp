@@ -177,8 +177,8 @@ bool RedVSIIOElement::IsBinaryOpSymbol(void) const
 bool RedVSIIOElement::IsSeparatorSymbol(void) const
 {
     if (IsSymbolStringContent()) return true;
-    if (IsSymbolOpenBracket())   return true;
-    if (IsSymbolCloseBracket())  return true;
+    if (IsSymbolBracketOpen())   return true;
+    if (IsSymbolBracketClose())  return true;
     if (IsSymbolComma())         return true;
     if (IsSymbolPeriod())        return true;
     if (IsSymbolDoubleColon())   return true;

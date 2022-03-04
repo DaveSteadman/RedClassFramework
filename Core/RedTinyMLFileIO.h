@@ -28,7 +28,7 @@ namespace Core {
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-typedef enum TESerialiseType { eDenseContent, eLinedIndentedContent } TESerialiseType;
+enum class TESerialiseType { DenseContent, LinedIndentedContent };
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 

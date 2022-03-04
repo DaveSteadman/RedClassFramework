@@ -83,6 +83,8 @@ public:
     RedDataChar         CharValue(void) const;
     RedDataList         ListValue(void) const;
     RedDataRecord       RecordValue(void) const;
+    double              DoubleValue(void) const;
+    int                 IntegerValue(void) const;
 
     bool                IsSuccessVal(void) const;
 
@@ -92,12 +94,12 @@ public:
     void operator =(const RedDataChar&    cNewData) { SetValue(&cNewData); };
     void operator =(const RedDataString&  cNewData) { SetValue(&cNewData); };
     void operator =(const RedDataNumber&  cNewData) { SetValue(&cNewData); };
-    void operator =(const bool        val)      { SetValue(RedDataBoolean(val)); };
-    void operator =(const char        val)      { SetValue(RedDataChar(val)); };
-    void operator =(const char*       val)      { SetValue(RedDataString(val)); };
-    void operator =(const int         val)      { SetValue(RedDataNumber(val)); };
-    void operator =(const unsigned    val)      { SetValue(RedDataNumber((int)val)); };
-    void operator =(const double      val)      { SetValue(RedDataNumber(val)); };
+    void operator =(const bool        val)          { SetValue(RedDataBoolean(val)); };
+    void operator =(const char        val)          { SetValue(RedDataChar(val)); };
+    void operator =(const char*       val)          { SetValue(RedDataString(val)); };
+    void operator =(const int         val)          { SetValue(RedDataNumber(val)); };
+    void operator =(const unsigned    val)          { SetValue(RedDataNumber((int)val)); };
+    void operator =(const double      val)          { SetValue(RedDataNumber(val)); };
 
     RedDataVariant operator+(const RedDataVariant& cVarData);
     RedDataVariant operator-(const RedDataVariant& cVarData);

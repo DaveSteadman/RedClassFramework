@@ -175,6 +175,10 @@ RedResult RedTestCore::TestDataList(void)
         RedDataNumber* pNum = dynamic_cast<RedDataNumber*>(cList.PtrForIndex(0));
         if (*pNum != 234) return kResultFail;
     }
+    {
+        RedDataList cList(100, kDataTypeNum);
+        if (cList.NumItems() != 100) return kResultFail;
+    }
     return kResultSuccess;
 }
 
@@ -484,13 +488,9 @@ RedResult RedTestCore::TestDataVariant(void)
         c = "test-unassigned";
         exp = "hello world";
 
-        if (c == exp)
-            return kResultFail;
-
+        if (c == exp) return kResultFail;
         c = a + b;
-
-        if (c != exp)
-            return kResultFail;
+        if (c != exp) return kResultFail;
     }
 
     {
@@ -500,28 +500,38 @@ RedResult RedTestCore::TestDataVariant(void)
         RedDataVariant exp(3.2);
 
         res = x + y;
-
-        if ( res != exp )
-            return kResultFail;
+        if ( res != exp ) return kResultFail;
     }
 
     {
         RedDataVariant x(1);
 
-        if (!x.Type().IsNum())
-            return kResultFail;
-        if (x.Type() != kDataTypeNum)
-            return kResultFail;
+        if (!x.Type().IsNum())         return kResultFail;
+        if (x.Type() != kDataTypeNum)  return kResultFail;
 
         RedDataString  xstr  = x.StringValue();
         RedDataNumber  xnum  = x.NumberValue();
         RedDataBoolean xbool = x.BoolValue();
 
-        if (xstr != "1") return kResultFail;
-        if (xnum != 1) return kResultFail;
+        if (xstr != "1")        return kResultFail;
+        if (xnum != 1)          return kResultFail;
         if (xbool != kBoolTRUE) return kResultFail;
     }
 
+    {
+        RedDataVariant trans1;
+        trans1 = "123.456";
+
+        RedDataNumber x = trans1.DoubleValue();
+        RedDataNumber y = trans1.IntegerValue();
+
+        if (!x.IsEqualTo(123.456)) return kResultFail;
+        if (!y.IsEqualTo(123))     return kResultFail;
+
+        trans1 = 123;
+        RedDataString z = trans1.StringValue();
+        if (z != "123") return kResultFail;
+    }
     return kResultSuccess;
 }
 

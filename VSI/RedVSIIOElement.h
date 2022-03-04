@@ -119,56 +119,72 @@ public:
     bool                   IsSymbolAssignMinus(void) const                { return eType == eSymbolAssignMinus; };
     bool                   IsSymbolAssignMultiply(void) const             { return eType == eSymbolAssignMultiply; };
     bool                   IsSymbolAssignPlus(void) const                 { return eType == eSymbolAssignPlus; };
+
+    bool                   IsSymbolBracketOpen(void) const                { return eType == eSymbolBracketOpen; };
+    bool                   IsSymbolBracketClose(void) const               { return eType == eSymbolBracketClose; };
+    bool                   IsSymbolBracketOpenCurly(void) const           { return eType == eSymbolBracketOpenCurly; };
+    bool                   IsSymbolBracketCloseCurly(void) const          { return eType == eSymbolBracketCloseCurly; };
+    bool                   IsSymbolBracketOpenSquare(void) const          { return eType == eSymbolBracketOpenSquare; };
+    bool                   IsSymbolBracketCloseSquare(void) const         { return eType == eSymbolBracketCloseSquare; };
+
     bool                   IsSymbolCompareEqual(void) const               { return eType == eSymbolCompareEqual; };
     bool                   IsSymbolCompareNotEqual(void) const            { return eType == eSymbolCompareNotEqual; };
     bool                   IsSymbolCompareLessThan(void) const            { return eType == eSymbolCompareLessThan; };
     bool                   IsSymbolCompareGreaterThan(void) const         { return eType == eSymbolCompareGreaterThan; };
     bool                   IsSymbolCompareLessThanOrEqual(void) const     { return eType == eSymbolCompareLessThan; };
     bool                   IsSymbolCompareGreaterThanOrEqual (void) const { return eType == eSymbolCompareGreaterThan; };
+    
     bool                   IsSymbolLogicAnd(void) const                   { return eType == eSymbolLogicAnd; };
     bool                   IsSymbolLogicOr(void) const                    { return eType == eSymbolLogicOr; };
     bool                   IsSymbolLogicNot(void) const                   { return eType == eSymbolLogicNot; };
-    bool                   IsSymbolDivide(void) const                     { return eType == eSymbolDivide; };
-    bool                   IsSymbolMinus(void) const                      { return eType == eSymbolMinus; };
-    bool                   IsSymbolMultiply(void) const                   { return eType == eSymbolMultiply; };
-    bool                   IsSymbolPlus(void) const                       { return eType == eSymbolPlus; };
-    bool                   IsSymbolPower(void) const                      { return eType == eSymbolPower; };
-    bool                   IsSymbolStringContent(void) const              { return eType == eSymbolStringContent; };
-    bool                   IsSymbolOpenBracket(void) const                { return eType == eSymbolOpenBracket; };
-    bool                   IsSymbolCloseBracket(void) const               { return eType == eSymbolCloseBracket; };
-    bool                   IsSymbolOpenSquareBracket(void) const          { return eType == eSymbolOpenSquareBracket; };
-    bool                   IsSymbolCloseSquareBracket(void) const         { return eType == eSymbolCloseSquareBracket; };
+
+    bool                   IsSymbolOperatorDivide(void) const             { return eType == eSymbolOperatorDivide; };
+    bool                   IsSymbolOperatorMinus(void) const              { return eType == eSymbolOperatorMinus; };
+    bool                   IsSymbolOperatorMultiply(void) const           { return eType == eSymbolOperatorMultiply; };
+    bool                   IsSymbolOperatorPlus(void) const               { return eType == eSymbolOperatorPlus; };
+    bool                   IsSymbolOperatorPower(void) const              { return eType == eSymbolOperatorPower; };
+    
     bool                   IsSymbolComma(void) const                      { return eType == eSymbolComma; };
     bool                   IsSymbolPeriod(void) const                     { return eType == eSymbolPeriod; };
     bool                   IsSymbolDoubleColon(void) const                { return eType == eSymbolDoubleColon; };
+    bool                   IsSymbolStringContent(void) const              { return eType == eSymbolStringContent; };
     bool                   IsSymbolEOF(void) const                        { return eType == eSymbolEOF; };
+
     static RedVSIIOElement SymbolAssignDivide(void)                       { return RedVSIIOElement(eSymbolAssignDivide); };
     static RedVSIIOElement SymbolAssignEqual(void)                        { return RedVSIIOElement(eSymbolAssignEqual); };
     static RedVSIIOElement SymbolAssignMinus(void)                        { return RedVSIIOElement(eSymbolAssignMinus); };
     static RedVSIIOElement SymbolAssignMultiply(void)                     { return RedVSIIOElement(eSymbolAssignMultiply); };
     static RedVSIIOElement SymbolAssignPlus(void)                         { return RedVSIIOElement(eSymbolAssignPlus); };
+
+    static RedVSIIOElement SymbolBracketOpen(void)                        { return RedVSIIOElement(eSymbolBracketOpen); };
+    static RedVSIIOElement SymbolBracketClose(void)                       { return RedVSIIOElement(eSymbolBracketClose); };
+    static RedVSIIOElement SymbolBracketOpenCurly(void)                   { return RedVSIIOElement(eSymbolBracketOpenCurly); };
+    static RedVSIIOElement SymbolBracketCloseCurly(void)                  { return RedVSIIOElement(eSymbolBracketCloseCurly); };
+    static RedVSIIOElement SymbolBracketOpenSquare(void)                  { return RedVSIIOElement(eSymbolBracketOpenSquare); };
+    static RedVSIIOElement SymbolBracketCloseSquare(void)                 { return RedVSIIOElement(eSymbolBracketCloseSquare); };
+
     static RedVSIIOElement SymbolCompareEqual(void)                       { return RedVSIIOElement(eSymbolCompareEqual); };
     static RedVSIIOElement SymbolCompareNotEqual(void)                    { return RedVSIIOElement(eSymbolCompareNotEqual); };
     static RedVSIIOElement SymbolCompareLessThan(void)                    { return RedVSIIOElement(eSymbolCompareLessThan); };
     static RedVSIIOElement SymbolCompareGreaterThan(void)                 { return RedVSIIOElement(eSymbolCompareGreaterThan); };
     static RedVSIIOElement SymbolCompareLessThanOrEqual(void)             { return RedVSIIOElement(eSymbolCompareLessThanOrEqual); };
     static RedVSIIOElement SymbolCompareGreaterThanOrEqual(void)          { return RedVSIIOElement(eSymbolCompareGreaterThanOrEqual); };
+
     static RedVSIIOElement SymbolLogicAnd(void)                           { return RedVSIIOElement(eSymbolLogicAnd); };
     static RedVSIIOElement SymbolLogicOr(void)                            { return RedVSIIOElement(eSymbolLogicOr); };
     static RedVSIIOElement SymbolLogicNot(void)                           { return RedVSIIOElement(eSymbolLogicNot); };
-    static RedVSIIOElement SymbolDivide(void)                             { return RedVSIIOElement(eSymbolDivide); };
-    static RedVSIIOElement SymbolMinus(void)                              { return RedVSIIOElement(eSymbolMinus); };
-    static RedVSIIOElement SymbolMultiply(void)                           { return RedVSIIOElement(eSymbolMultiply); };
-    static RedVSIIOElement SymbolPlus(void)                               { return RedVSIIOElement(eSymbolPlus); };
-    static RedVSIIOElement SymbolPower(void)                              { return RedVSIIOElement(eSymbolPower); };
-    static RedVSIIOElement SymbolStringContent(void)                      { return RedVSIIOElement(eSymbolStringContent); };
-    static RedVSIIOElement SymbolOpenBracket(void)                        { return RedVSIIOElement(eSymbolOpenBracket); };
-    static RedVSIIOElement SymbolCloseBracket(void)                       { return RedVSIIOElement(eSymbolCloseBracket); };
-    static RedVSIIOElement SymbolOpenSquareBracket(void)                  { return RedVSIIOElement(eSymbolOpenSquareBracket); };
-    static RedVSIIOElement SymbolCloseSquareBracket(void)                 { return RedVSIIOElement(eSymbolCloseSquareBracket); };
+
+    static RedVSIIOElement SymbolOperatorPlus(void)                       { return RedVSIIOElement(eSymbolOperatorPlus); };
+    static RedVSIIOElement SymbolOperatorMinus(void)                      { return RedVSIIOElement(eSymbolOperatorMinus); };
+    static RedVSIIOElement SymbolOperatorMultiply(void)                   { return RedVSIIOElement(eSymbolOperatorMultiply); };
+    static RedVSIIOElement SymbolOperatorDivide(void)                     { return RedVSIIOElement(eSymbolOperatorDivide); };
+    static RedVSIIOElement SymbolOperatorPower(void)                      { return RedVSIIOElement(eSymbolOperatorPower); };
+ 
     static RedVSIIOElement SymbolComma(void)                              { return RedVSIIOElement(eSymbolComma); };
     static RedVSIIOElement SymbolPeriod(void)                             { return RedVSIIOElement(eSymbolPeriod); };
     static RedVSIIOElement SymbolDoubleColon(void)                        { return RedVSIIOElement(eSymbolDoubleColon); };
+    static RedVSIIOElement SymbolStringContent(void)                      { return RedVSIIOElement(eSymbolStringContent); };
+
     static RedVSIIOElement SymbolEOF(void)                                { return RedVSIIOElement(eSymbolEOF); };
 
     // Operators
@@ -226,28 +242,35 @@ private:
         eSymbolAssignMinus,
         eSymbolAssignMultiply,
         eSymbolAssignPlus,
+
+        eSymbolBracketOpen,
+        eSymbolBracketClose,
+        eSymbolBracketOpenCurly,
+        eSymbolBracketCloseCurly,
+        eSymbolBracketOpenSquare,
+        eSymbolBracketCloseSquare,
+
         eSymbolCompareEqual,
         eSymbolCompareNotEqual,
         eSymbolCompareLessThan,
         eSymbolCompareGreaterThan,
         eSymbolCompareLessThanOrEqual,
         eSymbolCompareGreaterThanOrEqual,
+        
         eSymbolLogicAnd,
         eSymbolLogicOr,
         eSymbolLogicNot,
-        eSymbolDivide,
-        eSymbolMinus,
-        eSymbolMultiply,
-        eSymbolPlus,
-        eSymbolPower,
-        eSymbolStringContent,
-        eSymbolOpenBracket,
-        eSymbolCloseBracket,
-        eSymbolOpenSquareBracket,
-        eSymbolCloseSquareBracket,
+        
+        eSymbolOperatorDivide,
+        eSymbolOperatorMinus,
+        eSymbolOperatorMultiply,
+        eSymbolOperatorPlus,
+        eSymbolOperatorPower,
+
         eSymbolComma,
         eSymbolPeriod,
         eSymbolDoubleColon,
+        eSymbolStringContent,
 
         eSymbolEOF
     } TELangElem;

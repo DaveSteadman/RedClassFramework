@@ -200,8 +200,8 @@ RedResult RedTestVSI::TestParseFactory_001(void)
         RedDataString testExpr("4300 + 21");
 
         RedVSITokenElementMap tokenMap;
-        tokenMap.Add(RedDataString("+"), RedVSIIOElement::SymbolPlus());
-        tokenMap.Add(RedDataString("-"), RedVSIIOElement::SymbolMinus());
+        tokenMap.Add(RedDataString("+"), RedVSIIOElement::SymbolOperatorPlus());
+        tokenMap.Add(RedDataString("-"), RedVSIIOElement::SymbolOperatorMinus());
 
         RedVSITokenBuffer tokBuf;
 
@@ -240,7 +240,7 @@ RedResult RedTestVSI::TestParseFactory_002(void)
         RedDataString testExpr("x = 'hello' + ' red'");
 
         RedVSITokenElementMap tokenMap;
-        tokenMap.Add(RedDataString("+"), RedVSIIOElement::SymbolPlus());
+        tokenMap.Add(RedDataString("+"), RedVSIIOElement::SymbolOperatorPlus());
         tokenMap.Add(RedDataString("="), RedVSIIOElement::SymbolAssignEqual());
         //tokenMap.Add(RedDataString("'"), RedVSIIOElement::SymbolStringContent());
 
@@ -292,11 +292,11 @@ RedResult RedTestVSI::TestParseFactory_003(void)
         RedDataString testExpr("x = (3 + 2) * 20");
 
         RedVSITokenElementMap tokenMap;
-        tokenMap.Add(RedDataString("+"), RedVSIIOElement::SymbolPlus());
-        tokenMap.Add(RedDataString("*"), RedVSIIOElement::SymbolMultiply());
+        tokenMap.Add(RedDataString("+"), RedVSIIOElement::SymbolOperatorPlus());
+        tokenMap.Add(RedDataString("*"), RedVSIIOElement::SymbolOperatorMultiply());
         tokenMap.Add(RedDataString("="), RedVSIIOElement::SymbolAssignEqual());
-        tokenMap.Add(RedDataString("("), RedVSIIOElement::SymbolOpenBracket());
-        tokenMap.Add(RedDataString(")"), RedVSIIOElement::SymbolCloseBracket());
+        tokenMap.Add(RedDataString("("), RedVSIIOElement::SymbolBracketOpen());
+        tokenMap.Add(RedDataString(")"), RedVSIIOElement::SymbolBracketClose());
 
         // - - - Extract the tokens - - - 
 
@@ -353,8 +353,8 @@ RedResult RedTestVSI::TestCmdNew(void)
             RedDataString testExpr("4300 + 12");
 
             RedVSITokenElementMap tokenMap;
-            tokenMap.Add(RedDataString("+"), RedVSIIOElement::SymbolPlus());
-            tokenMap.Add(RedDataString("-"), RedVSIIOElement::SymbolMinus());
+            tokenMap.Add(RedDataString("+"), RedVSIIOElement::SymbolOperatorPlus());
+            tokenMap.Add(RedDataString("-"), RedVSIIOElement::SymbolOperatorMinus());
 
             RedVSITokenBuffer tokBuf;
 
@@ -677,34 +677,44 @@ RedResult RedTestVSI::TestFragment_Expr(void)
         new local number x   = 3 \
         x = x + 1 \
         x = x * 2";
-    //    RedDataString strCodeFragment = "\
-    //        new local record x \
-    //        x[aa] = 12 ";
 
-        // Turn the code into tokens
+    // Turn the code into tokens
     RedVSILibTokenMap cTokenMap;
     RedVSITokenBuffer cTokenList;
     RedLog            cRedLog;
     if (!RedVSITokenFactory::CreateTokens(strCodeFragment, cTokenMap.cVSILibTokenMap, cTokenList))
         return kResultFail;
 
+    // - - - From this point on we need to delete the created elements - - - - - -
+ 
     // Turn the tokens into code
     RedVSICmd* topCmd = RedVSICmdFactory::RunConstuctionCompetition(cTokenList, cRedLog);
     if (topCmd == NULL)
         return kResultFail;
     if (cRedLog.ContainsError())
+    {
+        delete topCmd;
         return kResultFail;
+    }
 
     // Execute the code in a context
     RedVSIContextRoutine testContext(&cRedLog, topCmd);
     testContext.Execute(10);
     if (cRedLog.ContainsError())
+    {
+        delete topCmd;
         return kResultFail;
+    }
 
     // Check the execution result
     RedDataVariant x = testContext.DataItemAsVariant("x");
-    if (x != 8) return kResultFail;
+    if (x != 8) 
+    {
+        delete topCmd;
+        return kResultFail;
+    }
 
+    delete topCmd;
     return kResultSuccess;
 }
 

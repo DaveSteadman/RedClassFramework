@@ -58,15 +58,13 @@ RedType* RedDataList::Clone(void) const
 void RedDataList::InitToSize(unsigned uNumItems, RedDataType cItemType)
 {
     // Clear any existing list
-    if (pList) { delete pList; pList = NULL; }
+    if (pList) 
+        delete pList; 
 
     pList = new RedTypeList;
 
-    RedType* pNewListObj = NULL;
     for (unsigned i = 0; i < uNumItems; i++)
-    {
-        pNewListObj = RedType::NewRedObj(cItemType);
-    }
+        pList->AddLast(RedType::NewRedObj(cItemType));
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

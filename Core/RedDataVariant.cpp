@@ -297,6 +297,48 @@ RedDataChar RedDataVariant::CharValue(void) const
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
+double RedDataVariant::DoubleValue(void) const
+{
+    double retDbl = 0.0;
+
+    if (pData->Type().IsNum())
+    {
+        RedDataNumber* pNumData = dynamic_cast<RedDataNumber*>(pData);
+        retDbl = pNumData->DoubleValue();
+    }
+    if (pData->Type().IsStr())
+    {
+        RedDataString* pStrData = dynamic_cast<RedDataString*>(pData);
+        RedDataNumber tempNum(*pStrData);
+        retDbl = tempNum.DoubleValue();
+    }
+
+    return retDbl;
+}
+
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+int RedDataVariant::IntegerValue(void) const
+{
+    int retInt = 0;
+
+    if (pData->Type().IsNum())
+    {
+        RedDataNumber* pNumData = dynamic_cast<RedDataNumber*>(pData);
+        retInt = pNumData->IntegerValue();
+    }
+    if (pData->Type().IsStr())
+    {
+        RedDataString* pStrData = dynamic_cast<RedDataString*>(pData);
+        RedDataNumber tempNum(*pStrData);
+        retInt = tempNum.IntegerValue();
+    }
+
+    return retInt;
+}
+
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
 RedDataList RedDataVariant::ListValue(void) const
 {
     RedDataList cLst;

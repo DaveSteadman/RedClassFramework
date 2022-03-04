@@ -65,12 +65,12 @@ void RedVSILibTokenMap::SetupTokenMap(void)
         cVSILibTokenMap.Add(kVSIIOElementSymbolAssignDivide,              RedVSIIOElement::SymbolAssignDivide());
         cVSILibTokenMap.Add(kVSIIOElementSymbolAssignEqual,               RedVSIIOElement::SymbolAssignEqual());
 
-        cVSILibTokenMap.Add(kVSIIOElementSymbolOpenBracket,               RedVSIIOElement::SymbolBracketOpen());
-        cVSILibTokenMap.Add(kVSIIOElementSymbolCloseBracket,              RedVSIIOElement::SymbolBracketClose());
-        cVSILibTokenMap.Add(kVSIIOElementSymbolOpenCurlyBracket,          RedVSIIOElement::SymbolBracketOpen());
-        cVSILibTokenMap.Add(kVSIIOElementSymbolCloseCurlyBracket,         RedVSIIOElement::SymbolBracketClose());
-        cVSILibTokenMap.Add(kVSIIOElementSymbolOpenSquareBracket,         RedVSIIOElement::SymbolBracketOpenSquare());
-        cVSILibTokenMap.Add(kVSIIOElementSymbolCloseSquareBracket,        RedVSIIOElement::SymbolBracketCloseSquare());
+        cVSILibTokenMap.Add(kVSIIOElementSymbolBracketOpen,               RedVSIIOElement::SymbolBracketOpen());
+        cVSILibTokenMap.Add(kVSIIOElementSymbolBracketClose,              RedVSIIOElement::SymbolBracketClose());
+        cVSILibTokenMap.Add(kVSIIOElementSymbolBracketOpenCurly,          RedVSIIOElement::SymbolBracketOpen());
+        cVSILibTokenMap.Add(kVSIIOElementSymbolBracketCloseCurly,         RedVSIIOElement::SymbolBracketClose());
+        cVSILibTokenMap.Add(kVSIIOElementSymbolBracketOpenSquare,         RedVSIIOElement::SymbolBracketOpenSquare());
+        cVSILibTokenMap.Add(kVSIIOElementSymbolBracketCloseSquare,        RedVSIIOElement::SymbolBracketCloseSquare());
 
         cVSILibTokenMap.Add(kVSIIOElementSymbolCompareEqual,              RedVSIIOElement::SymbolCompareEqual());
         cVSILibTokenMap.Add(kVSIIOElementSymbolCompareNotEqual,           RedVSIIOElement::SymbolCompareNotEqual());
@@ -83,11 +83,11 @@ void RedVSILibTokenMap::SetupTokenMap(void)
         cVSILibTokenMap.Add(kVSIIOElementSymbolLogicNot,                  RedVSIIOElement::SymbolLogicNot());
         cVSILibTokenMap.Add(kVSIIOElementSymbolLogicOr,                   RedVSIIOElement::SymbolLogicOr());
 
-        cVSILibTokenMap.Add(kVSIIOElementSymbolPlus,                      RedVSIIOElement::SymbolOperatorPlus());
-        cVSILibTokenMap.Add(kVSIIOElementSymbolMinus,                     RedVSIIOElement::SymbolOperatorMinus());
-        cVSILibTokenMap.Add(kVSIIOElementSymbolMultiply,                  RedVSIIOElement::SymbolOperatorMultiply());
-        cVSILibTokenMap.Add(kVSIIOElementSymbolDivide,                    RedVSIIOElement::SymbolOperatorDivide());
-        cVSILibTokenMap.Add(kVSIIOElementSymbolPower,                     RedVSIIOElement::SymbolOperatorPower());
+        cVSILibTokenMap.Add(kVSIIOElementSymbolOperatorPlus,              RedVSIIOElement::SymbolOperatorPlus());
+        cVSILibTokenMap.Add(kVSIIOElementSymbolOperatorMinus,             RedVSIIOElement::SymbolOperatorMinus());
+        cVSILibTokenMap.Add(kVSIIOElementSymbolOperatorMultiply,          RedVSIIOElement::SymbolOperatorMultiply());
+        cVSILibTokenMap.Add(kVSIIOElementSymbolOperatorDivide,            RedVSIIOElement::SymbolOperatorDivide());
+        cVSILibTokenMap.Add(kVSIIOElementSymbolOperatorPower,             RedVSIIOElement::SymbolOperatorPower());
 
         cVSILibTokenMap.Add(kVSIIOElementSymbolComma,                     RedVSIIOElement::SymbolComma());
         cVSILibTokenMap.Add(kVSIIOElementSymbolPeriod,                    RedVSIIOElement::SymbolPeriod());

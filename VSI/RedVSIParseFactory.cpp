@@ -260,12 +260,12 @@ RedVSIParseTreeInterface* RedVSIParseFactory::RunSumExprCompetition(RedVSITokenB
     {
         // Read the operator
         RedVSIToken cOp = cInputBuffer.GetToken();
-        if ( (cOp.Predef().IsSymbolPlus()) || (cOp.Predef().IsSymbolMinus()) )
+        if ( (cOp.Predef().IsSymbolOperatorPlus()) || (cOp.Predef().IsSymbolOperatorMinus()) )
         {
             // Create the operator object
             pCurrOp = new RedVSIParseTreeBinaryOp();
-            if      (cOp.Predef().IsSymbolPlus())  pCurrOp->SetOp(RedVSILangElement::BinaryOpPlus());
-            else if (cOp.Predef().IsSymbolMinus()) pCurrOp->SetOp(RedVSILangElement::BinaryOpMinus());
+            if      (cOp.Predef().IsSymbolOperatorPlus())  pCurrOp->SetOp(RedVSILangElement::BinaryOpPlus());
+            else if (cOp.Predef().IsSymbolOperatorMinus()) pCurrOp->SetOp(RedVSILangElement::BinaryOpMinus());
 
             // shuffle nodes to accomodate the new operator
             pTopElem = pCurrOp;
@@ -320,12 +320,14 @@ RedVSIParseTreeInterface* RedVSIParseFactory::RunMultiExprCompetition(RedVSIToke
     {
         // Read the operator
         RedVSIToken cOp = cInputBuffer.GetToken();
-        if ( (cOp.Predef().IsSymbolMultiply()) || (cOp.Predef().IsSymbolDivide()) )
+        if ( (cOp.Predef().IsSymbolOperatorMultiply()) || (cOp.Predef().IsSymbolOperatorDivide()) )
         {
             // Create the operator object
             pCurrOp = new RedVSIParseTreeBinaryOp();
-            if      (cOp.Predef().IsSymbolMultiply()) pCurrOp->SetOp(RedVSILangElement::BinaryOpMultiply());
-            else if (cOp.Predef().IsSymbolDivide())   pCurrOp->SetOp(RedVSILangElement::BinaryOpDivide());
+            if      (cOp.Predef().IsSymbolOperatorMultiply()) 
+                pCurrOp->SetOp(RedVSILangElement::BinaryOpMultiply());
+            else if (cOp.Predef().IsSymbolOperatorDivide())   
+                pCurrOp->SetOp(RedVSILangElement::BinaryOpDivide());
 
             // shuffle nodes to accomodate the new operator
             pTopElem = pCurrOp;
@@ -380,12 +382,11 @@ RedVSIParseTreeInterface* RedVSIParseFactory::RunPowExprCompetition(RedVSITokenB
     {
         // Read the operator
         RedVSIToken cOp = cInputBuffer.GetToken();
-        if ( cOp.Predef().IsSymbolPower() )
+        if ( cOp.Predef().IsSymbolOperatorPower() )
         {
             // Create the operator object
             pCurrOp = new RedVSIParseTreeBinaryOp();
-            if (cOp.Predef().IsSymbolPower())
-                pCurrOp->SetOp(RedVSILangElement::BinaryOpPower());
+            pCurrOp->SetOp(RedVSILangElement::BinaryOpPower());
 
             // shuffle nodes to accomodate the new operator
             pTopElem = pCurrOp;
@@ -470,7 +471,7 @@ RedVSIParseTreeInterface* RedVSIParseFactory::RunSubExprCompetition(RedVSITokenB
 {
     RedVSIToken cTok = cInputBuffer.GetToken();
 
-    if (cTok.Predef().IsSymbolOpenBracket())
+    if (cTok.Predef().IsSymbolBracketOpen())
     {
         // Read the sub expression
         RedVSIParseTreeInterface* pSubExpr = RunCompareExprCompetition(cInputBuffer, log);
@@ -482,7 +483,7 @@ RedVSIParseTreeInterface* RedVSIParseFactory::RunSubExprCompetition(RedVSITokenB
         
         // Ensure the expression ends with a close bracket
         cTok = cInputBuffer.GetToken();
-        if (!cTok.Predef().IsSymbolCloseBracket())
+        if (!cTok.Predef().IsSymbolBracketClose())
         {
             log.AddText(cTok.GetPos().PosText() + RedVSIErrorCodes::GetErrorString(RedVSIErrorCodes::ePFact_SubExpr_NoExprEnd));
             return 0;
@@ -534,7 +535,7 @@ RedVSIParseTreeInterface* RedVSIParseFactory::RunVariableCompetition(RedVSIToken
     
         // check for an array index after the variable name
         cTok = cInputBuffer.GetToken();
-        if (cTok.Predef().IsSymbolOpenSquareBracket())
+        if (cTok.Predef().IsSymbolBracketOpenSquare())
         {
             // Read the array index expression
             pIndexExpr = RunCompareExprCompetition(cInputBuffer, log);
@@ -546,7 +547,7 @@ RedVSIParseTreeInterface* RedVSIParseFactory::RunVariableCompetition(RedVSIToken
 
             // read the closing array bracket, which isn't part of the expression.
             cTok = cInputBuffer.GetToken();
-            if (!cTok.Predef().IsSymbolCloseSquareBracket())
+            if (!cTok.Predef().IsSymbolBracketCloseSquare())
             {
                 log.AddText(cTok.GetPos().PosText() + RedVSIErrorCodes::GetErrorString(RedVSIErrorCodes::ePFact_Var_NoArrayExprEnd));
                 return NULL;
@@ -576,7 +577,7 @@ RedVSIParseTreeInterface* RedVSIParseFactory::RunExternalCallCompetition(RedVSIT
 
     if (!cUnitNameTok.Type().IsName())                   { return NULL; }
     if (!cFuncTok.Type().IsName())                       { return NULL; }
-    if (!cOpenBracketTok.Predef().IsSymbolOpenBracket()) { return NULL; }
+    if (!cOpenBracketTok.Predef().IsSymbolBracketOpen()) { return NULL; }
 
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     
@@ -605,7 +606,7 @@ RedVSIParseTreeInterface* RedVSIParseFactory::RunExternalCallCompetition(RedVSIT
     {
         // check for the end of the params first
         cParamTok = cInputBuffer.GetToken();
-        if (cParamTok.Predef().IsSymbolCloseBracket())
+        if (cParamTok.Predef().IsSymbolBracketClose())
         {
             iParamsComplete = 1;
         }
@@ -651,7 +652,7 @@ RedVSIParseTreeInterface* RedVSIParseFactory::RunInternalCallCompetition(RedVSIT
     RedVSIToken cOpenBracketTok = cInputBuffer.GetToken();
 
     if (!cFuncTok.Type().IsName())                       { return NULL; }
-    if (!cOpenBracketTok.Predef().IsSymbolOpenBracket()) { return NULL; }
+    if (!cOpenBracketTok.Predef().IsSymbolBracketOpen()) { return NULL; }
 
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     
@@ -676,7 +677,7 @@ RedVSIParseTreeInterface* RedVSIParseFactory::RunInternalCallCompetition(RedVSIT
     {
         // check for the end of the params first
         cParamTok = cInputBuffer.GetToken();
-        if (cParamTok.Predef().IsSymbolCloseBracket())
+        if (cParamTok.Predef().IsSymbolBracketClose())
         {
             iParamsComplete = 1;
         }

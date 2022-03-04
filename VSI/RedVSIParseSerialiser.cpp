@@ -59,13 +59,15 @@ void RedVSIParseSerialiser::SerialiseBinaryOp(RedVSITokenBuffer& cTokenBuffer, R
     else if (cOutOp.IsBinaryOpCompareNotEqual())      cOpTok.SetPredefined(RedVSIIOElement::SymbolCompareNotEqual());
     else if (cOutOp.IsBinaryOpCompareGreaterThan())   cOpTok.SetPredefined(RedVSIIOElement::SymbolCompareGreaterThan());
     else if (cOutOp.IsBinaryOpCompareLessThan())      cOpTok.SetPredefined(RedVSIIOElement::SymbolCompareLessThan());
+
     else if (cOutOp.IsBinaryOpLogicAnd())             cOpTok.SetPredefined(RedVSIIOElement::SymbolLogicAnd());
     else if (cOutOp.IsBinaryOpLogicOr())              cOpTok.SetPredefined(RedVSIIOElement::SymbolLogicOr());
-    else if (cOutOp.IsBinaryOpPower())                cOpTok.SetPredefined(RedVSIIOElement::SymbolPower());
-    else if (cOutOp.IsBinaryOpPlus())                 cOpTok.SetPredefined(RedVSIIOElement::SymbolPlus());
-    else if (cOutOp.IsBinaryOpMinus())                cOpTok.SetPredefined(RedVSIIOElement::SymbolMinus());
-    else if (cOutOp.IsBinaryOpMultiply())             cOpTok.SetPredefined(RedVSIIOElement::SymbolMultiply());
-    else if (cOutOp.IsBinaryOpDivide())               cOpTok.SetPredefined(RedVSIIOElement::SymbolDivide());
+
+    else if (cOutOp.IsBinaryOpPlus())                 cOpTok.SetPredefined(RedVSIIOElement::SymbolOperatorPlus());
+    else if (cOutOp.IsBinaryOpMinus())                cOpTok.SetPredefined(RedVSIIOElement::SymbolOperatorMinus());
+    else if (cOutOp.IsBinaryOpMultiply())             cOpTok.SetPredefined(RedVSIIOElement::SymbolOperatorMultiply());
+    else if (cOutOp.IsBinaryOpDivide())               cOpTok.SetPredefined(RedVSIIOElement::SymbolOperatorDivide());
+    else if (cOutOp.IsBinaryOpPower())                cOpTok.SetPredefined(RedVSIIOElement::SymbolOperatorPower());
 
     cTokenBuffer.AppendToken(cOpTok);
 
@@ -86,7 +88,7 @@ void RedVSIParseSerialiser::SerialiseUnaryOp(RedVSITokenBuffer& cTokenBuffer, Re
 
     // write the operator   
     if      (cOutOp.IsUnaryOpLogicNot())  cOpTok.SetPredefined(RedVSIIOElement::SymbolLogicNot());
-    else if (cOutOp.IsUnaryOpMinus())     cOpTok.SetPredefined(RedVSIIOElement::SymbolMinus());
+    else if (cOutOp.IsUnaryOpMinus())     cOpTok.SetPredefined(RedVSIIOElement::SymbolOperatorMinus());
 
     cTokenBuffer.AppendToken(cOpTok);
 
