@@ -131,32 +131,51 @@ RedResult RedTestCore::TestDataBoolean(void)
 
 RedResult RedTestCore::TestDataChar(void)
 {
-    RedDataChar a = RedDataChar(0);
-    RedDataChar b = RedDataChar('A');
-    RedDataChar c = RedDataChar('{');
+    {
+        RedDataChar a = RedDataChar(0);
+        RedDataChar b = RedDataChar('A');
+        RedDataChar c = RedDataChar('{');
 
-    if (a.IsPrintable()) return kResultFail;
-    if (!b.IsAlpha())    return kResultFail;
-    if (!c.IsBracket())  return kResultFail;
+        if (a.IsPrintable()) return kResultFail;
+        if (!b.IsAlpha())    return kResultFail;
+        if (!c.IsBracket())  return kResultFail;
 
-    a.Set(b);
-    if (!a.IsAlpha())    return kResultFail;
+        a.Set(b);
+        if (!a.IsAlpha()) return kResultFail;
 
-    c = a;
-    if (!a.IsAlpha())    return kResultFail;
+        c = a;
+        if (!a.IsAlpha()) return kResultFail;
 
-    c = 'k';
-    if (!a.IsAlpha())    return kResultFail;
+        c = 'k';
+        if (!a.IsAlpha()) return kResultFail;
 
-    c = 67;
-    if (!a.IsAlpha())    return kResultFail;
+        c = 67;
+        if (!a.IsAlpha()) return kResultFail;
 
-    a = 'a';
-    b = 'b';
-    if (a == b) return kResultFail;
+        a = 'a';
+        b = 'b';
+        if (a == b) return kResultFail;
+        a = b;
+        if (a != b) return kResultFail;
+    }
+    {
+        RedDataChar a('0');
+        RedDataChar b('4');
+        RedDataChar c('9');
+        RedDataChar x('x');
 
-    a = b;
-    if (a != b) return kResultFail;
+        if (!a.IsDecimalNumber())  return kResultFail;
+        if (a.DecimalNumber() != 0) return kResultFail;
+
+        if (!b.IsDecimalNumber())  return kResultFail;
+        if (b.DecimalNumber() != 4) return kResultFail;
+
+        if (!c.IsDecimalNumber())  return kResultFail;
+        if (c.DecimalNumber() != 9) return kResultFail;
+
+        if (x.IsDecimalNumber())  return kResultFail;
+        if (x.DecimalNumber() != 0) return kResultFail;
+    }
 
     return kResultSuccess;
 }

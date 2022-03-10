@@ -48,7 +48,7 @@ public:
     // Heap Data
     RedType*                   CreateHeapDataItem(const RedVSILangElement& cType, const RedDataString& cName);
     bool                       FindHeapDataItem(const RedDataString& cName, RedType*& pData);
-    RedType*                   HeapDataItem(const RedDataString& cName) { return cHeap.PtrForName(cName); };
+    RedType* HeapDataItem(const RedDataString& cName) { return cHeap.PtrForName(cName); };
     RedDataRecord*             Heap(void) { return &cHeap; };
 
     // Routine Stack

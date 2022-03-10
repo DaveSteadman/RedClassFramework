@@ -50,7 +50,7 @@ public:
 
     char       Char(void)             const { return ch; };
     bool       IsChar(char NewCh)     const { return ch == NewCh; };
-    int        DecimalNumber(void)    const;
+    int        DecimalNumber(void)    const { return (IsDecimalNumber()) ? (int)ch - (int)'0' : 0; };
 
     // queries
     bool       IsAlpha(void)          const { return ( ((ch>='a')&&(ch<='z')) || ((ch>='A')&&(ch<='Z')) ); };
