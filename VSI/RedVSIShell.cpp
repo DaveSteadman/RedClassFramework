@@ -19,18 +19,33 @@
 #pragma once
 
 #include "RedCoreNamespace.h"
+#include "RedVSINamespace.h"
+
+#include "RedVSIShell.h"
 
 using namespace Red::Core;
+using namespace Red::VSI;
 
 namespace Red {
 namespace VSI {
 
- // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-class RedVSIShell
+void RedVSIShell::ProcessCmdLine(RedDataString inputstr)
 {
-public:
-};
+    // Parse line
+    // lib load <path>
+    // lib list <classname>
+    // lib clear <classname>
+    // log list
+    // log clear
+    // run <routine sig>
+    // heap list
+    // heap clear <name>
+    // heap add <type> <name> = <val>
+    // runfrag <code fragment>
+    // init
+}
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 

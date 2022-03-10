@@ -34,6 +34,7 @@ public:
     // Shell Commands:
     // - load/list/clear classes&routines.
     // - List data values heap etc
+    // - Show/clear log
     // VSI Commands:
     // - execute routines
     // - execute fragments

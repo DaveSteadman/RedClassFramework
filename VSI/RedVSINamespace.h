@@ -77,3 +77,4 @@
 #include "RedVSIParseTreeVal.h"
 #include "RedVSIParseTreeVar.h"
 
+#include "RedVSIShell.h"
