@@ -58,5 +58,3 @@ private:
 
 } // VSI
 } // Red
-
-

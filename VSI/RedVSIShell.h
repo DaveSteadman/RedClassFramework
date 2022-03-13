@@ -52,18 +52,18 @@ public:
 
 private:
 
-    bool LibAddComp(RedDataString& retstr);
-    bool LibInitComp(RedDataString& retstr);
-    bool LibListComp(RedDataString& retstr);
+    bool LibAddComp(RedDataString& retstr, RedVSITokenBuffer& cInputBuffer);
+    bool LibInitComp(RedDataString& retstr, RedVSITokenBuffer& cInputBuffer);
+    bool LibListComp(RedDataString& retstr, RedVSITokenBuffer& cInputBuffer);
 
-    bool DataAddComp(RedDataString& retstr);
-    bool DataInitComp(RedDataString& retstr);
-    bool DataListComp(RedDataString& retstr);
+    bool DataAddComp(RedDataString& retstr, RedVSITokenBuffer& cInputBuffer);
+    bool DataInitComp(RedDataString& retstr, RedVSITokenBuffer& cInputBuffer);
+    bool DataListComp(RedDataString& retstr, RedVSITokenBuffer& cInputBuffer);
 
-    bool RunFragComp(RedDataString& retstr);
-    bool RunFuncComp(RedDataString& retstr);
+    bool RunFragComp(RedDataString& retstr, RedVSITokenBuffer& cInputBuffer);
+    bool RunFuncComp(RedDataString& retstr, RedVSITokenBuffer& cInputBuffer);
 
-    bool ExitComp(RedDataString& retstr);
+    bool ExitComp(RedDataString& retstr, RedVSITokenBuffer& cInputBuffer);
 };
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

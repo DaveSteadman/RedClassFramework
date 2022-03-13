@@ -25,6 +25,14 @@ using namespace Red::Core;
 namespace Red {
 namespace VSI {
 
+
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    
+void RedVSILib::Init(void)
+{
+    cClassList.Init();
+}
+
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 void RedVSILib::AddClass(RedVSILibClass* pNewClass)
@@ -70,38 +78,30 @@ RedVSILibClass* RedVSILib::FindClass(const RedDataString& cClassName)
         cIt.Next();
     }
 
-    // Not found, search for the class in a library directory if one is setup
-    if (!LibFilePath.IsEmpty())
+    return NULL;
+}
+
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+RedDataList RedVSILib::ClassNameList(void)
+{
+    RedDataList cList;
+
+    IteratorType cIt(&cClassList);
+
+    // Iterate through the loaded classes for the classname
+    cIt.First();
+    while (!cIt.IsDone())
     {
-        RedDataString fullpath = LibFilePath + cClassName + ".tml";
+        RedVSILibClass* pCurrClass = cIt.CurrentItem();
 
-        if (RedIOHandler::FileExists(fullpath))
-        {
-            // Load the class
-            RedTinyMLElement* newX = RedTinyMLFileIO::CreateTinyMLFromFile(fullpath);
-            if (newX == NULL)
-                return NULL;
+        if (pCurrClass != NULL)
+            cList.AddByPtr(pCurrClass->ClassName().Clone());
 
-            RedVSILibFactory vsiCodeLibFactory(this);
-            RedTinyMLNode*    tmlTreeNode    =  dynamic_cast<RedTinyMLNode*>(newX);
-
-            RedLog log;
-            vsiCodeLibFactory.InputTmlClass(tmlTreeNode, log);
-
-            cIt.First();
-            while (!cIt.IsDone())
-            {
-                RedVSILibClass* pCurrClass = cIt.CurrentItem();
-
-                if (pCurrClass->ClassName() == cClassName)
-                    return pCurrClass;
-
-                cIt.Next();
-            }
-        }
+        cIt.Next();
     }
 
-    return NULL;
+    return cList;
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -147,19 +147,6 @@ RedVSILibRoutine* RedVSILib::FindRoutine(const RedDataString& cClassName, const 
         pRoutine = pClass->FindRoutineByName(cRoutineName);
 
     return pRoutine;
-}
-
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-bool RedVSILib::DoesClassFileExist(const RedDataString& classname)
-{
-    bool retval = false;
-
-    RedDataString fullpath = LibFilePath + classname + ".tml";
-
-    retval = RedIOHandler::FileExists(fullpath);
-
-    return retval;
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

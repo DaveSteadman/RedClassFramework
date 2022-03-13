@@ -60,5 +60,92 @@ RedDataString RedVSIShell::ProcessCmdLine(RedDataString inputstr)
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
+bool RedVSIShell::LibAddComp(RedDataString& retstr, RedVSITokenBuffer& cInputBuffer)
+{
+
+    RedDataString filepath = "";
+
+    if (!RedIOHandler::FileExists(filepath))
+        return false;
+
+    return false;
+}
+
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+bool RedVSIShell::LibInitComp(RedDataString& retstr, RedVSITokenBuffer& cInputBuffer)
+{
+
+    eCodeLib.Init();
+
+    return false;
+}
+
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+bool RedVSIShell::LibListComp(RedDataString& retstr, RedVSITokenBuffer& cInputBuffer)
+{
+
+    RedDataList cList = eCodeLib.ClassNameList();
+
+    unsigned listcount = cList.NumItems();
+
+    for (unsigned i = 0; i < listcount; i++)
+    {
+        RedDataString* x;
+        x = dynamic_cast<RedDataString*>(cList.PtrForIndex(i));
+
+
+        retstr += *x;
+        retstr += "\n";
+    }
+
+    return false;
+}
+
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+bool RedVSIShell::DataAddComp(RedDataString& retstr, RedVSITokenBuffer& cInputBuffer)
+{
+    return false;
+}
+
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+bool RedVSIShell::DataInitComp(RedDataString& retstr, RedVSITokenBuffer& cInputBuffer)
+{
+    return false;
+}
+
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+bool RedVSIShell::DataListComp(RedDataString& retstr, RedVSITokenBuffer& cInputBuffer)
+{
+    return false;
+}
+
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+bool RedVSIShell::RunFragComp(RedDataString& retstr, RedVSITokenBuffer& cInputBuffer)
+{
+    return false;
+}
+
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+bool RedVSIShell::RunFuncComp(RedDataString& retstr, RedVSITokenBuffer& cInputBuffer)
+{
+    return false;
+}
+
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+bool RedVSIShell::ExitComp(RedDataString& retstr, RedVSITokenBuffer& cInputBuffer)
+{
+    return false;
+}
+
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
 } // VSI
 } // Red

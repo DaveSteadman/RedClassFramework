@@ -37,27 +37,26 @@ public:
     typedef RedDoubleLinkedList<RedVSILibClass*>          ListType;
     typedef RedDoubleLinkedListIterator<RedVSILibClass*>  IteratorType;
 
-    void       AddClass(RedVSILibClass* pNewClass);
-    void       DelClass(const RedDataString& cClassName);
+    void       Init(void);
+
+    // Classes
+    void            AddClass(RedVSILibClass* pNewClass);
+    void            DelClass(const RedDataString& cClassName);
+    RedVSILibClass* FindClass(const RedDataString& cClassName);
+    RedDataList     ClassNameList(void);
 
     // Find routines not const, as they may lead to the library loading a class from file.
-    RedVSILibClass*   FindClass(const RedDataString& cClassName);
     RedVSILibRoutine* FindRoutine(const RedVSIRoutineCallInterface& cSig);
     RedVSILibRoutine* FindRoutine(const RedDataString& cClassName, const RedDataString& cRoutineName);
 
     // Returns number of classes in library
     unsigned NumClasses(void) const { return cClassList.NumItems(); };
 
-    void SetLibFilePath(const RedDataString& newlibpath) { LibFilePath = newlibpath; };
-
 private:
 
     IteratorType GetClassIterator(void) { IteratorType cIt(&cClassList); return cIt; };
 
-    bool DoesClassFileExist(const RedDataString& classname);
-
-    ListType  cClassList;
-    RedDataString LibFilePath;
+    ListType cClassList;
 };
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

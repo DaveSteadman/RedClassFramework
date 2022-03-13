@@ -22,7 +22,6 @@
 #include "RedVSICmdFactory.h"
 #include "RedVSICmdSerialiser.h"
 #include "RedVSICmdLet.h"
-#include "RedVSICmdLoadCode.h"
 #include "RedVSICmdLog.h"
 #include "RedVSICmdIf.h"
 #include "RedVSICmdNew.h"
