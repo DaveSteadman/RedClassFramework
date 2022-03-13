@@ -679,7 +679,7 @@ RedResult RedTestCore::TestNumberRange(void)
 
 
     RedNumberRange FullCircleDegrees(0.0, 360.0);
-    RedNumberRange FullCircleRadians(0.0, 2 * pi);
+    RedNumberRange FullCircleRadians(0.0, 2 * kPi);
     RedDataNumber angle = 90.0;
 
     RedDataNumber ftr(FullCircleDegrees.FractionThroughRange(angle));

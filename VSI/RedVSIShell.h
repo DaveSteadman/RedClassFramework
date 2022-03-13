@@ -19,11 +19,15 @@
 #pragma once
 
 #include "RedCoreNamespace.h"
+#include "RedVSINamespace.h"
 
 using namespace Red::Core;
+using namespace Red::VSI;
 
 namespace Red {
 namespace VSI {
+
+enum class TEShellState { Unknown, Running, Waiting, Ended };
 
  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -39,9 +43,27 @@ public:
     // - execute routines
     // - execute fragments
 
-    void ProcessCmdLine(RedDataString inputstr);
+    RedDataString ProcessCmdLine(RedDataString inputstr);
+
+
+    TEShellState eState = TEShellState::Waiting;
+
+    RedVSILib eCodeLib;
 
 private:
+
+    bool LibAddComp(RedDataString& retstr);
+    bool LibInitComp(RedDataString& retstr);
+    bool LibListComp(RedDataString& retstr);
+
+    bool DataAddComp(RedDataString& retstr);
+    bool DataInitComp(RedDataString& retstr);
+    bool DataListComp(RedDataString& retstr);
+
+    bool RunFragComp(RedDataString& retstr);
+    bool RunFuncComp(RedDataString& retstr);
+
+    bool ExitComp(RedDataString& retstr);
 };
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

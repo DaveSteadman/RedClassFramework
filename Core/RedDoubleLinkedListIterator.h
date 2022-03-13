@@ -32,7 +32,7 @@ class RedDoubleLinkedListIterator
 public:
 
     typedef RedDoubleLinkedList<Element> ListType;
-    enum TESearchDir { eForwards, eBackwards };
+    enum class TESearchDir { eForwards, eBackwards };
 
     RedDoubleLinkedListIterator(const ListType* pNewList);
 
@@ -42,7 +42,7 @@ public:
     Element    CurrentItem(void) const;
 
     void       SetSearchDirection(TESearchDir eDir) { eSearchDir = eDir; };
-    void       SetSearchDirectionBackwards(void)    { eSearchDir = eBackwards; First(); };
+    void       SetSearchDirectionBackwards(void)    { eSearchDir = TESearchDir::eBackwards; First(); };
     unsigned   CollectionIndex(void) const          { return iCurrPos; };
 
 private:
@@ -58,7 +58,7 @@ template<class Element>
 RedDoubleLinkedListIterator<Element>::RedDoubleLinkedListIterator(const ListType* pNewList)
 {
     pList       = pNewList;
-    eSearchDir  = eForwards;
+    eSearchDir  = TESearchDir::eForwards;
 
     First();
 }
@@ -68,7 +68,7 @@ RedDoubleLinkedListIterator<Element>::RedDoubleLinkedListIterator(const ListType
 template<class Element>
 void RedDoubleLinkedListIterator<Element>::First(void)
 {
-    if (eSearchDir == eForwards)
+    if (eSearchDir == TESearchDir::eForwards)
         iCurrPos = pList->FirstIndex();
     else
         iCurrPos = pList->LastIndex();
@@ -79,7 +79,7 @@ void RedDoubleLinkedListIterator<Element>::First(void)
 template<class Element>
 void RedDoubleLinkedListIterator<Element>::Next(void)
 {
-    if (eSearchDir == eForwards)
+    if (eSearchDir == TESearchDir::eForwards)
         iCurrPos++;
     else
         iCurrPos--;
@@ -94,7 +94,7 @@ bool RedDoubleLinkedListIterator<Element>::IsDone(void) const
 
     if (pList->IsEmpty()) return true;
 
-    if (eSearchDir == eForwards)
+    if (eSearchDir == TESearchDir::eForwards)
     {
         if (iCurrPos > pList->LastIndex())
             iSearchDone = true;

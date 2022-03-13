@@ -31,8 +31,10 @@ namespace VSI {
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-void RedVSIShell::ProcessCmdLine(RedDataString inputstr)
+RedDataString RedVSIShell::ProcessCmdLine(RedDataString inputstr)
 {
+    RedDataString retStr = "";
+
     // Parse line
     // lib load <path>
     // lib list <classname>
@@ -45,6 +47,15 @@ void RedVSIShell::ProcessCmdLine(RedDataString inputstr)
     // heap add <type> <name> = <val>
     // runfrag <code fragment>
     // init
+
+    RedVSITokenBuffer cInputBuffer;
+    RedVSILibTokenMap map;
+
+    int iCreateResult = RedVSITokenFactory::CreateTokens(inputstr, map.cVSILibTokenMap, cInputBuffer);
+
+
+    retStr = "command processed.\n";
+    return retStr;
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

@@ -26,8 +26,8 @@ namespace Core {
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-#define RED_TRUE  1
-#define RED_FALSE 0
+const unsigned RED_TRUE  = 1;
+const unsigned RED_FALSE = 0;
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 // Boolean value class. As a child of RedType class, this allows a boolean value to exist in 

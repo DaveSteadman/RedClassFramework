@@ -67,7 +67,7 @@ private:
 
     // Code library
     // Using a pointer, as we would want ot craete libraries and pass them around between threads.
-    RedVSILib* pCodeLib;
+    RedVSILib* pCodeLib = NULL;
 
     // Data attributes
     RedDataRecord cHeap;

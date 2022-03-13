@@ -61,8 +61,8 @@ private:
     typedef struct TListElement
     {
         Element       Elem;
-        TListElement* pPrev;
-        TListElement* pNext;
+        TListElement* pPrev = NULL;
+        TListElement* pNext = NULL;
     } TListElement;
 
     void MakeListElement(TListElement** pNewElem);

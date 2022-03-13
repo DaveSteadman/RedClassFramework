@@ -238,9 +238,9 @@ bool RedDate::IsLeapYear(const unsigned ForYear)
 unsigned RedDate::DaysInYear(const unsigned ForYear)
 {
     if (IsLeapYear(ForYear))
-        return daysPerLeapYear;
+        return kDaysPerLeapYear;
     else
-        return daysPerRegularYear;
+        return kDaysPerRegularYear;
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -257,7 +257,7 @@ void RedDate::NextDay(void)
         // update just the month if we can
         if (month)
         {
-            if (month < monthsPerYear)
+            if (month < kMonthsPerYear)
             {
                 date = 1;
                 month++;
@@ -294,7 +294,7 @@ void RedDate::PrevDay(void)
         {
             // else, update the year
             year--;
-            month = monthsPerYear;
+            month = kMonthsPerYear;
             date = DaysInMonth(month, year);
         }
     }
