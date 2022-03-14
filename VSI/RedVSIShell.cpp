@@ -49,6 +49,143 @@ RedDataString RedVSIShell::ProcessCmdLine(RedDataString inputstr)
     // heap add <type> <name> = <val>
     // runfrag <code fragment>
     // init
+
+    RedVSITokenBuffer cInputBuffer;
+    RedVSILibTokenMap map;
+
+    int iCreateResult = RedVSITokenFactory::CreateTokens(inputstr, map.cVSILibTokenMap, cInputBuffer);
+
+    RedLog cLog;
+    if      (ExitComp(cInputBuffer, cLog))     retStr = cLog.AllLoggedText();
+    else if (DataInitComp(cInputBuffer, cLog)) retStr = cLog.AllLoggedText();
+
+    return retStr;
+}
+
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+bool RedVSIShell::LibAddComp(RedVSITokenBuffer& cInputBuffer, RedLog& cLog)
+{
+
+    RedDataString filepath = "";
+
+    if (!RedIOHandler::FileExists(filepath))
+        return false;
+
+    return false;
+}
+
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+bool RedVSIShell::LibInitComp(RedVSITokenBuffer& cInputBuffer, RedLog& cLog)
+{
+
+    eCodeLib.Init();
+
+    return false;
+}
+
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+bool RedVSIShell::LibListComp(RedVSITokenBuffer& cInputBuffer, RedLog& cLog)
+{
+    RedDataList cList = eCodeLib.ClassNameList();
+
+    unsigned listcount = cList.NumItems();
+
+    RedDataString retstr;
+    for (unsigned i = 0; i < listcount; i++)
+    {
+        RedDataString* x;
+        x = dynamic_cast<RedDataString*>(cList.PtrForIndex(i));
+
+
+        retstr += *x;
+        retstr += "\n";
+    }
+    cLog.AddText(retstr);
+
+    return false;
+}
+
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+bool RedVSIShell::DataAddComp(RedVSITokenBuffer& cInputBuffer, RedLog& cLog)
+{
+    return false;
+}
+
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+bool RedVSIShell::DataInitComp(RedVSITokenBuffer& cInputBuffer, RedLog& cLog)
+{
+    RedVSIToken cCmdTok  = cInputBuffer.GetToken();
+    RedVSIToken cCmd2Tok = cInputBuffer.GetToken();
+
+    if (cCmdTok.Predef().IsKeywordShellData() && 
+        cCmd2Tok.Predef().IsKeywordShellInit() )
+    {
+        cLog.AddText("DataInit Command Processed.");
+
+        return true;
+
+    }
+
+    // not data init command, return the token and fail the comp.
+    cInputBuffer.SetTokenIndexBackOne();
+    cInputBuffer.SetTokenIndexBackOne();
+    return false;
+}
+
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+bool RedVSIShell::DataListComp(RedVSITokenBuffer& cInputBuffer, RedLog& cLog)
+{
+    return false;
+}
+
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+bool RedVSIShell::RunFragComp(RedVSITokenBuffer& cInputBuffer, RedLog& cLog)
+{
+    RedVSIToken cCmdTok = cInputBuffer.GetToken();
+
+    if (cCmdTok.Predef().IsKeywordShellRun())
+    {
+
+    }
+    return false;
+}
+
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+bool RedVSIShell::RunFuncComp(RedVSITokenBuffer& cInputBuffer, RedLog& cLog)
+{
+    RedVSIToken cCmdTok = cInputBuffer.GetToken();
+
+    if (cCmdTok.Predef().IsKeywordShellRun())
+    {
+
+    }
+    return false;
+}
+
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+bool RedVSIShell::ExitComp(RedVSITokenBuffer& cInputBuffer, RedLog& cLog)
+{
+    RedVSIToken cCmdTok = cInputBuffer.GetToken();
+
+    if (cCmdTok.Predef().IsKeywordShellExit())
+    {
+        eState = TEShellState::Ended;
+        cLog.AddText("Exit Command Processed.");
+        return true;
+    }
+
+    // not exit command, return the token and fail the comp.
+    cInputBuffer.SetTokenIndexBackOne();
+    return false;
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

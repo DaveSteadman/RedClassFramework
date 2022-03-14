@@ -35,6 +35,7 @@ int main()
     bool inputvalid = true;
 
     Red::VSI::RedVSIShell cVsiShell;
+    Red::Core::RedDataString retstr;
 
     std::cout << "\n";
     while (inputvalid)
@@ -43,7 +44,8 @@ int main()
         std::cout << ":>";
         std::cin.getline(inputline, 256);
 
-        cVsiShell.ProcessCmdLine(RedDataString(inputline));
+        retstr = cVsiShell.ProcessCmdLine(RedDataString(inputline));
+        std::cout << retstr.TextPtr();
 
         if (cVsiShell.eState == TEShellState::Ended)
             inputvalid = false;
