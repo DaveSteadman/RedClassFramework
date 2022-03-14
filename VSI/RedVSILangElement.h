@@ -189,6 +189,7 @@ protected:
         eTypeRecord,
         eTypeString,
 
+        // Binary Ops
         eBinaryOpAssignDivide,
         eBinaryOpAssignEqual,
         eBinaryOpAssignMinus,

@@ -4,6 +4,7 @@
 #include <iostream>
 #include "RedCoreNamespace.h"
 #include "RedVSINamespace.h"
+
 #include "RedTestCentre.h"
 
 int main()
@@ -33,6 +34,8 @@ int main()
     char inputline[256];
     bool inputvalid = true;
 
+    Red::VSI::RedVSIShell cVsiShell;
+
     std::cout << "\n";
     while (inputvalid)
     {
@@ -40,7 +43,10 @@ int main()
         std::cout << ":>";
         std::cin.getline(inputline, 256);
 
+        cVsiShell.ProcessCmdLine(RedDataString(inputline));
 
+        if (cVsiShell.eState == TEShellState::Ended)
+            inputvalid = false;
     }
 
 }

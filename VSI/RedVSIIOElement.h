@@ -105,6 +105,28 @@ public:
     bool                   IsKeywordParams(void) const                    { return eType == eKeywordParams; };
     bool                   IsKeywordParent(void) const                    { return eType == eKeywordParent; };
 
+    // Shell (area)
+    bool                   IsShellAreaKeyword(void) const;
+    static RedVSIIOElement KeywordShellData(void)         { return RedVSIIOElement(eKeywordShellData); }
+    static RedVSIIOElement KeywordShellExit(void)         { return RedVSIIOElement(eKeywordShellExit); }
+    static RedVSIIOElement KeywordShellLib(void)          { return RedVSIIOElement(eKeywordShellLib); }
+    static RedVSIIOElement KeywordShellLog(void)          { return RedVSIIOElement(eKeywordShellLog); }
+    static RedVSIIOElement KeywordShellRun(void)          { return RedVSIIOElement(eKeywordShellRun); }
+    bool                   IsKeywordShellData(void) const { return eType == eKeywordShellData; };
+    bool                   IsKeywordShellExit(void) const { return eType == eKeywordShellExit; };
+    bool                   IsKeywordShellLib(void)  const { return eType == eKeywordShellLib; };
+    bool                   IsKeywordShellLog(void)  const { return eType == eKeywordShellLog; };
+    bool                   IsKeywordShellRun(void)  const { return eType == eKeywordShellRun; };
+
+    // Shell (action)
+    bool                   IsShellActionKeyword(void) const;
+    static RedVSIIOElement KeywordShellAdd(void)          { return RedVSIIOElement(eKeywordShellAdd); }
+    static RedVSIIOElement KeywordShellInit(void)         { return RedVSIIOElement(eKeywordShellInit); }
+    static RedVSIIOElement KeywordShellList(void)         { return RedVSIIOElement(eKeywordShellList); }
+    bool                   IsKeywordShellAdd(void)  const { return eType == eKeywordShellAdd; };
+    bool                   IsKeywordShellInit(void) const { return eType == eKeywordShellInit; };
+    bool                   IsKeywordShellList(void) const { return eType == eKeywordShellList; };
+
     // Operators and separators
     bool                   IsOperatorSymbol(void) const;
     bool                   IsAssignOpSymbol(void) const;
@@ -231,6 +253,18 @@ private:
         eKeywordEndloop,
         eKeywordLog,
         eKeywordReturn,
+
+        // Shell Area
+        eKeywordShellData,
+        eKeywordShellLib,
+        eKeywordShellLog,
+        eKeywordShellRun,
+        eKeywordShellExit,
+
+        // Shell Action
+        eKeywordShellAdd,
+        eKeywordShellInit,
+        eKeywordShellList,
 
         // Bool Values
         eKeywordBoolValueTrue,

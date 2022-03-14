@@ -42,7 +42,7 @@ public:
 
 private:
 
-    static bool                EOFComp   (RedVSITokenBuffer& cInputBuffer, RedLog& RedLog);
+    static bool       EOFComp   (RedVSITokenBuffer& cInputBuffer, RedLog& RedLog);
 
     static RedVSICmd* ExprComp  (RedVSITokenBuffer& cInputBuffer, RedLog& RedLog);
     static RedVSICmd* IfComp    (RedVSITokenBuffer& cInputBuffer, RedLog& RedLog);

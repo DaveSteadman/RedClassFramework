@@ -31,6 +31,8 @@ enum class TEShellState { Unknown, Running, Waiting, Ended };
 
  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
+    class enum TEShellState = { eRunning, eExit };
+
 class RedVSIShell
 {
 public:
@@ -45,25 +47,7 @@ public:
 
     RedDataString ProcessCmdLine(RedDataString inputstr);
 
-
-    TEShellState eState = TEShellState::Waiting;
-
-    RedVSILib eCodeLib;
-
 private:
-
-    bool LibAddComp(RedDataString& retstr, RedVSITokenBuffer& cInputBuffer);
-    bool LibInitComp(RedDataString& retstr, RedVSITokenBuffer& cInputBuffer);
-    bool LibListComp(RedDataString& retstr, RedVSITokenBuffer& cInputBuffer);
-
-    bool DataAddComp(RedDataString& retstr, RedVSITokenBuffer& cInputBuffer);
-    bool DataInitComp(RedDataString& retstr, RedVSITokenBuffer& cInputBuffer);
-    bool DataListComp(RedDataString& retstr, RedVSITokenBuffer& cInputBuffer);
-
-    bool RunFragComp(RedDataString& retstr, RedVSITokenBuffer& cInputBuffer);
-    bool RunFuncComp(RedDataString& retstr, RedVSITokenBuffer& cInputBuffer);
-
-    bool ExitComp(RedDataString& retstr, RedVSITokenBuffer& cInputBuffer);
 };
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

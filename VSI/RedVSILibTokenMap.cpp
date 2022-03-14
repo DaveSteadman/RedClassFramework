@@ -59,6 +59,15 @@ void RedVSILibTokenMap::SetupTokenMap(void)
         cVSILibTokenMap.Add(kVSIIOElementKeywordTrue,                     RedVSIIOElement::KeywordTrue());
         cVSILibTokenMap.Add(kVSIIOElementKeywordWhile,                    RedVSIIOElement::KeywordWhile());
 
+        cVSILibTokenMap.Add(kVSIIOElementKeywordAdd,                      RedVSIIOElement::KeywordShellData());
+        cVSILibTokenMap.Add(kVSIIOElementKeywordExit,                     RedVSIIOElement::KeywordShellExit());
+        cVSILibTokenMap.Add(kVSIIOElementKeywordLib,                      RedVSIIOElement::KeywordShellLib());
+        cVSILibTokenMap.Add(kVSIIOElementKeywordLog,                      RedVSIIOElement::KeywordShellLog());
+        cVSILibTokenMap.Add(kVSIIOElementKeywordRun,                      RedVSIIOElement::KeywordShellRun());
+        cVSILibTokenMap.Add(kVSIIOElementKeywordAdd,                      RedVSIIOElement::KeywordShellAdd());
+        cVSILibTokenMap.Add(kVSIIOElementKeywordInit,                     RedVSIIOElement::KeywordShellInit());
+        cVSILibTokenMap.Add(kVSIIOElementKeywordList,                     RedVSIIOElement::KeywordShellList());
+
         cVSILibTokenMap.Add(kVSIIOElementSymbolAssignPlus,                RedVSIIOElement::SymbolAssignPlus());
         cVSILibTokenMap.Add(kVSIIOElementSymbolAssignMinus,               RedVSIIOElement::SymbolAssignMinus());
         cVSILibTokenMap.Add(kVSIIOElementSymbolAssignMultiply,            RedVSIIOElement::SymbolAssignMultiply());

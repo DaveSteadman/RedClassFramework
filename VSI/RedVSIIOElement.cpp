@@ -96,6 +96,30 @@ bool RedVSIIOElement::IsLibraryKeyword(void) const
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
+bool RedVSIIOElement::IsShellAreaKeyword(void) const
+{
+    if (IsKeywordShellData()) return true;
+    if (IsKeywordShellLib())  return true;
+    if (IsKeywordShellLog())  return true;
+    if (IsKeywordShellRun())  return true;
+    if (IsKeywordShellExit())  return true;
+
+    return false;
+}
+
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+bool RedVSIIOElement::IsShellActionKeyword(void) const
+{
+    if (IsKeywordShellAdd())  return true;
+    if (IsKeywordShellInit()) return true;
+    if (IsKeywordShellList()) return true;
+
+    return false;
+}
+
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
 bool RedVSIIOElement::IsOperatorSymbol(void) const
 {
     if (IsAssignOpSymbol())      return true;
