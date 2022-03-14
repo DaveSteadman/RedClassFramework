@@ -43,6 +43,20 @@ public:
     // - execute routines
     // - execute fragments
 
+    // Shell (or other top-level)
+        // Heap
+        // Library
+        // Log
+    // Thread
+        // Routine-call list
+        // Library pointer
+        // Log pointer
+    // Routine
+        // Stack
+        // Parse tree
+        // Library pointer
+        // Log pointer
+
     RedDataString ProcessCmdLine(RedDataString inputstr);
 
     TEShellState eState = TEShellState::Waiting;
