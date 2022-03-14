@@ -49,6 +49,9 @@ public:
 
     RedVSILib eCodeLib;
 
+    // Data attributes
+    RedDataRecord cHeap;
+
 private:
 
     bool LibAddComp(RedVSITokenBuffer& cInputBuffer, RedLog& cLog);

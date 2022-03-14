@@ -37,7 +37,7 @@ RedTinyMLNode::~RedTinyMLNode()
         this->nodelist.DelLast();
     }
 }
-    
+
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 RedTinyMLNode* RedTinyMLNode::CreateChildNode(const RedDataString& NewName)

@@ -11,42 +11,32 @@ int main()
 {
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-    Red::Core::RedLog cLog;
-    Red::Test::RedTestCentre::RunAllUnitTests(cLog);
-    std::cout << cLog.AllLoggedText().TextPtr();
+    //Red::Core::RedLog cLog;
+    //Red::Test::RedTestCentre::RunAllUnitTests(cLog);
+    //std::cout << cLog.AllLoggedText().TextPtr();
 
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-    Red::Core::RedDataString cTestString = "Red Framework";
-
-    Red::Core::RedDataChar cTestCh = cTestString[2];
-    cTestString.SetCharAtIndex(2, 'e');
-
-    Red::Core::RedTinyMLNode cRootNode("root");
-    cRootNode.CreateChildNode("OptA");
-
-    Red::Core::RedBufferOutput outputBuf;
-    RedTinyMLFileIO::SerialiseCore(outputBuf, &cRootNode, TESerialiseType::LinedIndentedContent);
-
-    std::cout << "Hello " << cTestString.TextPtr() << "!\n" << outputBuf.ExtractData().TextPtr();
-
+    std::cout << "Red Shell\n";
 
     char inputline[256];
-    bool inputvalid = true;
 
     Red::VSI::RedVSIShell cVsiShell;
     Red::Core::RedDataString retstr;
 
-    std::cout << "\n";
+    bool inputvalid = true;
     while (inputvalid)
     {
+        // Initialise and get line
         for (int i = 0; i < 256; i++) inputline[i] = '\0';
         std::cout << ":>";
         std::cin.getline(inputline, 256);
 
+        // Run Command and output results
         retstr = cVsiShell.ProcessCmdLine(RedDataString(inputline));
         std::cout << retstr.TextPtr();
 
+        // End when shell done
         if (cVsiShell.eState == TEShellState::Ended)
             inputvalid = false;
     }

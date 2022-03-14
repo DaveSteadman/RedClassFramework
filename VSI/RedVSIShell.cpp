@@ -57,7 +57,12 @@ RedDataString RedVSIShell::ProcessCmdLine(RedDataString inputstr)
 
     RedLog cLog;
     if      (ExitComp(cInputBuffer, cLog))     retStr = cLog.AllLoggedText();
+    else if (DataAddComp(cInputBuffer, cLog))  retStr = cLog.AllLoggedText();
     else if (DataInitComp(cInputBuffer, cLog)) retStr = cLog.AllLoggedText();
+    else if (DataListComp(cInputBuffer, cLog)) retStr = cLog.AllLoggedText();
+    else if (RunFragComp(cInputBuffer, cLog))  retStr = cLog.AllLoggedText();
+    else if (cInputBuffer.NumTokens() > 0)     retStr = "Command Not Found\n";
+    else                                       retStr = "";
 
     return retStr;
 }
@@ -112,6 +117,20 @@ bool RedVSIShell::LibListComp(RedVSITokenBuffer& cInputBuffer, RedLog& cLog)
 
 bool RedVSIShell::DataAddComp(RedVSITokenBuffer& cInputBuffer, RedLog& cLog)
 {
+    RedVSIToken cCmdTok = cInputBuffer.GetToken();
+    RedVSIToken cCmd2Tok = cInputBuffer.GetToken();
+
+    if (cCmdTok.Predef().IsKeywordShellData() &&
+        cCmd2Tok.Predef().IsKeywordShellAdd())
+    {
+        cLog.AddText("DataAdd Command Processed.");
+
+        return true;
+    }
+
+    // not data init command, return the token and fail the comp.
+    cInputBuffer.SetTokenIndexBackOne();
+    cInputBuffer.SetTokenIndexBackOne();
     return false;
 }
 
@@ -128,7 +147,6 @@ bool RedVSIShell::DataInitComp(RedVSITokenBuffer& cInputBuffer, RedLog& cLog)
         cLog.AddText("DataInit Command Processed.");
 
         return true;
-
     }
 
     // not data init command, return the token and fail the comp.
@@ -141,6 +159,20 @@ bool RedVSIShell::DataInitComp(RedVSITokenBuffer& cInputBuffer, RedLog& cLog)
 
 bool RedVSIShell::DataListComp(RedVSITokenBuffer& cInputBuffer, RedLog& cLog)
 {
+    RedVSIToken cCmdTok = cInputBuffer.GetToken();
+    RedVSIToken cCmd2Tok = cInputBuffer.GetToken();
+
+    if (cCmdTok.Predef().IsKeywordShellData() &&
+        cCmd2Tok.Predef().IsKeywordShellList())
+    {
+        cLog.AddText("DataList Command Processed.");
+
+        return true;
+    }
+
+    // not data init command, return the token and fail the comp.
+    cInputBuffer.SetTokenIndexBackOne();
+    cInputBuffer.SetTokenIndexBackOne();
     return false;
 }
 
@@ -148,12 +180,48 @@ bool RedVSIShell::DataListComp(RedVSITokenBuffer& cInputBuffer, RedLog& cLog)
 
 bool RedVSIShell::RunFragComp(RedVSITokenBuffer& cInputBuffer, RedLog& cLog)
 {
-    RedVSIToken cCmdTok = cInputBuffer.GetToken();
+    RedVSIToken cCmdTok  = cInputBuffer.GetToken();
+    RedVSIToken cCodeTok = cInputBuffer.GetToken();
 
-    if (cCmdTok.Predef().IsKeywordShellRun())
+    if (cCmdTok.Predef().IsKeywordShellRun() && 
+        cCodeTok.Type().IsStringLiteral())
     {
+        RedVSILibTokenMap cTokenMap;
+        RedVSITokenBuffer cTokenList;
+        RedDataString strCodeFragment = cCodeTok.Text();
+        if (!RedVSITokenFactory::CreateTokens(strCodeFragment, cTokenMap.cVSILibTokenMap, cTokenList))
+            return true;
 
+        // - - - From this point on we need to delete the created elements - - - - - -
+
+        // Turn the tokens into code
+        RedVSICmd* topCmd = RedVSICmdFactory::RunConstuctionCompetition(cTokenList, cLog);
+        if (topCmd == NULL)
+        {
+            cLog.AddErrorEvent("Code construction competition failed.\n");
+            return true;
+        }
+        if (cLog.ContainsError())
+        {
+            cLog.AddErrorEvent("Error detected post-Code construction competition.\n");
+            delete topCmd;
+            return true;
+        }
+
+        // Execute the code in a context
+        RedVSIContextRoutine testContext(&cLog, topCmd);
+        testContext.Execute(10);
+        if (cLog.ContainsError())
+        {
+            cLog.AddErrorEvent("Code execution error.\n");
+        }
+        delete topCmd;
+        return true;
     }
+
+    // not data init command, return the token and fail the comp.
+    cInputBuffer.SetTokenIndexBackOne();
+    cInputBuffer.SetTokenIndexBackOne();
     return false;
 }
 
