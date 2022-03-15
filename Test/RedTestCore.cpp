@@ -624,10 +624,17 @@ RedResult RedTestCore::TestDate(void)
 
 RedResult RedTestCore::TestTime(void)
 {
-    RedTime t(12, 0, 0.0);
+    RedTime t1(12,  0,  0.0);
+    RedTime t2( 1,  1,  1.1);
 
-    RedDataString xstr = t.TimeString();
+    RedDataString xstr = t1.TimeString();
     if (xstr != "12:00:00.00") return kResultFail;
+
+    xstr = t1.SixDigitTimeString();
+    if (xstr != "120000") return kResultFail;
+
+    xstr = t2.SixDigitTimeString();
+    if (xstr != "010101") return kResultFail;
 
     return kResultSuccess;
 }
@@ -702,7 +709,6 @@ RedResult RedTestCore::TestResult(void)
     }
     return kResultSuccess;
 }
-
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 

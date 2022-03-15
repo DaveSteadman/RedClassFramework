@@ -11,9 +11,9 @@ int main()
 {
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-    //Red::Core::RedLog cLog;
-    //Red::Test::RedTestCentre::RunAllUnitTests(cLog);
-    //std::cout << cLog.AllLoggedText().TextPtr();
+    Red::Core::RedLog cLog;
+    Red::Test::RedTestCentre::RunAllUnitTests(cLog);
+    std::cout << cLog.AllLoggedText().TextPtr();
 
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 

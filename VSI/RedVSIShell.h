@@ -43,19 +43,28 @@ public:
     // - execute routines
     // - execute fragments
 
-    // Shell (or other top-level)
+    // Shell
+        // Run command line
+        // Query BaseEnv
+    // VSI Base Environment
         // Heap
-        // Library
+        // Code Lib
         // Log
-    // Thread
-        // Routine-call list
-        // Library pointer
-        // Log pointer
+        // Threadlist (reduced to a list-object of routine calls?, MAPID with unique number/string)
+        // Execute (iterate across threads, calls executes())
+        // Create thread with routine
+        // Create thread with fragment
     // Routine
         // Stack
         // Parse tree
-        // Library pointer
-        // Log pointer
+        // BaseEnv pointer
+        // Threadlist ptr
+        // Execute (jump through commands and parse trees, queue up calls and return, return on command count limit).
+
+    // Futures
+        // Save/load whole machine state?
+        // Save command line history
+        // Break into execute() https://stackoverflow.com/questions/4217037/catch-ctrl-c-in-c
 
     RedDataString ProcessCmdLine(RedDataString inputstr);
 

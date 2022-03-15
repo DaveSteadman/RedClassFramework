@@ -52,8 +52,9 @@ public:
     static RedTime Now(void);
 
     // Time Presentation
-    const RedDataString TimeString(void) const;   // hh:mm:ss
-    const unsigned  SixDigitTime(void) const; // hhmmss
+    const RedDataString TimeString(void) const;   // "hh:mm:ss"
+    const unsigned      SixDigitTime(void) const; // hhmmss
+    const RedDataString SixDigitTimeString(void) const; // "hhmmss"
 
     // Seconds In Day Routines
     const double SecondsSinceStartOfDay(void) const { return (hours*kTimeSecondsInHour) + (minutes*kTimeSecondsInMinute) + seconds; };

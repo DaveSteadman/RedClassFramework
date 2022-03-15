@@ -80,6 +80,23 @@ const unsigned RedTime::SixDigitTime(void) const
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
+const RedDataString RedTime::SixDigitTimeString(void) const // "hhmmss"
+{
+    RedDataString retstr;
+
+    RedDataNumber h(hours);
+    RedDataNumber m(minutes);
+    RedDataNumber s(seconds);
+
+    retstr.Append(h.DecimalStringWithMinDigitsAndDP(2, 0));
+    retstr.Append(m.DecimalStringWithMinDigitsAndDP(2, 0));
+    retstr.Append(s.DecimalStringWithMinDigitsAndDP(2, 0));
+
+    return retstr;
+}
+
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
 void RedTime::SetNow(void)
 {
     time_t     rawtime;

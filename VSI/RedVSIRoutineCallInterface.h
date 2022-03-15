@@ -46,12 +46,12 @@ public:
     void            SetupCall(const RedDataString& cNewClassName, const RedDataString& cNewObjName, const RedDataString& cNewFuncName) { cClassName = cNewClassName; cObjName = cNewObjName; cFuncName = cNewFuncName; };
 
 
-    void            SetClassName   (const RedDataString& cNewClassName)        { cClassName = cNewClassName;  };
-    void            SetObjectName  (const RedDataString& cNewObjectName)       { cObjName   = cNewObjectName; };
-    void            SetFuncName    (const RedDataString& cNewFuncName)         { cFuncName  = cNewFuncName;   };
-    RedDataString       ClassName      (void)                            const { return cClassName; };
-    RedDataString       ObjectName     (void)                            const { return cObjName;   };
-    RedDataString       FuncName       (void)                            const { return cFuncName;  };
+    void            SetClassName   (const RedDataString& cNewClassName)    { cClassName = cNewClassName;  };
+    void            SetObjectName  (const RedDataString& cNewObjectName)   { cObjName   = cNewObjectName; };
+    void            SetFuncName    (const RedDataString& cNewFuncName)     { cFuncName  = cNewFuncName;   };
+    RedDataString   ClassName      (void)                            const { return cClassName; };
+    RedDataString   ObjectName     (void)                            const { return cObjName;   };
+    RedDataString   FuncName       (void)                            const { return cFuncName;  };
 
     const RedVSIVariantList* Params(void)                                  const { return &cParams; };
     void               AddParam(const RedDataVariant& newParam)       { cParams.AddLast(newParam); };
@@ -60,9 +60,9 @@ public:
 
 protected:
 
-    RedDataString         cClassName;
-    RedDataString         cObjName;
-    RedDataString         cFuncName;
+    RedDataString     cClassName;
+    RedDataString     cObjName;
+    RedDataString     cFuncName;
     RedVSIVariantList cParams;
 };
 
