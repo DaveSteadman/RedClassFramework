@@ -111,6 +111,7 @@ RedType* RedVSIContextRoutine::CreateDataItem(const RedVSILangElement& cLocation
     if (!cLocation.IsLocation()) throw;
     if (!cType.IsType()) throw;
 
+    /*
     RedDataType DataType = RedVSILangElement::DataTypeForLangElemType(cType);
 
     if (cLocation.IsLocationStack())
@@ -123,6 +124,7 @@ RedType* RedVSIContextRoutine::CreateDataItem(const RedVSILangElement& cLocation
             pNewData = pThreadContextRecord->CreateHeapDataItem(cType, cName);
 
     }
+    */
 
     // return the pointer to the new object (or zero)
     return pNewData;

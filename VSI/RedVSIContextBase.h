@@ -20,28 +20,40 @@
 
 #include "RedCoreNamespace.h"
 
-#include "RedVSIContextRoutine.h"
-#include "RedVSIContextThread.h"
-#include "RedVSILib.h"
+using namespace Red::Core;
+
+// VSI Base Environment
+    // Heap
+    // Code Lib
+    // Log
+    // Threadlist (reduced to a list-object of routine calls?, MAPID with unique number/string)
+    // Execute (iterate across threads, calls executes())
+    // Create thread with routine
+    // Create thread with fragment
 
 namespace Red {
 namespace VSI {
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-// Factory and top-level library class controlling the creation of any context object.
-class RedVSIContextFactory
-{
-public:
-
-    static RedResult LoadFragmentIntoContext(const RedDataString& InputCodeFragment, RedVSIContextRoutine& UpdateContext);
-
-    static RedResult CreateContext(RedVSIContextRoutine** OutputContext, RedLog& cLog);
-    static RedResult CreateThreadContextForRoutine(const RedDataString& classname, const RedDataString& routinename, RedVSILib* pInputLib, RedVSIContextThread** OutputThreadContext, RedLog& cLog);
-};
+class RedVSIContextRoutine;
+typedef RedStackLIFO<RedVSIContextRoutine*>                   RedVSIRoutineContextStack;
+typedef RedMapList<RedDataString, RedVSIRoutineContextStack*> RedVSIThreadList;
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
+class RedVSIContextBase {
+
+public:
+
+    RedVSILib        cCodeLib;
+    RedLog           cLog;
+    RedDataRecord    cHeap;
+    RedVSIThreadList cThreadList;
+
+private:
+
+};
+
 } // VSI
 } // Red
-

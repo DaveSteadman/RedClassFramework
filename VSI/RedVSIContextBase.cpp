@@ -1,3 +1,4 @@
+
 // -------------------------------------------------------------------------------------------------
 // This file is covered by: The MIT License (MIT) Copyright (c) 2022 David G. Steadman
 // -------------------------------------------------------------------------------------------------
@@ -16,32 +17,49 @@
 // (http://opensource.org/licenses/MIT)
 // -------------------------------------------------------------------------------------------------
 
-#pragma once
+#include "RedVSIContextBase.h"
 
-#include "RedCoreNamespace.h"
-
-#include "RedVSIContextRoutine.h"
-#include "RedVSIContextThread.h"
-#include "RedVSILib.h"
+using namespace Red::Core;
 
 namespace Red {
 namespace VSI {
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+// Heap Data
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-// Factory and top-level library class controlling the creation of any context object.
-class RedVSIContextFactory
+/*
+
+RedType* RedVSIContextBase::CreateHeapDataItem(const RedVSILangElement& cType, const RedDataString& cName)
 {
-public:
+    RedType* pNewData = NULL;
 
-    static RedResult LoadFragmentIntoContext(const RedDataString& InputCodeFragment, RedVSIContextRoutine& UpdateContext);
+    // Basic Validation
+    if (!cType.IsType()) throw;
 
-    static RedResult CreateContext(RedVSIContextRoutine** OutputContext, RedLog& cLog);
-    static RedResult CreateThreadContextForRoutine(const RedDataString& classname, const RedDataString& routinename, RedVSILib* pInputLib, RedVSIContextThread** OutputThreadContext, RedLog& cLog);
-};
+    RedDataType DataType = RedVSILangElement::DataTypeForLangElemType(cType);
+
+    pNewData = cHeap.CreateAddReturn(cName, DataType);
+
+    // return the pointer to the new object (or zero)
+    return pNewData;
+}
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
+bool RedVSIContextBase::FindHeapDataItem(const RedDataString& cName, RedType*& pData)
+{
+    if (cHeap.FindFieldPtr(cName, pData))
+        return true;
+
+    return false;
+}
+
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+*/
+
 } // VSI
 } // Red
+
 

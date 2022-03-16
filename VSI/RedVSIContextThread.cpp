@@ -26,35 +26,6 @@ namespace Red {
 namespace VSI {
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-// Heap Data
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-RedType* RedVSIContextThread::CreateHeapDataItem(const RedVSILangElement& cType, const RedDataString& cName)
-{
-    RedType* pNewData = NULL;
-
-    // Basic Validation
-    if (!cType.IsType()) throw;
-
-    RedDataType DataType = RedVSILangElement::DataTypeForLangElemType(cType);
-
-    pNewData = cHeap.CreateAddReturn(cName, DataType);
-
-    // return the pointer to the new object (or zero)
-    return pNewData;
-}
-
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-bool RedVSIContextThread::FindHeapDataItem(const RedDataString& cName, RedType*& pData)
-{
-    if (cHeap.FindFieldPtr(cName, pData))
-        return true;
-
-    return false;
-}
-
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 // Routine Stack
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 

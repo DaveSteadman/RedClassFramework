@@ -27,7 +27,7 @@ using namespace Red::VSI;
 namespace Red {
 namespace VSI {
 
-enum class TEShellState { Unknown, Running, Waiting, Ended };
+
 
  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -68,14 +68,9 @@ public:
 
     RedDataString ProcessCmdLine(RedDataString inputstr);
 
-    TEShellState eState = TEShellState::Waiting;
-
-    RedVSILib eCodeLib;
-
-    // Data attributes
-    RedDataRecord cHeap;
-
 private:
+
+    RedVSIContextBase cVSIBase;
 
     bool LibAddComp(RedVSITokenBuffer& cInputBuffer, RedLog& cLog);
     bool LibInitComp(RedVSITokenBuffer& cInputBuffer, RedLog& cLog);

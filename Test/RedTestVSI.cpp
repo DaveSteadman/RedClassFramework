@@ -569,6 +569,7 @@ RedResult RedTestVSI::TestRunProg_001(void)
             return kResultFail;
 
         // Execute code
+        /*
         {
             RedVSIContextThread* tc;
 
@@ -588,6 +589,7 @@ RedResult RedTestVSI::TestRunProg_001(void)
                     return kResultFail;
             }
         }
+        */
     }
     return kResultSuccess;
 }

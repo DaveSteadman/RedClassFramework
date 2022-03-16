@@ -85,7 +85,7 @@ bool RedVSIShell::LibAddComp(RedVSITokenBuffer& cInputBuffer, RedLog& cLog)
 bool RedVSIShell::LibInitComp(RedVSITokenBuffer& cInputBuffer, RedLog& cLog)
 {
 
-    eCodeLib.Init();
+    cVSIBase.cCodeLib.Init();
 
     return false;
 }
@@ -94,7 +94,7 @@ bool RedVSIShell::LibInitComp(RedVSITokenBuffer& cInputBuffer, RedLog& cLog)
 
 bool RedVSIShell::LibListComp(RedVSITokenBuffer& cInputBuffer, RedLog& cLog)
 {
-    RedDataList cList = eCodeLib.ClassNameList();
+    RedDataList cList = cVSIBase.cCodeLib.ClassNameList();
 
     unsigned listcount = cList.NumItems();
 
@@ -244,12 +244,12 @@ bool RedVSIShell::ExitComp(RedVSITokenBuffer& cInputBuffer, RedLog& cLog)
 {
     RedVSIToken cCmdTok = cInputBuffer.GetToken();
 
-    if (cCmdTok.Predef().IsKeywordShellExit())
-    {
-        eState = TEShellState::Ended;
-        cLog.AddText("Exit Command Processed.");
-        return true;
-    }
+    // if (cCmdTok.Predef().IsKeywordShellExit())
+    // {
+    //     eState = TEShellState::Ended;
+    //     cLog.AddText("Exit Command Processed.");
+    //     return true;
+    // }
 
     // not exit command, return the token and fail the comp.
     cInputBuffer.SetTokenIndexBackOne();

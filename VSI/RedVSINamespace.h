@@ -33,6 +33,7 @@
 #include "RedVSIContextRoutine.h"
 #include "RedVSIContextThread.h"
 #include "RedVSIParseStackTraverser.h"
+#include "RedVSIContextBase.h"
 
 // Collections
 #include "RedDoubleLinkedList.h"
