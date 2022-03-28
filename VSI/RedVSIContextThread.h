@@ -54,13 +54,15 @@ public:
     // Routine Execution
     void                       Execute(const unsigned NumCmd);
 
+    RedDataRecord* Heap(void) { return &cHeap; };
+
 private:
 
-    // A stack of all routine context. The top of the stack is the curently executing.
+    // A stack of all routine context. The top of the stack is the currently executing.
     RedVSIRoutineContextStack cRoutineStack;
 
     // Code library
-    // Using a pointer, as we would want ot craete libraries and pass them around between threads.
+    // Using a pointer, as we would want ot create libraries and pass them around between threads.
     RedVSILib* pCodeLib = NULL;
 
     // Data attributes

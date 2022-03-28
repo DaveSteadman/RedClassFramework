@@ -60,6 +60,9 @@ public:
     // Locate
     bool        FindFieldPtr(const RedDataString& cAttribName, RedType*& pData) { return pAttribList->FindDataById(cAttribName, pData); };
 
+    RedDataString NameForIndex(const unsigned uIndex) const;
+    RedType*       PtrForIndex(const unsigned uIndex) const;
+
     RedDataType TypeForName(const RedDataString& cAttribName);
     RedType*    PtrForName (const RedDataString& cAttribName);
 

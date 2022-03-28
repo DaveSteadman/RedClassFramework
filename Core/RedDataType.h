@@ -21,6 +21,8 @@
 namespace Red {
 namespace Core {
 
+class RedDataString;
+
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 // Enumeration based class to encapsulate the possible RedType objects.
@@ -59,6 +61,8 @@ public:
     static RedDataType Variant(void)    { return RedDataType(TEDataType::eDataTypeVariant); };
 
     int iState(void) const { return (int)eState; };
+
+    RedDataString Name(void);
 
 protected:
 

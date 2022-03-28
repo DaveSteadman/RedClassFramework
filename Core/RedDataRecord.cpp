@@ -128,6 +128,31 @@ RedType* RedDataRecord::PtrForName(const RedDataString& cAttribName)
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+RedDataString RedDataRecord::NameForIndex(const unsigned uIndex) const
+{
+    RedDataString cRetStr = "<NoName>";
+
+    if (pAttribList->FindIdByIndex(uIndex, cRetStr))
+        return cRetStr;
+    else
+        return "<NotFound>";
+}
+
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+
+RedType* RedDataRecord::PtrForIndex(const unsigned uIndex) const
+{
+    RedType* retData = NULL;
+
+    if (pAttribList->FindDataByIndex(uIndex, retData))
+        return retData;
+    else
+        return NULL;
+}
+
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 // Operators
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 

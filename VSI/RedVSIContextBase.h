@@ -20,6 +20,8 @@
 
 #include "RedCoreNamespace.h"
 
+#include "RedVSILib.h"
+
 using namespace Red::Core;
 
 // VSI Base Environment
@@ -42,9 +44,13 @@ typedef RedMapList<RedDataString, RedVSIRoutineContextStack*> RedVSIThreadList;
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
+enum class TEContextState {Running, Ended};
+
 class RedVSIContextBase {
 
 public:
+
+    TEContextState eState = TEContextState::Running;
 
     RedVSILib        cCodeLib;
     RedLog           cLog;

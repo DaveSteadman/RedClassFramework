@@ -27,8 +27,6 @@ using namespace Red::VSI;
 namespace Red {
 namespace VSI {
 
-
-
  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 class RedVSIShell
@@ -67,6 +65,8 @@ public:
         // Break into execute() https://stackoverflow.com/questions/4217037/catch-ctrl-c-in-c
 
     RedDataString ProcessCmdLine(RedDataString inputstr);
+
+    TEContextState RunState(void) { return cVSIBase.eState; };
 
 private:
 

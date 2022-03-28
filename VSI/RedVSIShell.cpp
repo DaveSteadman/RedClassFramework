@@ -125,6 +125,8 @@ bool RedVSIShell::DataAddComp(RedVSITokenBuffer& cInputBuffer, RedLog& cLog)
     {
         cLog.AddText("DataAdd Command Processed.");
 
+        cVSIBase.cHeap.AddByValue("var1", 1);
+
         return true;
     }
 
@@ -162,11 +164,29 @@ bool RedVSIShell::DataListComp(RedVSITokenBuffer& cInputBuffer, RedLog& cLog)
     RedVSIToken cCmdTok = cInputBuffer.GetToken();
     RedVSIToken cCmd2Tok = cInputBuffer.GetToken();
 
-    if (cCmdTok.Predef().IsKeywordShellData() &&
-        cCmd2Tok.Predef().IsKeywordShellList())
+    if (cCmdTok.Predef().IsKeywordShellData() && cCmd2Tok.Predef().IsKeywordShellList())
     {
         cLog.AddText("DataList Command Processed.");
 
+        unsigned NumElems = cVSIBase.cHeap.NumItems();
+
+        RedDataString cDataList;
+        cDataList = "Num Elements: ";
+        cDataList.Append(RedDataNumber(NumElems).DecimalString());
+        cLog.AddText(cDataList);
+
+        RedDataString cDataLine;
+        for (unsigned i = 0; i < NumElems; i++)
+        {
+            RedType* pData = cVSIBase.cHeap.PtrForIndex(i);
+
+            cDataLine = "heap ";
+            cDataLine.Append(pData->Type().Name());
+            cDataLine += " ";
+            cDataLine.Append(cVSIBase.cHeap.NameForIndex(i));
+
+            cLog.AddText(cDataLine);
+        }
         return true;
     }
 
@@ -244,12 +264,12 @@ bool RedVSIShell::ExitComp(RedVSITokenBuffer& cInputBuffer, RedLog& cLog)
 {
     RedVSIToken cCmdTok = cInputBuffer.GetToken();
 
-    // if (cCmdTok.Predef().IsKeywordShellExit())
-    // {
-    //     eState = TEShellState::Ended;
-    //     cLog.AddText("Exit Command Processed.");
-    //     return true;
-    // }
+    if (cCmdTok.Predef().IsKeywordShellExit())
+    {
+        cVSIBase.eState = TEContextState::Ended;
+        cLog.AddText("Exit Command Processed.");
+        return true;
+    }
 
     // not exit command, return the token and fail the comp.
     cInputBuffer.SetTokenIndexBackOne();

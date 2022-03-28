@@ -165,7 +165,7 @@ bool RedVSIContextRoutine::FindDataItem(const RedDataString& cName, RedType*& pD
 
     if (pThreadContextRecord != NULL)
     {
-        if (pThreadContextRecord->FindHeapDataItem(cName, pData))
+        if (pThreadContextRecord->Heap()->FindFieldPtr(cName, pData))
             return true;
     }
 

@@ -37,8 +37,8 @@ int main()
         std::cout << retstr.TextPtr();
 
         // End when shell done
-        //if (cVsiShell.eState == TEShellState::Ended)
-        //    inputvalid = false;
+        if (cVsiShell.RunState() == TEContextState::Ended)
+            inputvalid = false;
     }
 
 }

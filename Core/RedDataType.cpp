@@ -18,8 +18,28 @@
 
 #include "RedDataType.h"
 
+#include "RedDataString.h"
+
 namespace Red {
 namespace Core {
+
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+RedDataString RedDataType::Name(void)
+{
+    switch (eState)
+    {
+    case TEDataType::eDataTypeInvalid : return "Invalid";
+    case TEDataType::eDataTypeBool :    return "Bool";
+    case TEDataType::eDataTypeChar :    return "Char";
+    case TEDataType::eDataTypeList :    return "List";
+    case TEDataType::eDataTypeNum :     return "Num";
+    case TEDataType::eDataTypeRecord :  return "Record";
+    case TEDataType::eDataTypeStr :     return "String";
+    case TEDataType::eDataTypeVariant : return "Variant";
+    }
+    return "<Undefined>";
+}
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
