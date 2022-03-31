@@ -1,5 +1,5 @@
 // -------------------------------------------------------------------------------------------------
-// This file is covered by: The MIT License (MIT) Copyright (c) 2022 David G. Steadman
+// This file is covered by: The MIT License (MIT) Copyright (c) 2022 Dave Steadman
 // -------------------------------------------------------------------------------------------------
 // Permission is hereby granted, free of charge, to any person obtaining a copy of this software and
 // associated documentation files (the "Software"), to deal in the Software without restriction,
@@ -144,36 +144,36 @@ bool RedDataVariant::ExportTo(RedType* pExportToData) const
             {
                 RedDataBoolean* pSourceDataBool = dynamic_cast<RedDataBoolean*>(pData);
                 RedDataBoolean* pExportToBool   = dynamic_cast<RedDataBoolean*>(pExportToData);
-                *pExportToBool              = *pSourceDataBool;
-                is_success                  = true;
+                *pExportToBool                  = *pSourceDataBool;
+                is_success                      = true;
             }
             else if (pExportToData->Type().IsChar())
             {
                 RedDataChar* pSourceDataChar    = dynamic_cast<RedDataChar*>(pData);
                 RedDataChar* pExportToChar      = dynamic_cast<RedDataChar*>(pExportToData);
-                *pExportToChar              = *pSourceDataChar;
-                is_success                  = true;
+                *pExportToChar                  = *pSourceDataChar;
+                is_success                      = true;
             }
             else if (pExportToData->Type().IsNum())
             {
                 RedDataNumber* pSourceDataNum   = dynamic_cast<RedDataNumber*>(pData);
                 RedDataNumber* pExportToNum     = dynamic_cast<RedDataNumber*>(pExportToData);
-                *pExportToNum               = *pSourceDataNum;
-                is_success                  = true;
+                *pExportToNum                   = *pSourceDataNum;
+                is_success                      = true;
             }
             else if (pExportToData->Type().IsStr())
             {
                 RedDataString* pSourceDataStr   = dynamic_cast<RedDataString*>(pData);
                 RedDataString* pExportToStr     = dynamic_cast<RedDataString*>(pExportToData);
-                *pExportToStr               = *pSourceDataStr;
-                is_success                  = true;
+                *pExportToStr                   = *pSourceDataStr;
+                is_success                      = true;
             }
             else if (pExportToData->Type().IsRecord())
             {
                 RedDataRecord* pSourceDataRec   = dynamic_cast<RedDataRecord*>(pData);
                 RedDataRecord* pExportToRec     = dynamic_cast<RedDataRecord*>(pExportToData);
-                *pExportToRec               = *pSourceDataRec;
-                is_success                  = true;
+                *pExportToRec                   = *pSourceDataRec;
+                is_success                      = true;
             }
         }
 
@@ -200,7 +200,7 @@ bool RedDataVariant::ExportTo(RedType* pExportToData) const
 RedDataBoolean RedDataVariant::BoolValue(void) const
 {
     RedDataBoolean cBool;
-    
+
     // Assign the data to the return type only if its numeric.
     if (pData->Type().IsBool())
     {
@@ -226,7 +226,7 @@ RedDataBoolean RedDataVariant::BoolValue(void) const
 RedDataNumber RedDataVariant::NumberValue(void) const
 {
     RedDataNumber cNum;
-    
+
     // Assign the data to the return type only if its numeric.
     if (pData->Type().IsNum())
     {
@@ -240,7 +240,7 @@ RedDataNumber RedDataVariant::NumberValue(void) const
 
 RedDataString RedDataVariant::StringValue(void) const
 {
-    RedDataString cStr;
+    RedDataString cStr = "<No String Representation>";
     
     // Assign the data to the return type only if its numeric.
     if (pData->Type().IsStr())
@@ -261,6 +261,18 @@ RedDataString RedDataVariant::StringValue(void) const
     {
         RedDataNumber* pNumData = dynamic_cast<RedDataNumber*>(pData);
         cStr = pNumData->DecimalString();
+    }
+    else if (pData->Type().IsList())
+    {
+        RedDataList* pListData = dynamic_cast<RedDataList*>(pData);
+
+        cStr = "<list ";
+        cStr += RedDataNumber(pListData->NumItems()).DecimalString();
+        cStr += ">";
+    }
+    else if (pData->Type().IsRecord())
+    {
+        cStr = "<record>";
     }
 
     return cStr;
@@ -427,7 +439,7 @@ RedDataVariant RedDataVariant::operator-(const RedDataVariant& cVarData)
         RedDataNumber cRes = *((RedDataNumber*)pData) - cVarData.NumberValue();
         cRetVal.SetValue(&cRes);
     }
-    
+
     return cRetVal;
 }
 
@@ -442,7 +454,7 @@ RedDataVariant RedDataVariant::operator*(const RedDataVariant& cVarData)
         RedDataNumber cRes = *((RedDataNumber*)pData) * cVarData.NumberValue();
         cRetVal.SetValue(&cRes);
     }
-    
+
     return cRetVal;
 }
 
@@ -451,7 +463,7 @@ RedDataVariant RedDataVariant::operator*(const RedDataVariant& cVarData)
 RedDataVariant RedDataVariant::operator/(const RedDataVariant& cVarData)
 {
     RedDataVariant cRetVal;
-    
+
     if ( (pData->Type().IsNum()) && (cVarData.Type().IsNum()) )
     {
         RedDataNumber cRes = *((RedDataNumber*)pData) / cVarData.NumberValue();

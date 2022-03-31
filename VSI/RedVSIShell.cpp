@@ -1,5 +1,5 @@
 // -------------------------------------------------------------------------------------------------
-// This file is covered by: The MIT License (MIT) Copyright (c) 2022 David G. Steadman
+// This file is covered by: The MIT License (MIT) Copyright (c) 2022 Dave Steadman
 // -------------------------------------------------------------------------------------------------
 // Permission is hereby granted, free of charge, to any person obtaining a copy of this software and
 // associated documentation files (the "Software"), to deal in the Software without restriction,
@@ -126,6 +126,8 @@ bool RedVSIShell::DataAddComp(RedVSITokenBuffer& cInputBuffer, RedLog& cLog)
         cLog.AddText("DataAdd Command Processed.");
 
         cVSIBase.cHeap.AddByValue("var1", 1);
+        cVSIBase.cHeap.AddByValue("var2", 1.234);
+        cVSIBase.cHeap.AddByValue("var3", "data");
 
         return true;
     }
@@ -184,6 +186,10 @@ bool RedVSIShell::DataListComp(RedVSITokenBuffer& cInputBuffer, RedLog& cLog)
             cDataLine.Append(pData->Type().Name());
             cDataLine += " ";
             cDataLine.Append(cVSIBase.cHeap.NameForIndex(i));
+
+            cDataLine += " = ";
+            RedDataVariant x(*pData);
+            cDataLine += x.StringValue();
 
             cLog.AddText(cDataLine);
         }

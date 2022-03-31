@@ -1,5 +1,5 @@
 // -------------------------------------------------------------------------------------------------
-// This file is covered by: The MIT License (MIT) Copyright (c) 2022 David G. Steadman
+// This file is covered by: The MIT License (MIT) Copyright (c) 2022 Dave Steadman
 // -------------------------------------------------------------------------------------------------
 // Permission is hereby granted, free of charge, to any person obtaining a copy of this software and
 // associated documentation files (the "Software"), to deal in the Software without restriction,
@@ -46,7 +46,7 @@ public:
     ~RedDataNumber(void) { };
 
     // Inherited: RedType
-    void          Init(void)        { eNumType= TENumberType::eInt; iIntVal=0; dblFloatVal=0.0; };
+    void          Init(void)        { eNumType=TENumberType::eInt; iIntVal=0; dblFloatVal=0.0; };
     RedDataType   Type(void) const  { return kDataTypeNum; };
     RedType*      Clone(void) const { RedDataNumber* newN = new RedDataNumber(*this); return (RedType*)newN; };
 
@@ -58,36 +58,36 @@ public:
     bool          IsEqualTo(const RedDataNumber& CheckVal) const;
     bool          IsEqualToWithinTollerance(const RedDataNumber& CheckVal, const RedDataNumber& tollerance) const;
 
-    RedDataString     DecimalString(void) const;
-    RedDataString     DecimalStringWithDP(const unsigned decimalplaces) const;
-    RedDataString     DecimalStringWithMinDigitsAndDP(const unsigned mindigits, const unsigned decimalplaces) const;
-    RedDataChar       CharValue(void) const;
+    RedDataString DecimalString(void) const;
+    RedDataString DecimalStringWithDP(const unsigned decimalplaces) const;
+    RedDataString DecimalStringWithMinDigitsAndDP(const unsigned mindigits, const unsigned decimalplaces) const;
+    RedDataChar   CharValue(void) const;
     int           IntegerValue(void) const;
     double        DoubleValue(void) const;
 
     void          Set(const RedDataNumber& cNewVal) { eNumType=cNewVal.eNumType; iIntVal=cNewVal.iIntVal; dblFloatVal=cNewVal.dblFloatVal; };
-    void          Set(const double dblNewVal)   { eNumType= TENumberType::eFloat;           iIntVal=0;               dblFloatVal=dblNewVal; };
-    void          Set(const int iNewVal)        { eNumType= TENumberType::eInt;             iIntVal=iNewVal;         dblFloatVal=0.0; };
-    void          SetZero(void)                 { Init(); };
+    void          Set(const double dblNewVal)       { eNumType=TENumberType::eFloat; iIntVal=0; dblFloatVal=dblNewVal; };
+    void          Set(const int iNewVal)            { eNumType=TENumberType::eInt; iIntVal=iNewVal; dblFloatVal=0.0; };
+    void          SetZero(void)                     { Init(); };
     void          SetDecimalString(const RedDataString& cNewDecimalVal);
 
     void          MakePositive(void);
     void          MakeNegative(void);
 
-    RedDataNumber     IntegerPart(void) const;
-    RedDataNumber     FractionalPart(void) const;
-    RedDataNumber     DivisionQuotient(const RedDataNumber& d) const;
-    RedDataNumber     DivisionRemainder(const RedDataNumber& d) const;
+    RedDataNumber IntegerPart(void) const;
+    RedDataNumber FractionalPart(void) const;
+    RedDataNumber DivisionQuotient(const RedDataNumber& d) const;
+    RedDataNumber DivisionRemainder(const RedDataNumber& d) const;
 
     // Arithemtic operators
     RedDataNumber operator  +(const RedDataNumber& n) const;
     RedDataNumber operator  -(const RedDataNumber& n) const;
     RedDataNumber operator  *(const RedDataNumber& n) const;
     RedDataNumber operator  /(const RedDataNumber& n) const;
-    void      operator +=(const RedDataNumber& n);
-    void      operator -=(const RedDataNumber& n);
-    void      operator *=(const RedDataNumber& n);
-    void      operator /=(const RedDataNumber& n);
+    void          operator +=(const RedDataNumber& n);
+    void          operator -=(const RedDataNumber& n);
+    void          operator *=(const RedDataNumber& n);
+    void          operator /=(const RedDataNumber& n);
 
     RedDataNumber& operator ++(); // Prefix
     RedDataNumber  operator ++(int); // Postfix

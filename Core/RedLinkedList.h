@@ -1,5 +1,5 @@
 // -------------------------------------------------------------------------------------------------
-// This file is covered by: The MIT License (MIT) Copyright (c) 2022 David G. Steadman
+// This file is covered by: The MIT License (MIT) Copyright (c) 2022 Dave Steadman
 // -------------------------------------------------------------------------------------------------
 // Permission is hereby granted, free of charge, to any person obtaining a copy of this software and
 // associated documentation files (the "Software"), to deal in the Software without restriction,
@@ -70,9 +70,9 @@ private:
     bool MakeListElement(TListElement** pNewElem);
     bool FindListElement(const unsigned ElemNum, TListElement** pFoundElem) const;
 
-    TListElement* pListHead;
-    TListElement* pListTail;
-    unsigned      iNumItems;
+    TListElement* pListHead = NULL;
+    TListElement* pListTail = NULL;
+    unsigned      iNumItems = 0;
 };
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -82,8 +82,8 @@ private:
 template <class Element>
 RedLinkedList<Element>::RedLinkedList()
 {
-    pListHead = 0;
-    pListTail = 0;
+    pListHead = NULL;
+    pListTail = NULL;
     iNumItems = 0;
 }
 
@@ -92,7 +92,7 @@ RedLinkedList<Element>::RedLinkedList()
 template <class Element>
 RedLinkedList<Element>::~RedLinkedList()
 {
-    while( iNumItems>0 )
+    while( iNumItems > 0 )
         DelFirst();
 }
 
@@ -105,7 +105,7 @@ void RedLinkedList<Element>::AddLast(Element Elem)
 {
     // first create the new element
     // return failed if we didn't make the new object
-    TListElement* pNewElem  = 0;
+    TListElement* pNewElem = NULL;
     MakeListElement(&pNewElem);
     
     // assign the contents
@@ -116,8 +116,8 @@ void RedLinkedList<Element>::AddLast(Element Elem)
     {
     case 0:
         // if list is empty, ensure head and tail are set to this element
-        pListHead        = pNewElem;
-        pListTail        = pNewElem;
+        pListHead = pNewElem;
+        pListTail = pNewElem;
         break;
 
     default:
@@ -125,7 +125,7 @@ void RedLinkedList<Element>::AddLast(Element Elem)
         pListTail->pNext = pNewElem;
 
         // Update the tail element
-        pListTail        = pNewElem;
+        pListTail = pNewElem;
         break;
     }
 
@@ -138,7 +138,7 @@ template <class Element>
 void RedLinkedList<Element>::AddFirst(Element Elem)
 {
     // first create the new element
-    TListElement* pNewElem  = 0;
+    TListElement* pNewElem  = NULL;
 
     // return failed if we didn't make the new object
     MakeListElement(&pNewElem);
@@ -171,11 +171,11 @@ void RedLinkedList<Element>::AddFirst(Element Elem)
 template <class Element>
 bool RedLinkedList<Element>::InsertAfter(const unsigned iElemIndex, Element Elem)
 {
-    TListElement* pInsertAfterElem = 0;
-    TListElement* pNewElem         = 0;
+    TListElement* pInsertAfterElem = NULL;
+    TListElement* pNewElem         = NULL;
 
     // Start by identifying special cases.
-    if (iNumItems==0)               AddFirst(Elem);
+    if (iNumItems == 0)             AddFirst(Elem);
     if (iElemIndex  < FirstIndex()) AddFirst(Elem);
     if (iElemIndex >= LastIndex())  AddLast(Elem); 
    
@@ -192,7 +192,7 @@ bool RedLinkedList<Element>::InsertAfter(const unsigned iElemIndex, Element Elem
     // Fix pointers to add object. First assign the new object to the next in the list.
     // If the new item isn't going on the tail, we have a new item, else we need to 
     // update the tail pointer.
-    if (pInsertAfterElem->pNext != 0)
+    if (pInsertAfterElem->pNext != NULL)
     {
         pNewElem->pNext = pInsertAfterElem->pNext;
     }
@@ -217,7 +217,7 @@ bool RedLinkedList<Element>::InsertAfter(const unsigned iElemIndex, Element Elem
 template <class Element>
 bool RedLinkedList<Element>::Find(const unsigned iElemIndex, Element& Elem) const
 {
-    TListElement* pGetElem = 0;
+    TListElement* pGetElem = NULL;
 
     // Return failed if we can find the item
     if ( !FindListElement(iElemIndex, &pGetElem) )
@@ -232,7 +232,7 @@ bool RedLinkedList<Element>::Find(const unsigned iElemIndex, Element& Elem) cons
 template <class Element>
 bool RedLinkedList<Element>::FindFirst(Element& Elem) const
 {
-    if (pListHead == 0)
+    if (pListHead == NULL)
         return false;
     
     Elem = pListHead->Elem;
@@ -244,7 +244,7 @@ bool RedLinkedList<Element>::FindFirst(Element& Elem) const
 template <class Element>
 bool RedLinkedList<Element>::FindLast(Element& Elem) const
 {
-    if (pListTail == 0)
+    if (pListTail == NULL)
         return false;
     
     Elem = pListTail->Elem;
@@ -269,8 +269,8 @@ bool RedLinkedList<Element>::DelFirst(void)
     // head/tail pointers too.
     if (iNumItems == 1)
     {
-        pListHead = 0;
-        pListTail = 0;
+        pListHead = NULL;
+        pListTail = NULL;
         iNumItems = 0;
     }
 
@@ -292,8 +292,8 @@ bool RedLinkedList<Element>::DelFirst(void)
 template <class Element>
 bool RedLinkedList<Element>::DelLast(void)
 {
-    TListElement* pRemoveElem = 0;
-    TListElement* pPrevElem   = 0;
+    TListElement* pRemoveElem = NULL;
+    TListElement* pPrevElem   = NULL;
 
     // Fail if we have nothing to delete
     if ( (iNumItems == 0) || (!pListTail) )
@@ -302,26 +302,26 @@ bool RedLinkedList<Element>::DelLast(void)
     // If we have just one element, reset the list
     if (iNumItems == 1)
     {
-        pListHead = 0;
-        pListTail = 0;
+        pListHead = NULL;
+        pListTail = NULL;
         iNumItems = 0;
         delete pRemoveElem;
     }
     // Else, perform the more complex opertation on the penultimate entry
     else    
     {
-        TListElement* pPenultimateElem  = 0;
+        TListElement* pPenultimateElem  = NULL;
 
         // Find the penultimate entry
         if ( !FindListElement(LastIndex()-1, &pPenultimateElem) )
-            return 0;
+            return false;
         
         // Check the penultimate points to the delete entry
         if (pPenultimateElem->pNext != pRemoveElem)
-            return 0;
+            return false;
             
         // Change the penultimate element to the tail and delete the last entry 
-        pPenultimateElem->pNext = 0;
+        pPenultimateElem->pNext = NULL;
         pListTail = pPenultimateElem;
         delete pRemoveElem;
         
@@ -336,12 +336,12 @@ bool RedLinkedList<Element>::DelLast(void)
 template <class Element>
 bool RedLinkedList<Element>::Del(const unsigned iElemIndex)
 {
-    TListElement* pRemoveElem = 0;
-    TListElement* pPrevElem   = 0;
-    TListElement* pNextElem   = 0;
+    TListElement* pRemoveElem = NULL;
+    TListElement* pPrevElem   = NULL;
+    TListElement* pNextElem   = NULL;
 
     // Fail if we have nothing to delete
-    if ( iNumItems == 0 )
+    if (iNumItems == 0)
         return false;
 
     // Cater for special cases
@@ -352,11 +352,11 @@ bool RedLinkedList<Element>::Del(const unsigned iElemIndex)
     // Proceed, knowing we have at least two elements and we're not in an end
     // of list special case
     int           iPreviousIndex = iNumItems-1;
-    TListElement* pPreviousElem  = 0;
+    TListElement* pPreviousElem  = NULL;
 
     // Return failed if we can't find the item or its predecessor
-    if ( !FindListElement(iElemIndex, &pRemoveElem) ) return 0;
-    if ( !FindListElement(iPreviousIndex, &pPreviousElem) ) return 0;
+    if ( !FindListElement(iElemIndex, &pRemoveElem) ) return false;
+    if ( !FindListElement(iPreviousIndex, &pPreviousElem) ) return false;
         
     // Cut out the element from the list
     pPreviousElem->pNext = pRemoveElem->pNext;
@@ -434,8 +434,8 @@ bool RedLinkedList<Element>::FindListElement(
     TListElement** pFoundElem) const
 {
     // Initialise the return value
-    *pFoundElem             = 0;
-    TListElement* pCurrElem = 0;
+    *pFoundElem             = NULL;
+    TListElement* pCurrElem = NULL;
 
     // Fail if we have nothing (or not enough) to search.
     if (iNumItems == 0)           return false;
@@ -443,8 +443,8 @@ bool RedLinkedList<Element>::FindListElement(
     if (ElemIndex < FirstIndex()) return false;
 
     // Don't search if we want the head or tail.
-    if (ElemIndex == FirstIndex()) { *pFoundElem = pListHead; return 1; }
-    if (ElemIndex == LastIndex())  { *pFoundElem = pListTail; return 1; }
+    if (ElemIndex == FirstIndex()) { *pFoundElem = pListHead; return true; }
+    if (ElemIndex == LastIndex())  { *pFoundElem = pListTail; return true; }
 
     // Set reference to element zero
     pCurrElem = pListHead;
@@ -453,7 +453,7 @@ bool RedLinkedList<Element>::FindListElement(
     for (unsigned i=1; i<ElemIndex; i++)
     {
         // if we're out of list, fail
-        if (pCurrElem->pNext == 0)
+        if (pCurrElem->pNext == NULL)
             return false;
 
         // else move onto next element
