@@ -1,5 +1,5 @@
 // -------------------------------------------------------------------------------------------------
-// This file is covered by: The MIT License (MIT) Copyright (c) 2022 David G. Steadman
+// This file is covered by: The MIT License (MIT) Copyright (c) 2022 Dave Steadman
 // -------------------------------------------------------------------------------------------------
 // Permission is hereby granted, free of charge, to any person obtaining a copy of this software and
 // associated documentation files (the "Software"), to deal in the Software without restriction,
@@ -21,7 +21,7 @@
 #include "RedVSICmd.h"
 #include "RedVSIErrorCodes.h"
 #include "RedLog.h"
-#include "RedVSIContextInterface.h"
+#include "RedVSIContextRoutine.h"
 #include "RedVSIParseTreeInterface.h"
 #include "RedVSILangElement.h"
 
@@ -40,8 +40,8 @@ public:
 
     // RedVSICmd inherited routines
     RedVSILangElement Type(void) const { return kLangElementCommandIf; };
-    void              QueueExpr(RedVSIContextInterface* pContext);
-    void              Execute(RedVSIContextInterface* pContext);
+    void              QueueExpr(RedVSIContextRoutine* pContext);
+    void              Execute(RedVSIContextRoutine* pContext);
 
     // Wholesale access/assign operations
     void              SetDetails(RedVSIParseTreeInterface*& pInCmdExpr,  RedVSICmd*& pInPosBranch,  RedVSICmd*& pInNegBranch);

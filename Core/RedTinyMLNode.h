@@ -1,5 +1,5 @@
 // -------------------------------------------------------------------------------------------------
-// This file is covered by: The MIT License (MIT) Copyright (c) 2022 David G. Steadman
+// This file is covered by: The MIT License (MIT) Copyright (c) 2022 Dave Steadman
 // -------------------------------------------------------------------------------------------------
 // Permission is hereby granted, free of charge, to any person obtaining a copy of this software and
 // associated documentation files (the "Software"), to deal in the Software without restriction,
@@ -32,33 +32,33 @@ class RedTinyMLNode : public RedTinyMLElement
 {
 public:
 
-    typedef RedDoubleLinkedList<RedTinyMLElement*>         TmlNodeListType;
-    typedef RedDoubleLinkedListIterator<RedTinyMLElement*> TmlNodeListItType;
+    typedef RedDoubleLinkedList<RedTinyMLElement*>         TmlElementListType;
+    typedef RedDoubleLinkedListIterator<RedTinyMLElement*> TmlElementListItType;
 
     // Constructor
-    RedTinyMLNode(const RedDataString& NewName) : RedTinyMLElement(NewName) { nodelist.Init(); };
+    RedTinyMLNode(const RedDataString& NewName) : RedTinyMLElement(NewName) { elemlist.Init(); };
     
     // Destructor - delete all items in list
     ~RedTinyMLNode();
 
     // Basic Queries
-    bool     IsNode(void)           const { return true; };
-    unsigned NodeElementCount(void) const { return nodelist.NumItems(); };
+    bool     IsNode(void)       const { return true; };
+    unsigned ElementCount(void) const { return elemlist.NumItems(); };
 
     // List an list-iterator accessors
-    TmlNodeListType*  NodeList(void)     { return &nodelist; };
-    TmlNodeListItType NodeIterator(void) { return TmlNodeListItType(&nodelist); };
+    TmlElementListType*  ElementList(void)         { return &elemlist; };
+    TmlElementListItType ElementListIterator(void) { return TmlElementListItType(&elemlist); };
 
     // Create child elements within the tree and return a pointer to them
     RedTinyMLNode*    CreateChildNode (const RedDataString& NewName);
     RedTinyMLLeaf*    CreateChildLeaf (const RedDataString& NewName, const RedDataString& NewData);
 
     // Add new child nodes without cloning
-    void AddChildNode (RedTinyMLNode* pNewNode) { nodelist.AddLast(dynamic_cast<RedTinyMLElement*>(pNewNode)); };
-    void AddChildLeaf (RedTinyMLLeaf* pNewLeaf) { nodelist.AddLast(dynamic_cast<RedTinyMLElement*>(pNewLeaf)); };
+    void AddChildNode (RedTinyMLNode* pNewNode) { elemlist.AddLast(dynamic_cast<RedTinyMLElement*>(pNewNode)); };
+    void AddChildLeaf (RedTinyMLLeaf* pNewLeaf) { elemlist.AddLast(dynamic_cast<RedTinyMLElement*>(pNewLeaf)); };
 
 private:
-    TmlNodeListType nodelist;
+    TmlElementListType elemlist;
 };
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

@@ -1,5 +1,5 @@
 // -------------------------------------------------------------------------------------------------
-// This file is covered by: The MIT License (MIT) Copyright (c) 2022 David G. Steadman
+// This file is covered by: The MIT License (MIT) Copyright (c) 2022 Dave Steadman
 // -------------------------------------------------------------------------------------------------
 // Permission is hereby granted, free of charge, to any person obtaining a copy of this software and
 // associated documentation files (the "Software"), to deal in the Software without restriction,
@@ -21,7 +21,7 @@
 #include "RedCoreNamespace.h"
 
 #include "RedVSIParseTreeInterface.h"
-#include "RedVSIContextInterface.h"
+#include "RedVSIContextRoutine.h"
 
 using namespace Red::Core;
 
@@ -35,8 +35,9 @@ class RedVSIParseTreeVal : public RedVSIParseTreeInterface
 public:
 
     RedVSIParseTreeVal(void)                      { Init(); };
-    RedVSIParseTreeVal(RedDataVariant cNewVal)        { SetValue(cNewVal); };
+    RedVSIParseTreeVal(RedDataVariant cNewVal)    { SetValue(cNewVal); };
     ~RedVSIParseTreeVal(void)                     { };
+
     // Inherited RedType
     void              Init(void)            { cVal.Init(); };
     RedVSILangElement Type(void) const      { return RedVSILangElement::ParseValue(); };
@@ -46,7 +47,7 @@ public:
     void             SetValue(RedDataVariant& cInVal) { cVal = cInVal; };
 
     // Inherited RedVSIParseTreeInterface
-    void CalcResult(RedVSIContextInterface* pContext) { pContext->SetExprResult(this, cVal); };
+    void CalcResult(RedVSIContextRoutine* pContext) { pContext->SetExprResult(this, cVal); };
 
 private:
     RedDataVariant cVal;

@@ -1,5 +1,5 @@
 // -------------------------------------------------------------------------------------------------
-// This file is covered by: The MIT License (MIT) Copyright (c) 2022 David G. Steadman
+// This file is covered by: The MIT License (MIT) Copyright (c) 2022 Dave Steadman
 // -------------------------------------------------------------------------------------------------
 // Permission is hereby granted, free of charge, to any person obtaining a copy of this software and
 // associated documentation files (the "Software"), to deal in the Software without restriction,
@@ -33,16 +33,11 @@ public:
     static void RunUnitTest(RedLog& log);
 
 private:
-
     static RedResult TestOne(void);
     static RedResult TestTwo(void);
     static RedResult TestIterators(void);
     static RedResult TestTreeEdit(void);
     static RedResult TestQuoteCharacters(void);
-
-//        static int TestBasicVSILibrary_001(void);
-//        static int TestReadBasicVSILibrary_001(void);
-
 };
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

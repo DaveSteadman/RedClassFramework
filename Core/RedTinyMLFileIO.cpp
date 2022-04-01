@@ -1,6 +1,6 @@
 
 // -------------------------------------------------------------------------------------------------
-// This file is covered by: The MIT License (MIT) Copyright (c) 2022 David G. Steadman
+// This file is covered by: The MIT License (MIT) Copyright (c) 2022 Dave Steadman
 // -------------------------------------------------------------------------------------------------
 // Permission is hereby granted, free of charge, to any person obtaining a copy of this software and
 // associated documentation files (the "Software"), to deal in the Software without restriction,
@@ -116,15 +116,17 @@ void RedTinyMLFileIO::SerialiseCore(RedBufferOutput& outputBuf, const RedTinyMLE
     {
         RedTinyMLNode* pCurrNode = (RedTinyMLNode*)topTmlNode;
 
-        RedTinyMLNode::TmlNodeListItType ListIt = pCurrNode->NodeIterator();
+        RedTinyMLNode::TmlElementListItType ListIt = pCurrNode->ElementListIterator();
 
-        if (eMode == TESerialiseType::LinedIndentedContent) outputBuf.IncreaseIndent();
+        if (eMode == TESerialiseType::LinedIndentedContent) 
+            outputBuf.IncreaseIndent();
 
         while (!ListIt.IsDone())
         {
             RedTinyMLElement* nextElem = ListIt.CurrentItem();
 
-            if (eMode == TESerialiseType::LinedIndentedContent) outputBuf.WriteNewLineWithIndent();
+            if (eMode == TESerialiseType::LinedIndentedContent) 
+                outputBuf.WriteNewLineWithIndent();
 
             RedTinyMLFileIO::SerialiseCore(outputBuf, nextElem, eMode);
 
@@ -264,7 +266,7 @@ bool RedTinyMLFileIO::ReadTmlElement(RedBufferInput& inputBuf, RedTinyMLElement*
             RedTinyMLElement* newChildNode;
             
             if (RedTinyMLFileIO::ReadTmlElement(inputBuf, &newChildNode) )
-                newNode->NodeList()->AddLast(newChildNode);
+                newNode->ElementList()->AddLast(newChildNode);
 
              ch = inputBuf.PreviewNextNonWhitespaceChar();
         }

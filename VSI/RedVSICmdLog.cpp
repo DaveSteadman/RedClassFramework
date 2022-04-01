@@ -1,5 +1,5 @@
 // -------------------------------------------------------------------------------------------------
-// This file is covered by: The MIT License (MIT) Copyright (c) 2022 David G. Steadman
+// This file is covered by: The MIT License (MIT) Copyright (c) 2022 Dave Steadman
 // -------------------------------------------------------------------------------------------------
 // Permission is hereby granted, free of charge, to any person obtaining a copy of this software and
 // associated documentation files (the "Software"), to deal in the Software without restriction,
@@ -36,7 +36,7 @@ RedVSICmdLog::RedVSICmdLog(void)
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-void RedVSICmdLog::QueueExpr(RedVSIContextInterface* pContext)
+void RedVSICmdLog::QueueExpr(RedVSIContextRoutine* pContext)
 {
     if (pLogExpr)
         pContext->QueueExpr(pLogExpr);
@@ -44,7 +44,7 @@ void RedVSICmdLog::QueueExpr(RedVSIContextInterface* pContext)
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-void RedVSICmdLog::Execute(RedVSIContextInterface* pContext)
+void RedVSICmdLog::Execute(RedVSIContextRoutine* pContext)
 {
     // Get the result of the commands expression
     RedDataVariant cExprResult = pContext->ExprResult(pLogExpr);

@@ -1,5 +1,5 @@
 // -------------------------------------------------------------------------------------------------
-// This file is covered by: The MIT License (MIT) Copyright (c) 2022 David G. Steadman
+// This file is covered by: The MIT License (MIT) Copyright (c) 2022 Dave Steadman
 // -------------------------------------------------------------------------------------------------
 // Permission is hereby granted, free of charge, to any person obtaining a copy of this software and
 // associated documentation files (the "Software"), to deal in the Software without restriction,
@@ -40,8 +40,8 @@ class RedDataVariant : public RedType
 public:
 
     RedDataVariant(void):pData(NULL) { };
-    RedDataVariant(const RedType& cDataItem):pData(NULL)        { cDataItem.Clone(); };
-    RedDataVariant(const RedDataVariant& cDataItem):pData(NULL)     { SetValue(cDataItem); };
+    RedDataVariant(const RedType& cDataItem):pData(NULL)        { pData = cDataItem.Clone(); };
+    RedDataVariant(const RedDataVariant& cDataItem):pData(NULL) { SetValue(cDataItem); };
     RedDataVariant(const RedDataBoolean& cNewBool):pData(NULL)  { SetValue(cNewBool); };
     RedDataVariant(const RedDataChar& cNewCh):pData(NULL)       { SetValue(RedDataChar(cNewCh)); };
     RedDataVariant(const RedDataNumber& cNewNum):pData(NULL)    { SetValue(cNewNum); };

@@ -1,5 +1,5 @@
 // -------------------------------------------------------------------------------------------------
-// This file is covered by: The MIT License (MIT) Copyright (c) 2022 David G. Steadman
+// This file is covered by: The MIT License (MIT) Copyright (c) 2022 Dave Steadman
 // -------------------------------------------------------------------------------------------------
 // Permission is hereby granted, free of charge, to any person obtaining a copy of this software and
 // associated documentation files (the "Software"), to deal in the Software without restriction,
@@ -20,6 +20,9 @@
 
 #include "RedCoreNamespace.h"
 
+#include "RedVSILib.h"
+#include "RedVSIContextRoutine.h"
+
 using namespace Red::Core;
 
 // VSI Base Environment
@@ -37,14 +40,19 @@ namespace VSI {
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 class RedVSIContextRoutine;
+
 typedef RedStackLIFO<RedVSIContextRoutine*>                   RedVSIRoutineContextStack;
 typedef RedMapList<RedDataString, RedVSIRoutineContextStack*> RedVSIThreadList;
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
+enum class TEContextState {Running, Ended};
+
 class RedVSIContextBase {
 
 public:
+
+    TEContextState eState = TEContextState::Running;
 
     RedVSILib        cCodeLib;
     RedLog           cLog;

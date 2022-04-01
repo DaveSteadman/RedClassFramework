@@ -1,5 +1,5 @@
 // -------------------------------------------------------------------------------------------------
-// This file is covered by: The MIT License (MIT) Copyright (c) 2022 David G. Steadman
+// This file is covered by: The MIT License (MIT) Copyright (c) 2022 Dave Steadman
 // -------------------------------------------------------------------------------------------------
 // Permission is hereby granted, free of charge, to any person obtaining a copy of this software and
 // associated documentation files (the "Software"), to deal in the Software without restriction,
@@ -37,7 +37,7 @@ RedVSICmdReturn::RedVSICmdReturn(void)
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-void RedVSICmdReturn::QueueExpr(RedVSIContextInterface* pContext)
+void RedVSICmdReturn::QueueExpr(RedVSIContextRoutine* pContext)
 {
     if (pReturnExpr)
         pContext->QueueExpr(pReturnExpr);
@@ -45,7 +45,7 @@ void RedVSICmdReturn::QueueExpr(RedVSIContextInterface* pContext)
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-void RedVSICmdReturn::Execute(RedVSIContextInterface* pContext)
+void RedVSICmdReturn::Execute(RedVSIContextRoutine* pContext)
 {
     // If we have an expression, just finish up and return
     if (pReturnExpr)

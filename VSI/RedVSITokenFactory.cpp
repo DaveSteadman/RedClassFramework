@@ -1,5 +1,5 @@
 // -------------------------------------------------------------------------------------------------
-// This file is covered by: The MIT License (MIT) Copyright (c) 2022 David G. Steadman
+// This file is covered by: The MIT License (MIT) Copyright (c) 2022 Dave Steadman
 // -------------------------------------------------------------------------------------------------
 // Permission is hereby granted, free of charge, to any person obtaining a copy of this software and
 // associated documentation files (the "Software"), to deal in the Software without restriction,
@@ -291,10 +291,14 @@ RedResult RedVSITokenFactory::PredefinedComp(RedBufferInput& cInputBuffer, RedVS
         {
             // We have matches, so get the character for real and look for an exact match
             cValidStr += cInputBuffer.GetNextChar();
+        }
+        else if (NumMatches == 1)
+        {
+            // We have matches, so get the character for real and look for an exact match
             if (cTokenMap.Find(cValidStr, cElem))
             {
-                iExactMatchFound    = true;
-                cFinalElem          = cElem;
+                iExactMatchFound = true;
+                cFinalElem = cElem;
                 iProcessingComplete = true;
             }
         }

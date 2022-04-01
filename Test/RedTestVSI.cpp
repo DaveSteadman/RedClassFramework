@@ -1,5 +1,5 @@
 // -------------------------------------------------------------------------------------------------
-// This file is covered by: The MIT License (MIT) Copyright (c) 2022 David G. Steadman
+// This file is covered by: The MIT License (MIT) Copyright (c) 2022 Dave Steadman
 // -------------------------------------------------------------------------------------------------
 // Permission is hereby granted, free of charge, to any person obtaining a copy of this software and
 // associated documentation files (the "Software"), to deal in the Software without restriction,
@@ -19,7 +19,6 @@
 #include "RedTestVSI.h"
 #include "RedVSINamespace.h"
 #include "RedVSIContextRoutine.h"
-#include "RedVSIContextThread.h"
 
 #include "RedVSICmdSerialiser.h"
 #include "RedVSILibTokenMap.h"
@@ -724,8 +723,9 @@ RedResult RedTestVSI::TestFragment_Expr(void)
 
 RedResult RedTestVSI::TestFragment_If(void)
 {
-    // Define a small code fragment
-    RedDataString strCodeFragment = "\
+    {
+        // Define a small code fragment
+        RedDataString strCodeFragment = "\
         new local number x   = 3 \
         new local number res = 0 \
         if x < 4 then \
@@ -733,30 +733,65 @@ RedResult RedTestVSI::TestFragment_If(void)
         endif \
         res = res * 3";
 
-    // Turn the code into tokens
-    RedVSILibTokenMap cTokenMap;
-    RedVSITokenBuffer cTokenList;
-    RedLog            cRedLog;
-    if (!RedVSITokenFactory::CreateTokens(strCodeFragment, cTokenMap.cVSILibTokenMap, cTokenList))
-        return kResultFail;
+        // Turn the code into tokens
+        RedVSILibTokenMap cTokenMap;
+        RedVSITokenBuffer cTokenList;
+        RedLog            cRedLog;
+        if (!RedVSITokenFactory::CreateTokens(strCodeFragment, cTokenMap.cVSILibTokenMap, cTokenList))
+            return kResultFail;
 
-    // Turn the tokens into code
-    RedVSICmd* topCmd = RedVSICmdFactory::RunConstuctionCompetition(cTokenList, cRedLog);
-    if (topCmd == NULL)
-        return kResultFail;
-    if (cRedLog.ContainsError())
-        return kResultFail;
+        // Turn the tokens into code
+        RedVSICmd* topCmd = RedVSICmdFactory::RunConstuctionCompetition(cTokenList, cRedLog);
+        if (topCmd == NULL)
+            return kResultFail;
+        if (cRedLog.ContainsError())
+            return kResultFail;
 
-    // Execute the code in a context
-    RedVSIContextRoutine testContext(&cRedLog);
-    RedVSIContextFactory::LoadFragmentIntoContext(strCodeFragment, testContext);
-    testContext.Execute(10);
-    if (cRedLog.ContainsError())
-        return kResultFail;
+        // Execute the code in a context
+        RedVSIContextRoutine testContext(&cRedLog);
+        RedVSIContextFactory::LoadFragmentIntoContext(strCodeFragment, testContext);
+        testContext.Execute(10);
+        if (cRedLog.ContainsError())
+            return kResultFail;
 
-    // Check the execution result
-    RedDataVariant x = testContext.DataItemAsVariant("res");
-    if (x != 12) return kResultFail;
+        // Check the execution result
+        RedDataVariant x = testContext.DataItemAsVariant("res");
+        if (x != 12) return kResultFail;
+    }
+
+    {
+        // Define a small code fragment
+        RedDataString strCodeFragment = "\
+        new local number x   = 3 \
+        if x == 4 then \
+            x = x + 10 \
+        endif";
+
+        // Turn the code into tokens
+        RedVSILibTokenMap cTokenMap;
+        RedVSITokenBuffer cTokenList;
+        RedLog            cRedLog;
+        if (!RedVSITokenFactory::CreateTokens(strCodeFragment, cTokenMap.cVSILibTokenMap, cTokenList))
+            return kResultFail;
+
+        // Turn the tokens into code
+        RedVSICmd* topCmd = RedVSICmdFactory::RunConstuctionCompetition(cTokenList, cRedLog);
+        if (topCmd == NULL)
+            return kResultFail;
+        if (cRedLog.ContainsError())
+            return kResultFail;
+
+        // Execute the code in a context
+        RedVSIContextRoutine testContext(&cRedLog);
+        RedVSIContextFactory::LoadFragmentIntoContext(strCodeFragment, testContext);
+        testContext.Execute(10);
+        if (cRedLog.ContainsError())
+            return kResultFail;
+
+        // Check the execution result
+        RedDataVariant x = testContext.DataItemAsVariant("x");
+        if (x != 3) return kResultFail;
+    }
 
     return kResultSuccess;
 }

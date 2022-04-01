@@ -1,5 +1,5 @@
 // -------------------------------------------------------------------------------------------------
-// This file is covered by: The MIT License (MIT) Copyright (c) 2022 David G. Steadman
+// This file is covered by: The MIT License (MIT) Copyright (c) 2022 Dave Steadman
 // -------------------------------------------------------------------------------------------------
 // Permission is hereby granted, free of charge, to any person obtaining a copy of this software and
 // associated documentation files (the "Software"), to deal in the Software without restriction,
@@ -35,19 +35,19 @@ class RedVSIParseTreeVar : public RedVSIParseTreeInterface
 public:
 
     // construction;
-    RedVSIParseTreeVar(void)                                                               { cVarName=""; };
+    RedVSIParseTreeVar(void)                                                                   { cVarName=""; };
     RedVSIParseTreeVar(const RedDataString& cNewVarName)                                       { cVarName=cNewVarName; pVarIndexExpr=NULL; };
     RedVSIParseTreeVar(const RedDataString& cNewVarName, RedVSIParseTreeInterface* index_expr) { cVarName=cNewVarName; pVarIndexExpr=index_expr;  };
     ~RedVSIParseTreeVar();
 
     // inherited
-    void              CalcResult(RedVSIContextInterface* pContext);
+    void              CalcResult(RedVSIContextRoutine* pContext);
     RedVSILangElement Type(void) const { return RedVSILangElement::ParseVariable(); };
 
     void              SetVarName(const RedDataString& cInVarName) { cVarName = cInVarName; };
-    RedDataString         VarName(void) const                     { return cVarName; };
+    RedDataString     VarName(void) const                         { return cVarName; };
 
-    void              AssignValue(RedVSIContextInterface* pContext, RedDataVariant& result);
+    void              AssignValue(RedVSIContextRoutine* pContext, RedDataVariant& result);
 
 private:
 

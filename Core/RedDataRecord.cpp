@@ -1,5 +1,5 @@
 // -------------------------------------------------------------------------------------------------
-// This file is covered by: The MIT License (MIT) Copyright (c) 2022 David G. Steadman
+// This file is covered by: The MIT License (MIT) Copyright (c) 2022 Dave Steadman
 // -------------------------------------------------------------------------------------------------
 // Permission is hereby granted, free of charge, to any person obtaining a copy of this software and
 // associated documentation files (the "Software"), to deal in the Software without restriction,
@@ -123,6 +123,31 @@ RedType* RedDataRecord::PtrForName(const RedDataString& cAttribName)
     RedType* pData = NULL;
     if (FindFieldPtr(cAttribName, pData))
         return pData;
+    else
+        return NULL;
+}
+
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+RedDataString RedDataRecord::NameForIndex(const unsigned uIndex) const
+{
+    RedDataString cRetStr = "<NoName>";
+
+    if (pAttribList->FindIdByIndex(uIndex, cRetStr))
+        return cRetStr;
+    else
+        return "<NotFound>";
+}
+
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+
+RedType* RedDataRecord::PtrForIndex(const unsigned uIndex) const
+{
+    RedType* retData = NULL;
+
+    if (pAttribList->FindDataByIndex(uIndex, retData))
+        return retData;
     else
         return NULL;
 }

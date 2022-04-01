@@ -1,5 +1,5 @@
 // -------------------------------------------------------------------------------------------------
-// This file is covered by: The MIT License (MIT) Copyright (c) 2022 David G. Steadman
+// This file is covered by: The MIT License (MIT) Copyright (c) 2022 Dave Steadman
 // -------------------------------------------------------------------------------------------------
 // Permission is hereby granted, free of charge, to any person obtaining a copy of this software and
 // associated documentation files (the "Software"), to deal in the Software without restriction,
@@ -54,11 +54,15 @@ public:
 
     // Shortcut add operations
     void        AddByValue(const RedDataString& cNewAttribName, const int iVal)     { pAttribList->Add(cNewAttribName, new RedDataNumber(iVal));  };
+    void        AddByValue(const RedDataString& cNewAttribName, const double dVal)  { pAttribList->Add(cNewAttribName, new RedDataNumber(dVal)); };
     void        AddByValue(const RedDataString& cNewAttribName, const char* strVal) { pAttribList->Add(cNewAttribName, new RedDataString(strVal)); };
     void        AddByValue(const RedDataString& cNewAttribName, const bool bVal)    { pAttribList->Add(cNewAttribName, new RedDataBoolean(bVal)); };
 
     // Locate
     bool        FindFieldPtr(const RedDataString& cAttribName, RedType*& pData) { return pAttribList->FindDataById(cAttribName, pData); };
+
+    RedDataString NameForIndex(const unsigned uIndex) const;
+    RedType*      PtrForIndex(const unsigned uIndex) const;
 
     RedDataType TypeForName(const RedDataString& cAttribName);
     RedType*    PtrForName (const RedDataString& cAttribName);

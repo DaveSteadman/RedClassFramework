@@ -1,5 +1,5 @@
 // -------------------------------------------------------------------------------------------------
-// This file is covered by: The MIT License (MIT) Copyright (c) 2022 David G. Steadman
+// This file is covered by: The MIT License (MIT) Copyright (c) 2022 Dave Steadman
 // -------------------------------------------------------------------------------------------------
 // Permission is hereby granted, free of charge, to any person obtaining a copy of this software and
 // associated documentation files (the "Software"), to deal in the Software without restriction,
@@ -77,25 +77,25 @@ RedResult RedVSIContextFactory::LoadFragmentIntoContext(const RedDataString& Inp
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-RedResult RedVSIContextFactory::CreateThreadContextForRoutine(const RedDataString& classname, const RedDataString& routinename, RedVSILib* pInputLib, RedVSIContextThread** OutputThreadContext, RedLog& cLog)
-{
-    // Find the routine to execute
-    RedVSILibRoutine* LibRoutine = pInputLib->FindRoutine(classname, routinename);
-
-    if (LibRoutine == NULL)
-        return kResultFail;
-
-    *OutputThreadContext = new RedVSIContextThread();
-
-    RedVSIContextRoutine* pFirstRoutineContext = new RedVSIContextRoutine(&cLog, classname, routinename, LibRoutine->FirstCommand());
-
-    pFirstRoutineContext->SetThreadContextRecord(*OutputThreadContext);
-    (*OutputThreadContext)->PushRoutineOnStack(pFirstRoutineContext);
-    (*OutputThreadContext)->SetCodeLib(pInputLib);
-
-    return kResultSuccess;
-}
+//
+//RedResult RedVSIContextFactory::CreateThreadContextForRoutine(const RedDataString& classname, const RedDataString& routinename, RedVSILib* pInputLib, RedVSIContextThread** OutputThreadContext, RedLog& cLog)
+//{
+//    // Find the routine to execute
+//    RedVSILibRoutine* LibRoutine = pInputLib->FindRoutine(classname, routinename);
+//
+//    if (LibRoutine == NULL)
+//        return kResultFail;
+//
+//    *OutputThreadContext = new RedVSIContextThread();
+//
+//    RedVSIContextRoutine* pFirstRoutineContext = new RedVSIContextRoutine(&cLog, classname, routinename, LibRoutine->FirstCommand());
+//
+//    pFirstRoutineContext->SetBaseContext(*OutputThreadContext);
+//    (*OutputThreadContext)->PushRoutineOnStack(pFirstRoutineContext);
+//    (*OutputThreadContext)->SetCodeLib(pInputLib);
+//
+//    return kResultSuccess;
+//}
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 

@@ -1,5 +1,5 @@
 // -------------------------------------------------------------------------------------------------
-// This file is covered by: The MIT License (MIT) Copyright (c) 2022 David G. Steadman
+// This file is covered by: The MIT License (MIT) Copyright (c) 2022 Dave Steadman
 // -------------------------------------------------------------------------------------------------
 // Permission is hereby granted, free of charge, to any person obtaining a copy of this software and
 // associated documentation files (the "Software"), to deal in the Software without restriction,
@@ -32,9 +32,9 @@ RedTinyMLNode::~RedTinyMLNode()
     RedTinyMLNode* pCurrNode = 0;
     
     // Loop until the list is empty
-    while (!this->nodelist.IsEmpty())
+    while (!this->elemlist.IsEmpty())
     {
-        this->nodelist.DelLast();
+        this->elemlist.DelLast();
     }
 }
 
@@ -43,7 +43,7 @@ RedTinyMLNode::~RedTinyMLNode()
 RedTinyMLNode* RedTinyMLNode::CreateChildNode(const RedDataString& NewName)
 {
     RedTinyMLNode* pNewNode = new RedTinyMLNode(NewName);
-    this->nodelist.AddLast(dynamic_cast<RedTinyMLElement*>(pNewNode));
+    this->elemlist.AddLast(dynamic_cast<RedTinyMLElement*>(pNewNode));
 
     return pNewNode;
 }
@@ -54,7 +54,7 @@ RedTinyMLLeaf* RedTinyMLNode::CreateChildLeaf(const RedDataString& NewName, cons
 {
     RedTinyMLLeaf *NewLeaf = new RedTinyMLLeaf(NewName, NewData);
 
-    this->nodelist.AddLast(dynamic_cast<RedTinyMLElement*>(NewLeaf));
+    this->elemlist.AddLast(dynamic_cast<RedTinyMLElement*>(NewLeaf));
     return NewLeaf;
 }
 

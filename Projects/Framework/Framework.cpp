@@ -7,16 +7,18 @@
 
 #include "RedTestCentre.h"
 
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
 int main()
 {
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
+    std::cout << "- Built In Test - - - - - - - - - - - - - - - \n";
     Red::Core::RedLog cLog;
     Red::Test::RedTestCentre::RunAllUnitTests(cLog);
     std::cout << cLog.AllLoggedText().TextPtr();
 
-    // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
+    std::cout << "- - - - - - - - - - - - - - - - - - - - - - - \n";
     std::cout << "Red Shell\n";
 
     char inputline[256];
@@ -37,8 +39,9 @@ int main()
         std::cout << retstr.TextPtr();
 
         // End when shell done
-        //if (cVsiShell.eState == TEShellState::Ended)
-        //    inputvalid = false;
+        if (cVsiShell.RunState() == TEContextState::Ended)
+            inputvalid = false;
     }
-
 }
+
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

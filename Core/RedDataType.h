@@ -1,5 +1,5 @@
 // -------------------------------------------------------------------------------------------------
-// This file is covered by: The MIT License (MIT) Copyright (c) 2022 David G. Steadman
+// This file is covered by: The MIT License (MIT) Copyright (c) 2022 Dave Steadman
 // -------------------------------------------------------------------------------------------------
 // Permission is hereby granted, free of charge, to any person obtaining a copy of this software and
 // associated documentation files (the "Software"), to deal in the Software without restriction,
@@ -20,6 +20,8 @@
 
 namespace Red {
 namespace Core {
+
+class RedDataString;
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -59,6 +61,8 @@ public:
     static RedDataType Variant(void)    { return RedDataType(TEDataType::eDataTypeVariant); };
 
     int iState(void) const { return (int)eState; };
+
+    RedDataString Name(void);
 
 protected:
 

@@ -1,5 +1,5 @@
 // -------------------------------------------------------------------------------------------------
-// This file is covered by: The MIT License (MIT) Copyright (c) 2022 David G. Steadman
+// This file is covered by: The MIT License (MIT) Copyright (c) 2022 Dave Steadman
 // -------------------------------------------------------------------------------------------------
 // Permission is hereby granted, free of charge, to any person obtaining a copy of this software and
 // associated documentation files (the "Software"), to deal in the Software without restriction,
@@ -36,7 +36,7 @@ RedVSICmdLet::RedVSICmdLet(void)
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-void RedVSICmdLet::QueueExpr(RedVSIContextInterface* pContext)
+void RedVSICmdLet::QueueExpr(RedVSIContextRoutine* pContext)
 {
     if (pExpr)
         pContext->QueueExpr(pExpr);
@@ -44,7 +44,7 @@ void RedVSICmdLet::QueueExpr(RedVSIContextInterface* pContext)
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-void RedVSICmdLet::Execute(RedVSIContextInterface* pContext)
+void RedVSICmdLet::Execute(RedVSIContextRoutine* pContext)
 {
     // expression will have been evaluated prior to the command, 
     // so any actions already performed. Just queue up the next 

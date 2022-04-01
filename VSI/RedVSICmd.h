@@ -1,5 +1,5 @@
 // -------------------------------------------------------------------------------------------------
-// This file is covered by: The MIT License (MIT) Copyright (c) 2022 David G. Steadman
+// This file is covered by: The MIT License (MIT) Copyright (c) 2022 Dave Steadman
 // -------------------------------------------------------------------------------------------------
 // Permission is hereby granted, free of charge, to any person obtaining a copy of this software and
 // associated documentation files (the "Software"), to deal in the Software without restriction,
@@ -19,11 +19,12 @@
 #pragma once
 
 #include "RedLog.h"
-#include "RedVSIContextInterface.h"
 #include "RedVSILangElement.h"
 
 namespace Red {
 namespace VSI {
+
+class RedVSIContextRoutine;
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -39,11 +40,11 @@ public:
 
     // Operation to queue up the top level expressions in a command. A separate class
     // determines the actual traversing of the parse-tree.
-    virtual void QueueExpr(RedVSIContextInterface* pContext) =0;
+    virtual void QueueExpr(RedVSIContextRoutine* pContext) =0;
     
     // Execute the command, assuming the expressions are all fully executed and the
     // results are available in the context.
-    virtual void Execute(RedVSIContextInterface* pContext) =0;
+    virtual void Execute(RedVSIContextRoutine* pContext) =0;
     
     // Get the next command in the sequence (not including the branches of
     // conditional/iterative commands)

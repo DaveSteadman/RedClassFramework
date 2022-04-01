@@ -1,5 +1,5 @@
 // -------------------------------------------------------------------------------------------------
-// This file is covered by: The MIT License (MIT) Copyright (c) 2022 David G. Steadman
+// This file is covered by: The MIT License (MIT) Copyright (c) 2022 Dave Steadman
 // -------------------------------------------------------------------------------------------------
 // Permission is hereby granted, free of charge, to any person obtaining a copy of this software and
 // associated documentation files (the "Software"), to deal in the Software without restriction,
@@ -69,7 +69,7 @@ void RedVSILibFactory::InputTmlClass(RedTinyMLElement* pTopTmlNode, RedLog& cAna
     RedDataString x(pName->Data());
     pNewClass->SetClassName(x);
 
-    Red::Core::RedTinyMLNode::TmlNodeListItType routineIt = pTmlNode->NodeIterator();
+    RedTinyMLNode::TmlElementListItType routineIt = pTmlNode->ElementListIterator();
 
     routineIt.First();
     while (!routineIt.IsDone())
@@ -120,7 +120,7 @@ RedVSILibRoutine* RedVSILibFactory::InputTmlRoutine(RedTinyMLNode& cRoutineNode,
     RedTinyMLNode* pParams = RedTinyMLAction::NodeFirstNamedNode(cRoutineNode, kVSIIOElementKeywordParams);
     if (pParams != NULL)
     {
-        RedTinyMLNode::TmlNodeListItType paramIt = pParams->NodeIterator();
+        RedTinyMLNode::TmlElementListItType paramIt = pParams->ElementListIterator();
         paramIt.First();
         while (!paramIt.IsDone())
         {
@@ -132,7 +132,7 @@ RedVSILibRoutine* RedVSILibFactory::InputTmlRoutine(RedTinyMLNode& cRoutineNode,
                 RedDataString paramTypeStr(pLeaf->Data());
 
                 RedVSILangElement paramType;
-                if (paramTypeStr == kVSIIOElementKeywordBool)   paramType = kLangElementTypeBool;
+                if      (paramTypeStr == kVSIIOElementKeywordBool)   paramType = kLangElementTypeBool;
                 else if (paramTypeStr == kVSIIOElementKeywordChar)   paramType = kLangElementTypeChar;
                 else if (paramTypeStr == kVSIIOElementKeywordNumber) paramType = kLangElementTypeNumber;
                 else if (paramTypeStr == kVSIIOElementKeywordString) paramType = kLangElementTypeString;

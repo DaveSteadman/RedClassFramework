@@ -1,5 +1,5 @@
 // -------------------------------------------------------------------------------------------------
-// This file is covered by: The MIT License (MIT) Copyright (c) 2022 David G. Steadman
+// This file is covered by: The MIT License (MIT) Copyright (c) 2022 Dave Steadman
 // -------------------------------------------------------------------------------------------------
 // Permission is hereby granted, free of charge, to any person obtaining a copy of this software and
 // associated documentation files (the "Software"), to deal in the Software without restriction,
@@ -125,6 +125,10 @@ bool RedVSIShell::DataAddComp(RedVSITokenBuffer& cInputBuffer, RedLog& cLog)
     {
         cLog.AddText("DataAdd Command Processed.");
 
+        cVSIBase.cHeap.AddByValue("var1", 1);
+        cVSIBase.cHeap.AddByValue("var2", 1.234);
+        cVSIBase.cHeap.AddByValue("var3", "data");
+
         return true;
     }
 
@@ -162,11 +166,33 @@ bool RedVSIShell::DataListComp(RedVSITokenBuffer& cInputBuffer, RedLog& cLog)
     RedVSIToken cCmdTok = cInputBuffer.GetToken();
     RedVSIToken cCmd2Tok = cInputBuffer.GetToken();
 
-    if (cCmdTok.Predef().IsKeywordShellData() &&
-        cCmd2Tok.Predef().IsKeywordShellList())
+    if (cCmdTok.Predef().IsKeywordShellData() && cCmd2Tok.Predef().IsKeywordShellList())
     {
         cLog.AddText("DataList Command Processed.");
 
+        unsigned NumElems = cVSIBase.cHeap.NumItems();
+
+        RedDataString cDataList;
+        cDataList = "Num Elements: ";
+        cDataList.Append(RedDataNumber(NumElems).DecimalString());
+        cLog.AddText(cDataList);
+
+        RedDataString cDataLine;
+        for (unsigned i = 0; i < NumElems; i++)
+        {
+            RedType* pData = cVSIBase.cHeap.PtrForIndex(i);
+
+            cDataLine = "heap ";
+            cDataLine.Append(pData->Type().Name());
+            cDataLine += " ";
+            cDataLine.Append(cVSIBase.cHeap.NameForIndex(i));
+
+            cDataLine += " = ";
+            RedDataVariant x(*pData);
+            cDataLine += x.StringValue();
+
+            cLog.AddText(cDataLine);
+        }
         return true;
     }
 
@@ -178,13 +204,15 @@ bool RedVSIShell::DataListComp(RedVSITokenBuffer& cInputBuffer, RedLog& cLog)
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
+// run "new heap number x = 1"
+// run "if x == 1 then new heap number y = 2 endif"
+
 bool RedVSIShell::RunFragComp(RedVSITokenBuffer& cInputBuffer, RedLog& cLog)
 {
     RedVSIToken cCmdTok  = cInputBuffer.GetToken();
     RedVSIToken cCodeTok = cInputBuffer.GetToken();
 
-    if (cCmdTok.Predef().IsKeywordShellRun() && 
-        cCodeTok.Type().IsStringLiteral())
+    if (cCmdTok.Predef().IsKeywordShellRun() && cCodeTok.Type().IsStringLiteral())
     {
         RedVSILibTokenMap cTokenMap;
         RedVSITokenBuffer cTokenList;
@@ -210,6 +238,7 @@ bool RedVSIShell::RunFragComp(RedVSITokenBuffer& cInputBuffer, RedLog& cLog)
 
         // Execute the code in a context
         RedVSIContextRoutine testContext(&cLog, topCmd);
+        testContext.SetBaseContext(&cVSIBase);
         testContext.Execute(10);
         if (cLog.ContainsError())
         {
@@ -244,12 +273,12 @@ bool RedVSIShell::ExitComp(RedVSITokenBuffer& cInputBuffer, RedLog& cLog)
 {
     RedVSIToken cCmdTok = cInputBuffer.GetToken();
 
-    // if (cCmdTok.Predef().IsKeywordShellExit())
-    // {
-    //     eState = TEShellState::Ended;
-    //     cLog.AddText("Exit Command Processed.");
-    //     return true;
-    // }
+    if (cCmdTok.Predef().IsKeywordShellExit())
+    {
+        cVSIBase.eState = TEContextState::Ended;
+        cLog.AddText("Exit Command Processed.");
+        return true;
+    }
 
     // not exit command, return the token and fail the comp.
     cInputBuffer.SetTokenIndexBackOne();

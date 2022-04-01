@@ -1,5 +1,5 @@
 // -------------------------------------------------------------------------------------------------
-// This file is covered by: The MIT License (MIT) Copyright (c) 2022 David G. Steadman
+// This file is covered by: The MIT License (MIT) Copyright (c) 2022 Dave Steadman
 // -------------------------------------------------------------------------------------------------
 // Permission is hereby granted, free of charge, to any person obtaining a copy of this software and
 // associated documentation files (the "Software"), to deal in the Software without restriction,
@@ -27,7 +27,7 @@ namespace Core {
 
 RedTinyMLElement* RedTinyMLAction::NodeFirstNamedElement(RedTinyMLNode& node, const RedDataString& SearchName)
 {
-    Core::RedTinyMLNode::TmlNodeListItType yIt = node.NodeIterator();
+    RedTinyMLNode::TmlElementListItType yIt = node.ElementListIterator();
     yIt.First();
     while (!yIt.IsDone())
     {
@@ -115,7 +115,7 @@ RedResult RedTinyMLAction::ChildLeafDataForName(RedTinyMLNode& node, const RedDa
 
 RedResult RedTinyMLAction::ChildLeafNameForData(RedTinyMLNode& node, const RedDataString& inleafdata, RedDataString& outleafname)
 {
-    RedTinyMLNode::TmlNodeListItType it = node.NodeIterator();
+    RedTinyMLNode::TmlElementListItType it = node.ElementListIterator();
 
     it.First();
     while(!it.IsDone())
@@ -141,7 +141,7 @@ RedResult RedTinyMLAction::ChildLeafNameForData(RedTinyMLNode& node, const RedDa
 
 unsigned RedTinyMLAction::NumberOfNamedChildLeaves(RedTinyMLNode& node, const RedDataString& SearchName)
 {
-    RedTinyMLNode::TmlNodeListItType it = node.NodeIterator();
+    RedTinyMLNode::TmlElementListItType it = node.ElementListIterator();
     unsigned matchcount = 0;
 
     it.First();
@@ -167,7 +167,7 @@ unsigned RedTinyMLAction::TreeElementCount(RedTinyMLNode& node)
     // 1 = starting node.
     unsigned currNodeCount = 1;
 
-    Core::RedTinyMLNode::TmlNodeListItType yIt = node.NodeIterator();
+    RedTinyMLNode::TmlElementListItType yIt = node.ElementListIterator();
     yIt.First();
     while (!yIt.IsDone())
     {

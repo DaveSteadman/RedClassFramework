@@ -1,5 +1,5 @@
 // -------------------------------------------------------------------------------------------------
-// This file is covered by: The MIT License (MIT) Copyright (c) 2022 David G. Steadman
+// This file is covered by: The MIT License (MIT) Copyright (c) 2022 Dave Steadman
 // -------------------------------------------------------------------------------------------------
 // Permission is hereby granted, free of charge, to any person obtaining a copy of this software and
 // associated documentation files (the "Software"), to deal in the Software without restriction,
@@ -56,7 +56,7 @@ void RedVSICmdIf::GetDetails(RedVSIParseTreeInterface*& pOutCmdExpr, RedVSICmd*&
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-void RedVSICmdIf::QueueExpr(RedVSIContextInterface* pContext)
+void RedVSICmdIf::QueueExpr(RedVSIContextRoutine* pContext)
 {
     if (pCmdExpr)
         pContext->QueueExpr(pCmdExpr);
@@ -64,7 +64,7 @@ void RedVSICmdIf::QueueExpr(RedVSIContextInterface* pContext)
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-void RedVSICmdIf::Execute(RedVSIContextInterface* pContext)
+void RedVSICmdIf::Execute(RedVSIContextRoutine* pContext)
 {
     // Regardless of the expression outcome, queue the next command
     pContext->QueueCommand(NextCmd());

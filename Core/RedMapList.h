@@ -1,5 +1,5 @@
 // -------------------------------------------------------------------------------------------------
-// This file is covered by: The MIT License (MIT) Copyright (c) 2022 David G. Steadman
+// This file is covered by: The MIT License (MIT) Copyright (c) 2022 Dave Steadman
 // -------------------------------------------------------------------------------------------------
 // Permission is hereby granted, free of charge, to any person obtaining a copy of this software and
 // associated documentation files (the "Software"), to deal in the Software without restriction,
@@ -83,7 +83,7 @@ private:
 template <class IdClass, class DataClass>
 RedMapList<IdClass, DataClass>::~RedMapList()
 {
-    while( cList.NumItems() > 0 )
+    while(cList.NumItems() > 0)
         cList.DelAll();
 }
 
@@ -184,7 +184,7 @@ bool RedMapList<IdClass, DataClass>::FindDataByIndex(unsigned iElemIndex, DataCl
 template <class IdClass, class DataClass>
 bool RedMapList<IdClass, DataClass>::AssignDataByIndex(unsigned iElemIndex, DataClass Data)
 {
-    if ( (iElemIndex<0) || (iElemIndex>cList.NumItems()) )
+    if ( (iElemIndex < 0) || (iElemIndex > cList.NumItems()) )
         return false;
 
     TMapElement cElem;
@@ -245,8 +245,8 @@ bool RedMapList<IdClass, DataClass>::MakeListElement(TMapElement** pNewElem)
 {
     pNewElem = new TMapElement;
     
-    pNewElem->cId   = 0;
-    pNewElem->cData = 0;
+   // pNewElem->cId   = 0;
+   // pNewElem->cData = 0;
 
     return true;
 }

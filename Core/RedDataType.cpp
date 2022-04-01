@@ -1,5 +1,5 @@
 // -------------------------------------------------------------------------------------------------
-// This file is covered by: The MIT License (MIT) Copyright (c) 2022 David G. Steadman
+// This file is covered by: The MIT License (MIT) Copyright (c) 2022 Dave Steadman
 // -------------------------------------------------------------------------------------------------
 // Permission is hereby granted, free of charge, to any person obtaining a copy of this software and
 // associated documentation files (the "Software"), to deal in the Software without restriction,
@@ -18,8 +18,28 @@
 
 #include "RedDataType.h"
 
+#include "RedDataString.h"
+
 namespace Red {
 namespace Core {
+
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+RedDataString RedDataType::Name(void)
+{
+    switch (eState)
+    {
+    case TEDataType::eDataTypeInvalid : return "Invalid";
+    case TEDataType::eDataTypeBool :    return "Bool";
+    case TEDataType::eDataTypeChar :    return "Char";
+    case TEDataType::eDataTypeList :    return "List";
+    case TEDataType::eDataTypeNum :     return "Num";
+    case TEDataType::eDataTypeRecord :  return "Record";
+    case TEDataType::eDataTypeStr :     return "String";
+    case TEDataType::eDataTypeVariant : return "Variant";
+    }
+    return "<Undefined>";
+}
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
