@@ -35,7 +35,7 @@ class RedVSIParseTreeVar : public RedVSIParseTreeInterface
 public:
 
     // construction;
-    RedVSIParseTreeVar(void)                                                               { cVarName=""; };
+    RedVSIParseTreeVar(void)                                                                   { cVarName=""; };
     RedVSIParseTreeVar(const RedDataString& cNewVarName)                                       { cVarName=cNewVarName; pVarIndexExpr=NULL; };
     RedVSIParseTreeVar(const RedDataString& cNewVarName, RedVSIParseTreeInterface* index_expr) { cVarName=cNewVarName; pVarIndexExpr=index_expr;  };
     ~RedVSIParseTreeVar();
@@ -45,7 +45,7 @@ public:
     RedVSILangElement Type(void) const { return RedVSILangElement::ParseVariable(); };
 
     void              SetVarName(const RedDataString& cInVarName) { cVarName = cInVarName; };
-    RedDataString         VarName(void) const                     { return cVarName; };
+    RedDataString     VarName(void) const                         { return cVarName; };
 
     void              AssignValue(RedVSIContextRoutine* pContext, RedDataVariant& result);
 

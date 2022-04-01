@@ -291,10 +291,14 @@ RedResult RedVSITokenFactory::PredefinedComp(RedBufferInput& cInputBuffer, RedVS
         {
             // We have matches, so get the character for real and look for an exact match
             cValidStr += cInputBuffer.GetNextChar();
+        }
+        else if (NumMatches == 1)
+        {
+            // We have matches, so get the character for real and look for an exact match
             if (cTokenMap.Find(cValidStr, cElem))
             {
-                iExactMatchFound    = true;
-                cFinalElem          = cElem;
+                iExactMatchFound = true;
+                cFinalElem = cElem;
                 iProcessingComplete = true;
             }
         }

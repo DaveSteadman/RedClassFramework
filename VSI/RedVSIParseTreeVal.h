@@ -35,8 +35,9 @@ class RedVSIParseTreeVal : public RedVSIParseTreeInterface
 public:
 
     RedVSIParseTreeVal(void)                      { Init(); };
-    RedVSIParseTreeVal(RedDataVariant cNewVal)        { SetValue(cNewVal); };
+    RedVSIParseTreeVal(RedDataVariant cNewVal)    { SetValue(cNewVal); };
     ~RedVSIParseTreeVal(void)                     { };
+
     // Inherited RedType
     void              Init(void)            { cVal.Init(); };
     RedVSILangElement Type(void) const      { return RedVSILangElement::ParseValue(); };
