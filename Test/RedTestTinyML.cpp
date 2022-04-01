@@ -115,11 +115,11 @@ RedResult RedTestTinyML::TestIterators(void)
         y->CreateChildLeaf("name4", "data4");
         y->CreateChildLeaf("name5", "data5");
 
-        Red::Core::RedTinyMLNode::TmlNodeListItType yIt = y->NodeIterator();
+        RedTinyMLNode::TmlElementListItType yIt = y->ElementListIterator();
 
         int count = 0;
 
-        int count2 = y->NodeElementCount();
+        int count2 = y->ElementCount();
 
         yIt.First();
         while (!yIt.IsDone())
@@ -156,13 +156,13 @@ RedResult RedTestTinyML::TestIterators(void)
             return kResultFail;
         if (RedTinyMLAction::TreeElementCount(*y) != 6)
             return kResultFail;
-        if (x.NodeElementCount() != 1)
+        if (x.ElementCount() != 1)
             return kResultFail;
-        if (y->NodeElementCount() != 5)
+        if (y->ElementCount() != 5)
             return kResultFail;
 
         int count = 0;
-        Red::Core::RedTinyMLNode::TmlNodeListItType yIt = y->NodeIterator();
+        RedTinyMLNode::TmlElementListItType yIt = y->ElementListIterator();
         yIt.First();
         while (!yIt.IsDone())
         {
@@ -173,7 +173,7 @@ RedResult RedTestTinyML::TestIterators(void)
             yIt.Next();
         }
 
-        int count2 = y->NodeElementCount();
+        int count2 = y->ElementCount();
 
         if (count != 5)
             return kResultFail;
@@ -221,7 +221,6 @@ RedResult RedTestTinyML::TestQuoteCharacters(void)
 
         RedTinyMLLeaf* pLeaf = dynamic_cast<RedTinyMLLeaf*>(testElement);
         if (pLeaf->Data() != "\"content\"") { delete testElement; return kResultFail; }
-
     }
     return kResultSuccess;
 }

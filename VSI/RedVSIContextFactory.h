@@ -21,7 +21,6 @@
 #include "RedCoreNamespace.h"
 
 #include "RedVSIContextRoutine.h"
-#include "RedVSIContextThread.h"
 #include "RedVSILib.h"
 
 namespace Red {
@@ -37,7 +36,7 @@ public:
     static RedResult LoadFragmentIntoContext(const RedDataString& InputCodeFragment, RedVSIContextRoutine& UpdateContext);
 
     static RedResult CreateContext(RedVSIContextRoutine** OutputContext, RedLog& cLog);
-    static RedResult CreateThreadContextForRoutine(const RedDataString& classname, const RedDataString& routinename, RedVSILib* pInputLib, RedVSIContextThread** OutputThreadContext, RedLog& cLog);
+    // static RedResult CreateThreadContextForRoutine(const RedDataString& classname, const RedDataString& routinename, RedVSILib* pInputLib, RedVSIContextThread** OutputThreadContext, RedLog& cLog);
 };
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

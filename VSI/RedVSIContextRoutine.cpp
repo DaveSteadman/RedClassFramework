@@ -39,7 +39,7 @@ RedVSIContextRoutine::RedVSIContextRoutine(RedLog* pInitLog) : pLog(pInitLog)
 
     cReturnValue.Init();
     pCurrCmd = NULL;
-    pThreadContextRecord = NULL;
+    pBaseContext = NULL;
 
     eCmdPhase = eCmdExecPhaseStart;
 }
@@ -52,7 +52,7 @@ RedVSIContextRoutine::RedVSIContextRoutine(RedLog* pInitLog, RedVSICmd* pFirstCm
 
     cReturnValue.Init();
     pCurrCmd = pFirstCmd;
-    pThreadContextRecord = NULL;
+    pBaseContext = NULL;
 
     eCmdPhase = eCmdExecPhaseStart;
 }
@@ -64,7 +64,7 @@ RedVSIContextRoutine::RedVSIContextRoutine(RedLog* pInitLog, const RedDataString
     ClassName = inClassName;
     RoutineName = inRoutineName;
     pCurrCmd = pFirstCmd;
-    pThreadContextRecord = NULL;
+    pBaseContext = NULL;
 
     eCmdPhase = eCmdExecPhaseStart;
 }
@@ -117,14 +117,12 @@ RedType* RedVSIContextRoutine::CreateDataItem(const RedVSILangElement& cLocation
     {
         pNewData = cLocalVariables.CreateAddReturn(cName, DataType);
     }
-    /*
+  
     else if (cLocation.IsLocationHeap())
     {
-        if (pThreadContextRecord != NULL)
-            pNewData = pThreadContextRecord->CreateHeapDataItem(cType, cName);
-
+        if (pBaseContext != NULL)
+            pNewData = pBaseContext->cHeap.CreateAddReturn(cName, DataType);
     }
-    */
 
     // return the pointer to the new object (or zero)
     return pNewData;
@@ -145,9 +143,9 @@ RedType* RedVSIContextRoutine::DuplicateDataItem(const RedVSILangElement& cLocat
     }
     else if (cLocation.IsLocationHeap())
     {
-        if (pThreadContextRecord != NULL)
+        if (pBaseContext != NULL)
         {
-            pThreadContextRecord->Heap()->CloneAndAdd(cName, pDataItem);
+            pBaseContext->cHeap.CloneAndAdd(cName, pDataItem);
         }
     }
 
@@ -163,9 +161,9 @@ bool RedVSIContextRoutine::FindDataItem(const RedDataString& cName, RedType*& pD
     if (cLocalVariables.FindFieldPtr(cName, pData))
         return true;
 
-    if (pThreadContextRecord != NULL)
+    if (pBaseContext != NULL)
     {
-        if (pThreadContextRecord->Heap()->FindFieldPtr(cName, pData))
+        if (pBaseContext->cHeap.FindFieldPtr(cName, pData))
             return true;
     }
 
@@ -266,9 +264,9 @@ void RedVSIContextRoutine::ExecuteExprQueue(void)
 
 void RedVSIContextRoutine::SetupRoutineCall(const RedVSIRoutineCallInterface& cCallSignature)
 {
-    if (pThreadContextRecord != NULL)
+    if (pBaseContext != NULL)
     {
-        RedVSILib* pLib = pThreadContextRecord->CodeLib();
+        RedVSILib* pLib = &(pBaseContext->cCodeLib);
 
         if (pLib != NULL)
         {
@@ -311,10 +309,10 @@ void RedVSIContextRoutine::SetupRoutineCall(const RedVSIRoutineCallInterface& cC
                 }
 
                 // Add the thread context
-                pSubroutineContext->SetThreadContextRecord(pThreadContextRecord);
+                //pSubroutineContext->SetBaseContextRecord(pThreadContextRecord);
 
                 // Push the routine on the stack - At this point, the current context is no longer the top of the stack and is considered blocked.
-                pThreadContextRecord->PushRoutineOnStack(pSubroutineContext);
+                //pThreadContextRecord->PushRoutineOnStack(pSubroutineContext);
             }
             else
             {
@@ -329,14 +327,14 @@ void RedVSIContextRoutine::SetupRoutineCall(const RedVSIRoutineCallInterface& cC
 
 bool RedVSIContextRoutine::IsContextBlocked(const RedVSIContextRoutine* pRoutineContext) const
 {
-    if (pRoutineContext == NULL)
-        return false;
+    //if (pRoutineContext == NULL)
+    //    return false;
 
-    if (pRoutineContext->pThreadContextRecord != NULL)
-    {
-        if (pRoutineContext->pThreadContextRecord->TopRoutineOnStack() != this)
-            return true;
-    }
+    //if (pRoutineContext->pThreadContextRecord != NULL)
+    //{
+    //    if (pRoutineContext->pThreadContextRecord->TopRoutineOnStack() != this)
+    //        return true;
+    //}
 
     return false;
 }

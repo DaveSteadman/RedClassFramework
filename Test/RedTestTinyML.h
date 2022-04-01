@@ -33,16 +33,11 @@ public:
     static void RunUnitTest(RedLog& log);
 
 private:
-
     static RedResult TestOne(void);
     static RedResult TestTwo(void);
     static RedResult TestIterators(void);
     static RedResult TestTreeEdit(void);
     static RedResult TestQuoteCharacters(void);
-
-//        static int TestBasicVSILibrary_001(void);
-//        static int TestReadBasicVSILibrary_001(void);
-
 };
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

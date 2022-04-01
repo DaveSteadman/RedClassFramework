@@ -25,7 +25,7 @@
 #include "RedVSIContextInterface.h"
 #include "RedVSILangElement.h"
 #include "RedVSIRoutineCallInterface.h"
-#include "RedVSIContextThread.h"
+#include "RedVSIContextBase.h"
 
 using namespace Red::Core;
 
@@ -112,8 +112,8 @@ public:
     void  SetRoutineName(const RedDataString& rname) { RoutineName = rname; };
     void  SetClassName(const RedDataString& cname) { ClassName = cname; };
 
-    void                 SetThreadContextRecord(RedVSIContextThread* pCntxtRecord) { pThreadContextRecord = pCntxtRecord; };
-    RedVSIContextThread* ThreadContextRecord(void)                                  const { return pThreadContextRecord; };
+    void               SetBaseContext(RedVSIContextBase* pNewBaseContext) { pBaseContext = pNewBaseContext; };
+    RedVSIContextBase* BaseContext(void)                                  const { return pBaseContext; };
 
 private:
 
@@ -154,7 +154,7 @@ private:
     RedDataVariant cReturnValue;
 
     // Record holding thread data
-    RedVSIContextThread* pThreadContextRecord;
+    RedVSIContextBase* pBaseContext;
 
     // Logging
     RedLog* pLog;

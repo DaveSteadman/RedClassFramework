@@ -31,7 +31,6 @@
 // Context
 #include "RedVSIContextFactory.h"
 #include "RedVSIContextRoutine.h"
-#include "RedVSIContextThread.h"
 #include "RedVSIParseStackTraverser.h"
 #include "RedVSIContextBase.h"
 

@@ -22,7 +22,7 @@
 #include "RedDoubleLinkedListIterator.h"
 
 namespace Red {
-namespace Core {        
+namespace Core {
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -70,7 +70,7 @@ RedQueueFIFO<ElementType>::RedQueueFIFO()
 template <class ElementType>
 RedQueueFIFO<ElementType>::~RedQueueFIFO()
 {
-    while( cList.NumItems() > 0 )
+    while(cList.NumItems() > 0)
         cList.DelAll();
 }
 

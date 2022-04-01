@@ -49,7 +49,8 @@ RedDataString RedVSIErrorCodes::GetErrorString(TErrorCodes eErrCode)
     case eCFact_If_NoExpr:              cErrStr=""; break;
 
     // Command
-    case eNew_ResultTypeMismatch:       cErrStr="CommandNew: Initialising expression different type to declared data item."; break;
+    case eNew_ResultTypeMismatch:       cErrStr = "CommandNew: Initialising expression different type to declared data item."; break;
+    case eNew_CreateError:              cErrStr = "CommandNew: Data item not created."; break;
 
     // Parse
     case eParseVar_NoVar:               cErrStr=""; break;

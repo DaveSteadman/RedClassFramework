@@ -204,13 +204,14 @@ bool RedVSIShell::DataListComp(RedVSITokenBuffer& cInputBuffer, RedLog& cLog)
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
+// run "new heap number x = 1"
+
 bool RedVSIShell::RunFragComp(RedVSITokenBuffer& cInputBuffer, RedLog& cLog)
 {
     RedVSIToken cCmdTok  = cInputBuffer.GetToken();
     RedVSIToken cCodeTok = cInputBuffer.GetToken();
 
-    if (cCmdTok.Predef().IsKeywordShellRun() && 
-        cCodeTok.Type().IsStringLiteral())
+    if (cCmdTok.Predef().IsKeywordShellRun() && cCodeTok.Type().IsStringLiteral())
     {
         RedVSILibTokenMap cTokenMap;
         RedVSITokenBuffer cTokenList;
@@ -236,6 +237,7 @@ bool RedVSIShell::RunFragComp(RedVSITokenBuffer& cInputBuffer, RedLog& cLog)
 
         // Execute the code in a context
         RedVSIContextRoutine testContext(&cLog, topCmd);
+        testContext.SetBaseContext(&cVSIBase);
         testContext.Execute(10);
         if (cLog.ContainsError())
         {

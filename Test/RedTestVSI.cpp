@@ -19,7 +19,6 @@
 #include "RedTestVSI.h"
 #include "RedVSINamespace.h"
 #include "RedVSIContextRoutine.h"
-#include "RedVSIContextThread.h"
 
 #include "RedVSICmdSerialiser.h"
 #include "RedVSILibTokenMap.h"

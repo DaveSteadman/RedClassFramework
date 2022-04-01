@@ -18,8 +18,6 @@
 
 #include "RedVSIParseTreeCall.h"
 
-#include "RedVSIContextThread.h"
-
 namespace Red {
 namespace VSI {
 

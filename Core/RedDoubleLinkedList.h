@@ -78,7 +78,9 @@ private:
 template <class Element>
 RedDoubleLinkedList<Element>::RedDoubleLinkedList()
 {
-    Init();
+    pListHead = NULL;
+    pListTail = NULL;
+    iNumItems = 0;
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -86,7 +88,7 @@ RedDoubleLinkedList<Element>::RedDoubleLinkedList()
 template <class Element>
 RedDoubleLinkedList<Element>::~RedDoubleLinkedList()
 {
-    while( iNumItems>0 )
+    while(iNumItems > 0)
         DelFirst();
 }
 
@@ -95,9 +97,7 @@ RedDoubleLinkedList<Element>::~RedDoubleLinkedList()
 template <class Element>
 void RedDoubleLinkedList<Element>::Init(void)
 {
-    pListHead = 0;
-    pListTail = 0;
-    iNumItems = 0;
+
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -106,8 +106,8 @@ template <class Element>
 bool RedDoubleLinkedList<Element>::AddLast(Element Elem)
 {
     // First create the new element
-    TListElement* pNewElem  = 0;
-    TListElement* pPrevElem = 0;
+    TListElement* pNewElem  = NULL;
+    TListElement* pPrevElem = NULL;
 
     // Make the new object and assign the contents
     MakeListElement(&pNewElem);
@@ -311,7 +311,7 @@ bool RedDoubleLinkedList<Element>::DelLast(void)
     //TListElement* pPrevElem   = 0;
 
     // fail if we have nothing to delete
-    if ( iNumItems == 0 )
+    if (iNumItems == 0)
         return false;
 
     // backup the pointer to element to delete
@@ -321,8 +321,8 @@ bool RedDoubleLinkedList<Element>::DelLast(void)
     pListTail = pListTail->pPrev;
 
     // If the new tail is not null, remove its reference to the old tail.
-    if (pListTail != 0)
-        pListTail->pNext = 0;
+    if (pListTail != NULL)
+        pListTail->pNext = NULL;
 
     // finally delete the item and return success
     delete pRemoveElem;
@@ -340,7 +340,7 @@ bool RedDoubleLinkedList<Element>::Del(unsigned iElemIndex)
     TListElement* pNextElem   = 0;
 
     // fail if we have nothing to delete
-    if ( iNumItems == 0 )
+    if (iNumItems == 0)
         return false;
 
     // return failed if we can find the item
@@ -428,8 +428,8 @@ void RedDoubleLinkedList<Element>::MakeListElement(TListElement** pNewElem)
     TListElement* pElem = new TListElement;
 
     // initialise the data
-    pElem->pPrev = 0;
-    pElem->pNext = 0;
+    pElem->pPrev = NULL;
+    pElem->pNext = NULL;
 
     // assign the output value and return success
     *pNewElem = pElem;
@@ -443,8 +443,8 @@ bool RedDoubleLinkedList<Element>::FindListElement(
     TListElement** pFoundElem) const 
 {
     // Initialise the return value
-    *pFoundElem             = 0;
-    TListElement* pCurrElem = 0;
+    *pFoundElem             = NULL;
+    TListElement* pCurrElem = NULL;
 
     // fail if we have nothing (or not enough) to search.
     if (iNumItems == 0)            return false;
