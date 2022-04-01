@@ -37,7 +37,7 @@ RedVSICmdReturn::RedVSICmdReturn(void)
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-void RedVSICmdReturn::QueueExpr(RedVSIContextInterface* pContext)
+void RedVSICmdReturn::QueueExpr(RedVSIContextRoutine* pContext)
 {
     if (pReturnExpr)
         pContext->QueueExpr(pReturnExpr);
@@ -45,7 +45,7 @@ void RedVSICmdReturn::QueueExpr(RedVSIContextInterface* pContext)
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-void RedVSICmdReturn::Execute(RedVSIContextInterface* pContext)
+void RedVSICmdReturn::Execute(RedVSIContextRoutine* pContext)
 {
     // If we have an expression, just finish up and return
     if (pReturnExpr)

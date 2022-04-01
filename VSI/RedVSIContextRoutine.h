@@ -22,15 +22,16 @@
 
 #include "RedVSICollections.h"
 #include "RedVSICmd.h"
-#include "RedVSIContextInterface.h"
 #include "RedVSILangElement.h"
 #include "RedVSIRoutineCallInterface.h"
-#include "RedVSIContextBase.h"
 
 using namespace Red::Core;
 
 namespace Red {
 namespace VSI {
+
+class RedVSIContextBase;
+class RedVSILib;
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -47,9 +48,9 @@ typedef enum TECmdExecutePhases
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 // Class to represent the context required to execute a routine.
-// Uses parent class RedVSIContextInterface, allowing code-fragments and simple command sequences to
+// Uses parent class RedVSIContextRoutine, allowing code-fragments and simple command sequences to
 // be executed in a lightweight environment.
-class RedVSIContextRoutine : public RedVSIContextInterface
+class RedVSIContextRoutine
 {
 public:
 
@@ -61,9 +62,9 @@ public:
     ~RedVSIContextRoutine(void);
 
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-    // RedVSIContextInterface Inhertied Interface
+    // RedVSIContextRoutine Inhertied Interface
 
-    // Data accessors (RedVSIContextInterface)
+    // Data accessors (RedVSIContextRoutine)
     RedType*        CreateDataItem(const RedVSILangElement& cLocation, const RedVSILangElement& cType, const RedDataString& cName);
     RedType*        DuplicateDataItem(const RedVSILangElement& cLocation, const RedType* pDataItem, const RedDataString& cName);
     bool            FindDataItem(const RedDataString& cName, RedType*& pData);
@@ -71,7 +72,7 @@ public:
 
     RedVSILib*      FindCodeLib(void);
 
-    // Inhertied Expressions (RedVSIContextInterface)
+    // Inhertied Expressions (RedVSIContextRoutine)
     void            QueueExpr(RedVSIParseTreeInterface* pExpr);
     void            SetExprResult(RedVSIParseTreeInterface* pExpr, const RedDataVariant& result);
     RedDataVariant  ExprResult(RedVSIParseTreeInterface* pExpr);
@@ -97,7 +98,7 @@ public:
     //    void                       SetRoutineCallData(const RedVSIRoutineCallInterface& d) { cRoutineCall = d; };
     //    RedVSIRoutineCallInterface RoutineCallData(void)                                   { return cRoutineCall; };
 
-        // Inherited Routine creation and control (RedVSIContextInterface)
+        // Inherited Routine creation and control (RedVSIContextRoutine)
     RedDataVariant& ValueToReturn(void) { return cReturnValue; };
     void         SetReturnedValue(const RedDataVariant& cData);
 
@@ -113,7 +114,7 @@ public:
     void  SetClassName(const RedDataString& cname) { ClassName = cname; };
 
     void               SetBaseContext(RedVSIContextBase* pNewBaseContext) { pBaseContext = pNewBaseContext; };
-    RedVSIContextBase* BaseContext(void)                                  const { return pBaseContext; };
+    RedVSIContextBase* BaseContext(void)                            const { return pBaseContext; };
 
 private:
 

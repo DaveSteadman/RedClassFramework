@@ -36,7 +36,7 @@ RedVSICmdLog::RedVSICmdLog(void)
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-void RedVSICmdLog::QueueExpr(RedVSIContextInterface* pContext)
+void RedVSICmdLog::QueueExpr(RedVSIContextRoutine* pContext)
 {
     if (pLogExpr)
         pContext->QueueExpr(pLogExpr);
@@ -44,7 +44,7 @@ void RedVSICmdLog::QueueExpr(RedVSIContextInterface* pContext)
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-void RedVSICmdLog::Execute(RedVSIContextInterface* pContext)
+void RedVSICmdLog::Execute(RedVSIContextRoutine* pContext)
 {
     // Get the result of the commands expression
     RedDataVariant cExprResult = pContext->ExprResult(pLogExpr);

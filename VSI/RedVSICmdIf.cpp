@@ -56,7 +56,7 @@ void RedVSICmdIf::GetDetails(RedVSIParseTreeInterface*& pOutCmdExpr, RedVSICmd*&
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-void RedVSICmdIf::QueueExpr(RedVSIContextInterface* pContext)
+void RedVSICmdIf::QueueExpr(RedVSIContextRoutine* pContext)
 {
     if (pCmdExpr)
         pContext->QueueExpr(pCmdExpr);
@@ -64,7 +64,7 @@ void RedVSICmdIf::QueueExpr(RedVSIContextInterface* pContext)
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-void RedVSICmdIf::Execute(RedVSIContextInterface* pContext)
+void RedVSICmdIf::Execute(RedVSIContextRoutine* pContext)
 {
     // Regardless of the expression outcome, queue the next command
     pContext->QueueCommand(NextCmd());

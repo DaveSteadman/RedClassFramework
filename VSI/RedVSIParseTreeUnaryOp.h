@@ -21,7 +21,7 @@
 #include "RedVSIParseTreeInterface.h"
 #include "RedDataVariant.h"
 #include "RedVSIErrorCodes.h"
-#include "RedVSIContextInterface.h"
+#include "RedVSIContextRoutine.h"
 #include "RedVSIErrorCodes.h"
 #include "RedVSILangElement.h"
 
@@ -40,7 +40,7 @@ public:
     // RedVSIParseTreeInterface  - - - - - - - -
 
     RedVSILangElement Type(void) const { return RedVSILangElement::ParseUnaryOp(); };
-    void CalcResult(RedVSIContextInterface* pContext);
+    void CalcResult(RedVSIContextRoutine* pContext);
 
     // - - - - - - - - - - - - - - - - - - - - -
 
@@ -52,15 +52,15 @@ public:
 
 protected:
 
-    void CalcNegateResult(RedVSIContextInterface* pContext);
+    void CalcNegateResult(RedVSIContextRoutine* pContext);
 
-//    void CalcNegateResult    (RedVSIContextInterface& cContext, RedDataVariant& cResult, int& iComplete);
-//    void CalcAddrOfItemResult(RedVSIContextInterface& cContext, RedDataVariant& cResult, int& iComplete);
-//    void CalcItemAtAddrResult(RedVSIContextInterface& cContext, RedDataVariant& cResult, int& iComplete);
+//    void CalcNegateResult    (RedVSIContextRoutine& cContext, RedDataVariant& cResult, int& iComplete);
+//    void CalcAddrOfItemResult(RedVSIContextRoutine& cContext, RedDataVariant& cResult, int& iComplete);
+//    void CalcItemAtAddrResult(RedVSIContextRoutine& cContext, RedDataVariant& cResult, int& iComplete);
 
 private:
 
-    void LogError(RedVSIContextInterface& cContext, RedVSIErrorCodes::TErrorCodes eErr);
+    void LogError(RedVSIContextRoutine& cContext, RedVSIErrorCodes::TErrorCodes eErr);
 
     RedVSILangElement         cOp;
     RedVSIParseTreeInterface* pExpr;

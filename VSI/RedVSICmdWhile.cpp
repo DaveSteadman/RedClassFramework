@@ -55,7 +55,7 @@ void RedVSICmdWhile::GetDetails(RedVSIParseTreeInterface*& pOutConditionExpr, Re
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-void RedVSICmdWhile::QueueExpr(RedVSIContextInterface* pContext)
+void RedVSICmdWhile::QueueExpr(RedVSIContextRoutine* pContext)
 {
     if (pConditionExpr)
         pContext->QueueExpr(pConditionExpr);
@@ -63,7 +63,7 @@ void RedVSICmdWhile::QueueExpr(RedVSIContextInterface* pContext)
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-void RedVSICmdWhile::Execute(RedVSIContextInterface* pContext)
+void RedVSICmdWhile::Execute(RedVSIContextRoutine* pContext)
 {
     // Get the result of the conditional expression
     RedDataVariant cExprResult = pContext->ExprResult(pConditionExpr);

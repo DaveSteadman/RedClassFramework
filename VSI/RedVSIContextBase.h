@@ -21,6 +21,7 @@
 #include "RedCoreNamespace.h"
 
 #include "RedVSILib.h"
+#include "RedVSIContextRoutine.h"
 
 using namespace Red::Core;
 
@@ -39,6 +40,7 @@ namespace VSI {
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 class RedVSIContextRoutine;
+
 typedef RedStackLIFO<RedVSIContextRoutine*>                   RedVSIRoutineContextStack;
 typedef RedMapList<RedDataString, RedVSIRoutineContextStack*> RedVSIThreadList;
 

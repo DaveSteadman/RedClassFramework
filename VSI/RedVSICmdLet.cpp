@@ -36,7 +36,7 @@ RedVSICmdLet::RedVSICmdLet(void)
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-void RedVSICmdLet::QueueExpr(RedVSIContextInterface* pContext)
+void RedVSICmdLet::QueueExpr(RedVSIContextRoutine* pContext)
 {
     if (pExpr)
         pContext->QueueExpr(pExpr);
@@ -44,7 +44,7 @@ void RedVSICmdLet::QueueExpr(RedVSIContextInterface* pContext)
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-void RedVSICmdLet::Execute(RedVSIContextInterface* pContext)
+void RedVSICmdLet::Execute(RedVSIContextRoutine* pContext)
 {
     // expression will have been evaluated prior to the command, 
     // so any actions already performed. Just queue up the next 

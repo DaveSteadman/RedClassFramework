@@ -30,9 +30,9 @@
 
 // Context
 #include "RedVSIContextFactory.h"
+#include "RedVSIContextBase.h"
 #include "RedVSIContextRoutine.h"
 #include "RedVSIParseStackTraverser.h"
-#include "RedVSIContextBase.h"
 
 // Collections
 #include "RedDoubleLinkedList.h"
@@ -51,7 +51,7 @@
 
 // Interface
 #include "RedVSICmd.h"
-#include "RedVSIContextInterface.h"
+#include "RedVSIContextRoutine.h"
 #include "RedVSIParseTreeinterface.h"
 #include "RedVSIRoutineCallInterface.h"
 

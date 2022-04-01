@@ -18,7 +18,7 @@
 
 #pragma once
 
-#include "RedVSIContextInterface.h"
+#include "RedVSIContextRoutine.h"
 #include "RedVSILangElement.h"
 
 namespace Red {
@@ -30,7 +30,7 @@ class RedVSIParseTreeInterface
 {
 public:
 
-    virtual void              CalcResult(RedVSIContextInterface* pContext) =0;
+    virtual void              CalcResult(RedVSIContextRoutine* pContext) =0;
     virtual RedVSILangElement Type(void) const =0;
     virtual                  ~RedVSIParseTreeInterface(void) { };
 };

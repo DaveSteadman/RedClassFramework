@@ -20,7 +20,7 @@
 
 #include "RedVSICmd.h"
 #include "RedVSIParseTreeInterface.h"
-#include "RedVSIContextInterface.h"
+#include "RedVSIContextRoutine.h"
 #include "RedVSILangElement.h"
 
 namespace Red {
@@ -38,12 +38,12 @@ public:
 
     RedVSILangElement Type(void) const { return kLangElementCommandWhile; };
     
-    void QueueExpr(RedVSIContextInterface* pContext);
+    void QueueExpr(RedVSIContextRoutine* pContext);
 
     void SetDetails(RedVSIParseTreeInterface*& pInConditionExpr,  RedVSICmd*& pInLoopBranch);
     void GetDetails(RedVSIParseTreeInterface*& pOutConditionExpr, RedVSICmd*& pOutLoopBranch) const;
 
-    void Execute(RedVSIContextInterface* pContext);
+    void Execute(RedVSIContextRoutine* pContext);
 
 private:
 

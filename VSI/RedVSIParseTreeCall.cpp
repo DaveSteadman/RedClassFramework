@@ -62,7 +62,7 @@ void RedVSIParseTreeCall::GetDetails(RedDataString& cOutObjName, RedDataString& 
 // The execution then has to go back to the thread, to realise it needs to be a level higher
 // start processing the new routine's commands.
 
-void RedVSIParseTreeCall::CalcResult(RedVSIContextInterface* pContext)
+void RedVSIParseTreeCall::CalcResult(RedVSIContextRoutine* pContext)
 {
     // The params results list
     RedVSIRoutineCallInterface cCall;

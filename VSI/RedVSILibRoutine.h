@@ -20,6 +20,8 @@
 
 #include "RedDataString.h"
 #include "RedVSICmd.h"
+#include "RedVSICollections.h"
+#include "RedVSIRoutineCallInterface.h"
 
 using namespace Red::Core;
 

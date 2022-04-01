@@ -23,6 +23,8 @@
 #include "RedVSICollections.h"
 #include "RedVSILibRoutine.h"
 
+#include "RedVSIContextBase.h"
+
 #include "RedCoreNamespace.h"
 using namespace Red::Core;
 

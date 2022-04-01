@@ -44,7 +44,7 @@ RedVSIParseTreeUnaryOp::~RedVSIParseTreeUnaryOp(void)
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-void RedVSIParseTreeUnaryOp::CalcResult(RedVSIContextInterface* pContext)
+void RedVSIParseTreeUnaryOp::CalcResult(RedVSIContextRoutine* pContext)
 {
     if (cOp.IsUnaryOpMinus()) CalcNegateResult(pContext);
 }
@@ -59,7 +59,7 @@ void RedVSIParseTreeUnaryOp::GetDetails(RedVSILangElement& cOutOp, RedVSIParseTr
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-void RedVSIParseTreeUnaryOp::CalcNegateResult(RedVSIContextInterface* pContext)
+void RedVSIParseTreeUnaryOp::CalcNegateResult(RedVSIContextRoutine* pContext)
 {
     // First check for previous execution and a return value
     RedDataVariant cInputExprVal;

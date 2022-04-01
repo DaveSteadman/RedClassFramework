@@ -60,7 +60,7 @@ RedVSICmdNew::~RedVSICmdNew(void)
 // RedVSICmd inherited routines
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-void RedVSICmdNew::QueueExpr(RedVSIContextInterface* pContext)
+void RedVSICmdNew::QueueExpr(RedVSIContextRoutine* pContext)
 {
     if (pDataInitExpr)
         pContext->QueueExpr(pDataInitExpr);
@@ -68,7 +68,7 @@ void RedVSICmdNew::QueueExpr(RedVSIContextInterface* pContext)
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-void RedVSICmdNew::Execute(RedVSIContextInterface* pContext)
+void RedVSICmdNew::Execute(RedVSIContextRoutine* pContext)
 {
     RedType* pData = 0;
 

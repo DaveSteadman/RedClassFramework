@@ -41,7 +41,7 @@ public:
 
     // inherited
     ~RedVSIParseTreeBinaryOp(void);
-    void                    CalcResult(RedVSIContextInterface* pContext);
+    void                    CalcResult(RedVSIContextRoutine* pContext);
     RedVSILangElement       Type(void) const   { return RedVSILangElement::ParseBinaryOp(); };
 
     // Assign/Query operations

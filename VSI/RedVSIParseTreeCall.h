@@ -44,7 +44,7 @@ public:
     void GetDetails(      RedDataString& cOutObjectName,       RedDataString& cOutClassName,      RedDataString& cOutFuncName, RedVSIParseList*& pOutParamList);
 
     // Operation
-    void CalcResult(RedVSIContextInterface* pContext);
+    void CalcResult(RedVSIContextRoutine* pContext);
 
 private:
 

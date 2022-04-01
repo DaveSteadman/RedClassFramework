@@ -20,7 +20,7 @@
 
 #include "RedVSICmd.h"
 #include "RedLog.h"
-#include "RedVSIContextInterface.h"
+#include "RedVSIContextRoutine.h"
 #include "RedVSIParseTreeInterface.h"
 #include "RedVSIErrorCodes.h"
 
@@ -42,8 +42,8 @@ public:
     void SetDetails(RedVSIParseTreeInterface*& pInReturnExpr)        { pReturnExpr    = pInReturnExpr; };
     void GetDetails(RedVSIParseTreeInterface*& pOutReturnExpr) const { pOutReturnExpr = pReturnExpr; };
 
-    void QueueExpr(RedVSIContextInterface* pContext);
-    void Execute(RedVSIContextInterface* pContext);
+    void QueueExpr(RedVSIContextRoutine* pContext);
+    void Execute(RedVSIContextRoutine* pContext);
 
 private:
 

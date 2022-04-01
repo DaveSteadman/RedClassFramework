@@ -17,6 +17,7 @@
 // -------------------------------------------------------------------------------------------------
 
 #include "RedVSILibRoutine.h"
+#include "RedVSIRoutineCallInterface.h"
 
 namespace Red {
 namespace VSI {

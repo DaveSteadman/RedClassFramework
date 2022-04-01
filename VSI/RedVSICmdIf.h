@@ -21,7 +21,7 @@
 #include "RedVSICmd.h"
 #include "RedVSIErrorCodes.h"
 #include "RedLog.h"
-#include "RedVSIContextInterface.h"
+#include "RedVSIContextRoutine.h"
 #include "RedVSIParseTreeInterface.h"
 #include "RedVSILangElement.h"
 
@@ -40,8 +40,8 @@ public:
 
     // RedVSICmd inherited routines
     RedVSILangElement Type(void) const { return kLangElementCommandIf; };
-    void              QueueExpr(RedVSIContextInterface* pContext);
-    void              Execute(RedVSIContextInterface* pContext);
+    void              QueueExpr(RedVSIContextRoutine* pContext);
+    void              Execute(RedVSIContextRoutine* pContext);
 
     // Wholesale access/assign operations
     void              SetDetails(RedVSIParseTreeInterface*& pInCmdExpr,  RedVSICmd*& pInPosBranch,  RedVSICmd*& pInNegBranch);

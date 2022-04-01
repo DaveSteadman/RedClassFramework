@@ -21,7 +21,7 @@
 #include "RedVSICmd.h"
 #include "RedVSITokenBuffer.h"
 #include "RedLog.h"
-#include "RedVSIContextInterface.h"
+#include "RedVSIContextRoutine.h"
 #include "RedVSIErrorCodes.h"
 
 namespace Red {

@@ -21,7 +21,7 @@
 #include "RedCoreNamespace.h"
 
 #include "RedVSIParseTreeInterface.h"
-#include "RedVSIContextInterface.h"
+#include "RedVSIContextRoutine.h"
 
 using namespace Red::Core;
 
@@ -46,7 +46,7 @@ public:
     void             SetValue(RedDataVariant& cInVal) { cVal = cInVal; };
 
     // Inherited RedVSIParseTreeInterface
-    void CalcResult(RedVSIContextInterface* pContext) { pContext->SetExprResult(this, cVal); };
+    void CalcResult(RedVSIContextRoutine* pContext) { pContext->SetExprResult(this, cVal); };
 
 private:
     RedDataVariant cVal;

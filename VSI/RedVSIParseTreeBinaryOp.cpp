@@ -66,7 +66,7 @@ RedVSIParseTreeBinaryOp::~RedVSIParseTreeBinaryOp(void)
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-void RedVSIParseTreeBinaryOp::CalcResult(RedVSIContextInterface* pContext)
+void RedVSIParseTreeBinaryOp::CalcResult(RedVSIContextRoutine* pContext)
 {
     // Get the left/right node results
     RedDataVariant cLeftVal;
