@@ -177,15 +177,15 @@ RedResult RedTestVSI::TestParseTreeBinaryOp(void)
 RedResult RedTestVSI::TestTokeniseCode(void)
 {
     RedVSILibTokenMap map;
-    RedDataString testCode = "new local number varX = 3.14159 varX = varX * 2 return varX";
+    RedDataString testCode = "new stack number varX = 3.14159 varX = varX * 2 return varX";
     {
         RedVSITokenBuffer cInputBuffer;
 
-        int iCreateResult = RedVSITokenFactory::CreateTokens(testCode, map.cVSILibTokenMap, cInputBuffer);
+        bool bCreateResult = RedVSITokenFactory::CreateTokens(testCode, map.cVSILibTokenMap, cInputBuffer);
 
         RedDataString debugText = cInputBuffer.DebugDump();
 
-        if (iCreateResult == 0)
+        if (bCreateResult == false)
             return kResultFail;
     }
     return kResultSuccess;
@@ -396,7 +396,7 @@ RedResult RedTestVSI::TestCmdNew(void)
         RedBufferOutput outBuf;
         RedVSICmdSerialiser::TokenBufferToOutputBuffer(cTokenBuffer, cLibMap.cVSILibTokenMap, outBuf);
 
-        if (outBuf.ExtractData() != RedDataString("new local number x = 4300 + 12 "))
+        if (outBuf.ExtractData() != RedDataString("new stack number x = 4300 + 12 "))
             return kResultFail;
     }
 
@@ -502,7 +502,7 @@ RedResult RedTestVSI::TestRunProg_001(void)
                 {{routine} \
                     {{name}TwoPi} \
                     {{code} \
-                        new local number varX = 3.14159 \
+                        new stack number varX = 3.14159 \
                         varX = varX * 2 \
                         return varX \
                     } \
@@ -530,7 +530,7 @@ RedResult RedTestVSI::TestRunProg_001(void)
                 {{routine} \
                     {{name}TestCall} \
                     {{code} \
-                        new local number x1 = 1234 \
+                        new stack number x1 = 1234 \
                         new heap  number x2 = 0 \
                         x2 = TestRoutines::Halve(x1) \
                     } \
@@ -538,8 +538,8 @@ RedResult RedTestVSI::TestRunProg_001(void)
                 {{routine} \
                     {{name}TestExecute} \
                     {{code} \
-                        new local number varX = 3.14159 \
-                        new local number varY \
+                        new stack number varX = 3.14159 \
+                        new stack number varY \
                         varY = varX * 2 \
                     } \
                 } \
@@ -598,7 +598,7 @@ RedResult RedTestVSI::TestRunProg_001(void)
 RedResult RedTestVSI::TestFragment_New(void)
 {
     // Define a small code fragment
-    RedDataString strCodeFragment = "new local number x = 3.2 x = x * 2";
+    RedDataString strCodeFragment = "new stack number x = 3.2 x = x * 2";
 
     // Turn the code into tokens
     RedVSILibTokenMap cTokenMap;
@@ -633,9 +633,9 @@ RedResult RedTestVSI::TestFragment_NewTypes(void)
 {
     // Define a small code fragment
     RedDataString strCodeFragment = " \
-        new local bool   testB = true \
-        new local number testN = 123 \
-        new local string testS = 'Str' ";
+        new stack bool   testB = true \
+        new stack number testN = 123 \
+        new stack string testS = 'Str' ";
 
     // Turn the code into tokens
     RedVSILibTokenMap cTokenMap;
@@ -675,7 +675,7 @@ RedResult RedTestVSI::TestFragment_Expr(void)
 {
     // Define a small code fragment
     RedDataString strCodeFragment = "\
-        new local number x   = 3 \
+        new stack number x   = 3 \
         x = x + 1 \
         x = x * 2";
 
@@ -726,8 +726,8 @@ RedResult RedTestVSI::TestFragment_If(void)
     {
         // Define a small code fragment
         RedDataString strCodeFragment = "\
-        new local number x   = 3 \
-        new local number res = 0 \
+        new stack number x   = 3 \
+        new stack number res = 0 \
         if x < 4 then \
             res = x + 1 \
         endif \
@@ -762,7 +762,7 @@ RedResult RedTestVSI::TestFragment_If(void)
     {
         // Define a small code fragment
         RedDataString strCodeFragment = "\
-        new local number x   = 3 \
+        new stack number x   = 3 \
         if x == 4 then \
             x = x + 10 \
         endif";
@@ -803,7 +803,7 @@ RedResult RedTestVSI::TestFragment_While(void)
     // Define a small code fragment
     // The quick +1 on the end help check that we've correctly detected the endof the command
     RedDataString strCodeFragment = " \
-        new local number x = 2 \
+        new stack number x = 2 \
         while x < 99 loop \
             x = x * 2 \
         endloop \
@@ -836,8 +836,8 @@ RedResult RedTestVSI::TestFragment_Log(void)
     // Define a small code fragment
     // The quick +1 on the end help check that we've correctly detected the endof the command
     RedDataString strCodeFragment = " \
-        new local number x = 2.2 \
-        new local string zxz = 'zz' \
+        new stack number x = 2.2 \
+        new stack string zxz = 'zz' \
         log x ";
 
     RedLog                 cRedLog;

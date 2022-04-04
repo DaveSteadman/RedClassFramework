@@ -11,30 +11,41 @@ using namespace Red::Core;
 using namespace Red::VSI;
 using namespace Red::Test;
 
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
 int main()
 {
-    std::cout << "Hello World!\n";
+    // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-    RedLog cLog;
-    RedTestCentre::RunAllUnitTests(cLog);
+    std::cout << "- Built In Test - - - - - - - - - - - - - - - \n";
+    Red::Core::RedLog cLog;
+    Red::Test::RedTestCentre::RunAllUnitTests(cLog);
     std::cout << cLog.AllLoggedText().TextPtr();
-    if (cLog.ContainsError())
-        std::cout << "ERROR\n";
 
-    bool bLoopValid = true;
-    RedVSIShell cRedShell;
-    while (cRedShell.eState != TEShellState::Ended)
+    std::cout << "- - - - - - - - - - - - - - - - - - - - - - - \n";
+    std::cout << "Red Shell\n";
+
+    char inputline[256];
+
+    Red::VSI::RedVSIShell cVsiShell;
+    Red::Core::RedDataString retstr;
+
+    bool inputvalid = true;
+    while (inputvalid)
     {
-        char line[255];
-        for (unsigned i = 0; i < 255; i++) line[i] = '\0';
-        
+        // Initialise and get line
+        for (int i = 0; i < 256; i++) inputline[i] = '\0';
         std::cout << ":>";
-        std::cin.getline(line, 255);
+        std::cin.getline(inputline, 256);
 
-        RedDataString retstr = cRedShell.ProcessCmdLine(RedDataString(line));
+        // Run Command and output results
+        retstr = cVsiShell.ProcessCmdLine(RedDataString(inputline));
         std::cout << retstr.TextPtr();
-    }
 
-    return 0;
+        // End when shell done
+        if (cVsiShell.RunState() == TEContextState::Ended)
+            inputvalid = false;
+    }
 }
 
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

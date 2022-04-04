@@ -277,7 +277,7 @@ RedResult RedVSITokenFactory::PredefinedComp(RedBufferInput& cInputBuffer, RedVS
     bool             iExactMatchFound = false;
     
     // skip over whitespace characters until we get to a character we want to deal with
-    cPreviewChar = cInputBuffer.PreviewNextChar();
+    //cPreviewChar = cInputBuffer.PreviewNextChar();
 
     while (!iProcessingComplete)
     {
@@ -287,24 +287,23 @@ RedResult RedVSITokenFactory::PredefinedComp(RedBufferInput& cInputBuffer, RedVS
 
         // Get the number of matches for the new string
         unsigned NumMatches = cTokenMap.CountMatchCandidates(cPreviewStr);
+
+        // We have any matches, so get the character for real and look for an exact match
         if (NumMatches >= 1)
-        {
-            // We have matches, so get the character for real and look for an exact match
             cValidStr += cInputBuffer.GetNextChar();
-        }
-        else if (NumMatches == 1)
+        else
+            iProcessingComplete = true;
+
+
+        // if we have a single match candidate, complete the compeition
+        if (NumMatches == 1)
         {
             // We have matches, so get the character for real and look for an exact match
             if (cTokenMap.Find(cValidStr, cElem))
             {
-                iExactMatchFound = true;
-                cFinalElem = cElem;
-                iProcessingComplete = true;
+                iExactMatchFound    = true;
+                cFinalElem          = cElem;
             }
-        }
-        // set complete when we run out of matches - we have to look beyond any match to ensure we haven't found a substring.
-        else
-        {
             iProcessingComplete = true;
         }
     }

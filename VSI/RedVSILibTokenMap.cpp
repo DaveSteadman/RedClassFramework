@@ -72,7 +72,7 @@ void RedVSILibTokenMap::SetupTokenMap(void)
         cVSILibTokenMap.Add(kVSIIOElementSymbolAssignMinus,               RedVSIIOElement::SymbolAssignMinus());
         cVSILibTokenMap.Add(kVSIIOElementSymbolAssignMultiply,            RedVSIIOElement::SymbolAssignMultiply());
         cVSILibTokenMap.Add(kVSIIOElementSymbolAssignDivide,              RedVSIIOElement::SymbolAssignDivide());
-        cVSILibTokenMap.Add(kVSIIOElementSymbolAssignEqual,               RedVSIIOElement::SymbolAssignEqual());
+        cVSILibTokenMap.Add(RedDataString("="),                           RedVSIIOElement::SymbolAssignEqual());
 
         cVSILibTokenMap.Add(kVSIIOElementSymbolBracketOpen,               RedVSIIOElement::SymbolBracketOpen());
         cVSILibTokenMap.Add(kVSIIOElementSymbolBracketClose,              RedVSIIOElement::SymbolBracketClose());
