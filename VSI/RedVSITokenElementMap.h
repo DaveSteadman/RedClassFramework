@@ -37,7 +37,7 @@ public:
 
     void      Add(const RedDataString& cStr, const RedVSIIOElement& cElem);
 
-    bool      Find(RedDataString& cCheckStr, RedVSIIOElement& cElem);
+    bool      Find(RedDataString cCheckStr, RedVSIIOElement cElem);
     bool      FindString(RedVSIIOElement& cCheckElem, RedDataString& cStr);
 
     unsigned  CountMatchCandidates(RedDataString& cCheckStr);

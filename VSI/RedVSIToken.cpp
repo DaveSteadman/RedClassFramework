@@ -37,14 +37,7 @@ void RedVSIToken::Init(void)
 
 bool RedVSIToken::IsEOF(void) const
 {
-    if (!cType.IsNonPrintable())
-        return false;
- 
-    RedDataString cEOFStr;
-    
-    cEOFStr.Append('\0');
-
-    if (cText == cEOFStr)
+    if ((cType.IsPredefined()) && (cPredef.IsSymbolEOF()))
         return true;
 
     return false;

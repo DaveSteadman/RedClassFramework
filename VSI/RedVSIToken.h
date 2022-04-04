@@ -46,11 +46,16 @@ public:
     void SetStringLiteral(const RedDataString& cNewStr)       { Init(); cType.SetStringLiteral(); cText=cNewStr; };
     void SetNonPrintable(const RedDataChar& cNewChar)         { Init(); cType.SetNonPrintable();  cText=cNewChar; };
     void SetWhitespace(const RedDataString& cNewStr)          { Init(); cType.SetWhitespace();    cText=cNewStr; };
-    void SetPredefined(const RedVSIIOElement& cNewPredef)     { Init(); cType.SetPredefined();    cPredef=cNewPredef; };
+    void SetPredefined(const RedVSIIOElement& cNewPredef)     {         cType.SetPredefined();    cPredef=cNewPredef; };
+
+    void SetEOF(void)                                         { Init(); SetPredefined(RedVSIIOElement::SymbolEOF());};
+
+    // assign the token string text, with no other logic (used to double-check number inputs).
+    void StoreStringInput(const RedDataString& cNewStr)       { cText = cNewStr; };
 
     // Setup
-    static RedVSIToken WhitespaceSpaceToken(void)  { RedVSIToken t; t.SetWhitespace(RedDataString(" "));           return t; };
-    static RedVSIToken EOFToken(void)              { RedVSIToken t; t.SetPredefined(RedVSIIOElement::SymbolEOF()); return t; };
+    static RedVSIToken WhitespaceSpaceToken(void)  { RedVSIToken t; t.SetWhitespace(RedDataString(" ")); return t; };
+    static RedVSIToken EOFToken(void)              { RedVSIToken t; t.SetEOF(); return t; };
 
     void         SetPos(RedBufferPos cNewPos) { cCodePos = cNewPos; };
     RedBufferPos GetPos(void)                 { return cCodePos; };

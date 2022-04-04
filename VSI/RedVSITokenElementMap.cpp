@@ -48,7 +48,7 @@ void RedVSITokenElementMap::Add(const RedDataString& cStr, const RedVSIIOElement
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-bool RedVSITokenElementMap::Find(RedDataString& cCheckStr, RedVSIIOElement& cElem)
+bool RedVSITokenElementMap::Find(RedDataString cCheckStr, RedVSIIOElement cElem)
 {
     MapListItType cIt(&cMap);
 

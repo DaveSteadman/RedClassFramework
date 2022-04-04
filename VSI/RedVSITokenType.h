@@ -31,9 +31,11 @@ public:
     RedVSITokenType(void)                      { Init(); };
     
     void Init(void)                            { eState = TETokenType::eDefaultInvalid; };
+
     void SetNumber(void)                       { eState = TETokenType::eNumber; };
     void SetName(void)                         { eState = TETokenType::eName; };
     void SetStringLiteral(void)                { eState = TETokenType::eStringLiteral; };
+    void SetSymbol(void)                       { eState = TETokenType::eSymbol; };
     void SetNonPrintable(void)                 { eState = TETokenType::eNonPrintable; };
     void SetWhitespace(void)                   { eState = TETokenType::eWhitespace; };
     void SetPredefined(void)                   { eState = TETokenType::ePredefined; };
@@ -42,13 +44,17 @@ public:
     bool IsNumber(void) const                  { return (eState == TETokenType::eNumber); };
     bool IsName(void) const                    { return (eState == TETokenType::eName); };
     bool IsStringLiteral(void) const           { return (eState == TETokenType::eStringLiteral); };
+    bool IsSymbol(void) const                  { return (eState == TETokenType::eSymbol); };
     bool IsNonPrintable(void) const            { return (eState == TETokenType::eNonPrintable); };
     bool IsWhitespace(void) const              { return (eState == TETokenType::eWhitespace); };
     bool IsPredefined(void) const              { return (eState == TETokenType::ePredefined); };
-    
+
+    bool IsPotentiallyPredef(void) const       { return ((IsName()) || (IsSymbol())); };
+
     static RedVSITokenType Number(void)        { return RedVSITokenType(TETokenType::eNumber); };
     static RedVSITokenType Name(void)          { return RedVSITokenType(TETokenType::eName); };
     static RedVSITokenType StringLiteral(void) { return RedVSITokenType(TETokenType::eStringLiteral); };
+    static RedVSITokenType Symbol(void)        { return RedVSITokenType(TETokenType::eSymbol); };
     static RedVSITokenType NonPrintable(void)  { return RedVSITokenType(TETokenType::eNonPrintable); };
     static RedVSITokenType Whitespace(void)    { return RedVSITokenType(TETokenType::eWhitespace); };
     static RedVSITokenType Predefined(void)    { return RedVSITokenType(TETokenType::ePredefined); };
@@ -57,10 +63,13 @@ protected:
 
     enum class TETokenType
     {
-        eDefaultInvalid, 
+        eDefaultInvalid,
+
         eNumber, 
         eName,
         eStringLiteral,
+        eSymbol,
+
         eNonPrintable,
         eWhitespace,
         ePredefined

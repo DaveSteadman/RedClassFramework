@@ -43,6 +43,7 @@ bool RedVSITokenFactory::CreateTokens(RedBufferInput& cInputBuffer, RedVSITokenE
     cInputBuffer.SetStartPos();
     RedVSIToken cNewTok;
 
+    // Loop, creating tokens, until we run out of text (or get an error).
     do {
         // read the token data
         RunTokenComp(cInputBuffer, cTokenMap, cNewTok);
@@ -53,14 +54,13 @@ bool RedVSITokenFactory::CreateTokens(RedBufferInput& cInputBuffer, RedVSITokenE
     }
     while( (!cNewTok.IsEOF()) && (cNewTok.IsValid()) );
 
-    //RedDataString cRep = Test_RedVSITokenBuffer::CreateBufferReport(cOutputTokenList, cTokenMap);
-
     // Initialise if we've not interpreted all the tokens right.
     if (!cNewTok.IsValid()) 
     {
         cOutputTokenList.Init();
         return false;
     }
+
     return true;
 }
 
@@ -74,7 +74,7 @@ RedResult RedVSITokenFactory::RunTokenComp(RedBufferInput& cInputBuffer, RedVSIT
     cNewTok.Init();
     RedResult RedResult;
     RedResult.SetNoResult();
-    
+
     // skip over whitespace characters until we get to a character we want to deal with
     cInputBuffer.SkipWhitespace();
 
@@ -86,8 +86,9 @@ RedResult RedVSITokenFactory::RunTokenComp(RedBufferInput& cInputBuffer, RedVSIT
     //RedDataChar cPreviewChar = cInputBuffer.PreviewNextChar();
     
     unsigned iCompetitionEntry = 1;
+    bool bLoopValid = true;
 
-    while (RedResult.IsNoResult())
+    while (bLoopValid)
     {
         // Reset the start read pos
         cInputBuffer.SetPos(iStartPos);
@@ -97,17 +98,29 @@ RedResult RedVSITokenFactory::RunTokenComp(RedBufferInput& cInputBuffer, RedVSIT
         switch(iCompetitionEntry)
         {
         case 1: RedResult = NumberComp(cInputBuffer, cNewTok);                break;
-        case 2: RedResult = PredefinedComp(cInputBuffer, cTokenMap, cNewTok); break;
-        case 3: RedResult = NameComp(cInputBuffer, cNewTok);                  break;
-        case 4: RedResult = StringLiteralComp(cInputBuffer, cNewTok);         break;
-        case 5: RedResult = NonPrintableComp(cInputBuffer, cNewTok);          break;
+        case 2: RedResult = NameComp(cInputBuffer, cNewTok);                  break;
+        case 3: RedResult = StringLiteralComp(cInputBuffer, cNewTok);         break;
+        case 4: RedResult = NonPrintableComp(cInputBuffer, cNewTok);          break;
         default:
-            RedResult.SetFail();
+            // Run out of entries in competition. 
+            bLoopValid = false;
+            cNewTok.SetEOF();
         }
-        
+
+        if (RedResult.IsSuccess())
+            bLoopValid = false;
+
         iCompetitionEntry++;
     }
-    
+
+    // Update the token to a predefined version if available.
+    if (cNewTok.Type().IsPotentiallyPredef())
+    {
+        RedVSIIOElement cPredefElem;
+        if (cTokenMap.Find(cNewTok.Text(), cPredefElem))
+            cNewTok.SetPredefined(cPredefElem);
+    }
+
     cNewTok.SetPos(cBufPos);
     return RedResult;
 }
@@ -153,6 +166,7 @@ RedResult RedVSITokenFactory::NumberComp(RedBufferInput& cInputBuffer, RedVSITok
 
         // We have a number token, so convert the input string to a numeric
         // value.
+        cNewTok.StoreStringInput(cTokenText);
         cNewTok.SetNumber(RedDataNumber(cTokenText));
         return RedResult::Success();
     }
@@ -254,7 +268,6 @@ RedResult RedVSITokenFactory::NameComp(RedBufferInput& cInputBuffer, RedVSIToken
     while (cPreviewChar.IsAlphaNumeric())
     {
         cValidStr += cInputBuffer.GetNextChar();
-
         cPreviewChar = cInputBuffer.PreviewNextChar();
     }
     
@@ -264,57 +277,30 @@ RedResult RedVSITokenFactory::NameComp(RedBufferInput& cInputBuffer, RedVSIToken
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-RedResult RedVSITokenFactory::PredefinedComp(RedBufferInput& cInputBuffer, RedVSITokenElementMap& cTokenMap, RedVSIToken& cNewTok)
+RedResult RedVSITokenFactory::SymbolComp(RedBufferInput& cInputBuffer, RedVSIToken& cNewTok)
 {
-    bool          iProcessingComplete = false;
     RedDataChar       cPreviewChar;
     RedDataChar       cNewChar;
     RedDataString     cPreviewStr;
     RedDataString     cValidStr;
-    
+
     RedVSIIOElement  cElem;
     RedVSIIOElement  cFinalElem;
-    bool             iExactMatchFound = false;
-    
-    // skip over whitespace characters until we get to a character we want to deal with
-    //cPreviewChar = cInputBuffer.PreviewNextChar();
 
-    while (!iProcessingComplete)
+    // If the first character isn't a symbol, return false.
+    cPreviewChar = cInputBuffer.PreviewNextChar();
+    if (!cPreviewChar.IsSymbol())
+        return RedResult::NoResult();
+
+    // Read symbols until not a symbol
+    while (cPreviewChar.IsSymbol())
     {
-        // Get the next potential character and create the new string to search for.
+        cValidStr += cInputBuffer.GetNextChar();
         cPreviewChar = cInputBuffer.PreviewNextChar();
-        cPreviewStr = cValidStr + cPreviewChar;
-
-        // Get the number of matches for the new string
-        unsigned NumMatches = cTokenMap.CountMatchCandidates(cPreviewStr);
-
-        // We have any matches, so get the character for real and look for an exact match
-        if (NumMatches >= 1)
-            cValidStr += cInputBuffer.GetNextChar();
-        else
-            iProcessingComplete = true;
-
-
-        // if we have a single match candidate, complete the compeition
-        if (NumMatches == 1)
-        {
-            // We have matches, so get the character for real and look for an exact match
-            if (cTokenMap.Find(cValidStr, cElem))
-            {
-                iExactMatchFound    = true;
-                cFinalElem          = cElem;
-            }
-            iProcessingComplete = true;
-        }
     }
-        
-    // if we found a match create a valid object we are going to return     
-    if (iExactMatchFound)
-    {
-        cNewTok.SetPredefined(cElem);
-        return RedResult::Success();
-    }
-    return RedResult::NoResult();
+
+    cNewTok.SetName(cValidStr);
+    return RedResult::Success();
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

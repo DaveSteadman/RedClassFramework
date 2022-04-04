@@ -47,7 +47,7 @@ private:
     static RedResult StringLiteralComp (RedBufferInput& cInputBuffer, RedVSIToken& cNewTok);
     static RedResult NonPrintableComp  (RedBufferInput& cInputBuffer, RedVSIToken& cNewTok);
     static RedResult NameComp          (RedBufferInput& cInputBuffer, RedVSIToken& cNewTok);
-    static RedResult PredefinedComp    (RedBufferInput& cInputBuffer, RedVSITokenElementMap& cTokenMap, RedVSIToken& cNewTok);
+    static RedResult SymbolComp        (RedBufferInput& cInputBuffer, RedVSIToken& cNewTok);
 };
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
