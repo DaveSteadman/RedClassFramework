@@ -203,6 +203,27 @@ RedResult RedTestVSI::TestParseFactory_001(void)
         tokenMap.Add(RedDataString("-"), RedVSIIOElement::SymbolOperatorMinus());
 
         RedVSITokenBuffer tokBuf;
+        int iCreateResult = RedVSITokenFactory::CreateTokens(testExpr, tokenMap, tokBuf);
+
+        RedVSIToken cTok1 = tokBuf.GetToken();
+        RedVSIToken cTok2 = tokBuf.GetToken();
+        RedVSIToken cTok3 = tokBuf.GetToken();
+
+        if (!cTok1.Predef().IsInvalid())            return kResultFail;
+        if (!cTok2.Predef().IsSymbolOperatorPlus()) return kResultFail;
+        if (!cTok3.Predef().IsInvalid())            return kResultFail;
+
+        if (!cTok2.Type().IsNumber())               return kResultFail;
+    }
+
+    {
+        RedDataString testExpr("4300 + 21");
+
+        RedVSITokenElementMap tokenMap;
+        tokenMap.Add(RedDataString("+"), RedVSIIOElement::SymbolOperatorPlus());
+        tokenMap.Add(RedDataString("-"), RedVSIIOElement::SymbolOperatorMinus());
+
+        RedVSITokenBuffer tokBuf;
 
         int iCreateResult = RedVSITokenFactory::CreateTokens(testExpr, tokenMap, tokBuf);
 

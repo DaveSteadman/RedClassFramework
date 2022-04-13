@@ -129,8 +129,8 @@ RedResult RedVSITokenFactory::RunTokenComp(RedBufferInput& cInputBuffer, RedVSIT
 
 RedResult RedVSITokenFactory::NumberComp(RedBufferInput& cInputBuffer, RedVSIToken& cNewTok)
 {
-    bool      iProcessingComplete = false;
-    bool      iDecimalPointUsed   = false;
+    bool          iProcessingComplete = false;
+    bool          iDecimalPointUsed   = false;
     RedDataChar   cPreviewChar1;
     RedDataChar   cPreviewChar2;
     RedDataChar   cNewChar;

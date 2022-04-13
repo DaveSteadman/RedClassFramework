@@ -8,6 +8,16 @@
 #include "RedTestCentre.h"
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+// NextTask:
+// - Get the Token reading improved 
+//      - Fix the strings for simplicity.
+//      - Test reading tokens.
+//      - Check the memory leaks when exiting a read-token routine.
+// 
+//      - Elevate the token from RedVSIToken to RedToken, to cover all the uses (TinyML etc).
+//      - Reads everything as its own thing - names, symbols, numbers etc. Then predef as an independent follow-up stage.
+// 
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 int main()
 {

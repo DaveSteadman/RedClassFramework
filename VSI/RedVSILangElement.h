@@ -36,6 +36,8 @@ public:
     RedVSILangElement(void) { eType = eDefaultInvalid; };
     void Init(void)         { eType = eDefaultInvalid; };
 
+    bool                     IsInvalid(void) const                           { return eType == eDefaultInvalid; };
+
     // Command types
     bool                     IsCommand(void) const;
     bool                     IsCommandIf(void) const                         { return eType == eCommandIf; };

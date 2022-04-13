@@ -34,6 +34,9 @@ public:
     RedVSIIOElement(void) { Init(); };
     void Init(void);
 
+    bool                   IsInvalid(void) const { return eType == eDefaultInvalid; };
+
+
     // Locations
     bool                   IsLocationKeyword(void) const;
     bool                   IsKeywordAttribute(void) const                 { return eType == eKeywordAttribute; };

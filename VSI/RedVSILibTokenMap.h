@@ -63,7 +63,6 @@ static const RedDataString kVSIIOElementKeywordLog                      = RedDat
 static const RedDataString kVSIIOElementKeywordLoop                     = RedDataString("loop");
 static const RedDataString kVSIIOElementKeywordName                     = RedDataString("name");
 static const RedDataString kVSIIOElementKeywordNew                      = RedDataString("new");
-static const RedDataString kVSIIOElementKeywordNo                       = RedDataString("no");
 static const RedDataString kVSIIOElementKeywordNumber                   = RedDataString("number");
 static const RedDataString kVSIIOElementKeywordParams                   = RedDataString("params");
 static const RedDataString kVSIIOElementKeywordParent                   = RedDataString("parent");
@@ -76,7 +75,6 @@ static const RedDataString kVSIIOElementKeywordString                   = RedDat
 static const RedDataString kVSIIOElementKeywordThen                     = RedDataString("then");
 static const RedDataString kVSIIOElementKeywordTrue                     = RedDataString("true");
 static const RedDataString kVSIIOElementKeywordWhile                    = RedDataString("while");
-static const RedDataString kVSIIOElementKeywordYes                      = RedDataString("yes");
 
 static const RedDataString kVSIIOElementSymbolAssignPlus                = RedDataString("+=");
 static const RedDataString kVSIIOElementSymbolAssignMinus               = RedDataString("-=");
