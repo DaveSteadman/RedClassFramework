@@ -50,11 +50,9 @@ public:
 
     char       Char(void)             const { return ch; };
     bool       IsChar(char NewCh)     const { return ch == NewCh; };
-    int        DecimalNumber(void)    const { return (IsDecimalNumber()) ? (int)ch - (int)'0' : 0; };
 
     // queries
     bool       IsAlpha(void)          const { return ( ((ch>='a')&&(ch<='z')) || ((ch>='A')&&(ch<='Z')) ); };
-    bool       IsAlphaNumeric(void)   const { return ( IsAlpha() || IsDecimalNumber() ); };
     bool       IsBracket(void)        const { return ( (ch=='(') || (ch==')') || (ch=='[') || (ch==']') || (ch=='{') || (ch=='}') ); };
     bool       IsComma(void)          const { return (ch == ','); };
     bool       IsDecimalNumber(void)  const { return ( (ch >= '0') && (ch <= '9') ); };
@@ -66,12 +64,15 @@ public:
     bool       IsEOL(void)            const { return (ch == '\n'); };
     bool       IsMinus(void)          const { return (ch == '-'); };
     bool       IsNonPrintable(void)   const { return (ch<32); };
-    bool       IsNumeric(void)        const { return ( IsDecimalNumber() || IsFullstop() ); };
     bool       IsOperator(void)       const { return ( (ch=='=') || (ch=='+') || (ch=='-') || (ch=='*') || (ch=='/') || (ch=='<') || (ch=='>') ); };
     bool       IsPrintable(void)      const { return (ch>=32); };
     bool       IsQuote(void)          const { return ( (ch == '"') || (ch == '\'') ); };
-    bool       IsSymbol(void)         const { return ( IsPrintable() && (!IsAlphaNumeric()) && (!IsQuote()) ); };
     bool       IsWhiteSpace(void)     const { return ( (ch == '\n') || (ch == ' ') || (ch == '\t') ); };
+
+    bool       IsAlphaNumeric(void)   const { return (IsAlpha() || IsDecimalNumber()); };
+    bool       IsNumeric(void)        const { return (IsDecimalNumber() || IsFullstop()); };
+    bool       IsSymbol(void)         const { return (IsPrintable() && (!IsAlphaNumeric()) && (!IsQuote()) && (!IsWhiteSpace())); };
+    int        DecimalNumber(void)    const { return (IsDecimalNumber()) ? (int)ch - (int)'0' : 0; };
 
     // Assignment Operators
     void operator =(const int      newVal)  { Set(newVal); };

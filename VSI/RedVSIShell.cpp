@@ -50,10 +50,9 @@ RedDataString RedVSIShell::ProcessCmdLine(RedDataString inputstr)
     // runfrag <code fragment>
     // init
 
-    RedVSITokenBuffer cInputBuffer;
-    RedVSILibTokenMap map;
+    RedTokenBuffer cInputBuffer;
 
-    int iCreateResult = RedVSITokenFactory::CreateTokens(inputstr, map.cVSILibTokenMap, cInputBuffer);
+    int iCreateResult = RedTokenFactory::CreateTokens(inputstr, cInputBuffer);
 
     RedLog cLog;
     if      (ExitComp(cInputBuffer, cLog))     retStr = cLog.AllLoggedText();
@@ -69,7 +68,7 @@ RedDataString RedVSIShell::ProcessCmdLine(RedDataString inputstr)
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-bool RedVSIShell::LibAddComp(RedVSITokenBuffer& cInputBuffer, RedLog& cLog)
+bool RedVSIShell::LibAddComp(RedTokenBuffer& cInputBuffer, RedLog& cLog)
 {
 
     RedDataString filepath = "";
@@ -82,7 +81,7 @@ bool RedVSIShell::LibAddComp(RedVSITokenBuffer& cInputBuffer, RedLog& cLog)
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-bool RedVSIShell::LibInitComp(RedVSITokenBuffer& cInputBuffer, RedLog& cLog)
+bool RedVSIShell::LibInitComp(RedTokenBuffer& cInputBuffer, RedLog& cLog)
 {
 
     cVSIBase.cCodeLib.Init();
@@ -92,7 +91,7 @@ bool RedVSIShell::LibInitComp(RedVSITokenBuffer& cInputBuffer, RedLog& cLog)
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-bool RedVSIShell::LibListComp(RedVSITokenBuffer& cInputBuffer, RedLog& cLog)
+bool RedVSIShell::LibListComp(RedTokenBuffer& cInputBuffer, RedLog& cLog)
 {
     RedDataList cList = cVSIBase.cCodeLib.ClassNameList();
 
@@ -115,10 +114,10 @@ bool RedVSIShell::LibListComp(RedVSITokenBuffer& cInputBuffer, RedLog& cLog)
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-bool RedVSIShell::DataAddComp(RedVSITokenBuffer& cInputBuffer, RedLog& cLog)
+bool RedVSIShell::DataAddComp(RedTokenBuffer& cInputBuffer, RedLog& cLog)
 {
-    RedVSIToken cCmdTok = cInputBuffer.GetToken();
-    RedVSIToken cCmd2Tok = cInputBuffer.GetToken();
+    RedToken cCmdTok = cInputBuffer.GetToken();
+    RedToken cCmd2Tok = cInputBuffer.GetToken();
 
     if (cCmdTok.Predef().IsKeywordShellData() &&
         cCmd2Tok.Predef().IsKeywordShellAdd())
@@ -140,10 +139,10 @@ bool RedVSIShell::DataAddComp(RedVSITokenBuffer& cInputBuffer, RedLog& cLog)
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-bool RedVSIShell::DataInitComp(RedVSITokenBuffer& cInputBuffer, RedLog& cLog)
+bool RedVSIShell::DataInitComp(RedTokenBuffer& cInputBuffer, RedLog& cLog)
 {
-    RedVSIToken cCmdTok  = cInputBuffer.GetToken();
-    RedVSIToken cCmd2Tok = cInputBuffer.GetToken();
+    RedToken cCmdTok  = cInputBuffer.GetToken();
+    RedToken cCmd2Tok = cInputBuffer.GetToken();
 
     if (cCmdTok.Predef().IsKeywordShellData() && 
         cCmd2Tok.Predef().IsKeywordShellInit() )
@@ -161,10 +160,10 @@ bool RedVSIShell::DataInitComp(RedVSITokenBuffer& cInputBuffer, RedLog& cLog)
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-bool RedVSIShell::DataListComp(RedVSITokenBuffer& cInputBuffer, RedLog& cLog)
+bool RedVSIShell::DataListComp(RedTokenBuffer& cInputBuffer, RedLog& cLog)
 {
-    RedVSIToken cCmdTok = cInputBuffer.GetToken();
-    RedVSIToken cCmd2Tok = cInputBuffer.GetToken();
+    RedToken cCmdTok = cInputBuffer.GetToken();
+    RedToken cCmd2Tok = cInputBuffer.GetToken();
 
     if (cCmdTok.Predef().IsKeywordShellData() && cCmd2Tok.Predef().IsKeywordShellList())
     {
@@ -207,17 +206,16 @@ bool RedVSIShell::DataListComp(RedVSITokenBuffer& cInputBuffer, RedLog& cLog)
 // run "new heap number x = 1"
 // run "if x == 1 then new heap number y = 2 endif"
 
-bool RedVSIShell::RunFragComp(RedVSITokenBuffer& cInputBuffer, RedLog& cLog)
+bool RedVSIShell::RunFragComp(RedTokenBuffer& cInputBuffer, RedLog& cLog)
 {
-    RedVSIToken cCmdTok  = cInputBuffer.GetToken();
-    RedVSIToken cCodeTok = cInputBuffer.GetToken();
+    RedToken cCmdTok  = cInputBuffer.GetToken();
+    RedToken cCodeTok = cInputBuffer.GetToken();
 
     if (cCmdTok.Predef().IsKeywordShellRun() && cCodeTok.Type().IsStringLiteral())
     {
-        RedVSILibTokenMap cTokenMap;
-        RedVSITokenBuffer cTokenList;
+        RedTokenBuffer cTokenList;
         RedDataString strCodeFragment = cCodeTok.Text();
-        if (!RedVSITokenFactory::CreateTokens(strCodeFragment, cTokenMap.cVSILibTokenMap, cTokenList))
+        if (!RedTokenFactory::CreateTokens(strCodeFragment, cTokenList))
             return true;
 
         // - - - From this point on we need to delete the created elements - - - - - -
@@ -256,9 +254,9 @@ bool RedVSIShell::RunFragComp(RedVSITokenBuffer& cInputBuffer, RedLog& cLog)
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-bool RedVSIShell::RunFuncComp(RedVSITokenBuffer& cInputBuffer, RedLog& cLog)
+bool RedVSIShell::RunFuncComp(RedTokenBuffer& cInputBuffer, RedLog& cLog)
 {
-    RedVSIToken cCmdTok = cInputBuffer.GetToken();
+    RedToken cCmdTok = cInputBuffer.GetToken();
 
     if (cCmdTok.Predef().IsKeywordShellRun())
     {
@@ -269,9 +267,9 @@ bool RedVSIShell::RunFuncComp(RedVSITokenBuffer& cInputBuffer, RedLog& cLog)
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-bool RedVSIShell::ExitComp(RedVSITokenBuffer& cInputBuffer, RedLog& cLog)
+bool RedVSIShell::ExitComp(RedTokenBuffer& cInputBuffer, RedLog& cLog)
 {
-    RedVSIToken cCmdTok = cInputBuffer.GetToken();
+    RedToken cCmdTok = cInputBuffer.GetToken();
 
     if (cCmdTok.Predef().IsKeywordShellExit())
     {

@@ -19,7 +19,7 @@
 #pragma once
 
 #include "RedVSICmd.h"
-#include "RedVSITokenBuffer.h"
+#include "RedTokenBuffer.h"
 #include "RedLog.h"
 #include "RedVSIContextRoutine.h"
 #include "RedVSIErrorCodes.h"
@@ -38,18 +38,18 @@ class RedVSICmdFactory
 {
 public:
 
-    static RedVSICmd* RunConstuctionCompetition(RedVSITokenBuffer& cInputBuffer, RedLog& RedLog);
+    static RedVSICmd* RunConstuctionCompetition(RedTokenBuffer& cInputBuffer, RedLog& RedLog);
 
 private:
 
-    static bool       EOFComp   (RedVSITokenBuffer& cInputBuffer, RedLog& RedLog);
+    static bool       EOFComp   (RedTokenBuffer& cInputBuffer, RedLog& RedLog);
 
-    static RedVSICmd* ExprComp  (RedVSITokenBuffer& cInputBuffer, RedLog& RedLog);
-    static RedVSICmd* IfComp    (RedVSITokenBuffer& cInputBuffer, RedLog& RedLog);
-    static RedVSICmd* LogComp   (RedVSITokenBuffer& cInputBuffer, RedLog& RedLog);
-    static RedVSICmd* NewComp   (RedVSITokenBuffer& cInputBuffer, RedLog& RedLog);
-    static RedVSICmd* ReturnComp(RedVSITokenBuffer& cInputBuffer, RedLog& RedLog);
-    static RedVSICmd* WhileComp (RedVSITokenBuffer& cInputBuffer, RedLog& RedLog);
+    static RedVSICmd* ExprComp  (RedTokenBuffer& cInputBuffer, RedLog& RedLog);
+    static RedVSICmd* IfComp    (RedTokenBuffer& cInputBuffer, RedLog& RedLog);
+    static RedVSICmd* LogComp   (RedTokenBuffer& cInputBuffer, RedLog& RedLog);
+    static RedVSICmd* NewComp   (RedTokenBuffer& cInputBuffer, RedLog& RedLog);
+    static RedVSICmd* ReturnComp(RedTokenBuffer& cInputBuffer, RedLog& RedLog);
+    static RedVSICmd* WhileComp (RedTokenBuffer& cInputBuffer, RedLog& RedLog);
 };
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

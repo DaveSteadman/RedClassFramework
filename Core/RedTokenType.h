@@ -18,17 +18,15 @@
 
 #pragma once
 
-#include "RedCoreNamespace.h"
-
 namespace Red {
-namespace VSI {
+namespace Core {
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-class RedVSITokenType
+class RedTokenType
 {
 public:
-    RedVSITokenType(void)                      { Init(); };
+    RedTokenType(void)                         { Init(); };
     
     void Init(void)                            { eState = TETokenType::eDefaultInvalid; };
 
@@ -38,7 +36,6 @@ public:
     void SetSymbol(void)                       { eState = TETokenType::eSymbol; };
     void SetNonPrintable(void)                 { eState = TETokenType::eNonPrintable; };
     void SetWhitespace(void)                   { eState = TETokenType::eWhitespace; };
-    void SetPredefined(void)                   { eState = TETokenType::ePredefined; };
     
     bool IsValid(void) const                   { return (eState != TETokenType::eDefaultInvalid); };
     bool IsNumber(void) const                  { return (eState == TETokenType::eNumber); };
@@ -47,35 +44,28 @@ public:
     bool IsSymbol(void) const                  { return (eState == TETokenType::eSymbol); };
     bool IsNonPrintable(void) const            { return (eState == TETokenType::eNonPrintable); };
     bool IsWhitespace(void) const              { return (eState == TETokenType::eWhitespace); };
-    bool IsPredefined(void) const              { return (eState == TETokenType::ePredefined); };
 
-    bool IsPotentiallyPredef(void) const       { return ((IsName()) || (IsSymbol())); };
-
-    static RedVSITokenType Number(void)        { return RedVSITokenType(TETokenType::eNumber); };
-    static RedVSITokenType Name(void)          { return RedVSITokenType(TETokenType::eName); };
-    static RedVSITokenType StringLiteral(void) { return RedVSITokenType(TETokenType::eStringLiteral); };
-    static RedVSITokenType Symbol(void)        { return RedVSITokenType(TETokenType::eSymbol); };
-    static RedVSITokenType NonPrintable(void)  { return RedVSITokenType(TETokenType::eNonPrintable); };
-    static RedVSITokenType Whitespace(void)    { return RedVSITokenType(TETokenType::eWhitespace); };
-    static RedVSITokenType Predefined(void)    { return RedVSITokenType(TETokenType::ePredefined); };
+    static RedTokenType Number(void)           { return RedTokenType(TETokenType::eNumber); };
+    static RedTokenType Name(void)             { return RedTokenType(TETokenType::eName); };
+    static RedTokenType StringLiteral(void)    { return RedTokenType(TETokenType::eStringLiteral); };
+    static RedTokenType Symbol(void)           { return RedTokenType(TETokenType::eSymbol); };
+    static RedTokenType NonPrintable(void)     { return RedTokenType(TETokenType::eNonPrintable); };
+    static RedTokenType Whitespace(void)       { return RedTokenType(TETokenType::eWhitespace); };
 
 protected:
 
     enum class TETokenType
     {
         eDefaultInvalid,
-
         eNumber, 
         eName,
         eStringLiteral,
         eSymbol,
-
         eNonPrintable,
-        eWhitespace,
-        ePredefined
+        eWhitespace
     };
 
-    RedVSITokenType(TETokenType eNewState) { eState = eNewState; };
+    RedTokenType(TETokenType eNewState) { eState = eNewState; };
 
 private:
     TETokenType eState = TETokenType::eDefaultInvalid;
@@ -83,5 +73,6 @@ private:
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-} // VSI
+} // Core
 } // Red
+

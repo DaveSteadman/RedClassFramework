@@ -72,18 +72,18 @@ private:
 
     RedVSIContextBase cVSIBase;
 
-    bool LibAddComp(RedVSITokenBuffer& cInputBuffer, RedLog& cLog);
-    bool LibInitComp(RedVSITokenBuffer& cInputBuffer, RedLog& cLog);
-    bool LibListComp(RedVSITokenBuffer& cInputBuffer, RedLog& cLog);
+    bool LibAddComp(RedTokenBuffer& cInputBuffer, RedLog& cLog);
+    bool LibInitComp(RedTokenBuffer& cInputBuffer, RedLog& cLog);
+    bool LibListComp(RedTokenBuffer& cInputBuffer, RedLog& cLog);
 
-    bool DataAddComp(RedVSITokenBuffer& cInputBuffer, RedLog& cLog);
-    bool DataInitComp(RedVSITokenBuffer& cInputBuffer, RedLog& cLog);
-    bool DataListComp(RedVSITokenBuffer& cInputBuffer, RedLog& cLog);
+    bool DataAddComp(RedTokenBuffer& cInputBuffer, RedLog& cLog);
+    bool DataInitComp(RedTokenBuffer& cInputBuffer, RedLog& cLog);
+    bool DataListComp(RedTokenBuffer& cInputBuffer, RedLog& cLog);
 
-    bool RunFragComp(RedVSITokenBuffer& cInputBuffer, RedLog& cLog);
-    bool RunFuncComp(RedVSITokenBuffer& cInputBuffer, RedLog& cLog);
+    bool RunFragComp(RedTokenBuffer& cInputBuffer, RedLog& cLog);
+    bool RunFuncComp(RedTokenBuffer& cInputBuffer, RedLog& cLog);
 
-    bool ExitComp(RedVSITokenBuffer& cInputBuffer, RedLog& cLog);
+    bool ExitComp(RedTokenBuffer& cInputBuffer, RedLog& cLog);
 };
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

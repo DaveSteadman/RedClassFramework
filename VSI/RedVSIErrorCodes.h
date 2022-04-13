@@ -22,7 +22,7 @@
 
 #include "RedCoreNamespace.h"
 
-#include "RedVSIToken.h"
+#include "RedToken.h"
 
 namespace Red {
 namespace VSI {

@@ -21,7 +21,6 @@
 #include "RedCoreNamespace.h"
 
 #include "RedVSILib.h"
-#include "RedVSILibTokenMap.h"
 #include "RedVSILibRoutine.h"
 
 using namespace Red::Core;
@@ -46,8 +45,7 @@ public:
 
 // attributes
 
-    RedVSILibTokenMap cLibMap;
-    RedVSILib*        pLib;
+    RedVSILib* pLib;
 };
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

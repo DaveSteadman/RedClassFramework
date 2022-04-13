@@ -19,7 +19,7 @@
 #pragma once
 
 #include "RedCoreNamespace.h"
-#include "RedVSIToken.h"
+#include "RedToken.h"
 #include "RedVSIParseTreeInterface.h"
 #include "RedVSILangElement.h"
 #include "RedVSIErrorCodes.h"

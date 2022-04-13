@@ -16,28 +16,28 @@
 // (http://opensource.org/licenses/MIT)
 // -------------------------------------------------------------------------------------------------
 
-#include "RedVSIToken.h"
-#include "RedBufferInput.h"
+#include "RedCoreNamespace.h"
 
 namespace Red {
-namespace VSI {
+namespace Core {
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-void RedVSIToken::Init(void)
+void RedToken::Init(void)
 {
     cType.Init();
-    cPredef.Init();
-
-    cNumber.Init();
     cText.Init();
+
+    cPredef.Init();
+    cNumber.Init();
+    cCodePos.Init();
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-bool RedVSIToken::IsEOF(void) const
+bool RedToken::IsEOF(void) const
 {
-    if ((cType.IsPredefined()) && (cPredef.IsSymbolEOF()))
+    if (cPredef.IsSymbolEOF())
         return true;
 
     return false;
@@ -45,24 +45,44 @@ bool RedVSIToken::IsEOF(void) const
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-RedDataString RedVSIToken::DebugText(RedVSITokenElementMap& RedVSITokenMap)
+RedDataString RedToken::DebugText()
 {
     RedDataString cRetStr;
 
-    if      (cType.IsNumber())         { cRetStr = "[num ";    cRetStr += cNumber.DecimalString(); cRetStr += "] "; }
-    else if (cType.IsName())           { cRetStr = "[name ";   cRetStr += cText; cRetStr += "] ";}
-    else if (cType.IsStringLiteral())  { cRetStr = "[str "; cRetStr += cText; cRetStr += "] ";}
-    else if (IsEOF())                  { cRetStr = "<<EOF>> "; }
-    else if (cType.IsNonPrintable())   { RedDataNumber cCh = cText[1]; cRetStr = "[chr: "; cRetStr += cCh.DecimalString(); cRetStr += "] "; }
-    else if (cType.IsPredefined())     { cRetStr = "[predef "; RedDataString lookup; RedVSITokenMap.FindString(cPredef, lookup); cRetStr += lookup; cRetStr += "] ";}
-    else if (!cType.IsValid())         { cRetStr = "<<Undefined>>"; }
-
+    if (cType.IsValid()) 
+    {
+        if (cPredef.IsInvalid())
+        {
+            if      (cType.IsNumber())         { cRetStr = "[num ";    cRetStr += cNumber.DecimalString(); cRetStr += "] "; }
+            else if (cType.IsName())           { cRetStr = "[name ";   cRetStr += cText; cRetStr += "] ";}
+            else if (cType.IsStringLiteral())  { cRetStr = "[str "; cRetStr += cText; cRetStr += "] ";}
+            else if (IsEOF())                  { cRetStr = "<<EOF>> "; }
+            else if (cType.IsNonPrintable())   { RedDataNumber cCh = cText[1]; cRetStr = "[chr: "; cRetStr += cCh.DecimalString(); cRetStr += "] "; }
+        }
+        else
+        {
+            RedTokenPredefMap* pMap = RedTokenPredefMap::getInstance();
+            RedDataString cPredefStr;
+            if (pMap->FindStringFromPredef(cPredef, cPredefStr))
+            {
+                cRetStr = "[predef "; 
+                cRetStr += cPredefStr;
+                cRetStr += "] ";
+            }
+            else
+                cRetStr = "<<Broken Predef>>";
+        }
+    }
+    else
+    {
+        cRetStr = "<<Undefined>>";
+    }
     return cRetStr;
 }
     
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-void RedVSIToken::operator =(const RedVSIToken& cTok)
+void RedToken::operator =(const RedToken& cTok)
 {
     cType    = cTok.cType;
     cText    = cTok.cText;
@@ -73,5 +93,5 @@ void RedVSIToken::operator =(const RedVSIToken& cTok)
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-} // VSI
+} // Core
 } // Red

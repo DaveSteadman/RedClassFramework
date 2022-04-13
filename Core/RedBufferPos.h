@@ -34,6 +34,8 @@ public:
     RedBufferPos(void) { iRow=0; iCol=0; };
     RedBufferPos(const unsigned iNewRow, const unsigned iNewCol) { iRow=iNewRow; iCol=iNewCol; };
 
+    void Init(void) { iRow = 0; iCol = 0; };
+
     unsigned Row(void) const { return iRow.IntegerValue(); };
     unsigned Col(void) const { return iCol.IntegerValue(); };
 

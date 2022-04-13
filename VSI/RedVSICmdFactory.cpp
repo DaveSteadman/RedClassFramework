@@ -27,7 +27,7 @@
 #include "RedVSICmdReturn.h"
 #include "RedVSICmdWhile.h"
 
-#include "RedVSIToken.h"
+#include "RedToken.h"
 #include "RedVSIParseFactory.h"
 
 namespace Red {
@@ -35,7 +35,7 @@ namespace VSI {
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-RedVSICmd* RedVSICmdFactory::RunConstuctionCompetition(RedVSITokenBuffer& cInputBuffer, RedLog& RedLog)
+RedVSICmd* RedVSICmdFactory::RunConstuctionCompetition(RedTokenBuffer& cInputBuffer, RedLog& RedLog)
 {
     RedVSICmd* pFirstObject = NULL;
     RedVSICmd* pTailObject  = NULL;
@@ -113,9 +113,9 @@ RedVSICmd* RedVSICmdFactory::RunConstuctionCompetition(RedVSITokenBuffer& cInput
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-bool RedVSICmdFactory::EOFComp(RedVSITokenBuffer& cInputBuffer, RedLog& RedLog)
+bool RedVSICmdFactory::EOFComp(RedTokenBuffer& cInputBuffer, RedLog& RedLog)
 {
-    RedVSIToken cTok = cInputBuffer.GetToken();
+    RedToken cTok = cInputBuffer.GetToken();
 
     // The EOF doesn't consume a token, so any close bracket can be read by the parent routine that
     // previously read the open bracket.
@@ -130,10 +130,10 @@ bool RedVSICmdFactory::EOFComp(RedVSITokenBuffer& cInputBuffer, RedLog& RedLog)
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-RedVSICmd* RedVSICmdFactory::IfComp(RedVSITokenBuffer& cInputBuffer, RedLog& RedLog)
+RedVSICmd* RedVSICmdFactory::IfComp(RedTokenBuffer& cInputBuffer, RedLog& RedLog)
 {
     // Read the if keyword
-    RedVSIToken cTok  = cInputBuffer.GetToken();
+    RedToken cTok  = cInputBuffer.GetToken();
     if (!cTok.Predef().IsKeywordIf()) return NULL;
 
     RedVSIParseTreeInterface* pExpr      = NULL;
@@ -189,7 +189,7 @@ RedVSICmd* RedVSICmdFactory::IfComp(RedVSITokenBuffer& cInputBuffer, RedLog& Red
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-RedVSICmd* RedVSICmdFactory::ExprComp(RedVSITokenBuffer& cInputBuffer, RedLog& RedLog)
+RedVSICmd* RedVSICmdFactory::ExprComp(RedTokenBuffer& cInputBuffer, RedLog& RedLog)
 {
     // read an expression
     RedVSIParseTreeInterface* pExpr = RedVSIParseFactory::ConstructAssignExpr(cInputBuffer, RedLog);
@@ -215,10 +215,10 @@ RedVSICmd* RedVSICmdFactory::ExprComp(RedVSITokenBuffer& cInputBuffer, RedLog& R
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-RedVSICmd* RedVSICmdFactory::LogComp(RedVSITokenBuffer& cInputBuffer, RedLog& RedLog)
+RedVSICmd* RedVSICmdFactory::LogComp(RedTokenBuffer& cInputBuffer, RedLog& RedLog)
 {
     // New is started with a keyword, we can instantly return if not right.
-    RedVSIToken cKeywordTok = cInputBuffer.GetToken();
+    RedToken cKeywordTok = cInputBuffer.GetToken();
     if (!cKeywordTok.Predef().IsKeywordLog()) return NULL;
 
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -240,16 +240,16 @@ RedVSICmd* RedVSICmdFactory::LogComp(RedVSITokenBuffer& cInputBuffer, RedLog& Re
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-RedVSICmd* RedVSICmdFactory::NewComp(RedVSITokenBuffer& cInputBuffer, RedLog& RedLog)
+RedVSICmd* RedVSICmdFactory::NewComp(RedTokenBuffer& cInputBuffer, RedLog& RedLog)
 {
     // New is started with a keyword, we can instantly return if not right.
-    RedVSIToken cKeywordTok = cInputBuffer.GetToken();
+    RedToken cKeywordTok = cInputBuffer.GetToken();
     if (!cKeywordTok.Predef().IsKeywordNew()) return NULL;
 
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
     // Read and validate the location, type and name
-    RedVSIToken cLocTok  = cInputBuffer.GetToken();
+    RedToken cLocTok  = cInputBuffer.GetToken();
     if (!cLocTok.Predef().IsLocationKeyword())
     {
         RedLog.AddErrorEvent(RedVSIErrorCodes::GetErrorString(RedVSIErrorCodes::eCFact_New_BadLoc));
@@ -260,7 +260,7 @@ RedVSICmd* RedVSICmdFactory::NewComp(RedVSITokenBuffer& cInputBuffer, RedLog& Re
     else if (cLocTok.Predef().IsKeywordStack())     cLoc = RedVSILangElement::LocationStack();
     else if (cLocTok.Predef().IsKeywordHeap())      cLoc = RedVSILangElement::LocationHeap();
 
-    RedVSIToken cTypeTok = cInputBuffer.GetToken();
+    RedToken cTypeTok = cInputBuffer.GetToken();
     if (!cTypeTok.Predef().IsTypeKeyword())
     {
         RedLog.AddErrorEvent(RedVSIErrorCodes::GetErrorString(RedVSIErrorCodes::eCFact_New_BadType));
@@ -274,7 +274,7 @@ RedVSICmd* RedVSICmdFactory::NewComp(RedVSITokenBuffer& cInputBuffer, RedLog& Re
     else if (cTypeTok.Predef().IsKeywordRecord())   cType = RedVSILangElement::TypeRecord();
     else if (cTypeTok.Predef().IsKeywordString())   cType = RedVSILangElement::TypeString();
 
-    RedVSIToken cNameTok = cInputBuffer.GetToken();
+    RedToken cNameTok = cInputBuffer.GetToken();
     if (!cNameTok.Type().IsName())
     {
         RedLog.AddErrorEvent(RedVSIErrorCodes::GetErrorString(RedVSIErrorCodes::eCFact_New_BadName));
@@ -285,7 +285,7 @@ RedVSICmd* RedVSICmdFactory::NewComp(RedVSITokenBuffer& cInputBuffer, RedLog& Re
     RedVSIParseTreeInterface* pIndexExpr = NULL;
     if (cLoc.IsLocationAttribute())
     {
-        RedVSIToken bracketToken = cInputBuffer.GetToken();
+        RedToken bracketToken = cInputBuffer.GetToken();
         if (!bracketToken.Predef().IsSymbolBracketOpenSquare())
         {
             RedLog.AddErrorEvent(RedVSIErrorCodes::GetErrorString(RedVSIErrorCodes::eCFact_New_BadLoc));
@@ -310,7 +310,7 @@ RedVSICmd* RedVSICmdFactory::NewComp(RedVSITokenBuffer& cInputBuffer, RedLog& Re
 
     // Look for the optional initialisation clause
     RedVSIParseTreeInterface* pInitExpr = NULL;
-    RedVSIToken cEqTok = cInputBuffer.GetToken();
+    RedToken cEqTok = cInputBuffer.GetToken();
     if (cEqTok.Predef().IsSymbolAssignEqual())
     {
         // Create the expression and handle creation errors
@@ -334,10 +334,10 @@ RedVSICmd* RedVSICmdFactory::NewComp(RedVSITokenBuffer& cInputBuffer, RedLog& Re
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-RedVSICmd* RedVSICmdFactory::ReturnComp(RedVSITokenBuffer& cInputBuffer, RedLog& RedLog)
+RedVSICmd* RedVSICmdFactory::ReturnComp(RedTokenBuffer& cInputBuffer, RedLog& RedLog)
 {
     // New is started with a keyword, we can instantly return if not right.
-    RedVSIToken cKeywordTok = cInputBuffer.GetToken();
+    RedToken cKeywordTok = cInputBuffer.GetToken();
     if (!cKeywordTok.Predef().IsKeywordReturn()) return NULL;
 
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -366,10 +366,10 @@ RedVSICmd* RedVSICmdFactory::ReturnComp(RedVSITokenBuffer& cInputBuffer, RedLog&
     
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-RedVSICmd* RedVSICmdFactory::WhileComp(RedVSITokenBuffer& cInputBuffer, RedLog& RedLog)
+RedVSICmd* RedVSICmdFactory::WhileComp(RedTokenBuffer& cInputBuffer, RedLog& RedLog)
 {
     // Read the WHILE keyword
-    RedVSIToken cTok  = cInputBuffer.GetToken();
+    RedToken cTok  = cInputBuffer.GetToken();
     if (!cTok.Predef().IsKeywordWhile()) return NULL;
 
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

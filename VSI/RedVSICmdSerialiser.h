@@ -27,7 +27,7 @@
 #include "RedVSICmdNew.h"
 #include "RedVSICmdReturn.h"
 #include "RedVSICmdWhile.h"
-#include "RedVSITokenBuffer.h"
+#include "RedTokenBuffer.h"
 
 using namespace Red::Core;
 
@@ -39,16 +39,16 @@ namespace VSI {
 class RedVSICmdSerialiser
 {
 public:
-    static void SerialiseCommandChain(RedVSITokenBuffer& cTokenBuffer, RedVSICmd* pCmd);
-    static void TokenBufferToOutputBuffer(RedVSITokenBuffer& cInTokenBuffer, RedVSITokenElementMap& tokenMap, RedBufferOutput& outBuffer);
+    static void SerialiseCommandChain(RedTokenBuffer& cTokenBuffer, RedVSICmd* pCmd);
+    static void TokenBufferToOutputBuffer(RedTokenBuffer& cInTokenBuffer, RedBufferOutput& outBuffer);
 
 private:
-    static void SerialiseIfCmd      (RedVSITokenBuffer& cTokenBuffer, RedVSICmdIf*     pCmd);
-    static void SerialiseLetCmd     (RedVSITokenBuffer& cTokenBuffer, RedVSICmdLet*    pCmd);
-    static void SerialiseLogCmd     (RedVSITokenBuffer& cTokenBuffer, RedVSICmdLog*    pCmd);
-    static void SerialiseNewCmd     (RedVSITokenBuffer& cTokenBuffer, RedVSICmdNew*    pCmd);
-    static void SerialiseReturnCmd  (RedVSITokenBuffer& cTokenBuffer, RedVSICmdReturn* pCmd);
-    static void SerialiseWhileCmd   (RedVSITokenBuffer& cTokenBuffer, RedVSICmdWhile*  pCmd);
+    static void SerialiseIfCmd      (RedTokenBuffer& cTokenBuffer, RedVSICmdIf*     pCmd);
+    static void SerialiseLetCmd     (RedTokenBuffer& cTokenBuffer, RedVSICmdLet*    pCmd);
+    static void SerialiseLogCmd     (RedTokenBuffer& cTokenBuffer, RedVSICmdLog*    pCmd);
+    static void SerialiseNewCmd     (RedTokenBuffer& cTokenBuffer, RedVSICmdNew*    pCmd);
+    static void SerialiseReturnCmd  (RedTokenBuffer& cTokenBuffer, RedVSICmdReturn* pCmd);
+    static void SerialiseWhileCmd   (RedTokenBuffer& cTokenBuffer, RedVSICmdWhile*  pCmd);
 };
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

@@ -18,39 +18,39 @@
 
 #pragma once
 
-#include "RedCoreNamespace.h"
-
-#include "RedVSIToken.h"
-#include "RedVSITokenBuffer.h"
-#include "RedVSITokenElementMap.h"
+#include "RedDataString.h"
+#include "RedBufferInput.h"
+#include "RedResult.h"
+#include "RedToken.h"
+#include "RedTokenBuffer.h"
 
 using namespace Red::Core;
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 namespace Red {
-namespace VSI {
+namespace Core {
 
-class RedVSITokenFactory
+class RedTokenFactory
 {
 public:
 
-    static bool CreateTokens(const RedDataString& cInputText,  RedVSITokenElementMap& cTokenMap, RedVSITokenBuffer& cOutputTokenList);
-    static bool CreateTokens(RedBufferInput& cInputBuffer, RedVSITokenElementMap& cTokenMap, RedVSITokenBuffer& cOutputTokenList);
+    static bool CreateTokens(const RedDataString& cInputText, RedTokenBuffer& cOutputTokenList);
+    static bool CreateTokens(RedBufferInput& cInputBuffer,  RedTokenBuffer& cOutputTokenList);
 
 private:
 
     // Operations to construct a token from an unknown buffer input
-    static RedResult RunTokenComp      (RedBufferInput& cInputBuffer, RedVSITokenElementMap& cTokenMap, RedVSIToken& cNewTok);
+    static RedResult RunTokenComp      (RedBufferInput& cInputBuffer, RedToken& cNewTok);
 
-    static RedResult NumberComp        (RedBufferInput& cInputBuffer, RedVSIToken& cNewTok);
-    static RedResult StringLiteralComp (RedBufferInput& cInputBuffer, RedVSIToken& cNewTok);
-    static RedResult NonPrintableComp  (RedBufferInput& cInputBuffer, RedVSIToken& cNewTok);
-    static RedResult NameComp          (RedBufferInput& cInputBuffer, RedVSIToken& cNewTok);
-    static RedResult SymbolComp        (RedBufferInput& cInputBuffer, RedVSIToken& cNewTok);
+    static RedResult NumberComp        (RedBufferInput& cInputBuffer, RedToken& cNewTok);
+    static RedResult StringLiteralComp (RedBufferInput& cInputBuffer, RedToken& cNewTok);
+    static RedResult NonPrintableComp  (RedBufferInput& cInputBuffer, RedToken& cNewTok);
+    static RedResult NameComp          (RedBufferInput& cInputBuffer, RedToken& cNewTok);
+    static RedResult SymbolComp        (RedBufferInput& cInputBuffer, RedToken& cNewTok);
 };
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-} // VSI
+} // Core
 } // Red

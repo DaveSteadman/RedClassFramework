@@ -50,6 +50,9 @@ void RedTestCore::RunUnitTest(RedLog& log)
     // Test Collections
     if (RedTestCore::TestLinkedList().IsFail())   { log.AddErrorEvent("Core Unit Test: TestLinkedList Failed");   return; }
 
+    // Test Tokens
+    if (RedTestCore::TestTokens().IsFail())       { log.AddErrorEvent("Core Unit Test: TestTokens Failed");       return; }
+
     // Test Misc Types
     if (RedTestCore::TestEventLog().IsFail())     { log.AddErrorEvent("Core Unit Test: TestEventLog Failed");     return; }
     if (RedTestCore::TestNumberRange().IsFail())  { log.AddErrorEvent("Core Unit Test: TestNumberRange Failed");  return; }
@@ -474,7 +477,6 @@ RedResult RedTestCore::TestDataString(void)
     return kResultSuccess;
 }
 
-
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 RedResult RedTestCore::TestDataVariant(void)
@@ -550,6 +552,24 @@ RedResult RedTestCore::TestDataVariant(void)
         trans1 = 123;
         RedDataString z = trans1.StringValue();
         if (z != "123") return kResultFail;
+    }
+    return kResultSuccess;
+}
+
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+// Parsing
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+RedResult RedTestCore::TestTokens(void)
+{
+    {
+        RedDataString strTest("+ =");
+
+        RedTokenBuffer tokBuf;
+        int iCreateResult = RedTokenFactory::CreateTokens(strTest, tokBuf);
+
+        RedToken t1 = tokBuf.GetToken();
+        RedToken t2 = tokBuf.GetToken();
     }
     return kResultSuccess;
 }

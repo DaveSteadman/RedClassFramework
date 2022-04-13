@@ -23,7 +23,7 @@ namespace VSI {
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-void RedVSIParseSerialiser::SerialiseExpression(RedVSITokenBuffer& cTokenBuffer, RedVSIParseTreeInterface* pExpr)
+void RedVSIParseSerialiser::SerialiseExpression(RedTokenBuffer& cTokenBuffer, RedVSIParseTreeInterface* pExpr)
 {
     if (!pExpr) return;
     
@@ -36,11 +36,11 @@ void RedVSIParseSerialiser::SerialiseExpression(RedVSITokenBuffer& cTokenBuffer,
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-void RedVSIParseSerialiser::SerialiseBinaryOp(RedVSITokenBuffer& cTokenBuffer, RedVSIParseTreeBinaryOp* pExpr)
+void RedVSIParseSerialiser::SerialiseBinaryOp(RedTokenBuffer& cTokenBuffer, RedVSIParseTreeBinaryOp* pExpr)
 {
     RedVSIParseTreeInterface* pOutLeft;
     RedVSILangElement         cOutOp;
-    RedVSIToken               cOpTok;
+    RedToken               cOpTok;
     RedVSIParseTreeInterface* pOutRight;
 
     // read the data out of the expression
@@ -50,24 +50,24 @@ void RedVSIParseSerialiser::SerialiseBinaryOp(RedVSITokenBuffer& cTokenBuffer, R
     SerialiseExpression(cTokenBuffer, pOutLeft);
 
     // write the operator   
-    if      (cOutOp.IsBinaryOpAssignEqual())          cOpTok.SetPredefined(RedVSIIOElement::SymbolAssignEqual());
-    else if (cOutOp.IsBinaryOpAssignPlus())           cOpTok.SetPredefined(RedVSIIOElement::SymbolAssignPlus());
-    else if (cOutOp.IsBinaryOpAssignMinus())          cOpTok.SetPredefined(RedVSIIOElement::SymbolAssignMinus());
-    else if (cOutOp.IsBinaryOpAssignMultiply())       cOpTok.SetPredefined(RedVSIIOElement::SymbolAssignMultiply());
-    else if (cOutOp.IsBinaryOpAssignDivide())         cOpTok.SetPredefined(RedVSIIOElement::SymbolAssignDivide());
-    else if (cOutOp.IsBinaryOpCompareEqual())         cOpTok.SetPredefined(RedVSIIOElement::SymbolCompareEqual());
-    else if (cOutOp.IsBinaryOpCompareNotEqual())      cOpTok.SetPredefined(RedVSIIOElement::SymbolCompareNotEqual());
-    else if (cOutOp.IsBinaryOpCompareGreaterThan())   cOpTok.SetPredefined(RedVSIIOElement::SymbolCompareGreaterThan());
-    else if (cOutOp.IsBinaryOpCompareLessThan())      cOpTok.SetPredefined(RedVSIIOElement::SymbolCompareLessThan());
+    if      (cOutOp.IsBinaryOpAssignEqual())          cOpTok.SetPredefined(RedTokenPredefType::SymbolAssignEqual());
+    else if (cOutOp.IsBinaryOpAssignPlus())           cOpTok.SetPredefined(RedTokenPredefType::SymbolAssignPlus());
+    else if (cOutOp.IsBinaryOpAssignMinus())          cOpTok.SetPredefined(RedTokenPredefType::SymbolAssignMinus());
+    else if (cOutOp.IsBinaryOpAssignMultiply())       cOpTok.SetPredefined(RedTokenPredefType::SymbolAssignMultiply());
+    else if (cOutOp.IsBinaryOpAssignDivide())         cOpTok.SetPredefined(RedTokenPredefType::SymbolAssignDivide());
+    else if (cOutOp.IsBinaryOpCompareEqual())         cOpTok.SetPredefined(RedTokenPredefType::SymbolCompareEqual());
+    else if (cOutOp.IsBinaryOpCompareNotEqual())      cOpTok.SetPredefined(RedTokenPredefType::SymbolCompareNotEqual());
+    else if (cOutOp.IsBinaryOpCompareGreaterThan())   cOpTok.SetPredefined(RedTokenPredefType::SymbolCompareGreaterThan());
+    else if (cOutOp.IsBinaryOpCompareLessThan())      cOpTok.SetPredefined(RedTokenPredefType::SymbolCompareLessThan());
 
-    else if (cOutOp.IsBinaryOpLogicAnd())             cOpTok.SetPredefined(RedVSIIOElement::SymbolLogicAnd());
-    else if (cOutOp.IsBinaryOpLogicOr())              cOpTok.SetPredefined(RedVSIIOElement::SymbolLogicOr());
+    else if (cOutOp.IsBinaryOpLogicAnd())             cOpTok.SetPredefined(RedTokenPredefType::SymbolLogicAnd());
+    else if (cOutOp.IsBinaryOpLogicOr())              cOpTok.SetPredefined(RedTokenPredefType::SymbolLogicOr());
 
-    else if (cOutOp.IsBinaryOpPlus())                 cOpTok.SetPredefined(RedVSIIOElement::SymbolOperatorPlus());
-    else if (cOutOp.IsBinaryOpMinus())                cOpTok.SetPredefined(RedVSIIOElement::SymbolOperatorMinus());
-    else if (cOutOp.IsBinaryOpMultiply())             cOpTok.SetPredefined(RedVSIIOElement::SymbolOperatorMultiply());
-    else if (cOutOp.IsBinaryOpDivide())               cOpTok.SetPredefined(RedVSIIOElement::SymbolOperatorDivide());
-    else if (cOutOp.IsBinaryOpPower())                cOpTok.SetPredefined(RedVSIIOElement::SymbolOperatorPower());
+    else if (cOutOp.IsBinaryOpPlus())                 cOpTok.SetPredefined(RedTokenPredefType::SymbolOperatorPlus());
+    else if (cOutOp.IsBinaryOpMinus())                cOpTok.SetPredefined(RedTokenPredefType::SymbolOperatorMinus());
+    else if (cOutOp.IsBinaryOpMultiply())             cOpTok.SetPredefined(RedTokenPredefType::SymbolOperatorMultiply());
+    else if (cOutOp.IsBinaryOpDivide())               cOpTok.SetPredefined(RedTokenPredefType::SymbolOperatorDivide());
+    else if (cOutOp.IsBinaryOpPower())                cOpTok.SetPredefined(RedTokenPredefType::SymbolOperatorPower());
 
     cTokenBuffer.AppendToken(cOpTok);
 
@@ -77,18 +77,18 @@ void RedVSIParseSerialiser::SerialiseBinaryOp(RedVSITokenBuffer& cTokenBuffer, R
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-void RedVSIParseSerialiser::SerialiseUnaryOp(RedVSITokenBuffer& cTokenBuffer, RedVSIParseTreeUnaryOp* pExpr)
+void RedVSIParseSerialiser::SerialiseUnaryOp(RedTokenBuffer& cTokenBuffer, RedVSIParseTreeUnaryOp* pExpr)
 {
     RedVSILangElement         cOutOp;
-    RedVSIToken               cOpTok;
+    RedToken               cOpTok;
     RedVSIParseTreeInterface* pOutExpr;
 
     // read the data out of the expression
     pExpr->GetDetails(cOutOp, pOutExpr);
 
     // write the operator   
-    if      (cOutOp.IsUnaryOpLogicNot())  cOpTok.SetPredefined(RedVSIIOElement::SymbolLogicNot());
-    else if (cOutOp.IsUnaryOpMinus())     cOpTok.SetPredefined(RedVSIIOElement::SymbolOperatorMinus());
+    if      (cOutOp.IsUnaryOpLogicNot())  cOpTok.SetPredefined(RedTokenPredefType::SymbolLogicNot());
+    else if (cOutOp.IsUnaryOpMinus())     cOpTok.SetPredefined(RedTokenPredefType::SymbolOperatorMinus());
 
     cTokenBuffer.AppendToken(cOpTok);
 
@@ -99,30 +99,32 @@ void RedVSIParseSerialiser::SerialiseUnaryOp(RedVSITokenBuffer& cTokenBuffer, Re
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-void RedVSIParseSerialiser::SerialiseValue(RedVSITokenBuffer& cTokenBuffer, RedVSIParseTreeVal* pExpr)
+void RedVSIParseSerialiser::SerialiseValue(RedTokenBuffer& cTokenBuffer, RedVSIParseTreeVal* pExpr)
 {
     // define all the variables we will need
     RedDataVariant cOutVal;
-    RedVSIToken cValTok;
+    RedToken cValTok;
     
     // read the data out of the parse tree node
     cOutVal = pExpr->Value();
     
     // Write the name or number
-    if      (cOutVal.Type().IsNum()) cValTok.SetNumber( cOutVal.NumberValue() );
-    else if (cOutVal.Type().IsStr()) cValTok.SetName(   cOutVal.StringValue() );
+    if (cOutVal.Type().IsNum()) 
+        cValTok.SetNumber(cOutVal.StringValue(), cOutVal.NumberValue());
+    else if (cOutVal.Type().IsStr()) 
+        cValTok.SetName(cOutVal.StringValue() );
     
     cTokenBuffer.AppendToken(cValTok);
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-void RedVSIParseSerialiser::SerialiseVariable(RedVSITokenBuffer& cTokenBuffer, RedVSIParseTreeVar* pExpr)
+void RedVSIParseSerialiser::SerialiseVariable(RedTokenBuffer& cTokenBuffer, RedVSIParseTreeVar* pExpr)
 {
     // define all the variables we will need
     RedDataString                 cOutVarName;
     //RedVSIParseTreeInterface* pOutVarIndexExpr = NULL;
-    RedVSIToken               cNameTok;
+    RedToken               cNameTok;
 
     // read the data out of the parse tree node
 //    pExpr->GetDetails(cOutVarName, pOutVarIndexExpr);
@@ -134,15 +136,15 @@ void RedVSIParseSerialiser::SerialiseVariable(RedVSITokenBuffer& cTokenBuffer, R
 //    if (pOutVarIndexExpr)
 //    {
 //        // write the open brakect for the item index
-//        RedVSIToken cBracketTok;
-//        cBracketTok.SetPredefined(RedVSIIOElement::SymbolOpenBracket());
+//        RedToken cBracketTok;
+//        cBracketTok.SetPredefined(RedTokenPredefType::SymbolOpenBracket());
 //        cTokenBuffer.AppendToken(cBracketTok);
 //        
 //        // write the item index expression
 //        SerialiseExpression(cTokenBuffer, pOutVarIndexExpr);
 //        
 //        // write the close brakect for the item index
-//        cBracketTok.SetPredefined(RedVSIIOElement::SymbolCloseBracket());
+//        cBracketTok.SetPredefined(RedTokenPredefType::SymbolCloseBracket());
 //        cTokenBuffer.AppendToken(cBracketTok);
 //    }
 }

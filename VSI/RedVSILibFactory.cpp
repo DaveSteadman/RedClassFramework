@@ -25,8 +25,8 @@
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 #include "RedVSILibFactory.h"
-#include "RedVSITokenFactory.h"
-#include "RedVSITokenBuffer.h"
+#include "RedTokenFactory.h"
+#include "RedTokenBuffer.h"
 #include "RedVSICmdFactory.h"
 #include "RedVSICmdSerialiser.h"
 
@@ -54,7 +54,7 @@ void RedVSILibFactory::InputTmlClass(RedTinyMLElement* pTopTmlNode, RedLog& cAna
         return;
     }
 
-    if (pTopTmlNode->Name() != kVSIIOElementKeywordClass)
+    if (pTopTmlNode->Name() != kIOStringKeywordClass)
     {
         cAnalysis.AddErrorEvent("Lib Factory: InputTmlClass: Top-level node not a class");
         return;
@@ -65,7 +65,7 @@ void RedVSILibFactory::InputTmlClass(RedTinyMLElement* pTopTmlNode, RedLog& cAna
     RedTinyMLNode* pTmlNode = (RedTinyMLNode*)pTopTmlNode;
 
 
-    RedTinyMLLeaf* pName = RedTinyMLAction::NodeFirstNamedLeaf(*pTmlNode, kVSIIOElementKeywordName);
+    RedTinyMLLeaf* pName = RedTinyMLAction::NodeFirstNamedLeaf(*pTmlNode, kIOStringKeywordName);
     RedDataString x(pName->Data());
     pNewClass->SetClassName(x);
 
@@ -79,7 +79,7 @@ void RedVSILibFactory::InputTmlClass(RedTinyMLElement* pTopTmlNode, RedLog& cAna
         if (pCurrElem->IsNode())
         {
             RedTinyMLNode* pCurrNode = dynamic_cast<RedTinyMLNode*>(pCurrElem);
-            if (pCurrNode->Name() == kVSIIOElementKeywordRoutine)
+            if (pCurrNode->Name() == kIOStringKeywordRoutine)
             {
                 RedVSILibRoutine* newRoutine = InputTmlRoutine(*pCurrNode, cAnalysis);
 
@@ -101,7 +101,7 @@ void RedVSILibFactory::InputTmlClass(RedTinyMLElement* pTopTmlNode, RedLog& cAna
 // Add a Tml-Class to library
 RedVSILibRoutine* RedVSILibFactory::InputTmlRoutine(RedTinyMLNode& cRoutineNode, RedLog& cAnalysis)
 {
-    if (cRoutineNode.Name() != kVSIIOElementKeywordRoutine)
+    if (cRoutineNode.Name() != kIOStringKeywordRoutine)
     {
         cAnalysis.AddErrorEvent("Lib Factory: InputTmlRoutine: Top-level node not a routine");
         return NULL;
@@ -110,14 +110,14 @@ RedVSILibRoutine* RedVSILibFactory::InputTmlRoutine(RedTinyMLNode& cRoutineNode,
     RedVSILibRoutine* newRoutine = new RedVSILibRoutine;
 
     // name
-    RedTinyMLLeaf* pName = RedTinyMLAction::NodeFirstNamedLeaf(cRoutineNode, kVSIIOElementKeywordName);
+    RedTinyMLLeaf* pName = RedTinyMLAction::NodeFirstNamedLeaf(cRoutineNode, kIOStringKeywordName);
     if (pName == NULL)
         cAnalysis.AddErrorEvent("Lib Factory: InputTmlRoutine: Routine has no name");
     else
         newRoutine->cName = pName->Data();
 
     // params
-    RedTinyMLNode* pParams = RedTinyMLAction::NodeFirstNamedNode(cRoutineNode, kVSIIOElementKeywordParams);
+    RedTinyMLNode* pParams = RedTinyMLAction::NodeFirstNamedNode(cRoutineNode, kIOStringKeywordParams);
     if (pParams != NULL)
     {
         RedTinyMLNode::TmlElementListItType paramIt = pParams->ElementListIterator();
@@ -132,10 +132,10 @@ RedVSILibRoutine* RedVSILibFactory::InputTmlRoutine(RedTinyMLNode& cRoutineNode,
                 RedDataString paramTypeStr(pLeaf->Data());
 
                 RedVSILangElement paramType;
-                if      (paramTypeStr == kVSIIOElementKeywordBool)   paramType = kLangElementTypeBool;
-                else if (paramTypeStr == kVSIIOElementKeywordChar)   paramType = kLangElementTypeChar;
-                else if (paramTypeStr == kVSIIOElementKeywordNumber) paramType = kLangElementTypeNumber;
-                else if (paramTypeStr == kVSIIOElementKeywordString) paramType = kLangElementTypeString;
+                if      (paramTypeStr == kIOStringKeywordBool)   paramType = kLangElementTypeBool;
+                else if (paramTypeStr == kIOStringKeywordChar)   paramType = kLangElementTypeChar;
+                else if (paramTypeStr == kIOStringKeywordNumber) paramType = kLangElementTypeNumber;
+                else if (paramTypeStr == kIOStringKeywordString) paramType = kLangElementTypeString;
 
                 newRoutine->AddParam(paramName, paramType);
             }
@@ -144,17 +144,15 @@ RedVSILibRoutine* RedVSILibFactory::InputTmlRoutine(RedTinyMLNode& cRoutineNode,
     }
 
     // code
-    RedTinyMLLeaf* pTmlCode = RedTinyMLAction::NodeFirstNamedLeaf(cRoutineNode, kVSIIOElementKeywordCode);
+    RedTinyMLLeaf* pTmlCode = RedTinyMLAction::NodeFirstNamedLeaf(cRoutineNode, kIOStringKeywordCode);
     if (pTmlCode == NULL)
         cAnalysis.AddErrorEvent("Lib Factory: InputTmlRoutine: Routine has no code");
     else
     {
         RedDataString c = pTmlCode->Data();
 
-        RedVSITokenBuffer cInputBuffer;
-        RedVSILibTokenMap tokenLib;
-
-        int iCreateResult = RedVSITokenFactory::CreateTokens(c, tokenLib.cVSILibTokenMap, cInputBuffer);
+        RedTokenBuffer cInputBuffer;
+        int iCreateResult = RedTokenFactory::CreateTokens(c, cInputBuffer);
 
         RedDataString debugText = cInputBuffer.DebugDump();
 
@@ -185,6 +183,8 @@ RedTinyMLElement* RedVSILibFactory::OutputTmlClass(const RedDataString& classnam
     // Find the class
     RedVSILibClass* pClass = pLib->FindClass(classname);
     if (pClass == NULL) return NULL;
+
+    RedTokenPredefMap* pTokenMap = RedTokenPredefMap::getInstance();
 
     // Create the class node
     RedTinyMLNode* pClassTml = new RedTinyMLNode("class");
@@ -218,28 +218,29 @@ RedTinyMLElement* RedVSILibFactory::OutputTmlClass(const RedDataString& classnam
             while (!paramIt.IsDone())
             {
                 RedDataString         paramName = paramIt.CurrentId();
-                RedVSILangElement paramType = paramIt.CurrentData();
-                RedVSIIOElement   paramTypeIoElem;
+                RedVSILangElement     paramType = paramIt.CurrentData();
+                RedTokenPredefType    paramTypeIoElem;
                 RedDataString         paramTypeStr;
-                if (paramType.IsTypeBool())    paramTypeIoElem = RedVSIIOElement::KeywordBool();
-                else if (paramType.IsTypeChar())    paramTypeIoElem = RedVSIIOElement::KeywordChar();
-                else if (paramType.IsTypeList())    paramTypeIoElem = RedVSIIOElement::KeywordList();
-                else if (paramType.IsTypeNumber())  paramTypeIoElem = RedVSIIOElement::KeywordNumber();
-                else if (paramType.IsTypeRecord())  paramTypeIoElem = RedVSIIOElement::KeywordRecord();
-                else if (paramType.IsTypeString())  paramTypeIoElem = RedVSIIOElement::KeywordString();
 
-                if (cLibMap.cVSILibTokenMap.FindString(paramTypeIoElem, paramTypeStr))
-                    pParamNode->CreateChildLeaf(paramName, paramTypeStr);
+                if      (paramType.IsTypeBool())    paramTypeIoElem = RedTokenPredefType::KeywordBool();
+                else if (paramType.IsTypeChar())    paramTypeIoElem = RedTokenPredefType::KeywordChar();
+                else if (paramType.IsTypeList())    paramTypeIoElem = RedTokenPredefType::KeywordList();
+                else if (paramType.IsTypeNumber())  paramTypeIoElem = RedTokenPredefType::KeywordNumber();
+                else if (paramType.IsTypeRecord())  paramTypeIoElem = RedTokenPredefType::KeywordRecord();
+                else if (paramType.IsTypeString())  paramTypeIoElem = RedTokenPredefType::KeywordString();
+
+                pTokenMap->FindStringFromPredef(paramTypeIoElem, paramTypeStr);
+                pParamNode->CreateChildLeaf(paramName, paramTypeStr);
 
                 paramIt.Next();
             }
         }
 
         // convert the code into tokens, and then to a string
-        RedVSITokenBuffer cTokenBuffer;
+        RedTokenBuffer cTokenBuffer;
         RedVSICmdSerialiser::SerialiseCommandChain(cTokenBuffer, pOutCode);
         RedBufferOutput outBuf;
-        RedVSICmdSerialiser::TokenBufferToOutputBuffer(cTokenBuffer, cLibMap.cVSILibTokenMap, outBuf);
+        RedVSICmdSerialiser::TokenBufferToOutputBuffer(cTokenBuffer, outBuf);
         pRoutine->CreateChildLeaf("code", outBuf.ExtractData());
 
         // Add the completed routine into the class
@@ -273,7 +274,7 @@ RedTinyMLElement* RedVSILibFactory::OutputTmlRoutine(const RedDataString& classn
             pCurrRtn->GetDetails(cOutName, cOutParamList, pOutCode);
 
             // convert the code into tokens
-            RedVSITokenBuffer cTokenBuffer;
+            RedTokenBuffer cTokenBuffer;
             RedVSICmdSerialiser::SerialiseCommandChain(cTokenBuffer, pOutCode);
 
             // turn code tokens into a string

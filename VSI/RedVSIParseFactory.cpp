@@ -24,28 +24,28 @@
 
 #include "RedVSIErrorCodes.h"
 
-#include "RedVSIToken.h"
+#include "RedToken.h"
 
 namespace Red {
 namespace VSI {
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-RedVSIParseTreeInterface* RedVSIParseFactory::ConstructAssignExpr(RedVSITokenBuffer& cInputBuffer, RedLog& log)
+RedVSIParseTreeInterface* RedVSIParseFactory::ConstructAssignExpr(RedTokenBuffer& cInputBuffer, RedLog& log)
 {
     return RedVSIParseFactory::RunExprAssignCompetition(cInputBuffer, log);
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-RedVSIParseTreeInterface* RedVSIParseFactory::ConstructStatementExpr(RedVSITokenBuffer& cInputBuffer, RedLog& log)
+RedVSIParseTreeInterface* RedVSIParseFactory::ConstructStatementExpr(RedTokenBuffer& cInputBuffer, RedLog& log)
 {
     return RedVSIParseFactory::RunCompareExprCompetition(cInputBuffer, log);
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-RedVSIParseTreeInterface* RedVSIParseFactory::ConstructValueExpr(RedVSITokenBuffer& cInputBuffer, RedLog& log)
+RedVSIParseTreeInterface* RedVSIParseFactory::ConstructValueExpr(RedTokenBuffer& cInputBuffer, RedLog& log)
 {
     return RedVSIParseFactory::RunSumExprCompetition(cInputBuffer, log);
 }
@@ -54,7 +54,7 @@ RedVSIParseTreeInterface* RedVSIParseFactory::ConstructValueExpr(RedVSITokenBuff
 // Private Operations
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-RedVSIParseTreeInterface* RedVSIParseFactory::RunExprAssignCompetition(RedVSITokenBuffer& cInputBuffer, RedLog& log)
+RedVSIParseTreeInterface* RedVSIParseFactory::RunExprAssignCompetition(RedTokenBuffer& cInputBuffer, RedLog& log)
 {
     // Top Element, returned to the caller
     RedVSIParseTreeInterface* pTopElem = 0;
@@ -74,7 +74,7 @@ RedVSIParseTreeInterface* RedVSIParseFactory::RunExprAssignCompetition(RedVSITok
     while ( (iOpFound) && (!log.ContainsError()) )
     {
         // Read the operator
-        RedVSIToken cOp = cInputBuffer.GetToken();
+        RedToken cOp = cInputBuffer.GetToken();
         if ( (cOp.Predef().IsAssignOpSymbol()) )
         {
             // Create the operator object
@@ -117,7 +117,7 @@ RedVSIParseTreeInterface* RedVSIParseFactory::RunExprAssignCompetition(RedVSITok
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-RedVSIParseTreeInterface* RedVSIParseFactory::RunCompareExprCompetition(RedVSITokenBuffer& cInputBuffer, RedLog& log)
+RedVSIParseTreeInterface* RedVSIParseFactory::RunCompareExprCompetition(RedTokenBuffer& cInputBuffer, RedLog& log)
 {
     // Top Element, returned to the caller
     RedVSIParseTreeInterface* pTopElem = 0;
@@ -137,7 +137,7 @@ RedVSIParseTreeInterface* RedVSIParseFactory::RunCompareExprCompetition(RedVSITo
     while ( (iOpFound) && (!log.ContainsError()) )
     {
         // Read the operator
-        RedVSIToken cOp = cInputBuffer.GetToken();
+        RedToken cOp = cInputBuffer.GetToken();
         if ( (cOp.Predef().IsCompareOpSymbol()) )
         {
             // Create the operator object
@@ -179,7 +179,7 @@ RedVSIParseTreeInterface* RedVSIParseFactory::RunCompareExprCompetition(RedVSITo
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-RedVSIParseTreeInterface* RedVSIParseFactory::RunLogicExprCompetition(RedVSITokenBuffer& cInputBuffer, RedLog& log)
+RedVSIParseTreeInterface* RedVSIParseFactory::RunLogicExprCompetition(RedTokenBuffer& cInputBuffer, RedLog& log)
 {
     // Top Element, returned to the caller
     RedVSIParseTreeInterface* pTopElem = 0;
@@ -199,7 +199,7 @@ RedVSIParseTreeInterface* RedVSIParseFactory::RunLogicExprCompetition(RedVSIToke
     while ( (iOpFound) && (!log.ContainsError()) )
     {
         // Read the operator
-        RedVSIToken cOp = cInputBuffer.GetToken();
+        RedToken cOp = cInputBuffer.GetToken();
         if ( (cOp.Predef().IsLogicOpSymbol()) )
         {
             // Create the operator object
@@ -239,7 +239,7 @@ RedVSIParseTreeInterface* RedVSIParseFactory::RunLogicExprCompetition(RedVSIToke
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-RedVSIParseTreeInterface* RedVSIParseFactory::RunSumExprCompetition(RedVSITokenBuffer& cInputBuffer, RedLog& log)
+RedVSIParseTreeInterface* RedVSIParseFactory::RunSumExprCompetition(RedTokenBuffer& cInputBuffer, RedLog& log)
 {
     // Top Element, returned to the caller
     RedVSIParseTreeInterface* pTopElem = NULL;
@@ -259,7 +259,7 @@ RedVSIParseTreeInterface* RedVSIParseFactory::RunSumExprCompetition(RedVSITokenB
     while ( (iOpFound) && (!log.ContainsError()) )
     {
         // Read the operator
-        RedVSIToken cOp = cInputBuffer.GetToken();
+        RedToken cOp = cInputBuffer.GetToken();
         if ( (cOp.Predef().IsSymbolOperatorPlus()) || (cOp.Predef().IsSymbolOperatorMinus()) )
         {
             // Create the operator object
@@ -299,7 +299,7 @@ RedVSIParseTreeInterface* RedVSIParseFactory::RunSumExprCompetition(RedVSITokenB
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-RedVSIParseTreeInterface* RedVSIParseFactory::RunMultiExprCompetition(RedVSITokenBuffer& cInputBuffer, RedLog& log)
+RedVSIParseTreeInterface* RedVSIParseFactory::RunMultiExprCompetition(RedTokenBuffer& cInputBuffer, RedLog& log)
 {
     // Top Element, returned to the caller
     RedVSIParseTreeInterface* pTopElem = 0;
@@ -319,7 +319,7 @@ RedVSIParseTreeInterface* RedVSIParseFactory::RunMultiExprCompetition(RedVSIToke
     while ( (iOpFound) && (!log.ContainsError()) )
     {
         // Read the operator
-        RedVSIToken cOp = cInputBuffer.GetToken();
+        RedToken cOp = cInputBuffer.GetToken();
         if ( (cOp.Predef().IsSymbolOperatorMultiply()) || (cOp.Predef().IsSymbolOperatorDivide()) )
         {
             // Create the operator object
@@ -361,7 +361,7 @@ RedVSIParseTreeInterface* RedVSIParseFactory::RunMultiExprCompetition(RedVSIToke
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-RedVSIParseTreeInterface* RedVSIParseFactory::RunPowExprCompetition(RedVSITokenBuffer& cInputBuffer, RedLog& log)
+RedVSIParseTreeInterface* RedVSIParseFactory::RunPowExprCompetition(RedTokenBuffer& cInputBuffer, RedLog& log)
 {
     // Top Element, returned to the caller
     RedVSIParseTreeInterface* pTopElem = 0;
@@ -381,7 +381,7 @@ RedVSIParseTreeInterface* RedVSIParseFactory::RunPowExprCompetition(RedVSITokenB
     while ( (iOpFound) && (!log.ContainsError()) )
     {
         // Read the operator
-        RedVSIToken cOp = cInputBuffer.GetToken();
+        RedToken cOp = cInputBuffer.GetToken();
         if ( cOp.Predef().IsSymbolOperatorPower() )
         {
             // Create the operator object
@@ -420,7 +420,7 @@ RedVSIParseTreeInterface* RedVSIParseFactory::RunPowExprCompetition(RedVSITokenB
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-RedVSIParseTreeInterface* RedVSIParseFactory::RunItemExprCompetition(RedVSITokenBuffer& cInputBuffer, RedLog& log)
+RedVSIParseTreeInterface* RedVSIParseFactory::RunItemExprCompetition(RedTokenBuffer& cInputBuffer, RedLog& log)
 {
     RedVSIParseTreeInterface* pEntry = NULL;
 
@@ -467,9 +467,9 @@ RedVSIParseTreeInterface* RedVSIParseFactory::RunItemExprCompetition(RedVSIToken
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-RedVSIParseTreeInterface* RedVSIParseFactory::RunSubExprCompetition(RedVSITokenBuffer& cInputBuffer, RedLog& log)
+RedVSIParseTreeInterface* RedVSIParseFactory::RunSubExprCompetition(RedTokenBuffer& cInputBuffer, RedLog& log)
 {
-    RedVSIToken cTok = cInputBuffer.GetToken();
+    RedToken cTok = cInputBuffer.GetToken();
 
     if (cTok.Predef().IsSymbolBracketOpen())
     {
@@ -497,16 +497,16 @@ RedVSIParseTreeInterface* RedVSIParseFactory::RunSubExprCompetition(RedVSITokenB
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-RedVSIParseTreeInterface* RedVSIParseFactory::RunValueCompetition(RedVSITokenBuffer& cInputBuffer, RedLog& log)
+RedVSIParseTreeInterface* RedVSIParseFactory::RunValueCompetition(RedTokenBuffer& cInputBuffer, RedLog& log)
 {
-    RedVSIToken cTok = cInputBuffer.GetToken();
+    RedToken cTok = cInputBuffer.GetToken();
   
     if (IsValueToken(cTok))
     {
         RedDataVariant cNodeVal;
         if      (cTok.Type().IsNumber())        cNodeVal = cTok.Number();
         else if (cTok.Type().IsStringLiteral()) cNodeVal = cTok.Text();
-        else if (cTok.Type().IsPredefined() && cTok.Predef().IsBoolKeyword())
+        else if (cTok.Predef().IsBoolKeyword())
         {
             if      (cTok.Predef().IsKeywordTrue())  cNodeVal = kBoolTRUE;
             else if (cTok.Predef().IsKeywordFalse()) cNodeVal = kBoolFALSE;
@@ -523,9 +523,9 @@ RedVSIParseTreeInterface* RedVSIParseFactory::RunValueCompetition(RedVSITokenBuf
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-RedVSIParseTreeInterface* RedVSIParseFactory::RunVariableCompetition(RedVSITokenBuffer& cInputBuffer, RedLog& log)
+RedVSIParseTreeInterface* RedVSIParseFactory::RunVariableCompetition(RedTokenBuffer& cInputBuffer, RedLog& log)
 {
-    RedVSIToken cTok = cInputBuffer.GetToken();
+    RedToken cTok = cInputBuffer.GetToken();
 
     if (IsVariableToken(cTok))
     {
@@ -567,13 +567,13 @@ RedVSIParseTreeInterface* RedVSIParseFactory::RunVariableCompetition(RedVSIToken
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-RedVSIParseTreeInterface* RedVSIParseFactory::RunExternalCallCompetition(RedVSITokenBuffer& cInputBuffer, RedLog& log)
+RedVSIParseTreeInterface* RedVSIParseFactory::RunExternalCallCompetition(RedTokenBuffer& cInputBuffer, RedLog& log)
 {
     // Check the four elements which start a function call
-    RedVSIToken cUnitNameTok    = cInputBuffer.GetToken();
-    RedVSIToken cSeparatorTok   = cInputBuffer.GetToken();
-    RedVSIToken cFuncTok        = cInputBuffer.GetToken();
-    RedVSIToken cOpenBracketTok = cInputBuffer.GetToken();
+    RedToken cUnitNameTok    = cInputBuffer.GetToken();
+    RedToken cSeparatorTok   = cInputBuffer.GetToken();
+    RedToken cFuncTok        = cInputBuffer.GetToken();
+    RedToken cOpenBracketTok = cInputBuffer.GetToken();
 
     if (!cUnitNameTok.Type().IsName())                   { return NULL; }
     if (!cFuncTok.Type().IsName())                       { return NULL; }
@@ -598,8 +598,8 @@ RedVSIParseTreeInterface* RedVSIParseFactory::RunExternalCallCompetition(RedVSIT
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
     // iterate to populate the call with parameters
-    RedVSIToken cParamTok;
-    RedVSIToken cCommaTok;
+    RedToken cParamTok;
+    RedToken cCommaTok;
     int         iParamsComplete = 0;
     
     while (!iParamsComplete)
@@ -645,11 +645,11 @@ RedVSIParseTreeInterface* RedVSIParseFactory::RunExternalCallCompetition(RedVSIT
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-RedVSIParseTreeInterface* RedVSIParseFactory::RunInternalCallCompetition(RedVSITokenBuffer& cInputBuffer, RedLog& log)
+RedVSIParseTreeInterface* RedVSIParseFactory::RunInternalCallCompetition(RedTokenBuffer& cInputBuffer, RedLog& log)
 {
     // Check the elements which start an internal function call
-    RedVSIToken cFuncTok        = cInputBuffer.GetToken();    
-    RedVSIToken cOpenBracketTok = cInputBuffer.GetToken();
+    RedToken cFuncTok        = cInputBuffer.GetToken();    
+    RedToken cOpenBracketTok = cInputBuffer.GetToken();
 
     if (!cFuncTok.Type().IsName())                       { return NULL; }
     if (!cOpenBracketTok.Predef().IsSymbolBracketOpen()) { return NULL; }
@@ -669,8 +669,8 @@ RedVSIParseTreeInterface* RedVSIParseFactory::RunInternalCallCompetition(RedVSIT
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
     // iterate to populate the call with parameters
-    RedVSIToken cParamTok;
-    RedVSIToken cCommaTok;
+    RedToken cParamTok;
+    RedToken cCommaTok;
     int    iParamsComplete = 0;    
     
     while (!iParamsComplete)
@@ -717,18 +717,18 @@ RedVSIParseTreeInterface* RedVSIParseFactory::RunInternalCallCompetition(RedVSIT
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-bool RedVSIParseFactory::IsValueToken(const RedVSIToken& cTok)
+bool RedVSIParseFactory::IsValueToken(const RedToken& cTok)
 {
-    if ( cTok.Type().IsNumber() )                                      return true;
-    if ( cTok.Type().IsStringLiteral() )                               return true;
-    if ( cTok.Type().IsPredefined() && cTok.Predef().IsBoolKeyword() ) return true;
+    if ( cTok.Type().IsNumber() )        return true;
+    if ( cTok.Type().IsStringLiteral() ) return true;
+    if ( cTok.Predef().IsBoolKeyword() ) return true;
     
     return false;
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-bool RedVSIParseFactory::IsVariableToken(const RedVSIToken& cTok) 
+bool RedVSIParseFactory::IsVariableToken(const RedToken& cTok) 
 {
     if ( cTok.Type().IsName() ) return true;
     

@@ -21,7 +21,7 @@
 #include "RedVSICmdSerialiser.h"
 #include "RedVSILangElement.h"
 #include "RedVSIParseSerialiser.h"
-#include "RedVSILibTokenMap.h"
+#include "RedTokenPredefMap.h"
 
 #include "RedVSICmdLet.h"
 #include "RedVSICmdNew.h"
@@ -36,9 +36,9 @@ namespace VSI {
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-void RedVSICmdSerialiser::SerialiseCommandChain(RedVSITokenBuffer& cTokenBuffer, RedVSICmd* pCmd)
+void RedVSICmdSerialiser::SerialiseCommandChain(RedTokenBuffer& cTokenBuffer, RedVSICmd* pCmd)
 {
-    RedVSIToken cCRLFTok;
+    RedToken cCRLFTok;
     cCRLFTok.SetWhitespace(RedDataString("\n"));
 
     // Loop until we run out of commands
@@ -62,33 +62,36 @@ void RedVSICmdSerialiser::SerialiseCommandChain(RedVSITokenBuffer& cTokenBuffer,
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-void RedVSICmdSerialiser::TokenBufferToOutputBuffer(RedVSITokenBuffer& cInTokenBuffer, RedVSITokenElementMap& tokenMap, RedBufferOutput& outBuffer)
+void RedVSICmdSerialiser::TokenBufferToOutputBuffer(RedTokenBuffer& cInTokenBuffer, RedBufferOutput& outBuffer)
 {
-    RedVSITokenBuffer::IteratorType cTokenIt = cInTokenBuffer.GetIterator();
+    RedTokenPredefMap* pTokenMap = RedTokenPredefMap::getInstance();
+
+    RedTokenBuffer::IteratorType cTokenIt = cInTokenBuffer.GetIterator();
     cTokenIt.First();
+
     while(!cTokenIt.IsDone())
     {
-        RedVSIToken CurrToken = cTokenIt.CurrentItem();
+        RedToken CurrToken = cTokenIt.CurrentItem();
 
         if (CurrToken.Type().IsName())
         {
-            outBuffer.Append( CurrToken.Text() );
-            outBuffer.Append( kTokenWhitespaceSpace.Text() );
+            outBuffer.Append(CurrToken.Text());
+            outBuffer.Append(" ");
         }
         else if (CurrToken.Type().IsNumber())
         {
-            outBuffer.Append( CurrToken.Number() );
-            outBuffer.Append( kTokenWhitespaceSpace.Text() );
+            outBuffer.Append(CurrToken.Number());
+            outBuffer.Append(" ");
         }
-        else if (CurrToken.Type().IsPredefined())
+        else if (CurrToken.Predef().IsValid())
         {
-            RedVSIIOElement ioElem = CurrToken.Predef();
+            RedTokenPredefType ioElem = CurrToken.Predef();
             RedDataString       ioStr;
 
-            if (tokenMap.FindString(ioElem, ioStr))
+            if (pTokenMap->FindStringFromPredef(ioElem, ioStr))
                 outBuffer.Append(ioStr);
 
-            outBuffer.Append( kTokenWhitespaceSpace.Text() );
+            outBuffer.Append(" ");
         }
         else if (CurrToken.Type().IsWhitespace())
         {
@@ -101,7 +104,7 @@ void RedVSICmdSerialiser::TokenBufferToOutputBuffer(RedVSITokenBuffer& cInTokenB
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-void RedVSICmdSerialiser::SerialiseIfCmd(RedVSITokenBuffer& cTokenBuffer, RedVSICmdIf* pCmd)
+void RedVSICmdSerialiser::SerialiseIfCmd(RedTokenBuffer& cTokenBuffer, RedVSICmdIf* pCmd)
 {
     RedVSIParseTreeInterface* pIfExpr;
     RedVSICmd*       pPosBranch;
@@ -109,7 +112,7 @@ void RedVSICmdSerialiser::SerialiseIfCmd(RedVSITokenBuffer& cTokenBuffer, RedVSI
     pCmd->GetDetails(pIfExpr, pPosBranch, pNegBranch);
 
     // write the IF command keyword
-    RedVSIToken cCmdTok(RedVSIIOElement::KeywordIf());
+    RedToken cCmdTok(RedTokenPredefType::KeywordIf());
     cTokenBuffer.AppendToken(cCmdTok);
 
     // Serialise positive branch
@@ -117,7 +120,7 @@ void RedVSICmdSerialiser::SerialiseIfCmd(RedVSITokenBuffer& cTokenBuffer, RedVSI
         RedVSICmdSerialiser::SerialiseCommandChain(cTokenBuffer, pPosBranch);
 
     // Write the ELSE command keyword
-    RedVSIToken cElseCmdTok(RedVSIIOElement::KeywordElse());
+    RedToken cElseCmdTok(RedTokenPredefType::KeywordElse());
     cTokenBuffer.AppendToken(cElseCmdTok);
 
     // Serialise negative branch
@@ -125,13 +128,13 @@ void RedVSICmdSerialiser::SerialiseIfCmd(RedVSITokenBuffer& cTokenBuffer, RedVSI
         RedVSICmdSerialiser::SerialiseCommandChain(cTokenBuffer, pNegBranch);
 
     // Write the ENDIF command keyword
-    RedVSIToken cEndCmdTok(RedVSIIOElement::KeywordEndif());
+    RedToken cEndCmdTok(RedTokenPredefType::KeywordEndif());
     cTokenBuffer.AppendToken(cEndCmdTok);
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-void RedVSICmdSerialiser::SerialiseLetCmd(RedVSITokenBuffer& cTokenBuffer, RedVSICmdLet* pCmd)
+void RedVSICmdSerialiser::SerialiseLetCmd(RedTokenBuffer& cTokenBuffer, RedVSICmdLet* pCmd)
 {
     RedVSIParseTreeInterface* pOutExpr;
     pCmd->GetDetails(pOutExpr);
@@ -142,13 +145,13 @@ void RedVSICmdSerialiser::SerialiseLetCmd(RedVSITokenBuffer& cTokenBuffer, RedVS
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-void RedVSICmdSerialiser::SerialiseLogCmd(RedVSITokenBuffer& cTokenBuffer, RedVSICmdLog* pCmd)
+void RedVSICmdSerialiser::SerialiseLogCmd(RedTokenBuffer& cTokenBuffer, RedVSICmdLog* pCmd)
 {
     RedVSIParseTreeInterface* pOutExpr;
     pCmd->GetDetails(pOutExpr);
 
     // Write the command keyword
-    RedVSIToken cCmdTok(RedVSIIOElement::KeywordLog());
+    RedToken cCmdTok(RedTokenPredefType::KeywordLog());
     cTokenBuffer.AppendToken(cCmdTok);
 
     // Serialise the expression
@@ -156,7 +159,7 @@ void RedVSICmdSerialiser::SerialiseLogCmd(RedVSITokenBuffer& cTokenBuffer, RedVS
 }
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-void RedVSICmdSerialiser::SerialiseNewCmd(RedVSITokenBuffer& cTokenBuffer, RedVSICmdNew* pCmd)
+void RedVSICmdSerialiser::SerialiseNewCmd(RedTokenBuffer& cTokenBuffer, RedVSICmdNew* pCmd)
 {
     RedVSILangElement          cOutType;
     RedVSILangElement          cOutLoc;
@@ -168,44 +171,44 @@ void RedVSICmdSerialiser::SerialiseNewCmd(RedVSITokenBuffer& cTokenBuffer, RedVS
     pCmd->GetDetails(cOutType, cOutLoc, cOutName, pOutRecordIndexExpr, pOutInitExpr);
 
     // Write the command keyword
-    RedVSIToken cCmdTok(RedVSIIOElement::KeywordNew());
+    RedToken cCmdTok(RedTokenPredefType::KeywordNew());
     cTokenBuffer.AppendToken(cCmdTok);
 
-    RedVSIToken cLocTok;
-    if      (cOutLoc.IsLocationAttribute()) cLocTok.SetPredefined(RedVSIIOElement::KeywordAttribute());
-    else if (cOutLoc.IsLocationHeap())      cLocTok.SetPredefined(RedVSIIOElement::KeywordHeap());
-    else if (cOutLoc.IsLocationStack())     cLocTok.SetPredefined(RedVSIIOElement::KeywordStack());
+    RedToken cLocTok;
+    if      (cOutLoc.IsLocationAttribute()) cLocTok.SetPredefined(RedTokenPredefType::KeywordAttribute());
+    else if (cOutLoc.IsLocationHeap())      cLocTok.SetPredefined(RedTokenPredefType::KeywordHeap());
+    else if (cOutLoc.IsLocationStack())     cLocTok.SetPredefined(RedTokenPredefType::KeywordStack());
     cTokenBuffer.AppendToken(cLocTok);
 
-    RedVSIToken cTypeTok;
-    if      (cOutType.IsTypeBool())         cTypeTok.SetPredefined(RedVSIIOElement::KeywordBool());
-    else if (cOutType.IsTypeChar())         cTypeTok.SetPredefined(RedVSIIOElement::KeywordChar());
-    else if (cOutType.IsTypeList())         cTypeTok.SetPredefined(RedVSIIOElement::KeywordList());
-    else if (cOutType.IsTypeNumber())       cTypeTok.SetPredefined(RedVSIIOElement::KeywordNumber());
-    else if (cOutType.IsTypeRecord())       cTypeTok.SetPredefined(RedVSIIOElement::KeywordRecord());
-    else if (cOutType.IsTypeString())       cTypeTok.SetPredefined(RedVSIIOElement::KeywordString());
+    RedToken cTypeTok;
+    if      (cOutType.IsTypeBool())         cTypeTok.SetPredefined(RedTokenPredefType::KeywordBool());
+    else if (cOutType.IsTypeChar())         cTypeTok.SetPredefined(RedTokenPredefType::KeywordChar());
+    else if (cOutType.IsTypeList())         cTypeTok.SetPredefined(RedTokenPredefType::KeywordList());
+    else if (cOutType.IsTypeNumber())       cTypeTok.SetPredefined(RedTokenPredefType::KeywordNumber());
+    else if (cOutType.IsTypeRecord())       cTypeTok.SetPredefined(RedTokenPredefType::KeywordRecord());
+    else if (cOutType.IsTypeString())       cTypeTok.SetPredefined(RedTokenPredefType::KeywordString());
     cTokenBuffer.AppendToken(cTypeTok);
 
-    RedVSIToken cNameTok;
+    RedToken cNameTok;
     cNameTok.SetName(cOutName);
     cTokenBuffer.AppendToken(cNameTok);
 
     // Serialise the record indexing expression
     if (cOutLoc.IsLocationAttribute())
     {
-        RedVSIToken cOpenBracket(RedVSIIOElement::SymbolBracketOpenSquare());
+        RedToken cOpenBracket(RedTokenPredefType::SymbolBracketOpenSquare());
         cTokenBuffer.AppendToken(cOpenBracket);
 
         RedVSIParseSerialiser::SerialiseExpression(cTokenBuffer, pOutRecordIndexExpr);
 
-        RedVSIToken cCloseBracket(RedVSIIOElement::SymbolBracketCloseSquare());
+        RedToken cCloseBracket(RedTokenPredefType::SymbolBracketCloseSquare());
         cTokenBuffer.AppendToken(cCloseBracket);
     }
 
     // Serialise the expression
     if (pOutInitExpr != NULL)
     {
-        RedVSIToken cEqualTok(RedVSIIOElement::SymbolAssignEqual());
+        RedToken cEqualTok(RedTokenPredefType::SymbolAssignEqual());
         cTokenBuffer.AppendToken(cEqualTok);
 
         RedVSIParseSerialiser::SerialiseExpression(cTokenBuffer, pOutInitExpr);
@@ -214,14 +217,14 @@ void RedVSICmdSerialiser::SerialiseNewCmd(RedVSITokenBuffer& cTokenBuffer, RedVS
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-void RedVSICmdSerialiser::SerialiseReturnCmd(RedVSITokenBuffer& cTokenBuffer, RedVSICmdReturn* pCmd)
+void RedVSICmdSerialiser::SerialiseReturnCmd(RedTokenBuffer& cTokenBuffer, RedVSICmdReturn* pCmd)
 {
     RedVSIParseTreeInterface* pReturnExpr;
     pCmd->GetDetails(pReturnExpr);
         
     // write the command keyword
-    RedVSIToken cCmdTok;
-    cCmdTok.SetPredefined(RedVSIIOElement::KeywordReturn());
+    RedToken cCmdTok;
+    cCmdTok.SetPredefined(RedTokenPredefType::KeywordReturn());
     cTokenBuffer.AppendToken(cCmdTok);
 
     // serialise the expression
@@ -231,21 +234,21 @@ void RedVSICmdSerialiser::SerialiseReturnCmd(RedVSITokenBuffer& cTokenBuffer, Re
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-void RedVSICmdSerialiser::SerialiseWhileCmd(RedVSITokenBuffer& cTokenBuffer, RedVSICmdWhile* pCmd)
+void RedVSICmdSerialiser::SerialiseWhileCmd(RedTokenBuffer& cTokenBuffer, RedVSICmdWhile* pCmd)
 {
     RedVSIParseTreeInterface* pConditionExpr;
     RedVSICmd*       pLoopBranch;
     pCmd->GetDetails(pConditionExpr, pLoopBranch);
 
     // Write the WHILE command keyword
-    RedVSIToken cCmdTok(RedVSIIOElement::KeywordWhile());
+    RedToken cCmdTok(RedTokenPredefType::KeywordWhile());
     cTokenBuffer.AppendToken(cCmdTok);
 
     if (pConditionExpr)
         RedVSIParseSerialiser::SerialiseExpression(cTokenBuffer, pConditionExpr);
 
     // Write the LOOP command keyword
-    RedVSIToken cLoopCmdTok(RedVSIIOElement::KeywordLoop());
+    RedToken cLoopCmdTok(RedTokenPredefType::KeywordLoop());
     cTokenBuffer.AppendToken(cLoopCmdTok);
 
     // Serialise the loop branch
@@ -253,7 +256,7 @@ void RedVSICmdSerialiser::SerialiseWhileCmd(RedVSITokenBuffer& cTokenBuffer, Red
         RedVSICmdSerialiser::SerialiseCommandChain(cTokenBuffer, pLoopBranch);
 
     // Write the ENDLOOP command keyword
-    RedVSIToken cEndLoopCmdTok(RedVSIIOElement::KeywordEndloop());
+    RedToken cEndLoopCmdTok(RedTokenPredefType::KeywordEndloop());
     cTokenBuffer.AppendToken(cEndLoopCmdTok);
 }
 

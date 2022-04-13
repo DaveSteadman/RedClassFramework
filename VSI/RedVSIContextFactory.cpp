@@ -18,8 +18,7 @@
 
 #include "RedVSIContextFactory.h"
 //
-#include "RedVSILibTokenMap.h"
-#include "RedVSITokenFactory.h"
+#include "RedTokenFactory.h"
 #include "RedVSILibRoutine.h"
 #include "RedVSICmdFactory.h"
 
@@ -32,8 +31,8 @@ RedResult RedVSIContextFactory::CreateContext(RedVSIContextRoutine** OutputConte
 {
     // Turn the code into tokens
     //RedVSILibTokenMap cTokenMap;
-    //RedVSITokenBuffer cTokenList;
-    //if (!RedVSITokenFactory::CreateTokens(InputCodeFragment, cTokenMap.cVSILibTokenMap, cTokenList))
+    //RedTokenBuffer cTokenList;
+    //if (!RedTokenFactory::CreateTokens(InputCodeFragment, cTokenMap.cVSILibTokenMap, cTokenList))
     //    return kResultFail;
 
     /// Turn the tokens into code
@@ -56,9 +55,8 @@ RedResult RedVSIContextFactory::CreateContext(RedVSIContextRoutine** OutputConte
 RedResult RedVSIContextFactory::LoadFragmentIntoContext(const RedDataString& InputCodeFragment, RedVSIContextRoutine& UpdateContext)
 {
     // Turn the code into tokens
-    RedVSILibTokenMap cTokenMap;
-    RedVSITokenBuffer cTokenList;
-    if (!RedVSITokenFactory::CreateTokens(InputCodeFragment, cTokenMap.cVSILibTokenMap, cTokenList))
+    RedTokenBuffer cTokenList;
+    if (!RedTokenFactory::CreateTokens(InputCodeFragment, cTokenList))
         return kResultFail;
 
     RedLog* pLog = UpdateContext.Log();

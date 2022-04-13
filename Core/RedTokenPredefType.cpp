@@ -16,21 +16,21 @@
 // (http://opensource.org/licenses/MIT)
 // -------------------------------------------------------------------------------------------------
 
-#include "RedVSIIOElement.h"
+#include "RedTokenPredefType.h"
 
 namespace Red {
-namespace VSI {
+namespace Core {
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-void RedVSIIOElement::Init(void) 
+void RedTokenPredefType::Init(void) 
 {
     eType = eDefaultInvalid; 
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-bool RedVSIIOElement::IsLocationKeyword(void) const
+bool RedTokenPredefType::IsLocationKeyword(void) const
 {
     if (IsKeywordAttribute()) return true;
     if (IsKeywordStack())     return true;
@@ -41,7 +41,7 @@ bool RedVSIIOElement::IsLocationKeyword(void) const
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-bool RedVSIIOElement::IsTypeKeyword(void) const
+bool RedTokenPredefType::IsTypeKeyword(void) const
 {
     if (IsKeywordBool())   return true;
     if (IsKeywordChar())   return true;
@@ -55,7 +55,7 @@ bool RedVSIIOElement::IsTypeKeyword(void) const
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-bool RedVSIIOElement::IsCommandKeyword(void) const
+bool RedTokenPredefType::IsCommandKeyword(void) const
 {  
     if (IsKeywordNew())     return true;
     if (IsKeywordLet())     return true;
@@ -73,7 +73,7 @@ bool RedVSIIOElement::IsCommandKeyword(void) const
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-bool RedVSIIOElement::IsBoolKeyword(void) const
+bool RedTokenPredefType::IsBoolKeyword(void) const
 {
     if (IsKeywordTrue())  return true;
     if (IsKeywordFalse()) return true;
@@ -83,7 +83,7 @@ bool RedVSIIOElement::IsBoolKeyword(void) const
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-bool RedVSIIOElement::IsLibraryKeyword(void) const
+bool RedTokenPredefType::IsLibraryKeyword(void) const
 {
     if (IsKeywordName())    return true;
     if (IsKeywordClass())   return true;
@@ -96,7 +96,7 @@ bool RedVSIIOElement::IsLibraryKeyword(void) const
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-bool RedVSIIOElement::IsShellAreaKeyword(void) const
+bool RedTokenPredefType::IsShellAreaKeyword(void) const
 {
     if (IsKeywordShellData()) return true;
     if (IsKeywordShellLib())  return true;
@@ -109,7 +109,7 @@ bool RedVSIIOElement::IsShellAreaKeyword(void) const
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-bool RedVSIIOElement::IsShellActionKeyword(void) const
+bool RedTokenPredefType::IsShellActionKeyword(void) const
 {
     if (IsKeywordShellAdd())  return true;
     if (IsKeywordShellInit()) return true;
@@ -120,7 +120,7 @@ bool RedVSIIOElement::IsShellActionKeyword(void) const
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-bool RedVSIIOElement::IsOperatorSymbol(void) const
+bool RedTokenPredefType::IsOperatorSymbol(void) const
 {
     if (IsAssignOpSymbol())      return true;
     if (IsLogicOpSymbol())       return true;
@@ -132,7 +132,7 @@ bool RedVSIIOElement::IsOperatorSymbol(void) const
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-bool RedVSIIOElement::IsAssignOpSymbol(void) const
+bool RedTokenPredefType::IsAssignOpSymbol(void) const
 {
     if (IsSymbolAssignDivide())   return true;
     if (IsSymbolAssignEqual())    return true;
@@ -145,7 +145,7 @@ bool RedVSIIOElement::IsAssignOpSymbol(void) const
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-bool RedVSIIOElement::IsLogicOpSymbol(void) const
+bool RedTokenPredefType::IsLogicOpSymbol(void) const
 {
     if (IsSymbolLogicAnd()) return true;
     if (IsSymbolLogicOr())  return true;
@@ -156,7 +156,7 @@ bool RedVSIIOElement::IsLogicOpSymbol(void) const
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-bool RedVSIIOElement::IsBinaryLogicOpSymbol(void) const
+bool RedTokenPredefType::IsBinaryLogicOpSymbol(void) const
 {
     if (IsSymbolLogicAnd()) return true;
     if (IsSymbolLogicOr())  return true;
@@ -165,7 +165,7 @@ bool RedVSIIOElement::IsBinaryLogicOpSymbol(void) const
 }
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-bool RedVSIIOElement::IsCompareOpSymbol(void) const
+bool RedTokenPredefType::IsCompareOpSymbol(void) const
 {
     if (IsSymbolCompareEqual())       return true;
     if (IsSymbolCompareNotEqual())    return true;
@@ -177,7 +177,7 @@ bool RedVSIIOElement::IsCompareOpSymbol(void) const
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-bool RedVSIIOElement::IsBinaryOpSymbol(void) const
+bool RedTokenPredefType::IsBinaryOpSymbol(void) const
 {
     if (IsSymbolAssignDivide())       return true;
     if (IsSymbolAssignEqual())        return true;
@@ -198,7 +198,7 @@ bool RedVSIIOElement::IsBinaryOpSymbol(void) const
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-bool RedVSIIOElement::IsSeparatorSymbol(void) const
+bool RedTokenPredefType::IsSeparatorSymbol(void) const
 {
     if (IsSymbolStringContent()) return true;
     if (IsSymbolBracketOpen())   return true;
@@ -212,7 +212,7 @@ bool RedVSIIOElement::IsSeparatorSymbol(void) const
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-bool operator==(const RedVSIIOElement& lhs, const RedVSIIOElement& rhs)
+bool operator==(const RedTokenPredefType& lhs, const RedTokenPredefType& rhs)
 {
     if (lhs.iElem() == rhs.iElem())
         return true;
@@ -221,7 +221,7 @@ bool operator==(const RedVSIIOElement& lhs, const RedVSIIOElement& rhs)
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-bool operator!=(const RedVSIIOElement& lhs, const RedVSIIOElement& rhs)
+bool operator!=(const RedTokenPredefType& lhs, const RedTokenPredefType& rhs)
 {
     if (lhs.iElem() != rhs.iElem())
         return true;
@@ -230,5 +230,5 @@ bool operator!=(const RedVSIIOElement& lhs, const RedVSIIOElement& rhs)
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-} // VSI
+} // Core
 } // Red

@@ -48,6 +48,9 @@ private:
     static RedResult TestEventLog(void);
     static RedResult TestResult(void);
 
+    // Parsing
+    static RedResult TestTokens(void);
+
     // Time
     static RedResult TestDate(void);
     static RedResult TestTime(void);

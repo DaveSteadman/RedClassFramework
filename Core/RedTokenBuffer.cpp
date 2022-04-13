@@ -16,54 +16,78 @@
 // (http://opensource.org/licenses/MIT)
 // -------------------------------------------------------------------------------------------------
 
-#pragma once
-
-#include "RedCoreNamespace.h"
-#include "RedVSIToken.h"
-
-using namespace Red::Core;
+#include "RedTokenBuffer.h"
 
 namespace Red {
-namespace VSI {
+namespace Core {
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-class RedVSITokenBuffer
+void RedTokenBuffer::Init(void)
 {
-public:
-
-    typedef RedDoubleLinkedList<RedVSIToken>          ListType;
-    typedef RedDoubleLinkedListIterator<RedVSIToken>  IteratorType;
-
-    RedVSITokenBuffer(void) { Init(); };
-
-    void    Init(void);
-    
-    void    AppendToken(const RedVSIToken& cNewTok);
-
-    IteratorType GetIterator(void)    { IteratorType cIt(&cTokenList); return cIt; };
-
-    // all depricated on creation of iterator
-    RedVSIToken GetToken(void);
-    RedVSIToken GetToken(const unsigned iTokenIndex);
-
-    void        SetTokenIndex(const unsigned iTokenIndex) { iCurrListIndex = iTokenIndex; };
-    unsigned    GetTokenIndex(void)        { return iCurrListIndex; };
-    void        SetTokenIndexBackOne(void) { if (iCurrListIndex>0) iCurrListIndex--; };
-
-    bool        CurrIndexAtLastToken(void) { return (iCurrListIndex == cTokenList.NumItems()); };
-
-    unsigned    NumTokens(void) { return cTokenList.NumItems(); };
-
-    RedDataString   DebugDump(void);
-
-private:
-
-    ListType      cTokenList;
-    unsigned      iCurrListIndex;
-};
+    cTokenList.DelAll();
+    iCurrListIndex = cTokenList.FirstIndex();
+}
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-} // VSI
+void RedTokenBuffer::AppendToken(const RedToken& cNewTok)
+{
+    cTokenList.AddLast(cNewTok);
+    iCurrListIndex = cTokenList.FirstIndex();
+}
+
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+RedToken RedTokenBuffer::GetToken(void)
+{
+    RedToken         cCurrTok;
+    RedToken         cRetTok;
+
+    // check we can get the token
+    if (cTokenList.FindElementAtIndex(iCurrListIndex, cRetTok))
+        iCurrListIndex++;
+    else
+        cRetTok.SetNonPrintable(RedDataChar('\0'));
+
+    return cRetTok;
+}
+
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+RedToken RedTokenBuffer::GetToken(const unsigned iTokenIndex)
+{
+    RedToken cRetTok;
+
+    // check we can get the token
+    if (!cTokenList.FindElementAtIndex(iTokenIndex, cRetTok))
+        cRetTok.Init();
+
+    return cRetTok;
+}
+
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+RedDataString RedTokenBuffer::DebugDump(void)
+{
+    RedDataString RetStr;
+
+    IteratorType cIt = GetIterator();
+    cIt.First();
+
+    while (!cIt.IsDone())
+    {
+        RedToken currToken = cIt.CurrentItem();
+        RetStr += currToken.DebugText();
+        cIt.Next();
+    }
+
+    return RetStr;
+}
+
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+} // Core
 } // Red
+
+

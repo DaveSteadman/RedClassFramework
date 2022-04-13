@@ -16,37 +16,37 @@
 // (http://opensource.org/licenses/MIT)
 // -------------------------------------------------------------------------------------------------
 
-#include "RedVSITokenFactory.h"
+#include "RedCoreNamespace.h"
 
 using namespace Red::Core;
 
 namespace Red {
-namespace VSI {
+namespace Core {
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-bool RedVSITokenFactory::CreateTokens(const RedDataString& cInputText, RedVSITokenElementMap& cTokenMap, RedVSITokenBuffer& cOutputTokenList)
+bool RedTokenFactory::CreateTokens(const RedDataString& cInputText, RedTokenBuffer& cOutputTokenList)
 {
     cOutputTokenList.Init();
     RedBufferInput cCodeBuffer(cInputText);
 
-    bool Result = CreateTokens(cCodeBuffer, cTokenMap, cOutputTokenList);
+    bool Result = CreateTokens(cCodeBuffer, cOutputTokenList);
     
     return Result;
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-bool RedVSITokenFactory::CreateTokens(RedBufferInput& cInputBuffer, RedVSITokenElementMap& cTokenMap, RedVSITokenBuffer& cOutputTokenList)
+bool RedTokenFactory::CreateTokens(RedBufferInput& cInputBuffer, RedTokenBuffer& cOutputTokenList)
 {
     cOutputTokenList.Init();
     cInputBuffer.SetStartPos();
-    RedVSIToken cNewTok;
+    RedToken cNewTok;
 
     // Loop, creating tokens, until we run out of text (or get an error).
     do {
         // read the token data
-        RunTokenComp(cInputBuffer, cTokenMap, cNewTok);
+        RunTokenComp(cInputBuffer, cNewTok);
         
         // create the new token, so long as its valid
         if ( (cNewTok.IsValid()) && (!cNewTok.IsEOF()) )
@@ -68,7 +68,7 @@ bool RedVSITokenFactory::CreateTokens(RedBufferInput& cInputBuffer, RedVSITokenE
 // Private Routines
 // ============================================================================
 
-RedResult RedVSITokenFactory::RunTokenComp(RedBufferInput& cInputBuffer, RedVSITokenElementMap& cTokenMap, RedVSIToken& cNewTok)
+RedResult RedTokenFactory::RunTokenComp(RedBufferInput& cInputBuffer, RedToken& cNewTok)
 {
     // initialise the outputs
     cNewTok.Init();
@@ -98,9 +98,10 @@ RedResult RedVSITokenFactory::RunTokenComp(RedBufferInput& cInputBuffer, RedVSIT
         switch(iCompetitionEntry)
         {
         case 1: RedResult = NumberComp(cInputBuffer, cNewTok);                break;
-        case 2: RedResult = NameComp(cInputBuffer, cNewTok);                  break;
-        case 3: RedResult = StringLiteralComp(cInputBuffer, cNewTok);         break;
-        case 4: RedResult = NonPrintableComp(cInputBuffer, cNewTok);          break;
+        case 2: RedResult = SymbolComp(cInputBuffer, cNewTok);                break;
+        case 3: RedResult = NameComp(cInputBuffer, cNewTok);                  break;
+        case 4: RedResult = StringLiteralComp(cInputBuffer, cNewTok);         break;
+        case 5: RedResult = NonPrintableComp(cInputBuffer, cNewTok);          break;
         default:
             // Run out of entries in competition. 
             bLoopValid = false;
@@ -114,10 +115,12 @@ RedResult RedVSITokenFactory::RunTokenComp(RedBufferInput& cInputBuffer, RedVSIT
     }
 
     // Update the token to a predefined version if available.
-    if (cNewTok.Type().IsPotentiallyPredef())
+    if (cNewTok.IsPotentiallyPredef())
     {
-        RedVSIIOElement cPredefElem;
-        if (cTokenMap.Find(cNewTok.Text(), cPredefElem))
+        RedTokenPredefType cPredefElem;
+        RedTokenPredefMap* pTokenMap = RedTokenPredefMap::getInstance();
+
+        if (pTokenMap->FindPredefFromString(cNewTok.Text(), cPredefElem))
             cNewTok.SetPredefined(cPredefElem);
     }
 
@@ -127,7 +130,7 @@ RedResult RedVSITokenFactory::RunTokenComp(RedBufferInput& cInputBuffer, RedVSIT
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-RedResult RedVSITokenFactory::NumberComp(RedBufferInput& cInputBuffer, RedVSIToken& cNewTok)
+RedResult RedTokenFactory::NumberComp(RedBufferInput& cInputBuffer, RedToken& cNewTok)
 {
     bool          iProcessingComplete = false;
     bool          iDecimalPointUsed   = false;
@@ -166,8 +169,7 @@ RedResult RedVSITokenFactory::NumberComp(RedBufferInput& cInputBuffer, RedVSITok
 
         // We have a number token, so convert the input string to a numeric
         // value.
-        cNewTok.StoreStringInput(cTokenText);
-        cNewTok.SetNumber(RedDataNumber(cTokenText));
+        cNewTok.SetNumber(cTokenText, RedDataNumber(cTokenText));
         return RedResult::Success();
     }
     else
@@ -178,7 +180,7 @@ RedResult RedVSITokenFactory::NumberComp(RedBufferInput& cInputBuffer, RedVSITok
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-RedResult RedVSITokenFactory::StringLiteralComp(RedBufferInput& cInputBuffer, RedVSIToken& cNewTok)
+RedResult RedTokenFactory::StringLiteralComp(RedBufferInput& cInputBuffer, RedToken& cNewTok)
 {
     RedDataChar   cPreviewChar;
     RedDataChar   cNewChar;
@@ -231,7 +233,7 @@ RedResult RedVSITokenFactory::StringLiteralComp(RedBufferInput& cInputBuffer, Re
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-RedResult RedVSITokenFactory::NonPrintableComp(RedBufferInput& cInputBuffer, RedVSIToken& cNewTok)
+RedResult RedTokenFactory::NonPrintableComp(RedBufferInput& cInputBuffer, RedToken& cNewTok)
 {
     RedDataChar   cPreviewChar;
     RedDataChar   cNewChar;
@@ -250,15 +252,15 @@ RedResult RedVSITokenFactory::NonPrintableComp(RedBufferInput& cInputBuffer, Red
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-RedResult RedVSITokenFactory::NameComp(RedBufferInput& cInputBuffer, RedVSIToken& cNewTok)
+RedResult RedTokenFactory::NameComp(RedBufferInput& cInputBuffer, RedToken& cNewTok)
 {
     RedDataChar       cPreviewChar;
     RedDataChar       cNewChar;
     RedDataString     cPreviewStr;
     RedDataString     cValidStr;
     
-    RedVSIIOElement  cElem;
-    RedVSIIOElement  cFinalElem;
+    RedTokenPredefType  cElem;
+    RedTokenPredefType  cFinalElem;
 
     // If the first character isn't a letter, return false.
     cPreviewChar = cInputBuffer.PreviewNextChar();
@@ -277,15 +279,15 @@ RedResult RedVSITokenFactory::NameComp(RedBufferInput& cInputBuffer, RedVSIToken
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-RedResult RedVSITokenFactory::SymbolComp(RedBufferInput& cInputBuffer, RedVSIToken& cNewTok)
+RedResult RedTokenFactory::SymbolComp(RedBufferInput& cInputBuffer, RedToken& cNewTok)
 {
     RedDataChar       cPreviewChar;
     RedDataChar       cNewChar;
     RedDataString     cPreviewStr;
     RedDataString     cValidStr;
 
-    RedVSIIOElement  cElem;
-    RedVSIIOElement  cFinalElem;
+    RedTokenPredefType  cElem;
+    RedTokenPredefType  cFinalElem;
 
     // If the first character isn't a symbol, return false.
     cPreviewChar = cInputBuffer.PreviewNextChar();
@@ -305,7 +307,7 @@ RedResult RedVSITokenFactory::SymbolComp(RedBufferInput& cInputBuffer, RedVSITok
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-} // VSI
+} // Core
 } // Red
 
 

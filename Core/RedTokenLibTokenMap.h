@@ -19,7 +19,7 @@
 #pragma once
 
 #include "RedCoreNamespace.h"
-#include "RedVSIIOElement.h"
+#include "RedTokenElementMap.h"
 
 using namespace Red::Core;
 
@@ -28,32 +28,24 @@ namespace VSI {
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-class RedVSITokenElementMap
+class RedVSILibTokenMap
 {
 public:
 
-    RedVSITokenElementMap(void);
-    ~RedVSITokenElementMap(void);
+    RedVSILibTokenMap(void) { SetupTokenMap(); };
 
-    void      Add(const RedDataString& cStr, const RedVSIIOElement& cElem);
+    void SetupTokenMap(void);
 
-    bool      Find(RedDataString cCheckStr, RedVSIIOElement cElem);
-    bool      FindString(RedVSIIOElement& cCheckElem, RedDataString& cStr);
-
-    unsigned  CountMatchCandidates(RedDataString& cCheckStr);
-
-    unsigned  NumItems(void) const { return cMap.NumItems(); };
-    bool      IsEmpty(void)  const { return cMap.IsEmpty();  };
-
-private:
-
-    typedef RedMapList<RedDataString, RedVSIIOElement>         MapListType;
-    typedef RedMapListIterator<RedDataString, RedVSIIOElement> MapListItType;
-
-    MapListType cMap;
+    RedTokenElementMap cVSILibTokenMap;
 };
+
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+
+
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 } // VSI
 } // Red
+

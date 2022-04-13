@@ -14,9 +14,11 @@
 //      - Test reading tokens.
 //      - Check the memory leaks when exiting a read-token routine.
 // 
-//      - Elevate the token from RedVSIToken to RedToken, to cover all the uses (TinyML etc).
+//      - Elevate the token from RedToken to RedToken, to cover all the uses (TinyML etc).
 //      - Reads everything as its own thing - names, symbols, numbers etc. Then predef as an independent follow-up stage.
 // 
+// - Swap NULL for C++ nullptr keyword
+//
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 int main()

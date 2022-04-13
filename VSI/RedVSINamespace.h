@@ -46,8 +46,8 @@
 #include "RedVSICollections.h"
 #include "RedVSIErrorCodes.h"
 #include "RedVSILangElement.h"
-#include "RedVSIIOElement.h"
-#include "RedVSITokenType.h"
+#include "RedTokenPredefType.h"
+#include "RedTokenType.h"
 
 // Interface
 #include "RedVSICmd.h"
@@ -56,10 +56,10 @@
 #include "RedVSIRoutineCallInterface.h"
 
 // IO
-#include "RedVSIToken.h"
-#include "RedVSITokenBuffer.h"
-#include "RedVSITokenElementMap.h"
-#include "RedVSITokenFactory.h"
+#include "RedToken.h"
+#include "RedTokenBuffer.h"
+#include "RedTokenPredefMap.h"
+#include "RedTokenFactory.h"
 
 // Lib
 #include "RedVSILib.h"

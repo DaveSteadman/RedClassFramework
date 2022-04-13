@@ -20,8 +20,8 @@
 
 #include "RedCoreNamespace.h"
 
-#include "RedVSIToken.h"
-#include "RedVSITokenBuffer.h"
+#include "RedToken.h"
+#include "RedTokenBuffer.h"
 #include "RedVSIParseTreeInterface.h"
 
 using namespace Red::Core;
@@ -35,28 +35,28 @@ class RedVSIParseFactory
 {
 public:
 
-    static RedVSIParseTreeInterface* ConstructAssignExpr        (RedVSITokenBuffer& cInputBuffer, RedLog& log);
-    static RedVSIParseTreeInterface* ConstructStatementExpr     (RedVSITokenBuffer& cInputBuffer, RedLog& log);
-    static RedVSIParseTreeInterface* ConstructValueExpr         (RedVSITokenBuffer& cInputBuffer, RedLog& log);
+    static RedVSIParseTreeInterface* ConstructAssignExpr        (RedTokenBuffer& cInputBuffer, RedLog& log);
+    static RedVSIParseTreeInterface* ConstructStatementExpr     (RedTokenBuffer& cInputBuffer, RedLog& log);
+    static RedVSIParseTreeInterface* ConstructValueExpr         (RedTokenBuffer& cInputBuffer, RedLog& log);
 
 protected:
 
-    static RedVSIParseTreeInterface* RunExprAssignCompetition   (RedVSITokenBuffer& cInputBuffer, RedLog& log);
-    static RedVSIParseTreeInterface* RunCompareExprCompetition  (RedVSITokenBuffer& cInputBuffer, RedLog& log);
-    static RedVSIParseTreeInterface* RunLogicExprCompetition    (RedVSITokenBuffer& cInputBuffer, RedLog& log);
-    static RedVSIParseTreeInterface* RunSumExprCompetition      (RedVSITokenBuffer& cInputBuffer, RedLog& log);
-    static RedVSIParseTreeInterface* RunMultiExprCompetition    (RedVSITokenBuffer& cInputBuffer, RedLog& log);
-    static RedVSIParseTreeInterface* RunPowExprCompetition      (RedVSITokenBuffer& cInputBuffer, RedLog& log);
-    static RedVSIParseTreeInterface* RunItemExprCompetition     (RedVSITokenBuffer& cInputBuffer, RedLog& log);
-    static RedVSIParseTreeInterface* RunUnaryExprCompetition    (RedVSITokenBuffer& cInputBuffer, RedLog& log);
-    static RedVSIParseTreeInterface* RunSubExprCompetition      (RedVSITokenBuffer& cInputBuffer, RedLog& log);    
-    static RedVSIParseTreeInterface* RunValueCompetition        (RedVSITokenBuffer& cInputBuffer, RedLog& log);
-    static RedVSIParseTreeInterface* RunVariableCompetition     (RedVSITokenBuffer& cInputBuffer, RedLog& log);
-    static RedVSIParseTreeInterface* RunExternalCallCompetition (RedVSITokenBuffer& cInputBuffer, RedLog& log);
-    static RedVSIParseTreeInterface* RunInternalCallCompetition (RedVSITokenBuffer& cInputBuffer, RedLog& log);
+    static RedVSIParseTreeInterface* RunExprAssignCompetition   (RedTokenBuffer& cInputBuffer, RedLog& log);
+    static RedVSIParseTreeInterface* RunCompareExprCompetition  (RedTokenBuffer& cInputBuffer, RedLog& log);
+    static RedVSIParseTreeInterface* RunLogicExprCompetition    (RedTokenBuffer& cInputBuffer, RedLog& log);
+    static RedVSIParseTreeInterface* RunSumExprCompetition      (RedTokenBuffer& cInputBuffer, RedLog& log);
+    static RedVSIParseTreeInterface* RunMultiExprCompetition    (RedTokenBuffer& cInputBuffer, RedLog& log);
+    static RedVSIParseTreeInterface* RunPowExprCompetition      (RedTokenBuffer& cInputBuffer, RedLog& log);
+    static RedVSIParseTreeInterface* RunItemExprCompetition     (RedTokenBuffer& cInputBuffer, RedLog& log);
+    static RedVSIParseTreeInterface* RunUnaryExprCompetition    (RedTokenBuffer& cInputBuffer, RedLog& log);
+    static RedVSIParseTreeInterface* RunSubExprCompetition      (RedTokenBuffer& cInputBuffer, RedLog& log);    
+    static RedVSIParseTreeInterface* RunValueCompetition        (RedTokenBuffer& cInputBuffer, RedLog& log);
+    static RedVSIParseTreeInterface* RunVariableCompetition     (RedTokenBuffer& cInputBuffer, RedLog& log);
+    static RedVSIParseTreeInterface* RunExternalCallCompetition (RedTokenBuffer& cInputBuffer, RedLog& log);
+    static RedVSIParseTreeInterface* RunInternalCallCompetition (RedTokenBuffer& cInputBuffer, RedLog& log);
 
-    static bool                      IsValueToken(const RedVSIToken& cTok);
-    static bool                      IsVariableToken(const RedVSIToken& cTok);
+    static bool                      IsValueToken(const RedToken& cTok);
+    static bool                      IsVariableToken(const RedToken& cTok);
 };
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
