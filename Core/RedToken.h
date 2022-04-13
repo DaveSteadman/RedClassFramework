@@ -51,8 +51,8 @@ public:
     void SetWhitespace(const RedDataString& cNewStr)                           { Init(); cType.SetWhitespace();    cText=cNewStr; };
 
     void SetPredefined(const RedTokenPredefType& cNewPredef)     { cPredef=cNewPredef; };
-    void SetEOF(void)                                            { Init(); SetPredefined(RedTokenPredefType::SymbolEOF());};
-
+    
+    void SetEOF(void) { Init(); cType.SetNonPrintable(); cText = "<EOF>";  cPredef = RedTokenPredefType::SymbolEOF(); };
 
     bool IsPotentiallyPredef(void) { return (cType.IsName() || cType.IsSymbol()); };
 

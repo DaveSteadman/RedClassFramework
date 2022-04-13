@@ -38,7 +38,7 @@ RedTokenPredefMap* RedTokenPredefMap::m_instanceSingleton = nullptr;
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-bool RedTokenPredefMap::FindPredefFromString(RedDataString cCheckStr, RedTokenPredefType cElem)
+bool RedTokenPredefMap::FindPredefFromString(RedDataString cCheckStr, RedTokenPredefType& cElem)
 {
     MapListItType cIt(&cTokenMap);
 
@@ -65,7 +65,7 @@ bool RedTokenPredefMap::FindPredefFromString(RedDataString cCheckStr, RedTokenPr
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-bool RedTokenPredefMap::FindStringFromPredef(RedTokenPredefType& cCheckElem, RedDataString& cStr)
+bool RedTokenPredefMap::FindStringFromPredef(RedTokenPredefType cCheckElem, RedDataString& cStr)
 {
     MapListItType cIt(&cTokenMap);
 

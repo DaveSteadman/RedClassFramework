@@ -563,13 +563,22 @@ RedResult RedTestCore::TestDataVariant(void)
 RedResult RedTestCore::TestTokens(void)
 {
     {
-        RedDataString strTest("+ =");
+        RedDataString strTest("+ = +=");
 
         RedTokenBuffer tokBuf;
         int iCreateResult = RedTokenFactory::CreateTokens(strTest, tokBuf);
 
         RedToken t1 = tokBuf.GetToken();
+        if (!t1.Type().IsSymbol())               return kResultFail;
+        if (!t1.Predef().IsSymbolOperatorPlus()) return kResultFail;
+
         RedToken t2 = tokBuf.GetToken();
+        if (!t2.Type().IsSymbol())               return kResultFail;
+        if (!t2.Predef().IsSymbolAssignEqual())  return kResultFail;
+
+        RedToken t3 = tokBuf.GetToken();
+        if (!t3.Type().IsSymbol())               return kResultFail;
+        if (!t3.Predef().IsSymbolAssignPlus())   return kResultFail;
     }
     return kResultSuccess;
 }

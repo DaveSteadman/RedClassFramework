@@ -47,21 +47,15 @@ bool RedTokenFactory::CreateTokens(RedBufferInput& cInputBuffer, RedTokenBuffer&
     do {
         // read the token data
         RunTokenComp(cInputBuffer, cNewTok);
-        
-        // create the new token, so long as its valid
-        if ( (cNewTok.IsValid()) && (!cNewTok.IsEOF()) )
-            cOutputTokenList.AppendToken(cNewTok);
+        cOutputTokenList.AppendToken(cNewTok);
     }
-    while( (!cNewTok.IsEOF()) && (cNewTok.IsValid()) );
+    while ((cNewTok.IsValid()) && (!cNewTok.IsEOF()));
 
     // Initialise if we've not interpreted all the tokens right.
     if (!cNewTok.IsValid()) 
-    {
-        cOutputTokenList.Init();
         return false;
-    }
-
-    return true;
+    else
+        return true;
 }
 
 // ============================================================================
@@ -242,11 +236,15 @@ RedResult RedTokenFactory::NonPrintableComp(RedBufferInput& cInputBuffer, RedTok
     cPreviewChar = cInputBuffer.PreviewNextChar();
     if ( !cPreviewChar.IsNonPrintable() )
         return RedResult::NoResult();
-        
+
     cNewChar = cInputBuffer.GetNextChar();
 
     // finalise and return the object
-    cNewTok.SetNonPrintable(cNewChar);
+    if (cNewChar.IsEOF())
+        cNewTok.SetEOF();
+    else
+        cNewTok.SetNonPrintable(cNewChar);
+
     return RedResult::Success();
 }
 
@@ -301,7 +299,7 @@ RedResult RedTokenFactory::SymbolComp(RedBufferInput& cInputBuffer, RedToken& cN
         cPreviewChar = cInputBuffer.PreviewNextChar();
     }
 
-    cNewTok.SetName(cValidStr);
+    cNewTok.SetSymbol(cValidStr);
     return RedResult::Success();
 }
 

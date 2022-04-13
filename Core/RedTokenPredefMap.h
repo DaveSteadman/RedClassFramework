@@ -62,8 +62,8 @@ private:
 public:
 
 
-    bool      FindPredefFromString(RedDataString cCheckStr, RedTokenPredefType cElem);
-    bool      FindStringFromPredef(RedTokenPredefType& cCheckElem, RedDataString& cStr);
+    bool      FindPredefFromString(RedDataString cCheckStr, RedTokenPredefType& cElem);
+    bool      FindStringFromPredef(RedTokenPredefType cCheckElem, RedDataString& cStr);
     unsigned  CountMatchCandidates(RedDataString& cCheckStr);
 
 private:
