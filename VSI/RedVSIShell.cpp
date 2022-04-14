@@ -60,6 +60,8 @@ RedDataString RedVSIShell::ProcessCmdLine(RedDataString inputstr)
     else if (DataInitComp(cInputBuffer, cLog)) retStr = cLog.AllLoggedText();
     else if (DataListComp(cInputBuffer, cLog)) retStr = cLog.AllLoggedText();
     else if (RunFragComp(cInputBuffer, cLog))  retStr = cLog.AllLoggedText();
+    else if (HelpComp(cInputBuffer, cLog))     retStr = cLog.AllLoggedText();
+    else if (LibListComp(cInputBuffer, cLog))  retStr = cLog.AllLoggedText();
     else if (cInputBuffer.NumTokens() > 0)     retStr = "Command Not Found\n";
     else                                       retStr = "";
 
@@ -68,9 +70,31 @@ RedDataString RedVSIShell::ProcessCmdLine(RedDataString inputstr)
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
+bool RedVSIShell::HelpComp(RedTokenBuffer& cInputBuffer, RedLog& cLog)
+{
+    RedToken cCmdTok = cInputBuffer.GetToken();
+
+    if (cCmdTok.Predef().IsKeywordHelp())
+    {
+        cLog.AddText(":>data list - List items in the heap.");
+        cLog.AddText(":>exit - End program.");
+        cLog.AddText(":>help - List all shell commands.");
+        cLog.AddText(":>run \"new heap number x = 1\" - Run a VSI code fragment.");
+
+        return true;
+    }
+    else
+    {
+        // Not the help keyword, put the token back.
+        cInputBuffer.SetTokenIndexBackOne();
+    }
+    return false;
+}
+
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
 bool RedVSIShell::LibAddComp(RedTokenBuffer& cInputBuffer, RedLog& cLog)
 {
-
     RedDataString filepath = "";
 
     if (!RedIOHandler::FileExists(filepath))
@@ -93,21 +117,35 @@ bool RedVSIShell::LibInitComp(RedTokenBuffer& cInputBuffer, RedLog& cLog)
 
 bool RedVSIShell::LibListComp(RedTokenBuffer& cInputBuffer, RedLog& cLog)
 {
-    RedDataList cList = cVSIBase.cCodeLib.ClassNameList();
+    RedToken cCmdTok = cInputBuffer.GetToken();
+    RedToken cCmd2Tok = cInputBuffer.GetToken();
 
-    unsigned listcount = cList.NumItems();
-
-    RedDataString retstr;
-    for (unsigned i = 0; i < listcount; i++)
+    if (cCmdTok.Predef().IsKeywordLib() && cCmd2Tok.Predef().IsKeywordList())
     {
-        RedDataString* x;
-        x = dynamic_cast<RedDataString*>(cList.PtrForIndex(i));
+        cLog.AddText("LibList Shell Command Processed.");
 
+        RedDataList cList = cVSIBase.cCodeLib.ClassNameList();
 
-        retstr += *x;
-        retstr += "\n";
+        unsigned listcount = cList.NumItems();
+
+        RedDataString retstr;
+        for (unsigned i = 0; i < listcount; i++)
+        {
+            RedDataString* x;
+            x = dynamic_cast<RedDataString*>(cList.PtrForIndex(i));
+
+            retstr += *x;
+            retstr += "\n";
+        }
+        cLog.AddText(retstr);
+
+        return true;
     }
-    cLog.AddText(retstr);
+    else
+    {
+        cInputBuffer.SetTokenIndexBackOne();
+        cInputBuffer.SetTokenIndexBackOne();
+    }
 
     return false;
 }
@@ -119,8 +157,7 @@ bool RedVSIShell::DataAddComp(RedTokenBuffer& cInputBuffer, RedLog& cLog)
     RedToken cCmdTok = cInputBuffer.GetToken();
     RedToken cCmd2Tok = cInputBuffer.GetToken();
 
-    if (cCmdTok.Predef().IsKeywordShellData() &&
-        cCmd2Tok.Predef().IsKeywordShellAdd())
+    if (cCmdTok.Predef().IsKeywordData() &&  cCmd2Tok.Predef().IsKeywordAdd())
     {
         cLog.AddText("DataAdd Command Processed.");
 
@@ -130,10 +167,12 @@ bool RedVSIShell::DataAddComp(RedTokenBuffer& cInputBuffer, RedLog& cLog)
 
         return true;
     }
-
-    // not data init command, return the token and fail the comp.
-    cInputBuffer.SetTokenIndexBackOne();
-    cInputBuffer.SetTokenIndexBackOne();
+    else
+    {
+        // not data init command, return the token and fail the comp.
+        cInputBuffer.SetTokenIndexBackOne();
+        cInputBuffer.SetTokenIndexBackOne();
+    }
     return false;
 }
 
@@ -144,17 +183,20 @@ bool RedVSIShell::DataInitComp(RedTokenBuffer& cInputBuffer, RedLog& cLog)
     RedToken cCmdTok  = cInputBuffer.GetToken();
     RedToken cCmd2Tok = cInputBuffer.GetToken();
 
-    if (cCmdTok.Predef().IsKeywordShellData() && 
-        cCmd2Tok.Predef().IsKeywordShellInit() )
+    if (cCmdTok.Predef().IsKeywordData() && 
+        cCmd2Tok.Predef().IsKeywordInit() )
     {
         cLog.AddText("DataInit Command Processed.");
 
         return true;
     }
+    else
+    {
+        // not data init command, return the token and fail the comp.
+        cInputBuffer.SetTokenIndexBackOne();
+        cInputBuffer.SetTokenIndexBackOne();
+    }
 
-    // not data init command, return the token and fail the comp.
-    cInputBuffer.SetTokenIndexBackOne();
-    cInputBuffer.SetTokenIndexBackOne();
     return false;
 }
 
@@ -165,7 +207,7 @@ bool RedVSIShell::DataListComp(RedTokenBuffer& cInputBuffer, RedLog& cLog)
     RedToken cCmdTok = cInputBuffer.GetToken();
     RedToken cCmd2Tok = cInputBuffer.GetToken();
 
-    if (cCmdTok.Predef().IsKeywordShellData() && cCmd2Tok.Predef().IsKeywordShellList())
+    if (cCmdTok.Predef().IsKeywordData() && cCmd2Tok.Predef().IsKeywordList())
     {
         cLog.AddText("DataList Command Processed.");
 
@@ -181,7 +223,8 @@ bool RedVSIShell::DataListComp(RedTokenBuffer& cInputBuffer, RedLog& cLog)
         {
             RedType* pData = cVSIBase.cHeap.PtrForIndex(i);
 
-            cDataLine = "heap ";
+            cDataLine = kIOStringKeywordHeap;
+            cDataLine += " ";
             cDataLine.Append(pData->Type().Name());
             cDataLine += " ";
             cDataLine.Append(cVSIBase.cHeap.NameForIndex(i));
@@ -194,10 +237,12 @@ bool RedVSIShell::DataListComp(RedTokenBuffer& cInputBuffer, RedLog& cLog)
         }
         return true;
     }
-
-    // not data init command, return the token and fail the comp.
-    cInputBuffer.SetTokenIndexBackOne();
-    cInputBuffer.SetTokenIndexBackOne();
+    else
+    {
+        // not data init command, return the token and fail the comp.
+        cInputBuffer.SetTokenIndexBackOne();
+        cInputBuffer.SetTokenIndexBackOne();
+    }
     return false;
 }
 
@@ -211,7 +256,7 @@ bool RedVSIShell::RunFragComp(RedTokenBuffer& cInputBuffer, RedLog& cLog)
     RedToken cCmdTok  = cInputBuffer.GetToken();
     RedToken cCodeTok = cInputBuffer.GetToken();
 
-    if (cCmdTok.Predef().IsKeywordShellRun() && cCodeTok.Type().IsStringLiteral())
+    if (cCmdTok.Predef().IsKeywordRun() && cCodeTok.Type().IsStringLiteral())
     {
         RedTokenBuffer cTokenList;
         RedDataString strCodeFragment = cCodeTok.Text();
@@ -245,10 +290,12 @@ bool RedVSIShell::RunFragComp(RedTokenBuffer& cInputBuffer, RedLog& cLog)
         delete topCmd;
         return true;
     }
-
-    // not data init command, return the token and fail the comp.
-    cInputBuffer.SetTokenIndexBackOne();
-    cInputBuffer.SetTokenIndexBackOne();
+    else
+    {
+        // not data init command, return the token and fail the comp.
+        cInputBuffer.SetTokenIndexBackOne();
+        cInputBuffer.SetTokenIndexBackOne();
+    }
     return false;
 }
 
@@ -258,7 +305,7 @@ bool RedVSIShell::RunFuncComp(RedTokenBuffer& cInputBuffer, RedLog& cLog)
 {
     RedToken cCmdTok = cInputBuffer.GetToken();
 
-    if (cCmdTok.Predef().IsKeywordShellRun())
+    if (cCmdTok.Predef().IsKeywordRun())
     {
 
     }
@@ -271,15 +318,17 @@ bool RedVSIShell::ExitComp(RedTokenBuffer& cInputBuffer, RedLog& cLog)
 {
     RedToken cCmdTok = cInputBuffer.GetToken();
 
-    if (cCmdTok.Predef().IsKeywordShellExit())
+    if (cCmdTok.Predef().IsKeywordExit())
     {
         cVSIBase.eState = TEContextState::Ended;
         cLog.AddText("Exit Command Processed.");
         return true;
     }
-
-    // not exit command, return the token and fail the comp.
-    cInputBuffer.SetTokenIndexBackOne();
+    else
+    {
+        // not exit command, return the token and fail the comp.
+        cInputBuffer.SetTokenIndexBackOne();
+    }
     return false;
 }
 

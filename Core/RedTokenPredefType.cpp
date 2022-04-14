@@ -98,11 +98,12 @@ bool RedTokenPredefType::IsLibraryKeyword(void) const
 
 bool RedTokenPredefType::IsShellAreaKeyword(void) const
 {
-    if (IsKeywordShellData()) return true;
-    if (IsKeywordShellLib())  return true;
-    if (IsKeywordShellLog())  return true;
-    if (IsKeywordShellRun())  return true;
-    if (IsKeywordShellExit())  return true;
+    if (IsKeywordData())  return true;
+    if (IsKeywordHelp())  return true;
+    if (IsKeywordLib())   return true;
+    if (IsKeywordLog())   return true;
+    if (IsKeywordRun())   return true;
+    if (IsKeywordExit())  return true;
 
     return false;
 }
@@ -111,9 +112,9 @@ bool RedTokenPredefType::IsShellAreaKeyword(void) const
 
 bool RedTokenPredefType::IsShellActionKeyword(void) const
 {
-    if (IsKeywordShellAdd())  return true;
-    if (IsKeywordShellInit()) return true;
-    if (IsKeywordShellList()) return true;
+    if (IsKeywordAdd())  return true;
+    if (IsKeywordInit()) return true;
+    if (IsKeywordList()) return true;
 
     return false;
 }

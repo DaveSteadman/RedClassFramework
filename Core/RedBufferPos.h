@@ -31,25 +31,31 @@ class RedBufferPos
 {
 public:
 
-    RedBufferPos(void) { iRow=0; iCol=0; };
+    RedBufferPos(void) { iRow=1; iCol=1; };
     RedBufferPos(const unsigned iNewRow, const unsigned iNewCol) { iRow=iNewRow; iCol=iNewCol; };
 
-    void Init(void) { iRow = 0; iCol = 0; };
+    void Init(void) { iRow = 1; iCol = 1; };
 
-    unsigned Row(void) const { return iRow.IntegerValue(); };
-    unsigned Col(void) const { return iCol.IntegerValue(); };
+    unsigned Row(void) const { return iRow; };
+    unsigned Col(void) const { return iCol; };
 
-    RedDataString PosText(void) { RedDataString x="(row:" + iRow.DecimalString() + ", col:" + iCol.DecimalString() + ")"; return x; };
+    RedDataString PosText(void) 
+    {
+        RedDataNumber cRow(iRow);
+        RedDataNumber cCol(iCol);
+        RedDataString x = "(row:" + cRow.DecimalString() + ", col:" + cCol.DecimalString() + ")";
+        return x;
+    };
 
     void operator =(const RedBufferPos cNewPos) { iRow = cNewPos.iRow; iCol = cNewPos.iCol; };
 
 private:
-    RedDataNumber iRow;
-    RedDataNumber iCol;
+    unsigned iRow;
+    unsigned iCol;
 };
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-    
+
 } // Core
 } // Red
 

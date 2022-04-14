@@ -17,8 +17,8 @@
 // -------------------------------------------------------------------------------------------------
 
 #include "RedDataType.h"
-
 #include "RedDataString.h"
+#include "RedTokenPredefMap.h"
 
 namespace Red {
 namespace Core {
@@ -29,14 +29,14 @@ RedDataString RedDataType::Name(void)
 {
     switch (eState)
     {
-    case TEDataType::eDataTypeInvalid : return "Invalid";
-    case TEDataType::eDataTypeBool :    return "Bool";
-    case TEDataType::eDataTypeChar :    return "Char";
-    case TEDataType::eDataTypeList :    return "List";
-    case TEDataType::eDataTypeNum :     return "Num";
-    case TEDataType::eDataTypeRecord :  return "Record";
-    case TEDataType::eDataTypeStr :     return "String";
-    case TEDataType::eDataTypeVariant : return "Variant";
+    case TEDataType::eDataTypeInvalid : return kIOStringKeywordInvalid;
+    case TEDataType::eDataTypeBool :    return kIOStringKeywordBool;
+    case TEDataType::eDataTypeChar:     return kIOStringKeywordChar;
+    case TEDataType::eDataTypeList:     return kIOStringKeywordList;
+    case TEDataType::eDataTypeNum :     return kIOStringKeywordNumber;
+    case TEDataType::eDataTypeRecord :  return kIOStringKeywordRecord;
+    case TEDataType::eDataTypeStr :     return kIOStringKeywordString;
+    case TEDataType::eDataTypeVariant : return kIOStringKeywordVariant;
     }
     return "<Undefined>";
 }

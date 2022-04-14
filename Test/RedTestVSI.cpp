@@ -203,28 +203,22 @@ RedResult RedTestVSI::TestParseFactory_001(void)
         RedToken cTok2 = tokBuf.GetToken();
         RedToken cTok3 = tokBuf.GetToken();
 
+        if (!cTok1.Type().IsNumber())               return kResultFail;
+        if (!cTok2.Type().IsSymbol())               return kResultFail;
+        if (!cTok3.Type().IsNumber())               return kResultFail;
+
         if (!cTok1.Predef().IsInvalid())            return kResultFail;
         if (!cTok2.Predef().IsSymbolOperatorPlus()) return kResultFail;
         if (!cTok3.Predef().IsInvalid())            return kResultFail;
 
-        if (!cTok2.Type().IsNumber())               return kResultFail;
-    }
-
-    {
-        RedDataString testExpr("4300 + 21");
-
-        RedTokenBuffer tokBuf;
-        int iCreateResult = RedTokenFactory::CreateTokens(testExpr, tokBuf);
-
-        if (iCreateResult == 0)
-            return kResultFail;
-
+        tokBuf.SetTokenIndex(0); // reset token read index for expr-competition
         RedLog log;
         RedVSIParseTreeInterface* pt = RedVSIParseFactory::ConstructAssignExpr(tokBuf, log);
 
-        if (log.ContainsError())
-            return kResultFail;
         if (pt == NULL)
+            return kResultFail;
+
+        if (log.ContainsError())
             return kResultFail;
 
         RedLog               cLog;
@@ -236,7 +230,10 @@ RedResult RedTestVSI::TestParseFactory_001(void)
 
         if (res.NumberValue() != RedDataNumber(4321))
             return kResultFail;
+
+        delete pt;
     }
+
 
     return kResultSuccess;
 }

@@ -83,19 +83,12 @@ private:
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-static const RedDataString kIOStringKeywordBool                     = RedDataString("bool");
-static const RedDataString kIOStringKeywordChar                     = RedDataString("char");
-static const RedDataString kIOStringKeywordList                     = RedDataString("list");
-static const RedDataString kIOStringKeywordNumber                   = RedDataString("number");
-static const RedDataString kIOStringKeywordRecord                   = RedDataString("record");
-static const RedDataString kIOStringKeywordString                   = RedDataString("string");
-static const RedDataString kIOStringKeywordVariant                  = RedDataString("variant");
+static const RedDataString kIOStringKeywordInvalid                  = RedDataString("invalid");
 
 static const RedDataString kIOStringKeywordAttrib                   = RedDataString("attrib");
-static const RedDataString kIOStringKeywordHeap                     = RedDataString("heap");
-static const RedDataString kIOStringKeywordStack                    = RedDataString("stack");
-
 static const RedDataString kIOStringKeywordAdd                      = RedDataString("add");
+static const RedDataString kIOStringKeywordBool                     = RedDataString("bool");
+static const RedDataString kIOStringKeywordChar                     = RedDataString("char");
 static const RedDataString kIOStringKeywordClass                    = RedDataString("class");
 static const RedDataString kIOStringKeywordCode                     = RedDataString("code");
 static const RedDataString kIOStringKeywordData                     = RedDataString("data");
@@ -104,21 +97,29 @@ static const RedDataString kIOStringKeywordEndif                    = RedDataStr
 static const RedDataString kIOStringKeywordEndloop                  = RedDataString("endloop");
 static const RedDataString kIOStringKeywordExit                     = RedDataString("exit");
 static const RedDataString kIOStringKeywordFalse                    = RedDataString("false");
+static const RedDataString kIOStringKeywordHeap                     = RedDataString("heap");
+static const RedDataString kIOStringKeywordHelp                     = RedDataString("help");
 static const RedDataString kIOStringKeywordIf                       = RedDataString("if");
 static const RedDataString kIOStringKeywordInit                     = RedDataString("init");
 static const RedDataString kIOStringKeywordLet                      = RedDataString("let");
 static const RedDataString kIOStringKeywordLib                      = RedDataString("lib");
+static const RedDataString kIOStringKeywordList                     = RedDataString("list");
 static const RedDataString kIOStringKeywordLog                      = RedDataString("log");
 static const RedDataString kIOStringKeywordLoop                     = RedDataString("loop");
 static const RedDataString kIOStringKeywordName                     = RedDataString("name");
 static const RedDataString kIOStringKeywordNew                      = RedDataString("new");
+static const RedDataString kIOStringKeywordNumber                   = RedDataString("number");
 static const RedDataString kIOStringKeywordParams                   = RedDataString("params");
 static const RedDataString kIOStringKeywordParent                   = RedDataString("parent");
+static const RedDataString kIOStringKeywordRecord                   = RedDataString("record");
 static const RedDataString kIOStringKeywordReturn                   = RedDataString("return");
 static const RedDataString kIOStringKeywordRoutine                  = RedDataString("routine");
 static const RedDataString kIOStringKeywordRun                      = RedDataString("run");
+static const RedDataString kIOStringKeywordStack                    = RedDataString("stack");
+static const RedDataString kIOStringKeywordString                   = RedDataString("string");
 static const RedDataString kIOStringKeywordThen                     = RedDataString("then");
 static const RedDataString kIOStringKeywordTrue                     = RedDataString("true");
+static const RedDataString kIOStringKeywordVariant                  = RedDataString("variant");
 static const RedDataString kIOStringKeywordWhile                    = RedDataString("while");
 
 static const RedDataString kIOStringSymbolAssignPlus                = RedDataString("+=");

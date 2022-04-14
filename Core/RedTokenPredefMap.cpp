@@ -148,6 +148,7 @@ void RedTokenPredefMap::SetupTokenMap(void)
     cTokenMap.Add(kIOStringKeywordEndloop,                  RedTokenPredefType::KeywordEndloop());
     cTokenMap.Add(kIOStringKeywordFalse,                    RedTokenPredefType::KeywordFalse());
     cTokenMap.Add(kIOStringKeywordHeap,                     RedTokenPredefType::KeywordHeap());
+    cTokenMap.Add(kIOStringKeywordHelp,                     RedTokenPredefType::KeywordHelp());
     cTokenMap.Add(kIOStringKeywordIf,                       RedTokenPredefType::KeywordIf());
     cTokenMap.Add(kIOStringKeywordLet,                      RedTokenPredefType::KeywordLet());
     cTokenMap.Add(kIOStringKeywordList,                     RedTokenPredefType::KeywordList());
@@ -167,14 +168,14 @@ void RedTokenPredefMap::SetupTokenMap(void)
     cTokenMap.Add(kIOStringKeywordTrue,                     RedTokenPredefType::KeywordTrue());
     cTokenMap.Add(kIOStringKeywordWhile,                    RedTokenPredefType::KeywordWhile());
 
-    cTokenMap.Add(kIOStringKeywordAdd,                      RedTokenPredefType::KeywordShellAdd());
-    cTokenMap.Add(kIOStringKeywordData,                     RedTokenPredefType::KeywordShellData());
-    cTokenMap.Add(kIOStringKeywordExit,                     RedTokenPredefType::KeywordShellExit());
-    cTokenMap.Add(kIOStringKeywordLib,                      RedTokenPredefType::KeywordShellLib());
-    cTokenMap.Add(kIOStringKeywordLog,                      RedTokenPredefType::KeywordShellLog());
-    cTokenMap.Add(kIOStringKeywordRun,                      RedTokenPredefType::KeywordShellRun());
-    cTokenMap.Add(kIOStringKeywordInit,                     RedTokenPredefType::KeywordShellInit());
-    cTokenMap.Add(kIOStringKeywordList,                     RedTokenPredefType::KeywordShellList());
+    cTokenMap.Add(kIOStringKeywordAdd,                      RedTokenPredefType::KeywordAdd());
+    cTokenMap.Add(kIOStringKeywordData,                     RedTokenPredefType::KeywordData());
+    cTokenMap.Add(kIOStringKeywordExit,                     RedTokenPredefType::KeywordExit());
+    cTokenMap.Add(kIOStringKeywordLib,                      RedTokenPredefType::KeywordLib());
+    cTokenMap.Add(kIOStringKeywordLog,                      RedTokenPredefType::KeywordLog());
+    cTokenMap.Add(kIOStringKeywordRun,                      RedTokenPredefType::KeywordRun());
+    cTokenMap.Add(kIOStringKeywordInit,                     RedTokenPredefType::KeywordInit());
+    cTokenMap.Add(kIOStringKeywordList,                     RedTokenPredefType::KeywordList());
 
     cTokenMap.Add(kIOStringSymbolAssignPlus,                RedTokenPredefType::SymbolAssignPlus());
     cTokenMap.Add(kIOStringSymbolAssignMinus,               RedTokenPredefType::SymbolAssignMinus());

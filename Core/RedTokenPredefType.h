@@ -36,102 +36,90 @@ public:
     bool                      IsInvalid(void) const { return eType == eDefaultInvalid; };
     bool                      IsValid(void) const   { return eType != eDefaultInvalid; };
 
-
-    // Locations
+    // Check for keyowrd within a set
     bool                      IsLocationKeyword(void) const;
-    bool                      IsKeywordAttribute(void) const                 { return eType == eKeywordAttribute; };
-    bool                      IsKeywordStack(void) const                     { return eType == eKeywordStack; };
-    bool                      IsKeywordHeap(void) const                      { return eType == eKeywordHeap; };
-    static RedTokenPredefType KeywordAttribute(void)                         { return RedTokenPredefType(eKeywordAttribute); };
-    static RedTokenPredefType KeywordStack(void)                             { return RedTokenPredefType(eKeywordStack); };
-    static RedTokenPredefType KeywordHeap(void)                              { return RedTokenPredefType(eKeywordHeap); };
-
-    // Types
     bool                      IsTypeKeyword(void) const;
+    bool                      IsCommandKeyword(void) const;
+    bool                      IsBoolKeyword(void) const;
+    bool                      IsLibraryKeyword(void) const;
+    bool                      IsShellAreaKeyword(void) const;
+    bool                      IsShellActionKeyword(void) const;
+
+    // Keywords Check
+    bool                      IsKeywordAdd(void)  const                      { return eType == eKeywordAdd; };
+    bool                      IsKeywordAttribute(void) const                 { return eType == eKeywordAttribute; };
     bool                      IsKeywordBool(void) const                      { return eType == eKeywordBool; };
     bool                      IsKeywordChar(void) const                      { return eType == eKeywordChar; };
-    bool                      IsKeywordList(void) const                      { return eType == eKeywordList; };
-    bool                      IsKeywordNumber(void) const                    { return eType == eKeywordNumber; };
-    bool                      IsKeywordRecord(void) const                    { return eType == eKeywordRecord; };
-    bool                      IsKeywordString(void) const                    { return eType == eKeywordString; };
-    bool                      IsKeywordVariant(void) const                   { return eType == eKeywordVariant; };
-
-    static RedTokenPredefType KeywordBool(void)                              { return RedTokenPredefType(eKeywordBool); };
-    static RedTokenPredefType KeywordChar(void)                              { return RedTokenPredefType(eKeywordChar); };
-    static RedTokenPredefType KeywordList(void)                              { return RedTokenPredefType(eKeywordList); };
-    static RedTokenPredefType KeywordNumber(void)                            { return RedTokenPredefType(eKeywordNumber); };
-    static RedTokenPredefType KeywordRecord(void)                            { return RedTokenPredefType(eKeywordRecord); };
-    static RedTokenPredefType KeywordString(void)                            { return RedTokenPredefType(eKeywordString); };
-    static RedTokenPredefType KeywordVariant(void)                           { return RedTokenPredefType(eKeywordVariant); };
-
-    // Commands
-    bool                      IsCommandKeyword(void) const;
-    bool                      IsKeywordNew(void) const                       { return eType == eKeywordNew; };
-    bool                      IsKeywordLet(void) const                       { return eType == eKeywordLet; };
-    bool                      IsKeywordIf(void) const                        { return eType == eKeywordIf; };
-    bool                      IsKeywordThen(void) const                      { return eType == eKeywordThen; };
+    bool                      IsKeywordClass(void) const                     { return eType == eKeywordClass; };
+    bool                      IsKeywordCode(void) const                      { return eType == eKeywordCode; };
+    bool                      IsKeywordData(void) const                      { return eType == eKeywordData; };
     bool                      IsKeywordElse(void) const                      { return eType == eKeywordElse; };
     bool                      IsKeywordEndif(void) const                     { return eType == eKeywordEndif; };
-    bool                      IsKeywordWhile(void) const                     { return eType == eKeywordWhile; };
-    bool                      IsKeywordLoop(void) const                      { return eType == eKeywordLoop; };
     bool                      IsKeywordEndloop(void) const                   { return eType == eKeywordEndloop; };
-    bool                      IsKeywordLog(void) const                       { return eType == eKeywordLog; };
-    bool                      IsKeywordReturn(void) const                    { return eType == eKeywordReturn; };
-    static RedTokenPredefType KeywordNew(void)                               { return RedTokenPredefType(eKeywordNew); };
-    static RedTokenPredefType KeywordLet(void)                               { return RedTokenPredefType(eKeywordLet); };
-    static RedTokenPredefType KeywordIf(void)                                { return RedTokenPredefType(eKeywordIf); };
-    static RedTokenPredefType KeywordThen(void)                              { return RedTokenPredefType(eKeywordThen); };
-    static RedTokenPredefType KeywordElse(void)                              { return RedTokenPredefType(eKeywordElse); };
-    static RedTokenPredefType KeywordEndif(void)                             { return RedTokenPredefType(eKeywordEndif); };
-    static RedTokenPredefType KeywordWhile(void)                             { return RedTokenPredefType(eKeywordWhile); };
-    static RedTokenPredefType KeywordLoop(void)                              { return RedTokenPredefType(eKeywordLoop); };
-    static RedTokenPredefType KeywordEndloop(void)                           { return RedTokenPredefType(eKeywordEndloop); };
-    static RedTokenPredefType KeywordLog(void)                               { return RedTokenPredefType(eKeywordLog); };
-    static RedTokenPredefType KeywordReturn(void)                            { return RedTokenPredefType(eKeywordReturn); };
-
-    // Bool values
-    bool                      IsBoolKeyword(void) const;
-    bool                      IsKeywordTrue(void) const                      { return eType == eKeywordBoolValueTrue; };
+    bool                      IsKeywordExit(void) const                      { return eType == eKeywordExit; };
     bool                      IsKeywordFalse(void) const                     { return eType == eKeywordBoolValueFalse; };
-    static RedTokenPredefType KeywordTrue(void)                              { return RedTokenPredefType(eKeywordBoolValueTrue); };
-    static RedTokenPredefType KeywordFalse(void)                             { return RedTokenPredefType(eKeywordBoolValueFalse); };
-
-    // Library
-    bool                      IsLibraryKeyword(void) const;
-    static RedTokenPredefType KeywordName(void)                              { return RedTokenPredefType(eKeywordName); };
-    static RedTokenPredefType KeywordClass(void)                             { return RedTokenPredefType(eKeywordClass); };
-    static RedTokenPredefType KeywordRoutine(void)                           { return RedTokenPredefType(eKeywordRoutine); };
-    static RedTokenPredefType KeywordCode(void)                              { return RedTokenPredefType(eKeywordCode); };
-    static RedTokenPredefType KeywordParams(void)                            { return RedTokenPredefType(eKeywordParams); };
-    static RedTokenPredefType KeywordParent(void)                            { return RedTokenPredefType(eKeywordParent); };
+    bool                      IsKeywordHeap(void) const                      { return eType == eKeywordHeap; };
+    bool                      IsKeywordHelp(void) const                      { return eType == eKeywordHelp; };
+    bool                      IsKeywordIf(void) const                        { return eType == eKeywordIf; };
+    bool                      IsKeywordInit(void) const                      { return eType == eKeywordInit; };
+    bool                      IsKeywordLet(void) const                       { return eType == eKeywordLet; };
+    bool                      IsKeywordLib(void)  const                      { return eType == eKeywordLib; };
+    bool                      IsKeywordList(void) const                      { return eType == eKeywordList; };
+    bool                      IsKeywordLog(void) const                       { return eType == eKeywordLog; };
+    bool                      IsKeywordLoop(void) const                      { return eType == eKeywordLoop; };
     bool                      IsKeywordName(void) const                      { return eType == eKeywordName; };
-    bool                      IsKeywordClass(void) const                     { return eType == eKeywordClass; };
-    bool                      IsKeywordRoutine(void) const                   { return eType == eKeywordRoutine; };
-    bool                      IsKeywordCode(void) const                      { return eType == eKeywordCode; };
+    bool                      IsKeywordNew(void) const                       { return eType == eKeywordNew; };
+    bool                      IsKeywordNumber(void) const                    { return eType == eKeywordNumber; };
     bool                      IsKeywordParams(void) const                    { return eType == eKeywordParams; };
     bool                      IsKeywordParent(void) const                    { return eType == eKeywordParent; };
+    bool                      IsKeywordRecord(void) const                    { return eType == eKeywordRecord; };
+    bool                      IsKeywordReturn(void) const                    { return eType == eKeywordReturn; };
+    bool                      IsKeywordRoutine(void) const                   { return eType == eKeywordRoutine; };
+    bool                      IsKeywordRun(void)  const                      { return eType == eKeywordRun; };
+    bool                      IsKeywordStack(void) const                     { return eType == eKeywordStack; };
+    bool                      IsKeywordString(void) const                    { return eType == eKeywordString; };
+    bool                      IsKeywordThen(void) const                      { return eType == eKeywordThen; };
+    bool                      IsKeywordTrue(void) const                      { return eType == eKeywordBoolValueTrue; };
+    bool                      IsKeywordVariant(void) const                   { return eType == eKeywordVariant; };
+    bool                      IsKeywordWhile(void) const                     { return eType == eKeywordWhile; };
 
-    // Shell (area)
-    bool                      IsShellAreaKeyword(void) const;
-    static RedTokenPredefType KeywordShellData(void)         { return RedTokenPredefType(eKeywordShellData); }
-    static RedTokenPredefType KeywordShellExit(void)         { return RedTokenPredefType(eKeywordShellExit); }
-    static RedTokenPredefType KeywordShellLib(void)          { return RedTokenPredefType(eKeywordShellLib); }
-    static RedTokenPredefType KeywordShellLog(void)          { return RedTokenPredefType(eKeywordShellLog); }
-    static RedTokenPredefType KeywordShellRun(void)          { return RedTokenPredefType(eKeywordShellRun); }
-    bool                      IsKeywordShellData(void) const { return eType == eKeywordShellData; };
-    bool                      IsKeywordShellExit(void) const { return eType == eKeywordShellExit; };
-    bool                      IsKeywordShellLib(void)  const { return eType == eKeywordShellLib; };
-    bool                      IsKeywordShellLog(void)  const { return eType == eKeywordShellLog; };
-    bool                      IsKeywordShellRun(void)  const { return eType == eKeywordShellRun; };
-
-    // Shell (action)
-    bool                      IsShellActionKeyword(void) const;
-    static RedTokenPredefType KeywordShellAdd(void)          { return RedTokenPredefType(eKeywordShellAdd); }
-    static RedTokenPredefType KeywordShellInit(void)         { return RedTokenPredefType(eKeywordShellInit); }
-    static RedTokenPredefType KeywordShellList(void)         { return RedTokenPredefType(eKeywordShellList); }
-    bool                      IsKeywordShellAdd(void)  const { return eType == eKeywordShellAdd; };
-    bool                      IsKeywordShellInit(void) const { return eType == eKeywordShellInit; };
-    bool                      IsKeywordShellList(void) const { return eType == eKeywordShellList; };
+    // Keywords Setup
+    static RedTokenPredefType KeywordAdd(void)                               { return RedTokenPredefType(eKeywordAdd); }
+    static RedTokenPredefType KeywordAttribute(void)                         { return RedTokenPredefType(eKeywordAttribute); };
+    static RedTokenPredefType KeywordBool(void)                              { return RedTokenPredefType(eKeywordBool); };
+    static RedTokenPredefType KeywordChar(void)                              { return RedTokenPredefType(eKeywordChar); };
+    static RedTokenPredefType KeywordClass(void)                             { return RedTokenPredefType(eKeywordClass); };
+    static RedTokenPredefType KeywordCode(void)                              { return RedTokenPredefType(eKeywordCode); };
+    static RedTokenPredefType KeywordData(void)                              { return RedTokenPredefType(eKeywordData); }
+    static RedTokenPredefType KeywordElse(void)                              { return RedTokenPredefType(eKeywordElse); };
+    static RedTokenPredefType KeywordEndif(void)                             { return RedTokenPredefType(eKeywordEndif); };
+    static RedTokenPredefType KeywordEndloop(void)                           { return RedTokenPredefType(eKeywordEndloop); };
+    static RedTokenPredefType KeywordExit(void)                              { return RedTokenPredefType(eKeywordExit); }
+    static RedTokenPredefType KeywordFalse(void)                             { return RedTokenPredefType(eKeywordBoolValueFalse); };
+    static RedTokenPredefType KeywordStack(void)                             { return RedTokenPredefType(eKeywordStack); };
+    static RedTokenPredefType KeywordHeap(void)                              { return RedTokenPredefType(eKeywordHeap); };
+    static RedTokenPredefType KeywordHelp(void)                              { return RedTokenPredefType(eKeywordHelp); };
+    static RedTokenPredefType KeywordInit(void)                              { return RedTokenPredefType(eKeywordInit); }
+    static RedTokenPredefType KeywordIf(void)                                { return RedTokenPredefType(eKeywordIf); };
+    static RedTokenPredefType KeywordLet(void)                               { return RedTokenPredefType(eKeywordLet); };
+    static RedTokenPredefType KeywordLib(void)                               { return RedTokenPredefType(eKeywordLib); }
+    static RedTokenPredefType KeywordList(void)                              { return RedTokenPredefType(eKeywordList); };
+    static RedTokenPredefType KeywordLog(void)                               { return RedTokenPredefType(eKeywordLog); };
+    static RedTokenPredefType KeywordLoop(void)                              { return RedTokenPredefType(eKeywordLoop); };
+    static RedTokenPredefType KeywordName(void)                              { return RedTokenPredefType(eKeywordName); };
+    static RedTokenPredefType KeywordNew(void)                               { return RedTokenPredefType(eKeywordNew); };
+    static RedTokenPredefType KeywordNumber(void)                            { return RedTokenPredefType(eKeywordNumber); };
+    static RedTokenPredefType KeywordParams(void)                            { return RedTokenPredefType(eKeywordParams); };
+    static RedTokenPredefType KeywordParent(void)                            { return RedTokenPredefType(eKeywordParent); };
+    static RedTokenPredefType KeywordRecord(void)                            { return RedTokenPredefType(eKeywordRecord); };
+    static RedTokenPredefType KeywordReturn(void)                            { return RedTokenPredefType(eKeywordReturn); };
+    static RedTokenPredefType KeywordRoutine(void)                           { return RedTokenPredefType(eKeywordRoutine); };
+    static RedTokenPredefType KeywordRun(void)                               { return RedTokenPredefType(eKeywordRun); }
+    static RedTokenPredefType KeywordString(void)                            { return RedTokenPredefType(eKeywordString); };
+    static RedTokenPredefType KeywordThen(void)                              { return RedTokenPredefType(eKeywordThen); };
+    static RedTokenPredefType KeywordTrue(void)                              { return RedTokenPredefType(eKeywordBoolValueTrue); };
+    static RedTokenPredefType KeywordVariant(void)                           { return RedTokenPredefType(eKeywordVariant); };
+    static RedTokenPredefType KeywordWhile(void)                             { return RedTokenPredefType(eKeywordWhile); };
 
     // Operators and separators
     bool                      IsOperatorSymbol(void) const;
@@ -226,52 +214,40 @@ private:
     {
         eDefaultInvalid = 0,
 
-        // Locations
+        eKeywordAdd,
         eKeywordAttribute,
-        eKeywordStack,
-        eKeywordHeap,
-
-        // Types
         eKeywordBool,
         eKeywordChar,
-        eKeywordList,
-        eKeywordNumber,
-        eKeywordRecord,
-        eKeywordString,
-        eKeywordVariant,
-
-        // Library
-        eKeywordName,
         eKeywordClass,
-        eKeywordRoutine,
         eKeywordCode,
-        eKeywordParams,
-        eKeywordParent,
-
-        // Commands
-        eKeywordNew,
-        eKeywordLet,
-        eKeywordIf,
-        eKeywordThen,
+        eKeywordData,
         eKeywordElse,
         eKeywordEndif,
-        eKeywordWhile,
-        eKeywordLoop,
         eKeywordEndloop,
+        eKeywordExit,
+        eKeywordHeap,
+        eKeywordHelp,
+        eKeywordIf,
+        eKeywordInit,
+        eKeywordLet,
+        eKeywordLib,
+        eKeywordList,
         eKeywordLog,
+        eKeywordLoop,
+        eKeywordName,
+        eKeywordNew,
+        eKeywordNumber,
+        eKeywordParams,
+        eKeywordParent,
+        eKeywordRecord,
         eKeywordReturn,
-
-        // Shell Area
-        eKeywordShellData,
-        eKeywordShellLib,
-        eKeywordShellLog,
-        eKeywordShellRun,
-        eKeywordShellExit,
-
-        // Shell Action
-        eKeywordShellAdd,
-        eKeywordShellInit,
-        eKeywordShellList,
+        eKeywordRoutine,
+        eKeywordRun,
+        eKeywordStack,
+        eKeywordString,
+        eKeywordThen,
+        eKeywordVariant,
+        eKeywordWhile,
 
         // Bool Values
         eKeywordBoolValueTrue,

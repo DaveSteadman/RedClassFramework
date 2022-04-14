@@ -80,6 +80,8 @@ private:
     bool DataInitComp(RedTokenBuffer& cInputBuffer, RedLog& cLog);
     bool DataListComp(RedTokenBuffer& cInputBuffer, RedLog& cLog);
 
+    bool HelpComp(RedTokenBuffer& cInputBuffer, RedLog& cLog);
+
     bool RunFragComp(RedTokenBuffer& cInputBuffer, RedLog& cLog);
     bool RunFuncComp(RedTokenBuffer& cInputBuffer, RedLog& cLog);
 
