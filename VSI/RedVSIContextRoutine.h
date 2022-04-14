@@ -65,9 +65,9 @@ public:
     // RedVSIContextRoutine Inhertied Interface
 
     // Data accessors (RedVSIContextRoutine)
-    RedType*        CreateDataItem(const RedVSILangElement& cLocation, const RedVSILangElement& cType, const RedDataString& cName);
-    RedType*        DuplicateDataItem(const RedVSILangElement& cLocation, const RedType* pDataItem, const RedDataString& cName);
-    bool            FindDataItem(const RedDataString& cName, RedType*& pData);
+    RedData*        CreateDataItem(const RedVSILangElement& cLocation, const RedVSILangElement& cType, const RedDataString& cName);
+    RedData*        DuplicateDataItem(const RedVSILangElement& cLocation, const RedData* pDataItem, const RedDataString& cName);
+    bool            FindDataItem(const RedDataString& cName, RedData*& pData);
     RedDataVariant  DataItemAsVariant(const RedDataString& cName);
 
     RedVSILib*      FindCodeLib(void);

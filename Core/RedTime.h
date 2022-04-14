@@ -47,13 +47,13 @@ public:
 
     void SetTime(const unsigned h, const unsigned m, const double& s) { hours=h; minutes=m; seconds=s; };
     void SetTime(const RedDataString& timestr);
-    void SetNow(void);
 
+    void SetNow(void);
     static RedTime Now(void);
 
     // Time Presentation
-    const RedDataString TimeString(void) const;   // "hh:mm:ss"
-    const unsigned      SixDigitTime(void) const; // hhmmss
+    const RedDataString TimeString(void) const;         // "hh:mm:ss" (everything always in 24hr format)
+    const unsigned      SixDigitTime(void) const;       // hhmmss
     const RedDataString SixDigitTimeString(void) const; // "hhmmss"
 
     // Seconds In Day Routines
@@ -62,7 +62,6 @@ public:
     void         SetTimeFromElapsedSeconds(const double& DayElapsedSeconds);
 
 public:
-
     unsigned hours   = 0;
     unsigned minutes = 0;
     double   seconds = 0.0;

@@ -96,7 +96,7 @@ RedVSIContextRoutine::~RedVSIContextRoutine(void)
 //
 /// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 //
-//void RedVSIContextRoutine::AddParam(RedDataString cName, RedType* pData)
+//void RedVSIContextRoutine::AddParam(RedDataString cName, RedData* pData)
 //{
 //     cRoutineData.Add(cName, pData->Clone());
 //}
@@ -105,9 +105,9 @@ RedVSIContextRoutine::~RedVSIContextRoutine(void)
 // Data
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-RedType* RedVSIContextRoutine::CreateDataItem(const RedVSILangElement& cLocation, const RedVSILangElement& cType, const RedDataString& cName)
+RedData* RedVSIContextRoutine::CreateDataItem(const RedVSILangElement& cLocation, const RedVSILangElement& cType, const RedDataString& cName)
 {
-    RedType* pNewData = NULL;
+    RedData* pNewData = NULL;
 
     // Basic Validation
     if (!cLocation.IsLocation()) throw;
@@ -132,9 +132,9 @@ RedType* RedVSIContextRoutine::CreateDataItem(const RedVSILangElement& cLocation
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-RedType* RedVSIContextRoutine::DuplicateDataItem(const RedVSILangElement& cLocation, const RedType* pDataItem, const RedDataString& cName)
+RedData* RedVSIContextRoutine::DuplicateDataItem(const RedVSILangElement& cLocation, const RedData* pDataItem, const RedDataString& cName)
 {
-    RedType* pNewData = pDataItem->Clone();
+    RedData* pNewData = pDataItem->Clone();
 
     // Basic Validation
     if (!cLocation.IsLocation()) throw;
@@ -157,7 +157,7 @@ RedType* RedVSIContextRoutine::DuplicateDataItem(const RedVSILangElement& cLocat
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-bool RedVSIContextRoutine::FindDataItem(const RedDataString& cName, RedType*& pData)
+bool RedVSIContextRoutine::FindDataItem(const RedDataString& cName, RedData*& pData)
 {
     // first try and get the data from the local routine
     if (cLocalVariables.FindFieldPtr(cName, pData))
@@ -178,7 +178,7 @@ RedDataVariant RedVSIContextRoutine::DataItemAsVariant(const RedDataString& cNam
 {
     RedDataVariant RetVar;
 
-    RedType* pData = NULL;
+    RedData* pData = NULL;
 
     bool found = FindDataItem(cName, pData);
 

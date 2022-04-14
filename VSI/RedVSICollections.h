@@ -36,8 +36,8 @@ typedef RedStackLIFO<RedVSICmd*> RedVSICmdStack;
 typedef RedDoubleLinkedList<RedDataVariant>         RedVSIVariantList;
 typedef RedDoubleLinkedListIterator<RedDataVariant> RedVSIVariantListIterator;
 
-typedef RedMapList<int, RedType*>           RedVSIIntDataMap;
-typedef RedMapListIterator<int, RedType*>   RedVSIIntDataMapIterator;
+typedef RedMapList<int, RedData*>           RedVSIIntDataMap;
+typedef RedMapListIterator<int, RedData*>   RedVSIIntDataMapIterator;
 
 // Stack of parse tree elements, to order execution
 typedef RedStackLIFO<RedVSIParseTreeInterface*> RedVSIParseStack;

@@ -18,7 +18,7 @@
 
 #pragma once
 
-#include "RedType.h"
+#include "RedData.h"
 #include "RedDataType.h"
 
 namespace Red {
@@ -28,8 +28,8 @@ class RedDataString;
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-// Class representing a character. A child of RedType. Contains many type querying operations.
-class RedDataChar : public RedType
+// Class representing a character. A child of RedData. Contains many type querying operations.
+class RedDataChar : public RedData
 {
 public:
 
@@ -38,10 +38,10 @@ public:
     RedDataChar(char NewCh)  { Set(NewCh); };
     ~RedDataChar(void)       { };
 
-    // Inherited: RedType
+    // Inherited: RedData
     void        Init(void)        { Set('\0'); };
     RedDataType Type(void) const  { return kDataTypeChar; };
-    RedType*    Clone(void) const { RedDataChar* newC = new RedDataChar(); newC->ch = ch; return dynamic_cast<RedDataChar*>(newC); };
+    RedData*    Clone(void) const { RedDataChar* newC = new RedDataChar(); newC->ch = ch; return dynamic_cast<RedDataChar*>(newC); };
 
     // simple set & get operations
     void       Set(const char NewCh)        { ch = NewCh; };

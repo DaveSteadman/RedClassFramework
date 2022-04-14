@@ -38,7 +38,7 @@ public:
     RedVSIParseTreeVal(RedDataVariant cNewVal)    { SetValue(cNewVal); };
     ~RedVSIParseTreeVal(void)                     { };
 
-    // Inherited RedType
+    // Inherited RedData
     void              Init(void)            { cVal.Init(); };
     RedVSILangElement Type(void) const      { return RedVSILangElement::ParseValue(); };
     

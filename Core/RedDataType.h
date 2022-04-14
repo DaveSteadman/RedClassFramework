@@ -25,7 +25,7 @@ class RedDataString;
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-// Enumeration based class to encapsulate the possible RedType objects.
+// Enumeration based class to encapsulate the possible RedData objects.
 class RedDataType 
 {
 public:

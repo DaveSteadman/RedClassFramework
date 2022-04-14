@@ -25,17 +25,17 @@ class RedDataType;
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-// Parent class to any data type: string, number char, boolean etc. Exists to allow RedType*
+// Parent class to any data type: string, number char, boolean etc. Exists to allow RedData*
 // elements to be put into collections etc.
-class RedType
+class RedData
 {
 public:
     virtual void        Init(void) = 0;
     virtual RedDataType Type(void) const = 0;
-    virtual RedType*    Clone(void) const = 0;
-    virtual             ~RedType(void) { };
+    virtual RedData*    Clone(void) const = 0;
+    virtual             ~RedData(void) { };
 
-    static RedType* NewRedObj(const RedDataType eType);
+    static RedData* NewRedObj(const RedDataType eType);
 };
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

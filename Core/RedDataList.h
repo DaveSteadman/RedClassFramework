@@ -20,7 +20,7 @@
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-#include "RedType.h"
+#include "RedData.h"
 #include "RedDataBoolean.h"
 #include "RedDataNumber.h"
 #include "RedDataString.h"
@@ -31,11 +31,11 @@ namespace Red {
 namespace Core {
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-// A List data type, parented on RedType, so we can create collections of them and use them as VSI variables.
+// A List data type, parented on RedData, so we can create collections of them and use them as VSI variables.
 // All items stored as pointers, either addig from externally created objects, or by value that creates the object on the fly.
 // All objects deleted when deleted from the collection.
 
-class RedDataList : public RedType
+class RedDataList : public RedData
 {
 public:
 
@@ -44,18 +44,18 @@ public:
 
     ~RedDataList(void) { pList->DelAll(); delete pList; };
 
-    // Inherited: RedType
+    // Inherited: RedData
     RedDataType       Type(void) const { return RedDataType::List(); };
-    RedType*          Clone(void) const;
+    RedData*          Clone(void) const;
     void              Init(void) { pList->DelAll(); };
 
     void              InitToSize(unsigned uNumItems, RedDataType eItemType);
 
-    void        CloneAndAdd(const RedType* pNewAttrib) { pList->AddLast(pNewAttrib->Clone()); };
-    void        AddByPtr(RedType* pNewAttrib)          { pList->AddLast(pNewAttrib); };
+    void        CloneAndAdd(const RedData* pNewAttrib) { pList->AddLast(pNewAttrib->Clone()); };
+    void        AddByPtr(RedData* pNewAttrib)          { pList->AddLast(pNewAttrib); };
 
     // Generic add operations
-    RedType*    CreateAddReturn(const RedDataType& NewAttribType);
+    RedData*    CreateAddReturn(const RedDataType& NewAttribType);
 
     // Shortcut add operations
     void        AddByValue(const int iVal)     { pList->AddLast(new RedDataNumber(iVal));   };
@@ -68,19 +68,19 @@ public:
 
     unsigned    NumItems(void) const { return pList->NumItems(); };
 
-    RedType*    PtrForIndex(const unsigned uIndex) const;
+    RedData*    PtrForIndex(const unsigned uIndex) const;
 
     // Operators
     void operator =(const RedDataList& cNewVal);
-    RedType* operator [](const unsigned Index) const { return PtrForIndex(Index); };
+    RedData* operator [](const unsigned Index) const { return PtrForIndex(Index); };
 
 private:
 
-    typedef RedDoubleLinkedList<RedType*>   RedTypeList;
-    typedef RedDoubleLinkedList<RedType*>   RedTypeListIterator;
+    typedef RedDoubleLinkedList<RedData*>   RedTypeList;
+    typedef RedDoubleLinkedList<RedData*>   RedTypeListIterator;
 
     // Attributes
-    RedTypeList* pList;
+    RedTypeList* pList = NULL;
 };
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

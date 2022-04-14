@@ -91,7 +91,7 @@ RedResult RedTestVSI::TestParseTreeVar(void)
         testContext.CreateDataItem(RedVSILangElement::LocationStack(), RedVSILangElement::TypeNumber(), RedDataString("testVar1"));
 
         RedDataNumber* testVar1 = NULL;
-        RedType* pFoundDataItem = NULL;
+        RedData* pFoundDataItem = NULL;
         if (testContext.FindDataItem(RedDataString("testVar1"), pFoundDataItem))
         {
             if (pFoundDataItem->Type() != kDataTypeNum)
@@ -271,7 +271,7 @@ RedResult RedTestVSI::TestParseFactory_002(void)
         if (res.StringValue() != RedDataString("hello red"))
             return kResultFail;
 
-        RedType* resultX;
+        RedData* resultX;
         testContext.FindDataItem(RedDataString("x"), resultX);
         if (resultX->Type() != kDataTypeStr)
             return kResultFail;
@@ -324,7 +324,7 @@ RedResult RedTestVSI::TestParseFactory_003(void)
         if (res.NumberValue() != RedDataNumber(100))
             return kResultFail;
 
-        RedType* resultX;
+        RedData* resultX;
         testContext.FindDataItem(RedDataString("x"), resultX);
         if (resultX->Type() != kDataTypeNum)
             return kResultFail;
@@ -368,7 +368,7 @@ RedResult RedTestVSI::TestCmdNew(void)
         testContext.ExecuteExprQueue();
         cmdNew.Execute(&testContext);
 
-        RedType* resultX;
+        RedData* resultX;
         testContext.FindDataItem(RedDataString("x"), resultX);
         if (resultX->Type() != kDataTypeNum)
             return kResultFail;

@@ -18,7 +18,7 @@
 
 #pragma once
 
-#include "RedType.h"
+#include "RedData.h"
 #include "RedDataType.h"
 #include "RedCoreConsts.h"
 #include "RedDataChar.h"
@@ -35,7 +35,7 @@ static const unsigned kRedDataStringAllocBlockSize = 32;
 
 // String class, containing numerous string search & manipulation functions and operators.
 // All Index values start from zero.
-class RedDataString : public RedType
+class RedDataString : public RedData
 {
 public:
 
@@ -44,10 +44,10 @@ public:
     RedDataString(const char* instr);
     RedDataString(const RedDataString& instr);
 
-    // Inherited: RedType
+    // Inherited: RedData
     void           Init(void)        { Empty(); };
     RedDataType    Type(void)  const { return kDataTypeStr; };
-    RedType*       Clone(void) const { RedDataString* newS = new RedDataString(*this); return dynamic_cast<RedType*>(newS); };
+    RedData*       Clone(void) const { RedDataString* newS = new RedDataString(*this); return dynamic_cast<RedData*>(newS); };
 
     // Public Main Routines
     unsigned       FirstContentIndex(void) const { return 0; };

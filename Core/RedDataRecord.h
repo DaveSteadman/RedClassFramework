@@ -20,7 +20,7 @@
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-#include "RedType.h"
+#include "RedData.h"
 #include "RedDataString.h"
 #include "RedDataNumber.h"
 #include "RedDataBoolean.h"
@@ -32,25 +32,25 @@ namespace Core {
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-class RedDataRecord : public RedType
+class RedDataRecord : public RedData
 {
 public:
 
     RedDataRecord(void)  { pAttribList = new RedDataStringDataMap; };
     ~RedDataRecord(void) { pAttribList->DelAll(); delete pAttribList; };
 
-    // Inherited: RedType
+    // Inherited: RedData
     RedDataType Type(void) const { return RedDataType::Record(); };
-    RedType*    Clone(void) const;
+    RedData*    Clone(void) const;
     void        Init(void) { pAttribList->DelAll(); };
 
     // Generic Add
-    void        CloneAndAdd (const RedDataString& cNewAttribName, const RedType* pNewAttrib) { pAttribList->Add(cNewAttribName, pNewAttrib->Clone()); };
-    void        AddByPtr(const RedDataString& cNewAttribName, RedType* pNewAttrib)           { pAttribList->Add(cNewAttribName, pNewAttrib); };
+    void        CloneAndAdd (const RedDataString& cNewAttribName, const RedData* pNewAttrib) { pAttribList->Add(cNewAttribName, pNewAttrib->Clone()); };
+    void        AddByPtr(const RedDataString& cNewAttribName, RedData* pNewAttrib)           { pAttribList->Add(cNewAttribName, pNewAttrib); };
 
     // Generic add operations
-    RedType*    CreateAddReturn(const RedDataString& cNewAttribName, const RedDataType& NewAttribType);
-    RedType*    CreateAddReturn(const char* strNewAttribName,        const RedDataType& NewAttribType);
+    RedData*    CreateAddReturn(const RedDataString& cNewAttribName, const RedDataType& NewAttribType);
+    RedData*    CreateAddReturn(const char* strNewAttribName,        const RedDataType& NewAttribType);
 
     // Shortcut add operations
     void        AddByValue(const RedDataString& cNewAttribName, const int iVal)     { pAttribList->Add(cNewAttribName, new RedDataNumber(iVal));  };
@@ -59,13 +59,13 @@ public:
     void        AddByValue(const RedDataString& cNewAttribName, const bool bVal)    { pAttribList->Add(cNewAttribName, new RedDataBoolean(bVal)); };
 
     // Locate
-    bool        FindFieldPtr(const RedDataString& cAttribName, RedType*& pData) { return pAttribList->FindDataById(cAttribName, pData); };
+    bool        FindFieldPtr(const RedDataString& cAttribName, RedData*& pData) { return pAttribList->FindDataById(cAttribName, pData); };
 
     RedDataString NameForIndex(const unsigned uIndex) const;
-    RedType*      PtrForIndex(const unsigned uIndex) const;
+    RedData*      PtrForIndex(const unsigned uIndex) const;
 
     RedDataType TypeForName(const RedDataString& cAttribName);
-    RedType*    PtrForName (const RedDataString& cAttribName);
+    RedData*    PtrForName (const RedDataString& cAttribName);
 
     // Remove
     void        Del(const RedDataString& cNewAttribName)          { pAttribList->Del(cNewAttribName); };
@@ -78,11 +78,11 @@ public:
 
 private:
 
-    typedef RedMapList<RedDataString, RedType*>           RedDataStringDataMap;
-    typedef RedMapListIterator<RedDataString, RedType*>   RedDataStringDataMapIterator;
+    typedef RedMapList<RedDataString, RedData*>           RedDataStringDataMap;
+    typedef RedMapListIterator<RedDataString, RedData*>   RedDataStringDataMapIterator;
 
     // Attributes
-    RedDataStringDataMap* pAttribList;
+    RedDataStringDataMap* pAttribList = NULL;
 };
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

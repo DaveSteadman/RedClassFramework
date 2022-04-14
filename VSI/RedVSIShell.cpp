@@ -117,18 +117,26 @@ bool RedVSIShell::LibInitComp(RedTokenBuffer& cInputBuffer, RedLog& cLog)
 
 bool RedVSIShell::LibListComp(RedTokenBuffer& cInputBuffer, RedLog& cLog)
 {
-    RedToken cCmdTok = cInputBuffer.GetToken();
+    RedToken cCmdTok  = cInputBuffer.GetToken();
     RedToken cCmd2Tok = cInputBuffer.GetToken();
 
     if (cCmdTok.Predef().IsKeywordLib() && cCmd2Tok.Predef().IsKeywordList())
     {
         cLog.AddText("LibList Shell Command Processed.");
 
-        RedDataList cList = cVSIBase.cCodeLib.ClassNameList();
+        RedDataList cList;
+        cVSIBase.cCodeLib.ListClassNames(cList);
 
         unsigned listcount = cList.NumItems();
 
         RedDataString retstr;
+        RedDataNumber numClasses(listcount);
+
+        retstr = "NumClasses: ";
+        retstr += numClasses.DecimalString();
+        cLog.AddText(retstr);
+
+        retstr = "";
         for (unsigned i = 0; i < listcount; i++)
         {
             RedDataString* x;
@@ -221,7 +229,7 @@ bool RedVSIShell::DataListComp(RedTokenBuffer& cInputBuffer, RedLog& cLog)
         RedDataString cDataLine;
         for (unsigned i = 0; i < NumElems; i++)
         {
-            RedType* pData = cVSIBase.cHeap.PtrForIndex(i);
+            RedData* pData = cVSIBase.cHeap.PtrForIndex(i);
 
             cDataLine = kIOStringKeywordHeap;
             cDataLine += " ";

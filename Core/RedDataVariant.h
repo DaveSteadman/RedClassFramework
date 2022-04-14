@@ -18,7 +18,7 @@
 
 #pragma once
 
-#include "RedType.h"
+#include "RedData.h"
 #include "RedDataType.h"
 #include "RedDataBoolean.h"
 #include "RedDataChar.h"
@@ -35,12 +35,12 @@ namespace Core {
 // Class to hold any of the predefined data types.
 // Used in expressions, to pass a common type between parse tree elements.
 
-class RedDataVariant : public RedType
+class RedDataVariant : public RedData
 {
 public:
 
     RedDataVariant(void):pData(NULL) { };
-    RedDataVariant(const RedType& cDataItem):pData(NULL)        { pData = cDataItem.Clone(); };
+    RedDataVariant(const RedData& cDataItem):pData(NULL)        { pData = cDataItem.Clone(); };
     RedDataVariant(const RedDataVariant& cDataItem):pData(NULL) { SetValue(cDataItem); };
     RedDataVariant(const RedDataBoolean& cNewBool):pData(NULL)  { SetValue(cNewBool); };
     RedDataVariant(const RedDataChar& cNewCh):pData(NULL)       { SetValue(RedDataChar(cNewCh)); };
@@ -53,15 +53,15 @@ public:
     RedDataVariant(const bool val):pData(NULL)                  { SetValue(RedDataBoolean(val)); };
     ~RedDataVariant(void)                                       { Init(); };
 
-    // Inherited: RedType
+    // Inherited: RedData
     void                Init(void);
     RedDataType         Type(void) const;
-    RedType*            Clone(void) const;
+    RedData*            Clone(void) const;
 
     bool                IsValid(void) const { return (pData!=NULL); };
 
     void                SetValue(const RedDataVariant&     cDataItem);
-    void                SetValue(const RedType*        pNewData);
+    void                SetValue(const RedData*        pNewData);
     void                SetValue(const RedDataBoolean& cNewBool);
     void                SetValue(const RedDataChar&    cNewCh);
     void                SetValue(const RedDataList&    cNewLst);
@@ -75,8 +75,8 @@ public:
     void                SetValue(const bool     val) { SetValue(RedDataBoolean(val));     };
     void                SetValue(const char*    val) { SetValue(RedDataString(val));      };
 
-    RedType*            Value(void);
-    bool                ExportTo(RedType* pExportToData) const;
+    RedData*            Value(void);
+    bool                ExportTo(RedData* pExportToData) const;
     RedDataBoolean      BoolValue(void) const;
     RedDataNumber       NumberValue(void) const;
     RedDataString       StringValue(void) const;
@@ -88,7 +88,7 @@ public:
 
     bool                IsSuccessVal(void) const;
 
-    void operator =(const RedType* pData);
+    void operator =(const RedData* pData);
     void operator =(const RedDataVariant& n);
     void operator =(const RedDataBoolean& cNewData) { SetValue(&cNewData); };
     void operator =(const RedDataChar&    cNewData) { SetValue(&cNewData); };
@@ -107,7 +107,7 @@ public:
     RedDataVariant operator/(const RedDataVariant& cVarData);
 
 private:
-    RedType* pData;
+    RedData* pData = NULL;
 };
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

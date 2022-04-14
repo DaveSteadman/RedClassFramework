@@ -196,6 +196,9 @@ void RedDataString::Append(const char Ch)
 
 void RedDataString::Append(const char* Str)
 {
+    if (Str == NULL)
+        return;
+
     if (IsEmpty())
     {
         Set(Str);

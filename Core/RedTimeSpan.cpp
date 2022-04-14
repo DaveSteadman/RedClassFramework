@@ -30,21 +30,33 @@ namespace Core {
 
 const double RedTimeSpan::SpanInDays(void) const
 {
-    return 0;
+    return SpanInSeconds() * ((double)kTimeSecondsInDay);
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 const double RedTimeSpan::SpanInHours(void) const
 {
-    return 0;
+    return SpanInSeconds() * ((double)kTimeSecondsInHour);
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 const double RedTimeSpan::SpanInSeconds(void) const
 {
-    return 0;
+    double dblStart = starttime.SecondsSinceStartOfDay();
+    double dblEnd   = endtime.SecondsSinceStartOfDay();
+
+    if (dblStart < dblEnd)
+    {
+        return dblEnd - dblStart;
+    }
+    else
+    {
+        // if the end is before the start (smaller value), it wraps across between days.
+        // we'll want: Endtimestarttime->EndOfDay + 
+        return starttime.SecondsToEndOfDay() + dblEnd;
+    }
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

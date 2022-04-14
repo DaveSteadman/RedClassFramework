@@ -16,7 +16,7 @@
 // (http://opensource.org/licenses/MIT)
 // -------------------------------------------------------------------------------------------------
 
-#include "RedType.h"
+#include "RedData.h"
 
 #include "RedDataBoolean.h"
 #include "RedDataChar.h"
@@ -31,9 +31,9 @@ namespace Core {
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-RedType* RedType::NewRedObj(const RedDataType eType)
+RedData* RedData::NewRedObj(const RedDataType eType)
 {
-    RedType* retData = NULL;
+    RedData* retData = NULL;
 
     if      (eType.IsBool())    retData = new RedDataBoolean;
     else if (eType.IsChar())    retData = new RedDataChar;

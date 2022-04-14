@@ -18,7 +18,7 @@
 
 #pragma once
 
-#include "RedType.h"
+#include "RedData.h"
 #include "RedDataString.h"
 #include "RedDataChar.h"
 
@@ -33,7 +33,7 @@ static const double kDefaultFloatCompareTollerance = 0.0000001;
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 // Class representing a mutable number. Internally differentiates between int and float values.
-class RedDataNumber : public RedType
+class RedDataNumber : public RedData
 {
 public:
 
@@ -45,10 +45,10 @@ public:
     RedDataNumber(const RedDataString& cNewDecimalVal) { SetDecimalString(cNewDecimalVal); };
     ~RedDataNumber(void) { };
 
-    // Inherited: RedType
+    // Inherited: RedData
     void          Init(void)        { eNumType=TENumberType::eInt; iIntVal=0; dblFloatVal=0.0; };
     RedDataType   Type(void) const  { return kDataTypeNum; };
-    RedType*      Clone(void) const { RedDataNumber* newN = new RedDataNumber(*this); return (RedType*)newN; };
+    RedData*      Clone(void) const { RedDataNumber* newN = new RedDataNumber(*this); return (RedData*)newN; };
 
     // Class operations
     bool          IsZero(void)     const;

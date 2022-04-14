@@ -59,9 +59,9 @@ public:
     void            PrevDay(void);
 
     // String output
-    RedDataString       DateString(void) const;
-    RedDataString       EightDigitDateString(void) const;
-    RedDataString       SixDigitDateString(void) const;
+    RedDataString       DateString(void) const;           // "yyyy/mm/dd"
+    RedDataString       EightDigitDateString(void) const; // "yyyymmdd"
+    RedDataString       SixDigitDateString(void) const;   // "yymmdd"
 
     // Operators
     void operator =(const RedDate& cNewVal);
@@ -70,7 +70,6 @@ public:
     RedDate& operator ++(int) { NextDay(); return *this; };
     RedDate& operator --()    { PrevDay(); return *this; };
     RedDate& operator --(int) { PrevDay(); return *this; };
-
 
 public:
 

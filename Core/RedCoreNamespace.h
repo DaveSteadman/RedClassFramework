@@ -29,7 +29,7 @@
 
 // Core Types
 #include "RedDataType.h"
-#include "RedType.h"
+#include "RedData.h"
 #include "RedDataBoolean.h"
 #include "RedDataChar.h"
 #include "RedDataNumber.h"

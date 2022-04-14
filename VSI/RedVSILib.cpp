@@ -106,6 +106,28 @@ RedDataList RedVSILib::ClassNameList(void)
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
+void RedVSILib::ListClassNames(RedDataList& cClassNameList)
+{
+    cClassNameList.Init();
+
+    IteratorType cIt(&cClassList);
+
+    // Iterate through the loaded classes for the classname
+    cIt.First();
+    while (!cIt.IsDone())
+    {
+        RedVSILibClass* pCurrClass = cIt.CurrentItem();
+
+        if (pCurrClass != NULL)
+            cClassNameList.AddByPtr(pCurrClass->ClassName().Clone());
+
+        cIt.Next();
+    }
+}
+
+
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
 RedVSILibRoutine* RedVSILib::FindRoutine(const RedVSIRoutineCallInterface& cSig)
 {
     RedVSILibClass*   pClass   = FindClass(cSig.ClassName());

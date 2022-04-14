@@ -16,7 +16,7 @@
 // (http://opensource.org/licenses/MIT)
 // -------------------------------------------------------------------------------------------------
 
-#include "RedType.h"
+#include "RedData.h"
 
 #include "RedDataRecord.h"
 #include "RedDataBoolean.h"
@@ -36,7 +36,7 @@ namespace Core {
 // Inhertied
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-RedType* RedDataRecord::Clone(void) const 
+RedData* RedDataRecord::Clone(void) const 
 {
     RedDataRecord* pNewObj = new RedDataRecord();
 
@@ -48,14 +48,14 @@ RedType* RedDataRecord::Clone(void) const
     }
     pNewObj->pAttribList = pAttribList->Clone();
 
-    return (RedType*)pNewObj;
+    return (RedData*)pNewObj;
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-RedType* RedDataRecord::CreateAddReturn(const RedDataString& cNewAttribName, const RedDataType& NewAttribType)
+RedData* RedDataRecord::CreateAddReturn(const RedDataString& cNewAttribName, const RedDataType& NewAttribType)
 {
-    RedType* retData = RedType::NewRedObj(NewAttribType);
+    RedData* retData = RedData::NewRedObj(NewAttribType);
 
     pAttribList->Add(cNewAttribName, retData);
 
@@ -64,9 +64,9 @@ RedType* RedDataRecord::CreateAddReturn(const RedDataString& cNewAttribName, con
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-RedType* RedDataRecord::CreateAddReturn(const char* strNewAttribName, const RedDataType& NewAttribType)
+RedData* RedDataRecord::CreateAddReturn(const char* strNewAttribName, const RedDataType& NewAttribType)
 {
-    RedType* retData = RedType::NewRedObj(NewAttribType);
+    RedData* retData = RedData::NewRedObj(NewAttribType);
 
     pAttribList->Add(RedDataString(strNewAttribName), retData);
 
@@ -78,14 +78,14 @@ RedType* RedDataRecord::CreateAddReturn(const char* strNewAttribName, const RedD
 ///void RedDataRecord::Add(const RedDataString& cNewAttribName, int iVal)
 ///{ 
 ///    RedDataNumber* pNewNum = new RedDataNumber(iVal);
-///    pAttribList->Add(cNewAttribName, (RedType* )pNewNum);
+///    pAttribList->Add(cNewAttribName, (RedData* )pNewNum);
 ///};
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 //
 //void RedDataRecord::Add(const RedDataString& cNewAttribName, const RedDataNumber numVal)
 //{
-//    pAttribList->Add(cNewAttribName, (RedType*)numVal->Clone());
+//    pAttribList->Add(cNewAttribName, (RedData*)numVal->Clone());
 //}
 //
 /// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -93,7 +93,7 @@ RedType* RedDataRecord::CreateAddReturn(const char* strNewAttribName, const RedD
 //void RedDataRecord::Add(const RedDataString& cNewAttribName, const char* strVal)
 //{
 //    RedDataString* pNewStr = new RedDataString(strVal);
-//    pAttribList->Add(cNewAttribName, (RedType*)pNewStr);
+//    pAttribList->Add(cNewAttribName, (RedData*)pNewStr);
 //}
 //
 /// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -101,14 +101,14 @@ RedType* RedDataRecord::CreateAddReturn(const char* strNewAttribName, const RedD
 //void RedDataRecord::Add(const RedDataString& cNewAttribName, const bool bVal)
 //{
 //    RedDataBoolean* pNewBool = new RedDataBoolean(bVal);
-//    pAttribList->Add(cNewAttribName, (RedType*)pNewBool);
+//    pAttribList->Add(cNewAttribName, (RedData*)pNewBool);
 //}
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 RedDataType RedDataRecord::TypeForName(const RedDataString& cAttribName)
 {
-    RedType* pData = NULL;
+    RedData* pData = NULL;
 
     if (FindFieldPtr(cAttribName, pData))
         return pData->Type();
@@ -118,9 +118,9 @@ RedDataType RedDataRecord::TypeForName(const RedDataString& cAttribName)
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-RedType* RedDataRecord::PtrForName(const RedDataString& cAttribName)
+RedData* RedDataRecord::PtrForName(const RedDataString& cAttribName)
 {
-    RedType* pData = NULL;
+    RedData* pData = NULL;
     if (FindFieldPtr(cAttribName, pData))
         return pData;
     else
@@ -142,9 +142,9 @@ RedDataString RedDataRecord::NameForIndex(const unsigned uIndex) const
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 
-RedType* RedDataRecord::PtrForIndex(const unsigned uIndex) const
+RedData* RedDataRecord::PtrForIndex(const unsigned uIndex) const
 {
-    RedType* retData = NULL;
+    RedData* retData = NULL;
 
     if (pAttribList->FindDataByIndex(uIndex, retData))
         return retData;

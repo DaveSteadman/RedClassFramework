@@ -49,20 +49,20 @@ RedDataType RedDataVariant::Type(void) const
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-RedType* RedDataVariant::Clone(void) const
+RedData* RedDataVariant::Clone(void) const
 {
     RedDataVariant* pNewData = new RedDataVariant();
 
     if (pData)
         pNewData->SetValue(pData->Clone());
 
-    return dynamic_cast<RedType*>(pNewData);
+    return dynamic_cast<RedData*>(pNewData);
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 // Set a new value to the object. It maintains its own data, so any existing
 // data is deleted and the input is cloned.
-void RedDataVariant::SetValue(const RedType* pNewData)
+void RedDataVariant::SetValue(const RedData* pNewData)
 {
     Init();
     if (pNewData)
@@ -120,7 +120,7 @@ void RedDataVariant::SetValue(const RedDataString& cNewStr)
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-RedType* RedDataVariant::Value(void)
+RedData* RedDataVariant::Value(void)
 {
     if (pData)
         return pData;
@@ -130,7 +130,7 @@ RedType* RedDataVariant::Value(void)
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-bool RedDataVariant::ExportTo(RedType* pExportToData) const
+bool RedDataVariant::ExportTo(RedData* pExportToData) const
 {
     bool is_success = false;
 
@@ -388,7 +388,7 @@ bool RedDataVariant::IsSuccessVal(void) const
 // Operators
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-void RedDataVariant::operator =(const RedType* pNewData)
+void RedDataVariant::operator =(const RedData* pNewData)
 {
     Init();
 

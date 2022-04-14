@@ -16,7 +16,7 @@
 // (http://opensource.org/licenses/MIT)
 // -------------------------------------------------------------------------------------------------
 
-#include "RedType.h"
+#include "RedData.h"
 #include "RedDataString.h"
 #include "RedLogEvent.h"
 #include "RedLog.h"
@@ -40,9 +40,12 @@ void RedLog::AddEvent(const RedLogEvent& event)
 
 void RedLog::AddText(const RedDataString& NewText)
 {
-    RedLogEvent* storedEvent = new RedLogEvent(NewText);
+    if (!NewText.IsEmpty())
+    {
+        RedLogEvent* storedEvent = new RedLogEvent(NewText);
 
-    EventList.AddLast(storedEvent);
+        EventList.AddLast(storedEvent);
+    }
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

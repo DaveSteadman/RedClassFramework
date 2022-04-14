@@ -68,9 +68,9 @@ private:
     void MakeListElement(TListElement** pNewElem);
     bool FindListElement(unsigned iElemIndex, TListElement** pFoundElem) const;
 
-    TListElement* pListHead;
-    TListElement* pListTail;
-    unsigned      iNumItems;
+    TListElement* pListHead = NULL;
+    TListElement* pListTail = NULL;
+    unsigned      iNumItems = 0;
 };
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

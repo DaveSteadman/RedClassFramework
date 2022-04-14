@@ -18,7 +18,7 @@
 
 #pragma once
 
-#include "RedType.h"
+#include "RedData.h"
 #include "RedDataType.h"
 
 namespace Red {
@@ -30,10 +30,10 @@ const unsigned RED_TRUE  = 1;
 const unsigned RED_FALSE = 0;
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-// Boolean value class. As a child of RedType class, this allows a boolean value to exist in 
-// collections and VSI expressions alongside other RedType objects. The primary purpose of the class 
+// Boolean value class. As a child of RedData class, this allows a boolean value to exist in 
+// collections and VSI expressions alongside other RedData objects. The primary purpose of the class 
 // isn't to replace a bool type in normal operation, which is useful in conditional statements.
-class RedDataBoolean : public RedType
+class RedDataBoolean : public RedData
 {
 public:
 
@@ -44,10 +44,10 @@ public:
     RedDataBoolean(const bool Val)             { Set(Val); };
     ~RedDataBoolean()                          { };
     
-    // Inherited: RedType
+    // Inherited: RedData
     void               Init(void)          { SetFalse(); };
     RedDataType        Type(void) const    { return kDataTypeBool; };
-    RedType*           Clone(void) const   { RedDataBoolean* newB = new RedDataBoolean(); newB->iState = iState; return dynamic_cast<RedType*>(newB); };
+    RedData*           Clone(void) const   { RedDataBoolean* newB = new RedDataBoolean(); newB->iState = iState; return dynamic_cast<RedData*>(newB); };
 
     // simple set/get operations
     void               SetTrue(void)       { iState=RED_TRUE; };

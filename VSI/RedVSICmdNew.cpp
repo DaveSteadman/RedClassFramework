@@ -70,7 +70,7 @@ void RedVSICmdNew::QueueExpr(RedVSIContextRoutine* pContext)
 
 void RedVSICmdNew::Execute(RedVSIContextRoutine* pContext)
 {
-    RedType* pData = 0;
+    RedData* pData = 0;
 
     // Call the context with the details, so it can create the new data item.
     // Pointer to new item returned

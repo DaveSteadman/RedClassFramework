@@ -30,9 +30,9 @@ namespace VSI {
 
 /*
 
-RedType* RedVSIContextBase::CreateHeapDataItem(const RedVSILangElement& cType, const RedDataString& cName)
+RedData* RedVSIContextBase::CreateHeapDataItem(const RedVSILangElement& cType, const RedDataString& cName)
 {
-    RedType* pNewData = NULL;
+    RedData* pNewData = NULL;
 
     // Basic Validation
     if (!cType.IsType()) throw;
@@ -47,7 +47,7 @@ RedType* RedVSIContextBase::CreateHeapDataItem(const RedVSILangElement& cType, c
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-bool RedVSIContextBase::FindHeapDataItem(const RedDataString& cName, RedType*& pData)
+bool RedVSIContextBase::FindHeapDataItem(const RedDataString& cName, RedData*& pData)
 {
     if (cHeap.FindFieldPtr(cName, pData))
         return true;

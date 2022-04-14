@@ -16,7 +16,7 @@
 // (http://opensource.org/licenses/MIT)
 // -------------------------------------------------------------------------------------------------
 
-#include "RedType.h"
+#include "RedData.h"
 
 #include "RedDataList.h"
 
@@ -38,7 +38,7 @@ namespace Core {
 // Inhertied
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-RedType* RedDataList::Clone(void) const 
+RedData* RedDataList::Clone(void) const 
 {
     RedDataList* pNewObj = new RedDataList();
 
@@ -50,7 +50,7 @@ RedType* RedDataList::Clone(void) const
     }
     pNewObj->pList = pList->Clone();
 
-    return (RedType*)pNewObj;
+    return (RedData*)pNewObj;
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -64,14 +64,14 @@ void RedDataList::InitToSize(unsigned uNumItems, RedDataType cItemType)
     pList = new RedTypeList;
 
     for (unsigned i = 0; i < uNumItems; i++)
-        pList->AddLast(RedType::NewRedObj(cItemType));
+        pList->AddLast(RedData::NewRedObj(cItemType));
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-RedType* RedDataList::CreateAddReturn(const RedDataType& NewAttribType)
+RedData* RedDataList::CreateAddReturn(const RedDataType& NewAttribType)
 {
-    RedType* retData = RedType::NewRedObj(NewAttribType);
+    RedData* retData = RedData::NewRedObj(NewAttribType);
 
     pList->AddLast(retData);
 
@@ -80,9 +80,9 @@ RedType* RedDataList::CreateAddReturn(const RedDataType& NewAttribType)
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-RedType* RedDataList::PtrForIndex(const unsigned uIndex) const
+RedData* RedDataList::PtrForIndex(const unsigned uIndex) const
 {
-    RedType* retData = NULL;
+    RedData* retData = NULL;
 
     if (pList->FindElementAtIndex(uIndex, retData))
         return retData;

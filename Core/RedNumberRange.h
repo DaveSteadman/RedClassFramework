@@ -18,7 +18,7 @@
 
 #pragma once
 
-#include "RedType.h"
+#include "RedData.h"
 #include "RedDataNumber.h"
 #include "RedDataBoolean.h"
 
@@ -33,7 +33,7 @@ static const int kRedNumberRangeIntOnly     = 2;
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-class RedNumberRange : public RedType
+class RedNumberRange : public RedData
 {
 public:
 
@@ -45,10 +45,10 @@ public:
 
     ~RedNumberRange() { };
 
-    // Inherited: RedType
+    // Inherited: RedData
     void          Init(void)        { SetRange(0, 1); SetBehaviour(0); };
     RedDataType   Type(void) const  { return kDataTypeBool; };
-    RedType*      Clone(void) const { RedNumberRange* r = new RedNumberRange(cLow, cHigh); return (RedType*)r; };
+    RedData*      Clone(void) const { RedNumberRange* r = new RedNumberRange(cLow, cHigh); return (RedData*)r; };
 
     void          SetBehaviour(const int b);
 

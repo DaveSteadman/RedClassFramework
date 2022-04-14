@@ -43,7 +43,10 @@ public:
     void            AddClass(RedVSILibClass* pNewClass);
     void            DelClass(const RedDataString& cClassName);
     RedVSILibClass* FindClass(const RedDataString& cClassName);
+
     RedDataList     ClassNameList(void);
+
+    void     ListClassNames(RedDataList& cClassNameList);
 
     // Find routines not const, as they may lead to the library loading a class from file.
     RedVSILibRoutine* FindRoutine(const RedVSIRoutineCallInterface& cSig);

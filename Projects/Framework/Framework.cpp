@@ -18,6 +18,7 @@
 //      - Reads everything as its own thing - names, symbols, numbers etc. Then predef as an independent follow-up stage.
 // 
 // - Swap NULL for C++ nullptr keyword
+//      - Not being done right now, as its definition references STL std::nullptr_t.
 //
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
