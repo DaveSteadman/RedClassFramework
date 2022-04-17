@@ -72,7 +72,8 @@ public:
     bool       IsAlphaNumeric(void)   const { return (IsAlpha() || IsDecimalNumber()); };
     bool       IsNumeric(void)        const { return (IsDecimalNumber() || IsFullstop()); };
     bool       IsSymbol(void)         const { return (IsPrintable() && (!IsAlphaNumeric()) && (!IsQuote()) && (!IsWhiteSpace())); };
-    int        DecimalNumber(void)    const { return (IsDecimalNumber()) ? (int)ch - (int)'0' : 0; };
+
+    int        IntFromCharNum(void)   const { return (IsDecimalNumber()) ? (int)ch - (int)'0' : 0; };
 
     // Assignment Operators
     void operator =(const int      newVal)  { Set(newVal); };

@@ -25,7 +25,7 @@ namespace Core {
 
 void RedTokenPredefType::Init(void) 
 {
-    eType = eDefaultInvalid; 
+    eType = TEPredef::eDefaultInvalid; 
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

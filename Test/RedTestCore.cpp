@@ -168,16 +168,16 @@ RedResult RedTestCore::TestDataChar(void)
         RedDataChar x('x');
 
         if (!a.IsDecimalNumber())  return kResultFail;
-        if (a.DecimalNumber() != 0) return kResultFail;
+        if (a.IntFromCharNum() != 0) return kResultFail;
 
         if (!b.IsDecimalNumber())  return kResultFail;
-        if (b.DecimalNumber() != 4) return kResultFail;
+        if (b.IntFromCharNum() != 4) return kResultFail;
 
         if (!c.IsDecimalNumber())  return kResultFail;
-        if (c.DecimalNumber() != 9) return kResultFail;
+        if (c.IntFromCharNum() != 9) return kResultFail;
 
         if (x.IsDecimalNumber())  return kResultFail;
-        if (x.DecimalNumber() != 0) return kResultFail;
+        if (x.IntFromCharNum() != 0) return kResultFail;
     }
 
     return kResultSuccess;
