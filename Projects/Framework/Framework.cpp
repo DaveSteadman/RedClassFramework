@@ -13,7 +13,7 @@
 // - Run a pre-loaded function
 //
 // - Update number/string processing to simplify strings to/from numbers. static funcs etc.
-//      - DataActions: Create a functional/utility class for addition routines and remove clutter from data classes.
+//      - DataActions: Create a functional/utility class for addition routines and remove clutter from data classes?
 //
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 

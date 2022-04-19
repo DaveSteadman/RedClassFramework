@@ -57,7 +57,7 @@ public:
     bool IsPotentiallyPredef(void) { return (cType.IsName() || cType.IsSymbol()); };
 
     // Setup
-    static RedToken EOFToken(void)              { RedToken t; t.SetEOF(); return t; };
+    static RedToken EOFToken(void)            { RedToken t; t.SetEOF(); return t; };
 
     void         SetPos(RedBufferPos cNewPos) { cCodePos = cNewPos; };
     RedBufferPos GetPos(void)                 { return cCodePos; };

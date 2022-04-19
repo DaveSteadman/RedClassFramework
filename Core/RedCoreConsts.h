@@ -25,6 +25,8 @@
 namespace Red {
 namespace Core {
 
+static const char* kNullStr = "\0";
+
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 // Core
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

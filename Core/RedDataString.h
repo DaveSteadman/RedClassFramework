@@ -53,7 +53,7 @@ public:
     // Public Main Routines
     unsigned       FirstContentIndex(void) const { return 0; };
     unsigned       LastContentIndex(void)  const { return contentsize-1; };
-    char*          TextPtr(void)           const { return data; };
+    const char*    TextPtr(void)           const { return (data!=NULL)?data:kNullStr; };
     unsigned       AllocSize(void)         const { return allocsize; };
     unsigned       ContentSize(void)       const { return contentsize; };
 

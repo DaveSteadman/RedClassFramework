@@ -51,7 +51,7 @@ public:
 
 private:
 
-    RedDataString                  cVarName;
+    RedDataString              cVarName;
     RedVSIParseTreeInterface*  pVarIndexExpr;
 };
 
