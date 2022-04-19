@@ -18,6 +18,7 @@
 
 #include "RedVSIParseTreeVar.h"
 #include "RedVSIErrorCodes.h"
+#include "RedVSIContextBase.h"
 
 namespace Red {
 namespace VSI {
@@ -64,7 +65,16 @@ void RedVSIParseTreeVar::AssignValue(RedVSIContextRoutine* pContext, RedDataVari
         throw;
 
     if (!result.ExportTo(pVarObject))
-        throw;
+    {
+        if (pContext->BaseContext() != NULL)
+        {
+            RedDataString errStr = "Unable to assign value: ";
+            errStr += cVarName;
+            errStr += " ";
+            errStr += result.StringValue();
+            pContext->BaseContext()->cLog.AddErrorEvent(errStr);
+        }
+    }
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

@@ -79,11 +79,11 @@ public:
 private:
     
     
-    RedTokenType cType;      // Basic token type, number, string, etc.
-    RedDataString cText;     // The text extracted from the buffer
+    RedTokenType  cType = RedTokenType::DefaultInvalid(); // Basic token type, number, string, etc.
+    RedDataString cText = "";     // The text extracted from the buffer
 
-    RedTokenPredefType cPredef;  // If the type is predefined, this is relevant, otherwise a basic-invalid value.
-    RedDataNumber      cNumber;  // If the type is number, this is relevant, otherwise a zero value.
+    RedTokenPredefType cPredef = RedTokenPredefType::DefaultInvalid();  // If the type is predefined, this is relevant, otherwise a basic-invalid value.
+    RedDataNumber      cNumber = 0;  // If the type is number, this is relevant, otherwise a zero value.
     RedBufferPos       cCodePos; // Buffer position the token was extracted from. Useful in debugging/logging.
 };
 

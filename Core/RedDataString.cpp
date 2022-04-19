@@ -118,25 +118,28 @@ void RedDataString::Set(const char* pText)
     if (!IsEmpty())
         Empty();
 
-    const unsigned StrLenNewData     = (unsigned)strlen(pText);
-    const unsigned NumBlocksRequired = NumBlocksForSize(StrLenNewData);
-    const unsigned AllocSizeRequired = SizeForNumBlocks(NumBlocksRequired);
+    if (pText != NULL)
+    {
+        const unsigned StrLenNewData     = (unsigned)strlen(pText);
+        const unsigned NumBlocksRequired = NumBlocksForSize(StrLenNewData);
+        const unsigned AllocSizeRequired = SizeForNumBlocks(NumBlocksRequired);
 
-    char*          NewData           = RedDataString::AllocData(NumBlocksRequired);
+        char*          NewData           = RedDataString::AllocData(NumBlocksRequired);
 
-    // Clear Existing Data
-    DeleteData();
+        // Clear Existing Data
+        DeleteData();
 
-    // Assign new array and size
-    data      = NewData;
-    allocsize = AllocSizeRequired;
+        // Assign new array and size
+        data      = NewData;
+        allocsize = AllocSizeRequired;
 
-    // Assign content
-    strncpy(data, pText, StrLenNewData);
-    contentsize = StrLenNewData;
+        // Assign content
+        strncpy(data, pText, StrLenNewData);
+        contentsize = StrLenNewData;
 
-    // Loop to clear the rest of the string
-    InitialiseNonContentChars();
+        // Loop to clear the rest of the string
+        InitialiseNonContentChars();
+    }
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

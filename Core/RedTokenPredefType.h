@@ -84,6 +84,8 @@ public:
     bool                      IsKeywordWhile(void) const                     { return eType == TEPredef::eKeywordWhile; };
 
     // Keywords Setup
+    static RedTokenPredefType DefaultInvalid(void)                           { return RedTokenPredefType(TEPredef::eDefaultInvalid); };
+
     static RedTokenPredefType KeywordAdd(void)                               { return RedTokenPredefType(TEPredef::eKeywordAdd); }
     static RedTokenPredefType KeywordAttribute(void)                         { return RedTokenPredefType(TEPredef::eKeywordAttribute); };
     static RedTokenPredefType KeywordBool(void)                              { return RedTokenPredefType(TEPredef::eKeywordBool); };

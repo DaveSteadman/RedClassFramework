@@ -45,6 +45,7 @@ public:
     bool IsNonPrintable(void) const            { return (eState == TETokenType::eNonPrintable); };
     bool IsWhitespace(void) const              { return (eState == TETokenType::eWhitespace); };
 
+    static RedTokenType DefaultInvalid(void)   { return RedTokenType(TETokenType::eDefaultInvalid); };
     static RedTokenType Number(void)           { return RedTokenType(TETokenType::eNumber); };
     static RedTokenType Name(void)             { return RedTokenType(TETokenType::eName); };
     static RedTokenType StringLiteral(void)    { return RedTokenType(TETokenType::eStringLiteral); };

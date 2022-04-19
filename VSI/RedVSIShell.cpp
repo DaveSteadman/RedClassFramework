@@ -66,8 +66,6 @@ RedDataString RedVSIShell::ProcessCmdLine(RedDataString inputstr)
     else if (cInputBuffer.NumTokens() > 0)              retStr = "Command Not Found\n";
     else                                                retStr = "";
 
-    retStr = "test\n";
-
     return retStr;
 }
 
