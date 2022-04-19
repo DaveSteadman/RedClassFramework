@@ -251,6 +251,19 @@ RedResult RedTestCore::TestDataNumber(void)
         if (abcstr3 != "012.300") return kResultFail;
     }
 
+    // Hexadecimal strings
+    {
+        RedDataNumber x(12);
+        RedDataString xstr;
+        xstr = x.HexadecimalString();
+        if (xstr != "0xc") return kResultFail;
+        xstr = x.HexadecimalStringWithMinDigits(4);
+        if (xstr != "0x000c") return kResultFail;
+        x = 32000;
+        xstr = x.HexadecimalStringWithMinDigits(2);
+        if (xstr != "0x7d00") return kResultFail;
+    }
+
     // Reading strings
     {
         RedDataNumber x;

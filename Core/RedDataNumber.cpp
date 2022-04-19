@@ -176,6 +176,41 @@ RedDataString RedDataNumber::DecimalStringWithMinDigitsAndDP(const unsigned minc
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
+RedDataString RedDataNumber::HexadecimalString(void) const
+{
+    RedDataString  cRetStr;
+
+    if (eNumType == TENumberType::eInt)
+    {
+        const int  iStrLen = 32;
+        char       numstr[iStrLen];
+        snprintf(numstr, iStrLen, "0x%x", iIntVal);
+        cRetStr = numstr;
+    }
+    return cRetStr;
+}
+
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+RedDataString RedDataNumber::HexadecimalStringWithMinDigits(const unsigned mindigits) const
+{
+    RedDataString  cRetStr;
+
+    if (eNumType == TENumberType::eInt)
+    {
+        const int  iStrLen = 32;
+        char       formatstr[iStrLen];
+        char       numstr[iStrLen];
+
+        snprintf(formatstr, iStrLen, "0x%%0%dx", mindigits);
+        snprintf(numstr, iStrLen, formatstr, iIntVal);
+        cRetStr = numstr;
+    }
+    return cRetStr;
+}
+
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
 RedDataChar RedDataNumber::CharValue(void) const
 {
     // define return value, self-initialised to \0

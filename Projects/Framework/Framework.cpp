@@ -9,16 +9,10 @@
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 // NextTask:
-// - Get the Token reading improved 
-//      - Fix the strings for simplicity.
-//      - Test reading tokens.
-//      - Check the memory leaks when exiting a read-token routine.
-// 
-//      - Elevate the token from RedToken to RedToken, to cover all the uses (TinyML etc).
-//      - Reads everything as its own thing - names, symbols, numbers etc. Then predef as an independent follow-up stage.
-// 
-// - Swap NULL for C++ nullptr keyword
-//      - Not being done right now, as its definition references STL std::nullptr_t.
+// - Load a code file into the library
+// - Run a pre-loaded function
+//
+// - Update number/string processing to simplify strings to/from numbers. static funcs etc.
 //
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 

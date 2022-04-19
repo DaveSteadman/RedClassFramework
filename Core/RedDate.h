@@ -40,9 +40,9 @@ public:
     static RedDate  Today(void);
 
     // Involved Accessors
-    unsigned        TwoDigitYear(void) const   { return (year % 100); };
-    unsigned        EightDigitDate(void) const;
-    unsigned        SixDigitDate(void) const;
+    unsigned        TwoDigitYear(void) const { return (year % 100); }; // yy
+    unsigned        EightDigitDate(void) const; // yyyymmdd
+    unsigned        SixDigitDate(void) const;   // yymmdd
 
     // DaysFrom + DaysTo must equal DaysIn
     // DaysFrom includes the current date. DaysTo is all in the future.

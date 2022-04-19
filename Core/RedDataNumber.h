@@ -61,6 +61,9 @@ public:
     RedDataString DecimalString(void) const;
     RedDataString DecimalStringWithDP(const unsigned decimalplaces) const;
     RedDataString DecimalStringWithMinDigitsAndDP(const unsigned mindigits, const unsigned decimalplaces) const;
+    RedDataString HexadecimalString(void) const;
+    RedDataString HexadecimalStringWithMinDigits(const unsigned mindigits) const;
+
     RedDataChar   CharValue(void) const;
     int           IntegerValue(void) const;
     double        DoubleValue(void) const;
