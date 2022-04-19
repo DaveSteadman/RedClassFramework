@@ -29,7 +29,7 @@ namespace Core {
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 // Default tollerance on floating point equality statements
-static const unsigned kRedDataStringAllocBlockSize = 32;
+static const unsigned kStringAllocBlockSize = 32;
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -43,6 +43,7 @@ public:
     RedDataString(void);
     RedDataString(const char* instr);
     RedDataString(const RedDataString& instr);
+    ~RedDataString();
 
     // Inherited: RedData
     void           Init(void)        { Empty(); };
@@ -98,8 +99,8 @@ public:
     bool           LineAtNum(const unsigned LineNum, RedDataString& Line) const;
 
     // Internal Main Routines
-    static unsigned SizeForNumBlocks(const unsigned numblocks) { return kRedDataStringAllocBlockSize * numblocks; };
-    static unsigned NumBlocksForSize(const unsigned strsize)   { return (strsize/kRedDataStringAllocBlockSize) + 1; };
+    static unsigned SizeForNumBlocks(const unsigned numblocks) { return kStringAllocBlockSize * numblocks; };
+    static unsigned NumBlocksForSize(const unsigned strsize)   { return (strsize/kStringAllocBlockSize) + 1; };
     static char*    AllocData(const unsigned NumBlocks);
 
     // Derived Assignment/Access Operators
@@ -116,18 +117,18 @@ public:
 
 private:
 
-    void DeleteData(void) { if (data != NULL) { delete [] data; data = NULL; } };
+    void DeleteData(void) { if (data != NULL) { delete [] data; data = NULL; allocsize=0; contentsize=0; } };
 
     void InitialiseNonContentChars(void);
 
     // Char pointer to an array of data
-    char* data;
+    char* data = NULL;
 
     // Size of the array
-    unsigned allocsize;
+    unsigned allocsize = 0;
 
     // Length of data preceding an end null character, there must always be at least one.
-    unsigned contentsize;
+    unsigned contentsize = 0;
 };
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

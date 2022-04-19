@@ -13,6 +13,7 @@
 // - Run a pre-loaded function
 //
 // - Update number/string processing to simplify strings to/from numbers. static funcs etc.
+//      - DataActions: Create a functional/utility class for addition routines and remove clutter from data classes.
 //
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -43,7 +44,8 @@ int main()
 
         // Run Command and output results
         retstr = cVsiShell.ProcessCmdLine(RedDataString(inputline));
-        std::cout << retstr.TextPtr();
+        if (retstr.TextPtr() != NULL)
+            std::cout << retstr.TextPtr();
 
         // End when shell done
         if (cVsiShell.RunState() == TEContextState::Ended)

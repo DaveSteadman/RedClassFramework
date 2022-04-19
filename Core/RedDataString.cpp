@@ -64,6 +64,13 @@ RedDataString::RedDataString(const RedDataString& instr)
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+RedDataString::~RedDataString()
+{
+    Empty();
+}
+
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 // Public Main Routines
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -71,11 +78,6 @@ void RedDataString::Empty(void)
 {
     // Delete recreate the stored string
     DeleteData();
-    data = AllocData(1);
-
-    // Update the string size
-    allocsize   = SizeForNumBlocks(1);
-    contentsize = 0;
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -113,32 +115,28 @@ void RedDataString::Set(const char Ch)
 
 void RedDataString::Set(const char* pText)
 {
-    if (pText == NULL)
-    {
+    if (!IsEmpty())
         Empty();
-    }
-    else
-    {
-        const unsigned StrLenNewData     = (unsigned)strlen(pText);
-        const unsigned NumBlocksRequired = NumBlocksForSize(StrLenNewData);
-        const unsigned AllocSizeRequired = SizeForNumBlocks(NumBlocksRequired);
 
-        char*          NewData           = RedDataString::AllocData(NumBlocksRequired);
+    const unsigned StrLenNewData     = (unsigned)strlen(pText);
+    const unsigned NumBlocksRequired = NumBlocksForSize(StrLenNewData);
+    const unsigned AllocSizeRequired = SizeForNumBlocks(NumBlocksRequired);
 
-        // Clear Existing Data
-        DeleteData();
+    char*          NewData           = RedDataString::AllocData(NumBlocksRequired);
 
-        // Assign new array and size
-        data      = NewData;
-        allocsize = AllocSizeRequired;
+    // Clear Existing Data
+    DeleteData();
 
-        // Assign content
-        strncpy(data, pText, StrLenNewData);
-        contentsize = StrLenNewData;
+    // Assign new array and size
+    data      = NewData;
+    allocsize = AllocSizeRequired;
 
-        // Loop to clear the rest of the string
-        InitialiseNonContentChars();
-    }
+    // Assign content
+    strncpy(data, pText, StrLenNewData);
+    contentsize = StrLenNewData;
+
+    // Loop to clear the rest of the string
+    InitialiseNonContentChars();
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -181,9 +179,9 @@ void RedDataString::Append(const char Ch)
             // Increment the content size
             contentsize++;
 
-            // Delete the existing data string and using the newly created one
-            DeleteData();
-            data      = NewData;
+            delete[] data; 
+            data = NewData;
+
             allocsize = AllocSizeRequired;
 
             // Loop to clear the rest of the string
@@ -234,8 +232,8 @@ void RedDataString::Append(const char* Str)
             strncpy(&NewData[contentsize], Str, AppendSize);
 
             // Assign all the new data and increment the size
-            DeleteData();
-            data      = NewData;
+            delete[] data;
+            data = NewData;
             allocsize = AllocSizeRequired;
             contentsize += AppendSize;
 
@@ -299,8 +297,8 @@ void RedDataString::InsertAtIndex(const unsigned Index, const char Ch)
     contentsize++;
 
     // Delete the existing data string and using the newly created one
-    DeleteData();
-    data      = NewData;
+    delete[] data;
+    data = NewData;
     allocsize = AllocSizeRequired;
 
     // Loop to clear the rest of the string
@@ -342,7 +340,7 @@ void RedDataString::InsertAtIndex(const unsigned Index, const char* Str)
     contentsize += InsertSize;
 
     // Delete the existing data string and using the newly created one
-    DeleteData();
+    delete[] data;
     data      = NewData;
     allocsize = AllocSizeRequired;
 

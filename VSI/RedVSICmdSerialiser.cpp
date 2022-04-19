@@ -163,7 +163,7 @@ void RedVSICmdSerialiser::SerialiseNewCmd(RedTokenBuffer& cTokenBuffer, RedVSICm
 {
     RedVSILangElement          cOutType;
     RedVSILangElement          cOutLoc;
-    RedDataString                  cOutName;
+    RedDataString              cOutName;
     RedVSIParseTreeInterface*  pOutRecordIndexExpr = NULL;
     RedVSIParseTreeInterface*  pOutInitExpr = NULL;
 

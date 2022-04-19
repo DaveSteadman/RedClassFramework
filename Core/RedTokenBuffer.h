@@ -37,6 +37,7 @@ public:
     typedef RedDoubleLinkedListIterator<RedToken>  IteratorType;
 
     RedTokenBuffer(void) { Init(); };
+    ~RedTokenBuffer();
 
     void    Init(void);
     

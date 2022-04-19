@@ -23,6 +23,13 @@ namespace Core {
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
+RedTokenBuffer::~RedTokenBuffer()
+{
+    Init();
+}
+
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
 void RedTokenBuffer::Init(void)
 {
     cTokenList.DelAll();

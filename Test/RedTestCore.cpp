@@ -327,23 +327,23 @@ RedResult RedTestCore::TestDataString(void)
 
         b1 = RedDataString::NumBlocksForSize(15);
         b2 = RedDataString::SizeForNumBlocks(b1);
-        if (b1 != 1)                        return kResultFail;
-        if (b2 != kRedDataStringAllocBlockSize) return kResultFail;
+        if (b1 != 1)                     return kResultFail;
+        if (b2 != kStringAllocBlockSize) return kResultFail;
 
         b1 = RedDataString::NumBlocksForSize(31);
         b2 = RedDataString::SizeForNumBlocks(b1);
-        if (b1 != 1)                          return kResultFail;
-        if (b2 != 1*kRedDataStringAllocBlockSize) return kResultFail;
+        if (b1 != 1)                       return kResultFail;
+        if (b2 != 1*kStringAllocBlockSize) return kResultFail;
 
         b1 = RedDataString::NumBlocksForSize(32);
         b2 = RedDataString::SizeForNumBlocks(b1);
-        if (b1 != 2)                          return kResultFail;
-        if (b2 != 2*kRedDataStringAllocBlockSize) return kResultFail;
+        if (b1 != 2)                       return kResultFail;
+        if (b2 != 2*kStringAllocBlockSize) return kResultFail;
 
         b1 = RedDataString::NumBlocksForSize(319);
         b2 = RedDataString::SizeForNumBlocks(b1);
-        if (b1 != 10)                          return kResultFail;
-        if (b2 != 10*kRedDataStringAllocBlockSize) return kResultFail;
+        if (b1 != 10)                       return kResultFail;
+        if (b2 != 10*kStringAllocBlockSize) return kResultFail;
     }
 
     // Construction and calls
@@ -359,15 +359,15 @@ RedResult RedTestCore::TestDataString(void)
         RedDataString x("1234567890");
         if (x.FirstContentIndex() != 0)                          return kResultFail;
         if (x.LastContentIndex()  != 9)                          return kResultFail;
-        if (x.AllocSize()         != kRedDataStringAllocBlockSize)   return kResultFail;
+        if (x.AllocSize()         != kStringAllocBlockSize)   return kResultFail;
 
         x.Set("1234567890123456789012345678901");
         if (x.LastContentIndex() != 30)                          return kResultFail;
-        if (x.AllocSize()        != kRedDataStringAllocBlockSize)    return kResultFail;
+        if (x.AllocSize()        != kStringAllocBlockSize)    return kResultFail;
 
         x.Set("12345678901234567890123456789012");
         if (x.LastContentIndex() != 31)                          return kResultFail;
-        if (x.AllocSize()        != 2*kRedDataStringAllocBlockSize)  return kResultFail;
+        if (x.AllocSize()        != 2*kStringAllocBlockSize)  return kResultFail;
     }
 
     // Append Char
@@ -379,12 +379,12 @@ RedResult RedTestCore::TestDataString(void)
         x.Set("123456789012345678901234567890");
         x.Append('X');
         if (x.LastContentIndex() != 30) return kResultFail;
-        if (x.AllocSize()        != kRedDataStringAllocBlockSize) return kResultFail;
+        if (x.AllocSize()        != kStringAllocBlockSize) return kResultFail;
 
         x.Set("1234567890123456789012345678901");
         x.Append('X');
         if (x.LastContentIndex() != 31) return kResultFail;
-        if (x.AllocSize()        != 2*kRedDataStringAllocBlockSize) return kResultFail;
+        if (x.AllocSize()        != 2*kStringAllocBlockSize) return kResultFail;
     }
 
     // Append Str

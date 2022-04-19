@@ -40,7 +40,8 @@ class RedLog
 public:
 
     RedLog(void) : containsError(0) { };
-    void Init(void) { EventList.DelAll(); containsError=0; };
+    ~RedLog() { Init(); };
+    void Init(void) { EventList.DelAll(); containsError=false; };
 
     void      AddEvent(const RedLogEvent& event);
     void      AddText (const RedDataString& NewText);
