@@ -8,12 +8,18 @@
 #include "RedTestCentre.h"
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-// NextTask:
-// - Load a code file into the library
+// NextTarget:
+// - Load a code file into the library 
+// 
+//         lib add "c:\util\scratch\test.txt"
+// 
 // - Run a pre-loaded function
 //
+// Ideas:
 // - Update number/string processing to simplify strings to/from numbers. static funcs etc.
 //      - DataActions: Create a functional/utility class for addition routines and remove clutter from data classes?
+// - RedDataVariant type reports the internal type, not the variant "container". 
+//      - Maybe want to change that so actions like serialisation can correctly handle variants.
 //
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 

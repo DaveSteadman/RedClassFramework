@@ -37,7 +37,7 @@ public:
     RedVSILibFactory(RedVSILib* pNewLib);
 
     // Add a Tml-Class to library
-    void              InputTmlClass  (RedTinyMLElement* pTopTmlNode,   RedLog& cAnalysis);
+    void              InputTmlClass  (RedTinyMLElement* pTopTmlNode, RedLog& cAnalysis);
     RedVSILibRoutine* InputTmlRoutine(RedTinyMLNode& cRoutineNode, RedLog& cAnalysis);
 
     RedTinyMLElement* OutputTmlClass  (const RedDataString& classname);

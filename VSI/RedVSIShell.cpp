@@ -20,6 +20,7 @@
 
 #include "RedCoreNamespace.h"
 #include "RedVSINamespace.h"
+#include "RedTinyMLFileIO.h"
 
 #include "RedVSIShell.h"
 
@@ -62,6 +63,7 @@ RedDataString RedVSIShell::ProcessCmdLine(RedDataString inputstr)
     else if (DataListComp(cInputBuffer, cVSIBase.cLog)) retStr = cVSIBase.cLog.AllLoggedText();
     else if (RunFragComp(cInputBuffer, cVSIBase.cLog))  retStr = cVSIBase.cLog.AllLoggedText();
     else if (HelpComp(cInputBuffer, cVSIBase.cLog))     retStr = cVSIBase.cLog.AllLoggedText();
+    else if (LibAddComp(cInputBuffer, cVSIBase.cLog))   retStr = cVSIBase.cLog.AllLoggedText();
     else if (LibListComp(cInputBuffer, cVSIBase.cLog))  retStr = cVSIBase.cLog.AllLoggedText();
     else if (cInputBuffer.NumTokens() > 0)              retStr = "Command Not Found\n";
     else                                                retStr = "";
@@ -96,12 +98,53 @@ bool RedVSIShell::HelpComp(RedTokenBuffer& cInputBuffer, RedLog& cLog)
 
 bool RedVSIShell::LibAddComp(RedTokenBuffer& cInputBuffer, RedLog& cLog)
 {
-    RedDataString filepath = "";
+    RedToken cCmdTok = cInputBuffer.GetToken();
+    RedToken cCmd2Tok = cInputBuffer.GetToken();
 
-    if (!RedIOHandler::FileExists(filepath))
+    if (!cCmdTok.Predef().IsKeywordLib() || !cCmd2Tok.Predef().IsKeywordAdd())
+    {
+        cInputBuffer.SetTokenIndexBackOne();
+        cInputBuffer.SetTokenIndexBackOne();
         return false;
+    }
+    cLog.AddText("LibAdd Shell Command Processed.");
 
-    return false;
+    RedToken cFilePathTok = cInputBuffer.GetToken();
+    RedDataString filepathStr = cFilePathTok.Text();
+    if (!cFilePathTok.Type().IsStringLiteral())
+    {
+        RedDataString cErrStr = "String literal token for filepath not found with token: ";
+        cErrStr += filepathStr;
+        cLog.AddErrorEvent(cErrStr);
+        return true;
+    }
+
+    if (!RedIOHandler::FileExists(filepathStr))
+    {
+        RedDataString cErrStr = "Could not find filepath with token: ";
+        cErrStr += filepathStr;
+        cLog.AddErrorEvent(cErrStr);
+        return true;
+    }
+
+    // --- 
+    // Have a path to a known file. open it and import.
+
+    RedTinyMLElement* pTopTinyMLElem = RedTinyMLFileIO::CreateTinyMLFromFile(filepathStr);
+
+    if (pTopTinyMLElem == NULL)
+    {
+        RedDataString cErrStr = "Unable to create basic TinyML structure from file: ";
+        cErrStr += filepathStr;
+        cLog.AddErrorEvent(cErrStr);
+        return true;
+    }
+
+    RedVSILibFactory vsiCodeLibFactory(&cVSIBase.cCodeLib);
+
+    vsiCodeLibFactory.InputTmlClass(pTopTinyMLElem, cLog);
+
+    return true;
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
