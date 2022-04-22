@@ -103,6 +103,8 @@ bool RedVSIShell::HelpComp(RedTokenBuffer& cInputBuffer, RedLog& cLog)
         cLog.AddText(":>data list - List items in the heap.");
         cLog.AddText(":>exit - End program.");
         cLog.AddText(":>help - List all shell commands.");
+        cLog.AddText(":>lib add <filepath> - Add new class to code library.");
+        cLog.AddText(":>lib list - Show contents of code libary.");
         cLog.AddText(":>run \"new heap number x = 1\" - Run a VSI code fragment.");
 
         return true;

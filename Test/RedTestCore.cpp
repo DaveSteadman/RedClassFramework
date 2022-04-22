@@ -167,16 +167,16 @@ RedResult RedTestCore::TestDataChar(void)
         RedDataChar c('9');
         RedDataChar x('x');
 
-        if (!a.IsDecimalNumber())  return kResultFail;
+        if (!a.IsDecimalNumber())    return kResultFail;
         if (a.IntFromCharNum() != 0) return kResultFail;
 
-        if (!b.IsDecimalNumber())  return kResultFail;
+        if (!b.IsDecimalNumber())    return kResultFail;
         if (b.IntFromCharNum() != 4) return kResultFail;
 
-        if (!c.IsDecimalNumber())  return kResultFail;
+        if (!c.IsDecimalNumber())    return kResultFail;
         if (c.IntFromCharNum() != 9) return kResultFail;
 
-        if (x.IsDecimalNumber())  return kResultFail;
+        if (x.IsDecimalNumber())     return kResultFail;
         if (x.IntFromCharNum() != 0) return kResultFail;
     }
 
@@ -357,16 +357,16 @@ RedResult RedTestCore::TestDataString(void)
     // Set
     {
         RedDataString x("1234567890");
-        if (x.FirstContentIndex() != 0)                          return kResultFail;
-        if (x.LastContentIndex()  != 9)                          return kResultFail;
+        if (x.FirstContentIndex() != 0)                       return kResultFail;
+        if (x.LastContentIndex()  != 9)                       return kResultFail;
         if (x.AllocSize()         != kStringAllocBlockSize)   return kResultFail;
 
         x.Set("1234567890123456789012345678901");
-        if (x.LastContentIndex() != 30)                          return kResultFail;
+        if (x.LastContentIndex() != 30)                       return kResultFail;
         if (x.AllocSize()        != kStringAllocBlockSize)    return kResultFail;
 
         x.Set("12345678901234567890123456789012");
-        if (x.LastContentIndex() != 31)                          return kResultFail;
+        if (x.LastContentIndex() != 31)                       return kResultFail;
         if (x.AllocSize()        != 2*kStringAllocBlockSize)  return kResultFail;
     }
 
@@ -378,12 +378,12 @@ RedResult RedTestCore::TestDataString(void)
 
         x.Set("123456789012345678901234567890");
         x.Append('X');
-        if (x.LastContentIndex() != 30) return kResultFail;
+        if (x.LastContentIndex() != 30)                    return kResultFail;
         if (x.AllocSize()        != kStringAllocBlockSize) return kResultFail;
 
         x.Set("1234567890123456789012345678901");
         x.Append('X');
-        if (x.LastContentIndex() != 31) return kResultFail;
+        if (x.LastContentIndex() != 31)                      return kResultFail;
         if (x.AllocSize()        != 2*kStringAllocBlockSize) return kResultFail;
     }
 
@@ -391,7 +391,7 @@ RedResult RedTestCore::TestDataString(void)
     {
         RedDataString x1("123");
         x1.Append("ABC");
-        if (x1 != "123ABC") return kResultFail;
+        if (x1 != "123ABC")        return kResultFail;
         if (x1.ContentSize() != 6) return kResultFail;
 
         x1 = "ABC";
@@ -458,10 +458,10 @@ RedResult RedTestCore::TestDataString(void)
 
         RedDataString x2;
         if (!x1.LineAtNum(2, x2)) return kResultFail;
-        if (x2 != "abc") return kResultFail;
+        if (x2 != "abc")          return kResultFail;
 
         if (!x1.LineAtNum(1, x2)) return kResultFail;
-        if (x2 != "123") return kResultFail;
+        if (x2 != "123")          return kResultFail;
 
         if (x1.LineAtNum(0, x2)) return kResultFail;
     }
@@ -523,7 +523,7 @@ RedResult RedTestCore::TestDataVariant(void)
         {
             y = x.StringValue();
             if (y.Type() != kDataTypeStr) return kResultFail;
-            if (y != str) return kResultFail;
+            if (y != str)                 return kResultFail;
         }
     }
 
@@ -716,10 +716,10 @@ RedResult RedTestCore::TestLinkedList(void)
 
     int x=0;
     if (l.FindFirst(x) == 0) return kResultFail;
-    if (x != 1) return kResultFail;
+    if (x != 1)              return kResultFail;
 
     if (l.FindLast(x) == 0) return kResultFail;
-    if (x != 3) return kResultFail;
+    if (x != 3)             return kResultFail;
 
     return kResultSuccess;
 }
@@ -777,7 +777,7 @@ RedResult RedTestCore::TestEventLog(void)
     log.AddText("EventLogText1");
     log.AddText("EventLogText2");
     if (log.NumEvents() != 2) return kResultFail;
-    if (log.ContainsError()) return kResultFail;
+    if (log.ContainsError())  return kResultFail;
 
     RedLogEvent e(TEventLogType::eErrorEvent, "ErrorText1");
     log.AddEvent(e);
