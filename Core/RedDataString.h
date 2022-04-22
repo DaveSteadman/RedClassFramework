@@ -88,6 +88,7 @@ public:
     void           DelFirstChar(void) { DelCharsAtIndex(FirstContentIndex(), 1); };
     void           DelLastChar(void)  { DelCharsAtIndex(LastContentIndex(),  1); };
 
+
     RedDataString  SubStr(const unsigned StartIndex, const unsigned Count) const;
     bool           IsCharInString(char ch) const;
     bool           IsAlphaNumeric(void) const;
@@ -95,8 +96,14 @@ public:
     // substring routines
     // CondenseAllocation
 
+
     unsigned       NumLines(void) const;
     bool           LineAtNum(const unsigned LineNum, RedDataString& Line) const;
+
+    void           DelPrefix(const RedDataString& PrefixStr);
+    void           DelSuffix(const RedDataString& SuffixStr);
+    void           TrimQuotes(void);
+
 
     // Internal Main Routines
     static unsigned SizeForNumBlocks(const unsigned numblocks) { return kStringAllocBlockSize * numblocks; };

@@ -18,10 +18,11 @@
 
 #include "RedDataVariant.h"
 #include "RedDataBoolean.h"
-
 #include "RedDataChar.h"
 #include "RedDataString.h"
 #include "RedDataNumber.h"
+
+#include "RedTokenPredefMap.h"
 
 namespace Red {
 namespace Core {
@@ -134,8 +135,9 @@ bool RedDataVariant::ExportTo(RedData* pExportToData) const
 {
     bool is_success = false;
 
-    // first check both ethe data items are not null pointers
-    if ((pData) && (pExportToData)) 
+    // first check both ethe data items are not null pointers, and they are not the same.
+    if ( ((pData != NULL) && (pExportToData != NULL)) &&
+         (pData != pExportToData) )
     {
         // check if the two types are the same
         if (pData->Type() == pExportToData->Type())
@@ -207,8 +209,7 @@ RedDataBoolean RedDataVariant::BoolValue(void) const
         RedDataBoolean* pBoolData = dynamic_cast<RedDataBoolean*>(pData);
         cBool = *pBoolData;
     }
-
-    if (pData->Type().IsNum())
+    else if (pData->Type().IsNum())
     {
         RedDataNumber* pNumData = dynamic_cast<RedDataNumber*>(pData);
 
@@ -217,7 +218,15 @@ RedDataBoolean RedDataVariant::BoolValue(void) const
         else
             cBool.SetFalse();
     }
+    else if (pData->Type().IsStr())
+    {
+        RedDataString* pStr = dynamic_cast<RedDataString*>(pData);
 
+        if (*pStr == kIOStringKeywordTrue)
+            cBool.SetTrue();
+        if (*pStr == kIOStringKeywordFalse)
+            cBool.SetFalse();
+    }
     return cBool;
 }
 
@@ -248,14 +257,19 @@ RedDataString RedDataVariant::StringValue(void) const
         RedDataString* pStrData = dynamic_cast<RedDataString*>(pData);
         cStr = *pStrData;
     }
+    else if (pData->Type().IsChar())
+    {
+        RedDataChar* pChrData = dynamic_cast<RedDataChar*>(pData);
+        cStr = *pChrData;
+    }
     else if (pData->Type().IsBool())
     {
         RedDataBoolean b;
         ExportTo(&b);
         if (b.IsTrue())
-            cStr = "true";
+            cStr = kIOStringKeywordTrue;
         if (b.IsFalse())
-            cStr = "false";
+            cStr = kIOStringKeywordFalse;
     }
     else if (pData->Type().IsNum())
     {
@@ -268,11 +282,15 @@ RedDataString RedDataVariant::StringValue(void) const
 
         cStr = "<list ";
         cStr += RedDataNumber(pListData->NumItems()).DecimalString();
-        cStr += ">";
+        cStr += " items>";
     }
     else if (pData->Type().IsRecord())
     {
-        cStr = "<record>";
+        RedDataRecord* pRecData = dynamic_cast<RedDataRecord*>(pData);
+
+        cStr = "<record >";
+        cStr += RedDataNumber(pRecData->NumItems()).DecimalString();
+        cStr += " items>";
     }
 
     return cStr;

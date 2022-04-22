@@ -493,6 +493,60 @@ bool RedDataString::LineAtNum(const unsigned LineNum, RedDataString& Line) const
     return true;
 }
 
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+void RedDataString::DelPrefix(const RedDataString& PrefixStr)
+{
+    // Check the prefix is shorter than the main string.
+    if (PrefixStr.ContentSize() >= ContentSize())
+        return;
+
+    const unsigned pcs = PrefixStr.ContentSize();
+    bool prefixmatch = true;
+
+    // loop through the prefix and the current string, check they match.
+    for (unsigned i = 0; i < pcs; i++)
+    {
+        if (PrefixStr.CharAtIndex(i) != CharAtIndex(i))
+            prefixmatch = false;
+    }
+
+    // if so, delete the leading number of characters in the prefix.
+    if (prefixmatch)
+        DelCharsAtIndex(0, pcs);
+}
+
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+void RedDataString::DelSuffix(const RedDataString& SuffixStr)
+{
+    // Check the SuffixStr is shorter than the main string.
+    if (SuffixStr.ContentSize() >= ContentSize())
+        return;
+
+    const unsigned scs = SuffixStr.ContentSize();
+    bool suffixmatch = true;
+
+    // loop through the prefix and the current string, check they match.
+    for (unsigned i = 0; i < scs; i++)
+    {
+        unsigned suffixpos = (ContentSize() - scs) + i;
+
+        if (SuffixStr.CharAtIndex(i) != CharAtIndex(suffixpos))
+            suffixmatch = false;
+    }
+
+    if (suffixmatch)
+        DelCharsAtIndex(ContentSize() - scs, ContentSize());
+}
+
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+void RedDataString::TrimQuotes(void)
+{
+
+}
+
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 // Internal Main Routines

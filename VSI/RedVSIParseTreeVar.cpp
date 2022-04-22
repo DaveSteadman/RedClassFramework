@@ -44,8 +44,13 @@ void RedVSIParseTreeVar::CalcResult(RedVSIContextRoutine* pContext)
     RedData* pDataItem = 0;
     if (!pContext->FindDataItem(cVarName, pDataItem))
     {
-        throw;
+        //throw;
         //RedVSIErrorCodes::Log(pContext->GetAnalysis(), RedVSIErrorCodes::eParseVar_NoVar);
+
+        RedDataString cErrStr = "Var not found: ";
+        cErrStr += cVarName;
+        pContext->BaseContext()->cLog.AddErrorEvent(cErrStr);
+
         return;
     }
 

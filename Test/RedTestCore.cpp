@@ -466,6 +466,22 @@ RedResult RedTestCore::TestDataString(void)
         if (x1.LineAtNum(0, x2)) return kResultFail;
     }
 
+    // Prefix
+    {
+        RedDataString x1;
+
+        x1 = "RedString";
+        x1.DelPrefix("Red");
+        if (x1 != "String") return kResultFail;
+
+        x1 = "123456789abc";
+        x1.DelPrefix("124");
+        if (x1 != "123456789abc") return kResultFail;
+
+        x1.DelSuffix("abc");
+        if (x1 != "123456789") return kResultFail;
+    }
+
     // Operators
     {
         RedDataString x1 = "abc";

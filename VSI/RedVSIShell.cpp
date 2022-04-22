@@ -57,21 +57,42 @@ RedDataString RedVSIShell::ProcessCmdLine(RedDataString inputstr)
 
     cVSIBase.cLog.Init();
 
-    if      (ExitComp(cInputBuffer, cVSIBase.cLog))     retStr = cVSIBase.cLog.AllLoggedText();
-    else if (DataAddComp(cInputBuffer, cVSIBase.cLog))  retStr = cVSIBase.cLog.AllLoggedText();
-    else if (DataInitComp(cInputBuffer, cVSIBase.cLog)) retStr = cVSIBase.cLog.AllLoggedText();
-    else if (DataListComp(cInputBuffer, cVSIBase.cLog)) retStr = cVSIBase.cLog.AllLoggedText();
-    else if (RunFragComp(cInputBuffer, cVSIBase.cLog))  retStr = cVSIBase.cLog.AllLoggedText();
-    else if (HelpComp(cInputBuffer, cVSIBase.cLog))     retStr = cVSIBase.cLog.AllLoggedText();
-    else if (LibAddComp(cInputBuffer, cVSIBase.cLog))   retStr = cVSIBase.cLog.AllLoggedText();
-    else if (LibListComp(cInputBuffer, cVSIBase.cLog))  retStr = cVSIBase.cLog.AllLoggedText();
-    else if (cInputBuffer.NumTokens() > 0)              retStr = "Command Not Found\n";
-    else                                                retStr = "";
-
+    if (BlankLineComp(cInputBuffer, cVSIBase.cLog))
+    {
+        retStr = "";
+    }
+    else
+    {
+        if      (ExitComp(cInputBuffer, cVSIBase.cLog))     retStr = cVSIBase.cLog.AllLoggedText();
+        else if (DataAddComp(cInputBuffer, cVSIBase.cLog))  retStr = cVSIBase.cLog.AllLoggedText();
+        else if (DataInitComp(cInputBuffer, cVSIBase.cLog)) retStr = cVSIBase.cLog.AllLoggedText();
+        else if (DataListComp(cInputBuffer, cVSIBase.cLog)) retStr = cVSIBase.cLog.AllLoggedText();
+        else if (RunFragComp(cInputBuffer, cVSIBase.cLog))  retStr = cVSIBase.cLog.AllLoggedText();
+        else if (HelpComp(cInputBuffer, cVSIBase.cLog))     retStr = cVSIBase.cLog.AllLoggedText();
+        else if (LibAddComp(cInputBuffer, cVSIBase.cLog))   retStr = cVSIBase.cLog.AllLoggedText();
+        else if (LibListComp(cInputBuffer, cVSIBase.cLog))  retStr = cVSIBase.cLog.AllLoggedText();
+        else                                                retStr = "Command not found.\n";
+    }
     return retStr;
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+bool RedVSIShell::BlankLineComp(RedTokenBuffer& cInputBuffer, RedLog& cLog)
+{
+    RedToken cCmdTok = cInputBuffer.GetToken();
+
+    if (cCmdTok.IsEOF())
+    {
+        return true;
+    }
+    else
+    {
+        // Not the EOF keyword, put the token back.
+        cInputBuffer.SetTokenIndexBackOne();
+    }
+    return false;
+}
 
 bool RedVSIShell::HelpComp(RedTokenBuffer& cInputBuffer, RedLog& cLog)
 {

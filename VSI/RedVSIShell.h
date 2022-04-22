@@ -72,6 +72,8 @@ private:
 
     RedVSIContextBase cVSIBase;
 
+    bool BlankLineComp(RedTokenBuffer& cInputBuffer, RedLog& cLog);
+
     bool LibAddComp(RedTokenBuffer& cInputBuffer, RedLog& cLog);
     bool LibInitComp(RedTokenBuffer& cInputBuffer, RedLog& cLog);
     bool LibListComp(RedTokenBuffer& cInputBuffer, RedLog& cLog);

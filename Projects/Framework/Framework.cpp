@@ -20,7 +20,11 @@
 //      - DataActions: Create a functional/utility class for addition routines and remove clutter from data classes?
 // - RedDataVariant type reports the internal type, not the variant "container". 
 //      - Maybe want to change that so actions like serialisation can correctly handle variants.
-//
+// - When an expression reaches an error, throw. Catch it at the command level that started the expression.
+//      - Mop up anything about the expression, make sure an error message is logged. Move on.
+// - DataString: Make the InsertAtIndex routines robust, and reuse then in all the append/prepend versions.
+//      - Remove additional memory allocation calls.
+// 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 int main()
