@@ -97,7 +97,8 @@ RedDoubleLinkedList<Element>::~RedDoubleLinkedList()
 template <class Element>
 void RedDoubleLinkedList<Element>::Init(void)
 {
-
+    while (iNumItems > 0)
+        DelFirst();
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

@@ -58,7 +58,9 @@ public:
     RedDataType         Type(void) const;
     RedData*            Clone(void) const;
 
-    bool                IsValid(void) const { return (pData!=NULL); };
+    bool                IsValid(void) const  { return (pData!=NULL); };
+    RedDataType         DataType(void) const { return (pData==NULL) ? kDataTypeInvalid : pData->Type(); };
+
 
     void                SetValue(const RedDataVariant&     cDataItem);
     void                SetValue(const RedData*        pNewData);
