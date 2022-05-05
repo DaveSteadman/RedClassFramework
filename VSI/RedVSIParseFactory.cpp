@@ -576,6 +576,7 @@ RedVSIParseTreeInterface* RedVSIParseFactory::RunExternalCallCompetition(RedToke
     RedToken cOpenBracketTok = cInputBuffer.GetToken();
 
     if (!cUnitNameTok.Type().IsName())                   { return NULL; }
+    if (!cSeparatorTok.Predef().IsSymbolDoubleColon())   { return NULL; }
     if (!cFuncTok.Type().IsName())                       { return NULL; }
     if (!cOpenBracketTok.Predef().IsSymbolBracketOpen()) { return NULL; }
 
@@ -606,6 +607,13 @@ RedVSIParseTreeInterface* RedVSIParseFactory::RunExternalCallCompetition(RedToke
     {
         // check for the end of the params first
         cParamTok = cInputBuffer.GetToken();
+        if (cParamTok.IsEOF())
+        {
+            // EOF == Error, failed to close paralist.
+            log.AddErrorEvent(
+                "EOF found when traversing parameter list for: " + 
+                cUnitNameTok.Text() + kIOStringSymbolDoubleColon + cFuncTok.Text());
+        }
         if (cParamTok.Predef().IsSymbolBracketClose())
         {
             iParamsComplete = 1;
