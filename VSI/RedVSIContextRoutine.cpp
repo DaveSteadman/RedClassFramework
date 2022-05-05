@@ -40,7 +40,7 @@ RedVSIContextRoutine::RedVSIContextRoutine(RedLog* pInitLog) : pLog(pInitLog)
     // pThisObj     = 0;
 
     cReturnValue.Init();
-    pCurrCmd = NULL;
+    pCurrCmd     = NULL;
     pBaseContext = NULL;
 
     eCmdPhase = eCmdExecPhaseStart;
@@ -53,7 +53,7 @@ RedVSIContextRoutine::RedVSIContextRoutine(RedLog* pInitLog, RedVSICmd* pFirstCm
     // pThisObj     = 0;
 
     cReturnValue.Init();
-    pCurrCmd = pFirstCmd;
+    pCurrCmd     = pFirstCmd;
     pBaseContext = NULL;
 
     eCmdPhase = eCmdExecPhaseStart;
@@ -63,9 +63,9 @@ RedVSIContextRoutine::RedVSIContextRoutine(RedLog* pInitLog, RedVSICmd* pFirstCm
 
 RedVSIContextRoutine::RedVSIContextRoutine(RedLog* pInitLog, const RedDataString& inClassName, const RedDataString& inRoutineName, RedVSICmd* pFirstCmd) : pLog(pInitLog)
 {
-    ClassName = inClassName;
-    RoutineName = inRoutineName;
-    pCurrCmd = pFirstCmd;
+    ClassName    = inClassName;
+    RoutineName  = inRoutineName;
+    pCurrCmd     = pFirstCmd;
     pBaseContext = NULL;
 
     eCmdPhase = eCmdExecPhaseStart;
@@ -89,7 +89,7 @@ RedVSIContextRoutine::~RedVSIContextRoutine(void)
 
 //void RedVSIContextRoutine::SetNameDetails(RedDataString& cNewObjectName, RedDataString& cNewClassName, RedDataString& cNewFuncName)
 //{ 
-//    //cObjectName = cNewObjectName;
+//    cObjectName = cNewObjectName;
 //    cClassName  = cNewClassName; 
 //    cFuncName   = cNewFuncName; 
 //}

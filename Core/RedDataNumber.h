@@ -64,6 +64,10 @@ public:
     RedDataString HexadecimalString(void) const;
     RedDataString HexadecimalStringWithMinDigits(const unsigned mindigits) const;
 
+    static RedDataString StringOf(const int iNum)      { RedDataNumber cNum(iNum); return cNum.DecimalString(); };
+    static RedDataString StringOf(const double dblNum) { RedDataNumber cNum(dblNum); return cNum.DecimalString(); };
+    static RedDataString StringOfWithDP(const double dblNum, const unsigned decimalplaces) { RedDataNumber cNum(dblNum); return cNum.DecimalStringWithDP(decimalplaces); };
+
     RedDataChar   CharValue(void) const;
     int           IntegerValue(void) const;
     double        DoubleValue(void) const;

@@ -279,6 +279,18 @@ RedResult RedTestCore::TestDataNumber(void)
         if (y != -1.234) return kResultFail;
     }
 
+    // New format string
+    {
+        RedDataString cStr = RedDataNumber::StringOf(12);
+        if (cStr != "12") return kResultFail;
+
+        cStr = RedDataNumber::StringOf(12.123);
+        if (cStr != "12.123000") return kResultFail;
+
+        cStr = RedDataNumber::StringOfWithDP(12.123, 3);
+        if (cStr != "12.123") return kResultFail;
+    }
+
     return kResultSuccess;
 }
 

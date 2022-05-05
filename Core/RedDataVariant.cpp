@@ -251,8 +251,12 @@ RedDataString RedDataVariant::StringValue(void) const
 {
     RedDataString cStr = "<No String Representation>";
     
+    if (pData == NULL)
+    {
+        cStr = "<NULL PDATA>";
+    }
     // Assign the data to the return type only if its numeric.
-    if (pData->Type().IsStr())
+    else if (pData->Type().IsStr())
     {
         RedDataString* pStrData = dynamic_cast<RedDataString*>(pData);
         cStr = *pStrData;

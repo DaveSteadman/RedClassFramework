@@ -194,7 +194,7 @@ RedDataString RedDataNumber::HexadecimalString(void) const
 
 RedDataString RedDataNumber::HexadecimalStringWithMinDigits(const unsigned mindigits) const
 {
-    RedDataString  cRetStr;
+    RedDataString cRetStr;
 
     if (eNumType == TENumberType::eInt)
     {
@@ -208,6 +208,14 @@ RedDataString RedDataNumber::HexadecimalStringWithMinDigits(const unsigned mindi
     }
     return cRetStr;
 }
+
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+// static
+//RedDataString RedDataNumber::StringOf(const int iNum)
+//{
+//    RedDataNumber cNum(iNum);
+//    return cNum.DecimalString();
+//}
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 

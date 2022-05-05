@@ -10,9 +10,9 @@
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 // NextTarget:
 // - Load a code file into the library 
-// 
+//
 //         lib add "c:\util\scratch\test.txt"
-// 
+//
 // - Run a pre-loaded function
 //
 // Ideas:
@@ -24,7 +24,7 @@
 //      - Mop up anything about the expression, make sure an error message is logged. Move on.
 // - DataString: Make the InsertAtIndex routines robust, and reuse then in all the append/prepend versions.
 //      - Remove additional memory allocation calls.
-// 
+//
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 int main()

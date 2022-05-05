@@ -554,28 +554,28 @@ RedResult RedTestVSI::TestRunProg_001(void)
         if (log.ContainsError())
             return kResultFail;
 
-        // Execute code
-        /*
+
         {
-            RedVSIContextThread* tc;
+            RedVSIContextBase    cVSIBase;
 
-            if (RedVSIContextFactory::CreateThreadContextForRoutine("TestRoutines", "TestCall", &vsiCodeLib, &tc, log) == kResultSuccess)
+            RedVSILibFactory vsiCodeLibFactory(&cVSIBase.cCodeLib);
+            vsiCodeLibFactory.InputTmlClass(tmlTreeNode, cVSIBase.cLog);
+
+            RedVSICmd* pTopCmd = NULL;
+            RedVSILibRoutine* pRtn = cVSIBase.cCodeLib.FindRoutine("TestRoutines", "TestCall");
+            if (pRtn != NULL)
+                pTopCmd = pRtn->FirstCommand();
+                
+            RedVSIContextRoutine testContext(&cVSIBase.cLog, pTopCmd);
+
+
+            testContext.SetBaseContext(&cVSIBase);
+            testContext.Execute(10);
+            if (cVSIBase.cLog.ContainsError())
             {
-                tc->Execute(10);
-
-                if (log.ContainsError()) return kResultFail;
-
-                RedDataNumber* pXNum = dynamic_cast<RedDataNumber*>(tc->HeapDataItem("x2"));
-                if (pXNum)
-                {
-                    if (!pXNum->IsEqualToWithinTollerance(617, kNumberFloatCompTollerance))
-                        return kResultFail;
-                }
-                else
-                    return kResultFail;
+                cVSIBase.cLog.AddErrorEvent("Code execution error.\n");
             }
         }
-        */
     }
     return kResultSuccess;
 }
