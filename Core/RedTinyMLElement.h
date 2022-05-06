@@ -35,11 +35,11 @@ class RedTinyMLElement
 public:
     RedTinyMLElement(const RedDataString& initname) { SetName(initname); };
 
-    RedDataString    Name(void) const { return name;  };
-    void         SetName(const RedDataString& initname) { name = initname; };
+    RedDataString    Name(void) const { return name; };
+    void             SetName(const RedDataString& initname) { name = initname; };
 
-    virtual bool IsLeaf(void) const { return false; };
-    virtual bool IsNode(void) const { return false; };
+    virtual bool     IsLeaf(void) const { return false; };
+    virtual bool     IsNode(void) const { return false; };
 
 private:
     RedDataString name;

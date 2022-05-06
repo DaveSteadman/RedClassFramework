@@ -18,71 +18,36 @@
 
 #pragma once
 
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-// The Core namespace is exactly that, the core classes which are re-used throughout the rest of the
-// system. Everything is prefixed Red* to differentiate it from other class frameworks a compiler
-// may pick up.
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-// Fundamental Elements
-#include "RedCoreConsts.h"
-
-// Core Types
-#include "RedDataType.h"
-#include "RedData.h"
 #include "RedDataBoolean.h"
-#include "RedDataChar.h"
 #include "RedDataNumber.h"
 #include "RedDataString.h"
-#include "RedDataRecord.h"
-#include "RedDataList.h"
-#include "RedDataVariant.h"
-#include "RedDataActions.h"
 
-// Wrappers
-#include "RedNumberRange.h"
+namespace Red {
+namespace Core {
 
-// Collections
-#include "RedDoubleLinkedList.h"
-#include "RedDoubleLinkedListIterator.h"
-#include "RedLinkedList.h"
-#include "RedLinkedListIterator.h"
-#include "RedMapList.h"
-#include "RedMapListIterator.h"
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-// Derived Collections
-#include "RedQueueFIFO.h"
-#include "RedStackLIFO.h"
+class RedDataActions {
 
-// Event Logging
-#include "RedResult.h"
-#include "RedLogEvent.h"
-#include "RedLog.h"
+public:
 
-// IO
-#include "RedBufferPos.h"
-#include "RedBufferInput.h"
-#include "RedBufferOutput.h"
-#include "RedIOHandler.h"
+    static RedDataString StringFromNumber(RedDataNumber cNum);
 
-// Tokens
-#include "RedTokenType.h"
-#include "RedTokenPredefType.h"
-#include "RedToken.h"
-#include "RedTokenPredefMap.h"
-#include "RedTokenBuffer.h"
-#include "RedTokenFactory.h"
+    static RedDataString StringFromInt(int iNum);
+    static RedDataString StringFromIntWithMinDigits(int iNum, unsigned mindigits);
 
-// TinyML
-#include "RedTinyMLElement.h"
-#include "RedTinyMLLeaf.h"
-#include "RedTinyMLNode.h"
-#include "RedTinyMLAction.h"
-#include "RedTinyMLFileIO.h"
+    static RedDataString StringFromDouble(double dblNum);
+    static RedDataString StringFromDoubleWithDP(double dblNum, unsigned dp);
+    static RedDataString StringFromDoubleWithMinDigitsAndDP(double dblNum, unsigned mindigits, unsigned dp);
 
-// Time
-#include "RedDate.h"
-#include "RedDateSpan.h"
-#include "RedTime.h"
-#include "RedTimeSpan.h"
+    static RedDataString HexadecimalStringFromInt(unsigned iNum);
+    static RedDataString HexadecimalStringFromIntWithMinDigits(unsigned iNum, unsigned mindigits);
+
+};
+
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+} // Core
+} // Red
+
 

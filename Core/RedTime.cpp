@@ -21,6 +21,7 @@
 #include "RedDataString.h"
 #include "RedDataNumber.h"
 #include "RedTime.h"
+#include "RedDataActions.h"
 
 #include <time.h>
 #include <stdio.h>
@@ -51,15 +52,11 @@ const RedDataString RedTime::TimeString(void) const
 {
     RedDataString retstr;
 
-    RedDataNumber h(hours);
-    RedDataNumber m(minutes);
-    RedDataNumber s(seconds);
-
-    retstr.Append(h.DecimalStringWithMinDigitsAndDP(2, 0));
+    retstr = RedDataActions::StringFromIntWithMinDigits(hours, 2);
     retstr.Append(":");
-    retstr.Append(m.DecimalStringWithMinDigitsAndDP(2, 0));
+    retstr.Append(RedDataActions::StringFromIntWithMinDigits(minutes, 2));
     retstr.Append(":");
-    retstr.Append(s.DecimalStringWithMinDigitsAndDP(5, 2));
+    retstr.Append(RedDataActions::StringFromDoubleWithMinDigitsAndDP(seconds, 2, 2));
 
     return retstr;
 }
@@ -84,13 +81,9 @@ const RedDataString RedTime::SixDigitTimeString(void) const // "hhmmss"
 {
     RedDataString retstr;
 
-    RedDataNumber h(hours);
-    RedDataNumber m(minutes);
-    RedDataNumber s(seconds);
-
-    retstr.Append(h.DecimalStringWithMinDigitsAndDP(2, 0));
-    retstr.Append(m.DecimalStringWithMinDigitsAndDP(2, 0));
-    retstr.Append(s.DecimalStringWithMinDigitsAndDP(2, 0));
+    retstr = RedDataActions::StringFromIntWithMinDigits(hours, 2);
+    retstr.Append(RedDataActions::StringFromIntWithMinDigits(minutes, 2));
+    retstr.Append(RedDataActions::StringFromIntWithMinDigits((int)(floor(seconds)), 2));
 
     return retstr;
 }

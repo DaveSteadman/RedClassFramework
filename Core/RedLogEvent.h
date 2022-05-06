@@ -20,6 +20,7 @@
 
 #include "RedDataString.h"
 #include "RedDataNumber.h"
+#include "RedDataActions.h"
 
 namespace Red {
 namespace Core {
@@ -49,7 +50,7 @@ public:
     TEventLogType       EventType(void) const                    { return LogType; };
     RedDataString       Text(void) const                         { return text; };
     void                AppendText(const RedDataString& newText) { text.Append(newText); };
-    void                AppendText(const RedDataNumber& newNum)  { text.Append(newNum.DecimalString()); };
+    void                AppendText(const RedDataNumber& newNum)  { text.Append(RedDataActions::StringFromNumber(newNum)); };
 
     void                Set(const TEventLogType newtype, const RedDataString& newtext) { LogType=newtype; text=newtext; };
 

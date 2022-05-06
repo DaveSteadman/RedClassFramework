@@ -21,6 +21,7 @@
 #include "RedDataString.h"
 #include "RedDataNumber.h"
 #include "RedDataChar.h"
+#include "RedDataActions.h"
 
 namespace Red {
 namespace Core {
@@ -52,14 +53,14 @@ public:
 
     void Append(const RedDataString& cStr)   { cStrBuffer+=cStr; };
     void Append(const RedDataChar& cCh)      { cStrBuffer+=cCh; };
-    void Append(const RedDataNumber& cNum)   { cStrBuffer+=cNum.DecimalString(); };
+    void Append(const RedDataNumber& cNum)   { cStrBuffer+=RedDataActions::StringFromNumber(cNum); };
 
     RedDataString ExtractData(void) const    { return cStrBuffer; };
 
     void AppendIndented(const RedDataString& cStr);
 
-    friend RedBufferOutput& operator<<(RedBufferOutput& outputbuf, const char* newstr)      { outputbuf.Append(newstr);            return outputbuf; };
-    friend RedBufferOutput& operator<<(RedBufferOutput& outputbuf, const int newval)        { outputbuf.Append(RedDataNumber(newval)); return outputbuf; };
+    friend RedBufferOutput& operator<<(RedBufferOutput& outputbuf, const char* newstr)          { outputbuf.Append(newstr);            return outputbuf; };
+    friend RedBufferOutput& operator<<(RedBufferOutput& outputbuf, const int newval)            { outputbuf.Append(RedDataNumber(newval)); return outputbuf; };
     friend RedBufferOutput& operator<<(RedBufferOutput& outputbuf, const RedDataString& newstr) { outputbuf.Append(newstr);            return outputbuf; };
     friend RedBufferOutput& operator<<(RedBufferOutput& outputbuf, const RedDataChar& newch)    { outputbuf.Append(newch);             return outputbuf; };
     friend RedBufferOutput& operator<<(RedBufferOutput& outputbuf, const RedDataNumber& newnum) { outputbuf.Append(newnum);            return outputbuf; };

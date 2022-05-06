@@ -53,11 +53,11 @@ RedDataString RedToken::DebugText()
     {
         if (cPredef.IsInvalid())
         {
-            if      (cType.IsNumber())         { cRetStr = "[num ";    cRetStr += cNumber.DecimalString(); cRetStr += "] "; }
-            else if (cType.IsName())           { cRetStr = "[name ";   cRetStr += cText; cRetStr += "] ";}
-            else if (cType.IsStringLiteral())  { cRetStr = "[str "; cRetStr += cText; cRetStr += "] ";}
+            if      (cType.IsNumber())         { cRetStr = "[num "  + RedDataActions::StringFromNumber(cNumber) + "] ";}
+            else if (cType.IsName())           { cRetStr = "[name " + cText                                     + "] ";}
+            else if (cType.IsStringLiteral())  { cRetStr = "[str "  + cText                                     + "] ";}
             else if (IsEOF())                  { cRetStr = "<<EOF>> "; }
-            else if (cType.IsNonPrintable())   { RedDataNumber cCh = cText[1]; cRetStr = "[chr: "; cRetStr += cCh.DecimalString(); cRetStr += "] "; }
+            else if (cType.IsNonPrintable())   { cRetStr = "[chr: " + RedDataActions::HexadecimalStringFromInt(cText[1]) + "] "; }
         }
         else
         {

@@ -20,6 +20,7 @@
 
 #include "RedDataNumber.h"
 #include "RedDataString.h"
+#include "RedDataActions.h"
 
 namespace Red {
 namespace Core {
@@ -43,7 +44,7 @@ public:
     {
         RedDataNumber cRow(iRow);
         RedDataNumber cCol(iCol);
-        RedDataString x = "(row:" + cRow.DecimalString() + ", col:" + cCol.DecimalString() + ")";
+        RedDataString x = "(row:" + RedDataActions::StringFromNumber(cRow) + ", col:" + RedDataActions::StringFromNumber(cCol) + ")";
         return x;
     };
 

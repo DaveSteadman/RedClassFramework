@@ -285,13 +285,13 @@ void RedVSIContextRoutine::SetupRoutineCall(const RedVSIRoutineCallInterface& cC
                 {
                     if ((pRtn->Params()->NumItems() > 0) && (pRtn->Params()->NumItems()))
                     {
-                        unsigned RtnLibParamFirstIndex = pRtn->Params()->FirstIndex();
-                        unsigned RtnLibParamLastIndex = pRtn->Params()->LastIndex();
+                        unsigned RtnLibParamFirstIndex  = pRtn->Params()->FirstIndex();
+                        unsigned RtnLibParamLastIndex   = pRtn->Params()->LastIndex();
                         unsigned RtnCallParamFirstIndex = cCallSignature.Params()->FirstIndex();
-                        unsigned RtnCallParamLastIndex = cCallSignature.Params()->LastIndex();
+                        unsigned RtnCallParamLastIndex  = cCallSignature.Params()->LastIndex();
 
                         if (RtnLibParamFirstIndex != RtnCallParamFirstIndex) throw;
-                        if (RtnLibParamLastIndex != RtnCallParamLastIndex)  throw;
+                        if (RtnLibParamLastIndex  != RtnCallParamLastIndex)  throw;
 
                         RedDataString  CurrLibParamName;
                         RedDataVariant CurrCallParamData;
@@ -311,10 +311,10 @@ void RedVSIContextRoutine::SetupRoutineCall(const RedVSIRoutineCallInterface& cC
                 }
 
                 // Add the thread context
-                //pSubroutineContext->SetBaseContextRecord(pThreadContextRecord);
+                pSubroutineContext->SetBaseContext(pBaseContext);
 
                 // Push the routine on the stack - At this point, the current context is no longer the top of the stack and is considered blocked.
-                //pThreadContextRecord->PushRoutineOnStack(pSubroutineContext);
+                pBaseContext->cCallStack.Push(pSubroutineContext);
             }
             else
             {

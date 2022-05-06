@@ -21,6 +21,7 @@
 #include "RedDate.h"
 #include "RedDataNumber.h"
 #include "RedDataString.h"
+#include "RedDataActions.h"
 
 #include <time.h>
 #include <stdio.h>
@@ -71,15 +72,11 @@ RedDataString RedDate::DateString(void) const
 {
     RedDataString retstr;
 
-    RedDataNumber y(year);
-    RedDataNumber m(month);
-    RedDataNumber d(date);
-
-    retstr.Append(y.DecimalString());
+    retstr = RedDataActions::StringFromIntWithMinDigits(year, 4);
     retstr.Append("/");
-    retstr.Append(m.DecimalString());
+    retstr.Append(RedDataActions::StringFromIntWithMinDigits(month, 2));
     retstr.Append("/");
-    retstr.Append(d.DecimalString());
+    retstr.Append(RedDataActions::StringFromIntWithMinDigits(date, 2));
 
     return retstr;
 }
@@ -90,13 +87,9 @@ RedDataString RedDate::EightDigitDateString(void) const
 {
     RedDataString retstr;
 
-    RedDataNumber y(year);
-    RedDataNumber m(month);
-    RedDataNumber d(date);
-
-    retstr.Append(y.DecimalString());
-    retstr.Append(m.DecimalString());
-    retstr.Append(d.DecimalString());
+    retstr = RedDataActions::StringFromIntWithMinDigits(year, 4);
+    retstr.Append(RedDataActions::StringFromIntWithMinDigits(month, 2));
+    retstr.Append(RedDataActions::StringFromIntWithMinDigits(date, 2));
 
     return retstr;
 }
@@ -107,13 +100,9 @@ RedDataString RedDate::SixDigitDateString(void) const
 {
     RedDataString retstr;
 
-    RedDataNumber y(TwoDigitYear());
-    RedDataNumber m(month);
-    RedDataNumber d(date);
-
-    retstr.Append(y.DecimalString());
-    retstr.Append(m.DecimalString());
-    retstr.Append(d.DecimalString());
+    retstr = RedDataActions::StringFromIntWithMinDigits(TwoDigitYear(), 2);
+    retstr.Append(RedDataActions::StringFromIntWithMinDigits(month, 2));
+    retstr.Append(RedDataActions::StringFromIntWithMinDigits(date, 2));
 
     return retstr;
 }

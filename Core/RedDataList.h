@@ -45,11 +45,11 @@ public:
     ~RedDataList(void) { pList->DelAll(); delete pList; };
 
     // Inherited: RedData
-    RedDataType       Type(void) const { return RedDataType::List(); };
-    RedData*          Clone(void) const;
-    void              Init(void) { pList->DelAll(); };
+    RedDataType Type(void) const { return RedDataType::List(); };
+    RedData*    Clone(void) const;
+    void        Init(void) { pList->DelAll(); };
 
-    void              InitToSize(unsigned uNumItems, RedDataType eItemType);
+    void        InitToSize(unsigned uNumItems, RedDataType eItemType);
 
     void        CloneAndAdd(const RedData* pNewAttrib) { pList->AddLast(pNewAttrib->Clone()); };
     void        AddByPtr(RedData* pNewAttrib)          { pList->AddLast(pNewAttrib); };

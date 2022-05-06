@@ -199,8 +199,7 @@ bool RedVSIShell::LibListComp(RedTokenBuffer& cInputBuffer, RedLog& cLog)
         RedDataString retstr;
         RedDataNumber numClasses(listcount);
 
-        retstr = "NumClasses: ";
-        retstr += numClasses.DecimalString();
+        retstr = "NumClasses: " + RedDataActions::StringFromNumber(numClasses);
         cLog.AddText(retstr);
 
         retstr = "";
@@ -288,10 +287,7 @@ bool RedVSIShell::DataListComp(RedTokenBuffer& cInputBuffer, RedLog& cLog)
 
         unsigned NumElems = cVSIBase.cHeap.NumItems();
 
-        RedDataString cDataList;
-        cDataList = "Num Elements: ";
-        cDataList.Append(RedDataNumber(NumElems).DecimalString());
-        cLog.AddText(cDataList);
+        cLog.AddText("Num Elements: " + RedDataActions::StringFromInt(NumElems));
 
         RedDataString cDataLine;
         for (unsigned i = 0; i < NumElems; i++)

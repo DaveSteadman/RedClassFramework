@@ -21,6 +21,7 @@
 #include "RedDataChar.h"
 #include "RedDataString.h"
 #include "RedDataNumber.h"
+#include "RedDataActions.h"
 
 #include "RedTokenPredefMap.h"
 
@@ -278,22 +279,20 @@ RedDataString RedDataVariant::StringValue(void) const
     else if (pData->Type().IsNum())
     {
         RedDataNumber* pNumData = dynamic_cast<RedDataNumber*>(pData);
-        cStr = pNumData->DecimalString();
+        cStr = RedDataActions::StringFromNumber(*pNumData);
     }
     else if (pData->Type().IsList())
     {
         RedDataList* pListData = dynamic_cast<RedDataList*>(pData);
 
-        cStr = "<list ";
-        cStr += RedDataNumber(pListData->NumItems()).DecimalString();
-        cStr += " items>";
+        cStr = "<list " + RedDataActions::StringFromInt(pListData->NumItems()) + " items>";
     }
     else if (pData->Type().IsRecord())
     {
         RedDataRecord* pRecData = dynamic_cast<RedDataRecord*>(pData);
 
         cStr = "<record >";
-        cStr += RedDataNumber(pRecData->NumItems()).DecimalString();
+        cStr += RedDataActions::StringFromInt(pRecData->NumItems());
         cStr += " items>";
     }
 

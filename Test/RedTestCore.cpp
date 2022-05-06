@@ -217,16 +217,17 @@ RedResult RedTestCore::TestDataNumber(void)
     // String representations
     {
         RedDataNumber z1(12.345);
-        RedDataString zstr1 = z1.DecimalString();
+        RedDataString zstr1 = RedDataActions::StringFromNumber(z1);
         if (zstr1 != "12.345000") return kResultFail;
 
         RedDataNumber z2(12345);
-        RedDataString zstr2 = z2.DecimalString();
+        RedDataString zstr2 = RedDataActions::StringFromNumber(z2);
         if (zstr2 != "12345") return kResultFail;
     }
+/*
     {
         RedDataNumber abc1(12);
-        RedDataString abcstr1 = abc1.DecimalStringWithDP(2);
+        RedDataString abcstr1 = RedDataActions::StringFromNumberWithDP(abc1, 2);
         if (abcstr1 != "12.00") return kResultFail;
 
         RedDataNumber abc2(12.3456);
@@ -250,17 +251,18 @@ RedResult RedTestCore::TestDataNumber(void)
         RedDataString abcstr3 = abc3.DecimalStringWithMinDigitsAndDP(7, 3);
         if (abcstr3 != "012.300") return kResultFail;
     }
+*/
 
     // Hexadecimal strings
     {
-        RedDataNumber x(12);
         RedDataString xstr;
-        xstr = x.HexadecimalString();
+        xstr = RedDataActions::HexadecimalStringFromInt(12);
         if (xstr != "0xc") return kResultFail;
-        xstr = x.HexadecimalStringWithMinDigits(4);
+
+        xstr = RedDataActions::HexadecimalStringFromIntWithMinDigits(12, 4);
         if (xstr != "0x000c") return kResultFail;
-        x = 32000;
-        xstr = x.HexadecimalStringWithMinDigits(2);
+
+        xstr = RedDataActions::HexadecimalStringFromIntWithMinDigits(32000, 4);
         if (xstr != "0x7d00") return kResultFail;
     }
 
@@ -281,13 +283,13 @@ RedResult RedTestCore::TestDataNumber(void)
 
     // New format string
     {
-        RedDataString cStr = RedDataNumber::StringOf(12);
+        RedDataString cStr = RedDataActions::StringFromInt(12);
         if (cStr != "12") return kResultFail;
 
-        cStr = RedDataNumber::StringOf(12.123);
+        cStr = RedDataActions::StringFromDouble(12.123);
         if (cStr != "12.123000") return kResultFail;
 
-        cStr = RedDataNumber::StringOfWithDP(12.123, 3);
+        cStr = RedDataActions::StringFromDoubleWithDP(12.123, 3);
         if (cStr != "12.123") return kResultFail;
     }
 

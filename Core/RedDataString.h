@@ -96,7 +96,6 @@ public:
     // substring routines
     // CondenseAllocation
 
-
     unsigned       NumLines(void) const;
     bool           LineAtNum(const unsigned LineNum, RedDataString& Line) const;
 

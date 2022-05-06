@@ -59,6 +59,8 @@ public:
     RedDataRecord    cHeap;
     RedVSIThreadList cThreadList;
 
+    RedVSIRoutineContextStack cCallStack;
+
 private:
 
 };

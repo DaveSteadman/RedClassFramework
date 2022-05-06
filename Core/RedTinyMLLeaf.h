@@ -39,10 +39,10 @@ public:
     RedTinyMLLeaf(const RedDataString& NewName, const RedDataString& NewData) : RedTinyMLElement(NewName) { data = NewData; };
 
     // Override: RedTinyMLElement
-    bool      IsLeaf(void) const { return true; };
+    bool          IsLeaf(void) const { return true; };
 
     RedDataString Data(void) const                  { return data; };
-    void      SetData(const RedDataString& NewData) { data = NewData; };
+    void          SetData(const RedDataString& NewData) { data = NewData; };
 
 private:
     RedDataString data;
