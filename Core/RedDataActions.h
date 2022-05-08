@@ -31,6 +31,7 @@ class RedDataActions {
 
 public:
 
+    // Number To String
     static RedDataString StringFromNumber(RedDataNumber cNum);
 
     static RedDataString StringFromInt(int iNum);
@@ -43,6 +44,9 @@ public:
     static RedDataString HexadecimalStringFromInt(unsigned iNum);
     static RedDataString HexadecimalStringFromIntWithMinDigits(unsigned iNum, unsigned mindigits);
 
+
+    // String To Number
+    static RedDataNumber NumberFromString(RedDataString cStrNum);
 };
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

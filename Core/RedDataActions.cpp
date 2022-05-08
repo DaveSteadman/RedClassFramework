@@ -164,6 +164,23 @@ RedDataString RedDataActions::HexadecimalStringFromIntWithMinDigits(unsigned iNu
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+// String To Number
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+RedDataNumber RedDataActions::NumberFromString(RedDataString cStrNum)
+{
+    const char* txtptr = cStrNum.TextPtr();
+    RedDataNumber cRetNum;
+
+    if (cStrNum.IsCharInString('.'))
+        cRetNum = atof(txtptr);
+    else
+        cRetNum = atoi(txtptr);
+
+    return cRetNum;
+}
+
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 } // Core
 } // Red

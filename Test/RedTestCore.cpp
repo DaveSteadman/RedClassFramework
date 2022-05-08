@@ -268,17 +268,19 @@ RedResult RedTestCore::TestDataNumber(void)
 
     // Reading strings
     {
-        RedDataNumber x;
         RedDataNumber y;
         RedDataString strNum;
 
         strNum.Set("1.234");
-        y.SetDecimalString(strNum);
+        y = RedDataActions::NumberFromString(strNum);
         if (y != 1.234) return kResultFail;
 
         strNum.Set("-1.234");
-        y.SetDecimalString(strNum);
+        y = RedDataActions::NumberFromString(strNum);
         if (y != -1.234) return kResultFail;
+
+        y = RedDataActions::NumberFromString("121212");
+        if (y != 121212) return kResultFail;
     }
 
     // New format string

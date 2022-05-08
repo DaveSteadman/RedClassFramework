@@ -42,7 +42,6 @@ public:
     RedDataNumber(const unsigned iNum)     { Set((int)iNum); };
     RedDataNumber(const double dblNum)     { Set(dblNum); };
     RedDataNumber(const RedDataNumber& objNum) { Set(objNum); };
-    RedDataNumber(const RedDataString& cNewDecimalVal) { SetDecimalString(cNewDecimalVal); };
     ~RedDataNumber(void) { };
 
     // Inherited: RedData
@@ -66,7 +65,6 @@ public:
     void          Set(const double dblNewVal)       { eNumType=TENumberType::eFloat; iIntVal=0; dblFloatVal=dblNewVal; };
     void          Set(const int iNewVal)            { eNumType=TENumberType::eInt; iIntVal=iNewVal; dblFloatVal=0.0; };
     void          SetZero(void)                     { Init(); };
-    void          SetDecimalString(const RedDataString& cNewDecimalVal);
 
     void          MakePositive(void);
     void          MakeNegative(void);

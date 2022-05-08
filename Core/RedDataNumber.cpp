@@ -255,27 +255,6 @@ RedDataNumber RedDataNumber::DivisionRemainder(const RedDataNumber& d) const
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-void RedDataNumber::SetDecimalString(const RedDataString& cNewDecimalVal)
-{
-
-    const char* txtptr = cNewDecimalVal.TextPtr();
-
-    if (cNewDecimalVal.IsCharInString('.'))
-    {
-        eNumType    = TENumberType::eFloat;
-        dblFloatVal = atof(txtptr);
-        iIntVal     = 0;
-    }
-    else
-    {
-        eNumType    = TENumberType::eInt;
-        iIntVal     = atoi(txtptr);
-        dblFloatVal = 0.0;
-    }
-}
-
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 // Arithmetic Operators
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 

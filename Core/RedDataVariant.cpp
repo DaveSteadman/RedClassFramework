@@ -342,7 +342,7 @@ double RedDataVariant::DoubleValue(void) const
     if (pData->Type().IsStr())
     {
         RedDataString* pStrData = dynamic_cast<RedDataString*>(pData);
-        RedDataNumber tempNum(*pStrData);
+        RedDataNumber tempNum = RedDataActions::NumberFromString(*pStrData);
         retDbl = tempNum.DoubleValue();
     }
 
@@ -363,7 +363,7 @@ int RedDataVariant::IntegerValue(void) const
     if (pData->Type().IsStr())
     {
         RedDataString* pStrData = dynamic_cast<RedDataString*>(pData);
-        RedDataNumber tempNum(*pStrData);
+        RedDataNumber tempNum = RedDataActions::NumberFromString(*pStrData);
         retInt = tempNum.IntegerValue();
     }
 

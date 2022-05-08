@@ -163,7 +163,7 @@ RedResult RedTokenFactory::NumberComp(RedBufferInput& cInputBuffer, RedToken& cN
 
         // We have a number token, so convert the input string to a numeric
         // value.
-        cNewTok.SetNumber(cTokenText, RedDataNumber(cTokenText));
+        cNewTok.SetNumber(cTokenText, RedDataActions::NumberFromString(cTokenText));
         return RedResult::Success();
     }
     else
