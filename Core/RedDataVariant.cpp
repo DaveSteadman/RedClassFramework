@@ -269,11 +269,10 @@ RedDataString RedDataVariant::StringValue(void) const
     }
     else if (pData->Type().IsBool())
     {
-        RedDataBoolean b;
-        ExportTo(&b);
-        if (b.IsTrue())
+        RedDataBoolean* pBoolData = dynamic_cast<RedDataBoolean*>(pData);
+        if (pBoolData->IsTrue())
             cStr = kIOStringKeywordTrue;
-        if (b.IsFalse())
+        else
             cStr = kIOStringKeywordFalse;
     }
     else if (pData->Type().IsNum())
@@ -312,11 +311,10 @@ RedDataChar RedDataVariant::CharValue(void) const
     }
     else if (pData->Type().IsBool())
     {
-        RedDataBoolean b;
-        ExportTo(&b);
-        if (b.IsTrue())
+        RedDataBoolean* pBoolData = dynamic_cast<RedDataBoolean*>(pData);
+        if (pBoolData->IsTrue())
             cChr = '1';
-        if (b.IsFalse())
+        else
             cChr = '0';
     }
     else if (pData->Type().IsChar())
@@ -339,7 +337,7 @@ double RedDataVariant::DoubleValue(void) const
         RedDataNumber* pNumData = dynamic_cast<RedDataNumber*>(pData);
         retDbl = pNumData->DoubleValue();
     }
-    if (pData->Type().IsStr())
+    else if (pData->Type().IsStr())
     {
         RedDataString* pStrData = dynamic_cast<RedDataString*>(pData);
         RedDataNumber tempNum = RedDataActions::NumberFromString(*pStrData);
@@ -360,7 +358,15 @@ int RedDataVariant::IntegerValue(void) const
         RedDataNumber* pNumData = dynamic_cast<RedDataNumber*>(pData);
         retInt = pNumData->IntegerValue();
     }
-    if (pData->Type().IsStr())
+    else if (pData->Type().IsBool())
+    {
+        RedDataBoolean* pBoolData = dynamic_cast<RedDataBoolean*>(pData);
+        if (pBoolData->IsTrue())
+            retInt = 1;
+        else
+            retInt = 0;
+    }
+    else if (pData->Type().IsStr())
     {
         RedDataString* pStrData = dynamic_cast<RedDataString*>(pData);
         RedDataNumber tempNum = RedDataActions::NumberFromString(*pStrData);

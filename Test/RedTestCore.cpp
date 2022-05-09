@@ -223,35 +223,16 @@ RedResult RedTestCore::TestDataNumber(void)
         RedDataNumber z2(12345);
         RedDataString zstr2 = RedDataActions::StringFromNumber(z2);
         if (zstr2 != "12345") return kResultFail;
+
+        RedDataString zstr3 = RedDataActions::StringFromDoubleWithMinDigitsAndDP(13.123, 4, 4);
+        if (zstr3 != "0013.1230") return kResultFail;
+
+        zstr3 = RedDataActions::StringFromDoubleWithMinDigitsAndDP(13.123, 1, 1);
+        if (zstr3 != "13.1") return kResultFail;
+
+        zstr3 = RedDataActions::StringFromDoubleWithMinDigitsAndDP(13.466, 1, 1);
+        if (zstr3 != "13.5") return kResultFail;
     }
-/*
-    {
-        RedDataNumber abc1(12);
-        RedDataString abcstr1 = RedDataActions::StringFromNumberWithDP(abc1, 2);
-        if (abcstr1 != "12.00") return kResultFail;
-
-        RedDataNumber abc2(12.3456);
-        RedDataString abcstr2 = abc2.DecimalStringWithDP(2);
-        if (abcstr2 != "12.35") return kResultFail;
-
-        RedDataNumber abc3(12.34);
-        RedDataString abcstr3 = abc3.DecimalStringWithDP(4);
-        if (abcstr3 != "12.3400") return kResultFail;
-    }
-    {
-        RedDataNumber abc1(12);
-        RedDataString abcstr1 = abc1.DecimalStringWithMinDigitsAndDP(3, 2);
-        if (abcstr1 != "12.00") return kResultFail;
-
-        RedDataNumber abc2(12.3);
-        RedDataString abcstr2 = abc2.DecimalStringWithMinDigitsAndDP(5, 0);
-        if (abcstr2 != "00012") return kResultFail;
-
-        RedDataNumber abc3(12.3);
-        RedDataString abcstr3 = abc3.DecimalStringWithMinDigitsAndDP(7, 3);
-        if (abcstr3 != "012.300") return kResultFail;
-    }
-*/
 
     // Hexadecimal strings
     {
