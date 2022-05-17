@@ -22,7 +22,7 @@
 
 #include "RedVSIParseTreeBinaryOp.h"
 #include "RedVSIParseTreeVar.h"
-
+#include "RedVSIContextBase.h"
 #include "RedVSIErrorCodes.h"
 
 using namespace Red::Core;
@@ -92,7 +92,11 @@ void RedVSIParseTreeBinaryOp::CalcResult(RedVSIContextRoutine* pContext)
     if (cOp.IsAssignOp())
     {
         // If the left is not a variable, we have an error.
-        if (!pLeft->Type().IsParseVariable()) { pContext->Log()->AddText(RedVSIErrorCodes::GetErrorString(RedVSIErrorCodes::eParseBinOp_NotVar)); return; }
+        if (!pLeft->Type().IsParseVariable()) 
+        { 
+            pContext->BaseContext()->cLog.AddText(RedVSIErrorCodes::GetErrorString(RedVSIErrorCodes::eParseBinOp_NotVar)); 
+            return; 
+        }
 
         // Calculate the result of the expression
         if      (cOp.IsBinaryOpAssignEqual())     cRetVal = cRightVal;
@@ -125,7 +129,7 @@ void RedVSIParseTreeBinaryOp::CalcResult(RedVSIContextRoutine* pContext)
 
     // Determine the validity of the outcome, raise an error if the operation
     // didn't produce a valid output.
-    if (!cRetVal.IsValid()) { pContext->Log()->AddText(RedVSIErrorCodes::GetErrorString(RedVSIErrorCodes::eParseBinOp_NoResult)); return; }
+    if (!cRetVal.IsValid()) { pContext->BaseContext()->cLog.AddText(RedVSIErrorCodes::GetErrorString(RedVSIErrorCodes::eParseBinOp_NoResult)); return; }
 
     // Store the result to quicken future calls
     pContext->SetExprResult(this, cRetVal);

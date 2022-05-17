@@ -31,8 +31,8 @@
 
 using namespace Red::Core;
 
-namespace Red {
-namespace VSI {
+namespace Red { 
+namespace VSI { 
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -107,8 +107,8 @@ void RedVSICmdSerialiser::TokenBufferToOutputBuffer(RedTokenBuffer& cInTokenBuff
 void RedVSICmdSerialiser::SerialiseIfCmd(RedTokenBuffer& cTokenBuffer, RedVSICmdIf* pCmd)
 {
     RedVSIParseTreeInterface* pIfExpr;
-    RedVSICmd*       pPosBranch;
-    RedVSICmd*       pNegBranch;
+    RedVSICmd*                pPosBranch;
+    RedVSICmd*                pNegBranch;
     pCmd->GetDetails(pIfExpr, pPosBranch, pNegBranch);
 
     // write the IF command keyword
@@ -237,7 +237,7 @@ void RedVSICmdSerialiser::SerialiseReturnCmd(RedTokenBuffer& cTokenBuffer, RedVS
 void RedVSICmdSerialiser::SerialiseWhileCmd(RedTokenBuffer& cTokenBuffer, RedVSICmdWhile* pCmd)
 {
     RedVSIParseTreeInterface* pConditionExpr;
-    RedVSICmd*       pLoopBranch;
+    RedVSICmd*                pLoopBranch;
     pCmd->GetDetails(pConditionExpr, pLoopBranch);
 
     // Write the WHILE command keyword

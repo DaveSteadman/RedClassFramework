@@ -55,9 +55,9 @@ class RedVSIContextRoutine
 public:
 
     // Construction Routines
-    RedVSIContextRoutine(RedLog* pInitLog);
-    RedVSIContextRoutine(RedLog* pInitLog, RedVSICmd* pFirstCmd);
-    RedVSIContextRoutine(RedLog* pInitLog, const RedDataString& inClassName, const RedDataString& inRoutineName, RedVSICmd* pFirstCmd);
+    RedVSIContextRoutine(RedVSIContextBase* pInitBaseContext);
+    RedVSIContextRoutine(RedVSIContextBase* pInitBaseContext, RedVSICmd* pFirstCmd);
+    RedVSIContextRoutine(RedVSIContextBase* pInitBaseContext, const RedDataString& inClassName, const RedDataString& inRoutineName, RedVSICmd* pFirstCmd);
 
     ~RedVSIContextRoutine(void);
 
@@ -79,7 +79,7 @@ public:
     void            ExecuteExprQueue(void);
 
     // Error reporting and debugging
-    RedLog*         Log(void) { return pLog; };
+    //RedLog*         Log(void) { return pLog; };
 
     // Setup Calls
     void            SetupRoutineCall(const RedVSIRoutineCallInterface& cSignature);
@@ -111,7 +111,7 @@ public:
     bool            HasCmdToExecute(void) const;
 
     void  SetRoutineName(const RedDataString& rname) { RoutineName = rname; };
-    void  SetClassName(const RedDataString& cname) { ClassName = cname; };
+    void  SetClassName(const RedDataString& cname)   { ClassName = cname; };
 
     void               SetBaseContext(RedVSIContextBase* pNewBaseContext) { pBaseContext = pNewBaseContext; };
     RedVSIContextBase* BaseContext(void)                            const { return pBaseContext; };
@@ -155,10 +155,11 @@ private:
     RedDataVariant cReturnValue;
 
     // Record holding thread data
+    // Contains log
     RedVSIContextBase* pBaseContext;
 
     // Logging
-    RedLog* pLog;
+    //RedLog* pLog;
 };
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

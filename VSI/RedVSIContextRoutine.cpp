@@ -35,38 +35,42 @@ namespace VSI {
 // Constructor / Destructor
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-RedVSIContextRoutine::RedVSIContextRoutine(RedLog* pInitLog) : pLog(pInitLog)
+RedVSIContextRoutine::RedVSIContextRoutine(RedVSIContextBase* pInitBaseContext)
 {
     // pThisObj     = 0;
+
+    pBaseContext = pInitBaseContext;
 
     cReturnValue.Init();
     pCurrCmd     = NULL;
-    pBaseContext = NULL;
 
     eCmdPhase = eCmdExecPhaseStart;
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-RedVSIContextRoutine::RedVSIContextRoutine(RedLog* pInitLog, RedVSICmd* pFirstCmd) : pLog(pInitLog)
+RedVSIContextRoutine::RedVSIContextRoutine(RedVSIContextBase* pInitBaseContext, RedVSICmd* pFirstCmd)
 {
     // pThisObj     = 0;
 
+    pBaseContext = pInitBaseContext;
+
     cReturnValue.Init();
     pCurrCmd     = pFirstCmd;
-    pBaseContext = NULL;
 
     eCmdPhase = eCmdExecPhaseStart;
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-RedVSIContextRoutine::RedVSIContextRoutine(RedLog* pInitLog, const RedDataString& inClassName, const RedDataString& inRoutineName, RedVSICmd* pFirstCmd) : pLog(pInitLog)
+RedVSIContextRoutine::RedVSIContextRoutine(RedVSIContextBase* pInitBaseContext, const RedDataString& inClassName, const RedDataString& inRoutineName, RedVSICmd* pFirstCmd)
 {
+
+    pBaseContext = pInitBaseContext;
+
     ClassName    = inClassName;
     RoutineName  = inRoutineName;
     pCurrCmd     = pFirstCmd;
-    pBaseContext = NULL;
 
     eCmdPhase = eCmdExecPhaseStart;
 }
@@ -223,7 +227,7 @@ void RedVSIContextRoutine::SetReturnedValue(const RedDataVariant& cData)
 
 void RedVSIContextRoutine::QueueExpr(RedVSIParseTreeInterface* pExpr)
 {
-    RedVSIParseStackTraverser::PopulateStack(cExprStack, pExpr, *pLog);
+    RedVSIParseStackTraverser::PopulateStack(cExprStack, pExpr, pBaseContext->cLog);
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -240,7 +244,7 @@ RedDataVariant RedVSIContextRoutine::ExprResult(RedVSIParseTreeInterface* pExpr)
     RedDataVariant cResult;
     if (!cExprResultList.FindDataById(pExpr, cResult))
     {
-        pLog->AddErrorEvent("Failed to find expression result.");
+        pBaseContext->cLog.AddErrorEvent("Failed to find expression result.");
     }
 
     return cResult;
@@ -278,7 +282,7 @@ void RedVSIContextRoutine::SetupRoutineCall(const RedVSIRoutineCallInterface& cC
             if (pRtn != NULL)
             {
                 // Create the new routine context
-                RedVSIContextRoutine* pSubroutineContext = new RedVSIContextRoutine(pLog, cCallSignature.ClassName(), cCallSignature.FuncName(), pRtn->FirstCommand());
+                RedVSIContextRoutine* pSubroutineContext = new RedVSIContextRoutine(pBaseContext, cCallSignature.ClassName(), cCallSignature.FuncName(), pRtn->FirstCommand());
 
                 // Add the params as local vars - the types will have been validated on selecting the routine in the library
                 // We iterate through the signature to get the names, and the call params to get the values.
@@ -318,7 +322,7 @@ void RedVSIContextRoutine::SetupRoutineCall(const RedVSIRoutineCallInterface& cC
             }
             else
             {
-                pLog->AddErrorEvent("Setup Routine Call: Unable to find routine");
+                pBaseContext->cLog.AddErrorEvent("Setup Routine Call: Unable to find routine");
             }
         }
     }

@@ -72,22 +72,22 @@ private:
 
     RedVSIContextBase cVSIBase;
 
-    bool BlankLineComp(RedTokenBuffer& cInputBuffer, RedLog& cLog);
+    bool BlankLineComp(RedTokenBuffer& cInputBuffer);
 
-    bool LibAddComp(RedTokenBuffer& cInputBuffer, RedLog& cLog);
-    bool LibInitComp(RedTokenBuffer& cInputBuffer, RedLog& cLog);
-    bool LibListComp(RedTokenBuffer& cInputBuffer, RedLog& cLog);
+    bool LibAddComp(RedTokenBuffer& cInputBuffer);
+    bool LibInitComp(RedTokenBuffer& cInputBuffer);
+    bool LibListComp(RedTokenBuffer& cInputBuffer);
 
-    bool DataAddComp(RedTokenBuffer& cInputBuffer, RedLog& cLog);
-    bool DataInitComp(RedTokenBuffer& cInputBuffer, RedLog& cLog);
-    bool DataListComp(RedTokenBuffer& cInputBuffer, RedLog& cLog);
+    bool DataAddComp(RedTokenBuffer& cInputBuffer);
+    bool DataInitComp(RedTokenBuffer& cInputBuffer);
+    bool DataListComp(RedTokenBuffer& cInputBuffer);
 
-    bool HelpComp(RedTokenBuffer& cInputBuffer, RedLog& cLog);
+    bool HelpComp(RedTokenBuffer& cInputBuffer);
 
-    bool RunFragComp(RedTokenBuffer& cInputBuffer, RedLog& cLog);
-    bool RunFuncComp(RedTokenBuffer& cInputBuffer, RedLog& cLog);
+    bool RunFragComp(RedTokenBuffer& cInputBuffer);
+    bool RunFuncComp(RedTokenBuffer& cInputBuffer);
 
-    bool ExitComp(RedTokenBuffer& cInputBuffer, RedLog& cLog);
+    bool ExitComp(RedTokenBuffer& cInputBuffer);
 };
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

@@ -33,9 +33,9 @@ class RedVSIContextFactory
 {
 public:
 
-    static RedResult LoadFragmentIntoContext(const RedDataString& InputCodeFragment, RedVSIContextRoutine& UpdateContext);
+    // static RedResult LoadFragmentIntoContext(const RedDataString& InputCodeFragment, RedVSIContextRoutine& UpdateContext);
 
-    static RedResult CreateContext(RedVSIContextRoutine** OutputContext, RedLog& cLog);
+    //static RedResult CreateContext(RedVSIContextRoutine** OutputContext, RedLog& cLog);
 
     //static RedResult CreateContextForRoutine(const RedDataString& classname, const RedDataString& routinename, RedVSILib* pInputLib, RedVSIContextThread** OutputThreadContext, RedLog& cLog);
 };

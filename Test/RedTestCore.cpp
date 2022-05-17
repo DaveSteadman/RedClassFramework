@@ -230,8 +230,8 @@ RedResult RedTestCore::TestDataNumber(void)
         zstr3 = RedDataActions::StringFromDoubleWithMinDigitsAndDP(13.123, 1, 1);
         if (zstr3 != "13.1") return kResultFail;
 
-        zstr3 = RedDataActions::StringFromDoubleWithMinDigitsAndDP(13.466, 1, 1);
-        if (zstr3 != "13.5") return kResultFail;
+        zstr3 = RedDataActions::StringFromDoubleWithMinDigitsAndDP(13.466, 3, 1);
+        if (zstr3 != "013.5") return kResultFail;
     }
 
     // Hexadecimal strings

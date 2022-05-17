@@ -35,7 +35,7 @@ namespace VSI {
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-RedVSICmd* RedVSICmdFactory::RunConstuctionCompetition(RedTokenBuffer& cInputBuffer, RedLog& RedLog)
+RedVSICmd* RedVSICmdFactory::RunConstuctionCompetition(RedTokenBuffer& cInputBuffer, RedLog& cLog)
 {
     RedVSICmd* pFirstObject = NULL;
     RedVSICmd* pTailObject  = NULL;
@@ -58,13 +58,13 @@ RedVSICmd* RedVSICmdFactory::RunConstuctionCompetition(RedTokenBuffer& cInputBuf
             // Create the new object if we can
             switch(iCompEntry)
             {
-            case 1: iEndOrError = EOFComp   (cInputBuffer, RedLog); break;
-            case 2: pNewObject  = IfComp    (cInputBuffer, RedLog); break;
-            case 3: pNewObject  = NewComp   (cInputBuffer, RedLog); break;
-            case 4: pNewObject  = ReturnComp(cInputBuffer, RedLog); break;
-            case 5: pNewObject  = WhileComp (cInputBuffer, RedLog); break;
-            case 6: pNewObject  = LogComp   (cInputBuffer, RedLog); break;
-            case 7: pNewObject  = ExprComp  (cInputBuffer, RedLog); break;
+            case 1: iEndOrError = EOFComp   (cInputBuffer, cLog); break;
+            case 2: pNewObject  = IfComp    (cInputBuffer, cLog); break;
+            case 3: pNewObject  = NewComp   (cInputBuffer, cLog); break;
+            case 4: pNewObject  = ReturnComp(cInputBuffer, cLog); break;
+            case 5: pNewObject  = WhileComp (cInputBuffer, cLog); break;
+            case 6: pNewObject  = LogComp   (cInputBuffer, cLog); break;
+            case 7: pNewObject  = ExprComp  (cInputBuffer, cLog); break;
             default:
                 {
                     iEndOrError = true;
@@ -75,7 +75,7 @@ RedVSICmd* RedVSICmdFactory::RunConstuctionCompetition(RedTokenBuffer& cInputBuf
             }
 
             // Check for any error in the competition
-            if (RedLog.ContainsError()) 
+            if (cLog.ContainsError())
                 iEndOrError = true;
 
             // Move onto the next entry
@@ -99,7 +99,7 @@ RedVSICmd* RedVSICmdFactory::RunConstuctionCompetition(RedTokenBuffer& cInputBuf
     }
 
     // Don't return any objects on error
-    if (RedLog.ContainsError())
+    if (cLog.ContainsError())
     {
         if (pFirstObject != NULL)
         {
@@ -113,7 +113,21 @@ RedVSICmd* RedVSICmdFactory::RunConstuctionCompetition(RedTokenBuffer& cInputBuf
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-bool RedVSICmdFactory::EOFComp(RedTokenBuffer& cInputBuffer, RedLog& RedLog)
+RedVSICmd* RedVSICmdFactory::RunConstuctionCompetition(RedDataString& cInputString, RedLog& cLog)
+{
+    // Turn the string into tokens
+    RedTokenBuffer cTokenList;
+    if (!RedTokenFactory::CreateTokens(cInputString, cTokenList))
+    {
+        cLog.AddErrorEvent("Failed to create tokens");
+        return NULL;
+    }
+    return RedVSICmdFactory::RunConstuctionCompetition(cTokenList, cLog);
+}
+
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+bool RedVSICmdFactory::EOFComp(RedTokenBuffer& cInputBuffer, RedLog& cLog)
 {
     RedToken cTok = cInputBuffer.GetToken();
 
@@ -130,7 +144,7 @@ bool RedVSICmdFactory::EOFComp(RedTokenBuffer& cInputBuffer, RedLog& RedLog)
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-RedVSICmd* RedVSICmdFactory::IfComp(RedTokenBuffer& cInputBuffer, RedLog& RedLog)
+RedVSICmd* RedVSICmdFactory::IfComp(RedTokenBuffer& cInputBuffer, RedLog& cLog)
 {
     // Read the if keyword
     RedToken cTok  = cInputBuffer.GetToken();
@@ -141,24 +155,24 @@ RedVSICmd* RedVSICmdFactory::IfComp(RedTokenBuffer& cInputBuffer, RedLog& RedLog
     RedVSICmd*       pNegBranch = NULL;
 
     // Read the expression to assign. If okay, assign it, else delete the command
-    pExpr = RedVSIParseFactory::ConstructAssignExpr(cInputBuffer, RedLog);
-    if ((pExpr == NULL) || (RedLog.ContainsError())) { RedLog.AddErrorEvent("IF command: cant construction expression"); return NULL; }
+    pExpr = RedVSIParseFactory::ConstructAssignExpr(cInputBuffer, cLog);
+    if ((pExpr == NULL) || (cLog.ContainsError())) { cLog.AddErrorEvent("IF command: cant construction expression"); return NULL; }
 
     // Check for the THEN keyword
     cTok = cInputBuffer.GetToken();
-    if (!cTok.Predef().IsKeywordThen()) { RedLog.AddErrorEvent("IF command: no Then keyword found"); delete pExpr; return NULL; }
+    if (!cTok.Predef().IsKeywordThen()) { cLog.AddErrorEvent("IF command: no Then keyword found"); delete pExpr; return NULL; }
 
     // Create the positive branch, Read the list of commands, which ends with a token the 
     // competition doesn't understand
-    pPosBranch = RunConstuctionCompetition(cInputBuffer, RedLog);
-    if ((pPosBranch == NULL) || (RedLog.ContainsError())) return NULL;
+    pPosBranch = RunConstuctionCompetition(cInputBuffer, cLog);
+    if ((pPosBranch == NULL) || (cLog.ContainsError())) return NULL;
 
     // Read the ELSE related token and progress, or we have an error
     cTok = cInputBuffer.GetToken();
     if ( cTok.Predef().IsKeywordElse() )
     {
         // Read the list of commands, which ends with a token the competition doesn't understand
-        pNegBranch = RunConstuctionCompetition(cInputBuffer, RedLog);
+        pNegBranch = RunConstuctionCompetition(cInputBuffer, cLog);
 
         // control the loops based on a keyword (and return token if not a keyword)
         cTok = cInputBuffer.GetToken();
@@ -166,13 +180,13 @@ RedVSICmd* RedVSICmdFactory::IfComp(RedTokenBuffer& cInputBuffer, RedLog& RedLog
 
     if (!cTok.Predef().IsKeywordEndif())
     {
-        RedLog.AddErrorEvent("IF command: no ENDIF keyword found");
+        cLog.AddErrorEvent("IF command: no ENDIF keyword found");
         delete pExpr;
         delete pPosBranch;
         if (pNegBranch != NULL) delete pNegBranch;
         return NULL;
     }
-    if (RedLog.ContainsError())
+    if (cLog.ContainsError())
     {
         delete pExpr;
         delete pPosBranch;
@@ -189,13 +203,13 @@ RedVSICmd* RedVSICmdFactory::IfComp(RedTokenBuffer& cInputBuffer, RedLog& RedLog
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-RedVSICmd* RedVSICmdFactory::ExprComp(RedTokenBuffer& cInputBuffer, RedLog& RedLog)
+RedVSICmd* RedVSICmdFactory::ExprComp(RedTokenBuffer& cInputBuffer, RedLog& cLog)
 {
     // read an expression
-    RedVSIParseTreeInterface* pExpr = RedVSIParseFactory::ConstructAssignExpr(cInputBuffer, RedLog);
+    RedVSIParseTreeInterface* pExpr = RedVSIParseFactory::ConstructAssignExpr(cInputBuffer, cLog);
     
     // if we have an expression and no error, then we can progress
-    if ((pExpr) && (!RedLog.ContainsError()))
+    if ((pExpr) && (!cLog.ContainsError()))
     {
         // if the top level element of the parse tree is an assignment or a 
         // routine call, then its a valid expression
@@ -215,7 +229,7 @@ RedVSICmd* RedVSICmdFactory::ExprComp(RedTokenBuffer& cInputBuffer, RedLog& RedL
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-RedVSICmd* RedVSICmdFactory::LogComp(RedTokenBuffer& cInputBuffer, RedLog& RedLog)
+RedVSICmd* RedVSICmdFactory::LogComp(RedTokenBuffer& cInputBuffer, RedLog& cLog)
 {
     // New is started with a keyword, we can instantly return if not right.
     RedToken cKeywordTok = cInputBuffer.GetToken();
@@ -224,10 +238,10 @@ RedVSICmd* RedVSICmdFactory::LogComp(RedTokenBuffer& cInputBuffer, RedLog& RedLo
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
     // Read an expression
-    RedVSIParseTreeInterface* pExpr = RedVSIParseFactory::ConstructAssignExpr(cInputBuffer, RedLog);
+    RedVSIParseTreeInterface* pExpr = RedVSIParseFactory::ConstructAssignExpr(cInputBuffer, cLog);
     if (!pExpr)
     {
-        RedLog.AddErrorEvent(RedVSIErrorCodes::GetErrorString(RedVSIErrorCodes::eCFact_Log_NoExpr));
+        cLog.AddErrorEvent(RedVSIErrorCodes::GetErrorString(RedVSIErrorCodes::eCFact_Log_NoExpr));
         return NULL;
     }
 
@@ -240,7 +254,7 @@ RedVSICmd* RedVSICmdFactory::LogComp(RedTokenBuffer& cInputBuffer, RedLog& RedLo
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-RedVSICmd* RedVSICmdFactory::NewComp(RedTokenBuffer& cInputBuffer, RedLog& RedLog)
+RedVSICmd* RedVSICmdFactory::NewComp(RedTokenBuffer& cInputBuffer, RedLog& cLog)
 {
     // New is started with a keyword, we can instantly return if not right.
     RedToken cKeywordTok = cInputBuffer.GetToken();
@@ -252,7 +266,7 @@ RedVSICmd* RedVSICmdFactory::NewComp(RedTokenBuffer& cInputBuffer, RedLog& RedLo
     RedToken cLocTok  = cInputBuffer.GetToken();
     if (!cLocTok.Predef().IsLocationKeyword())
     {
-        RedLog.AddErrorEvent(RedVSIErrorCodes::GetErrorString(RedVSIErrorCodes::eCFact_New_BadLoc));
+        cLog.AddErrorEvent(RedVSIErrorCodes::GetErrorString(RedVSIErrorCodes::eCFact_New_BadLoc));
         return NULL;
     }
     RedVSILangElement cLoc;
@@ -263,7 +277,7 @@ RedVSICmd* RedVSICmdFactory::NewComp(RedTokenBuffer& cInputBuffer, RedLog& RedLo
     RedToken cTypeTok = cInputBuffer.GetToken();
     if (!cTypeTok.Predef().IsTypeKeyword())
     {
-        RedLog.AddErrorEvent(RedVSIErrorCodes::GetErrorString(RedVSIErrorCodes::eCFact_New_BadType));
+        cLog.AddErrorEvent(RedVSIErrorCodes::GetErrorString(RedVSIErrorCodes::eCFact_New_BadType));
         return NULL;
     }
     RedVSILangElement cType;
@@ -277,7 +291,7 @@ RedVSICmd* RedVSICmdFactory::NewComp(RedTokenBuffer& cInputBuffer, RedLog& RedLo
     RedToken cNameTok = cInputBuffer.GetToken();
     if (!cNameTok.Type().IsName())
     {
-        RedLog.AddErrorEvent(RedVSIErrorCodes::GetErrorString(RedVSIErrorCodes::eCFact_New_BadName));
+        cLog.AddErrorEvent(RedVSIErrorCodes::GetErrorString(RedVSIErrorCodes::eCFact_New_BadName));
         return NULL;
     }
 
@@ -288,21 +302,21 @@ RedVSICmd* RedVSICmdFactory::NewComp(RedTokenBuffer& cInputBuffer, RedLog& RedLo
         RedToken bracketToken = cInputBuffer.GetToken();
         if (!bracketToken.Predef().IsSymbolBracketOpenSquare())
         {
-            RedLog.AddErrorEvent(RedVSIErrorCodes::GetErrorString(RedVSIErrorCodes::eCFact_New_BadLoc));
+            cLog.AddErrorEvent(RedVSIErrorCodes::GetErrorString(RedVSIErrorCodes::eCFact_New_BadLoc));
             return NULL;
         }
 
-        pIndexExpr = RedVSIParseFactory::ConstructStatementExpr(cInputBuffer, RedLog);
+        pIndexExpr = RedVSIParseFactory::ConstructStatementExpr(cInputBuffer, cLog);
         if (!pIndexExpr)
         {
-            RedLog.AddErrorEvent("New Command: Bad attribute indexing expression");
+            cLog.AddErrorEvent("New Command: Bad attribute indexing expression");
             return NULL;
         }
 
         bracketToken = cInputBuffer.GetToken();
         if (!bracketToken.Predef().IsSymbolBracketCloseSquare())
         {
-            RedLog.AddErrorEvent("New Command: Bad attribute indexing expression");
+            cLog.AddErrorEvent("New Command: Bad attribute indexing expression");
             delete pIndexExpr;
             return NULL;
         }
@@ -314,10 +328,10 @@ RedVSICmd* RedVSICmdFactory::NewComp(RedTokenBuffer& cInputBuffer, RedLog& RedLo
     if (cEqTok.Predef().IsSymbolAssignEqual())
     {
         // Create the expression and handle creation errors
-        pInitExpr = RedVSIParseFactory::ConstructAssignExpr(cInputBuffer, RedLog);
+        pInitExpr = RedVSIParseFactory::ConstructAssignExpr(cInputBuffer, cLog);
         if (!pInitExpr)
         {
-            RedLog.AddErrorEvent(RedVSIErrorCodes::GetErrorString(RedVSIErrorCodes::eCFact_New_NoInitExpr));
+            cLog.AddErrorEvent(RedVSIErrorCodes::GetErrorString(RedVSIErrorCodes::eCFact_New_NoInitExpr));
             return NULL;
         }
     }
@@ -334,7 +348,7 @@ RedVSICmd* RedVSICmdFactory::NewComp(RedTokenBuffer& cInputBuffer, RedLog& RedLo
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-RedVSICmd* RedVSICmdFactory::ReturnComp(RedTokenBuffer& cInputBuffer, RedLog& RedLog)
+RedVSICmd* RedVSICmdFactory::ReturnComp(RedTokenBuffer& cInputBuffer, RedLog& cLog)
 {
     // New is started with a keyword, we can instantly return if not right.
     RedToken cKeywordTok = cInputBuffer.GetToken();
@@ -343,10 +357,10 @@ RedVSICmd* RedVSICmdFactory::ReturnComp(RedTokenBuffer& cInputBuffer, RedLog& Re
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
     // Read an expression
-    RedVSIParseTreeInterface* pExpr = RedVSIParseFactory::ConstructAssignExpr(cInputBuffer, RedLog);
+    RedVSIParseTreeInterface* pExpr = RedVSIParseFactory::ConstructAssignExpr(cInputBuffer, cLog);
     
     // if we have an expression and no error, then we can progress
-    if ((pExpr) && (!RedLog.ContainsError()))
+    if ((pExpr) && (!cLog.ContainsError()))
     {
         // If the top level element of the parse tree is an assignment or a
         // routine call, then its a valid expression
@@ -366,7 +380,7 @@ RedVSICmd* RedVSICmdFactory::ReturnComp(RedTokenBuffer& cInputBuffer, RedLog& Re
     
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-RedVSICmd* RedVSICmdFactory::WhileComp(RedTokenBuffer& cInputBuffer, RedLog& RedLog)
+RedVSICmd* RedVSICmdFactory::WhileComp(RedTokenBuffer& cInputBuffer, RedLog& cLog)
 {
     // Read the WHILE keyword
     RedToken cTok  = cInputBuffer.GetToken();
@@ -378,10 +392,10 @@ RedVSICmd* RedVSICmdFactory::WhileComp(RedTokenBuffer& cInputBuffer, RedLog& Red
     RedVSICmd*       pLoopBranch = NULL;
 
     // Read the expression to assign. If okay, assign it, else delete the command
-    pExpr = RedVSIParseFactory::ConstructAssignExpr(cInputBuffer, RedLog);
+    pExpr = RedVSIParseFactory::ConstructAssignExpr(cInputBuffer, cLog);
     if (!pExpr)
     {
-        RedLog.AddErrorEvent(RedVSIErrorCodes::GetErrorString(RedVSIErrorCodes::eCFact_While_ExprError));
+        cLog.AddErrorEvent(RedVSIErrorCodes::GetErrorString(RedVSIErrorCodes::eCFact_While_ExprError));
         return NULL;
     }
 
@@ -389,20 +403,20 @@ RedVSICmd* RedVSICmdFactory::WhileComp(RedTokenBuffer& cInputBuffer, RedLog& Red
     cTok = cInputBuffer.GetToken();
     if (!cTok.Predef().IsKeywordLoop())
     {
-        RedLog.AddErrorEvent(RedVSIErrorCodes::GetErrorString(RedVSIErrorCodes::eCFact_While_NoLoopKeyword));
+        cLog.AddErrorEvent(RedVSIErrorCodes::GetErrorString(RedVSIErrorCodes::eCFact_While_NoLoopKeyword));
         delete pExpr;
         return NULL;
     }
 
     // Create the positive branch, Read the list of commands, which ends with a token the 
     // competition doesn't understand
-    pLoopBranch = RunConstuctionCompetition(cInputBuffer, RedLog);
+    pLoopBranch = RunConstuctionCompetition(cInputBuffer, cLog);
 
     // Read the ENDLOOP related token and progress, or we have an error
     cTok = cInputBuffer.GetToken();
     if (!cTok.Predef().IsKeywordEndloop())
     {
-        RedLog.AddErrorEvent(RedVSIErrorCodes::GetErrorString(RedVSIErrorCodes::eCFact_While_NoEndLoopKeyword));
+        cLog.AddErrorEvent(RedVSIErrorCodes::GetErrorString(RedVSIErrorCodes::eCFact_While_NoEndLoopKeyword));
         delete pExpr;
         delete pLoopBranch;
         return NULL;

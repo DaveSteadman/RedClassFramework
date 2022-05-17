@@ -9,22 +9,41 @@
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 // NextTarget:
-// - Load a code file into the library 
-//
-//         lib add "c:\util\scratch\test.txt"
+// - Organise routine calls onto a stack and then unwind on returning from a call.
+//      - Constrain to only single-threaded ideas until function calls are established/stable.
 //
 // - Run a pre-loaded function
+//         lib add "c:\util\scratch\test.txt"
 //
+//      Creation of any thread places it in a list:
+//          - Design statement that the threads/stacks are stored statically, like expressions.
+//          - Place routine context in list. Then call base context to execute, not on the context itself.
+// 
 // Ideas:
-// - Update number/string processing to simplify strings to/from numbers. static funcs etc.
-//      - DataActions: Create a functional/utility class for addition routines and remove clutter from data classes?
 // - RedDataVariant type reports the internal type, not the variant "container". 
 //      - Maybe want to change that so actions like serialisation can correctly handle variants.
 // - When an expression reaches an error, throw. Catch it at the command level that started the expression.
 //      - Mop up anything about the expression, make sure an error message is logged. Move on.
 // - DataString: Make the InsertAtIndex routines robust, and reuse then in all the append/prepend versions.
 //      - Remove additional memory allocation calls.
-//
+// - Only value of a language is its interaction with its environment.
+//      - e.g. Create a List object from files in a directory run "new heap list x = system::filelist('c:\', 'R')"
+// - Atomic blocks:
+//      - No yielding, to allow thread-safe operations. No loops allowed?
+// 
+// - Contexts
+//      - LocalRoutine 
+//          - Params, locals, return value
+//          - Expression processing
+//          - Command pointer
+//      - Globals
+//          - Heap 
+//          - Routine stack
+// 
+//  Relegate the Thread to a struct within the Global? 
+//      - How does a function call add to itself?
+//          - Create the new context, add to itself, call current context blocked?
+// 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 int main()

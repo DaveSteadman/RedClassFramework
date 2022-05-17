@@ -17,6 +17,7 @@
 // -------------------------------------------------------------------------------------------------
 
 #include "RedVSICmdLog.h"
+#include "RedVSIContextBase.h"
 
 namespace Red {
 namespace VSI {
@@ -50,7 +51,7 @@ void RedVSICmdLog::Execute(RedVSIContextRoutine* pContext)
     RedDataVariant cExprResult = pContext->ExprResult(pLogExpr);
 
     // Get a string representation of the value
-    pContext->Log()->AddText(cExprResult.StringValue());
+    pContext->BaseContext()->cLog.AddText(cExprResult.StringValue());
 
     // Expression will have been evaluated prior to the command,
     // so any actions already performed. Just queue up the next 

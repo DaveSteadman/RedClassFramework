@@ -38,18 +38,19 @@ class RedVSICmdFactory
 {
 public:
 
-    static RedVSICmd* RunConstuctionCompetition(RedTokenBuffer& cInputBuffer, RedLog& RedLog);
+    static RedVSICmd* RunConstuctionCompetition(RedTokenBuffer& cInputBuffer, RedLog& cLog);
+    static RedVSICmd* RunConstuctionCompetition(RedDataString&  cInputString, RedLog& cLog);
 
 private:
 
     static bool       EOFComp   (RedTokenBuffer& cInputBuffer, RedLog& RedLog);
 
-    static RedVSICmd* ExprComp  (RedTokenBuffer& cInputBuffer, RedLog& RedLog);
-    static RedVSICmd* IfComp    (RedTokenBuffer& cInputBuffer, RedLog& RedLog);
-    static RedVSICmd* LogComp   (RedTokenBuffer& cInputBuffer, RedLog& RedLog);
-    static RedVSICmd* NewComp   (RedTokenBuffer& cInputBuffer, RedLog& RedLog);
-    static RedVSICmd* ReturnComp(RedTokenBuffer& cInputBuffer, RedLog& RedLog);
-    static RedVSICmd* WhileComp (RedTokenBuffer& cInputBuffer, RedLog& RedLog);
+    static RedVSICmd* ExprComp  (RedTokenBuffer& cInputBuffer, RedLog& cLog);
+    static RedVSICmd* IfComp    (RedTokenBuffer& cInputBuffer, RedLog& cLog);
+    static RedVSICmd* LogComp   (RedTokenBuffer& cInputBuffer, RedLog& cLog);
+    static RedVSICmd* NewComp   (RedTokenBuffer& cInputBuffer, RedLog& cLog);
+    static RedVSICmd* ReturnComp(RedTokenBuffer& cInputBuffer, RedLog& cLog);
+    static RedVSICmd* WhileComp (RedTokenBuffer& cInputBuffer, RedLog& cLog);
 };
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

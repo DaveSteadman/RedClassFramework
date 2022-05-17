@@ -41,8 +41,8 @@ namespace VSI {
 
 class RedVSIContextRoutine;
 
-typedef RedStackLIFO<RedVSIContextRoutine*>                   RedVSIRoutineContextStack;
-typedef RedMapList<RedDataString, RedVSIRoutineContextStack*> RedVSIThreadList;
+typedef RedStackLIFO<RedVSIContextRoutine*> RedVSIRoutineContextStack;
+
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -52,13 +52,15 @@ class RedVSIContextBase {
 
 public:
 
+    // Execute()
+    // - Look at the routine stack, execute commands on the top one.
+    // - Remove top one if done, copying any return values down.
+
     TEContextState eState = TEContextState::Running;
 
     RedVSILib        cCodeLib;
     RedLog           cLog;
     RedDataRecord    cHeap;
-    RedVSIThreadList cThreadList;
-
     RedVSIRoutineContextStack cCallStack;
 
 private:

@@ -117,9 +117,9 @@ RedDataString RedDataActions::StringFromDoubleWithDP(double dblNum, unsigned dp)
 
 RedDataString RedDataActions::StringFromDoubleWithMinDigitsAndDP(double dblNum, unsigned mindigits, unsigned dp)
 {
-    const int  iStrLen = 32;
-    char       formatstr[iStrLen];
-    char       numstr[iStrLen];
+    const int      iStrLen = 32;
+    char           formatstr[iStrLen];
+    char           numstr[iStrLen];
     RedDataString  cRetStr;
 
     const unsigned digits = mindigits + dp + 1;
@@ -140,6 +140,7 @@ RedDataString RedDataActions::HexadecimalStringFromInt(unsigned iNum)
 
     const int  iStrLen = 32;
     char       numstr[iStrLen];
+
     snprintf(numstr, iStrLen, "0x%x", iNum);
     cRetStr = numstr;
 

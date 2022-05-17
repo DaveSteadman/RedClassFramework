@@ -27,6 +27,7 @@ namespace VSI {
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
+/*
 RedResult RedVSIContextFactory::CreateContext(RedVSIContextRoutine** OutputContext, RedLog& cLog)
 {
     // Turn the code into tokens
@@ -42,6 +43,9 @@ RedResult RedVSIContextFactory::CreateContext(RedVSIContextRoutine** OutputConte
     //if (cLog.IsError())
     //    return kResultFail;
 
+    RedVSIContextBase    baseContext;
+    RedVSIContextRoutine testContext(&baseContext);
+
     * OutputContext = new RedVSIContextRoutine(&cLog);
 
     if (*OutputContext == NULL)
@@ -49,9 +53,10 @@ RedResult RedVSIContextFactory::CreateContext(RedVSIContextRoutine** OutputConte
 
     return kResultSuccess;
 }
+*/
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
+/*
 RedResult RedVSIContextFactory::LoadFragmentIntoContext(const RedDataString& InputCodeFragment, RedVSIContextRoutine& UpdateContext)
 {
     // Turn the code into tokens
@@ -73,7 +78,7 @@ RedResult RedVSIContextFactory::LoadFragmentIntoContext(const RedDataString& Inp
 
     return kResultSuccess;
 }
-
+*/
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 //
 //RedResult RedVSIContextFactory::CreateThreadContextForRoutine(const RedDataString& classname, const RedDataString& routinename, RedVSILib* pInputLib, RedVSIContextThread** OutputThreadContext, RedLog& cLog)
