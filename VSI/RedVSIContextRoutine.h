@@ -78,9 +78,6 @@ public:
     RedDataVariant  ExprResult(RedVSIParseTreeInterface* pExpr);
     void            ExecuteExprQueue(void);
 
-    // Error reporting and debugging
-    //RedLog*         Log(void) { return pLog; };
-
     // Setup Calls
     void            SetupRoutineCall(const RedVSIRoutineCallInterface& cSignature);
     void            QueueCommand(RedVSICmd* pCmd) { if (pCmd != NULL) cCmdStack.Push(pCmd); else pCurrCmd = pCmd; };
@@ -119,15 +116,15 @@ public:
 private:
 
     // Execution
-    RedDataString RoutineName;
-    RedDataString ClassName;
+    RedDataString RoutineName = "";
+    RedDataString ClassName   = "";
 
     // Curr command initialised to zero, command popped off the stack.
     // expressions for that command evaluated, then the command is evaluated
     // which leads to a change on the stack. Following exection, the curr is cleared.
-    RedVSICmd* pCurrCmd;
+    RedVSICmd* pCurrCmd = NULL;
 
-    TECmdExecutePhases eCmdPhase;
+    TECmdExecutePhases eCmdPhase = eCmdExecPhaseStart;
 
     // The stack of commands in the routine. Added to by commands stacking up their
     // branched and subsequent commands. Reduced by the context executing them.
@@ -135,7 +132,7 @@ private:
 
     // The currently considered expression. Zero when starting a routine or between commands,
     // but maintains the address of the expression when the routine is blocked.
-    RedVSIParseTreeInterface* pCurrExpr;
+    RedVSIParseTreeInterface* pCurrExpr = NULL;
 
     // The list of parse tree nodes which need to be executed IN ORDER before
     // the pCurrCmd can be executed
@@ -156,10 +153,7 @@ private:
 
     // Record holding thread data
     // Contains log
-    RedVSIContextBase* pBaseContext;
-
-    // Logging
-    //RedLog* pLog;
+    RedVSIContextBase* pBaseContext = NULL;
 };
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

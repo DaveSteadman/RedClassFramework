@@ -589,29 +589,24 @@ RedResult RedTestVSI::TestRunProg_001(void)
 RedResult RedTestVSI::TestFragment_New(void)
 {
     // Define a small code fragment
-    RedDataString strCodeFragment = "new stack number x = 3.2 x = x * 2";
+    RedDataString strCodeFragment = "new stack number x=3.2 x=x*2";
 
-    // Turn the code into tokens
-    RedTokenBuffer cTokenList;
-    RedLog            cRedLog;
-    if (!RedTokenFactory::CreateTokens(strCodeFragment, cTokenList))
-        return kResultFail;
+    RedVSIContextBase baseContext;
 
     // Turn the tokens into code
-    RedVSICmd* pTopCmd = RedVSICmdFactory::RunConstuctionCompetition(cTokenList, cRedLog);
+    RedVSICmd* pTopCmd = RedVSICmdFactory::RunConstuctionCompetition(strCodeFragment, baseContext.cLog);
     if (pTopCmd == NULL)
         return kResultFail;
-    if (cRedLog.ContainsError())
-        return kResultFail;
-
-    // Execute the code in a context
-    RedVSIContextBase    baseContext;
     RedVSIContextRoutine testContext(&baseContext, pTopCmd);
-    testContext.Execute(10);
-    if (cRedLog.ContainsError())
-        return kResultFail;
+
+    // Execute the code in a context, while we have no completion and no error
+    while ((!testContext.IsExecutionComplete()) && (!baseContext.cLog.ContainsError()))
+        testContext.Execute(5);
+    delete pTopCmd;
 
     // Check the execution result
+    if (baseContext.cLog.ContainsError())
+        return kResultFail;
     RedDataVariant x = testContext.DataItemAsVariant("x");
     if (x != 6.4) return kResultFail;
 
@@ -628,28 +623,22 @@ RedResult RedTestVSI::TestFragment_NewTypes(void)
         new stack number testN = 123 \
         new stack string testS = 'Str' ";
 
-    // Turn the code into tokens
-    RedTokenBuffer cTokenList;
-    RedLog            cRedLog;
-    if (!RedTokenFactory::CreateTokens(strCodeFragment, cTokenList))
-        return kResultFail;
+    RedVSIContextBase baseContext;
 
     // Turn the tokens into code
-    RedVSICmd* pTopCmd = RedVSICmdFactory::RunConstuctionCompetition(cTokenList, cRedLog);
+    RedVSICmd* pTopCmd = RedVSICmdFactory::RunConstuctionCompetition(strCodeFragment, baseContext.cLog);
     if (pTopCmd == NULL)
         return kResultFail;
-    if (cRedLog.ContainsError())
-        return kResultFail;
-
-    // Execute the code in a context
-    RedVSIContextBase    baseContext;
     RedVSIContextRoutine testContext(&baseContext, pTopCmd);
-    while (!testContext.IsExecutionComplete())
-        testContext.Execute(1);
-    if (cRedLog.ContainsError())
-        return kResultFail;
+
+    // Execute the code in a context, while we have no completion and no error
+    while ((!testContext.IsExecutionComplete()) && (!baseContext.cLog.ContainsError()))
+        testContext.Execute(5);
+    delete pTopCmd;
 
     // Check the execution result
+    if (baseContext.cLog.ContainsError())
+        return kResultFail;
     RedDataVariant testB = testContext.DataItemAsVariant("testB");
     if (testB != true) return kResultFail;
     RedDataVariant testN = testContext.DataItemAsVariant("testN");
@@ -666,47 +655,30 @@ RedResult RedTestVSI::TestFragment_Expr(void)
 {
     // Define a small code fragment
     RedDataString strCodeFragment = "\
-        new stack number x   = 3 \
+        new stack number x = 3 \
         x = x + 1 \
         x = x * 2";
 
-    // Turn the code into tokens
-    RedTokenBuffer cTokenList;
-    RedLog            cRedLog;
-    if (!RedTokenFactory::CreateTokens(strCodeFragment, cTokenList))
-        return kResultFail;
+    RedVSIContextBase baseContext;
 
-    // - - - From this point on we need to delete the created elements - - - - - -
- 
     // Turn the tokens into code
-    RedVSICmd* pTopCmd = RedVSICmdFactory::RunConstuctionCompetition(cTokenList, cRedLog);
+    RedVSICmd* pTopCmd = RedVSICmdFactory::RunConstuctionCompetition(strCodeFragment, baseContext.cLog);
     if (pTopCmd == NULL)
         return kResultFail;
-    if (cRedLog.ContainsError())
-    {
-        delete pTopCmd;
-        return kResultFail;
-    }
-
-    // Execute the code in a context
-    RedVSIContextBase    baseContext;
     RedVSIContextRoutine testContext(&baseContext, pTopCmd);
-    testContext.Execute(10);
-    if (cRedLog.ContainsError())
-    {
-        delete pTopCmd;
-        return kResultFail;
-    }
+
+    // Execute the code in a context, while we have no completion and no error
+    while ((!testContext.IsExecutionComplete()) && (!baseContext.cLog.ContainsError()))
+        testContext.Execute(5);
+    delete pTopCmd;
 
     // Check the execution result
+    if (baseContext.cLog.ContainsError())
+        return kResultFail;
     RedDataVariant x = testContext.DataItemAsVariant("x");
     if (x != 8) 
-    {
-        delete pTopCmd;
         return kResultFail;
-    }
 
-    delete pTopCmd;
     return kResultSuccess;
 }
 
@@ -724,27 +696,22 @@ RedResult RedTestVSI::TestFragment_If(void)
         endif \
         res = res * 3";
 
-        // Turn the code into tokens
-        RedTokenBuffer cTokenList;
-        RedLog         cRedLog;
-        if (!RedTokenFactory::CreateTokens(strCodeFragment, cTokenList))
-            return kResultFail;
+        RedVSIContextBase baseContext;
 
         // Turn the tokens into code
-        RedVSICmd* pTopCmd = RedVSICmdFactory::RunConstuctionCompetition(cTokenList, cRedLog);
+        RedVSICmd* pTopCmd = RedVSICmdFactory::RunConstuctionCompetition(strCodeFragment, baseContext.cLog);
         if (pTopCmd == NULL)
             return kResultFail;
-        if (cRedLog.ContainsError())
-            return kResultFail;
-
-        // Execute the code in a context
-        RedVSIContextBase    baseContext;
         RedVSIContextRoutine testContext(&baseContext, pTopCmd);
-        testContext.Execute(10);
-        if (cRedLog.ContainsError())
-            return kResultFail;
+
+        // Execute the code in a context, while we have no completion and no error
+        while ((!testContext.IsExecutionComplete()) && (!baseContext.cLog.ContainsError()))
+            testContext.Execute(5);
+        delete pTopCmd;
 
         // Check the execution result
+        if (baseContext.cLog.ContainsError())
+            return kResultFail;
         RedDataVariant x = testContext.DataItemAsVariant("res");
         if (x != 12) return kResultFail;
     }
@@ -752,32 +719,27 @@ RedResult RedTestVSI::TestFragment_If(void)
     {
         // Define a small code fragment
         RedDataString strCodeFragment = "\
-        new stack number x   = 3 \
+        new stack number x = 3 \
         if x == 4 then \
             x = x + 10 \
         endif";
 
-        // Turn the code into tokens
-        RedTokenBuffer cTokenList;
-        RedLog            cRedLog;
-        if (!RedTokenFactory::CreateTokens(strCodeFragment, cTokenList))
-            return kResultFail;
+        RedVSIContextBase baseContext;
 
         // Turn the tokens into code
-        RedVSICmd* pTopCmd = RedVSICmdFactory::RunConstuctionCompetition(cTokenList, cRedLog);
+        RedVSICmd* pTopCmd = RedVSICmdFactory::RunConstuctionCompetition(strCodeFragment, baseContext.cLog);
         if (pTopCmd == NULL)
             return kResultFail;
-        if (cRedLog.ContainsError())
-            return kResultFail;
-
-        // Execute the code in a context
-        RedVSIContextBase    baseContext;
         RedVSIContextRoutine testContext(&baseContext, pTopCmd);
-        testContext.Execute(10);
-        if (cRedLog.ContainsError())
-            return kResultFail;
+
+        // Execute the code in a context, while we have no completion and no error
+        while ((!testContext.IsExecutionComplete()) && (!baseContext.cLog.ContainsError()))
+            testContext.Execute(5);
+        delete pTopCmd;
 
         // Check the execution result
+        if (baseContext.cLog.ContainsError())
+            return kResultFail;
         RedDataVariant x = testContext.DataItemAsVariant("x");
         if (x != 3) return kResultFail;
     }
@@ -798,33 +760,22 @@ RedResult RedTestVSI::TestFragment_While(void)
         endloop \
         x = x + 1 ";
 
-    // Turn the code into tokens
-    RedTokenBuffer cTokenList;
-    RedLog         cRedLog;
-    if (!RedTokenFactory::CreateTokens(strCodeFragment, cTokenList))
-        return kResultFail;
+    RedVSIContextBase baseContext;
 
     // Turn the tokens into code
-    RedVSICmd* pTopCmd = RedVSICmdFactory::RunConstuctionCompetition(cTokenList, cRedLog);
+    RedVSICmd* pTopCmd = RedVSICmdFactory::RunConstuctionCompetition(strCodeFragment, baseContext.cLog);
     if (pTopCmd == NULL)
         return kResultFail;
-    if (cRedLog.ContainsError())
-        return kResultFail;
-
-    // Execute the code in a context
-    RedVSIContextBase    baseContext;
     RedVSIContextRoutine testContext(&baseContext, pTopCmd);
-
-    if (baseContext.cLog.ContainsError()) return kResultFail;
 
     // Execute the code in a context, while we have no completion and no error
     while ((!testContext.IsExecutionComplete()) && (!baseContext.cLog.ContainsError()))
-        testContext.Execute(1);
-
-    if (baseContext.cLog.ContainsError())
-        return kResultFail;
+        testContext.Execute(5);
+    delete pTopCmd;
 
     // Check the execution result
+    if (baseContext.cLog.ContainsError())
+        return kResultFail;
     RedDataVariant x = testContext.DataItemAsVariant("x");
     if (x != 129) return kResultFail;
 
@@ -848,21 +799,16 @@ RedResult RedTestVSI::TestFragment_Log(void)
     RedVSICmd* pTopCmd = RedVSICmdFactory::RunConstuctionCompetition(strCodeFragment, baseContext.cLog);
     if (pTopCmd == NULL)
         return kResultFail;
-    if (baseContext.cLog.ContainsError())
-        return kResultFail;
-
-    // Execute the code in a context
     RedVSIContextRoutine testContext(&baseContext, pTopCmd);
-    if (baseContext.cLog.ContainsError()) return kResultFail;
 
     // Execute the code in a context, while we have no completion and no error
     while ((!testContext.IsExecutionComplete()) && (!baseContext.cLog.ContainsError()))
-        testContext.Execute(1);
-
-    if (baseContext.cLog.ContainsError())
-        return kResultFail;
+        testContext.Execute(5);
+    delete pTopCmd;
 
     // Check the execution result
+    if (baseContext.cLog.ContainsError())
+        return kResultFail;
     RedDataVariant x = testContext.DataItemAsVariant("x");
     if (x != 2.2) return kResultFail;
 

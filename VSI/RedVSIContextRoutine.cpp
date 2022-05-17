@@ -65,7 +65,6 @@ RedVSIContextRoutine::RedVSIContextRoutine(RedVSIContextBase* pInitBaseContext, 
 
 RedVSIContextRoutine::RedVSIContextRoutine(RedVSIContextBase* pInitBaseContext, const RedDataString& inClassName, const RedDataString& inRoutineName, RedVSICmd* pFirstCmd)
 {
-
     pBaseContext = pInitBaseContext;
 
     ClassName    = inClassName;
