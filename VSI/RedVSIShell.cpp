@@ -192,16 +192,31 @@ bool RedVSIShell::LibListComp(RedTokenBuffer& cInputBuffer)
         cVSIBase.cLog.AddText("LibList Shell Command Processed.");
 
         RedDataList cList;
-        cVSIBase.cCodeLib.ListClassNames(cList);
+
+        //cVSIBase.cCodeLib.ListClassNames(cList);
 
         unsigned listcount = cList.NumItems();
 
         RedDataString retstr;
-        RedDataNumber numClasses(listcount);
+        //RedDataNumber numClasses(listcount);
 
-        retstr = "NumClasses: " + RedDataActions::StringFromNumber(numClasses);
-        cVSIBase.cLog.AddText(retstr);
+        //retstr = "NumClasses: " + RedDataActions::StringFromNumber(numClasses);
+        //cVSIBase.cLog.AddText(retstr);
 
+        //retstr = "";
+        //for (unsigned i = 0; i < listcount; i++)
+        //{
+        //    RedDataString* x;
+        //    x = dynamic_cast<RedDataString*>(cList.PtrForIndex(i));
+
+        //    retstr += *x;
+        //    retstr += "\n";
+        //}
+        //cVSIBase.cLog.AddText(retstr);
+
+
+        cVSIBase.cCodeLib.RoutineSigList(cList);
+        listcount = cList.NumItems();
         retstr = "";
         for (unsigned i = 0; i < listcount; i++)
         {

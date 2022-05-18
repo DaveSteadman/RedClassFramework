@@ -46,6 +46,7 @@ public:
 
     RedDataList     ClassNameList(void);
 
+    void     RoutineSigList(RedDataList& cRoutineNameList);
     void     ListClassNames(RedDataList& cClassNameList);
 
     // Find routines not const, as they may lead to the library loading a class from file.

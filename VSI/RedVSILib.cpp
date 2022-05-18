@@ -106,6 +106,38 @@ RedDataList RedVSILib::ClassNameList(void)
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
+void RedVSILib::RoutineSigList(RedDataList& cRoutineNameList)
+{
+    cRoutineNameList.Init();
+
+    IteratorType cClassIt(&cClassList);
+
+    RedDataString cCurrLine;
+
+    // Iterate through the loaded classes for the classname
+    cClassIt.First();
+    while (!cClassIt.IsDone())
+    {
+        RedVSILibClass* pCurrClass = cClassIt.CurrentItem();
+
+        auto cRoutineIt = pCurrClass->GetRoutineIterator();
+        cRoutineIt.First();
+        while (!cRoutineIt.IsDone())
+        {
+            RedVSILibRoutine* pCurrRoutine = cRoutineIt.CurrentItem();
+
+            cCurrLine = pCurrClass->ClassName() + "::" + pCurrRoutine->cName + pCurrRoutine->ParamString();
+            cRoutineNameList.CloneAndAdd(&cCurrLine);
+
+            cRoutineIt.Next();
+        }
+
+        cClassIt.Next();
+    }
+}
+
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
 void RedVSILib::ListClassNames(RedDataList& cClassNameList)
 {
     cClassNameList.Init();
