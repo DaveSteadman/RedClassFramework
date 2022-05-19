@@ -34,6 +34,9 @@ class RedDataActions {
 
 public:
 
+    // String for type
+    static RedDataString StringFromType(RedDataType cType);
+
     // Number To String
     static RedDataString StringFromNumber(RedDataNumber cNum);
 

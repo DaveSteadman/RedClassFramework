@@ -43,12 +43,14 @@ bool RedTokenPredefType::IsLocationKeyword(void) const
 
 bool RedTokenPredefType::IsTypeKeyword(void) const
 {
-    if (IsKeywordBool())   return true;
-    if (IsKeywordChar())   return true;
-    if (IsKeywordList())   return true;
-    if (IsKeywordNumber()) return true;
-    if (IsKeywordRecord()) return true;
-    if (IsKeywordString()) return true;
+    if (IsKeywordBool())    return true;
+    if (IsKeywordChar())    return true;
+    if (IsKeywordList())    return true;
+    if (IsKeywordNumber())  return true;
+    if (IsKeywordRecord())  return true;
+    if (IsKeywordString())  return true;
+    if (IsKeywordVariant()) return true;
+    if (IsKeywordVoid())    return true;
 
     return false;
 }

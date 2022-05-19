@@ -17,12 +17,29 @@
 // -------------------------------------------------------------------------------------------------
 
 #include "RedDataActions.h"
+#include "RedTokenPredefMap.h"
 
 #include <stdio.h>
 #include <stdlib.h>
 
 namespace Red {
 namespace Core {
+
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+RedDataString RedDataActions::StringFromType(RedDataType cType)
+{
+    if (cType.IsBool())    return kIOStringKeywordBool;
+    if (cType.IsChar())    return kIOStringKeywordChar;
+    if (cType.IsList())    return kIOStringKeywordList;
+    if (cType.IsNum())     return kIOStringKeywordNumber;
+    if (cType.IsRecord())  return kIOStringKeywordRecord;
+    if (cType.IsStr())     return kIOStringKeywordString;
+    if (cType.IsVariant()) return kIOStringKeywordVariant;
+    if (cType.IsVoid())    return kIOStringKeywordVoid;
+
+    return "<Undefined>";
+}
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 

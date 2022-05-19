@@ -81,6 +81,7 @@ public:
     bool                      IsKeywordThen(void) const                      { return eType == TEPredef::eKeywordThen; };
     bool                      IsKeywordTrue(void) const                      { return eType == TEPredef::eKeywordBoolValueTrue; };
     bool                      IsKeywordVariant(void) const                   { return eType == TEPredef::eKeywordVariant; };
+    bool                      IsKeywordVoid(void) const                      { return eType == TEPredef::eKeywordVoid; };
     bool                      IsKeywordWhile(void) const                     { return eType == TEPredef::eKeywordWhile; };
 
     // Keywords Setup
@@ -121,6 +122,7 @@ public:
     static RedTokenPredefType KeywordThen(void)                              { return RedTokenPredefType(TEPredef::eKeywordThen); };
     static RedTokenPredefType KeywordTrue(void)                              { return RedTokenPredefType(TEPredef::eKeywordBoolValueTrue); };
     static RedTokenPredefType KeywordVariant(void)                           { return RedTokenPredefType(TEPredef::eKeywordVariant); };
+    static RedTokenPredefType KeywordVoid(void)                              { return RedTokenPredefType(TEPredef::eKeywordVoid); };
     static RedTokenPredefType KeywordWhile(void)                             { return RedTokenPredefType(TEPredef::eKeywordWhile); };
 
     // Operators and separators
@@ -249,6 +251,7 @@ private:
         eKeywordString,
         eKeywordThen,
         eKeywordVariant,
+        eKeywordVoid,
         eKeywordWhile,
 
         // Bool Values

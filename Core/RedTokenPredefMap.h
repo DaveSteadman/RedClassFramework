@@ -120,6 +120,7 @@ static const RedDataString kIOStringKeywordString                   = RedDataStr
 static const RedDataString kIOStringKeywordThen                     = RedDataString("then");
 static const RedDataString kIOStringKeywordTrue                     = RedDataString("true");
 static const RedDataString kIOStringKeywordVariant                  = RedDataString("variant");
+static const RedDataString kIOStringKeywordVoid                     = RedDataString("void");
 static const RedDataString kIOStringKeywordWhile                    = RedDataString("while");
 
 static const RedDataString kIOStringSymbolAssignPlus                = RedDataString("+=");

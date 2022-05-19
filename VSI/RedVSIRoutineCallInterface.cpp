@@ -27,13 +27,38 @@ namespace VSI {
 
 void RedVSIRoutineCallInterface::operator =(const RedVSIRoutineCallInterface& cSig)
 {
-    cClassName = cSig.cClassName;
-    cObjName   = cSig.cObjName;
-    cFuncName  = cSig.cFuncName;
-    cParams    = cSig.cParams;
+    cClassName     = cSig.cClassName;
+    cFuncName      = cSig.cFuncName;
+    cParamTypeList = cSig.cParamTypeList;
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+RedDataString RedVSIRoutineCallInterface::StringView(void)
+{
+    RedDataString cRetStr;
+
+    cRetStr = cClassName;
+    cRetStr += "::";
+    cRetStr += "cFuncName";
+    cRetStr += "(";
+    
+    TParamTypeListIterator cIt = TParamTypeListIterator(cParamTypeList);
+    cIt.First();
+    while (!cIt.IsDone())
+    {
+        RedDataString* pCurrStr = cIt.CurrentItem();
+        
+        cRetStr += *pCurrStr;
+        
+        // Move on, and add a comma if not at the end
+        cIt.Next();
+        if ((!cIt.IsDone()))
+            cRetStr += ", ";
+    }
+
+    cRetStr += ")";
+}
 
 } // VSI
 } // Red

@@ -41,7 +41,8 @@ public:
     void SetRecord(void)     { eState = TEDataType::eDataTypeRecord; };
     void SetStr(void)        { eState = TEDataType::eDataTypeStr; };
     void SetVariant(void)    { eState = TEDataType::eDataTypeVariant; };
-     
+    void SetVoid(void)       { eState = TEDataType::eDataTypeVoid; };
+
     bool IsValid(void)      const { return (eState != TEDataType::eDataTypeInvalid); };
     bool IsBool(void)       const { return (eState == TEDataType::eDataTypeBool); };
     bool IsChar(void)       const { return (eState == TEDataType::eDataTypeChar); };
@@ -50,6 +51,7 @@ public:
     bool IsRecord(void)     const { return (eState == TEDataType::eDataTypeRecord); };
     bool IsStr(void)        const { return (eState == TEDataType::eDataTypeStr); };
     bool IsVariant(void)    const { return (eState == TEDataType::eDataTypeVariant); };
+    bool IsVoid(void)       const { return (eState == TEDataType::eDataTypeVoid); };
 
     static RedDataType Invalid(void)    { return RedDataType(TEDataType::eDataTypeInvalid); };
     static RedDataType Bool(void)       { return RedDataType(TEDataType::eDataTypeBool); };
@@ -59,6 +61,7 @@ public:
     static RedDataType Record(void)     { return RedDataType(TEDataType::eDataTypeRecord); };
     static RedDataType Str(void)        { return RedDataType(TEDataType::eDataTypeStr); };
     static RedDataType Variant(void)    { return RedDataType(TEDataType::eDataTypeVariant); };
+    static RedDataType Void(void)       { return RedDataType(TEDataType::eDataTypeVoid); };
 
     int iState(void) const { return (int)eState; };
 
@@ -75,7 +78,8 @@ protected:
         eDataTypeNum,
         eDataTypeRecord,
         eDataTypeStr,
-        eDataTypeVariant
+        eDataTypeVariant,
+        eDataTypeVoid
     };
 
     RedDataType(TEDataType eNewState) : eState(eNewState) { };
@@ -92,6 +96,7 @@ static const RedDataType kDataTypeNum        = RedDataType::Num();
 static const RedDataType kDataTypeRecord     = RedDataType::Record();
 static const RedDataType kDataTypeStr        = RedDataType::Str();
 static const RedDataType kDataTypeVariant    = RedDataType::Variant();
+static const RedDataType kDataTypeVoid       = RedDataType::Void();
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 

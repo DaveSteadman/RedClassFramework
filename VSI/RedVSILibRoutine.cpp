@@ -38,13 +38,39 @@ void RedVSILibRoutine::Init(void)
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
+RedDataString RedVSILibRoutine::ParamTypeString(void) 
+{ 
+    RedDataString retStr = "(";
+
+    for (unsigned CurrParamIndex = LibParamList->FirstIndex(); CurrParamIndex <= LibParamList->LastIndex(); CurrParamIndex++)
+    {
+
+        RedDataString     CurrLibParamName;
+        RedVSILangElement CurrLibDataType;
+
+        LibParamList->FindIdByIndex(CurrParamIndex,   CurrLibParamName);
+        LibParamList->FindDataByIndex(CurrParamIndex, CurrLibDataType);
+
+        retStr += 
+
+        // if not last element, add a comma
+        if (CurrParamIndex < LibParamList->LastIndex())
+            retStr += ", ";
+    }
+    retStr += ")";
+
+    return retStr;
+};
+
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
 bool RedVSILibRoutine::IsMatching(const RedVSIRoutineCallInterface& cSig)
 {
-    if (cName != cSig.FuncName())
+    if (cName != cSig.cFuncName)
         return false;
 
     RedVSIStringLangElementMap* LibParamList  = Params();
-    const RedVSIVariantList*    CallParamList = cSig.Params();
+    const RedVSIRoutineCallInterface::TParamTypeList*    CallParamList = cSig.cParamTypeList;
 
     if (LibParamList->NumItems() != CallParamList->NumItems())
         return false;

@@ -68,7 +68,8 @@ void RedVSIParseTreeCall::CalcResult(RedVSIContextRoutine* pContext)
     RedVSIRoutineCallInterface cCall;
 
     // Assign the object anbd class information, even if its blank
-    cCall.SetupCall(cClassName, cObjectName, cFuncName);
+    cCall.cClassName = cClassName;
+    cCall.cFuncName = cFuncName;
 
     // loop through the params list to calculate any we don't have a result for
     RedVSIParseListIterator cParseIt(pParamList);
@@ -81,7 +82,7 @@ void RedVSIParseTreeCall::CalcResult(RedVSIContextRoutine* pContext)
         RedDataVariant r = pContext->ExprResult(pCurrParam);
 
         // add the result of the expr to the param list
-        cCall.AddParam(pContext->ExprResult(pCurrParam));
+        //cCall.cParamTypeList   AddParam(pContext->ExprResult(pCurrParam));
         
         // move onto the next parameter
         cParseIt.Next();

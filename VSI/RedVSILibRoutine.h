@@ -42,7 +42,8 @@ public:
     unsigned                    NumParams(void) { return cParamList.NumItems(); };
     RedVSIStringLangElementMap* Params(void) { return &cParamList; };
     void                        AddParam(const RedDataString& cParamName, RedVSILangElement cType) { cParamList.Add(cParamName, cType); };
-    RedDataString               ParamString(void) { return "(-)"; };
+
+    RedDataString               ParamTypeString(void) { return "(-)"; };
 
     void                        SetCode (RedVSICmd* pNewCode) { pCode = pNewCode; };
     RedVSICmd*                  FirstCommand(void) { return pCode; };

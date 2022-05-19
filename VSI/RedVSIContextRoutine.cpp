@@ -281,7 +281,7 @@ void RedVSIContextRoutine::SetupRoutineCall(const RedVSIRoutineCallInterface& cC
             if (pRtn != NULL)
             {
                 // Create the new routine context
-                RedVSIContextRoutine* pSubroutineContext = new RedVSIContextRoutine(pBaseContext, cCallSignature.ClassName(), cCallSignature.FuncName(), pRtn->FirstCommand());
+                RedVSIContextRoutine* pSubroutineContext = new RedVSIContextRoutine(pBaseContext, cCallSignature.cClassName, cCallSignature.cFuncName, pRtn->FirstCommand());
 
                 // Add the params as local vars - the types will have been validated on selecting the routine in the library
                 // We iterate through the signature to get the names, and the call params to get the values.
@@ -290,8 +290,8 @@ void RedVSIContextRoutine::SetupRoutineCall(const RedVSIRoutineCallInterface& cC
                     {
                         unsigned RtnLibParamFirstIndex  = pRtn->Params()->FirstIndex();
                         unsigned RtnLibParamLastIndex   = pRtn->Params()->LastIndex();
-                        unsigned RtnCallParamFirstIndex = cCallSignature.Params()->FirstIndex();
-                        unsigned RtnCallParamLastIndex  = cCallSignature.Params()->LastIndex();
+                        unsigned RtnCallParamFirstIndex = cCallSignature.cParamTypeList.FirstIndex();
+                        unsigned RtnCallParamLastIndex  = cCallSignature.cParamTypeList.LastIndex();
 
                         if (RtnLibParamFirstIndex != RtnCallParamFirstIndex) throw;
                         if (RtnLibParamLastIndex  != RtnCallParamLastIndex)  throw;
@@ -305,7 +305,7 @@ void RedVSIContextRoutine::SetupRoutineCall(const RedVSIRoutineCallInterface& cC
                             pRtn->Params()->FindIdByIndex(CurrParamIndex, CurrLibParamName);
 
                             // Get data from call
-                            cCallSignature.Params()->FindElementAtIndex(CurrParamIndex, CurrCallParamData);
+                            cCallSignature.cParamTypeList.FindElementAtIndex(CurrParamIndex, CurrCallParamData);
 
                             // Add new local variable to the new routine
                             pSubroutineContext->DuplicateDataItem(kLangElementLocationStack, CurrCallParamData.Value(), CurrLibParamName);

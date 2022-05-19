@@ -162,7 +162,7 @@ void RedVSILib::ListClassNames(RedDataList& cClassNameList)
 
 RedVSILibRoutine* RedVSILib::FindRoutine(const RedVSIRoutineCallInterface& cSig)
 {
-    RedVSILibClass*   pClass   = FindClass(cSig.ClassName());
+    RedVSILibClass*   pClass   = FindClass(cSig.cClassName);
     RedVSILibRoutine* pRoutine = NULL;
 
     // if we found the first class

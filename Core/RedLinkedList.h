@@ -47,6 +47,7 @@ public:
 
     // Access Items
     bool     Find(const unsigned iElemIndex, Element& Elem) const;
+    bool     FindElementAtIndex(const unsigned iElemIndex, Element& Elem) const;
     bool     FindFirst(Element& Elem) const;
     bool     FindLast(Element& Elem) const;
 
@@ -221,6 +222,21 @@ bool RedLinkedList<Element>::Find(const unsigned iElemIndex, Element& Elem) cons
 
     // Return failed if we can find the item
     if ( !FindListElement(iElemIndex, &pGetElem) )
+        return false;
+
+    Elem = pGetElem->Elem;
+    return true;
+}
+
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+template <class Element>
+bool RedLinkedList<Element>::FindElementAtIndex(const unsigned iElemIndex, Element& Elem) const
+{
+    TListElement* pGetElem = NULL;
+
+    // Return failed if we can find the item
+    if (!FindListElement(iElemIndex, &pGetElem))
         return false;
 
     Elem = pGetElem->Elem;

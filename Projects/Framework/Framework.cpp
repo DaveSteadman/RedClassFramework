@@ -45,6 +45,40 @@
 //          - Create the new context, add to itself, call current context blocked?
 // 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+// What is a Routine Signature?
+// 
+// Uses:
+//      - Finding a routine in the library to call
+//          - Checking if a routine exists before replacing it
+//      - Listing the library contents
+//      - ParseTreeCall loads up a Routine signature with objects and param-values, and says "call this".
+//          - Dynamic use
+//          - Does it need to exist? Can everything be setup dynamically?
+// Looks Like:
+// 
+//      rettype ClassA::RoutineB(type, type, type)
+//      ObjectA.RoutineB(varname, varname)
+// 
+// Can we:
+// 
+//      Have a single signature class to look-up and present?
+//      Always list/find them based on the static lib view, massage the object view when needed.
+// 
+// What is a signature:
+// 
+//      We have the classes and routines as separate things.
+//      - So the objects aren't maintained. Just create them and 
+// 
+//      Have a static version, then add the dynamic data to it for the run-time call?
+// 
+//      Compare types by strings, so we can include classnames in the future.
+// 
+// Solution:
+//      Static:
+//          - Class: 
+//              Get list of static signatures
+//              Does signature exist
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 int main()
 {
