@@ -44,6 +44,9 @@ public:
     RedDataBoolean(const bool Val)             { Set(Val); };
     ~RedDataBoolean()                          { };
     
+    //RedData    Ref(void) { RedData* ref = dynamic_cast<RedData>(this); return ref; };
+
+
     // Inherited: RedData
     void               Init(void)          { SetFalse(); };
     RedDataType        Type(void) const    { return kDataTypeBool; };

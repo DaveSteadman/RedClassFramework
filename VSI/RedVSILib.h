@@ -50,7 +50,7 @@ public:
     void     ListClassNames(RedDataList& cClassNameList);
 
     // Find routines not const, as they may lead to the library loading a class from file.
-    RedVSILibRoutine* FindRoutine(const RedVSIRoutineCallInterface& cSig);
+    RedVSILibRoutine* FindRoutine(const RedVSIRoutineSignature& cSig);
     RedVSILibRoutine* FindRoutine(const RedDataString& cClassName, const RedDataString& cRoutineName);
 
     // Returns number of classes in library

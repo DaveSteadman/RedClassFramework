@@ -53,6 +53,11 @@ typedef RedDoubleLinkedListIterator<RedVSIParseTreeInterface*> RedVSIParseListIt
 typedef RedMapList<RedDataString, RedVSILangElement>           RedVSIStringLangElementMap;
 typedef RedMapListIterator<RedDataString, RedVSILangElement>   RedVSIStringLangElementMapIterator;
 
+typedef RedMapList<RedDataString, RedDataType>                 RedVSIParamTypeList;
+typedef RedMapListIterator<RedDataString, RedDataType>         RedVSIParamTypeListIterator;
+
+
+
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 } // VSI

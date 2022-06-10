@@ -33,6 +33,7 @@ public:
     virtual void        Init(void) = 0;
     virtual RedDataType Type(void) const = 0;
     virtual RedData*    Clone(void) const = 0;
+    //virtual RedData&    Ref(void) const = 0;
     virtual             ~RedData(void) { };
 
     static RedData* NewRedObj(const RedDataType eType);

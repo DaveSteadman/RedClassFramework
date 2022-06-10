@@ -19,6 +19,23 @@
 //          - Design statement that the threads/stacks are stored statically, like expressions.
 //          - Place routine context in list. Then call base context to execute, not on the context itself.
 // 
+// 
+// What do I want from a signature?
+// - Create one during parse tree, got look up in the library. "Dynamic".
+// - Library create one per routine for checking against, and debug output. "Static".
+// - Compare Static and Dynamic signatures.
+//      - Function and class names are simple enough.
+//      - Checking List of parameters as types, vs name-type is the complexity.
+// 
+// Create one class for signatures, that can represent static, dynamic and perform all the comparisons.
+// - Signatures will be created for routines as they enter the library.
+// - Signatures will be able to create strong representations.
+// 
+// - Dynamic signature is the actual value, so the whole signature is the thing passed around for both 
+//   finding the library function and setting up the new call.
+// 
+// 
+// 
 // Ideas:
 // - RedDataVariant type reports the internal type, not the variant "container". 
 //      - Maybe want to change that so actions like serialisation can correctly handle variants.

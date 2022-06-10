@@ -23,7 +23,7 @@
 #include "RedVSICollections.h"
 #include "RedVSICmd.h"
 #include "RedVSILangElement.h"
-#include "RedVSIRoutineCallInterface.h"
+#include "RedVSIRoutineSignature.h"
 
 using namespace Red::Core;
 
@@ -79,7 +79,7 @@ public:
     void            ExecuteExprQueue(void);
 
     // Setup Calls
-    void            SetupRoutineCall(const RedVSIRoutineCallInterface& cSignature);
+    void            SetupRoutineCall(const RedVSIRoutineSignature& cSignature);
     void            QueueCommand(RedVSICmd* pCmd) { if (pCmd != NULL) cCmdStack.Push(pCmd); else pCurrCmd = pCmd; };
     void            ClearCommandQueue(void) { cCmdStack.DelAll(); pCurrCmd = NULL; };
     void            SetValueToReturn(const RedDataVariant& cData);
@@ -92,8 +92,8 @@ public:
 
     void            SetParamsList(RedDataRecord* pParamData);
 
-    //    void                       SetRoutineCallData(const RedVSIRoutineCallInterface& d) { cRoutineCall = d; };
-    //    RedVSIRoutineCallInterface RoutineCallData(void)                                   { return cRoutineCall; };
+    //    void                       SetRoutineCallData(const RedVSIRoutineSignature& d) { cRoutineCall = d; };
+    //    RedVSIRoutineSignature RoutineCallData(void)                                   { return cRoutineCall; };
 
         // Inherited Routine creation and control (RedVSIContextRoutine)
     RedDataVariant& ValueToReturn(void) { return cReturnValue; };

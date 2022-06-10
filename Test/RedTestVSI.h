@@ -58,6 +58,8 @@ private:
 
     static RedResult TestRunProg_001(void);
 
+    static RedResult TestSignature(void);
+
 };
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

@@ -126,7 +126,7 @@ void RedVSILib::RoutineSigList(RedDataList& cRoutineNameList)
         {
             RedVSILibRoutine* pCurrRoutine = cRoutineIt.CurrentItem();
 
-            cCurrLine = pCurrClass->ClassName() + "::" + pCurrRoutine->cName + pCurrRoutine->ParamString();
+            cCurrLine = pCurrClass->ClassName() + "::" + pCurrRoutine->cName; // +pCurrRoutine->ParamString();
             cRoutineNameList.CloneAndAdd(&cCurrLine);
 
             cRoutineIt.Next();
@@ -160,10 +160,12 @@ void RedVSILib::ListClassNames(RedDataList& cClassNameList)
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-RedVSILibRoutine* RedVSILib::FindRoutine(const RedVSIRoutineCallInterface& cSig)
+RedVSILibRoutine* RedVSILib::FindRoutine(const RedVSIRoutineSignature& cSig)
 {
-    RedVSILibClass*   pClass   = FindClass(cSig.cClassName);
+    // RedVSILibClass*   pClass   = FindClass(cSig.cClassName);
     RedVSILibRoutine* pRoutine = NULL;
+
+    /* 
 
     // if we found the first class
     if (pClass)
@@ -186,6 +188,8 @@ RedVSILibRoutine* RedVSILib::FindRoutine(const RedVSIRoutineCallInterface& cSig)
             }
         }
     }
+
+    */
 
     return pRoutine;
 }

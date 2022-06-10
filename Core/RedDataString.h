@@ -103,7 +103,6 @@ public:
     void           DelSuffix(const RedDataString& SuffixStr);
     void           TrimQuotes(void);
 
-
     // Internal Main Routines
     static unsigned SizeForNumBlocks(const unsigned numblocks) { return kStringAllocBlockSize * numblocks; };
     static unsigned NumBlocksForSize(const unsigned strsize)   { return (strsize/kStringAllocBlockSize) + 1; };

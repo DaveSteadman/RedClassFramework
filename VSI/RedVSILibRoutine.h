@@ -21,7 +21,7 @@
 #include "RedDataString.h"
 #include "RedVSICmd.h"
 #include "RedVSICollections.h"
-#include "RedVSIRoutineCallInterface.h"
+#include "RedVSIRoutineSignature.h"
 
 using namespace Red::Core;
 
@@ -40,24 +40,23 @@ public:
     bool IsValid(void) const;
 
     unsigned                    NumParams(void) { return cParamList.NumItems(); };
-    RedVSIStringLangElementMap* Params(void) { return &cParamList; };
-    void                        AddParam(const RedDataString& cParamName, RedVSILangElement cType) { cParamList.Add(cParamName, cType); };
-
-    RedDataString               ParamTypeString(void) { return "(-)"; };
+    RedVSIParamTypeList*        Params(void) { return &cParamList; };
+    void                        AddParam(const RedDataString& cParamName, RedDataType cType) { cParamList.Add(cParamName, cType); };
+    RedDataString               ParamTypeString(void);
 
     void                        SetCode (RedVSICmd* pNewCode) { pCode = pNewCode; };
     RedVSICmd*                  FirstCommand(void) { return pCode; };
 
-    void GetDetails(RedDataString& cOutName, RedVSIStringLangElementMap& cOutParamList, RedVSICmd*& pOutCode);
+    void GetDetails(RedDataString& cOutName, RedVSIParamTypeList& cOutParamList, RedVSICmd*& pOutCode);
 
-    bool    IsMatching(const RedVSIRoutineCallInterface& cSig);
+    bool    IsMatching(const RedVSIRoutineSignature& cSig);
 
 public: 
     RedDataString               cName = "";
 
 protected:
     
-    RedVSIStringLangElementMap  cParamList;
+    RedVSIParamTypeList  cParamList;
     RedVSICmd*         pCode = NULL;
 };
 

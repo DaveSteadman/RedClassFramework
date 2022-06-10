@@ -52,6 +52,8 @@ void RedTestVSI::RunUnitTest(RedLog& log)
 
     if (RedTestVSI::TestRunProg_001().IsFail())       { log.AddErrorEvent("VSI Unit Test: TestRunProg_001 Failed");       return; }
 
+    if (RedTestVSI::TestSignature().IsFail())         { log.AddErrorEvent("VSI Unit Test: TestSignature Failed");         return; }
+
     log.AddText("VSI Unit Test: Passed");
 }
 
@@ -812,6 +814,45 @@ RedResult RedTestVSI::TestFragment_Log(void)
     RedDataVariant x = testContext.DataItemAsVariant("x");
     if (x != 2.2) return kResultFail;
 
+    return kResultSuccess;
+}
+
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+RedResult RedTestVSI::TestSignature(void)
+{
+    {
+        RedVSIRoutineSignature cCallSig;
+
+        cCallSig.SetStatic();
+        cCallSig.SetNames("classname", "funcname");
+
+        cCallSig.AddStaticParam(kDataTypeBool, "name1");
+        cCallSig.AddStaticParam(kDataTypeNum,  "name2");
+
+        RedDataString cCheckStr = cCallSig.StringView();
+
+        if (cCheckStr != "classname::funcname(bool name1, number name2)")
+            return kResultFail;
+    }
+
+    {
+        RedVSIRoutineSignature cCallSig;
+
+        cCallSig.SetDynamic();
+        cCallSig.SetNames("classname2", "funcname2");
+
+        RedDataBoolean cBool(0);
+        cCallSig.AddDynamicParam(&cBool);
+
+        RedDataString cStr("www");
+        cCallSig.AddDynamicParam(&cStr);
+
+        RedDataString cCheckStr = cCallSig.StringView();
+
+        if (cCheckStr != "classname2::funcname2(bool, string)")
+            return kResultFail;
+    }
     return kResultSuccess;
 }
 

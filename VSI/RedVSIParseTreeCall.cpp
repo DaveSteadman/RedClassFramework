@@ -65,8 +65,10 @@ void RedVSIParseTreeCall::GetDetails(RedDataString& cOutObjName, RedDataString& 
 void RedVSIParseTreeCall::CalcResult(RedVSIContextRoutine* pContext)
 {
     // The params results list
-    RedVSIRoutineCallInterface cCall;
+    RedVSIRoutineSignature cCall;
 
+    /* 
+    
     // Assign the object anbd class information, even if its blank
     cCall.cClassName = cClassName;
     cCall.cFuncName = cFuncName;
@@ -87,6 +89,8 @@ void RedVSIParseTreeCall::CalcResult(RedVSIContextRoutine* pContext)
         // move onto the next parameter
         cParseIt.Next();
     }
+
+    */
 
     // Call the context to setup the new routine call
     pContext->SetupRoutineCall(cCall);

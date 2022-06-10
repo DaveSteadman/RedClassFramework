@@ -61,64 +61,6 @@ RedData* RedDataVariant::Clone(void) const
     return dynamic_cast<RedData*>(pNewData);
 }
 
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-// Set a new value to the object. It maintains its own data, so any existing
-// data is deleted and the input is cloned.
-void RedDataVariant::SetValue(const RedData* pNewData)
-{
-    Init();
-    if (pNewData)
-        pData = pNewData->Clone();
-}
-
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-void RedDataVariant::SetValue(const RedDataVariant& cDataItem)
-{ 
-    Init();
-    if (cDataItem.IsValid())
-        pData = cDataItem.pData->Clone(); 
-}
-
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-void RedDataVariant::SetValue(const RedDataBoolean& cNewBool)
-{
-    Init();
-    pData = new RedDataBoolean(cNewBool);
-}
-
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-void RedDataVariant::SetValue(const RedDataNumber& cNewNum)
-{
-    Init();
-    pData = new RedDataNumber(cNewNum);
-}
-
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-void RedDataVariant::SetValue(const RedDataChar& cNewCh)
-{
-    Init();
-    pData = new RedDataChar(cNewCh);
-}
-
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-void RedDataVariant::SetValue(const RedDataRecord&  cNewRec)
-{
-    Init();
-    pData = new RedDataRecord(cNewRec);
-}
-
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-void RedDataVariant::SetValue(const RedDataString& cNewStr)
-{
-    Init();
-    pData = new RedDataString(cNewStr);
-}
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -429,7 +371,7 @@ void RedDataVariant::operator =(const RedDataVariant& cVarData)
     Init();
 
     if (cVarData.pData)
-        pData = cVarData.pData->Clone();        
+        pData = cVarData.pData->Clone();
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

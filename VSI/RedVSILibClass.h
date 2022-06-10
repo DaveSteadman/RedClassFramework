@@ -20,7 +20,7 @@
 
 #include "RedCoreNamespace.h"
 #include "RedVSILibRoutine.h"
-#include "RedVSIRoutineCallInterface.h"
+#include "RedVSIRoutineSignature.h"
 
 using namespace Red::Core;
 
@@ -50,7 +50,7 @@ public:
     bool                HasParentClass(void) const                                   { return (!cParentClassName.IsEmpty()); };
 
     void                AddRoutine(RedVSILibRoutine* pNewRoutine);
-    RedVSILibRoutine*   FindRoutine(const RedVSIRoutineCallInterface& cSig);
+    RedVSILibRoutine*   FindRoutine(const RedVSIRoutineSignature& cSig);
     RedVSILibRoutine*   FindRoutineByName(const RedDataString& cNewRoutineName);
 
     RoutineIteratorType GetRoutineIterator(void) { RoutineIteratorType cIt(&cRoutineList); return cIt; };

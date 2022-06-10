@@ -267,64 +267,64 @@ void RedVSIContextRoutine::ExecuteExprQueue(void)
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-void RedVSIContextRoutine::SetupRoutineCall(const RedVSIRoutineCallInterface& cCallSignature)
+void RedVSIContextRoutine::SetupRoutineCall(const RedVSIRoutineSignature& cCallSignature)
 {
-    if (pBaseContext != NULL)
-    {
-        RedVSILib* pLib = &(pBaseContext->cCodeLib);
+    //if (pBaseContext != NULL)
+    //{
+    //    RedVSILib* pLib = &(pBaseContext->cCodeLib);
 
-        if (pLib != NULL)
-        {
-            RedVSILibRoutine* pRtn = pLib->FindRoutine(cCallSignature);
+    //    if (pLib != NULL)
+    //    {
+    //        RedVSILibRoutine* pRtn = pLib->FindRoutine(cCallSignature);
 
-            // If we found a routine in the library that matched the signature
-            if (pRtn != NULL)
-            {
-                // Create the new routine context
-                RedVSIContextRoutine* pSubroutineContext = new RedVSIContextRoutine(pBaseContext, cCallSignature.cClassName, cCallSignature.cFuncName, pRtn->FirstCommand());
+    //        // If we found a routine in the library that matched the signature
+    //        if (pRtn != NULL)
+    //        {
+    //            // Create the new routine context
+    //            RedVSIContextRoutine* pSubroutineContext = new RedVSIContextRoutine(pBaseContext, cCallSignature.cClassName, cCallSignature.cFuncName, pRtn->FirstCommand());
 
-                // Add the params as local vars - the types will have been validated on selecting the routine in the library
-                // We iterate through the signature to get the names, and the call params to get the values.
-                {
-                    if ((pRtn->Params()->NumItems() > 0) && (pRtn->Params()->NumItems()))
-                    {
-                        unsigned RtnLibParamFirstIndex  = pRtn->Params()->FirstIndex();
-                        unsigned RtnLibParamLastIndex   = pRtn->Params()->LastIndex();
-                        unsigned RtnCallParamFirstIndex = cCallSignature.cParamTypeList.FirstIndex();
-                        unsigned RtnCallParamLastIndex  = cCallSignature.cParamTypeList.LastIndex();
+    //            // Add the params as local vars - the types will have been validated on selecting the routine in the library
+    //            // We iterate through the signature to get the names, and the call params to get the values.
+    //            {
+    //                if ((pRtn->Params()->NumItems() > 0) && (pRtn->Params()->NumItems()))
+    //                {
+    //                    unsigned RtnLibParamFirstIndex  = pRtn->Params()->FirstIndex();
+    //                    unsigned RtnLibParamLastIndex   = pRtn->Params()->LastIndex();
+    //                    unsigned RtnCallParamFirstIndex = cCallSignature.cParamTypeList.FirstIndex();
+    //                    unsigned RtnCallParamLastIndex  = cCallSignature.cParamTypeList.LastIndex();
 
-                        if (RtnLibParamFirstIndex != RtnCallParamFirstIndex) throw;
-                        if (RtnLibParamLastIndex  != RtnCallParamLastIndex)  throw;
+    //                    if (RtnLibParamFirstIndex != RtnCallParamFirstIndex) throw;
+    //                    if (RtnLibParamLastIndex  != RtnCallParamLastIndex)  throw;
 
-                        RedDataString  CurrLibParamName;
-                        RedDataVariant CurrCallParamData;
+    //                    RedDataString  CurrLibParamName;
+    //                    RedDataVariant CurrCallParamData;
 
-                        for (unsigned CurrParamIndex = RtnLibParamFirstIndex; CurrParamIndex <= RtnLibParamLastIndex; CurrParamIndex++)
-                        {
-                            // Get name from library param list
-                            pRtn->Params()->FindIdByIndex(CurrParamIndex, CurrLibParamName);
+    //                    for (unsigned CurrParamIndex = RtnLibParamFirstIndex; CurrParamIndex <= RtnLibParamLastIndex; CurrParamIndex++)
+    //                    {
+    //                        // Get name from library param list
+    //                        pRtn->Params()->FindIdByIndex(CurrParamIndex, CurrLibParamName);
 
-                            // Get data from call
-                            cCallSignature.cParamTypeList.FindElementAtIndex(CurrParamIndex, CurrCallParamData);
+    //                        // Get data from call
+    //                        cCallSignature.cParamTypeList.FindElementAtIndex(CurrParamIndex, CurrCallParamData);
 
-                            // Add new local variable to the new routine
-                            pSubroutineContext->DuplicateDataItem(kLangElementLocationStack, CurrCallParamData.Value(), CurrLibParamName);
-                        }
-                    }
-                }
+    //                        // Add new local variable to the new routine
+    //                        pSubroutineContext->DuplicateDataItem(kLangElementLocationStack, CurrCallParamData.Value(), CurrLibParamName);
+    //                    }
+    //                }
+    //            }
 
-                // Add the thread context
-                pSubroutineContext->SetBaseContext(pBaseContext);
+    //            // Add the thread context
+    //            pSubroutineContext->SetBaseContext(pBaseContext);
 
-                // Push the routine on the stack - At this point, the current context is no longer the top of the stack and is considered blocked.
-                pBaseContext->cCallStack.Push(pSubroutineContext);
-            }
-            else
-            {
-                pBaseContext->cLog.AddErrorEvent("Setup Routine Call: Unable to find routine");
-            }
-        }
-    }
+    //            // Push the routine on the stack - At this point, the current context is no longer the top of the stack and is considered blocked.
+    //            pBaseContext->cCallStack.Push(pSubroutineContext);
+    //        }
+    //        else
+    //        {
+    //            pBaseContext->cLog.AddErrorEvent("Setup Routine Call: Unable to find routine");
+    //        }
+    //    }
+    //}
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

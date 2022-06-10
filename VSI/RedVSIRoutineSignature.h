@@ -19,7 +19,6 @@
 #pragma once
 
 #include "RedCoreNamespace.h"
-#include "RedVSICollections.h"
 
 using namespace Red::Core;
 
@@ -30,26 +29,56 @@ namespace VSI {
 
 // Class encapsulating a routine call. A container for a routine name and the parameters, as well
 // as the initial class of object name.
-class RedVSIRoutineCallInterface
+class RedVSIRoutineSignature
 {
 public:
 
-    typedef RedLinkedList<RedDataString*>               TParamTypeList;
-    typedef RedDoubleLinkedListIterator<RedDataString*> TParamTypeListIterator;
-
     // construction
-    RedVSIRoutineCallInterface(void) { Init(); };
-    ~RedVSIRoutineCallInterface()    { cParamTypeList.DelAll(); };
+    RedVSIRoutineSignature(void) { Init(); };
+    ~RedVSIRoutineSignature()    { Init(); };
+    void Init(void);
 
-    void            Init(void) { cClassName.Init(); cFuncName.Init(); cParamTypeList.DelAll(); };
+    // Signature Type
+    void SetDynamic(void);
+    void SetStatic(void);
+    bool IsDynamic(void) const { return (sigType == TESignatureType::eDynamic); };
+    bool IsStatic(void)  const { return (sigType == TESignatureType::eStatic);  };
 
+    // Names
+    void SetClassName(RedDataString cName)                    { cClassName = cName; };
+    void SetFunctionName(RedDataString cName)                 { cFuncName  = cName; };
+    void SetNames(RedDataString cCName, RedDataString cFName) { cClassName = cCName; cFuncName  = cFName; };
+    RedDataString SetClassName(void) const                    { return cClassName; };
+    RedDataString FunctionName(void) const                    { return cFuncName; };
+
+    // Params
+    void AddStaticParam(RedDataType cType, RedDataString cName);
+    void AddDynamicParam(RedData* cValue);
+    
+
+    // String Output
     RedDataString StringView(void);
 
-    void operator =(const RedVSIRoutineCallInterface& cSig);
+    // Operators
+    void operator =(const RedVSIRoutineSignature& cSig);
+
+private:
+
+    enum class TESignatureType { eDynamic, eStatic };
+
+    typedef RedLinkedList<RedData*>         TDynamicParamTypeList;
+    typedef RedLinkedListIterator<RedData*> TDynamicParamTypeListIterator;
+
+    typedef RedMapList<RedDataString, RedDataType>          TStaticParamTypeList;
+    typedef RedMapListIterator<RedDataString, RedDataType>  TStaticParamTypeListIterator;
 
     RedDataString     cClassName;
     RedDataString     cFuncName;
-    TParamTypeList    cParamTypeList;
+
+    TESignatureType sigType = TESignatureType::eStatic;
+
+    TDynamicParamTypeList   cDynamicParamList;
+    TStaticParamTypeList    cStaticParamList;
 };
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

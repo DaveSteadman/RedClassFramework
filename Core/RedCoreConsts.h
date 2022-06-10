@@ -32,7 +32,7 @@ static const char* kNullStr = "\0";
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 static const double kHalfPi = 1.570796326794896619;
-static const double kPi      = 3.141592653589793238;
+static const double kPi     = 3.141592653589793238;
 static const double kTwoPi  = 6.283185307179586476;
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

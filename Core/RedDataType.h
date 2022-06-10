@@ -32,54 +32,57 @@ public:
 
     RedDataType(void)        { Init(); };
     void Init(void)          { eState = TEDataType::eDataTypeInvalid; };
+    RedDataType* Clone(void) const { RedDataType* newT = new RedDataType(); newT->eState = eState;  return newT; };
 
     void SetInvalid(void)    { eState = TEDataType::eDataTypeInvalid; };
-    void SetBool(void)       { eState = TEDataType::eDataTypeBool; };
-    void SetChar(void)       { eState = TEDataType::eDataTypeChar; };
-    void SetList(void)       { eState = TEDataType::eDataTypeList; };
-    void SetNum(void)        { eState = TEDataType::eDataTypeNum; };
-    void SetRecord(void)     { eState = TEDataType::eDataTypeRecord; };
-    void SetStr(void)        { eState = TEDataType::eDataTypeStr; };
-    void SetVariant(void)    { eState = TEDataType::eDataTypeVariant; };
     void SetVoid(void)       { eState = TEDataType::eDataTypeVoid; };
+    void SetBool(void)       { eState = TEDataType::eDataTypeBool; };
+    void SetNum(void)        { eState = TEDataType::eDataTypeNum; };
+    void SetChar(void)       { eState = TEDataType::eDataTypeChar; };
+    void SetStr(void)        { eState = TEDataType::eDataTypeStr; };
+    void SetList(void)       { eState = TEDataType::eDataTypeList; };
+    void SetRecord(void)     { eState = TEDataType::eDataTypeRecord; };
+    void SetVariant(void)    { eState = TEDataType::eDataTypeVariant; };
 
     bool IsValid(void)      const { return (eState != TEDataType::eDataTypeInvalid); };
-    bool IsBool(void)       const { return (eState == TEDataType::eDataTypeBool); };
-    bool IsChar(void)       const { return (eState == TEDataType::eDataTypeChar); };
-    bool IsList(void)       const { return (eState == TEDataType::eDataTypeList); };
-    bool IsNum(void)        const { return (eState == TEDataType::eDataTypeNum); };
-    bool IsRecord(void)     const { return (eState == TEDataType::eDataTypeRecord); };
-    bool IsStr(void)        const { return (eState == TEDataType::eDataTypeStr); };
-    bool IsVariant(void)    const { return (eState == TEDataType::eDataTypeVariant); };
     bool IsVoid(void)       const { return (eState == TEDataType::eDataTypeVoid); };
+    bool IsBool(void)       const { return (eState == TEDataType::eDataTypeBool); };
+    bool IsNum(void)        const { return (eState == TEDataType::eDataTypeNum); };
+    bool IsChar(void)       const { return (eState == TEDataType::eDataTypeChar); };
+    bool IsStr(void)        const { return (eState == TEDataType::eDataTypeStr); };
+    bool IsList(void)       const { return (eState == TEDataType::eDataTypeList); };
+    bool IsRecord(void)     const { return (eState == TEDataType::eDataTypeRecord); };
+    bool IsVariant(void)    const { return (eState == TEDataType::eDataTypeVariant); };
 
     static RedDataType Invalid(void)    { return RedDataType(TEDataType::eDataTypeInvalid); };
-    static RedDataType Bool(void)       { return RedDataType(TEDataType::eDataTypeBool); };
-    static RedDataType Char(void)       { return RedDataType(TEDataType::eDataTypeChar); };
-    static RedDataType List(void)       { return RedDataType(TEDataType::eDataTypeList); };
-    static RedDataType Num(void)        { return RedDataType(TEDataType::eDataTypeNum); };
-    static RedDataType Record(void)     { return RedDataType(TEDataType::eDataTypeRecord); };
-    static RedDataType Str(void)        { return RedDataType(TEDataType::eDataTypeStr); };
-    static RedDataType Variant(void)    { return RedDataType(TEDataType::eDataTypeVariant); };
     static RedDataType Void(void)       { return RedDataType(TEDataType::eDataTypeVoid); };
+    static RedDataType Bool(void)       { return RedDataType(TEDataType::eDataTypeBool); };
+    static RedDataType Num(void)        { return RedDataType(TEDataType::eDataTypeNum); };
+    static RedDataType Char(void)       { return RedDataType(TEDataType::eDataTypeChar); };
+    static RedDataType Str(void)        { return RedDataType(TEDataType::eDataTypeStr); };
+    static RedDataType List(void)       { return RedDataType(TEDataType::eDataTypeList); };
+    static RedDataType Record(void)     { return RedDataType(TEDataType::eDataTypeRecord); };
+    static RedDataType Variant(void)    { return RedDataType(TEDataType::eDataTypeVariant); };
 
     int iState(void) const { return (int)eState; };
 
     RedDataString Name(void);
+
+    void operator =(const RedDataType sourceT) { eState = sourceT.eState; };
 
 protected:
 
     enum class TEDataType
     {
         eDataTypeInvalid = 0,
+        eDataTypeVoid,
         eDataTypeBool,
-        eDataTypeChar,
-        eDataTypeList,
         eDataTypeNum,
-        eDataTypeRecord,
+        eDataTypeChar,
         eDataTypeStr,
-        eDataTypeVariant,
-        eDataTypeVoid
+        eDataTypeList,
+        eDataTypeRecord,
+        eDataTypeVariant
     };
 
     RedDataType(TEDataType eNewState) : eState(eNewState) { };
@@ -89,14 +92,14 @@ private:
 };
 
 static const RedDataType kDataTypeInvalid    = RedDataType::Invalid();
-static const RedDataType kDataTypeBool       = RedDataType::Bool();
-static const RedDataType kDataTypeChar       = RedDataType::Char();
-static const RedDataType kDataTypeList       = RedDataType::List();
-static const RedDataType kDataTypeNum        = RedDataType::Num();
-static const RedDataType kDataTypeRecord     = RedDataType::Record();
-static const RedDataType kDataTypeStr        = RedDataType::Str();
-static const RedDataType kDataTypeVariant    = RedDataType::Variant();
 static const RedDataType kDataTypeVoid       = RedDataType::Void();
+static const RedDataType kDataTypeBool       = RedDataType::Bool();
+static const RedDataType kDataTypeNum        = RedDataType::Num();
+static const RedDataType kDataTypeChar       = RedDataType::Char();
+static const RedDataType kDataTypeStr        = RedDataType::Str();
+static const RedDataType kDataTypeList       = RedDataType::List();
+static const RedDataType kDataTypeRecord     = RedDataType::Record();
+static const RedDataType kDataTypeVariant    = RedDataType::Variant();
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 

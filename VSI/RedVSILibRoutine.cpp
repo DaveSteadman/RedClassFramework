@@ -17,7 +17,7 @@
 // -------------------------------------------------------------------------------------------------
 
 #include "RedVSILibRoutine.h"
-#include "RedVSIRoutineCallInterface.h"
+#include "RedVSIRoutineSignature.h"
 
 namespace Red {
 namespace VSI {
@@ -42,19 +42,23 @@ RedDataString RedVSILibRoutine::ParamTypeString(void)
 { 
     RedDataString retStr = "(";
 
-    for (unsigned CurrParamIndex = LibParamList->FirstIndex(); CurrParamIndex <= LibParamList->LastIndex(); CurrParamIndex++)
+    const unsigned firstindex = cParamList.FirstIndex();
+    const unsigned lastindex  = cParamList.FirstIndex();
+
+    for (unsigned CurrParamIndex = firstindex; CurrParamIndex <= lastindex; CurrParamIndex++)
     {
+        RedDataString CurrLibParamName;
+        RedDataType   CurrLibDataType;
 
-        RedDataString     CurrLibParamName;
-        RedVSILangElement CurrLibDataType;
-
-        LibParamList->FindIdByIndex(CurrParamIndex,   CurrLibParamName);
-        LibParamList->FindDataByIndex(CurrParamIndex, CurrLibDataType);
-
-        retStr += 
+        cParamList.FindIdByIndex(CurrParamIndex, CurrLibParamName);
+        cParamList.FindDataByIndex(CurrParamIndex, CurrLibDataType);
+        
+        retStr += RedDataActions::StringFromType(CurrLibDataType);
+        retStr += " ";
+        retStr += CurrLibParamName;
 
         // if not last element, add a comma
-        if (CurrParamIndex < LibParamList->LastIndex())
+        if (CurrParamIndex < lastindex)
             retStr += ", ";
     }
     retStr += ")";
@@ -64,30 +68,30 @@ RedDataString RedVSILibRoutine::ParamTypeString(void)
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-bool RedVSILibRoutine::IsMatching(const RedVSIRoutineCallInterface& cSig)
+bool RedVSILibRoutine::IsMatching(const RedVSIRoutineSignature& cSig)
 {
-    if (cName != cSig.cFuncName)
-        return false;
+    //if (cName != cSig.cFuncName)
+    //    return false;
 
-    RedVSIStringLangElementMap* LibParamList  = Params();
-    const RedVSIRoutineCallInterface::TParamTypeList*    CallParamList = cSig.cParamTypeList;
+    //RedVSIStringLangElementMap* LibParamList  = Params();
+    //const RedVSIRoutineSignature::TParamTypeList*    CallParamList = cSig.cParamTypeList;
 
-    if (LibParamList->NumItems() != CallParamList->NumItems())
-        return false;
+    //if (LibParamList->NumItems() != CallParamList->NumItems())
+    //    return false;
 
-    unsigned CallParamIndex = CallParamList->FirstIndex();
+    //unsigned CallParamIndex = CallParamList->FirstIndex();
 
-    RedDataString         CurrLibParamName;
-    RedVSILangElement CurrLibDataType;
-    RedDataVariant        CurrCallParam;
+    //RedDataString         CurrLibParamName;
+    //RedVSILangElement CurrLibDataType;
+    //RedDataVariant        CurrCallParam;
 
-    for (unsigned LibParamIndex = LibParamList->FirstIndex(); LibParamIndex <= LibParamList->LastIndex(); LibParamIndex++)
-    {
-        LibParamList->FindIdByIndex(LibParamIndex,   CurrLibParamName);
-        LibParamList->FindDataByIndex(LibParamIndex, CurrLibDataType);
+    //for (unsigned LibParamIndex = LibParamList->FirstIndex(); LibParamIndex <= LibParamList->LastIndex(); LibParamIndex++)
+    //{
+    //    LibParamList->FindIdByIndex(LibParamIndex,   CurrLibParamName);
+    //    LibParamList->FindDataByIndex(LibParamIndex, CurrLibDataType);
 
-        CallParamList->FindElementAtIndex(CallParamIndex, CurrCallParam);
-    }
+    //    CallParamList->FindElementAtIndex(CallParamIndex, CurrCallParam);
+    //}
 
 //    // Check the basics, that the routine name and the number of parameters match
 //    if (cName != cSig.FuncName()) return 0;
@@ -131,11 +135,11 @@ bool RedVSILibRoutine::IsMatching(const RedVSIRoutineCallInterface& cSig)
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-void RedVSILibRoutine::GetDetails(RedDataString& cOutName, RedVSIStringLangElementMap& cOutParamList, RedVSICmd*& pOutCode)
+void RedVSILibRoutine::GetDetails(RedDataString& cOutName, RedVSIParamTypeList& cOutParamList, RedVSICmd*& pOutCode)
 {
-    cOutName = cName;
+    cOutName      = cName;
     cOutParamList = cParamList;
-    pOutCode = pCode;
+    pOutCode      = pCode;
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

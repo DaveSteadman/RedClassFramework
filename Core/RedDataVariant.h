@@ -40,18 +40,18 @@ class RedDataVariant : public RedData
 public:
 
     RedDataVariant(void):pData(NULL) { };
-    RedDataVariant(const RedData& cDataItem):pData(NULL)        { pData = cDataItem.Clone(); };
-    RedDataVariant(const RedDataVariant& cDataItem):pData(NULL) { SetValue(cDataItem); };
-    RedDataVariant(const RedDataBoolean& cNewBool):pData(NULL)  { SetValue(cNewBool); };
-    RedDataVariant(const RedDataChar& cNewCh):pData(NULL)       { SetValue(RedDataChar(cNewCh)); };
-    RedDataVariant(const RedDataNumber& cNewNum):pData(NULL)    { SetValue(cNewNum); };
-    RedDataVariant(const RedDataRecord& cNewRec):pData(NULL)    { SetValue(RedDataRecord(cNewRec)); };
-    RedDataVariant(const RedDataString& cNewStr):pData(NULL)    { SetValue(RedDataString(cNewStr)); };
-    RedDataVariant(const int val):pData(NULL)                   { SetValue(RedDataNumber(val)); };
-    RedDataVariant(const double val):pData(NULL)                { SetValue(RedDataNumber(val)); };
-    RedDataVariant(const char* val):pData(NULL)                 { SetValue(RedDataString(val)); };
-    RedDataVariant(const bool val):pData(NULL)                  { SetValue(RedDataBoolean(val)); };
-    ~RedDataVariant(void)                                       { Init(); };
+    RedDataVariant(const RedData& cDataItem)        { pData = cDataItem.Clone(); };
+    RedDataVariant(const RedDataVariant& cDataItem) { SetValue(cDataItem); };
+    RedDataVariant(const RedDataBoolean& cNewBool)  { SetValue(cNewBool); };
+    RedDataVariant(const RedDataChar& cNewCh)       { SetValue(RedDataChar(cNewCh)); };
+    RedDataVariant(const RedDataNumber& cNewNum)    { SetValue(cNewNum); };
+    RedDataVariant(const RedDataRecord& cNewRec)    { SetValue(RedDataRecord(cNewRec)); };
+    RedDataVariant(const RedDataString& cNewStr)    { SetValue(RedDataString(cNewStr)); };
+    RedDataVariant(const int val)                   { SetValue(RedDataNumber(val)); };
+    RedDataVariant(const double val)                { SetValue(RedDataNumber(val)); };
+    RedDataVariant(const char* val)                 { SetValue(RedDataString(val)); };
+    RedDataVariant(const bool val)                  { SetValue(RedDataBoolean(val)); };
+    ~RedDataVariant(void)                           { Init(); };
 
     // Inherited: RedData
     void                Init(void);
@@ -61,15 +61,15 @@ public:
     bool                IsValid(void) const  { return (pData!=NULL); };
     RedDataType         DataType(void) const { return (pData==NULL) ? kDataTypeInvalid : pData->Type(); };
 
-
-    void                SetValue(const RedDataVariant&     cDataItem);
-    void                SetValue(const RedData*        pNewData);
-    void                SetValue(const RedDataBoolean& cNewBool);
-    void                SetValue(const RedDataChar&    cNewCh);
-    void                SetValue(const RedDataList&    cNewLst);
-    void                SetValue(const RedDataNumber&  cNewNum);
-    void                SetValue(const RedDataRecord&  cNewRec);
-    void                SetValue(const RedDataString&  cNewStr);
+    // Set a new value to the object. Any existing data is deleted and the input is cloned.
+    void                SetValue(const RedData* pNewData)         { Init(); if (pNewData) pData = pNewData->Clone(); };
+    void                SetValue(const RedDataBoolean& cNewBool)  { Init(); pData = new RedDataBoolean(cNewBool); };
+    void                SetValue(const RedDataNumber&  cNewNum)   { Init(); pData = new RedDataNumber(cNewNum); };
+    void                SetValue(const RedDataChar&    cNewCh)    { Init(); pData = new RedDataChar(cNewCh); };
+    void                SetValue(const RedDataString&  cNewStr)   { Init(); pData = new RedDataString(cNewStr); };
+    void                SetValue(const RedDataList&    cNewLst)   { Init(); pData = new RedDataList(cNewLst); };
+    void                SetValue(const RedDataRecord&  cNewRec)   { Init(); pData = new RedDataRecord(cNewRec); };
+    void                SetValue(const RedDataVariant& cDataItem) { Init(); if (cDataItem.IsValid()) pData = cDataItem.pData->Clone(); };
 
     void                SetValue(const int      val) { SetValue(RedDataNumber(val));      };
     void                SetValue(const unsigned val) { SetValue(RedDataNumber((int)val)); };
@@ -92,16 +92,16 @@ public:
 
     void operator =(const RedData* pData);
     void operator =(const RedDataVariant& n);
+
     void operator =(const RedDataBoolean& cNewData) { SetValue(&cNewData); };
     void operator =(const RedDataChar&    cNewData) { SetValue(&cNewData); };
     void operator =(const RedDataString&  cNewData) { SetValue(&cNewData); };
     void operator =(const RedDataNumber&  cNewData) { SetValue(&cNewData); };
-    void operator =(const bool        val)          { SetValue(RedDataBoolean(val)); };
-    void operator =(const char        val)          { SetValue(RedDataChar(val)); };
-    void operator =(const char*       val)          { SetValue(RedDataString(val)); };
-    void operator =(const int         val)          { SetValue(RedDataNumber(val)); };
-    void operator =(const unsigned    val)          { SetValue(RedDataNumber((int)val)); };
-    void operator =(const double      val)          { SetValue(RedDataNumber(val)); };
+    void operator =(const bool            val)      { SetValue(RedDataBoolean(val)); };
+    void operator =(const char            val)      { SetValue(RedDataChar(val)); };
+    void operator =(const char*           val)      { SetValue(RedDataString(val)); };
+    void operator =(const int             val)      { SetValue(RedDataNumber(val)); };
+    void operator =(const double          val)      { SetValue(RedDataNumber(val)); };
 
     RedDataVariant operator+(const RedDataVariant& cVarData);
     RedDataVariant operator-(const RedDataVariant& cVarData);
