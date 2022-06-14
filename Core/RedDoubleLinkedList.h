@@ -42,6 +42,7 @@ public:
     bool     FindFirst(Element& Elem) const;
     bool     FindLast(Element& Elem) const;
     bool     FindElementAtIndex(unsigned iElemIndex, Element& Elem) const;
+
     unsigned NumItems(void)   const { return iNumItems; };
     bool     IsEmpty(void)    const { return (iNumItems==0); };
     unsigned FirstIndex(void) const;

@@ -95,13 +95,24 @@
 //          - Class: 
 //              Get list of static signatures
 //              Does signature exist
+// 
+// 
+// :>run "xxx = (12+23)*(12-11)"
+// Info:    (row:1, col:13)
+// Info:    (row:1, col:13)
+// Error:   Badly Formed BinaryOp
+// Error:   Code execution error.
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 int main()
 {
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-    std::cout << "- Built In Test - - - - - - - - - - - - - - - \n";
+    RedDate cDateNow = RedDate::Today();
+    RedTime cTimeNow = RedTime::Now();
+
+    std::cout << "- " << cDateNow.DateString().TextPtr() << " - " << cTimeNow.TimeString().TextPtr() << "  - - - - - - - - -\n";
+
     Red::Core::RedLog cLog;
     Red::Test::RedTestCentre::RunAllUnitTests(cLog);
     std::cout << cLog.AllLoggedText().TextPtr();

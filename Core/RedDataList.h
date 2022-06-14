@@ -39,34 +39,32 @@ class RedDataList : public RedData
 {
 public:
 
-    RedDataList(void) { pList = NULL; pList = new RedTypeList; };
+    RedDataList(void) {  };
     RedDataList(unsigned uNumItems, RedDataType eItemType) { InitToSize(uNumItems, eItemType); };
-
-    ~RedDataList(void) { pList->DelAll(); delete pList; };
+    ~RedDataList(void) { DeleteAllListEntries(); };
 
     // Inherited: RedData
     RedDataType Type(void) const { return RedDataType::List(); };
     RedData*    Clone(void) const;
-    void        Init(void) { pList->DelAll(); };
+    void        Init(void) { DeleteAllListEntries(); };
 
     void        InitToSize(unsigned uNumItems, RedDataType eItemType);
-
-    void        CloneAndAdd(const RedData* pNewAttrib) { pList->AddLast(pNewAttrib->Clone()); };
-    void        AddByPtr(RedData* pNewAttrib)          { pList->AddLast(pNewAttrib); };
+    void        CloneAndAdd(const RedData* pNewAttrib) { cList.AddLast(pNewAttrib->Clone()); };
+    void        AddByPtr(RedData* pNewAttrib)          { cList.AddLast(pNewAttrib); };
 
     // Generic add operations
     RedData*    CreateAddReturn(const RedDataType& NewAttribType);
 
     // Shortcut add operations
-    void        AddByValue(const int iVal)     { pList->AddLast(new RedDataNumber(iVal));   };
-    void        AddByValue(const char* strVal) { pList->AddLast(new RedDataString(strVal)); };
-    void        AddByValue(const bool bVal)    { pList->AddLast(new RedDataBoolean(bVal));  };
+    void        AddLastByValue(const int iVal)     { cList.AddLast(new RedDataNumber(iVal));   };
+    void        AddLastByValue(const char* strVal) { cList.AddLast(new RedDataString(strVal)); };
+    void        AddLastByValue(const bool bVal)    { cList.AddLast(new RedDataBoolean(bVal));  };
 
     // Remove
-    void        DelAll(void) { pList->DelAll(); };
+    void        DelAll(void) { DeleteAllListEntries(); };
     void        DelAtIndex(const unsigned uIndex);
 
-    unsigned    NumItems(void) const { return pList->NumItems(); };
+    unsigned    NumItems(void) const { return cList.NumItems(); };
 
     RedData*    PtrForIndex(const unsigned uIndex) const;
 
@@ -76,11 +74,13 @@ public:
 
 private:
 
-    typedef RedDoubleLinkedList<RedData*>   RedTypeList;
-    typedef RedDoubleLinkedList<RedData*>   RedTypeListIterator;
+    void DeleteAllListEntries(void);
+
+    typedef RedDoubleLinkedList<RedData*>         RedTypeList;
+    typedef RedDoubleLinkedListIterator<RedData*> RedTypeListIterator;
 
     // Attributes
-    RedTypeList* pList = NULL;
+    RedTypeList cList;
 };
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

@@ -187,19 +187,39 @@ RedResult RedTestCore::TestDataChar(void)
 
 RedResult RedTestCore::TestDataList(void)
 {
+    // Basic add items list
     {
         RedDataList cList;
 
-        cList.AddByValue(123);
-        cList.AddByValue(234);
+        cList.AddLastByValue(123);
+        cList.AddLastByValue(234);
         cList.DelAtIndex(0);
 
         RedDataNumber* pNum = dynamic_cast<RedDataNumber*>(cList.PtrForIndex(0));
         if (*pNum != 234) return kResultFail;
     }
+
+    // Basic create sized list
     {
         RedDataList cList(100, kDataTypeNum);
         if (cList.NumItems() != 100) return kResultFail;
+        RedDataNumber* pNum50 = dynamic_cast<RedDataNumber*>(cList.PtrForIndex(50));
+        if (pNum50 == NULL) return kResultFail;
+        if (pNum50->Type() != kDataTypeNum) return kResultFail;
+    }
+
+    // List copying
+    {
+        RedDataList cList;
+
+        cList.AddLastByValue(12);
+        cList.AddLastByValue(false);
+        cList.AddLastByValue("qwerty");
+
+        RedDataList cList2;
+        cList2 = cList;
+
+        if (cList2.NumItems() != 3) return kResultFail;
     }
     return kResultSuccess;
 }

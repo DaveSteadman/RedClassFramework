@@ -30,27 +30,27 @@ namespace Red {
 namespace Core {
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-// Construction
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 // Inhertied
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 RedData* RedDataList::Clone(void) const 
 {
-    RedDataList* pNewObj = new RedDataList();
+    RedDataList* pNewList = new RedDataList();
 
-    // delete the attrib list, replacing it with a cloned one.
-    if (pNewObj->pList)
+    RedTypeListIterator cIt(&cList);
+    cIt.First();
+
+    while (!cIt.IsDone())
     {
-        delete pNewObj->pList;
-        pNewObj->pList = NULL;
-    }
-    pNewObj->pList = pList->Clone();
+        RedData* pCurrItem = cIt.CurrentItem();
 
-    return (RedData*)pNewObj;
+        if (pCurrItem != NULL)
+            pNewList->AddByPtr(pCurrItem->Clone());
+
+        cIt.Next();
+    }
+
+    return (RedData*)pNewList;
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -58,13 +58,11 @@ RedData* RedDataList::Clone(void) const
 void RedDataList::InitToSize(unsigned uNumItems, RedDataType cItemType)
 {
     // Clear any existing list
-    if (pList) 
-        delete pList; 
+    DeleteAllListEntries();
 
-    pList = new RedTypeList;
-
+    // Loop addinh new entities
     for (unsigned i = 0; i < uNumItems; i++)
-        pList->AddLast(RedData::NewRedObj(cItemType));
+        cList.AddLast(RedData::NewRedObj(cItemType));
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -73,7 +71,7 @@ RedData* RedDataList::CreateAddReturn(const RedDataType& NewAttribType)
 {
     RedData* retData = RedData::NewRedObj(NewAttribType);
 
-    pList->AddLast(retData);
+    cList.AddLast(retData);
 
     return retData;
 }
@@ -84,7 +82,7 @@ RedData* RedDataList::PtrForIndex(const unsigned uIndex) const
 {
     RedData* retData = NULL;
 
-    if (pList->FindElementAtIndex(uIndex, retData))
+    if (cList.FindElementAtIndex(uIndex, retData))
         return retData;
     else
         return NULL;
@@ -94,7 +92,41 @@ RedData* RedDataList::PtrForIndex(const unsigned uIndex) const
 
 void RedDataList::DelAtIndex(const unsigned uIndex)
 { 
-    pList->Del(uIndex);
+    // Delete the DataType entity within the linked list. The linked list will only delete the list-container sturcture.
+    RedData* pCurrItem = NULL;
+
+    // Get the last item (shouldn't fail)
+    if (cList.FindElementAtIndex(uIndex, pCurrItem))
+    {
+        // Delete the object (as this list is focussed on pointers to DataType objects we've previously created)
+        // The delete the linked list entry.
+        delete pCurrItem;
+        cList.Del(uIndex);
+    }
+}
+
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+// Private
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+void RedDataList::DeleteAllListEntries(void)
+{
+    // Loop while the list is not empty
+    while (!cList.IsEmpty())
+    {
+        RedData* pCurrItem = NULL;
+
+        // Get the last item (shouldn't fail)
+        if (cList.FindLast(pCurrItem))
+        {
+            // Delete the object (as this list is focussed on pointers to DataType objects we've previously created)
+            // The delete the linked list entry.
+            delete pCurrItem;
+            cList.DelLast();
+        }
+        else
+            throw;
+    }
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -105,15 +137,21 @@ void RedDataList::operator =(const RedDataList& cNewVal)
 {
     Init();
 
-    delete pList;
-    pList = cNewVal.pList->Clone();
+    DeleteAllListEntries();
+
+    unsigned iFirst = cNewVal.cList.FirstIndex();
+    unsigned iLast  = cNewVal.cList.LastIndex();
+
+    for (unsigned i=iFirst; i<=iLast; i++ )
+    {
+        RedData* pCurrItem = cNewVal.PtrForIndex(i);
+
+        if (pCurrItem != NULL)
+            cList.AddLast( pCurrItem->Clone() );
+    }
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 } // Core
 } // Red
-
-
-
-
