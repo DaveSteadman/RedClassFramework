@@ -54,10 +54,13 @@ public:
     // Params
     void AddStaticParam(RedDataType cType, RedDataString cName);
     void AddDynamicParam(RedData* cValue);
-    
+    unsigned NumParams(void);
 
     // String Output
     RedDataString StringView(void);
+
+    // Comparison
+    static bool CallComparison(RedVSIRoutineSignature& cStaticSig, RedVSIRoutineSignature& cDynamicSig);
 
     // Operators
     void operator =(const RedVSIRoutineSignature& cSig);
@@ -66,19 +69,16 @@ private:
 
     enum class TESignatureType { eDynamic, eStatic };
 
-    typedef RedLinkedList<RedData*>         TDynamicParamTypeList;
-    typedef RedLinkedListIterator<RedData*> TDynamicParamTypeListIterator;
-
-    typedef RedMapList<RedDataString, RedDataType>          TStaticParamTypeList;
-    typedef RedMapListIterator<RedDataString, RedDataType>  TStaticParamTypeListIterator;
+    typedef RedMapList<RedDataString, RedDataType>         TStaticParamTypeList;
+    typedef RedMapListIterator<RedDataString, RedDataType> TStaticParamTypeListIterator;
 
     RedDataString     cClassName;
     RedDataString     cFuncName;
 
     TESignatureType sigType = TESignatureType::eStatic;
 
-    TDynamicParamTypeList   cDynamicParamList;
-    TStaticParamTypeList    cStaticParamList;
+    RedDataList          cDynamicParamList;
+    TStaticParamTypeList cStaticParamList;
 };
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

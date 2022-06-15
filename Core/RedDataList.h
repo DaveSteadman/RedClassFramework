@@ -32,8 +32,8 @@ namespace Core {
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 // A List data type, parented on RedData, so we can create collections of them and use them as VSI variables.
-// All items stored as pointers, either addig from externally created objects, or by value that creates the object on the fly.
-// All objects deleted when deleted from the collection.
+// All items stored as pointers, either adding from externally created objects, or by value that creates the object on the fly.
+// All objects are explicitly deleted when they are deleted from the collection - This is the value this class adds beyond the linked-list type.
 
 class RedDataList : public RedData
 {
@@ -60,13 +60,15 @@ public:
     void        AddLastByValue(const char* strVal) { cList.AddLast(new RedDataString(strVal)); };
     void        AddLastByValue(const bool bVal)    { cList.AddLast(new RedDataBoolean(bVal));  };
 
+    // Index based contents lookup
+    unsigned    NumItems(void)   const { return cList.NumItems(); };
+    unsigned    FirstIndex(void) const { return cList.FirstIndex(); };
+    unsigned    LastIndex(void)  const { return cList.LastIndex(); };
+    RedData*    PtrForIndex(const unsigned uIndex) const;
+
     // Remove
     void        DelAll(void) { DeleteAllListEntries(); };
     void        DelAtIndex(const unsigned uIndex);
-
-    unsigned    NumItems(void) const { return cList.NumItems(); };
-
-    RedData*    PtrForIndex(const unsigned uIndex) const;
 
     // Operators
     void operator =(const RedDataList& cNewVal);

@@ -27,7 +27,7 @@ namespace Core {
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     
-RedTokenPredefMap* RedTokenPredefMap::m_instanceSingleton = nullptr;
+RedTokenPredefMap* RedTokenPredefMap::m_instanceSingleton = NULL;
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 

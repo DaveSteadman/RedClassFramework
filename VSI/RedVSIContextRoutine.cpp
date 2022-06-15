@@ -443,4 +443,3 @@ bool RedVSIContextRoutine::HasCmdToExecute(void) const
 
 } // VSI
 } // Red
-

@@ -821,7 +821,8 @@ RedResult RedTestVSI::TestFragment_Log(void)
 
 RedResult RedTestVSI::TestSignature(void)
 {
-    {
+    // Basic static signature check
+    { 
         RedVSIRoutineSignature cCallSig;
 
         cCallSig.SetStatic();
@@ -836,6 +837,7 @@ RedResult RedTestVSI::TestSignature(void)
             return kResultFail;
     }
 
+    // Basic dynamic signature check
     {
         RedVSIRoutineSignature cCallSig;
 
@@ -853,6 +855,29 @@ RedResult RedTestVSI::TestSignature(void)
         if (cCheckStr != "classname2::funcname2(bool, string)")
             return kResultFail;
     }
+    
+    // Signature comparisons check
+    {
+        RedVSIRoutineSignature cStaticLibSig;
+        RedVSIRoutineSignature cDynamicCallSig;
+
+        cStaticLibSig.SetStatic();
+        cStaticLibSig.SetNames("class", "func");
+
+        cDynamicCallSig.SetDynamic();
+        cDynamicCallSig.SetNames("class", "func");
+
+        RedDataBoolean cBool(true);
+        cStaticLibSig.AddStaticParam(cBool.Type(), "is_flag");
+        cDynamicCallSig.AddDynamicParam(&cBool);
+
+        RedDataString cStr("teststr");
+        cStaticLibSig.AddStaticParam(cStr.Type(), "text_param");
+        cDynamicCallSig.AddDynamicParam(&cStr);
+
+        //if (!RedVSIRoutineSignature::CallComparison(&cStaticLibSig, &cDynamicCallSig)) return kResultFail;
+    }
+
     return kResultSuccess;
 }
 

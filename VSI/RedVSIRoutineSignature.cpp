@@ -30,9 +30,10 @@ void RedVSIRoutineSignature::Init(void)
     cClassName.Init();
     cFuncName.Init();
 
+    cDynamicParamList.DelAll();
+
     sigType = TESignatureType::eStatic;
 
-    cDynamicParamList.DelAll();
     cStaticParamList.DelAll();
 };
 
@@ -82,12 +83,24 @@ void RedVSIRoutineSignature::AddDynamicParam(RedData* cValue)
 {
     if (sigType == TESignatureType::eDynamic)
     {
-        cDynamicParamList.AddLast(cValue->Clone());
+        cDynamicParamList.CloneAndAdd(cValue);
     }
     else
     {
         throw; // Exception, shouldn't be doing this.
     }
+}
+
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+unsigned RedVSIRoutineSignature::NumParams(void)
+{
+    if (sigType == TESignatureType::eDynamic)
+        return cDynamicParamList.NumItems();
+    else
+        return cStaticParamList.NumItems();
+
+    return 0;
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -122,39 +135,65 @@ RedDataString RedVSIRoutineSignature::StringView(void)
     }
     else
     {
+        const unsigned iFirst = cDynamicParamList.FirstIndex();
+        const unsigned iLast  = cDynamicParamList.LastIndex();
 
-        TDynamicParamTypeListIterator cIt(&cDynamicParamList);
-        cIt.First();
-        while (!cIt.IsDone())
+        for(unsigned i=iFirst; i<=iLast; i++)
         {
-            RedData* pCurrData = cIt.CurrentItem();
+            RedData* pCurrData = cDynamicParamList.PtrForIndex(i);
+            if (pCurrData != NULL)
+                cRetStr += RedDataActions::StringFromType(pCurrData->Type());
+            else
+                cRetStr += "<NULLPTR>";
 
-            cRetStr += RedDataActions::StringFromType(pCurrData->Type());
-
-            // Move on, and add a comma if not at the end
-            cIt.Next();
-            if ((!cIt.IsDone()))
-                cRetStr += ", ";
+            // Add the comma if not the last item
+            if (i <iLast ) cRetStr += ", ";
         }
-
     }
-    //
-    //cIt.First();
-    //while (!cIt.IsDone())
-    //{
-    //    RedDataType* pCurrDataType = cIt.CurrentItem();
-    //    
-    //    cRetStr += RedDataActions::StringFromType(*pCurrDataType);
-    //    
-    //    // Move on, and add a comma if not at the end
-    //    cIt.Next();
-    //    if ((!cIt.IsDone()))
-    //        cRetStr += ", ";
-    //}
 
+    // Finish and return
     cRetStr += ")";
-
     return cRetStr;
+}
+
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+bool RedVSIRoutineSignature::CallComparison(RedVSIRoutineSignature& cStaticSig, RedVSIRoutineSignature& cDynamicSig)
+{
+    // Basic setup check
+    if (cStaticSig.IsDynamic()) return false;
+    if (cDynamicSig.IsStatic()) return false;
+
+    // Name check
+    if (cStaticSig.cClassName != cDynamicSig.cClassName) return false;
+    if (cStaticSig.cFuncName  != cDynamicSig.cFuncName)  return false;
+
+    // Param numbers
+    if (cStaticSig.NumParams() != cDynamicSig.NumParams()) return false;
+
+    // param type compare
+    const unsigned nump = cStaticSig.NumParams();
+
+    const unsigned iFirst = cDynamicSig.cDynamicParamList.FirstIndex();
+    const unsigned iLast  = cDynamicSig.cDynamicParamList.LastIndex();
+    RedDataType cStaticParamType;
+    bool readSuccess = false;
+
+    for(unsigned i=iFirst; i<=iLast; i++)
+    {
+        RedData* pCurrDynamic = cDynamicSig.cDynamicParamList.PtrForIndex(i);
+        readSuccess = cStaticSig.cStaticParamList.FindDataByIndex(i, cStaticParamType);
+
+        // If we read params okay
+        if ((readSuccess) && (pCurrDynamic != NULL))
+        {
+            // If the param types don't match, we fail
+            if (pCurrDynamic->Type() != cStaticParamType)
+                return false;
+        }
+    }
+
+    return true;
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
