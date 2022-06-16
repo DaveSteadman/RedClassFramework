@@ -21,6 +21,7 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <math.h>
 
 namespace Red {
 namespace Core {
@@ -117,11 +118,16 @@ RedDataString RedDataActions::StringFromDoubleWithDP(double dblNum, unsigned dp)
     char       numstr[iStrLen];
     RedDataString  cRetStr;
 
-    snprintf(formatstr, iStrLen, "%%.%df", dp);
-    snprintf(numstr, iStrLen, formatstr, dblNum);
-
-    // copy the string into the output core string object
-    cRetStr = numstr;
+    if (dp > 0)
+    {
+        snprintf(formatstr, iStrLen, "%%.%df", dp);
+        snprintf(numstr, iStrLen, formatstr, dblNum);
+        cRetStr = numstr;
+    }
+    else
+    {
+        cRetStr = StringFromInt((int)round(dblNum));
+    }
     return cRetStr;
 }
 
@@ -141,11 +147,16 @@ RedDataString RedDataActions::StringFromDoubleWithMinDigitsAndDP(double dblNum, 
 
     const unsigned digits = mindigits + dp + 1;
 
-    snprintf(formatstr, iStrLen, "%%0%d.%df", digits, dp);
-    snprintf(numstr, iStrLen, formatstr, dblNum);
-
-    // copy the string into the output core string object
-    cRetStr = numstr;
+    if (dp > 0)
+    {
+        snprintf(formatstr, iStrLen, "%%0%d.%df", digits, dp);
+        snprintf(numstr, iStrLen, formatstr, dblNum);
+        cRetStr = numstr;
+    }
+    else
+    {
+        cRetStr = StringFromIntWithMinDigits((int)round(dblNum), mindigits);
+    }
     return cRetStr;
 }
 

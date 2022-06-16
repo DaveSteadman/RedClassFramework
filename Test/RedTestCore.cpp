@@ -234,37 +234,73 @@ RedResult RedTestCore::TestDataNumber(void)
         if (!t1.IsEqualToWithinTollerance(1, 0.001)) return kResultFail;
     }
 
-    // String representations
+    // StringFromNumber
     {
+        RedDataString strNum;
         RedDataNumber z1(12.345);
-        RedDataString zstr1 = RedDataActions::StringFromNumber(z1);
-        if (zstr1 != "12.345000") return kResultFail;
+        strNum = RedDataActions::StringFromNumber(z1);
+        if (strNum != "12.345000") return kResultFail;
 
         RedDataNumber z2(12345);
-        RedDataString zstr2 = RedDataActions::StringFromNumber(z2);
-        if (zstr2 != "12345") return kResultFail;
+        strNum = RedDataActions::StringFromNumber(z2);
+        if (strNum != "12345") return kResultFail;
+    }
 
-        RedDataString zstr3 = RedDataActions::StringFromDoubleWithMinDigitsAndDP(13.123, 4, 4);
-        if (zstr3 != "0013.1230") return kResultFail;
+    // StringFromDoubleWithMinDigits
+    {
+        RedDataString strNum;
+        strNum = RedDataActions::StringFromDoubleWithDP(13.123, 10);
+        if (strNum != "13.1230000000") return kResultFail;
 
-        zstr3 = RedDataActions::StringFromDoubleWithMinDigitsAndDP(13.123, 1, 1);
-        if (zstr3 != "13.1") return kResultFail;
+        strNum = RedDataActions::StringFromDoubleWithDP(13.123, 4);
+        if (strNum != "13.1230") return kResultFail;
 
-        zstr3 = RedDataActions::StringFromDoubleWithMinDigitsAndDP(13.466, 3, 1);
-        if (zstr3 != "013.5") return kResultFail;
+        strNum = RedDataActions::StringFromDoubleWithDP(13.123, 1);
+        if (strNum != "13.1") return kResultFail;
+
+        strNum = RedDataActions::StringFromDoubleWithDP(13.183, 1);
+        if (strNum != "13.2") return kResultFail;
+
+        strNum = RedDataActions::StringFromDoubleWithDP(13.123, 0);
+        if (strNum != "13") return kResultFail;
+
+        strNum = RedDataActions::StringFromDoubleWithDP(13.888, 0);
+        if (strNum != "14") return kResultFail;
+    }
+
+    // StringFromDoubleWithMinDigitsAndDP
+    {
+        RedDataString strNum;
+        strNum = RedDataActions::StringFromDoubleWithMinDigitsAndDP(13.123, 4, 4);
+        if (strNum != "0013.1230") return kResultFail;
+
+        strNum = RedDataActions::StringFromDoubleWithMinDigitsAndDP(13.123, 1, 1);
+        if (strNum != "13.1") return kResultFail;
+
+        strNum = RedDataActions::StringFromDoubleWithMinDigitsAndDP(13.466, 3, 1);
+        if (strNum != "013.5") return kResultFail;
+
+        strNum = RedDataActions::StringFromDoubleWithMinDigitsAndDP(13.466, 3, 0);
+        if (strNum != "013") return kResultFail;
+
+        strNum = RedDataActions::StringFromDoubleWithMinDigitsAndDP(13.466, 0, 0);
+        if (strNum != "13") return kResultFail;
+
+        strNum = RedDataActions::StringFromDoubleWithMinDigitsAndDP(13.776, 0, 0);
+        if (strNum != "14") return kResultFail;
     }
 
     // Hexadecimal strings
     {
-        RedDataString xstr;
-        xstr = RedDataActions::HexadecimalStringFromInt(12);
-        if (xstr != "0xc") return kResultFail;
+        RedDataString strNum;
+        strNum = RedDataActions::HexadecimalStringFromInt(12);
+        if (strNum != "0xc") return kResultFail;
 
-        xstr = RedDataActions::HexadecimalStringFromIntWithMinDigits(12, 4);
-        if (xstr != "0x000c") return kResultFail;
+        strNum = RedDataActions::HexadecimalStringFromIntWithMinDigits(12, 4);
+        if (strNum != "0x000c") return kResultFail;
 
-        xstr = RedDataActions::HexadecimalStringFromIntWithMinDigits(32000, 4);
-        if (xstr != "0x7d00") return kResultFail;
+        strNum = RedDataActions::HexadecimalStringFromIntWithMinDigits(32000, 4);
+        if (strNum != "0x7d00") return kResultFail;
     }
 
     // Reading strings

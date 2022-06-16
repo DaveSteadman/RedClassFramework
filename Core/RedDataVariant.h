@@ -39,7 +39,7 @@ class RedDataVariant : public RedData
 {
 public:
 
-    RedDataVariant(void):pData(NULL) { };
+    RedDataVariant(void)                            { };
     RedDataVariant(const RedData& cDataItem)        { pData = cDataItem.Clone(); };
     RedDataVariant(const RedDataVariant& cDataItem) { SetValue(cDataItem); };
     RedDataVariant(const RedDataBoolean& cNewBool)  { SetValue(cNewBool); };
@@ -62,7 +62,7 @@ public:
     RedDataType         DataType(void) const { return (pData==NULL) ? kDataTypeInvalid : pData->Type(); };
 
     // Set a new value to the object. Any existing data is deleted and the input is cloned.
-    void                SetValue(const RedData* pNewData)         { Init(); if (pNewData) pData = pNewData->Clone(); };
+    void                SetValue(const RedData*        pNewData)  { Init(); if (pNewData) pData = pNewData->Clone(); };
     void                SetValue(const RedDataBoolean& cNewBool)  { Init(); pData = new RedDataBoolean(cNewBool); };
     void                SetValue(const RedDataNumber&  cNewNum)   { Init(); pData = new RedDataNumber(cNewNum); };
     void                SetValue(const RedDataChar&    cNewCh)    { Init(); pData = new RedDataChar(cNewCh); };
@@ -90,8 +90,8 @@ public:
 
     bool                IsSuccessVal(void) const;
 
-    void operator =(const RedData* pData);
-    void operator =(const RedDataVariant& n);
+    void operator =(const RedData*        pNewData);
+    void operator =(const RedDataVariant& cNewData);
 
     void operator =(const RedDataBoolean& cNewData) { SetValue(&cNewData); };
     void operator =(const RedDataChar&    cNewData) { SetValue(&cNewData); };

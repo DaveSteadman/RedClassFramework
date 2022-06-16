@@ -366,12 +366,12 @@ void RedDataVariant::operator =(const RedData* pNewData)
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-void RedDataVariant::operator =(const RedDataVariant& cVarData)
+void RedDataVariant::operator =(const RedDataVariant& cNewData)
 {
     Init();
 
-    if (cVarData.pData)
-        pData = cVarData.pData->Clone();
+    if (cNewData.pData)
+        pData = cNewData.pData->Clone();
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
