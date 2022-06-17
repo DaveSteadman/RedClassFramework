@@ -96,12 +96,10 @@
 //              Get list of static signatures
 //              Does signature exist
 // 
+// Error:
+//     run "xxx = (12+23)*(12-11)"
+//     Its about lack of whitespace in the line.
 // 
-// :>run "xxx = (12+23)*(12-11)"
-// Info:    (row:1, col:13)
-// Info:    (row:1, col:13)
-// Error:   Badly Formed BinaryOp
-// Error:   Code execution error.
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 int main()
@@ -115,7 +113,7 @@ int main()
 
     Red::Core::RedLog cLog;
     Red::Test::RedTestCentre::RunAllUnitTests(cLog);
-    std::cout << cLog.AllLoggedText().TextPtr();
+    std::cout << cLog.AllLoggedText(TELogType::eEventTypeStamped).TextPtr();
 
     std::cout << "- - - - - - - - - - - - - - - - - - - - - - - \n";
     std::cout << "Red Shell\n";

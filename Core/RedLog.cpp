@@ -60,9 +60,9 @@ void RedLog::AddErrorEvent(const RedDataString& NewText)
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-RedDataString RedLog::AllLoggedText(void)
+RedDataString RedLog::AllLoggedText(TELogType eLogType)
 {
-    RedDataString          outStr;
+    RedDataString      outStr;
     EventLogListItType logIt(&EventList);
 
     logIt.First();
@@ -70,11 +70,9 @@ RedDataString RedLog::AllLoggedText(void)
     {
         RedLogEvent* pCurrItem = logIt.CurrentItem();
 
-        if      (pCurrItem->EventType() == TEventLogType::eErrorEvent)   outStr.Append("Error:   ");
-        else if (pCurrItem->EventType() == TEventLogType::eWarningEvent) outStr.Append("Warning: ");
-        else if (pCurrItem->EventType() == TEventLogType::eInfoEvent)    outStr.Append("Info:    ");
-
-        outStr.Append(pCurrItem->Text());
+        if (eLogType == eJustText)         outStr.Append(pCurrItem->Text());
+        if (eLogType == eTimestamped)      outStr.Append(pCurrItem->TimestampedText());
+        if (eLogType == eEventTypeStamped) outStr.Append(pCurrItem->EventTypeText());
         outStr.Append("\n");
 
         logIt.Next();

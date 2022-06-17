@@ -88,7 +88,6 @@ public:
     void           DelFirstChar(void) { DelCharsAtIndex(FirstContentIndex(), 1); };
     void           DelLastChar(void)  { DelCharsAtIndex(LastContentIndex(),  1); };
 
-
     RedDataString  SubStr(const unsigned StartIndex, const unsigned Count) const;
     bool           IsCharInString(char ch) const;
     bool           IsAlphaNumeric(void) const;

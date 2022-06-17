@@ -655,32 +655,60 @@ RedResult RedTestVSI::TestFragment_NewTypes(void)
 
 RedResult RedTestVSI::TestFragment_Expr(void)
 {
-    // Define a small code fragment
-    RedDataString strCodeFragment = "\
-        new stack number x = 3 \
-        x = x + 1 \
-        x = x * 2";
+    {
+        // Define a small code fragment
+        RedDataString strCodeFragment = "\
+            new stack number x = 3 \
+            x = x + 1 \
+            x = x * 2";
 
-    RedVSIContextBase baseContext;
+        RedVSIContextBase baseContext;
 
-    // Turn the tokens into code
-    RedVSICmd* pTopCmd = RedVSICmdFactory::RunConstuctionCompetition(strCodeFragment, baseContext.cLog);
-    if (pTopCmd == NULL)
-        return kResultFail;
-    RedVSIContextRoutine testContext(&baseContext, pTopCmd);
+        // Turn the tokens into code
+        RedVSICmd* pTopCmd = RedVSICmdFactory::RunConstuctionCompetition(strCodeFragment, baseContext.cLog);
+        if (pTopCmd == NULL)
+            return kResultFail;
+        RedVSIContextRoutine testContext(&baseContext, pTopCmd);
 
-    // Execute the code in a context, while we have no completion and no error
-    while ((!testContext.IsExecutionComplete()) && (!baseContext.cLog.ContainsError()))
-        testContext.Execute(5);
-    delete pTopCmd;
+        // Execute the code in a context, while we have no completion and no error
+        while ((!testContext.IsExecutionComplete()) && (!baseContext.cLog.ContainsError()))
+            testContext.Execute(5);
+        delete pTopCmd;
 
-    // Check the execution result
-    if (baseContext.cLog.ContainsError())
-        return kResultFail;
-    RedDataVariant x = testContext.DataItemAsVariant("x");
-    if (x != 8) 
-        return kResultFail;
+        // Check the execution result
+        if (baseContext.cLog.ContainsError())
+            return kResultFail;
+        RedDataVariant x = testContext.DataItemAsVariant("x");
+        if (x != 8) 
+            return kResultFail;
+    }
 
+    // Test of whitespace within an expression
+    // - single character brakcets
+    // - difference betwen "12" "-" "11" and "12" "-11", recognising the operator.
+    {
+        RedDataString strCodeFragment = "new heap number xxx = (12+23)*(12-11)";
+
+        RedVSIContextBase baseContext;
+
+        // Turn the tokens into code
+        RedVSICmd* pTopCmd = RedVSICmdFactory::RunConstuctionCompetition(strCodeFragment, baseContext.cLog);
+        if (pTopCmd == NULL)
+            return kResultFail;
+        RedVSIContextRoutine testContext(&baseContext, pTopCmd);
+
+        // Execute the code in a context, while we have no completion and no error
+        while ((!testContext.IsExecutionComplete()) && (!baseContext.cLog.ContainsError()))
+            testContext.Execute(5);
+        delete pTopCmd;
+
+        // Check the execution result
+        if (baseContext.cLog.ContainsError())
+            return kResultFail;
+        RedDataVariant x = testContext.DataItemAsVariant("xxx");
+        if (x != 35) 
+            return kResultFail;
+    }
     return kResultSuccess;
 }
 
@@ -875,7 +903,7 @@ RedResult RedTestVSI::TestSignature(void)
         cStaticLibSig.AddStaticParam(cStr.Type(), "text_param");
         cDynamicCallSig.AddDynamicParam(&cStr);
 
-        //if (!RedVSIRoutineSignature::CallComparison(&cStaticLibSig, &cDynamicCallSig)) return kResultFail;
+        if (!RedVSIRoutineSignature::CallComparison(cStaticLibSig, cDynamicCallSig)) return kResultFail;
     }
 
     return kResultSuccess;

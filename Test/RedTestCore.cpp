@@ -363,7 +363,6 @@ RedResult RedTestCore::TestDataRecord(void)
         RedDataVariant* pV = dynamic_cast<RedDataVariant*>(x.CreateAddReturn("FieldBool", kDataTypeVariant));
         *pV = "qq";
         *pV = 1234;
-
     }
 
     return kResultSuccess;

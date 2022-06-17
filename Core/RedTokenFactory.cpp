@@ -293,10 +293,21 @@ RedResult RedTokenFactory::SymbolComp(RedBufferInput& cInputBuffer, RedToken& cN
         return RedResult::NoResult();
 
     // Read symbols until not a symbol
-    while (cPreviewChar.IsSymbol())
+    bool bBracketCheck = false;
+    while ((cPreviewChar.IsSymbol()) && (bBracketCheck == false))
     {
-        cValidStr += cInputBuffer.GetNextChar();
+        // Consume the new character, 
+        cNewChar = cInputBuffer.GetNextChar();
+        cValidStr += cNewChar;
+
+        // Preview the next character
         cPreviewChar = cInputBuffer.PreviewNextChar();
+
+        // Rule: Brackets are always single character tokens.
+        //       - Stop the loop if we start with a bracket.
+        //       - Stop the loop if the next character might be a bracket.
+        if (cNewChar.IsBracket())     bBracketCheck = true;
+        if (cPreviewChar.IsBracket()) bBracketCheck = true;
     }
 
     cNewTok.SetSymbol(cValidStr);

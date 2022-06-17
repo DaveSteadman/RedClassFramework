@@ -18,6 +18,8 @@
 
 #pragma once
 
+#include "RedDate.h"
+#include "RedTime.h"
 #include "RedDataString.h"
 #include "RedDataNumber.h"
 #include "RedDataActions.h"
@@ -40,23 +42,46 @@ class RedLogEvent
 public:
 
     // Constructors
-    RedLogEvent(const TEventLogType NewLogType)                               : LogType(NewLogType) {};
-    RedLogEvent(const TEventLogType NewLogType, const RedDataString& NewText) : LogType(NewLogType), text(NewText) {};
-    RedLogEvent(const RedDataString& NewText)                                 : LogType(TEventLogType::eInfoEvent), text(NewText) {};
-    RedLogEvent(const RedLogEvent& CurrEvent)                                 : LogType(CurrEvent.LogType), text(CurrEvent.text) {};
+    RedLogEvent(const TEventLogType NewLogType)                               : LogType(NewLogType) { SetTimestampNow(); };
+    RedLogEvent(const TEventLogType NewLogType, const RedDataString& NewText) : LogType(NewLogType), text(NewText) { SetTimestampNow(); };
+    RedLogEvent(const RedDataString& NewText)                                 : LogType(TEventLogType::eInfoEvent), text(NewText) { SetTimestampNow(); };
+    RedLogEvent(const RedLogEvent& CurrEvent)                                 : LogType(CurrEvent.LogType), text(CurrEvent.text) { SetTimestampNow(); };
 
     // Basic Accessors
     void                Init(void)                               { LogType = TEventLogType::eInfoEvent; text.Init(); };
     TEventLogType       EventType(void) const                    { return LogType; };
-    RedDataString       Text(void) const                         { return text; };
+    
+    RedDataString       Text(void)                               { return text; };
+    RedDataString       EventTypeText(void)                      { return EventTypeString() + " // " + text; };
+    RedDataString       TimestampedText(void)                    { return TimestampString() + " // " + text; };
+
     void                AppendText(const RedDataString& newText) { text.Append(newText); };
     void                AppendText(const RedDataNumber& newNum)  { text.Append(RedDataActions::StringFromNumber(newNum)); };
 
     void                Set(const TEventLogType newtype, const RedDataString& newtext) { LogType=newtype; text=newtext; };
+    void                SetTimestampNow(void) { cDate = RedDate::Today(); cTime = RedTime::Now(); };
 
-    void operator =(const RedLogEvent& newVal)      { Set(newVal.EventType(), newVal.Text()); };
+
+
+    //void operator =(const RedLogEvent& newVal)      { LogType=newVal.LogType; text=newVal.Text; cDate=newVal.cDate; cTime=newVal.cTime; };
 
 private:
+
+    RedDataString TimestampString(void) 
+    { 
+        return cDate.EightDigitDateString() + "-" + cTime.SixDigitTimeString(); 
+    };
+
+    RedDataString EventTypeString(void)
+    {
+        if      (LogType == TEventLogType::eErrorEvent)   return "Error";
+        else if (LogType == TEventLogType::eWarningEvent) return "Warning";
+        else if (LogType == TEventLogType::eInfoEvent)    return "Info";
+        return "Unknown";
+    };
+
+    RedDate cDate;
+    RedTime cTime;
     TEventLogType LogType = TEventLogType::eInfoEvent;
     RedDataString text    = "";
 };

@@ -33,11 +33,14 @@ typedef RedDoubleLinkedListIterator<RedLogEvent*> EventLogListItType;
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
+enum TELogType { eTimestamped, eEventTypeStamped, eJustText };
+
 // Holds logged information, from text debug statements, info, warnings and
 // error messages. Has additional methods to then query the information.
 class RedLog
 {
 public:
+
 
     RedLog(void) : containsError(0) { };
     ~RedLog() { Init(); };
@@ -48,7 +51,7 @@ public:
     void      AddErrorEvent(const RedDataString& NewText);
     void      AddErrorEvent(const char* NewText) { AddErrorEvent(RedDataString(NewText)); };
 
-    RedDataString AllLoggedText(void);
+    RedDataString AllLoggedText(TELogType eLogType = TELogType::eJustText);
 
     void      Clear(void) { EventList.DelAll(); containsError = false; };
 
@@ -59,6 +62,7 @@ public:
     bool     ContainsError(void)   const { return containsError; };
 
 private:
+
     EventLogListType EventList;
     bool             containsError;
 };
