@@ -100,6 +100,10 @@
 //     run "xxx = (12+23)*(12-11)"
 //     Its about lack of whitespace in the line.
 // 
+//      Fix by:
+//      1 - Searching for predefs in the first instance, labelling other symbols as just symbols.
+//      2 - Know the type of the prior token. You never get two operators in a line. So "X+=-10" can work.
+// 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 int main()
