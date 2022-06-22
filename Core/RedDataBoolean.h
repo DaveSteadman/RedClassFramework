@@ -68,10 +68,10 @@ public:
 
     static RedDataBoolean  NOT(RedDataBoolean v1)                     { return RedDataBoolean(v1.IsFalse());                 };
     static RedDataBoolean  OR(RedDataBoolean v1, RedDataBoolean v2)   { return RedDataBoolean(v1.IsTrue()  || v2.IsTrue());  };
-    static RedDataBoolean  NOR(RedDataBoolean v1, RedDataBoolean v2)  { return RedDataBoolean(v1.IsFalse() || v2.IsFalse()); };
+    static RedDataBoolean  NOR(RedDataBoolean v1, RedDataBoolean v2)  { return RedDataBoolean(v1.IsFalse() && v2.IsFalse()); };
     static RedDataBoolean  AND(RedDataBoolean v1, RedDataBoolean v2)  { return RedDataBoolean(v1.IsTrue()  && v2.IsTrue());  };
+    static RedDataBoolean  NAND(RedDataBoolean v1, RedDataBoolean v2) { return RedDataBoolean(v1.IsFalse() || v2.IsFalse()); };
     static RedDataBoolean  XOR(RedDataBoolean v1, RedDataBoolean v2)  { return RedDataBoolean(v1.IsTrue()  != v2.IsTrue());  };
-    static RedDataBoolean  NAND(RedDataBoolean v1, RedDataBoolean v2) { return RedDataBoolean(v1.IsFalse() && v2.IsFalse()); };
 
     void      operator =(const RedDataBoolean& cVal) { iState = cVal.iState; };
     void      operator =(const bool        val ) { if (val) iState=RED_TRUE; else iState=RED_FALSE; };

@@ -66,7 +66,7 @@ public:
 
     int iState(void) const { return (int)eState; };
 
-    RedDataString Name(void);
+    RedDataString Name(void) const;
 
     void operator =(const RedDataType sourceT) { eState = sourceT.eState; };
 

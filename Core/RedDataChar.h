@@ -46,7 +46,7 @@ public:
     // simple set & get operations
     void       Set(const char NewCh)        { ch = NewCh; };
     void       Set(int NewCh)               { if ((NewCh > 0) && (NewCh<256)) ch = NewCh; };
-    void       Set(const RedDataChar& cNewVal)  { ch = cNewVal.ch; };
+    void       Set(const RedDataChar& cNew) { ch = cNew.ch; };
 
     char       Char(void)             const { return ch; };
     bool       IsChar(char NewCh)     const { return ch == NewCh; };
@@ -58,11 +58,11 @@ public:
     bool       IsDecimalNumber(void)  const { return ( (ch >= '0') && (ch <= '9') ); };
     bool       IsDecimalPoint(void)   const { return (ch == '.'); };
     bool       IsEOF(void)            const { return (ch == '\0'); };
+    bool       IsEOL(void)            const { return (ch == '\n'); };
     bool       IsFullstop(void)       const { return (ch == '.'); };
     bool       IsHexNumber(void)      const { return ( ((ch>='0')&&(ch<='9')) || ((ch>='a')&&(ch<='f')) || ((ch>='A')&&(ch<='F')) ); };
-    bool       IsNewline(void)        const { return (ch == '\n'); };
-    bool       IsEOL(void)            const { return (ch == '\n'); };
     bool       IsMinus(void)          const { return (ch == '-'); };
+    bool       IsNewline(void)        const { return (ch == '\n'); };
     bool       IsNonPrintable(void)   const { return (ch<32); };
     bool       IsOperator(void)       const { return ( (ch=='=') || (ch=='+') || (ch=='-') || (ch=='*') || (ch=='/') || (ch=='<') || (ch=='>') ); };
     bool       IsPrintable(void)      const { return (ch>=32); };
@@ -78,7 +78,7 @@ public:
     // Assignment Operators
     void operator =(const int      newVal)  { Set(newVal); };
     void operator =(const char     newVal)  { Set(newVal); };
-    void operator =(const RedDataChar& newVal)  { Set(newVal); };
+    void operator =(const RedDataChar& nV)  { Set(nV);     };
 
 private:
 

@@ -29,13 +29,14 @@ namespace Test {
 
 void RedTestTinyML::RunUnitTest(RedLog& log)
 {
-    if (RedTestTinyML::TestOne().IsFail())             { log.AddErrorEvent("TinyML Unit Test: TestOne Failed");              return; }
-    if (RedTestTinyML::TestTwo().IsFail())             { log.AddErrorEvent("TinyML Unit Test: TestTwo Failed");              return; }
-    if (RedTestTinyML::TestIterators().IsFail())       { log.AddErrorEvent("TinyML Unit Test: TestIterators Failed");        return; }
-    if (RedTestTinyML::TestTreeEdit().IsFail())        { log.AddErrorEvent("TinyML Unit Test: TestTreeEdit Failed");         return; }
-    if (RedTestTinyML::TestQuoteCharacters().IsFail()) { log.AddErrorEvent("TinyML Unit Test: TestQuoteCharacters Failed");  return; }
+    if (RedTestTinyML::TestOne().IsFail())             { log.AddErrorEvent("TinyML Unit Test: TestOne Failed");             }
+    if (RedTestTinyML::TestTwo().IsFail())             { log.AddErrorEvent("TinyML Unit Test: TestTwo Failed");             }
+    if (RedTestTinyML::TestIterators().IsFail())       { log.AddErrorEvent("TinyML Unit Test: TestIterators Failed");       }
+    if (RedTestTinyML::TestTreeEdit().IsFail())        { log.AddErrorEvent("TinyML Unit Test: TestTreeEdit Failed");        }
+    if (RedTestTinyML::TestQuoteCharacters().IsFail()) { log.AddErrorEvent("TinyML Unit Test: TestQuoteCharacters Failed"); }
 
-    log.AddText("TinyML Unit Test: Passed");
+    if (!log.ContainsError())
+        log.AddText("TinyML Unit Test: Passed");
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

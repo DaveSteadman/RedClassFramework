@@ -25,7 +25,7 @@ namespace Core {
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-RedDataString RedDataType::Name(void)
+RedDataString RedDataType::Name(void) const 
 {
     switch (eState)
     {

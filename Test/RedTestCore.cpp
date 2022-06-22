@@ -32,34 +32,35 @@ namespace Test {
 void RedTestCore::RunUnitTest(RedLog& log)
 {
     // Test Core Classes
-    if (RedTestCore::TestDataType().IsFail())     { log.AddErrorEvent("Core Unit Test: TestDataType Failed");     return; }
+    if (RedTestCore::TestDataType().IsFail())     { log.AddErrorEvent("Core Unit Test: TestDataType Failed");      }
  
     // Test Data Types
-    if (RedTestCore::TestDataBoolean().IsFail())  { log.AddErrorEvent("Core Unit Test: TestDataBoolean Failed");  return; }
-    if (RedTestCore::TestDataChar().IsFail())     { log.AddErrorEvent("Core Unit Test: TestDataChar Failed");     return; }
-    if (RedTestCore::TestDataList().IsFail())     { log.AddErrorEvent("Core Unit Test: TestDataList Failed");     return; }
-    if (RedTestCore::TestDataNumber().IsFail())   { log.AddErrorEvent("Core Unit Test: TestDataNumber Failed");   return; }
-    if (RedTestCore::TestDataRecord().IsFail())   { log.AddErrorEvent("Core Unit Test: TestDataRecord Failed");   return; }
-    if (RedTestCore::TestDataString().IsFail())   { log.AddErrorEvent("Core Unit Test: TestDataString Failed");   return; }
-    if (RedTestCore::TestDataVariant().IsFail())  { log.AddErrorEvent("Core Unit Test: TestDataVariant Failed");  return; }
+    if (RedTestCore::TestDataBoolean().IsFail())  { log.AddErrorEvent("Core Unit Test: TestDataBoolean Failed");   }
+    if (RedTestCore::TestDataChar().IsFail())     { log.AddErrorEvent("Core Unit Test: TestDataChar Failed");      }
+    if (RedTestCore::TestDataList().IsFail())     { log.AddErrorEvent("Core Unit Test: TestDataList Failed");      }
+    if (RedTestCore::TestDataNumber().IsFail())   { log.AddErrorEvent("Core Unit Test: TestDataNumber Failed");    }
+    if (RedTestCore::TestDataRecord().IsFail())   { log.AddErrorEvent("Core Unit Test: TestDataRecord Failed");    }
+    if (RedTestCore::TestDataString().IsFail())   { log.AddErrorEvent("Core Unit Test: TestDataString Failed");    }
+    if (RedTestCore::TestDataVariant().IsFail())  { log.AddErrorEvent("Core Unit Test: TestDataVariant Failed");   }
 
     // Test Time Types
-    if (RedTestCore::TestTime().IsFail())         { log.AddErrorEvent("Core Unit Test: TestTime Failed");         return; }
-    if (RedTestCore::TestDate().IsFail())         { log.AddErrorEvent("Core Unit Test: TestDate Failed");         return; }
+    if (RedTestCore::TestTime().IsFail())         { log.AddErrorEvent("Core Unit Test: TestTime Failed");          }
+    if (RedTestCore::TestDate().IsFail())         { log.AddErrorEvent("Core Unit Test: TestDate Failed");          }
 
     // Test Collections
-    if (RedTestCore::TestLinkedList().IsFail())   { log.AddErrorEvent("Core Unit Test: TestLinkedList Failed");   return; }
+    if (RedTestCore::TestLinkedList().IsFail())   { log.AddErrorEvent("Core Unit Test: TestLinkedList Failed");    }
 
     // Test Tokens
-    if (RedTestCore::TestTokens().IsFail())       { log.AddErrorEvent("Core Unit Test: TestTokens Failed");       return; }
+    if (RedTestCore::TestTokens().IsFail())       { log.AddErrorEvent("Core Unit Test: TestTokens Failed");        }
 
     // Test Misc Types
-    if (RedTestCore::TestEventLog().IsFail())     { log.AddErrorEvent("Core Unit Test: TestEventLog Failed");     return; }
-    if (RedTestCore::TestNumberRange().IsFail())  { log.AddErrorEvent("Core Unit Test: TestNumberRange Failed");  return; }
-    if (RedTestCore::TestOutputBuffer().IsFail()) { log.AddErrorEvent("Core Unit Test: TestOutputBuffer Failed"); return; }
-    if (RedTestCore::TestResult().IsFail())       { log.AddErrorEvent("Core Unit Test: TestResult Failed");       return; }
+    if (RedTestCore::TestEventLog().IsFail())     { log.AddErrorEvent("Core Unit Test: TestEventLog Failed");      }
+    if (RedTestCore::TestNumberRange().IsFail())  { log.AddErrorEvent("Core Unit Test: TestNumberRange Failed");   }
+    if (RedTestCore::TestOutputBuffer().IsFail()) { log.AddErrorEvent("Core Unit Test: TestOutputBuffer Failed");  }
+    if (RedTestCore::TestResult().IsFail())       { log.AddErrorEvent("Core Unit Test: TestResult Failed");        }
 
-    log.AddText("Core Unit Test: Passed");
+    if (!log.ContainsError())
+        log.AddText("Core Unit Test: Passed");
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
